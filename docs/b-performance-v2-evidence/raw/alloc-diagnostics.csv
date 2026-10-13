@@ -1,0 +1,4 @@
+rows,input_capacity_bytes,freeze_allocations,freeze_peak_extra_bytes,frozen_extra_bytes,weak_only_extra_bytes,pointer_preserved
+0,0,1,16,16,16,false
+10000,160000,1,320016,160016,160016,false
+1000000,16000000,1,32000016,16000016,16000016,false

@@ -1,0 +1,17 @@
+{
+  "raw_generic_invocations": 3840,
+  "raw_owner_invocations": 600,
+  "binaries": {
+    "generic-diagnostics": "ba733c8d3ee019b53047d054f46f453751dc713e31123e5668784572dcf2e9b2",
+    "generic-baseline": "b74d84cdae269dbf97df642ebf07e1522d0df84fd0c18bdd1694116683429044",
+    "generic-owner": "bae6d4d0e1f47bd758bfe007b38b05525a66cc0a857292ebc1617c9bffb2c04f",
+    "probe-owner": "3fbadc9c842718659e64289372e24ea76528a4693317f83060f89dee296dc412",
+    "probe-diagnostics": "13926dc53a156979a9932afdcf77ff97516f98a85fbdea63b604a62bc1b53264"
+  },
+  "notes": [
+    "Initial owner build failed because source_rows replacement was too broad; narrowed to frozen QuoteBuffer only.",
+    "First owner run used stale shared-target library: excluded; retained in scratch invalid-shared-target-raw. Added cargo clean -p minipy-native before each standalone probe build.",
+    "Raw retained rows include warmup samples 0..4; summary excludes these per cell.",
+    "Source hashes are offline provenance only. No runtime hash added."
+  ]
+}

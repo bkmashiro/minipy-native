@@ -37,6 +37,7 @@ pub struct CodeUnit {
     module: Option<JITModule>,
     entry: Entry,
     pub code_bytes: usize,
+    /// Actual lowered CLIF when explicitly requested; empty for ordinary compilation.
     pub clif: String,
 }
 impl Drop for CodeUnit {
@@ -54,6 +55,14 @@ impl CodeUnit {
         Self::compile_with_opt(source, "speed")
     }
     pub fn compile_with_opt(source: &str, opt: &str) -> Result<Self, CompileError> {
+        Self::compile_internal(source, opt, false)
+    }
+    /// Compile with the actual lowered CLIF retained for diagnostics.
+    /// Pass timing is separately enabled with the `compile-timing` Cargo feature.
+    pub fn compile_with_ir(source: &str, opt: &str) -> Result<Self, CompileError> {
+        Self::compile_internal(source, opt, true)
+    }
+    fn compile_internal(source: &str, opt: &str, retain_ir: bool) -> Result<Self, CompileError> {
         let program = crate::frontend::parse(source)?;
         let mut flags = settings::builder();
         flags.set("opt_level", opt).map_err(error)?;
@@ -165,7 +174,11 @@ impl CodeUnit {
             b.seal_all_blocks();
             b.finalize();
         }
-        let clif = ctx.func.display().to_string();
+        let clif = if retain_ir {
+            ctx.func.display().to_string()
+        } else {
+            String::new()
+        };
         module.define_function(id, &mut ctx).map_err(error)?;
         let code_bytes = ctx
             .compiled_code()

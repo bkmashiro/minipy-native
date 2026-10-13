@@ -1,0 +1,250 @@
+{
+  "generic-baseline": {
+    "0,cold,256": {
+      "count": 60,
+      "compile_ns": 109708.0,
+      "conversion_ns": 42.0,
+      "execute_cleanup_ns": 3458.0,
+      "total_ns": 113312.5,
+      "code_bytes": 192.0
+    },
+    "0,cold,4096": {
+      "count": 60,
+      "compile_ns": 109312.0,
+      "conversion_ns": 42.0,
+      "execute_cleanup_ns": 3375.0,
+      "total_ns": 113145.5,
+      "code_bytes": 192.0
+    },
+    "0,warm,256": {
+      "count": 60,
+      "compile_ns": 0.0,
+      "conversion_ns": 42.0,
+      "execute_cleanup_ns": 834.0,
+      "total_ns": 1000.0,
+      "code_bytes": 192.0
+    },
+    "0,warm,4096": {
+      "count": 60,
+      "compile_ns": 0.0,
+      "conversion_ns": 42.0,
+      "execute_cleanup_ns": 791.0,
+      "total_ns": 875.0,
+      "code_bytes": 192.0
+    },
+    "100,cold,256": {
+      "count": 60,
+      "compile_ns": 109687.0,
+      "conversion_ns": 167.0,
+      "execute_cleanup_ns": 3500.0,
+      "total_ns": 113417.0,
+      "code_bytes": 192.0
+    },
+    "100,cold,4096": {
+      "count": 60,
+      "compile_ns": 109395.5,
+      "conversion_ns": 167.0,
+      "execute_cleanup_ns": 3458.0,
+      "total_ns": 113145.5,
+      "code_bytes": 192.0
+    },
+    "100,warm,256": {
+      "count": 60,
+      "compile_ns": 0.0,
+      "conversion_ns": 167.0,
+      "execute_cleanup_ns": 1020.5,
+      "total_ns": 1291.0,
+      "code_bytes": 192.0
+    },
+    "100,warm,4096": {
+      "count": 60,
+      "compile_ns": 0.0,
+      "conversion_ns": 125.0,
+      "execute_cleanup_ns": 917.0,
+      "total_ns": 1167.0,
+      "code_bytes": 192.0
+    },
+    "10000,cold,256": {
+      "count": 60,
+      "compile_ns": 113145.5,
+      "conversion_ns": 8125.0,
+      "execute_cleanup_ns": 18854.5,
+      "total_ns": 139000.0,
+      "code_bytes": 192.0
+    },
+    "10000,cold,4096": {
+      "count": 60,
+      "compile_ns": 111041.5,
+      "conversion_ns": 8166.5,
+      "execute_cleanup_ns": 14979.5,
+      "total_ns": 134250.0,
+      "code_bytes": 192.0
+    },
+    "10000,warm,256": {
+      "count": 60,
+      "compile_ns": 0.0,
+      "conversion_ns": 7917.0,
+      "execute_cleanup_ns": 14417.0,
+      "total_ns": 22417.0,
+      "code_bytes": 192.0
+    },
+    "10000,warm,4096": {
+      "count": 60,
+      "compile_ns": 0.0,
+      "conversion_ns": 8020.5,
+      "execute_cleanup_ns": 12333.5,
+      "total_ns": 20458.0,
+      "code_bytes": 192.0
+    }
+  },
+  "generic-diagnostics": {
+    "0,cold,256": {
+      "count": 60,
+      "compile_ns": 96916.5,
+      "conversion_ns": 42.0,
+      "execute_cleanup_ns": 3541.5,
+      "total_ns": 100375.0,
+      "code_bytes": 192.0
+    },
+    "0,cold,4096": {
+      "count": 60,
+      "compile_ns": 96604.5,
+      "conversion_ns": 42.0,
+      "execute_cleanup_ns": 3479.0,
+      "total_ns": 100229.0,
+      "code_bytes": 192.0
+    },
+    "0,warm,256": {
+      "count": 60,
+      "compile_ns": 0.0,
+      "conversion_ns": 42.0,
+      "execute_cleanup_ns": 833.0,
+      "total_ns": 958.0,
+      "code_bytes": 192.0
+    },
+    "0,warm,4096": {
+      "count": 60,
+      "compile_ns": 0.0,
+      "conversion_ns": 42.0,
+      "execute_cleanup_ns": 750.0,
+      "total_ns": 875.0,
+      "code_bytes": 192.0
+    },
+    "100,cold,256": {
+      "count": 60,
+      "compile_ns": 97687.5,
+      "conversion_ns": 167.0,
+      "execute_cleanup_ns": 3500.0,
+      "total_ns": 101708.5,
+      "code_bytes": 192.0
+    },
+    "100,cold,4096": {
+      "count": 60,
+      "compile_ns": 97291.0,
+      "conversion_ns": 167.0,
+      "execute_cleanup_ns": 3458.0,
+      "total_ns": 101229.5,
+      "code_bytes": 192.0
+    },
+    "100,warm,256": {
+      "count": 60,
+      "compile_ns": 0.0,
+      "conversion_ns": 166.0,
+      "execute_cleanup_ns": 1000.0,
+      "total_ns": 1250.0,
+      "code_bytes": 192.0
+    },
+    "100,warm,4096": {
+      "count": 60,
+      "compile_ns": 0.0,
+      "conversion_ns": 125.0,
+      "execute_cleanup_ns": 916.0,
+      "total_ns": 1125.0,
+      "code_bytes": 192.0
+    },
+    "10000,cold,256": {
+      "count": 60,
+      "compile_ns": 99458.0,
+      "conversion_ns": 8083.0,
+      "execute_cleanup_ns": 16792.0,
+      "total_ns": 124875.0,
+      "code_bytes": 192.0
+    },
+    "10000,cold,4096": {
+      "count": 60,
+      "compile_ns": 98563.0,
+      "conversion_ns": 8125.0,
+      "execute_cleanup_ns": 14833.0,
+      "total_ns": 121833.0,
+      "code_bytes": 192.0
+    },
+    "10000,warm,256": {
+      "count": 60,
+      "compile_ns": 0.0,
+      "conversion_ns": 7875.0,
+      "execute_cleanup_ns": 14209.0,
+      "total_ns": 22167.0,
+      "code_bytes": 192.0
+    },
+    "10000,warm,4096": {
+      "count": 60,
+      "compile_ns": 0.0,
+      "conversion_ns": 7958.0,
+      "execute_cleanup_ns": 12291.5,
+      "total_ns": 20292.0,
+      "code_bytes": 192.0
+    }
+  },
+  "owner-diagnostics": {
+    "0,,": {
+      "count": 80,
+      "generation_ns": 41.0,
+      "freeze_ns": 41.0,
+      "execution_cleanup_ns": 854.5,
+      "total_ns": 958.5,
+      "payload_bytes": 0.0
+    },
+    "10000,,": {
+      "count": 80,
+      "generation_ns": 1333.0,
+      "freeze_ns": 2625.0,
+      "execution_cleanup_ns": 9916.0,
+      "total_ns": 13959.0,
+      "payload_bytes": 160000.0
+    },
+    "1000000,,": {
+      "count": 80,
+      "generation_ns": 174812.0,
+      "freeze_ns": 353375.0,
+      "execution_cleanup_ns": 895937.5,
+      "total_ns": 1423437.5,
+      "payload_bytes": 16000000.0
+    }
+  },
+  "owner-owner": {
+    "0,,": {
+      "count": 80,
+      "generation_ns": 20.5,
+      "freeze_ns": 41.0,
+      "execution_cleanup_ns": 750.0,
+      "total_ns": 875.0,
+      "payload_bytes": 0.0
+    },
+    "10000,,": {
+      "count": 80,
+      "generation_ns": 2625.0,
+      "freeze_ns": 42.0,
+      "execution_cleanup_ns": 9500.0,
+      "total_ns": 12583.0,
+      "payload_bytes": 160000.0
+    },
+    "1000000,,": {
+      "count": 80,
+      "generation_ns": 158458.5,
+      "freeze_ns": 42.0,
+      "execution_cleanup_ns": 896417.0,
+      "total_ns": 1056625.0,
+      "payload_bytes": 16000000.0
+    }
+  }
+}
