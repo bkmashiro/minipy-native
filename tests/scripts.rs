@@ -302,6 +302,67 @@ async fn cancelling_after_print_during_record_keeps_output_and_discards_late_com
     tokio::time::sleep(Duration::from_millis(60)).await;
     assert_eq!(p.record_count(), 1);
 }
+#[tokio::test]
+async fn compilation_of_different_sources_does_not_reuse_semantics_or_diagnostics() {
+    // Same compiling thread: different locals, CFG/Tool imports and errors.
+    for i in 1..16 {
+        let source = format!("x={i}\nif x > 0:\n    y=x*2\nelse:\n    y=0\nprint(y)");
+        let (out, _) = run(&source, &[], &[], ScriptLimits::default()).await;
+        assert_eq!(out.status, Ok(()));
+        assert_eq!(out.stdout, format!("{}\n", i * 2));
+        assert!(
+            CodeUnit::compile_with_opt(include_str!("../fixtures/weighted_scan.py"), "invalid")
+                .is_err()
+        );
+        let (out, _) = run("print(True)", &[], &[], ScriptLimits::default()).await;
+        assert_eq!(out.stdout, "True\n");
+    }
+}
+#[tokio::test]
+async fn future_scans_keep_owners_across_tools_and_live_bytes_are_aggregate() {
+    let source = "a=tools.load_quotes(1)\nb=tools.record_total(1,2)\nx=0\nfor q in a:\n    x+=q.quantity\nc=tools.load_quotes(b)\nfor q in c:\n    x+=q.quantity\nprint(x)\ntools.record_total(1,x)";
+    let code = Rc::new(CodeUnit::compile_script(source, &[]).unwrap());
+    let p = Arc::new(TestProvider::new(rows(), Delays::default()));
+    let trace: Trace = Rc::default();
+    let out = runtime::execute_script(
+        code,
+        p,
+        &[],
+        ScriptLimits::default(),
+        Cancellation::default(),
+        Some(trace.clone()),
+    )
+    .await;
+    assert_eq!(out.status, Ok(()));
+    assert_eq!(out.stdout, "12\n");
+    let held: Vec<_> = trace
+        .borrow()
+        .iter()
+        .filter(|e| e.phase == "record_wait")
+        .map(|e| e.buffer_bytes)
+        .collect();
+    assert_eq!(held, vec![48, 0]);
+    let source = "a=tools.load_quotes(1)\nb=tools.load_quotes(2)\nx=0\nfor q in a:\n    x+=q.quantity\nfor q in b:\n    x+=q.quantity\nprint(x)";
+    let mut limits = ScriptLimits::default();
+    limits.limits.buffer_bytes = 48;
+    let (out, p) = run(source, &[], &[], limits).await;
+    assert_eq!(out.status, Err(TaskError::Budget));
+    assert_eq!(out.stdout, "");
+    assert_eq!(p.load_count(), 2);
+    let code=Rc::new(CodeUnit::compile_script("a=tools.load_quotes(1)\nx=7\nfor q in a:\n    amount=q.quantity\n    x+=amount\nprint(x)",&[]).unwrap());
+    let p = Arc::new(TestProvider::new(vec![], Delays::default()));
+    let out = runtime::execute_script(
+        code,
+        p,
+        &[],
+        ScriptLimits::default(),
+        Cancellation::default(),
+        None,
+    )
+    .await;
+    assert_eq!(out.status, Ok(()));
+    assert_eq!(out.stdout, "7\n");
+}
 #[test]
 fn frontend_named_safety_bounds_and_rejections() {
     let compile = |s: &str| CodeUnit::compile_script(s, &[]);

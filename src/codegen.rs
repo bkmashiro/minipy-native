@@ -11,6 +11,11 @@ use cranelift_frontend::Switch;
 use cranelift_frontend::{FunctionBuilder, FunctionBuilderContext, Variable};
 use cranelift_jit::{JITBuilder, JITModule};
 use cranelift_module::{Linkage, Module};
+use std::cell::RefCell;
+thread_local! {
+    // Compiler scratch only: clear all function/code state between unknown sources.
+    static SCRATCH: RefCell<Option<(cranelift_codegen::Context, FunctionBuilderContext)>> = const { RefCell::new(None) };
+}
 
 #[repr(C)]
 pub(crate) struct Frame {
@@ -94,6 +99,24 @@ impl CodeUnit {
         Self::lower(program, "speed", false)
     }
     fn lower(program: ir::Program, opt: &str, retain_ir: bool) -> Result<Self, CompileError> {
+        let (mut ctx, mut fc) = SCRATCH.with(|s| s.borrow_mut().take()).unwrap_or_else(|| {
+            (
+                cranelift_codegen::Context::new(),
+                FunctionBuilderContext::new(),
+            )
+        });
+        let result = Self::lower_into(program, opt, retain_ir, &mut ctx, &mut fc);
+        ctx.clear();
+        SCRATCH.with(|s| *s.borrow_mut() = Some((ctx, fc)));
+        result
+    }
+    fn lower_into(
+        program: ir::Program,
+        opt: &str,
+        retain_ir: bool,
+        ctx: &mut cranelift_codegen::Context,
+        fc: &mut FunctionBuilderContext,
+    ) -> Result<Self, CompileError> {
         let mut flags = settings::builder();
         flags.set("opt_level", opt).map_err(error)?;
         let isa = cranelift_native::builder()
@@ -106,7 +129,7 @@ impl CodeUnit {
         let mut builder = JITBuilder::with_isa(isa, cranelift_module::default_libcall_names());
         builder.symbol("minipy_print", crate::runtime::native_print as *const u8);
         let mut module = JITModule::new(builder);
-        let mut ctx = module.make_context();
+        module.clear_context(ctx);
         ctx.func.signature.params = vec![AbiParam::new(types::I64); 3];
         ctx.func.signature.returns.push(AbiParam::new(types::I64));
         let mut print_sig = module.make_signature();
@@ -119,9 +142,8 @@ impl CodeUnit {
         let id = module
             .declare_function("scan", Linkage::Local, &ctx.func.signature)
             .map_err(error)?;
-        let mut fc = FunctionBuilderContext::new();
         {
-            let mut b = FunctionBuilder::new(&mut ctx.func, &mut fc);
+            let mut b = FunctionBuilder::new(&mut ctx.func, fc);
             let entry = b.create_block();
             b.append_block_params_for_function_params(entry);
             b.switch_to_block(entry);
@@ -187,7 +209,7 @@ impl CodeUnit {
         } else {
             String::new()
         };
-        module.define_function(id, &mut ctx).map_err(error)?;
+        module.define_function(id, ctx).map_err(error)?;
         let code_bytes = ctx
             .compiled_code()
             .ok_or_else(|| CompileError("missing machine code".into()))?
