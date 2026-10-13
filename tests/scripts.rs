@@ -363,6 +363,15 @@ async fn future_scans_keep_owners_across_tools_and_live_bytes_are_aggregate() {
     assert_eq!(out.status, Ok(()));
     assert_eq!(out.stdout, "7\n");
 }
+#[tokio::test]
+async fn scalar_values_cross_tools_and_chunk_backedges_only_when_live() {
+    let source = "x=40\ny=tools.record_total(1,2)\nprint(x+y)\na=tools.load_quotes(y)\ntotal=1\nprevious=0\nfor q in a:\n    value=q.quantity\n    if value>previous:\n        total+=value\n    previous=value\nreceipt=tools.record_total(y,total)\nprint(total)\nprint(previous)\nprint(receipt)";
+    let mut limits = ScriptLimits::default();
+    limits.limits.chunk = 1;
+    let (out, _) = run(source, &[], &[], limits).await;
+    assert_eq!(out.status, Ok(()));
+    assert_eq!(out.stdout, "43\n6\n2\n9\n");
+}
 #[test]
 fn frontend_named_safety_bounds_and_rejections() {
     let compile = |s: &str| CodeUnit::compile_script(s, &[]);

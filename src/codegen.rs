@@ -182,8 +182,9 @@ impl CodeUnit {
                 output_error,
                 resumes: vec![start],
                 row: None,
+                inputs: program.inputs,
             };
-            flow.stmts(&program.statements, 0);
+            flow.stmts(&program.statements, Live::default());
             let resumes = flow.resumes;
             b.switch_to_block(dispatch);
             let pc = b.ins().load(types::I64, MemFlags::trusted(), frame, 264);
@@ -258,15 +259,69 @@ struct Flow<'a, 'b> {
     output_error: cranelift_codegen::ir::Block,
     resumes: Vec<cranelift_codegen::ir::Block>,
     row: Option<Value>,
+    inputs: usize,
 }
-fn buffers_used(ss: &[Stmt]) -> u64 {
-    ss.iter().fold(0, |mask, s| {
-        mask | match s {
-            Stmt::For(i, _) => 1u64 << i,
-            Stmt::If(_, yes, no) => buffers_used(yes) | buffers_used(no),
-            _ => 0,
+#[derive(Clone, Copy, Default, PartialEq, Eq)]
+struct Live {
+    scalars: u32,
+    buffers: u64,
+}
+impl Live {
+    fn union(self, other: Self) -> Self {
+        Self {
+            scalars: self.scalars | other.scalars,
+            buffers: self.buffers | other.buffers,
         }
-    })
+    }
+}
+fn used(e: &Expr) -> u32 {
+    match e {
+        Expr::Local(i) => 1u32 << i,
+        Expr::Binary(_, a, b) => used(a) | used(b),
+        Expr::Not(e) => used(e),
+        _ => 0,
+    }
+}
+fn live_before(ss: &[Stmt], following: Live) -> Live {
+    ss.iter()
+        .rev()
+        .fold(following, |live, s| live_statement(s, live))
+}
+fn live_loop(buffer: usize, body: &[Stmt], following: Live) -> Live {
+    let mut live = following;
+    live.buffers |= 1u64 << buffer;
+    loop {
+        let next = live.union(live_before(body, live));
+        if next == live {
+            return live;
+        }
+        live = next;
+    }
+}
+fn live_statement(s: &Stmt, mut live: Live) -> Live {
+    match s {
+        Stmt::Set(i, e) => live.scalars = (live.scalars & !(1u32 << i)) | used(e),
+        Stmt::Record(i, batch, total) => {
+            live.scalars = (live.scalars & !(1u32 << i)) | used(batch) | used(total)
+        }
+        Stmt::Load(i, batch) => {
+            live.buffers &= !(1u64 << i);
+            live.scalars |= used(batch);
+        }
+        Stmt::Print(e, _) | Stmt::Eval(e) => live.scalars |= used(e),
+        Stmt::Return(e) => {
+            return Live {
+                scalars: used(e),
+                buffers: 0,
+            };
+        }
+        Stmt::If(e, yes, no) => {
+            live = live_before(yes, live).union(live_before(no, live));
+            live.scalars |= used(e);
+        }
+        Stmt::For(i, body) => live = live_loop(*i, body, live),
+    }
+    live
 }
 impl Flow<'_, '_> {
     fn expr(&mut self, expr: &Expr) -> Value {
@@ -292,16 +347,20 @@ impl Flow<'_, '_> {
             .ins()
             .load(types::I64, MemFlags::trusted(), self.frame, offset)
     }
-    fn spill(&mut self) {
+    fn spill(&mut self, live: u32) {
         for (i, var) in self.vars.iter().enumerate() {
-            let v = self.b.use_var(*var);
-            self.store((i * 8) as i32, v);
+            // Host inputs are immutable and already resident. Other slots only
+            // need writeback when the next native turn can read their value.
+            if i >= self.inputs && live & (1u32 << i) != 0 {
+                let v = self.b.use_var(*var);
+                self.store((i * 8) as i32, v);
+            }
         }
     }
-    fn suspend(&mut self, status: i64, pc: usize, live: u64) {
-        self.spill();
+    fn suspend(&mut self, status: i64, pc: usize, live: Live) {
+        self.spill(live.scalars);
         self.constant(264, pc as i64);
-        self.constant(312, live as i64);
+        self.constant(312, live.buffers as i64);
         let status = self.b.ins().iconst(types::I64, status);
         self.b.ins().return_(&[status]);
     }
@@ -311,9 +370,15 @@ impl Flow<'_, '_> {
         self.resumes.push(block);
         (pc, block)
     }
-    fn stmts(&mut self, ss: &[Stmt], following: u64) {
+    fn stmts(&mut self, ss: &[Stmt], following: Live) {
+        let mut after = vec![following; ss.len()];
+        let mut live = following;
+        for (i, s) in ss.iter().enumerate().rev() {
+            after[i] = live;
+            live = live_statement(s, live);
+        }
         for (position, stmt) in ss.iter().enumerate() {
-            let live = following | buffers_used(&ss[position + 1..]);
+            let mut live = after[position];
             match stmt {
                 Stmt::Set(i, e) => {
                     let value = self.expr(e);
@@ -352,6 +417,8 @@ impl Flow<'_, '_> {
                     self.constant(288, *target as i64);
                     let (pc, next) = self.continuation();
                     let terminal = matches!(&ss[position + 1..], [Stmt::Return(Expr::Local(i))] if i == target);
+                    // The Host supplies the new return value in this scalar slot.
+                    live.scalars &= !(1u32 << target);
                     self.suspend(if terminal { 7 } else { 3 }, pc, live);
                     self.b.switch_to_block(next);
                 }
@@ -378,7 +445,8 @@ impl Flow<'_, '_> {
             }
         }
     }
-    fn scan(&mut self, buffer: usize, body: &[Stmt], live: u64) {
+    fn scan(&mut self, buffer: usize, body: &[Stmt], following: Live) {
+        let live = live_loop(buffer, body, following);
         self.constant(256, 0);
         let (pc, chunk) = self.continuation();
         self.b.ins().jump(chunk, &[]);
@@ -423,7 +491,7 @@ impl Flow<'_, '_> {
         self.b.switch_to_block(row_body);
         let offset = self.b.ins().ishl_imm(i, 4);
         self.row = Some(self.b.ins().iadd(rows, offset));
-        self.stmts(body, live | (1u64 << buffer));
+        self.stmts(body, live);
         self.row = None;
         let i = self.b.use_var(ix);
         let next = self.b.ins().iadd_imm(i, 1);
@@ -437,7 +505,7 @@ impl Flow<'_, '_> {
         let after = self.b.create_block();
         self.b.ins().brif(more, yield_block, &[], after, &[]);
         self.b.switch_to_block(yield_block);
-        self.suspend(4, pc, live | (1u64 << buffer));
+        self.suspend(4, pc, live);
         self.b.switch_to_block(after);
     }
 }

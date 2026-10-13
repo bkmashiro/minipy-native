@@ -1,5 +1,6 @@
 //! Bounded D comparison: real scripts, one-shot compilation and ordinary Monty.
 //! argv: native|monty scalar|scan|weighted|legacy compile|cold|warm|mixed ROWS REPS DELAY_US
+mod script_memory;
 mod v2_common;
 use minipy_native::{
     codegen::CodeUnit,
@@ -193,13 +194,21 @@ fn main() {
     let reps: usize = args[5].parse().unwrap();
     let delay = Duration::from_micros(args[6].parse().unwrap());
     assert!(reps > 0 && n <= 1_000_000);
-    assert!(["compile", "cold", "warm", "mixed"].contains(&mode.as_str()));
+    assert!(["compile", "cold", "warm", "mixed", "hold"].contains(&mode.as_str()));
     let source = source(case);
     let legacy = case == "legacy";
     let rt = tokio::runtime::Builder::new_current_thread()
         .enable_time()
         .build()
         .unwrap();
+    if mode == "hold" {
+        assert!(["weighted", "legacy"].contains(&case.as_str()));
+        tokio::task::LocalSet::new().block_on(
+            &rt,
+            script_memory::run(engine, &source, case, n, reps, delay),
+        );
+        return;
+    }
     if mode == "mixed" {
         let expected_short = Rc::new(expected(case, 100));
         let expected_long = Rc::new(expected(case, n));
@@ -255,6 +264,9 @@ fn main() {
     };
     let expected = expected(case, n);
     for i in 0..reps {
+        if cfg!(feature = "allocation-diagnostics") {
+            v2_common::reset_peak();
+        }
         let before = v2_common::allocation();
         let cpu = v2_common::cpu_ns();
         let whole = Instant::now();

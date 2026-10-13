@@ -2,8 +2,10 @@
 Usage: python3 tools/run_d_scratch.py [ssh-key known-hosts host]
 No arguments uses the two local benchmark binaries specified below.
 All request observations, including each process's first compile, are retained.
+For D's next candidate set D_LABEL=spill, D_BASE and D_CANDIDATE binary paths.
 """
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -11,6 +13,8 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'bench/results/d-script'
 OUT.mkdir(exist_ok=True)
+label = os.environ.get('D_LABEL', 'scratch')
+assert label in ['scratch', 'spill']
 if len(sys.argv) == 4:
     key, known, host = sys.argv[1:]
     prefix = ['ssh', '-i', key, '-o', f'UserKnownHostsFile={known}', '-o', 'StrictHostKeyChecking=yes', '-o', 'BatchMode=yes', host]
@@ -21,11 +25,12 @@ else:
     prefix = []
     binaries = {'base': '/Users/yuzhe/.hermes/cache/scratch/d-script-c11-m4', 'scratch': '/Users/yuzhe/.hermes/cache/scratch/d-script-scratch-m4'}
     location = 'm4'
-path = OUT / f'scratch-{location}.jsonl'
+binaries = {'base': os.environ.get('D_BASE', binaries['base']), label: os.environ.get('D_CANDIDATE', binaries['scratch'])}
+path = OUT / f'{label}-{location}.jsonl'
 assert not path.exists(), 'preserve previous experiment'
 with path.open('w') as out:
     for round_id in range(3):
-        order = ['base', 'scratch'] if round_id % 2 == 0 else ['scratch', 'base']
+        order = ['base', label] if round_id % 2 == 0 else [label, 'base']
         for mode, rows, reps, delay in [('cold', 100, 60, 0), ('cold', 10_000, 60, 0), ('mixed', 100_000, 64, 1000)]:
             for arm in order:
                 args = [binaries[arm], 'native', 'weighted', mode, str(rows), str(reps), str(delay)]
