@@ -131,8 +131,12 @@ Global counters report requested Rust layouts, freed/allocated/reallocated bytes
 and peak live requested bytes since engine idle. They include diagnostic task and
 collection overhead, exclude allocator metadata/reserved bins and JIT mmap pages.
 RSS is sampled current resident memory. Linux RSS/PSS is from smaps_rollup and
-peak RSS is executable-lifetime VmHWM from /proc/self/status (including compile
-and sampling). getrusage ru_maxrss can inherit the Python launcher's pre-exec
+reported VmHWM is from /proc/self/status (including compile and sampling).
+Kernel RSS accounting can lag; raw VmHWM decreased slightly in small-input
+pilot snapshots. `peak_rss_bytes` therefore retains the cumulative maximum of
+sampled RSS and reported VmHWM, while `kernel_vm_hwm_bytes` keeps the unmodified
+kernel reading. This observed high-water mark is not a continuously traced exact
+peak. getrusage ru_maxrss can inherit the Python launcher's pre-exec
 peak, so the Linux probe no longer uses it. macOS uses getrusage, with no PSS in
 this probe, represented by null. Allocator counters and physical readers are not
 an atomic snapshot; readers/output also perturb later physical samples.

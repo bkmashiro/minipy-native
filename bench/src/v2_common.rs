@@ -115,6 +115,7 @@ pub struct Physical {
     pub rss_bytes: Option<u64>,
     pub pss_bytes: Option<u64>,
     pub peak_rss_bytes: Option<u64>,
+    pub kernel_vm_hwm_bytes: Option<u64>,
     pub method: &'static str,
 }
 pub fn physical() -> Physical {
@@ -139,24 +140,36 @@ pub fn physical() -> Physical {
                 })
                 .map(|n| n * 1024)
         };
-        Physical {
-            rss_bytes: kb("Rss:"),
-            pss_bytes: kb("Pss:"),
-            // ru_maxrss survives exec and can inherit the Python launcher's
-            // high-water mark. VmHWM is this executable's peak.
-            peak_rss_bytes: std::fs::read_to_string("/proc/self/status")
-                .ok()
-                .and_then(|text| {
-                    text.lines().find_map(|line| {
-                        line.strip_prefix("VmHWM:")?
-                            .split_whitespace()
-                            .next()?
-                            .parse::<u64>()
-                            .ok()
-                    })
+        let rss = kb("Rss:");
+        // ru_maxrss survives exec and can inherit the Python launcher's
+        // high-water mark. VmHWM reports an executable-lifetime HWM instead.
+        let hwm = std::fs::read_to_string("/proc/self/status")
+            .ok()
+            .and_then(|text| {
+                text.lines().find_map(|line| {
+                    line.strip_prefix("VmHWM:")?
+                        .split_whitespace()
+                        .next()?
+                        .parse::<u64>()
+                        .ok()
                 })
-                .map(|n| n * 1024),
-            method: "smaps_rollup RSS/PSS; status VmHWM since exec",
+            })
+            .map(|n| n * 1024);
+        // Kernel RSS accounting may lag and VmHWM can decrease between our
+        // snapshots. Preserve that raw reading, plus a cumulative observed
+        // high-water mark. This is not a continuously traced exact peak.
+        static OBSERVED_PEAK: AtomicU64 = AtomicU64::new(0);
+        let peak = rss
+            .into_iter()
+            .chain(hwm)
+            .max()
+            .map(|v| OBSERVED_PEAK.fetch_max(v, Ordering::Relaxed).max(v));
+        Physical {
+            rss_bytes: rss,
+            pss_bytes: kb("Pss:"),
+            peak_rss_bytes: peak,
+            kernel_vm_hwm_bytes: hwm,
+            method: "smaps RSS/PSS; cumulative max sampled RSS/reported VmHWM",
         }
     }
     #[cfg(not(target_os = "linux"))]
@@ -172,6 +185,7 @@ pub fn physical() -> Physical {
             rss_bytes: rss,
             pss_bytes: None,
             peak_rss_bytes: Some(u.ru_maxrss as u64),
+            kernel_vm_hwm_bytes: None,
             method: "ps-rss/getrusage; no macOS PSS",
         }
     }
