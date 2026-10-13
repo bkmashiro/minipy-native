@@ -347,5 +347,10 @@ zero observations; and tool stdout truncation/redaction while collecting v2 rows
 The final v2 raw data was saved remotely and copied as files before parsing.
 Exploratory union-future memory and non-reset peak output are not pooled into
 published memory results. Earlier stages and all first requests remain separately
-labeled. The final fixed-snapshot focused review is recorded with its findings
-before publication; no per-candidate review loop was added.
+labeled. The final fixed-snapshot focused review of `255e4eb` found no confirmed blocker.
+The reviewer independently reran 45 core and benchmark tests. Actual
+`gpt-6-luna/openai-codex` identity is verified by the separate Hermes CLI usage
+record. Native delegation was capped at two already-consumed frontend lanes;
+the review did not change that budget or any configuration. Review text and
+identity are archived as `focused-review.txt` and `focused-review-identity.json`.
+No per-candidate review loop was added.

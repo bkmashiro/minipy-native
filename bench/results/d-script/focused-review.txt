@@ -1,0 +1,10 @@
+结论：没有确认的 blocker，也没有发现足以误导主结论的证据问题。
+
+检查聚焦于 D 新入口的 frontend 初始化与静态绑定、native CFG/恢复点及标量和 buffer liveness、运行时权限/累计预算/取消与迟到操作、stdout 有界追加和 Quote owner 生命周期；并抽查了基准计时路径、Monty 实际执行用户脚本及分离的内存测量。项目文档列明的 unsupported 子集未作为缺陷提出。
+
+验证结果：
+- 固定 worktree 的实际 HEAD：`255e4ebf2d8513e36a9fa6bc886d8ce511540ee0`，工作区无未提交修改。
+- `CARGO_TARGET_DIR=/Users/yuzhe/projects/minipy-native/target cargo test --locked`：45 项测试通过。
+- `CARGO_TARGET_DIR=/Users/yuzhe/projects/minipy-native/target cargo +1.96.0 test --locked --manifest-path bench/Cargo.toml`：bench 测试通过。
+- 主控报告的 macOS/Linux ARM64 core、bench、Python、clippy 结果与本次代码抽查未见冲突；我未在本次 review 中重跑 Linux 或 clippy。
+- 实际模型：gpt-6-luna / openai-codex。

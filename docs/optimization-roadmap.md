@@ -51,5 +51,10 @@ Frame is 320 bytes versus 280 previously; each declared buffer adds a 16-byte vi
 and an 8-byte owner slot. Printing after record requires retaining code until done.
 
 Raw results, commands, identities and recomputation live in
-`bench/results/d-script/` and [experiments.md](experiments.md). Final focused
-independent review is the last delivery step, rather than another optimization lane.
+`bench/results/d-script/` and [experiments.md](experiments.md). The one final
+independent review of `255e4eb` found no confirmed blocker. Actual reviewer identity
+`gpt-6-luna/openai-codex` is verified by CLI usage metadata; 45 core and benchmark
+tests were independently rerun. See `focused-review.txt` and its identity JSON.
+Native delegation's two-child budget was exhausted by frontend/correction lanes,
+so the review used a separate read-only Hermes CLI session without changing
+profiles, budgets or configuration. No further optimization lane is scheduled.

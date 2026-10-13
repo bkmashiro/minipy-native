@@ -1,0 +1,10 @@
+{
+  "model": "gpt-6-luna",
+  "provider": "openai-codex",
+  "session_id": "20261014_045934_7057a6",
+  "api_calls": 5,
+  "completed": true,
+  "failed": false,
+  "partial": false,
+  "interrupted": false
+}
