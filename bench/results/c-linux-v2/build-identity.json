@@ -1,0 +1,18 @@
+{
+  "optimized_source": "065c7cbff5dc348437c520525b4882dfa07aca4e",
+  "deployment_script_source": "065c7cbff5dc348437c520525b4882dfa07aca4e",
+  "baseline_runtime": "564381d304be69d1fd870d4e92530c8024b7c394",
+  "identical_bench_source": "065c7cbff5dc348437c520525b4882dfa07aca4e",
+  "monty": "56949a4c45f51cedc7a96450782f58a8017e114d",
+  "rustc_build": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+  "zig": "0.15.2",
+  "target": "aarch64-unknown-linux-musl",
+  "speed_allocator": "System, no allocation-diagnostics feature",
+  "memory_allocator": "separate diagnostic counting allocator",
+  "build_commands": [
+    "python3 tools/prepare_bench_v2_baseline.py 065c7cbff5dc348437c520525b4882dfa07aca4e",
+    "cargo +1.96.0 zigbuild --release --locked --manifest-path bench/Cargo.toml --target aarch64-unknown-linux-musl --bin bench-v2 --bin memory-v2",
+    "cargo +1.96.0 zigbuild --release --locked --manifest-path bench/target/c-baseline-source/bench/Cargo.toml --target aarch64-unknown-linux-musl --bin bench-v2 --bin memory-v2"
+  ],
+  "note": "Guest deployed source has no .git or rustup; remote campaign_identity null fields are unavailable, not missing build provenance."
+}

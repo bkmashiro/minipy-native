@@ -1,0 +1,5 @@
+Initial deployment runner (18dc310) failed before opening raw files or executing any benchmark cell. Guest python3 invoked tools/run_bench_v2.py, whose identity() tried rustup (not installed on the cross-built VM).
+Observed exception: FileNotFoundError: [Errno 2] No such file or directory: 'rustup'
+A direct SSH rerun of the identical runner reproduced that stack at run_bench_v2.py:42. No timing rows were produced or excluded. Fixed optional identity collection to return null for unavailable guest tools, with a regression test. Build source/toolchain remains recorded by the host deployment identity.
+Earlier host setup failure: Python 3.9 tarfile.extractall did not accept filter='data'. Corrected only trusted git-archive extraction; no benchmark executed in that failed setup. A compile smoke also caught a source local-variable shadow; fixed with qualified v2_common::source before final builds.
+Monty clear control: pinned parser rejected del quotes with NotImplementedError: The monty syntax parser does not yet support the 'del' statement. This remains a regression test; executed equivalent control uses quotes = [] and is labeled monty-clear, not del.

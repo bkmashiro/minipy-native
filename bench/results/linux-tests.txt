@@ -1,15 +1,50 @@
 command: cargo zigbuild --tests --release --target aarch64-unknown-linux-musl --message-format=json
-    Finished `release` profile [optimized + debuginfo] target(s) in 0.02s
+   Compiling cranelift-codegen v0.128.3
+   Compiling cranelift-native v0.128.3
+   Compiling cranelift-module v0.128.3
+   Compiling cranelift-frontend v0.128.3
+   Compiling cranelift-jit v0.128.3
+   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `release` profile [optimized + debuginfo] target(s) in 17.88s
 rustc 1.93.1 (01f6ddf75 2026-02-11)
 0.15.2
 Linux pysolate-vm 6.18.52-0-virt #1-Alpine SMP PREEMPT_DYNAMIC 2026-09-15 05:37:48 aarch64 Linux
               total        used        free      shared  buff/cache   available
-Mem:           1972          69         292          47        1611        1768
+Mem:           1972          73         274          47        1624        1763
 Swap:          1024           0        1024
 Filesystem                Size      Used Available Use% Mounted on
 /dev/vda3                18.3G      4.6G     13.0G  26% /
 
-Executed minipy_native-260fe9faeeffc37f, exit=0
+Executed acceptance-bf8cebb28cfab792, exit=0
+
+running 7 tests
+test cancellation_drops_late_load_and_record_results_without_reviving_task ... ok
+test chunk_yields_resume_and_total_row_budget_is_not_refilled ... ok
+test empty_filter_and_mixed_records_execute_real_native_code ... ok
+test load_and_record_permissions_are_independent_and_rc_code_state_is_per_task ... ok
+test overflow_is_a_task_error_and_skipped_rows_do_not_overflow ... ok
+test provider_total_receipt_is_checked_for_overflow ... ok
+test second_await_does_not_retain_quote_owner ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+
+Executed boundaries-509bef2cb40ee1dc, exit=0
+
+running 8 tests
+test cancellation_at_chunk_boundary_prevents_record_and_drops_rows ... ok
+test cancellation_returns_before_provider_and_detached_owner_survives ... ok
+test cancelled_record_does_not_pin_code_until_io_completion ... ok
+test checked_arithmetic_and_boolean_error_order_execute_native ... ok
+test diagnostic_ir_is_opt_in_and_preserves_native_execution ... ok
+test dropping_receiver_during_load_also_releases_late_buffer ... ok
+test malformed_limits_buffer_caps_and_provider_errors_are_task_errors ... ok
+test stateful_source_changes_code_and_chunk_resume_result ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+
+Executed minipy_native-8c54e42020c5f39e, exit=0
 
 running 16 tests
 test buffer::tests::empty_and_malformed_buffers_are_handled_without_raw_loads ... ok
@@ -30,31 +65,3 @@ test provider::tests::load_suspends_and_each_call_gets_an_independent_owner ... 
 test provider::tests::record_is_async_checked_and_failures_are_returned ... ok
 
 test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
-
-
-Executed acceptance-793207091609ac90, exit=0
-
-running 7 tests
-test cancellation_drops_late_load_and_record_results_without_reviving_task ... ok
-test chunk_yields_resume_and_total_row_budget_is_not_refilled ... ok
-test empty_filter_and_mixed_records_execute_real_native_code ... ok
-test load_and_record_permissions_are_independent_and_rc_code_state_is_per_task ... ok
-test overflow_is_a_task_error_and_skipped_rows_do_not_overflow ... ok
-test provider_total_receipt_is_checked_for_overflow ... ok
-test second_await_does_not_retain_quote_owner ... ok
-
-test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
-
-
-Executed boundaries-9d40f50cb1c74e0c, exit=0
-
-running 7 tests
-test cancellation_at_chunk_boundary_prevents_record_and_drops_rows ... ok
-test cancellation_returns_before_provider_and_detached_owner_survives ... ok
-test cancelled_record_does_not_pin_code_until_io_completion ... ok
-test checked_arithmetic_and_boolean_error_order_execute_native ... ok
-test dropping_receiver_during_load_also_releases_late_buffer ... ok
-test malformed_limits_buffer_caps_and_provider_errors_are_task_errors ... ok
-test stateful_source_changes_code_and_chunk_resume_result ... ok
-
-test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s

@@ -2,7 +2,7 @@
 
 A research prototype for compiling short Python-like agent programs into native code over typed data, with bounded execution and asynchronous Host calls.
 
-**Status: working bounded prototype, with real macOS and Linux ARM64 execution and reproducible synthetic comparisons. Independent implementation review completed; corrected baseline handoff awaits same-card approval.** Working name; independent of Pysolate's CPython/Wasm runtime.
+**Status: working bounded prototype, with real macOS and Linux ARM64 execution and reproducible synthetic comparisons. Initial implementation review completed; integrated cost/density evidence is available.** Working name; independent of Pysolate's CPython/Wasm runtime.
 
 ## Goal
 
@@ -48,5 +48,7 @@ Engineering bounds are 16 KiB of source, 512 checked IR/frontend nodes, depth 32
 - [Design and semantic contract](docs/design.md)
 - [Experiments and redesign record](docs/experiments.md)
 - [Implementation mission and handoff](docs/implementation.md)
+- [Integrated cost, density and finite-load evidence](docs/performance-v2.md)
+- [Bounded follow-up candidates and pending API decisions](docs/next-steps.md)
 
 No packages, dynamic imports, generic object model, automatic result replay, or cross-task fusion in the first slice. Code and mutable task state are separate. Native lowering remains part of the trusted computing base.

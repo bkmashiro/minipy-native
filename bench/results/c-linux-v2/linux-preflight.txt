@@ -1,0 +1,79 @@
+Linux pysolate-vm 6.18.52-0-virt #1-Alpine SMP PREEMPT_DYNAMIC 2026-09-15 05:37:48 aarch64 Linux
+ 16:48:55 up 1 day, 11:16,  0 users,  load average: 0.00, 0.01, 0.00
+              total        used        free      shared  buff/cache   available
+Mem:           1972          75         124          47        1773        1761
+Swap:          1024           0        1024
+Filesystem                Size      Used Available Use% Mounted on
+/dev/vda3                18.3G      4.7G     12.8G  27% /
+PID   USER     TIME  COMMAND
+    1 root      0:00 /sbin/init
+    2 root      0:00 [kthreadd]
+    3 root      0:00 [pool_workqueue_]
+    4 root      0:00 [kworker/R-rcu_g]
+    5 root      0:00 [kworker/R-sync_]
+    6 root      0:00 [kworker/R-kvfre]
+    7 root      0:00 [kworker/R-slub_]
+    8 root      0:00 [kworker/R-netns]
+   10 root      0:00 [kworker/0:0H-kb]
+   11 root      0:02 [kworker/0:1-eve]
+   13 root      0:00 [kworker/R-mm_pe]
+   15 root      0:00 [ksoftirqd/0]
+   16 root      0:04 [rcu_preempt]
+   17 root      0:00 [rcu_exp_par_gp_]
+   18 root      0:00 [rcu_exp_gp_kthr]
+   19 root      0:00 [migration/0]
+   20 root      0:00 [cpuhp/0]
+   21 root      0:00 [cpuhp/1]
+   22 root      0:00 [migration/1]
+   23 root      0:00 [ksoftirqd/1]
+   24 root      0:00 [kworker/1:0-eve]
+   25 root      0:00 [kworker/1:0H-ev]
+   26 root      0:00 [kdevtmpfs]
+   27 root      0:00 [kworker/R-inet_]
+   28 root      0:00 [rcu_tasks_kthre]
+   29 root      0:00 [rcu_tasks_trace]
+   30 root      0:00 [kauditd]
+   31 root      0:00 [khungtaskd]
+   32 root      0:00 [oom_reaper]
+   33 root      0:00 [kworker/R-write]
+   34 root      0:04 [kcompactd0]
+   35 root      0:00 [ksmd]
+   36 root      0:00 [khugepaged]
+   37 root      0:00 [kworker/R-kbloc]
+   38 root      0:00 [kworker/R-blkcg]
+   39 root      0:00 [kworker/R-kinte]
+   40 root      0:00 [kworker/R-md_bi]
+   41 root      0:00 [kworker/1:1-eve]
+   42 root      0:00 [kworker/R-quota]
+   43 root      0:00 [kworker/1:1H-kb]
+   44 root      0:00 [kswapd0]
+   59 root      0:00 [kworker/R-kthro]
+  123 root      0:00 [khvcd]
+  146 root      0:00 [kworker/R-mld]
+  159 root      0:00 [kworker/R-ipv6_]
+  160 root      0:00 [kworker/0:1H]
+  161 root      0:00 [kworker/R-kstrp]
+  371 root      0:00 [kworker/u9:0]
+  390 root      0:00 [kworker/0:2-eve]
+  914 root      0:00 [jbd2/vda3-8]
+  915 root      0:00 [kworker/R-ext4-]
+ 1415 root      0:00 [jbd2/vda1-8]
+ 1416 root      0:00 [kworker/R-ext4-]
+ 1588 root      0:00 /sbin/udhcpc -b -R -p /var/run/udhcpc.eth0.pid -i eth0 -x hostname:pysolate-vm
+ 1681 root      0:00 /sbin/syslogd -t -n
+ 1702 root      0:00 /usr/sbin/crond -c /etc/crontabs -f
+ 1722 ntp       0:00 /usr/sbin/ntpd -N -p pool.ntp.org -n
+ 1746 root      0:00 sshd: /usr/sbin/sshd [listener] 0 of 10-100 startups
+ 1753 root      0:00 /sbin/getty 38400 tty1
+ 1754 root      0:00 /sbin/getty 38400 tty2
+ 1758 root      0:00 /sbin/getty 38400 tty3
+ 1762 root      0:00 /sbin/getty 38400 tty4
+ 1765 root      0:00 /sbin/getty 38400 tty5
+ 1770 root      0:00 /sbin/getty 38400 tty6
+ 1774 root      0:00 /sbin/getty -L 0 hvc0 vt100
+ 3729 root      0:08 [kworker/u8:0-ev]
+ 4383 root      0:03 [kworker/u8:2-ev]
+ 9293 root      0:06 [kworker/u8:3-ev]
+30306 root      0:00 sshd-session: root [priv]
+30308 root      0:00 sshd-session: root@notty
+30309 root      0:00 ps

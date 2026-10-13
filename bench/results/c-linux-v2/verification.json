@@ -1,0 +1,16 @@
+{
+  "source": "065c7cbff5dc348437c520525b4882dfa07aca4e",
+  "commands": {
+    "scheduled": 234,
+    "completed": 234
+  },
+  "raw_rows": 7711,
+  "latency_receipts_independently_recomputed": 1008,
+  "request_receipts_independently_recomputed": 5472,
+  "memory_commands_with_present_monotonic_observed_HWM": 150,
+  "latency_allocation_diagnostics": "all null",
+  "speed_identity_allocation_diagnostics": "all false",
+  "no_failures": true,
+  "independent_repetitions_per_cell": 3,
+  "note": "Finite request observations are not 6480 independent process repetitions."
+}
