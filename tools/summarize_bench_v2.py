@@ -44,7 +44,7 @@ def summarize(rows, runs):
             latency[(arm, r['engine'], r['case'], r['rows'], r['lifecycle'], r['chunk'], r['delay_us'])].append(r)
         elif kind == 'concurrent':
             assert r['completed'] + r['failed'] == r['requests']
-            concurrent[(arm, r['engine'], r['case'], r['rows'], r['concurrency'], r['chunk'], r['delay_us'], r['mixed'])].append(r)
+            concurrent[(arm, r['engine'], r['case'], r['rows'], r['concurrency'], r['chunk'], r['delay_us'], r['mixed'], r.get('lifecycle', 'prepared_shared_code_bounded_admission'), r.get('arrival_us') or 0)].append(r)
         elif kind == 'request':
             assert r['latency_ns'] == r['queue_ns'] + r['service_ns']
             requests[(r['command_index'], r['engine'])].append(r)
@@ -65,7 +65,7 @@ def summarize(rows, runs):
             tails.extend(x['latency_ns'] for x in short)
             queues.extend(x['queue_ns'] for x in short)
             services.extend(x['service_ns'] for x in short)
-        loads.append(dict(zip(['arm', 'engine', 'case', 'rows', 'concurrency', 'chunk', 'delay_us', 'mixed'], key), independent_runs=len(group), completed=sum(r['completed'] for r in group), failed=sum(r['failed'] for r in group), wall_ns=median([r['total_wall_ns'] for r in group]), cpu_ns=median([r['total_cpu_ns'] for r in group]), throughput_per_second=median([r['throughput_per_second'] for r in group]), short_request_count=len(tails), short_p50_ns=median(tails), short_p99_ns=percentile(tails, .99), short_queue_p99_ns=percentile(queues, .99), short_service_p99_ns=percentile(services, .99)))
+        loads.append(dict(zip(['arm', 'engine', 'case', 'rows', 'concurrency', 'chunk', 'delay_us', 'mixed', 'lifecycle', 'arrival_us'], key), independent_runs=len(group), completed=sum(r['completed'] for r in group), failed=sum(r['failed'] for r in group), wall_ns=median([r['total_wall_ns'] for r in group]), cpu_ns=median([r['total_cpu_ns'] for r in group]), throughput_per_second=median([r['throughput_per_second'] for r in group]), short_request_count=len(tails), short_p50_ns=median(tails), short_p99_ns=percentile(tails, .99), short_queue_p99_ns=percentile(queues, .99), short_service_p99_ns=percentile(services, .99)))
     observations = []
     for key, group in memory.items():
         observations.append(dict(zip(['arm', 'engine', 'tasks', 'rows', 'bytes_per_task', 'code', 'cancel', 'phase'], key), independent_runs=len(group), live_requested_bytes=median([r['allocation']['live_requested_bytes'] for r in group]), peak_requested_bytes=median([r['allocation']['peak_requested_bytes'] for r in group]), rss_bytes=median([r['physical']['rss_bytes'] for r in group]), pss_bytes=median([r['physical']['pss_bytes'] for r in group]), peak_rss_bytes=median([r['physical']['peak_rss_bytes'] for r in group]), payload_logical_bytes=median([r['payload_live_logical_bytes'] for r in group])))
@@ -123,10 +123,10 @@ def main(directory):
     text = ['# Benchmark v2 observations', '', 'Raw: v2-raw.jsonl. Commands/status: v2-runs.jsonl. Derived: v2-summary.json.', '', f"Commands: {result['commands']}", '', '## Latency (median microseconds)', '', '| Arm | Engine | Case | Rows | Lifecycle | Wall us | CPU us |', '|---|---|---|---:|---|---:|---:|']
     for r in result['latency']:
         text.append(f"| {r['arm']} | {r['engine']} | {r['case']} | {r['rows']} | {r['lifecycle']} | {r['wall_ns']/1000:.2f} | {r['cpu_ns']/1000:.2f} |")
-    text += ['', '## Concurrent prepared requests', '', '| Arm | Engine | Concurrency | Delay us/op | Requests/s | Short p99 us |', '|---|---|---:|---:|---:|---:|']
+    text += ['', '## Finite load observations', '', '| Arm | Engine | Lifecycle | Concurrency | Delay us/op | Requests/s | Short p99 us |', '|---|---|---|---:|---:|---:|---:|']
     for r in result['concurrent']:
         tail = '-' if r['short_p99_ns'] is None else f"{r['short_p99_ns']/1000:.2f}"
-        text.append(f"| {r['arm']} | {r['engine']} | {r['concurrency']} | {r['delay_us']} | {r['throughput_per_second']:.1f} | {tail} |")
+        text.append(f"| {r['arm']} | {r['engine']} | {r['lifecycle']} | {r['concurrency']} | {r['delay_us']} | {r['throughput_per_second']:.1f} | {tail} |")
     text += ['', '## Memory', '', 'See summary memory phase observations, task_slopes and byte_costs. Fits are diagnostic observations, not confidence intervals. Logical 10B is not RSS 10B.', '', '## Limits', ''] + ['- '+s for s in result['limitations']]
     (directory / 'report-v2.md').write_text('\n'.join(text)+'\n')
     print(json.dumps(result['commands']))

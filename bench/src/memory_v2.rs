@@ -22,6 +22,7 @@ struct Options {
     unique: bool,
     cancel: bool,
     chunk: usize,
+    clear_quotes: bool,
 }
 impl Options {
     fn parse() -> Result<Self, String> {
@@ -33,6 +34,7 @@ impl Options {
             unique: false,
             cancel: false,
             chunk: 256,
+            clear_quotes: false,
         };
         let mut args = std::env::args().skip(1);
         while let Some(k) = args.next() {
@@ -58,6 +60,9 @@ impl Options {
                     }
                 }
                 "--chunk" => o.chunk = number()?,
+                "--clear-quotes" => {
+                    o.clear_quotes = v.parse::<bool>().map_err(|e| e.to_string())?
+                }
                 _ => return Err(format!("unknown option {k}")),
             }
         }
@@ -74,6 +79,9 @@ impl Options {
             return Err("native raw bytes probe has no compiled code control".into());
         }
         let size = o.bytes.unwrap_or(o.rows * 16);
+        if o.clear_quotes && (o.engine != "monty" || o.bytes.is_some()) {
+            return Err("clear-quotes requires Monty Quote language path".into());
+        }
         if size.saturating_mul(o.tasks) > 256_000_000 {
             return Err("diagnostic payload sum >256MB (harness limit)".into());
         }
@@ -93,12 +101,29 @@ fn snapshot(
     // after the last strong owner drops, Weak pins the Arc allocation.
     let alloc = allocation();
     let phys = physical();
+    // Separate label prevents the explicit source-control from pooling with
+    // the unmodified source in historical and current summaries.
+    let engine = if o.clear_quotes {
+        "monty-clear"
+    } else {
+        &o.engine
+    };
     emit(
-        &serde_json::json!({"kind":"memory", "phase":phase, "engine":o.engine, "tasks":o.tasks, "rows":if o.bytes.is_none(){Some(o.rows)}else{None}, "bytes_per_task":o.bytes, "code":if o.unique{"unique"}else{"shared"}, "cancel":o.cancel, "payload_live_logical_bytes":payload, "input_capacity_bytes":capacity, "code_emitted_bytes":code_bytes, "allocation":alloc, "physical":phys, "loads":stats.map(|s|s.loads.load(Ordering::Acquire)), "records":stats.map(|s|s.records.load(Ordering::Acquire)), "finished_loads":stats.map(|s|s.finished_loads.load(Ordering::Acquire)), "finished_records":stats.map(|s|s.finished_records.load(Ordering::Acquire))}),
+        &serde_json::json!({"kind":"memory", "phase":phase, "engine":engine, "tasks":o.tasks, "rows":if o.bytes.is_none(){Some(o.rows)}else{None}, "bytes_per_task":o.bytes, "code":if o.unique{"unique"}else{"shared"}, "cancel":o.cancel, "payload_live_logical_bytes":payload, "input_capacity_bytes":capacity, "code_emitted_bytes":code_bytes, "allocation":alloc, "physical":phys, "loads":stats.map(|s|s.loads.load(Ordering::Acquire)), "records":stats.map(|s|s.records.load(Ordering::Acquire)), "finished_loads":stats.map(|s|s.finished_loads.load(Ordering::Acquire)), "finished_records":stats.map(|s|s.finished_records.load(Ordering::Acquire))}),
     );
 }
 async fn quotes(o: &Options) -> Result<(), String> {
-    let base = source("weighted_scan", 0)?;
+    let text_for = |initial| -> Result<String, String> {
+        let text = source("weighted_scan", initial)?;
+        Ok(if o.clear_quotes {
+            // Pinned Monty rejects `del`; rebinding releases the list while
+            // retaining Python's final loop variable q (at most one tuple).
+            text.replace("    return await", "    quotes = []\n    return await")
+        } else {
+            text
+        })
+    };
+    let base = text_for(0)?;
     let native = if o.engine == "native" && !o.unique {
         Some(Rc::new(
             CodeUnit::compile(&base).map_err(|e| e.to_string())?,
@@ -122,7 +147,7 @@ async fn quotes(o: &Options) -> Result<(), String> {
     for id in 0..o.tasks {
         let initial = if o.unique { id as i64 + 1 } else { 0 };
         let text = if o.unique {
-            source("weighted_scan", initial)?
+            text_for(initial)?
         } else {
             String::new()
         };
@@ -243,6 +268,9 @@ async fn quotes(o: &Options) -> Result<(), String> {
         barrier(&record, o.tasks).await?;
         let payload = if o.engine == "native" {
             0
+        } else if o.clear_quotes {
+            // Rebinding drops the list; the final loop variable retains one row.
+            usize::from(o.rows > 0) * 16 * o.tasks
         } else {
             o.rows * 16 * o.tasks
         };

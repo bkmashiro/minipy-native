@@ -25,7 +25,7 @@ cargo +1.96.0 test --locked --manifest-path bench/Cargo.toml
 
 Use a fresh output directory for each run. `run_bench_v2.py` serializes commands;
 no agents or VM provisioners are started. `--profile campaign --rounds 3` is a
-bounded starting campaign (36 commands per round), not an exhaustive matrix.
+bounded starting campaign (39 commands per round), not an exhaustive matrix.
 `--skip-build --bin-dir DIR` works on the measured Linux host with deployed
 binaries and `MINIPY_FIXTURES` set to its fixture directory. Cross-builds are not
 runs. Inspect host load and competing builds before measurement.
@@ -75,6 +75,15 @@ bench/target/release/memory-v2 --engine native --tasks 8 --bytes 10
 - Both arms detach each provider operation and return by oneshot. Ready means
   no timer. Finite `--delay-us` sleeps once per operation, including real Tokio
   timer/scheduler overhead; it is not a network trace or exact sleep duration.
+- `cold-arrival` adds one bounded offered-load control: 64 mixed requests at
+  absolute 1 ms scheduled intervals, with at most eight admitted tasks. Queue
+  starts at the scheduled arrival, including reactor lateness; service includes
+  source read, fresh compilation, fresh input/import, execution and cleanup.
+  All future arrival descriptors are preallocated and their timers use Tokio's
+  millisecond-resolution clock. Compilation is synchronous on this one reactor,
+  not a parallel compiler pool. Whole-run wall includes the arrival window.
+  This is a finite fixed-arrival observation, not a production service capacity
+  or SLO. The original `concurrent` mode remains a prepared finite burst.
 - Correctness oracle and receipt checks are outside per-request timers. JSON
   output is outside the latency and whole-concurrency timers.
 
@@ -92,6 +101,12 @@ pending provider operations. Releasing the first gate executes the real program.
 At second wait native has dropped its row owner/frame; Monty's ordinary local
 `quotes` remains in its VM snapshot. This compares the original user source,
 without inserting a Monty-only `del quotes` optimization.
+The integrated campaign also runs a separately labeled `monty-clear` source
+control with `quotes = []` just before record. Pinned Monty rejects `del` with
+NotImplementedError (covered by a regression test). Rebinding clears the list
+but the final loop variable retains at most one row. Allocation snapshots still
+include VM arenas/capacity and freed slots, so clearing logical rows need not
+remove their physical or requested-allocation footprint.
 
 Shared native code uses one retained Rc owner. MontyRun clones share module
 bytecode/source Arcs while cloning session tables. Unique mode actually compiles

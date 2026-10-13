@@ -441,4 +441,19 @@ mod tests {
             }
         }
     }
+
+    #[tokio::test]
+    async fn explicit_list_clear_preserves_receipt_and_del_is_unsupported() {
+        let text = source("weighted_scan", 0).unwrap();
+        let del = text.replace("    return await", "    del quotes\n    return await");
+        assert!(compile_monty(&del).unwrap_err().contains("'del'"));
+        for n in [0, 1000] {
+            let clear = text.replace("    return await", "    quotes = []\n    return await");
+            let code = compile_monty(&clear).unwrap();
+            let result = execute_monty(code, Arc::new(RequestProvider::ready(n, Duration::ZERO)))
+                .await
+                .unwrap();
+            assert_eq!(result, oracle(n, "weighted_scan", 0));
+        }
+    }
 }

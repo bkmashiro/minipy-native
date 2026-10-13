@@ -7,7 +7,7 @@ from run_bench_v2 import plan
 class SummaryTests(unittest.TestCase):
     def test_plan_is_small_and_classified(self):
         self.assertEqual(len(plan('smoke')), 17)
-        self.assertEqual(len(plan('campaign')), 36)
+        self.assertEqual(len(plan('campaign')), 39)
         result = summarize([], [{'status': 'completed'}, {'status': 'failed'}, {'status': 'timeout'}])
         self.assertEqual(result['commands'], {'scheduled': 3, 'completed': 1, 'failed': 1, 'timeout': 1})
 
@@ -33,6 +33,15 @@ class SummaryTests(unittest.TestCase):
         row = {'kind': 'concurrent', 'arm': 'fixture', 'engine': 'native', 'case': 'case', 'rows': 1, 'concurrency': 1, 'chunk': 256, 'delay_us': 0, 'mixed': True, 'requests': 2, 'completed': 2, 'failed': 0, 'command_index': 0}
         with self.assertRaisesRegex(AssertionError, 'missing request'):
             summarize([row], [])
+
+    def test_burst_and_cold_arrival_are_never_pooled(self):
+        rows = []
+        for index, life, interval in [(0, 'prepared_shared_code_bounded_admission', None), (1, 'cold_fixed_arrival_bounded_admission', 1000)]:
+            rows.append({'kind': 'concurrent', 'arm': 'fixture', 'engine': 'native', 'case': 'case', 'rows': 1, 'concurrency': 1, 'chunk': 256, 'delay_us': 0, 'mixed': True, 'requests': 1, 'completed': 1, 'failed': 0, 'command_index': index, 'lifecycle': life, 'arrival_us': interval, 'total_wall_ns': 12, 'total_cpu_ns': 8, 'throughput_per_second': 1})
+            rows.append({'kind': 'request', 'command_index': index, 'engine': 'native', 'request': 0, 'status': 'completed', 'class': 'short', 'queue_ns': 4, 'service_ns': 8, 'latency_ns': 12})
+        result = summarize(rows, [])
+        self.assertEqual(len(result['concurrent']), 2)
+        self.assertEqual({r['arrival_us'] for r in result['concurrent']}, {0, 1000})
 
 
 if __name__ == '__main__':

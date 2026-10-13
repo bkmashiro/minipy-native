@@ -108,6 +108,7 @@ struct Options {
     requests: usize,
     sample: usize,
     mixed: bool,
+    arrival_us: usize,
 }
 #[derive(Clone, Copy)]
 struct TaskOptions {
@@ -116,13 +117,14 @@ struct TaskOptions {
     concurrency: usize,
     sample: usize,
     mixed: bool,
+    cold: bool,
 }
 impl Options {
     fn parse() -> Result<Self, String> {
         let mut args = std::env::args().skip(1);
         let mode = args.next().unwrap_or("latency".into());
-        if !["latency", "concurrent"].contains(&mode.as_str()) {
-            return Err("mode: latency|concurrent".into());
+        if !["latency", "concurrent", "cold-arrival"].contains(&mode.as_str()) {
+            return Err("mode: latency|concurrent|cold-arrival".into());
         }
         let mut values = BTreeMap::new();
         while let Some(k) = args.next() {
@@ -145,6 +147,7 @@ impl Options {
                 "--requests",
                 "--sample",
                 "--mixed",
+                "--arrival-us",
             ]
             .contains(&k.as_str())
             {
@@ -172,6 +175,7 @@ impl Options {
             concurrency: num("--concurrency", "4")?,
             requests: num("--requests", "16")?,
             sample: num("--sample", "0")?,
+            arrival_us: num("--arrival-us", "1000")?,
             mixed: match get("--mixed", "false").as_str() {
                 "true" => true,
                 "false" => false,
@@ -192,6 +196,9 @@ impl Options {
             return Err("option outside bounded campaign limits".into());
         }
         source(&o.case, 0)?;
+        if o.mode == "cold-arrival" && !(1..=1_000_000).contains(&o.arrival_us) {
+            return Err("arrival-us: 1..1000000".into());
+        }
         Ok(o)
     }
 }
@@ -393,8 +400,16 @@ fn concurrent(o: &Options, rt: &tokio::runtime::Runtime) -> Result<(), String> {
             let mut joins = Vec::with_capacity(o.requests);
             for request in 0..o.requests {
                 let sem = sem.clone();
-                let code = native.clone();
-                let monty = monty.clone();
+                let code = if o.mode == "cold-arrival" {
+                    None
+                } else {
+                    native.clone()
+                };
+                let monty = if o.mode == "cold-arrival" {
+                    None
+                } else {
+                    monty.clone()
+                };
                 let engine = engine.clone();
                 let case = o.case.clone();
                 let n = if o.mixed && request % 4 != 0 {
@@ -407,37 +422,64 @@ fn concurrent(o: &Options, rt: &tokio::runtime::Runtime) -> Result<(), String> {
                 } else {
                     expected_heavy
                 };
-                let enqueued = Instant::now();
+                // Absolute arrivals include reactor lateness in queue time.
+                let enqueued = if o.mode == "cold-arrival" {
+                    start + Duration::from_micros(o.arrival_us as u64 * request as u64)
+                } else {
+                    Instant::now()
+                };
                 let o = TaskOptions {
                     chunk: o.chunk,
                     delay: o.delay,
                     concurrency: o.concurrency,
                     sample: o.sample,
                     mixed: o.mixed,
+                    cold: o.mode == "cold-arrival",
                 };
                 joins.push(tokio::task::spawn_local(async move {
+                    if o.cold && enqueued > Instant::now() {
+                        tokio::time::sleep_until(tokio::time::Instant::from_std(enqueued)).await;
+                    }
                     let permit = sem.acquire_owned().await.unwrap();
                     let admitted = Instant::now();
                     let queue_ns = admitted.duration_since(enqueued).as_nanos() as u64;
-                    let provider = Arc::new(RequestProvider::ready(n, o.delay));
-                    let r = if let Some(code) = code {
-                        runtime::execute(
-                            code,
-                            provider,
-                            BATCH,
-                            LIMIT,
-                            Limits {
-                                chunk: o.chunk,
-                                ..Default::default()
-                            },
-                            Cancellation::default(),
-                            None,
-                        )
-                        .await
-                        .map_err(|e| e.to_string())
-                    } else {
-                        execute_monty(monty.unwrap(), provider).await
-                    };
+                    let r = async {
+                        let (code, monty) = if o.cold {
+                            let text = v2_common::source(&case, 0)?;
+                            if engine == "native" {
+                                (
+                                    Some(Rc::new(
+                                        CodeUnit::compile(&text).map_err(|e| e.to_string())?,
+                                    )),
+                                    None,
+                                )
+                            } else {
+                                (None, Some(compile_monty(&text)?))
+                            }
+                        } else {
+                            (code, monty)
+                        };
+                        let provider = Arc::new(RequestProvider::ready(n, o.delay));
+                        if let Some(code) = code {
+                            runtime::execute(
+                                code,
+                                provider,
+                                BATCH,
+                                LIMIT,
+                                Limits {
+                                    chunk: o.chunk,
+                                    ..Default::default()
+                                },
+                                Cancellation::default(),
+                                None,
+                            )
+                            .await
+                            .map_err(|e| e.to_string())
+                        } else {
+                            execute_monty(monty.unwrap(), provider).await
+                        }
+                    }
+                    .await;
                     let done = Instant::now();
                     drop(permit);
                     RequestRow {
@@ -478,7 +520,7 @@ fn concurrent(o: &Options, rt: &tokio::runtime::Runtime) -> Result<(), String> {
         let after = allocation();
         let completed = results.iter().filter(|r| r.status == "completed").count();
         emit(
-            &serde_json::json!({"kind":"concurrent", "engine":engine, "case":o.case, "sample":o.sample, "lifecycle":"prepared_shared_code_bounded_admission", "concurrency":o.concurrency, "requests":o.requests, "completed":completed, "failed":o.requests-completed, "rows":o.rows, "mixed":o.mixed, "chunk":o.chunk, "delay_us":o.delay.as_micros() as u64, "total_wall_ns":wall, "total_cpu_ns":cpu, "throughput_per_second": completed as f64 * 1e9 / wall as f64, "allocation_diagnostics":allocation_delta(alloc_before,after)}),
+            &serde_json::json!({"kind":"concurrent", "engine":engine, "case":o.case, "sample":o.sample, "lifecycle":if o.mode=="cold-arrival"{"cold_fixed_arrival_bounded_admission"}else{"prepared_shared_code_bounded_admission"}, "arrival_us":if o.mode=="cold-arrival"{Some(o.arrival_us)}else{None}, "concurrency":o.concurrency, "requests":o.requests, "completed":completed, "failed":o.requests-completed, "rows":o.rows, "mixed":o.mixed, "chunk":o.chunk, "delay_us":o.delay.as_micros() as u64, "total_wall_ns":wall, "total_cpu_ns":cpu, "throughput_per_second": completed as f64 * 1e9 / wall as f64, "allocation_diagnostics":allocation_delta(alloc_before,after)}),
         );
         for r in results {
             emit(&r);

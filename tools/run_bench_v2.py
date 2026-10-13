@@ -30,6 +30,10 @@ def plan(profile):
         # 10B is payload. The zero-length control isolates fixed representation cost.
         for tasks, size in ([(4, 0), (4, 10)] if smoke else [(0, 10), (8, 10), (32, 10), (8, 0), (8, 4096)]):
             cases.append(('memory-v2', ['--engine', engine, '--tasks', str(tasks), '--bytes', str(size), '--code', 'shared']))
+    if not smoke:
+        for delay in [0, 1000]:
+            cases.append(('bench-v2', ['cold-arrival', '--rows', '10000', '--requests', '64', '--concurrency', '8', '--mixed', 'true', '--arrival-us', '1000', '--delay-us', str(delay)]))
+        cases.append(('memory-v2', ['--engine', 'monty', '--tasks', '8', '--rows', '10000', '--code', 'shared', '--clear-quotes', 'true']))
     return cases
 
 
