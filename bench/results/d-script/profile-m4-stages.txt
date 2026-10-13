@@ -1,0 +1,200 @@
+parse_ns=660375
+prepare_ns=216250 lower_ns=130834 backend_ns=783791 finalize_ns=4042
+parse_ns=45334
+prepare_ns=2583 lower_ns=20666 backend_ns=240417 finalize_ns=3750
+parse_ns=31375
+prepare_ns=1542 lower_ns=17458 backend_ns=193250 finalize_ns=3125
+parse_ns=28708
+prepare_ns=1541 lower_ns=13250 backend_ns=168750 finalize_ns=2666
+parse_ns=22833
+prepare_ns=1125 lower_ns=11458 backend_ns=172250 finalize_ns=2250
+parse_ns=20500
+prepare_ns=1084 lower_ns=11292 backend_ns=165208 finalize_ns=2083
+parse_ns=19042
+prepare_ns=2291 lower_ns=13375 backend_ns=153625 finalize_ns=2166
+parse_ns=21917
+prepare_ns=1375 lower_ns=12709 backend_ns=149708 finalize_ns=2167
+parse_ns=27416
+prepare_ns=1250 lower_ns=12500 backend_ns=144458 finalize_ns=2167
+parse_ns=23084
+prepare_ns=2125 lower_ns=12000 backend_ns=148292 finalize_ns=2083
+parse_ns=18417
+prepare_ns=833 lower_ns=11000 backend_ns=147833 finalize_ns=2584
+parse_ns=18250
+prepare_ns=791 lower_ns=8584 backend_ns=144541 finalize_ns=2584
+parse_ns=22584
+prepare_ns=750 lower_ns=8542 backend_ns=140791 finalize_ns=2125
+parse_ns=25542
+prepare_ns=1042 lower_ns=12041 backend_ns=147625 finalize_ns=2625
+parse_ns=18917
+prepare_ns=708 lower_ns=8459 backend_ns=156791 finalize_ns=2084
+parse_ns=17959
+prepare_ns=750 lower_ns=10750 backend_ns=149834 finalize_ns=2500
+parse_ns=18041
+prepare_ns=667 lower_ns=8459 backend_ns=140042 finalize_ns=2167
+parse_ns=17917
+prepare_ns=750 lower_ns=8500 backend_ns=124625 finalize_ns=2042
+parse_ns=17958
+prepare_ns=750 lower_ns=8375 backend_ns=124833 finalize_ns=2083
+parse_ns=18208
+prepare_ns=750 lower_ns=8375 backend_ns=125167 finalize_ns=2125
+parse_ns=18084
+prepare_ns=708 lower_ns=8500 backend_ns=125000 finalize_ns=2125
+parse_ns=17875
+prepare_ns=750 lower_ns=8458 backend_ns=143167 finalize_ns=2416
+parse_ns=21958
+prepare_ns=750 lower_ns=8416 backend_ns=154792 finalize_ns=2083
+parse_ns=19833
+prepare_ns=1000 lower_ns=11708 backend_ns=142750 finalize_ns=2250
+parse_ns=17792
+prepare_ns=750 lower_ns=8375 backend_ns=139708 finalize_ns=2084
+parse_ns=18000
+prepare_ns=750 lower_ns=8333 backend_ns=147459 finalize_ns=2459
+parse_ns=18875
+prepare_ns=750 lower_ns=8375 backend_ns=141833 finalize_ns=2458
+parse_ns=23041
+prepare_ns=709 lower_ns=8375 backend_ns=140583 finalize_ns=2125
+parse_ns=24875
+prepare_ns=1042 lower_ns=12042 backend_ns=142416 finalize_ns=2125
+parse_ns=18208
+prepare_ns=1042 lower_ns=12125 backend_ns=148958 finalize_ns=2083
+parse_ns=20291
+prepare_ns=1041 lower_ns=11667 backend_ns=131959 finalize_ns=2500
+parse_ns=23833
+prepare_ns=708 lower_ns=8417 backend_ns=124416 finalize_ns=2125
+parse_ns=17792
+prepare_ns=750 lower_ns=8292 backend_ns=124375 finalize_ns=2041
+parse_ns=17959
+prepare_ns=708 lower_ns=8334 backend_ns=124041 finalize_ns=2167
+parse_ns=17833
+prepare_ns=750 lower_ns=8292 backend_ns=129916 finalize_ns=2417
+parse_ns=18834
+prepare_ns=750 lower_ns=8291 backend_ns=140334 finalize_ns=2083
+parse_ns=24792
+prepare_ns=1000 lower_ns=10167 backend_ns=146667 finalize_ns=2458
+parse_ns=17833
+prepare_ns=750 lower_ns=8333 backend_ns=150875 finalize_ns=2416
+parse_ns=17875
+prepare_ns=708 lower_ns=9375 backend_ns=151916 finalize_ns=2542
+parse_ns=17791
+prepare_ns=1000 lower_ns=13417 backend_ns=148583 finalize_ns=2167
+parse_ns=17917
+prepare_ns=709 lower_ns=8667 backend_ns=145750 finalize_ns=2500
+parse_ns=18625
+prepare_ns=750 lower_ns=8542 backend_ns=139000 finalize_ns=2750
+parse_ns=24833
+prepare_ns=791 lower_ns=8375 backend_ns=138333 finalize_ns=2083
+parse_ns=24292
+prepare_ns=1042 lower_ns=11708 backend_ns=142000 finalize_ns=2083
+parse_ns=25000
+prepare_ns=1084 lower_ns=11625 backend_ns=139125 finalize_ns=2042
+parse_ns=24709
+prepare_ns=959 lower_ns=9459 backend_ns=139291 finalize_ns=2083
+parse_ns=24916
+prepare_ns=1000 lower_ns=11584 backend_ns=141709 finalize_ns=2041
+parse_ns=24500
+prepare_ns=1000 lower_ns=11667 backend_ns=142125 finalize_ns=2084
+parse_ns=17875
+prepare_ns=708 lower_ns=9666 backend_ns=152000 finalize_ns=2083
+parse_ns=17791
+prepare_ns=917 lower_ns=11625 backend_ns=149500 finalize_ns=2041
+parse_ns=17750
+prepare_ns=750 lower_ns=8167 backend_ns=143875 finalize_ns=2584
+parse_ns=20583
+prepare_ns=750 lower_ns=8250 backend_ns=139208 finalize_ns=2083
+parse_ns=24709
+prepare_ns=1042 lower_ns=8875 backend_ns=139166 finalize_ns=2209
+parse_ns=24750
+prepare_ns=1000 lower_ns=8958 backend_ns=139125 finalize_ns=2083
+parse_ns=21375
+prepare_ns=1000 lower_ns=11583 backend_ns=145250 finalize_ns=2083
+parse_ns=25375
+prepare_ns=1000 lower_ns=9375 backend_ns=143500 finalize_ns=2084
+parse_ns=17792
+prepare_ns=750 lower_ns=11000 backend_ns=147083 finalize_ns=2500
+parse_ns=17875
+prepare_ns=708 lower_ns=8208 backend_ns=153666 finalize_ns=2084
+parse_ns=17625
+prepare_ns=750 lower_ns=8250 backend_ns=153417 finalize_ns=2125
+parse_ns=17791
+prepare_ns=750 lower_ns=8292 backend_ns=148083 finalize_ns=2375
+parse_ns=18042
+prepare_ns=791 lower_ns=8250 backend_ns=138708 finalize_ns=2792
+parse_ns=25083
+prepare_ns=1042 lower_ns=9750 backend_ns=139333 finalize_ns=2084
+parse_ns=25083
+prepare_ns=959 lower_ns=10916 backend_ns=138667 finalize_ns=2125
+parse_ns=17875
+prepare_ns=750 lower_ns=11750 backend_ns=149625 finalize_ns=2292
+parse_ns=17917
+prepare_ns=750 lower_ns=8208 backend_ns=141292 finalize_ns=2583
+parse_ns=24083
+prepare_ns=750 lower_ns=8375 backend_ns=144833 finalize_ns=2208
+parse_ns=19834
+prepare_ns=791 lower_ns=9125 backend_ns=149208 finalize_ns=2125
+parse_ns=24292
+prepare_ns=1000 lower_ns=11542 backend_ns=142083 finalize_ns=2042
+parse_ns=17875
+prepare_ns=750 lower_ns=8208 backend_ns=145750 finalize_ns=2541
+parse_ns=19292
+prepare_ns=708 lower_ns=8334 backend_ns=139041 finalize_ns=2084
+parse_ns=25000
+prepare_ns=1000 lower_ns=11417 backend_ns=137750 finalize_ns=2459
+parse_ns=19500
+prepare_ns=750 lower_ns=9333 backend_ns=142709 finalize_ns=2416
+parse_ns=18833
+prepare_ns=667 lower_ns=8250 backend_ns=138625 finalize_ns=2084
+parse_ns=26375
+prepare_ns=1166 lower_ns=10667 backend_ns=142000 finalize_ns=2209
+parse_ns=22250
+prepare_ns=875 lower_ns=9750 backend_ns=150834 finalize_ns=2125
+parse_ns=18083
+prepare_ns=750 lower_ns=11000 backend_ns=147667 finalize_ns=2167
+parse_ns=19708
+prepare_ns=833 lower_ns=9333 backend_ns=144375 finalize_ns=2542
+parse_ns=17875
+prepare_ns=750 lower_ns=8291 backend_ns=138625 finalize_ns=2041
+parse_ns=24042
+prepare_ns=1042 lower_ns=11583 backend_ns=127417 finalize_ns=2041
+parse_ns=18667
+prepare_ns=834 lower_ns=9250 backend_ns=127084 finalize_ns=2166
+parse_ns=19708
+prepare_ns=834 lower_ns=9083 backend_ns=139958 finalize_ns=2209
+parse_ns=19750
+prepare_ns=833 lower_ns=9250 backend_ns=139833 finalize_ns=2167
+parse_ns=18000
+prepare_ns=708 lower_ns=8208 backend_ns=141167 finalize_ns=2166
+parse_ns=17709
+prepare_ns=708 lower_ns=8333 backend_ns=147542 finalize_ns=9417
+parse_ns=17958
+prepare_ns=750 lower_ns=8958 backend_ns=143708 finalize_ns=2458
+parse_ns=20292
+prepare_ns=750 lower_ns=8334 backend_ns=140000 finalize_ns=2375
+parse_ns=20208
+prepare_ns=875 lower_ns=9083 backend_ns=139917 finalize_ns=4375
+parse_ns=19083
+prepare_ns=709 lower_ns=8250 backend_ns=148667 finalize_ns=2250
+parse_ns=17916
+prepare_ns=708 lower_ns=8166 backend_ns=147917 finalize_ns=3209
+parse_ns=20167
+prepare_ns=792 lower_ns=9375 backend_ns=138875 finalize_ns=4459
+parse_ns=17833
+prepare_ns=708 lower_ns=8208 backend_ns=138417 finalize_ns=1958
+parse_ns=17875
+prepare_ns=750 lower_ns=8250 backend_ns=130083 finalize_ns=2042
+parse_ns=19958
+prepare_ns=834 lower_ns=9167 backend_ns=125917 finalize_ns=1875
+parse_ns=19750
+prepare_ns=834 lower_ns=9166 backend_ns=137167 finalize_ns=1958
+parse_ns=19583
+prepare_ns=792 lower_ns=9209 backend_ns=137458 finalize_ns=2000
+parse_ns=18125
+prepare_ns=750 lower_ns=8292 backend_ns=141458 finalize_ns=4541
+parse_ns=19834
+prepare_ns=792 lower_ns=10750 backend_ns=146625 finalize_ns=2334
+parse_ns=19917
+prepare_ns=834 lower_ns=9291 backend_ns=138750 finalize_ns=2042
+parse_ns=19917
+prepare_ns=917 lower_ns=9166 backend_ns=139458 finalize_ns=2208
+parse_ns=20041
+prepare_ns=791 lower_ns=9250 backend_ns=139208 finalize_ns=1958

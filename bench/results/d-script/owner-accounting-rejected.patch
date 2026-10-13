@@ -1,0 +1,51 @@
+diff --git a/src/runtime.rs b/src/runtime.rs
+index c874e6b..3a622da 100644
+--- a/src/runtime.rs
++++ b/src/runtime.rs
+@@ -270,18 +270,31 @@ async fn run<P: Provider>(
+     let mut owners: Vec<Option<QuoteBuffer>> = (0..code.buffers).map(|_| None).collect();
+     let mut views = vec![View::default(); code.buffers];
+     let mut frame = Box::new(Frame::new(inputs, limits.rows, limits.chunk));
++    let mut active = 0u64;
++    let mut held = 0usize;
+     loop {
+         check(&cancel)?;
+         let status = code.resume(&mut frame, &views, output);
+         if matches!(status, 0 | 2 | 3 | 4 | 7) {
+-            for (i, owner) in owners.iter_mut().enumerate() {
+-                if frame.live & (1u64 << i) == 0 {
+-                    *owner = None;
+-                    views[i] = View::default();
+-                }
++            let mut dropped = active & !frame.live;
++            while dropped != 0 {
++                let i = dropped.trailing_zeros() as usize;
++                let quotes = owners[i].take().expect("active buffer owns its payload");
++                held -= quotes.bytes();
++                views[i] = View::default();
++                drop(quotes);
++                dropped &= dropped - 1;
+             }
++            active &= frame.live;
+         }
+-        let held: usize = owners.iter().flatten().map(QuoteBuffer::bytes).sum();
++        debug_assert_eq!(
++            held,
++            owners
++                .iter()
++                .flatten()
++                .map(QuoteBuffer::bytes)
++                .sum::<usize>()
++        );
+         match status {
+             0 => {
+                 event(&trace, "done", 0, 0, frame.remaining, frame.index);
+@@ -349,6 +362,8 @@ async fn run<P: Provider>(
+                         return Err(TaskError::Budget);
+                     }
+                     if frame.live & (1u64 << target) != 0 {
++                        held += quotes.bytes();
++                        active |= 1u64 << target;
+                         views[target] = View {
+                             ptr: quotes.rows().as_ptr(),
+                             len: quotes.rows().len() as u64,

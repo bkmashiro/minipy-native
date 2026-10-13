@@ -179,3 +179,173 @@ An unmerged scratch `Arc<Box<[Quote]>>` owner preserves nonempty payload pointer
 Weighted 10,000-row cold total falls 350.17 -> 289.50 us, ordinary Monty 3,712.72 us; 100-row native remains slower than Monty (209.29 vs 117.63 us). Source-once compile remains about 198 us weighted / 286 us stateful at 10k. Zero-row full-task first-wait requested-layout slope is about 5.36 KiB native / 48.51 KiB Monty, not RSS or frame size. At record wait for 8 x 10k rows, native sampled RSS is 4.789 MiB versus Monty 17.129 MiB; explicit Monty quotes=[] still 16.551 MiB because VM capacity survives logical row release. No Weak observer or allocator trim in density measurements.
 
 Prepared burst is distinct from the added finite cold-arrival control (64 mixed requests, one/ms, admission 8). With 1-ms sleeps/op, cold short p99 is 7.983 ms native / 57.451 ms Monty, a bounded observation rather than service capacity/SLO. Monty rejects del, so clear-list rebinding is separately labeled and tested. Native 10B Vec control reports 34 requested storage bytes but has no language/task execution: it is not a string result. Linux peak instrumentation was corrected twice before the formal campaign: inherited getrusage HWM, then slightly decreasing raw VmHWM; raw kernel values and cumulative observed max RSS/HWM are now separate. Retired pilots stay ignored, not pooled. Setup/verifier assumptions and failures are explicitly recorded in the report. No CI, paid resources, global configuration, new VM or other project changed. D is pre-created by the operator and releases after C, rather than extending C indefinitely.
+
+## D script entry and bounded performance iteration, 2026-10-14
+
+User priority changed to a usable top-level Python script with inferred scalar
+types, ordinary sequential Tool calls and explicit scalar print. Implementation
+`c11c7d1` replaces the fixed scan shell with one semantic IR and one native CFG.
+Resume PCs exist only at actual Tool waits and bounded row-chunk yields. Source
+names bind to slots at compilation. The legacy benchmark adapter remains.
+Expression statements are evaluated/discarded, including bool-valued final
+expressions and unused declared Tool returns. Loop-body locals can be introduced
+where assigned; potentially empty loops do not establish initialization afterward.
+Scalar `print(tools.record_total(...))` lowers to the existing call and print
+operations. `await print` is rejected. No new runtime dispatch or second IR was
+needed for those source forms.
+
+Scalar, scan-without-record and scan/record/receipt-print paths execute real
+generated machine code. Tests include renamed inputs/rows, branches with Tool
+resumption, sequential loops, loop-local arithmetic, print within loops, multiple
+buffers, aggregate retained-buffer bounds, cumulative fuel/call limits, permissions,
+earlier output on failure, cancellation and late completion. 45 core tests pass
+on macOS and the actual Linux ARM64 VM; bench 12 and Python 6 pass. Core and new
+benchmark Clippy pass with warnings denied. Frontend lanes ran on metadata-verified
+`gpt-6-luna/openai-codex`. The separate Codex CLI rejected that exact model for its
+ChatGPT account; no substitute model was used. Sol owns integration and conclusions.
+
+### Four retained replacements
+
+All A/B runs are serial, alternating per independent process round on the same
+machine, with the same source/producer/ABI/lifecycle within each pair. Raw samples
+include initialization. Tables summarize warmed-process requests, with first
+request distributions retained in `summary.json`. Unless specified otherwise,
+discard samples 0–9 for summaries, three rounds and 50 retained requests per
+round. Compiler scratch reuse keeps fresh source parsing and compilation.
+
+| Candidate | Linux operation | Wall before / after | Material cost or evidence |
+| --- | --- | ---: | --- |
+| `fa64b32` cleared compiler scratch | printing weighted script, cold 100 rows | 390.23 / 338.77 us | about 33 KiB retained per compiling thread for this source; steady allocation calls 793 / 758, reallocations 239 / 170 |
+| `c4a503a` live scalar writeback | same, cold 100 / 10k rows | 356.89 / 331.73 us; 443.91 / 410.79 us | Linux machine code 648 / 572 bytes; compile-time backward liveness, no runtime guards; Host inputs already resident and immutable |
+| `c0afa8c` bounded geometric stdout | 4,096 scalar prints, cold / prepared | 467.74 / 378.84 us; 223.09 / 148.13 us | 4,095 / 12 reallocations; cumulative requested allocation 18.78 / 0.165 MB, not measured bytes copied; output capacity 9,103 / 16,384 bytes |
+| `af06948` boxed Quote payload | 1M mixed rows, cold / prepared | 5.479 / 4.900 ms; 5.182 / 4.501 ms | input generation/freeze/cleanup included; requested peak 32.05 / 16.05 MB; extra small owner allocation/indirection |
+
+Scratch mixed 64-request/1-ms-wait CPU medians fall 34.84 -> 32.23 ms and pooled
+short p99 32.24 -> 28.82 ms on Linux. Live-writeback CPU falls 34.13 -> 31.84 ms,
+short p99 31.17 -> 28.30 ms. These finite all-admitted burst observations have no
+fixed-arrival/admission model and are distinct from C's arrival experiment.
+M4 scratch gains are near noise; its pooled timer tail rose in one round. M4 live
+writeback cold wall improves 161.21 -> 146.46 us at 100 rows, and 186.50 -> 170.69 us
+at 10k. Its mixed CPU improves, while timer p99 is noisy. No cross-platform
+universal tail or SLA claim follows. Linux is the measured deployment target.
+
+### Ownership/API decision and physical control
+
+The operator's latest unattended authorization explicitly permits measured
+engineering/API decisions. The previous owner approval gate was superseded.
+Frozen storage now uses `Arc<Box<[Quote]>>`; `QuoteWeak = Weak<Box<[Quote]>>` names
+the public observer type returned by `downgrade` and `TestProvider::last_rows`.
+Typed observers/tests are migrated. The exact-capacity freeze preserves its
+payload pointer; spare Vec capacity may shrink. Byte import still decodes/copies
+into aligned typed storage. The old error enum adds `Input` for the new sealed
+scalar argument signature. External exhaustive error matches and explicit old
+Weak types need migration. Legacy compile/execute/Provider signatures are intact.
+The internal public IR fields change with the approved single-IR migration.
+
+Owner was first tested in an isolated `c0afa8c + owner-candidate.patch` worktree.
+With no Weak observer, 1M-row load wait is about 21.23 MB RSS in both arms, then
+record wait about 5.22 MB. Requested peak halves; observed kernel/RSS high water
+is about 37.11 / 21.23 MB. This describes observations, not exact physical worst
+case. A separate explicit-Weak real-task control shows old storage retaining
+16.05 MB requested / 21.21 MB RSS at record wait, versus about 0.046 MB / 5.21 MB
+with the boxed owner. Dropping the old Weak releases that payload. These controls
+separate strong-owner release, allocation release and physical residency.
+
+### Generalization cost and strong baseline
+
+The final runtime snapshot is `1f8b7d7`. Ordinary Monty executes the full adapted
+script, including print and actual asynchronous Tool suspension. The adapter
+changes declared Tool syntax to explicit await and field reads to tuple indices;
+no user arithmetic/filter/loop is replaced with Rust. Both arms use independent
+equivalent typed producers. Speed uses System without allocation diagnostics;
+memory uses a separate counting build. Source clone/compile, argument and provider
+construction, freezing/conversion, native/VM execution, real waits, code/task/
+payload cleanup are timed. Task results/stdout remain live for correctness
+checking outside timing, so output delivery/destruction is not included. Prepared
+code compilation is outside its explicitly prepared boundary.
+
+`integrated-linux.jsonl`: 48 completed serial commands, 1,920 successful request
+observations, three rounds, 30 retained requests per cell/round after sample 9.
+
+| Operation | Native cold / prepared wall us | Ordinary Monty cold / prepared wall us |
+| --- | ---: | ---: |
+| scalar compute/print, no Tool | 190.00 / 2.00 | 56.63 / 39.85 |
+| weighted scan/record/print, 100 rows | 640.99 / 7.50 | 247.92 / 221.00 |
+| weighted scan/record/print, 10k rows | 466.03 / 86.02 | 3,799.23 / 3,757.16 |
+
+Process medians vary substantially (native 10k cold rounds 696.38, 418.90,
+466.03 us), even on the idle VM. No unmeasured cause is assigned to that variance.
+Small cold scripts still lose to Monty; compilation is the largest remaining
+cost. Independent median attribution columns are not an additive decomposition.
+Equivalent legacy native source returns an integer rather than printing it:
+100-row cold/prepared 370.77 / 8.71 us, 10k 511.76 / 124.23 us. Different code/
+output boundaries explain why this is a migration reference, not a zero-cost
+syntax equivalence claim.
+
+The unchanged `bench-v2` harness also compares C's runtime and D on the exact old
+source/producer/timer boundary. At 100 rows cold wall grows 380.33 -> 525.02 us,
+prepared falls 8.67 -> 6.73 us. At 10k cold grows 485.56 -> 599.46 us, prepared
+falls 119.71 -> 94.73 us. Machine code grows 192 -> 448 bytes, frame 280 -> 320
+bytes. The new general native continuations cost compilation and code footprint;
+the source contract was explicitly prioritized. C's 39-cell campaign was not rerun.
+
+Separate gated 64-task unique-code memory probes use concrete per-engine futures,
+so an inactive Monty branch does not inflate native task storage. Each task has
+an independent payload. At zero rows native first/record wait requested storage
+is 573.6 / 571.6 kB, Monty 3,249.3 / 3,250.3 kB, including code, providers, gates,
+handles, sources and compiler scratch. At 1k rows each: first native 1,597.6 kB,
+record 572.5 kB; Monty first 4,273.3 kB, record 9,387.7 kB. Native sampled RSS at
+record is 6.23 MB versus 16.99 MB. Code needed for post-record print is retained;
+terminal legacy record uses only 154.4 kB requested at zero rows. These are full
+probe states, not frame sizes or a measured density slope.
+
+### Negative results and convergence
+
+Initial 100-compile Linux stage profile (temporary instrumentation, removed)
+has medians parse 34.17, prepare 1.31, lowering 16.81, backend 299.82 and finalize
+2.46 us after sample 9. ISA setup is too small to justify a cache. Compiler
+scratch targets allocations in lowering/backend instead.
+
+Two final bounded alternatives were reverted: `opt_level=none` gives inconsistent
+cold benefit, worsens pooled 10k cold wall 492.75 -> 542.42 us and grows weighted
+code 572 -> 600 bytes; 1M prepared is neutral/slightly worse. Incremental active-
+owner/byte accounting removes repeated owner scans, but 10k prepared wall
+121.75 -> 152.46 us regresses and rounds are unstable. Its 1M improvement is too
+small/inconsistent to repay extra retained state/invariants. Neither code path,
+flag or production instrumentation remains.
+
+No evidence supports another simple net-value candidate in this lane. Remaining
+compiler/admission changes need a new cost hypothesis and workload; bytes/string
+values need encoding/ownership/Tool-ABI choices before implementation. Private
+stdout is not a first-class string value. Stop at this verified slice, not at a
+claim that the whole system is optimal. No global configuration, paid resource,
+new VM, Docker, CI or unrelated project changed.
+
+Reproduction and identity: `bench/results/d-script/identity.json`, raw JSONL,
+`summary.json`, and `linux-tests-integrated.txt`. Speed/memory executables are
+separate. Target is actual Alpine Linux 6.18.52 ARM64, existing 2-vCPU/2-GiB VM on
+M4; Rust 1.96.0, Zig 0.15.2, unchanged pinned Monty. Core macOS uses Rust 1.93.1.
+
+```sh
+cargo test --locked
+cargo clippy --locked --all-targets --all-features -- -D warnings
+cargo +1.96.0 test --locked --manifest-path bench/Cargo.toml
+cargo +1.96.0 zigbuild --release --locked --tests --target aarch64-unknown-linux-musl
+cargo +1.96.0 zigbuild --release --locked --manifest-path bench/Cargo.toml --target aarch64-unknown-linux-musl --bin script-bench --bin bench-v2
+# For memory: add --features allocation-diagnostics; do not reuse its timing.
+python3 tools/run_d_scratch.py KEY KNOWN_HOSTS HOST
+# D_LABEL=spill D_BASE=... D_CANDIDATE=... uses the same bounded runner.
+python3 tools/run_d_owner.py KEY KNOWN_HOSTS HOST
+D_OUT=integrated-linux.jsonl D_BIN=./d-integrated-script-speed-linux python3 tools/run_d_final.py KEY KNOWN_HOSTS HOST
+python3 tools/summarize_d.py
+```
+
+Failures were explicit and corrected: an unfilled native dispatch block in early
+integration; an initial sleep-based lifetime assertion replaced with a phase-based
+wait; Clippy-only observer alias/test placement; one wrong SSH host argument with
+zero observations; and tool stdout truncation/redaction while collecting v2 rows.
+The final v2 raw data was saved remotely and copied as files before parsing.
+Exploratory union-future memory and non-reset peak output are not pooled into
+published memory results. Earlier stages and all first requests remain separately
+labeled. The final fixed-snapshot focused review is recorded with its findings
+before publication; no per-candidate review loop was added.

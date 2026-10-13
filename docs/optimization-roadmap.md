@@ -1,47 +1,55 @@
 # D current optimization pointer
 
-D follows C (`d42e0cd`). Approved priority: a real top-level Python script entry,
-then bounded performance iteration. Source names are resolved by RustPython
-frontend lowering, never by a runtime name table or handwritten business kernel.
+D follows C (`d42e0cd`). Default top-level scripts now compile to the same semantic
+IR/native CFG as the old benchmark entry. No implicit expression echo. Tool calls
+remain sequential and truly asynchronous; scalar print uses bounded private output.
 
-## Current baseline and candidate
+## Kept, with matched evidence
 
-C ARM64 Linux weighted 100-row cold total median: 209.29 us, compile 198.29 us;
-stateful total 291.00 us, compile 278.96 us. These are independent columns.
-C raw results remain in `bench/results/c-linux-v2/`; do not rerun its matrix.
+- Cleared Cranelift compiler scratch reuse: Linux 100-row fresh-script wall median
+  390.23 -> 338.77 us. Retained weighted-script scratch is about 33 KiB per compiling
+  thread. M4 improvement is near noise; timer tails varied.
+- Live scalar writeback at native suspension: Linux 100-row 356.89 -> 331.73 us;
+  10k 443.91 -> 410.79 us. Weighted machine code 648 -> 572 bytes on Linux.
+- Bounded geometric stdout growth: 4,096 scalar prints, Linux cold 467.74 ->
+  378.84 us, prepared 223.09 -> 148.13 us. Reallocation calls 4,095 -> 12.
+  Final capacity grows from 9,103 to 16,384 bytes in that workload, within its cap.
+- Separately boxed Quote payload: Linux 1M-row cold 5.479 -> 4.900 ms, prepared
+  5.182 -> 4.501 ms; requested peak about 32.05 -> 16.05 MB. Explicit Weak control
+  confirms payload release at record wait. QuoteWeak now aliases Weak<Box<[Quote]>>.
 
-The current implementation extends the one semantic IR with sequential Tool
-calls, scans, output and evaluated/discarded expressions. Native code has a resume
-switch only at real Tool waits and row-chunk yields. It preserves the old
-`CodeUnit::compile` + `runtime::execute` entry; legacy source lowers to this IR.
-`compile_script` binds a declared scalar input schema, and `execute_script`
-returns status, bounded private stdout and error. No implicit expression echo.
+The operator's latest unattended authorization explicitly covers measured narrow
+engineering/API changes. No owner approval gate remains. Legacy compile/execute
+signatures are unchanged; observers and TaskError::Input are documented migrations.
 
-Both operator corrections are incorporated: bool-valued expression statements
-are discarded, and loop-body locals can be introduced where assigned. Reads
-after a potentially empty loop require prior definite initialization. Print is
-allowed inside loops but Tool waits inside loops remain explicitly unsupported.
+## Rejected and stop point
 
-Current verification: original runtime/lifetime tests and eight new integrated
-script tests pass on macOS. Native CFG construction initially exposed an unfilled
-Cranelift dispatch block and was corrected before acceptance. Frontend lane ran
-on verified `gpt-6-luna / openai-codex` via Hermes, after CLI's ChatGPT account
-rejected that exact model. No silent model substitution.
+ISA/module preparation was only 1.31 us in the initial Linux profile, versus
+299.82 us backend compilation. No ISA cache was built. opt_level=none was unstable
+and enlarged code. Incremental owner accounting was also unstable and regressed
+the 10k prepared cell, so both were reverted.
 
-## Next experiment
+The current dominant small-script cost is backend compilation. Integrated scalar
+cold wall is 190.00 us native vs 56.63 us ordinary Monty; 100-row printing script
+640.99 vs 247.92 us. At 10k rows it is 466.03 vs 3,799.23 us. VM process rounds
+vary considerably; these are bounded synthetic observations, not service capacity.
+Generalization has a measured cold cost: old-source same-round C/D totals grow
+380.33 -> 525.02 us at 100 rows, while prepared totals fall 8.67 -> 6.73 us.
 
-Compare C runtime vs generalized legacy on the same old benchmark cells, then
-legacy vs equivalent printing script and ordinary Monty on the same machine.
-Profile fresh small-script compilation before selecting one reusable immutable
-Host/ISA component. Report code/frame/layout and second-wait retention costs.
-Frame currently grows from 280 to 320 bytes, plus 16-byte views and owner slots
-per declared buffer. Script code that prints after a record must retain its code
-until completion; terminal legacy record still drops code before waiting.
+Stop new experiments here. No remaining simple candidate has evidence of net
+value. Broader compiler/admission changes need another focused cost hypothesis.
+First-class bytes/string values still require encoding, ownership and Tool-ABI
+choices; private stdout does not implement that language path. No source cache,
+verifier removal, scheduler rewrite, framework or unrelated project change.
 
-## Pending decisions and stop point
+## Handoff
 
-`Arc<Box<[Quote]>>` remains an isolated owner/API experiment, not an approved
-change. `QuoteBuffer::downgrade` and `TestProvider::last_rows` expose Weak types.
-Bytes/string language ownership, encoding and Tool ABI remain undecided.
-No automatic source cache, scheduler rewrite, verifier removal or framework.
-Stop at measured convergence or a genuine API/semantic decision, by 08:00 CST.
+45 core tests pass on macOS and actual Linux ARM64; bench 12, Python 6. Original
+cancellation, late completion, overflow and budget tests remain intact. The three
+real script paths and renamed/branched/two-loop/loop-local cases are covered.
+Frame is 320 bytes versus 280 previously; each declared buffer adds a 16-byte view
+and an 8-byte owner slot. Printing after record requires retaining code until done.
+
+Raw results, commands, identities and recomputation live in
+`bench/results/d-script/` and [experiments.md](experiments.md). Final focused
+independent review is the last delivery step, rather than another optimization lane.

@@ -1,0 +1,146 @@
+{
+  "final_runtime": "1f8b7d709b184e53fcb6f75c1f820db4c012e2ab",
+  "snapshots": {
+    "script_base": "c11c7d1ad616636ef698f85799a9b57631ae2c7f",
+    "scratch": "fa64b327ca420234080b76289fed1440b478014d",
+    "live_writeback": "c4a503a32e0f500b1d35a6ce939ddd6c4018be5a",
+    "stdout": "c0afa8cf3a61a397c242590463a962eda22f6b02",
+    "owner": "af069486ba984ed8906f3706cc0905eff03c544f"
+  },
+  "c_binary_runtime": "065c7cb (runtime unchanged in d42e0cd)",
+  "owner_experiment": "c0afa8c + docs/b-performance-v2-evidence/owner-candidate.patch; isolated worktree, then approved unattended migration",
+  "rust_core_macos": "rustc 1.93.1 (01f6ddf75 2026-02-11)",
+  "rust_bench_linux": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+  "zig": "0.15.2",
+  "target": "aarch64-unknown-linux-musl",
+  "host": "macOS Apple M4; existing Alpine Linux ARM64 VM, 2 vCPU/2048 MiB",
+  "kernel": "Linux 6.18.52-0-virt",
+  "monty": "56949a4c45f51cedc7a96450782f58a8017e114d",
+  "speed_allocator": "System, no allocation-diagnostics",
+  "memory_allocator": "separate counting System allocator; requested layouts, raw VmHWM and cumulative observed peak retained",
+  "source_digests": {
+    "src/frontend.rs": "bbb882089026ea6ee831e8b2503a940da5a08eacc4b6f82d8e1cde039696aacb",
+    "src/ir.rs": "e22a78aa97c7762bdfde1914adb0c5d5f9e3fac27567a14779b971eab0f9aea6",
+    "src/codegen.rs": "e5b6d9496075d9e78fca417416ef22e7381f5c4677fafbcebd4729fba249ce5c",
+    "src/runtime.rs": "7c5e9eee8fdfd6050064e735cae3d9614bc06c77b772e69d61b9d34f6ed2bed7",
+    "src/buffer.rs": "728e3dc082ed1f8bed96864f608c1ddb22f7f6b9016531dba0e5deff7d9d2867",
+    "src/provider.rs": "df14c16b61c6e9f78a51b07e6ba162d1a71b288a5690fd007117fe3676eb5952",
+    "src/error.rs": "f86a4e601c69fbe208813d526fa2da4b6faad551f28d589ebdbceb3931bf56d8",
+    "bench/src/scripts.rs": "debc11a96308ad2f4149bdea2cc512916c3bcea591287c284842c7f83239367d",
+    "bench/src/script_memory.rs": "5f4df4ef5d156f400a6a8e18835c2f6596a9f365c3998c5dd53492a6e89e72da",
+    "bench/src/weak_memory.rs": "51b6689d1d314cb3b9fa2f2c6cf9433a1840288f1a3142fcc50fd94b7406b9f0",
+    "bench/src/v2_common.rs": "751fd4fe89037e5551b28e730a430bcd9ba8e16dc44087955a7877170d127069",
+    "bench/src/v2.rs": "65c996a2db94369597603f22682b5e3e8cfed53fa6f9b975e7063b1d6da12341",
+    "Cargo.lock": "810520a60dbad6d43c8f6c55357a9cf9a1f0d9a396a8cca9eb70d3f3e14207b3",
+    "bench/Cargo.lock": "593b4b2c9a0a97db19596641d5f8d8115d1f8f4f8fa1d68580a58ee993cf8bc6"
+  },
+  "binary_digests": {
+    "d-integrated-script-memory-linux": {
+      "sha256": "7684a9f11009a788f8139f1084fb10bb84a0ed64a789d86497f48b22c90efd4d",
+      "bytes": 13509912
+    },
+    "d-integrated-script-speed-linux": {
+      "sha256": "637c4f00ef429574f5ffd95fb0a0faad2b06369fd2ebc59c2079b321606eebce",
+      "bytes": 13314744
+    },
+    "d-script-scratch-allocation-linux": {
+      "sha256": "06b4a0dddbdbbb0d0b402f7d3207b8902b1e501731efb324cb5f2f15fd6146fc",
+      "bytes": 13406648
+    },
+    "d-owner-accounting-base-linux": {
+      "sha256": "637c4f00ef429574f5ffd95fb0a0faad2b06369fd2ebc59c2079b321606eebce",
+      "bytes": 13314744
+    },
+    "d-print-exact-alloc-linux": {
+      "sha256": "46ff6ce35a589ba9bb4baee130956ff1183b3da7e15b8df6cbac4c5913a64ca8",
+      "bytes": 13426984
+    },
+    "d-script-context-speed-linux": {
+      "sha256": "3c27c4fe861e1b3413e74e662cfa0cc37a60e6afd8759395bcc549f1842c4bb5",
+      "bytes": 13310088
+    },
+    "d-script-scratch-linux": {
+      "sha256": "930fc6a38ea85e600d530cff76c35a1e83f88234af1d803969002ded08ee54c8",
+      "bytes": 13284952
+    },
+    "d-owner-speed-opt-linux": {
+      "sha256": "53cf5b64e9c806eca6febb07245a104d104e514addde3a88b472123781d12a3f",
+      "bytes": 13314056
+    },
+    "d-print-growth-speed-linux": {
+      "sha256": "3bb8ee98dd71ede8faee1456a41861428794220f787118c8ac3ba0effc53e9f7",
+      "bytes": 13314200
+    },
+    "d-script-base-allocation-linux": {
+      "sha256": "37dadb6d5cc9d0f41f3655da1ed5bbe38946f9d6f8b2a46a2f6fe66d22f7fd35",
+      "bytes": 13385768
+    },
+    "d-owner-memory-linux": {
+      "sha256": "6c64633422d224bcd4573d997e27744d49072b9db3c0481fd1a35310b3b6e12a",
+      "bytes": 13425352
+    },
+    "d-final-script-memory-linux": {
+      "sha256": "143c8eb1c42215330349322d505c0545b1c69129f88f522c3694abb48acdc331",
+      "bytes": 13510616
+    },
+    "d-integrated-v2-speed-linux": {
+      "sha256": "e80371822cccb6af3cbaadaf0b4445b85daa89c4382e430814a4a81578b49a4b",
+      "bytes": 13402328
+    },
+    "d-print-exact-speed-linux": {
+      "sha256": "ff8eb453cfc40a28bcf5f43ffed32b012e3f69c718a43fd78f39efbfdee4401b",
+      "bytes": 13314136
+    },
+    "d-final-v2-speed-linux": {
+      "sha256": "617beba8494d0b129c41e48caf64cec3b73ea5dc907f579f10f46876501ac6cf",
+      "bytes": 13411960
+    },
+    "d-weak-base-linux": {
+      "sha256": "143c8eb1c42215330349322d505c0545b1c69129f88f522c3694abb48acdc331",
+      "bytes": 13510616
+    },
+    "d-print-growth-alloc-linux": {
+      "sha256": "e0698941c64f2c591c2c4761d20e25b50aea6a6b77846c90eb69761b0003c9dc",
+      "bytes": 13427048
+    },
+    "d-script-liveness-speed-linux": {
+      "sha256": "90124ae0443a07fa1530b777e8ff5067af6b0018f92f31a1681662a9c77d3d74",
+      "bytes": 13310904
+    },
+    "d-final-script-speed-linux": {
+      "sha256": "2eacb3ec7b8b494e76fa32cd6f6e8546ce1de2a69434be05379128053ffe9032",
+      "bytes": 13315176
+    },
+    "d-script-c11-linux": {
+      "sha256": "2b10570f2ecb8acea3e3e7adb4673db0486800d4b98058bad5ea5a73a9f81a70",
+      "bytes": 13264072
+    },
+    "d-owner-none-opt-linux": {
+      "sha256": "586ef5270a26836dbc39902a6ff2809bd52d30126df80604db69a05e172d49ad",
+      "bytes": 13314040
+    },
+    "d-weak-owner-linux": {
+      "sha256": "ebf372eba113a77a2cad118a14e1ae47b37bef3ee47176708b43bf50194b42d9",
+      "bytes": 13509224
+    },
+    "d-owner-accounting-candidate-linux": {
+      "sha256": "0efd5ab57ea5b4535d94956ccdb33ed277407eeefa27d6abae11f80f994598ad",
+      "bytes": 13315384
+    },
+    "d-owner-speed-linux": {
+      "sha256": "59ad4f5626abea9e4b5595224a5e7c1f01b773b21ff2ae8d037a44d3a530f526",
+      "bytes": 13312776
+    }
+  },
+  "profile": "temporary timestamps around parse / ISA+module prepare / FunctionBuilder lowering / define_function / finalize_definitions on generalized pre-scratch code; 100 fresh compiles, source-equivalent c11c7d1. Instrumentation removed before all A/B speed runs. Raw stage observations are archived.",
+  "negative_opt_none": "1f8b7d7 with compile_script lower(program, none, false); only that flag, reverted",
+  "negative_owner_accounting": "1f8b7d7 plus archived owner-accounting-rejected.patch; reverted",
+  "commands": [
+    "cargo +1.96.0 zigbuild --release --locked --manifest-path bench/Cargo.toml --target aarch64-unknown-linux-musl --bin script-bench --bin bench-v2",
+    "cargo +1.96.0 zigbuild --release --locked --features allocation-diagnostics --manifest-path bench/Cargo.toml --target aarch64-unknown-linux-musl --bin script-bench",
+    "cargo +1.96.0 zigbuild --release --locked --tests --target aarch64-unknown-linux-musl",
+    "script-bench ENGINE CASE compile|cold|warm|mixed|hold|weak ROWS REPS DELAY_US",
+    "bench-v2 latency --engine native --case weighted_scan --rows N --repeats 40 --chunk 256 --delay-us 0 --sample ROUND"
+  ],
+  "collection": "JSONL saved remotely/scp for v2 rows to avoid terminal truncation/redaction; speed and memory run serially, no unrelated guest process observed. Each independent run retains its first request; summaries explicitly exclude early observations, never move their costs outside the raw interval."
+}

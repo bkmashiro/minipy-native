@@ -42,3 +42,21 @@ Thirty tests pass on macOS and on the actual Linux ARM64 VM. Integration additio
 Independent review of signed commit 87e0131 completed and found no confirmed implementation blocker. Its fixture-specific helper contract gap was corrected in 564381d with a fixed parameterized Quote/v1 filter/product/sum primitive and a bounded macOS/Linux rerun. The weighted source-once path loses to this general primitive; the cross-row stateful case is explicitly unsupported by it. Earlier specialized helpers remain labeled handwritten fixture floors.
 
 C integrates opt-in compiler diagnostics and a separate ordinary-Monty cost/density suite. The formal Linux campaign and its boundaries are in [performance-v2.md](performance-v2.md). Core now passes 31 tests, bench 10 and Python 6; memory and speed binaries are separate. The owner API candidate is still unmerged. Only one focused integrated evidence review is needed for C, not another global implementation audit. D is already an operator-created dependent optimization lane; [next-steps.md](next-steps.md) contains its measured hotspots and decisions. Do not expand C, add CI or manufacture cache/reuse assumptions.
+
+## D integrated script handoff
+
+`1f8b7d7` is the verified D runtime snapshot. Top-level scripts, sequential Tool
+continuations, natural loop locals, explicit bounded scalar stdout and discarded
+expressions share one semantic IR/native generator with legacy main source.
+Script outputs survive later errors. Source names have no runtime lookup.
+Four bounded replacements retain measured value: cleared compiler scratch reuse,
+live scalar writeback, geometric bounded output growth and separately boxed frozen
+Quote payloads. The latest unattended authorization covers the narrow observer/
+error API migrations, so no obsolete owner gate is left waiting.
+
+45 core tests pass on macOS and actual ARM64 Linux, benchmark 12 and Python 6.
+The final mixed-source and memory evidence, limitations, negative alternatives
+and API migration details are in [experiments.md](experiments.md). Current work
+stops at evidence convergence; [optimization-roadmap.md](optimization-roadmap.md)
+is the sole current pointer. The final fixed-snapshot independent review and
+publication read-back are recorded there and in the card, not a new review graph.

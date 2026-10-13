@@ -1,5 +1,13 @@
 # Next bounded optimization lane
 
+D has now delivered the script entry and four measured replacements. Use
+[optimization-roadmap.md](optimization-roadmap.md) for the single current pointer
+and [experiments.md](experiments.md#d-script-entry-and-bounded-performance-iteration-2026-10-14)
+for D's evidence. The sections below are C's historical handoff, not a new task
+list. The owner representation/API was subsequently authorized under unattended
+engineering discretion, measured on Linux and migrated in `af06948`; its old
+pending-approval wording below describes the C snapshot.
+
 C's integrated evidence is in [performance-v2.md](performance-v2.md), with raw
 Linux data at `bench/results/c-linux-v2/`. Measured runtime/harness snapshot is
 `065c7cb`; final publication adds report/figures, not another runtime optimization.

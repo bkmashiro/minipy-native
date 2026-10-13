@@ -42,6 +42,8 @@ Use the smallest ownership mechanism that works. A process pool feeding task reg
 
 Frozen owner lifetime covers all reads. A tiny view retaining a large owner may justify a small copy. Last-use release should drop quotes before an await when no later scan needs them. Do not confuse dropping a lease with reducing RSS: pool and provider retention stay accounted.
 
+The measured frozen owner is `Arc<Box<[Quote]>>`. Exact-capacity typed Vec storage is adopted without a payload copy; spare capacity may shrink and external-byte decoding still creates typed storage. A Weak observer retains the small Arc/Box header rather than the row payload after the last strong lease drops. `QuoteWeak` names this prototype observer API. Each task charges aggregate retained row bytes after import; provider construction/transient allocations and the complete process are not a hard memory quota. Private stdout grows geometrically up to its configured capacity bound, with whole-line append or failure preserving the earlier prefix.
+
 On cancellation, an outstanding operation keeps its necessary arguments alive until it really completes or acknowledges cancellation. Late completion validates task generation/operation identity, releases its resources, and never revives a cancelled or reused task slot. Cancelled outstanding operations retain resource charges. Code stays alive while a suspended task can resume.
 
 ## Native execution and scheduling

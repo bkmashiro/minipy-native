@@ -55,4 +55,6 @@ Engineering compile bounds are 16 KiB of source, 512 frontend nodes, depth 32, 3
 - [Bounded follow-up candidates and pending API decisions](docs/next-steps.md)
 - [Current D optimization pointer](docs/optimization-roadmap.md)
 
+D's current results and cost trade-offs are in [Experiments](docs/experiments.md#d-script-entry-and-bounded-performance-iteration-2026-10-14). Small source-cold scripts still lose to ordinary Monty. General continuations increase cold compilation cost and code footprint; prepared execution and large typed workloads improve. The observer API is now `QuoteWeak = Weak<Box<[Quote]>>`, and scalar input mismatch uses `TaskError::Input`. Explicit old Weak types or exhaustive error matches need migration.
+
 No packages, dynamic imports, generic object model, automatic result replay, or cross-task fusion in the first slice. Code and mutable task state are separate. Native lowering remains part of the trusted computing base.
