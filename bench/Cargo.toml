@@ -27,3 +27,7 @@ path = "src/v2.rs"
 [[bin]]
 name = "memory-v2"
 path = "src/memory_v2.rs"
+
+[[bin]]
+name = "script-bench"
+path = "src/scripts.rs"

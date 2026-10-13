@@ -8,9 +8,15 @@ One program execution is one logical task. Filter/map/fold and basic blocks are 
 
 ## Language
 
-Start with typed parameters, i64/bool, local variables, structured conditions/for loops, checked arithmetic, fixed record field reads, return and explicit await of declared tools. Reject unsupported syntax clearly. No package installation, dynamic imports, eval, reflection, runtime class mutation, arbitrary pointers, recursion or mutable closures. Static namespaces such as tools are permitted. Do not add two equivalent syntax forms for convenience before evidence warrants it.
+The default source is a top-level Python statement script. Host declares and injects typed scalar inputs and the `tools` namespace. Source annotations are optional (`int`/`bool`); signed-64 integer and bool types are inferred from inputs, Tool schema and expressions. Ordinary assignment can introduce locals wherever definite initialization permits. Standard syntax is parsed by RustPython and lowered once into a small typed semantic IR. Names become scalar, buffer, row-field and Tool slots at compile time.
 
-Signed i64 overflow is a task error. Conditions short-circuit. Input order determines multiply/add order and first data error; no reassociated reductions. A filtered row must not trigger arithmetic in the skipped branch. An empty scan returns zero. Resource errors terminate the task. Concrete source/IR size and execution limits should be few, documented engineering choices, not guessed production SLOs.
+`tools.load_quotes(batch)` and `tools.record_total(batch, total)` have synchronous sequential source semantics. Their generated native continuations suspend at the actual asynchronous Host call without blocking a thread. There is no implicit parallelism, prefetch or effect reordering. Explicit `await` remains accepted for legacy source and lowers to the same operation. The old annotated `async def main` entry is an adapter to the same IR and native generator, not a separate scan implementation.
+
+`print` takes one scalar argument and appends a line to task-private bounded stdout through a small native helper. It performs no Tool scheduling or process stdout I/O. Host receives status, stdout and error. Earlier output is preserved if a later computation, permission check, resource bound or Tool fails. Expression statements are evaluated and discarded, including the last expression; there is no implicit echo or designated result variable. Legacy `execute` continues to return its explicit integer result.
+
+The implemented subset has sequential scans, scalar conditions and checked arithmetic. A loop-local value can be assigned and used in the same iteration; reading it after a possibly empty loop requires earlier definite initialization. Nested scans, Tool calls inside loops, conditional buffer creation, buffer alias/rebinding, recursive or arbitrary suspendable functions and non-scalar print formatting are explicitly unsupported. Reject unsupported syntax clearly. No package installation, dynamic imports, eval, reflection, runtime class mutation, arbitrary pointers, recursion or mutable closures. Bytes/string language values remain a separate unapproved contract.
+
+Signed i64 overflow is a task error; integers differ from Python's arbitrary precision values. Conditions short-circuit. Input order determines multiply/add order and first data error; no reassociated reductions. A filtered row must not trigger arithmetic in the skipped branch. An empty scan leaves its preinitialized accumulators unchanged. Resource errors terminate the task. Concrete source/IR size and execution limits should be few, documented engineering choices, not guessed production SLOs.
 
 ## Initial Tool ABI
 
@@ -34,7 +40,7 @@ CodeUnit owns RX code, entry/state layout, source/error mapping and ABI identity
 
 Use the smallest ownership mechanism that works. A process pool feeding task regions is a candidate, not a requirement to build a custom allocator first. Large response owners must be separately releasable. Mutable task data cannot overwrite runtime metadata. Views cannot expose arbitrary addresses or other tasks' data.
 
-Frozen owner lifetime covers all reads. A tiny view retaining a large owner may justify a small copy. Last-use release should drop quotes before the second await. Do not confuse dropping a lease with reducing RSS: pool and provider retention stay accounted.
+Frozen owner lifetime covers all reads. A tiny view retaining a large owner may justify a small copy. Last-use release should drop quotes before an await when no later scan needs them. Do not confuse dropping a lease with reducing RSS: pool and provider retention stay accounted.
 
 On cancellation, an outstanding operation keeps its necessary arguments alive until it really completes or acknowledges cancellation. Late completion validates task generation/operation identity, releases its resources, and never revives a cancelled or reused task slot. Cancelled outstanding operations retain resource charges. Code stays alive while a suspended task can resume.
 
@@ -42,7 +48,7 @@ On cancellation, an outstanding operation keeps its necessary arguments alive un
 
 One task entry returns Call, Yield, Done or Failed. Use a small iterative dispatcher, one Ready queue initially and a mature async I/O runtime. Do not execute unrestricted CPU loops in the I/O reactor. Record waiting state before a provider can complete to prevent lost wakeups.
 
-A native scan keeps position and accumulators in registers where possible and spills at actual yield, not every row. Save input owner, row index, sum and necessary parameters across CPU yield. Clear input owner before record_total.
+A native scan keeps position and scalar locals in registers and spills at actual Tool suspension or chunk yield, not every row. The native entry has a compile-time-generated resume switch, not an IR interpreter. Runtime retains validated buffer leases and releases owners according to the continuation's future-use mask before submitting the next Tool. A later scan can intentionally keep a buffer across a record call. Code survives a record wait if later computation or print can enter it; a proven terminal legacy record still permits early code/frame release.
 
 Start with correct budget/cancellation checks, then compare bounded chunks against row checks. Fixed row charging is suitable only while per-row work is bounded. Long helpers must also have bounded work or an explicit execution domain. Await/yield never resets the task's total budget. CPU yield must preserve all live calling state; avoid supporting arbitrary suspendable nested calls until needed.
 

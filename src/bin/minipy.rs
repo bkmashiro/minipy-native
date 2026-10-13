@@ -54,20 +54,38 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let executor = tokio::runtime::Builder::new_current_thread()
         .enable_time()
         .build()?;
-    let receipt = executor.block_on(runtime::execute(
-        code,
-        provider.clone(),
-        7,
-        700,
-        Limits::default(),
-        Cancellation::default(),
-        Some(trace.clone()),
-    ))?;
-    println!(
-        "receipt={receipt} loads={} records={}",
-        provider.load_count(),
-        provider.record_count()
-    );
+    if code.is_legacy() {
+        let receipt = executor.block_on(runtime::execute(
+            code,
+            provider.clone(),
+            7,
+            700,
+            Limits::default(),
+            Cancellation::default(),
+            Some(trace.clone()),
+        ))?;
+        println!(
+            "receipt={receipt} loads={} records={}",
+            provider.load_count(),
+            provider.record_count()
+        );
+    } else {
+        let outcome = executor.block_on(runtime::execute_script(
+            code,
+            provider.clone(),
+            &[7, 700],
+            runtime::ScriptLimits::default(),
+            Cancellation::default(),
+            Some(trace.clone()),
+        ));
+        print!("{}", outcome.stdout);
+        outcome.status?;
+        println!(
+            "status=ok loads={} records={}",
+            provider.load_count(),
+            provider.record_count()
+        );
+    }
     for e in trace.borrow().iter() {
         println!(
             "{} buffer_bytes={} frame_bytes={} remaining={} index={}",

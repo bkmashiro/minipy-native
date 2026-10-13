@@ -1,4 +1,4 @@
-//! Restricted, typed scan IR. Only the frontend constructs this from source.
+//! Restricted typed semantic IR. Names and schemas are resolved at compilation.
 pub const MAX_LOCALS: usize = 32;
 pub const MAX_SOURCE_BYTES: usize = 16 * 1024;
 pub const MAX_NODES: usize = 512;
@@ -39,14 +39,22 @@ pub enum Expr {
 pub enum Stmt {
     Set(usize, Expr),
     If(Expr, Vec<Stmt>, Vec<Stmt>),
+    For(usize, Vec<Stmt>),
+    Load(usize, Expr),
+    Record(usize, Expr, Expr),
+    Print(Expr, Type),
+    Eval(Expr),
+    Return(Expr),
 }
 #[derive(Clone, Debug)]
 pub struct Program {
-    /// Slots 0 and 1 are batch_id and price_limit. No other parameters.
     pub locals: Vec<Type>,
-    pub init: Vec<Stmt>,
-    pub body: Vec<Stmt>,
-    pub total: Expr,
+    /// Host scalar inputs occupy the leading scalar slots.
+    pub inputs: usize,
+    /// Quote owners occupy a separate, statically numbered namespace.
+    pub buffers: usize,
+    pub statements: Vec<Stmt>,
+    pub legacy: bool,
 }
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct CompileError(pub String);

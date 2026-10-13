@@ -7,6 +7,7 @@ use cranelift_codegen::{
     ir::{AbiParam, InstBuilder, MemFlags, Value, condcodes::IntCC, types},
     settings::{self, Configurable},
 };
+use cranelift_frontend::Switch;
 use cranelift_frontend::{FunctionBuilder, FunctionBuilderContext, Variable};
 use cranelift_jit::{JITBuilder, JITModule};
 use cranelift_module::{Linkage, Module};
@@ -15,23 +16,38 @@ use cranelift_module::{Linkage, Module};
 pub(crate) struct Frame {
     pub locals: [i64; ir::MAX_LOCALS],
     pub index: u64,
-    initialized: u64,
+    pub pc: u64,
     pub total: i64,
+    pub batch: i64,
+    pub target: u64,
+    pub remaining: u64,
+    pub chunk: u64,
+    pub live: u64,
 }
 impl Frame {
-    pub(crate) fn new(batch: i64, limit: i64) -> Self {
+    pub(crate) fn new(inputs: &[i64], remaining: u64, chunk: usize) -> Self {
         let mut locals = [0; ir::MAX_LOCALS];
-        locals[0] = batch;
-        locals[1] = limit;
+        locals[..inputs.len()].copy_from_slice(inputs);
         Self {
             locals,
             index: 0,
-            initialized: 0,
+            pc: 0,
             total: 0,
+            batch: 0,
+            target: 0,
+            remaining,
+            chunk: chunk as u64,
+            live: 0,
         }
     }
 }
-type Entry = unsafe extern "C" fn(*mut Frame, *const Quote, u64, u64) -> i64;
+#[repr(C)]
+#[derive(Clone, Copy, Default)]
+pub(crate) struct View {
+    pub ptr: *const Quote,
+    pub len: u64,
+}
+type Entry = unsafe extern "C" fn(*mut Frame, *const View, *mut crate::runtime::Output) -> i64;
 /// Not Send/Sync: this first dispatcher and code ownership are thread-local.
 pub struct CodeUnit {
     module: Option<JITModule>,
@@ -39,6 +55,9 @@ pub struct CodeUnit {
     pub code_bytes: usize,
     /// Actual lowered CLIF when explicitly requested; empty for ordinary compilation.
     pub clif: String,
+    pub(crate) inputs: Vec<ir::Type>,
+    pub(crate) buffers: usize,
+    pub(crate) legacy: bool,
 }
 impl Drop for CodeUnit {
     fn drop(&mut self) {
@@ -51,6 +70,9 @@ impl Drop for CodeUnit {
     }
 }
 impl CodeUnit {
+    pub fn is_legacy(&self) -> bool {
+        self.legacy
+    }
     pub fn compile(source: &str) -> Result<Self, CompileError> {
         Self::compile_with_opt(source, "speed")
     }
@@ -64,6 +86,14 @@ impl CodeUnit {
     }
     fn compile_internal(source: &str, opt: &str, retain_ir: bool) -> Result<Self, CompileError> {
         let program = crate::frontend::parse(source)?;
+        Self::lower(program, opt, retain_ir)
+    }
+    /// Bind the declared Host input schema at compile time. No runtime names.
+    pub fn compile_script(source: &str, inputs: &[(&str, ir::Type)]) -> Result<Self, CompileError> {
+        let program = crate::frontend::parse_with_inputs(source, inputs)?;
+        Self::lower(program, "speed", false)
+    }
+    fn lower(program: ir::Program, opt: &str, retain_ir: bool) -> Result<Self, CompileError> {
         let mut flags = settings::builder();
         flags.set("opt_level", opt).map_err(error)?;
         let isa = cranelift_native::builder()
@@ -73,13 +103,19 @@ impl CodeUnit {
         if isa.pointer_type() != types::I64 {
             return Err(CompileError("only 64-bit hosts supported".into()));
         }
-        let mut module = JITModule::new(JITBuilder::with_isa(
-            isa,
-            cranelift_module::default_libcall_names(),
-        ));
+        let mut builder = JITBuilder::with_isa(isa, cranelift_module::default_libcall_names());
+        builder.symbol("minipy_print", crate::runtime::native_print as *const u8);
+        let mut module = JITModule::new(builder);
         let mut ctx = module.make_context();
-        ctx.func.signature.params = vec![AbiParam::new(types::I64); 4];
+        ctx.func.signature.params = vec![AbiParam::new(types::I64); 3];
         ctx.func.signature.returns.push(AbiParam::new(types::I64));
+        let mut print_sig = module.make_signature();
+        print_sig.params = vec![AbiParam::new(types::I64); 3];
+        print_sig.returns.push(AbiParam::new(types::I64));
+        let print = module
+            .declare_function("minipy_print", Linkage::Import, &print_sig)
+            .map_err(error)?;
+        let print = module.declare_func_in_func(print, &mut ctx.func);
         let id = module
             .declare_function("scan", Linkage::Local, &ctx.func.signature)
             .map_err(error)?;
@@ -91,9 +127,8 @@ impl CodeUnit {
             b.switch_to_block(entry);
             let params = b.block_params(entry).to_vec();
             let frame = params[0];
-            let rows = params[1];
-            let end = params[2];
-            let len = params[3];
+            let views = params[1];
+            let output = params[2];
             let vars: Vec<_> = program
                 .locals
                 .iter()
@@ -105,72 +140,45 @@ impl CodeUnit {
                     .load(types::I64, MemFlags::trusted(), frame, (i * 8) as i32);
                 b.def_var(*var, v);
             }
-            let ix = b.declare_var(types::I64);
-            let loaded = b.ins().load(types::I64, MemFlags::trusted(), frame, 256);
-            b.def_var(ix, loaded);
             let overflow = b.create_block();
-            let init = b.create_block();
-            let header = b.create_block();
-            let initialized = b.ins().load(types::I64, MemFlags::trusted(), frame, 264);
-            b.ins().brif(initialized, header, &[], init, &[]);
-            b.switch_to_block(init);
-            let mut emit = Emit {
+            let budget = b.create_block();
+            let output_error = b.create_block();
+            let start = b.create_block();
+            let dispatch = b.create_block();
+            b.ins().jump(dispatch, &[]);
+            // Fill the resume switch after lowering has assigned all PCs.
+            b.switch_to_block(start);
+            let mut flow = Flow {
                 b: &mut b,
                 vars: &vars,
+                frame,
+                views,
+                output,
+                print,
+                overflow,
+                budget,
+                output_error,
+                resumes: vec![start],
                 row: None,
-                overflow,
             };
-            emit.stmts(&program.init);
-            let one = b.ins().iconst(types::I64, 1);
-            b.ins().store(MemFlags::trusted(), one, frame, 264);
-            b.ins().jump(header, &[]);
-            b.switch_to_block(header);
-            let i = b.use_var(ix);
-            let more = b.ins().icmp(IntCC::UnsignedLessThan, i, end);
-            let body = b.create_block();
-            let finish = b.create_block();
-            b.ins().brif(more, body, &[], finish, &[]);
-            b.switch_to_block(body);
-            let offset = b.ins().ishl_imm(i, 4);
-            let row = b.ins().iadd(rows, offset);
-            let mut emit = Emit {
-                b: &mut b,
-                vars: &vars,
-                row: Some(row),
-                overflow,
-            };
-            emit.stmts(&program.body);
-            let i = b.use_var(ix);
-            let next = b.ins().iadd_imm(i, 1);
-            b.def_var(ix, next);
-            b.ins().jump(header, &[]);
-            b.switch_to_block(finish);
-            let i = b.use_var(ix);
-            b.ins().store(MemFlags::trusted(), i, frame, 256);
-            for (j, var) in vars.iter().enumerate() {
-                let v = b.use_var(*var);
-                b.ins().store(MemFlags::trusted(), v, frame, (j * 8) as i32);
+            flow.stmts(&program.statements, 0);
+            let resumes = flow.resumes;
+            b.switch_to_block(dispatch);
+            let pc = b.ins().load(types::I64, MemFlags::trusted(), frame, 264);
+            let mut switch = Switch::new();
+            for (i, block) in resumes.into_iter().enumerate() {
+                switch.set_entry(i as u128, block);
             }
-            let all = b.ins().icmp(IntCC::Equal, i, len);
-            let final_total = b.create_block();
-            let success = b.create_block();
-            b.ins().brif(all, final_total, &[], success, &[]);
-            b.switch_to_block(final_total);
-            let total = Emit {
-                b: &mut b,
-                vars: &vars,
-                row: None,
-                overflow,
-            }
-            .expr(&program.total);
-            b.ins().store(MemFlags::trusted(), total, frame, 272);
-            b.ins().jump(success, &[]);
-            b.switch_to_block(success);
-            let zero = b.ins().iconst(types::I64, 0);
-            b.ins().return_(&[zero]);
+            switch.emit(&mut b, pc, budget);
             b.switch_to_block(overflow);
             let one = b.ins().iconst(types::I64, 1);
             b.ins().return_(&[one]);
+            b.switch_to_block(budget);
+            let status = b.ins().iconst(types::I64, 5);
+            b.ins().return_(&[status]);
+            b.switch_to_block(output_error);
+            let status = b.ins().iconst(types::I64, 6);
+            b.ins().return_(&[status]);
             b.seal_all_blocks();
             b.finalize();
         }
@@ -194,41 +202,103 @@ impl CodeUnit {
             entry,
             code_bytes,
             clif,
+            inputs: program.locals[..program.inputs].to_vec(),
+            buffers: program.buffers,
+            legacy: program.legacy,
         })
     }
-    pub(crate) fn scan(
+    pub(crate) fn resume(
         &self,
         frame: &mut Frame,
-        rows: &[Quote],
-        end: usize,
-    ) -> Result<(), crate::error::TaskError> {
-        // Owner borrow proves actual allocation, alignment, immutable contents and lifetime.
-        // Runtime chooses monotonic bounded end. Generated body only loads index < end.
-        assert!(frame.index as usize <= end && end <= rows.len());
-        let status = unsafe { (self.entry)(frame, rows.as_ptr(), end as u64, rows.len() as u64) };
-        if status == 0 {
-            Ok(())
-        } else {
-            Err(crate::error::TaskError::Overflow)
-        }
+        views: &[View],
+        output: &mut crate::runtime::Output,
+    ) -> i64 {
+        // Runtime-owned views are validated immutable leases. Lowering only uses
+        // statically bound buffer/field slots and index < validated length.
+        debug_assert_eq!(views.len(), self.buffers);
+        unsafe { (self.entry)(frame, views.as_ptr(), output) }
     }
 }
 fn error(e: impl std::fmt::Display) -> CompileError {
     CompileError(e.to_string())
 }
-struct Emit<'a, 'b> {
+/// Compile structured statements directly to native CFG. PCs exist only at
+/// actual Host waits and row-chunk yields, never as an interpreted instruction stream.
+struct Flow<'a, 'b> {
     b: &'a mut FunctionBuilder<'b>,
     vars: &'a [Variable],
-    row: Option<Value>,
+    frame: Value,
+    views: Value,
+    output: Value,
+    print: cranelift_codegen::ir::FuncRef,
     overflow: cranelift_codegen::ir::Block,
+    budget: cranelift_codegen::ir::Block,
+    output_error: cranelift_codegen::ir::Block,
+    resumes: Vec<cranelift_codegen::ir::Block>,
+    row: Option<Value>,
 }
-impl Emit<'_, '_> {
-    fn stmts(&mut self, ss: &[Stmt]) {
-        for s in ss {
-            match s {
+fn buffers_used(ss: &[Stmt]) -> u64 {
+    ss.iter().fold(0, |mask, s| {
+        mask | match s {
+            Stmt::For(i, _) => 1u64 << i,
+            Stmt::If(_, yes, no) => buffers_used(yes) | buffers_used(no),
+            _ => 0,
+        }
+    })
+}
+impl Flow<'_, '_> {
+    fn expr(&mut self, expr: &Expr) -> Value {
+        Emit {
+            b: self.b,
+            vars: self.vars,
+            row: self.row,
+            overflow: self.overflow,
+        }
+        .expr(expr)
+    }
+    fn store(&mut self, offset: i32, value: Value) {
+        self.b
+            .ins()
+            .store(MemFlags::trusted(), value, self.frame, offset);
+    }
+    fn constant(&mut self, offset: i32, value: i64) {
+        let v = self.b.ins().iconst(types::I64, value);
+        self.store(offset, v);
+    }
+    fn load(&mut self, offset: i32) -> Value {
+        self.b
+            .ins()
+            .load(types::I64, MemFlags::trusted(), self.frame, offset)
+    }
+    fn spill(&mut self) {
+        for (i, var) in self.vars.iter().enumerate() {
+            let v = self.b.use_var(*var);
+            self.store((i * 8) as i32, v);
+        }
+    }
+    fn suspend(&mut self, status: i64, pc: usize, live: u64) {
+        self.spill();
+        self.constant(264, pc as i64);
+        self.constant(312, live as i64);
+        let status = self.b.ins().iconst(types::I64, status);
+        self.b.ins().return_(&[status]);
+    }
+    fn continuation(&mut self) -> (usize, cranelift_codegen::ir::Block) {
+        let block = self.b.create_block();
+        let pc = self.resumes.len();
+        self.resumes.push(block);
+        (pc, block)
+    }
+    fn stmts(&mut self, ss: &[Stmt], following: u64) {
+        for (position, stmt) in ss.iter().enumerate() {
+            let live = following | buffers_used(&ss[position + 1..]);
+            match stmt {
                 Stmt::Set(i, e) => {
-                    let v = self.expr(e);
-                    self.b.def_var(self.vars[*i], v);
+                    let value = self.expr(e);
+                    self.b.def_var(self.vars[*i], value);
+                }
+                Stmt::Eval(e) => {
+                    self.expr(e);
                 }
                 Stmt::If(e, yes, no) => {
                     let c = self.expr(e);
@@ -237,16 +307,125 @@ impl Emit<'_, '_> {
                     let join = self.b.create_block();
                     self.b.ins().brif(c, y, &[], n, &[]);
                     self.b.switch_to_block(y);
-                    self.stmts(yes);
+                    self.stmts(yes, live);
                     self.b.ins().jump(join, &[]);
                     self.b.switch_to_block(n);
-                    self.stmts(no);
+                    self.stmts(no, live);
                     self.b.ins().jump(join, &[]);
                     self.b.switch_to_block(join);
+                }
+                Stmt::Load(target, batch) => {
+                    let v = self.expr(batch);
+                    self.store(280, v);
+                    self.constant(288, *target as i64);
+                    let (pc, next) = self.continuation();
+                    self.suspend(2, pc, live);
+                    self.b.switch_to_block(next);
+                }
+                Stmt::Record(target, batch, total) => {
+                    let batch = self.expr(batch);
+                    let total = self.expr(total);
+                    self.store(280, batch);
+                    self.store(272, total);
+                    self.constant(288, *target as i64);
+                    let (pc, next) = self.continuation();
+                    let terminal = matches!(&ss[position + 1..], [Stmt::Return(Expr::Local(i))] if i == target);
+                    self.suspend(if terminal { 7 } else { 3 }, pc, live);
+                    self.b.switch_to_block(next);
+                }
+                Stmt::Print(e, ty) => {
+                    let value = self.expr(e);
+                    let kind = self
+                        .b
+                        .ins()
+                        .iconst(types::I64, i64::from(*ty == ir::Type::Bool));
+                    let call = self.b.ins().call(self.print, &[self.output, value, kind]);
+                    let failed = self.b.inst_results(call)[0];
+                    let next = self.b.create_block();
+                    self.b.ins().brif(failed, self.output_error, &[], next, &[]);
+                    self.b.switch_to_block(next);
+                }
+                Stmt::For(buffer, body) => self.scan(*buffer, body, live),
+                Stmt::Return(e) => {
+                    let value = self.expr(e);
+                    self.store(272, value);
+                    self.constant(312, 0);
+                    let done = self.b.ins().iconst(types::I64, 0);
+                    self.b.ins().return_(&[done]);
                 }
             }
         }
     }
+    fn scan(&mut self, buffer: usize, body: &[Stmt], live: u64) {
+        self.constant(256, 0);
+        let (pc, chunk) = self.continuation();
+        self.b.ins().jump(chunk, &[]);
+        self.b.switch_to_block(chunk);
+        let index = self.load(256);
+        let len = self.b.ins().load(
+            types::I64,
+            MemFlags::trusted(),
+            self.views,
+            (buffer * 16 + 8) as i32,
+        );
+        let rows = self.b.ins().load(
+            types::I64,
+            MemFlags::trusted(),
+            self.views,
+            (buffer * 16) as i32,
+        );
+        let left = self.b.ins().isub(len, index);
+        let quota = self.load(296);
+        let max_chunk = self.load(304);
+        let count = self.b.ins().umin(left, max_chunk);
+        let count = self.b.ins().umin(count, quota);
+        let left_nonzero = self.b.ins().icmp_imm(IntCC::NotEqual, left, 0);
+        let empty_quota = self.b.ins().icmp_imm(IntCC::Equal, quota, 0);
+        let exhausted = self.b.ins().band(left_nonzero, empty_quota);
+        let reserve = self.b.create_block();
+        self.b.ins().brif(exhausted, self.budget, &[], reserve, &[]);
+        self.b.switch_to_block(reserve);
+        let remaining = self.b.ins().isub(quota, count);
+        self.store(296, remaining);
+        let end = self.b.ins().iadd(index, count);
+        let ix = self.b.declare_var(types::I64);
+        self.b.def_var(ix, index);
+        let header = self.b.create_block();
+        let row_body = self.b.create_block();
+        let finish = self.b.create_block();
+        self.b.ins().jump(header, &[]);
+        self.b.switch_to_block(header);
+        let i = self.b.use_var(ix);
+        let more = self.b.ins().icmp(IntCC::UnsignedLessThan, i, end);
+        self.b.ins().brif(more, row_body, &[], finish, &[]);
+        self.b.switch_to_block(row_body);
+        let offset = self.b.ins().ishl_imm(i, 4);
+        self.row = Some(self.b.ins().iadd(rows, offset));
+        self.stmts(body, live | (1u64 << buffer));
+        self.row = None;
+        let i = self.b.use_var(ix);
+        let next = self.b.ins().iadd_imm(i, 1);
+        self.b.def_var(ix, next);
+        self.b.ins().jump(header, &[]);
+        self.b.switch_to_block(finish);
+        let i = self.b.use_var(ix);
+        self.store(256, i);
+        let more = self.b.ins().icmp(IntCC::UnsignedLessThan, i, len);
+        let yield_block = self.b.create_block();
+        let after = self.b.create_block();
+        self.b.ins().brif(more, yield_block, &[], after, &[]);
+        self.b.switch_to_block(yield_block);
+        self.suspend(4, pc, live | (1u64 << buffer));
+        self.b.switch_to_block(after);
+    }
+}
+struct Emit<'a, 'b> {
+    b: &'a mut FunctionBuilder<'b>,
+    vars: &'a [Variable],
+    row: Option<Value>,
+    overflow: cranelift_codegen::ir::Block,
+}
+impl Emit<'_, '_> {
     fn expr(&mut self, e: &Expr) -> Value {
         match e {
             Expr::Int(v) => self.b.ins().iconst(types::I64, *v),
@@ -320,8 +499,14 @@ mod tests {
     #[test]
     fn layout() {
         assert_eq!(std::mem::offset_of!(Frame, index), 256);
-        assert_eq!(std::mem::offset_of!(Frame, initialized), 264);
+        assert_eq!(std::mem::offset_of!(Frame, pc), 264);
         assert_eq!(std::mem::offset_of!(Frame, total), 272);
-        assert_eq!(std::mem::size_of::<Frame>(), 280);
+        assert_eq!(std::mem::offset_of!(Frame, batch), 280);
+        assert_eq!(std::mem::offset_of!(Frame, target), 288);
+        assert_eq!(std::mem::offset_of!(Frame, remaining), 296);
+        assert_eq!(std::mem::offset_of!(Frame, chunk), 304);
+        assert_eq!(std::mem::offset_of!(Frame, live), 312);
+        assert_eq!(std::mem::size_of::<Frame>(), 320);
+        assert_eq!(std::mem::size_of::<View>(), 16);
     }
 }

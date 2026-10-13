@@ -5,6 +5,7 @@ pub enum TaskError {
     Cancelled,
     Permission,
     Buffer,
+    Input,
     Provider(String),
 }
 impl std::fmt::Display for TaskError {
