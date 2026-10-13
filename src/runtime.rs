@@ -206,9 +206,22 @@ pub(crate) unsafe extern "C" fn native_print(output: *mut Output, value: i64, bo
         output.error = Some(TaskError::Budget);
         return 1;
     }
-    if output.stdout.try_reserve_exact(line.len()).is_err() {
-        output.error = Some(TaskError::Budget);
-        return 1;
+    let required = output.stdout.len() + line.len();
+    if required > output.stdout.capacity() {
+        // Amortize repeated line appends without letting capacity exceed the
+        // task's explicit output bound. Small single-line output stays small.
+        let capacity = required
+            .checked_next_power_of_two()
+            .unwrap_or(output.max)
+            .min(output.max);
+        if output
+            .stdout
+            .try_reserve_exact(capacity - output.stdout.len())
+            .is_err()
+        {
+            output.error = Some(TaskError::Budget);
+            return 1;
+        }
     }
     output.stdout.push_str(line);
     0
@@ -228,6 +241,27 @@ pub async fn execute_script<P: Provider>(
     ScriptOutcome {
         status,
         stdout: output.stdout,
+    }
+}
+#[cfg(test)]
+mod output_tests {
+    use super::*;
+    #[test]
+    fn growth_never_exceeds_the_task_cap_and_rejected_lines_are_atomic() {
+        for max in [0, 1, 2, 3, 7, 17, 31, 64] {
+            let mut out = Output::new(max, true);
+            for _ in 0..64 {
+                let before = out.stdout.clone();
+                let status = unsafe { native_print(&mut out, 7, 0) };
+                assert!(out.stdout.capacity() <= max);
+                if status != 0 {
+                    assert_eq!(out.stdout, before);
+                    assert_eq!(out.error, Some(TaskError::Budget));
+                    break;
+                }
+                assert_eq!(out.stdout.len(), before.len() + 2);
+            }
+        }
     }
 }
 #[allow(clippy::too_many_arguments)]

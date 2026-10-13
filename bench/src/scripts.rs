@@ -27,6 +27,7 @@ fn source(case: &str) -> String {
         "scalar" => "scalar_script.py",
         "scan" => "scan_script.py",
         "weighted" => "weighted_script.py",
+        "print_loop" => "print_loop_script.py",
         _ => panic!("case"),
     };
     let base = std::env::var_os("MINIPY_FIXTURES")
@@ -163,6 +164,10 @@ fn expected(case: &str, n: usize) -> (String, Option<i64>) {
             "scalar" => "734\nTrue\n".into(),
             "scan" => format!("{}\n", expected - BATCH),
             "weighted" => format!("{expected}\n"),
+            "print_loop" => v2_common::rows(n)
+                .iter()
+                .map(|q| format!("{}\n", q.quantity))
+                .collect(),
             _ => unreachable!(),
         };
         (stdout, None)
@@ -329,7 +334,7 @@ fn main() {
             validate(result, &expected, legacy);
         }
         v2_common::emit(
-            &serde_json::json!({"engine":engine,"case":case,"mode":mode,"rows":n,"rep":i,"delay_us":delay.as_micros(),"compile_ns":compile_ns,"total_wall_ns":total_wall_ns,"total_cpu_ns":total_cpu_ns,"code_bytes":code_bytes,"allocation_delta":v2_common::allocation_delta(before,after),"completed":true,"stdout":result.as_ref().map(|r|&r.0)}),
+            &serde_json::json!({"engine":engine,"case":case,"mode":mode,"rows":n,"rep":i,"delay_us":delay.as_micros(),"compile_ns":compile_ns,"total_wall_ns":total_wall_ns,"total_cpu_ns":total_cpu_ns,"code_bytes":code_bytes,"allocation_delta":v2_common::allocation_delta(before,after),"completed":true,"stdout":result.as_ref().filter(|r|r.0.len()<=128).map(|r|&r.0),"stdout_bytes":result.as_ref().map(|r|r.0.len())}),
         );
     }
 }
