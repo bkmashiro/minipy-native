@@ -1,0 +1,60 @@
+--- a/src/buffer.rs
++++ b/src/buffer.rs
+@@ -19,7 +19,7 @@
+ /// Immutable, shared ownership of a bounded array of Quote records.
+ #[derive(Clone, Debug)]
+ pub struct QuoteBuffer {
+-    rows: Arc<[Quote]>,
++    rows: Arc<Box<[Quote]>>,
+ }
+
+ impl QuoteBuffer {
+@@ -33,7 +33,7 @@
+             .checked_mul(size_of::<Quote>())
+             .ok_or(TaskError::Overflow)?;
+         Ok(Self {
+-            rows: Arc::from(quotes.into_boxed_slice()),
++            rows: Arc::new(quotes.into_boxed_slice()),
+         })
+     }
+
+@@ -84,7 +84,7 @@
+
+     /// Observe owner lifetime without extending it.
+     #[inline]
+-    pub fn downgrade(&self) -> Weak<[Quote]> {
++    pub fn downgrade(&self) -> Weak<Box<[Quote]>> {
+         Arc::downgrade(&self.rows)
+     }
+ }
+--- a/src/provider.rs
++++ b/src/provider.rs
+@@ -42,7 +42,7 @@
+     fail_load: bool,
+     fail_record: bool,
+     counters: Arc<Counters>,
+-    last_rows: Arc<Mutex<Option<Weak<[Quote]>>>>,
++    last_rows: Arc<Mutex<Option<Weak<Box<[Quote]>>>>>,
+ }
+
+ impl TestProvider {
+@@ -73,7 +73,7 @@
+     }
+
+     /// Weakly observe the latest loaded row allocation without extending its life.
+-    pub fn last_rows(&self) -> Option<Weak<[Quote]>> {
++    pub fn last_rows(&self) -> Option<Weak<Box<[Quote]>>> {
+         self.last_rows
+             .lock()
+             .unwrap_or_else(|e| e.into_inner())
+--- a/tests/acceptance.rs
++++ b/tests/acceptance.rs
+@@ -231,7 +231,7 @@
+     load_started: Notify,
+     record_started: Notify,
+     records: AtomicUsize,
+-    weak_rows: Mutex<Option<Weak<[Quote]>>>,
++    weak_rows: Mutex<Option<Weak<Box<[Quote]>>>>,
+ }
+ impl GatedProvider {
+     fn new(

@@ -89,10 +89,35 @@ async fn checked_arithmetic_and_boolean_error_order_execute_native() {
     assert_eq!(p.record_count(), 0);
 }
 #[tokio::test(flavor = "current_thread")]
+async fn diagnostic_ir_is_opt_in_and_preserves_native_execution() {
+    let ordinary = CodeUnit::compile(SOURCE).unwrap();
+    let explicit_opt = CodeUnit::compile_with_opt(SOURCE, "speed").unwrap();
+    let diagnostic = CodeUnit::compile_with_ir(SOURCE, "speed").unwrap();
+    assert!(ordinary.clif.is_empty());
+    assert!(explicit_opt.clif.is_empty());
+    assert!(diagnostic.clif.contains("function"));
+    assert!(diagnostic.clif.contains("load.i64"));
+    assert_eq!(ordinary.code_bytes, diagnostic.code_bytes);
+    for code in [ordinary, diagnostic] {
+        let provider = Arc::new(TestProvider::new(vec![q(2, 3)], Default::default()));
+        let receipt = runtime::execute(
+            Rc::new(code),
+            provider,
+            0,
+            100,
+            Limits::default(),
+            Cancellation::default(),
+            None,
+        )
+        .await;
+        assert_eq!(receipt, Ok(6));
+    }
+}
+#[tokio::test(flavor = "current_thread")]
 async fn stateful_source_changes_code_and_chunk_resume_result() {
     let s = include_str!("../fixtures/stateful_branch.py");
-    let a = CodeUnit::compile(SOURCE).unwrap();
-    let b = CodeUnit::compile(s).unwrap();
+    let a = CodeUnit::compile_with_ir(SOURCE, "speed").unwrap();
+    let b = CodeUnit::compile_with_ir(s, "speed").unwrap();
     assert_ne!(a.clif, b.clif);
     let (r, _) = execute(s, vec![q(10, 2), q(8, 3), q(11, 1)]).await;
     assert_eq!(r, Ok(31));

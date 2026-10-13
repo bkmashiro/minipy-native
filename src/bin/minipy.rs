@@ -15,7 +15,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
     let show_ir = args.next().is_some_and(|arg| arg == "--ir");
     let start = Instant::now();
-    let code = Rc::new(CodeUnit::compile(&source)?);
+    let code = Rc::new(if show_ir {
+        CodeUnit::compile_with_ir(&source, "speed")?
+    } else {
+        CodeUnit::compile(&source)?
+    });
     println!(
         "compile_ns={} code_bytes={}",
         start.elapsed().as_nanos(),
@@ -23,6 +27,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     );
     if show_ir {
         println!("{}", code.clif);
+        #[cfg(feature = "compile-timing")]
+        eprintln!("{}", cranelift_codegen::timing::take_current());
     }
     let provider = Arc::new(TestProvider::new(
         vec![
