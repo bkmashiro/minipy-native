@@ -1,10 +1,10 @@
 //! Asynchronous provider contract and deterministic test implementation.
 
-use crate::buffer::{Quote, QuoteBuffer};
+use crate::buffer::{Quote, QuoteBuffer, QuoteWeak};
 use crate::error::TaskError;
 use std::future::Future;
 use std::sync::atomic::{AtomicUsize, Ordering};
-use std::sync::{Arc, Mutex, Weak};
+use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
 /// Capability-facing asynchronous operations for the quote vertical slice.
@@ -42,7 +42,7 @@ pub struct TestProvider {
     fail_load: bool,
     fail_record: bool,
     counters: Arc<Counters>,
-    last_rows: Arc<Mutex<Option<Weak<[Quote]>>>>,
+    last_rows: Arc<Mutex<Option<QuoteWeak>>>,
 }
 
 impl TestProvider {
@@ -73,7 +73,7 @@ impl TestProvider {
     }
 
     /// Weakly observe the latest loaded row allocation without extending its life.
-    pub fn last_rows(&self) -> Option<Weak<[Quote]>> {
+    pub fn last_rows(&self) -> Option<QuoteWeak> {
         self.last_rows
             .lock()
             .unwrap_or_else(|e| e.into_inner())

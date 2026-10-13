@@ -16,14 +16,18 @@ pub struct Quote {
     pub quantity: i64,
 }
 
+/// Observes the small owner header, never pins the separately boxed row payload.
+pub type QuoteWeak = Weak<Box<[Quote]>>;
+
 /// Immutable, shared ownership of a bounded array of Quote records.
 #[derive(Clone, Debug)]
 pub struct QuoteBuffer {
-    rows: Arc<[Quote]>,
+    rows: Arc<Box<[Quote]>>,
 }
 
 impl QuoteBuffer {
     /// Freeze rows into an immutable owner, rejecting inputs beyond the row bound.
+    /// Exact-capacity Vec payloads are moved; spare capacity may shrink here.
     pub fn from_quotes(quotes: Vec<Quote>) -> Result<Self, TaskError> {
         if quotes.len() > MAX_QUOTES {
             return Err(TaskError::Budget);
@@ -33,7 +37,7 @@ impl QuoteBuffer {
             .checked_mul(size_of::<Quote>())
             .ok_or(TaskError::Overflow)?;
         Ok(Self {
-            rows: Arc::from(quotes.into_boxed_slice()),
+            rows: Arc::new(quotes.into_boxed_slice()),
         })
     }
 
@@ -84,7 +88,7 @@ impl QuoteBuffer {
 
     /// Observe owner lifetime without extending it.
     #[inline]
-    pub fn downgrade(&self) -> Weak<[Quote]> {
+    pub fn downgrade(&self) -> QuoteWeak {
         Arc::downgrade(&self.rows)
     }
 }
@@ -94,7 +98,24 @@ mod tests {
     use super::*;
     use std::mem::align_of;
     use std::ptr::addr_of;
-
+    #[test]
+    fn exact_capacity_freeze_moves_the_payload_and_uses_a_thin_owner() {
+        let rows = vec![
+            Quote {
+                unit_price_cents: 3,
+                quantity: 2
+            };
+            4
+        ];
+        assert_eq!(rows.len(), rows.capacity());
+        let ptr = rows.as_ptr();
+        let owner = QuoteBuffer::from_quotes(rows).unwrap();
+        assert_eq!(owner.rows().as_ptr(), ptr);
+        assert_eq!(size_of::<QuoteBuffer>(), size_of::<usize>());
+        let weak: QuoteWeak = owner.downgrade();
+        drop(owner);
+        assert!(weak.upgrade().is_none());
+    }
     #[test]
     fn quote_v1_layout_and_offsets_are_stable() {
         assert_eq!(size_of::<Quote>(), QUOTE_STRIDE);

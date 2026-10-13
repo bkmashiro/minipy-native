@@ -2,6 +2,7 @@
 //! argv: native|monty scalar|scan|weighted|legacy compile|cold|warm|mixed ROWS REPS DELAY_US
 mod script_memory;
 mod v2_common;
+mod weak_memory;
 use minipy_native::{
     codegen::CodeUnit,
     ir::Type,
@@ -199,13 +200,21 @@ fn main() {
     let reps: usize = args[5].parse().unwrap();
     let delay = Duration::from_micros(args[6].parse().unwrap());
     assert!(reps > 0 && n <= 1_000_000);
-    assert!(["compile", "cold", "warm", "mixed", "hold"].contains(&mode.as_str()));
+    assert!(["compile", "cold", "warm", "mixed", "hold", "weak"].contains(&mode.as_str()));
     let source = source(case);
     let legacy = case == "legacy";
     let rt = tokio::runtime::Builder::new_current_thread()
         .enable_time()
         .build()
         .unwrap();
+    if mode == "weak" {
+        assert!(engine == "native" && case == "weighted");
+        if !cfg!(feature = "allocation-diagnostics") {
+            panic!("weak is a separate diagnostic build");
+        }
+        tokio::task::LocalSet::new().block_on(&rt, weak_memory::run(&source, n));
+        return;
+    }
     if mode == "hold" {
         assert!(["weighted", "legacy"].contains(&case.as_str()));
         tokio::task::LocalSet::new().block_on(

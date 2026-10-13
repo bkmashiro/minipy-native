@@ -1,5 +1,5 @@
 use minipy_native::{
-    buffer::{Quote, QuoteBuffer},
+    buffer::{Quote, QuoteBuffer, QuoteWeak},
     codegen::CodeUnit,
     error::TaskError,
     provider::{Provider, TestProvider},
@@ -8,7 +8,7 @@ use minipy_native::{
 use std::{
     rc::Rc,
     sync::{
-        Arc, Mutex, Weak,
+        Arc, Mutex,
         atomic::{AtomicUsize, Ordering},
     },
 };
@@ -231,7 +231,7 @@ struct GatedProvider {
     load_started: Notify,
     record_started: Notify,
     records: AtomicUsize,
-    weak_rows: Mutex<Option<Weak<[Quote]>>>,
+    weak_rows: Mutex<Option<QuoteWeak>>,
 }
 impl GatedProvider {
     fn new(
