@@ -55,6 +55,10 @@ async fn scalar_script_private_stdout_and_no_implicit_echo() {
         assert_eq!(p.load_count(), 0);
         assert_eq!(p.record_count(), 0);
     }
+    let (out, p) = run("tools.load_quotes(1)", &[], &[], ScriptLimits::default()).await;
+    assert_eq!(out.status, Ok(()));
+    assert_eq!(out.stdout, "");
+    assert_eq!(p.load_count(), 1);
     let (out, _) = run(
         "answer = input * 2 + 1\nprint(answer)\nprint(answer > 0)\nprint(-9223372036854775808)",
         &[20],
@@ -78,6 +82,16 @@ const SCAN: &str = "quotes = tools.load_quotes(batch_id)\ntotal = 0\nfor quote i
 const INPUTS: &[(&str, Type)] = &[("batch_id", Type::I64), ("price_limit", Type::I64)];
 #[tokio::test]
 async fn real_scan_without_record_and_then_record_receipt() {
+    let (out, p) = run(
+        "print(tools.record_total(1,2))",
+        &[],
+        &[],
+        ScriptLimits::default(),
+    )
+    .await;
+    assert_eq!(out.status, Ok(()));
+    assert_eq!(out.stdout, "3\n");
+    assert_eq!(p.record_count(), 1);
     let (out, p) = run(
         &format!("{SCAN}print(total)"),
         &[7, 700],
@@ -383,6 +397,7 @@ fn frontend_named_safety_bounds_and_rejections() {
         "print('hi')",
         "print(1,2)",
         "print(1,end=2)",
+        "await print(1)",
         "import os",
         "def f():\n    return 1",
         "while True:\n    print(1)",

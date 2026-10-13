@@ -295,7 +295,7 @@ impl Compiler {
                     if ty != Type::I64 {
                         return Err(err("load_quotes batch expression must be i64"));
                     }
-                    if self.next_buffer >= 32 {
+                    if self.next_buffer >= ir::MAX_BUFFERS {
                         return Err(err("program exceeds 32 quote buffers"));
                     }
                     if self.names.iter().any(|n| n == &name)
@@ -427,11 +427,35 @@ impl Compiler {
                     return Ok(vec![Stmt::Record(i, batch, total)]);
                 }
                 if Self::is_tool(&e.value, "load_quotes") {
-                    let _ = self.tool_call(&e.value, "load_quotes", depth + 1, in_loop)?;
-                    return Err(err("load_quotes result must be assigned to a buffer name"));
+                    let (batch, _) = self
+                        .tool_call(&e.value, "load_quotes", depth + 1, in_loop)?
+                        .unwrap();
+                    if in_loop {
+                        return Err(err("tool calls are unsupported inside loops"));
+                    }
+                    let slot = self.next_buffer;
+                    if slot >= ir::MAX_BUFFERS {
+                        return Err(err("too many quote buffers"));
+                    }
+                    self.next_buffer += 1;
+                    self.buffers.insert(format!("\0discard{slot}"), slot);
+                    return Ok(vec![Stmt::Load(slot, batch)]);
                 }
                 if let Some(arg) = Self::print_arg(&e.value)? {
                     self.node(depth + 1)?;
+                    if let Some((batch, total)) =
+                        self.tool_call(arg, "record_total", depth + 2, in_loop)?
+                    {
+                        if in_loop {
+                            return Err(err("tool calls are unsupported inside loops"));
+                        }
+                        let i = self.hidden_scalar(Type::I64)?;
+                        self.initialized.insert(i);
+                        return Ok(vec![
+                            Stmt::Record(i, batch, total),
+                            Stmt::Print(Expr::Local(i), Type::I64),
+                        ]);
+                    }
                     let (value, ty) = self.expr(arg, depth + 2, in_loop)?;
                     if !matches!(ty, Type::I64 | Type::Bool) {
                         return Err(err("print accepts one i64 or bool argument"));
@@ -563,7 +587,7 @@ impl Compiler {
         Ok(Some((batch, total)))
     }
     fn print_arg(e: &ast::Expr) -> Result<Option<&ast::Expr>> {
-        let Some((call, _)) = Self::call_parts(e) else {
+        let Some((call, awaited)) = Self::call_parts(e) else {
             return Ok(None);
         };
         let ast::Expr::Call(c) = call else {
@@ -571,6 +595,9 @@ impl Compiler {
         };
         if !matches!(c.func.as_ref(), ast::Expr::Name(n) if n.id.as_str()=="print") {
             return Ok(None);
+        }
+        if awaited {
+            return Err(err("await applies only to declared Tool calls"));
         }
         if !c.keywords.is_empty() || c.args.len() != 1 {
             return Err(err("print accepts exactly one positional argument"));

@@ -1,5 +1,6 @@
 //! Restricted typed semantic IR. Names and schemas are resolved at compilation.
 pub const MAX_LOCALS: usize = 32;
+pub const MAX_BUFFERS: usize = 32;
 pub const MAX_SOURCE_BYTES: usize = 16 * 1024;
 pub const MAX_NODES: usize = 512;
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
