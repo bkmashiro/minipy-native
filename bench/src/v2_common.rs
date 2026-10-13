@@ -114,15 +114,18 @@ pub fn cpu_ns() -> u64 {
 pub struct Physical {
     pub rss_bytes: Option<u64>,
     pub pss_bytes: Option<u64>,
-    pub peak_rss_bytes: u64,
+    pub peak_rss_bytes: Option<u64>,
     pub method: &'static str,
 }
 pub fn physical() -> Physical {
+    #[cfg(not(target_os = "linux"))]
     let mut usage = std::mem::MaybeUninit::<libc::rusage>::uninit();
+    #[cfg(not(target_os = "linux"))]
     assert_eq!(
         unsafe { libc::getrusage(libc::RUSAGE_SELF, usage.as_mut_ptr()) },
         0
     );
+    #[cfg(not(target_os = "linux"))]
     let u = unsafe { usage.assume_init() };
     #[cfg(target_os = "linux")]
     {
@@ -139,8 +142,21 @@ pub fn physical() -> Physical {
         Physical {
             rss_bytes: kb("Rss:"),
             pss_bytes: kb("Pss:"),
-            peak_rss_bytes: u.ru_maxrss as u64 * 1024,
-            method: "smaps_rollup/getrusage",
+            // ru_maxrss survives exec and can inherit the Python launcher's
+            // high-water mark. VmHWM is this executable's peak.
+            peak_rss_bytes: std::fs::read_to_string("/proc/self/status")
+                .ok()
+                .and_then(|text| {
+                    text.lines().find_map(|line| {
+                        line.strip_prefix("VmHWM:")?
+                            .split_whitespace()
+                            .next()?
+                            .parse::<u64>()
+                            .ok()
+                    })
+                })
+                .map(|n| n * 1024),
+            method: "smaps_rollup RSS/PSS; status VmHWM since exec",
         }
     }
     #[cfg(not(target_os = "linux"))]
@@ -155,7 +171,7 @@ pub fn physical() -> Physical {
         Physical {
             rss_bytes: rss,
             pss_bytes: None,
-            peak_rss_bytes: u.ru_maxrss as u64,
+            peak_rss_bytes: Some(u.ru_maxrss as u64),
             method: "ps-rss/getrusage; no macOS PSS",
         }
     }

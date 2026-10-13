@@ -130,8 +130,10 @@ row storage without the Arc header. Bytes controls report the actual Vec capacit
 Global counters report requested Rust layouts, freed/allocated/reallocated bytes
 and peak live requested bytes since engine idle. They include diagnostic task and
 collection overhead, exclude allocator metadata/reserved bins and JIT mmap pages.
-RSS is sampled current resident memory, Linux PSS is from smaps_rollup, peak RSS
-is whole-process getrusage (including compile and sampling). macOS has no PSS in
+RSS is sampled current resident memory. Linux RSS/PSS is from smaps_rollup and
+peak RSS is executable-lifetime VmHWM from /proc/self/status (including compile
+and sampling). getrusage ru_maxrss can inherit the Python launcher's pre-exec
+peak, so the Linux probe no longer uses it. macOS uses getrusage, with no PSS in
 this probe, represented by null. Allocator counters and physical readers are not
 an atomic snapshot; readers/output also perturb later physical samples.
 
