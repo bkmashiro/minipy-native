@@ -39,7 +39,10 @@ def plan(profile):
 
 def identity(root):
     def command(args):
-        r = subprocess.run(args, cwd=root, text=True, capture_output=True, check=False)
+        try:
+            r = subprocess.run(args, cwd=root, text=True, capture_output=True, check=False)
+        except OSError:
+            return None  # Deployed guest binaries need no guest compiler/git.
         return r.stdout.strip() if r.returncode == 0 else None
     return {'kind': 'campaign_identity', 'host': platform.platform(), 'machine': platform.machine(),
             'source_commit': command(['git', 'rev-parse', 'HEAD']),

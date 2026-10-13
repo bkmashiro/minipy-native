@@ -4,7 +4,7 @@ Build both arms first with prepare_bench_v2_baseline.py and recorded Zig command
 """
 import json
 from pathlib import Path
-import shlex
+
 import subprocess
 import sys
 
@@ -21,7 +21,11 @@ commands = []
 
 def run(argv, capture=False):
     commands.append(argv)
-    result = subprocess.run(argv, cwd=ROOT, text=True, capture_output=capture, check=True)
+    result = subprocess.run(argv, cwd=ROOT, text=True, capture_output=capture, check=False)
+    if result.returncode and capture:
+        (output / 'deployment-failure.stdout.txt').write_text(result.stdout)
+        (output / 'deployment-failure.stderr.txt').write_text(result.stderr)
+    result.check_returncode()
     return result.stdout if capture else ''
 
 try:

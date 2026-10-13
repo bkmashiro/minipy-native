@@ -1,10 +1,18 @@
 """Deterministic arithmetic/accounting tests, not performance evidence."""
 import unittest
+from unittest.mock import patch
+from pathlib import Path
 from summarize_bench_v2 import fit, percentile, summarize
-from run_bench_v2 import plan
+from run_bench_v2 import identity, plan
 
 
 class SummaryTests(unittest.TestCase):
+    def test_missing_guest_toolchain_is_unavailable_metadata(self):
+        with patch('run_bench_v2.subprocess.run', side_effect=FileNotFoundError):
+            result = identity(Path('.'))
+        self.assertIsNone(result['toolchain'])
+        self.assertIsNone(result['source_commit'])
+
     def test_plan_is_small_and_classified(self):
         self.assertEqual(len(plan('smoke')), 17)
         self.assertEqual(len(plan('campaign')), 39)
