@@ -8,15 +8,14 @@ import statistics
 root = Path(__file__).resolve().parents[1]
 out = root / 'bench/results'
 rows_out = []
-for path in sorted(out.glob('*-*.csv')):
-    if path.name == 'summary.csv':
-        continue
+for path in sorted(out / f'{platform}-{opt}.csv' for platform in ['linux', 'macos'] for opt in ['speed', 'none']):
     with path.open() as f:
         rows = list(csv.DictReader(line for line in f if not line.startswith('#')))
     assert len(rows) == 1494, (path, len(rows))
     seen = set()
     groups = collections.defaultdict(list)
     for r in rows:
+        r['engine'] = {'monty_helper': 'monty_fixture_helper', 'host': 'host_fixture'}.get(r['engine'], r['engine'])
         key = tuple(r[k] for k in ['case', 'rows', 'engine', 'mode', 'chunk', 'sample'])
         assert key not in seen, (path, key)
         seen.add(key)

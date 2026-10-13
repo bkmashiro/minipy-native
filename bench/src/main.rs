@@ -1,3 +1,6 @@
+mod generic_baseline;
+mod typed_helpers;
+
 use minipy_native::{
     buffer::{Quote, QuoteBuffer},
     codegen::CodeUnit,
@@ -31,16 +34,14 @@ impl Provider for ImmediateProvider {
         });
         async move { rows }
     }
-    fn record_total(
+    async fn record_total(
         &self,
         batch: i64,
         total: i64,
-    ) -> impl Future<Output = Result<i64, minipy_native::error::TaskError>> + Send {
-        async move {
-            total
-                .checked_add(batch)
-                .ok_or(minipy_native::error::TaskError::Overflow)
-        }
+    ) -> Result<i64, minipy_native::error::TaskError> {
+        total
+            .checked_add(batch)
+            .ok_or(minipy_native::error::TaskError::Overflow)
     }
 }
 
@@ -146,7 +147,7 @@ fn runner(stateful: bool) -> Result<MontyRun, String> {
     .map_err(|e| e.to_string())
 }
 
-// Fixed host helper baseline: ordinary checked scan, not the native execution path.
+// Fixture-specific handwritten performance floor; not a general helper baseline.
 fn host_helper(
     rows: &[Quote],
     price_limit: i64,
@@ -232,6 +233,9 @@ fn run_monty_helper(runner: MontyRun, n: usize, stateful: bool) -> Result<i64, S
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let opt = std::env::args().nth(1).unwrap_or_else(|| "speed".into());
+    if opt == "generic" {
+        return generic_baseline::run();
+    }
     let rt = tokio::runtime::Builder::new_current_thread().build()?;
     println!("# monty=56949a4c45f51cedc7a96450782f58a8017e114d,provider=ready,opt={opt}");
     println!(
@@ -325,7 +329,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     let total = start.elapsed().as_nanos();
                     assert_eq!(r, receipt);
                     println!(
-                        "{case},{n},monty_helper,{mode},0,{i},{compile},0,{execution},{total},0,{r}"
+                        "{case},{n},monty_fixture_helper,{mode},0,{i},{compile},0,{execution},{total},0,{r}"
                     );
                 }
                 for chunk in [1, 256, 4096] {
@@ -378,7 +382,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let execution = t.elapsed().as_nanos();
                 let total = start.elapsed().as_nanos();
                 assert_eq!(r, receipt);
-                println!("{case},{n},host,warm,0,{i},0,{conversion},{execution},{total},0,{r}");
+                println!(
+                    "{case},{n},host_fixture,warm,0,{i},0,{conversion},{execution},{total},0,{r}"
+                );
             }
             // Untimed lifecycle observation; production measurements above have no trace allocation.
             let trace: Trace = Rc::default();

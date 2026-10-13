@@ -1,0 +1,37 @@
+{
+  "parent_commit": "87e0131d97bafce631b98685000b2e7aded3dd18",
+  "monty": "56949a4c45f51cedc7a96450782f58a8017e114d",
+  "commands": [
+    "cargo +1.96.0 build --release --manifest-path bench/Cargo.toml --locked",
+    "/usr/bin/time -l bench/target/release/quote-bench generic",
+    "cargo +1.96.0 zigbuild --release --manifest-path bench/Cargo.toml --locked --target aarch64-unknown-linux-musl",
+    "ssh <idle-vm> busybox time -v env MINIPY_FIXTURES=/root/minipy-native-generic/fixtures /root/minipy-native-generic/quote-bench generic"
+  ],
+  "source_sha256": {
+    "Cargo.lock": "810520a60dbad6d43c8f6c55357a9cf9a1f0d9a396a8cca9eb70d3f3e14207b3",
+    "Cargo.toml": "934c894df41b3b5fb6ab3259bbfb7c0eaa4d7f29750cc037be9b565a1604f39e",
+    "bench/Cargo.lock": "63b178f3005757f590122003cfa53ba429e2499c9ac21c8567d9aeda6a8ce698",
+    "bench/Cargo.toml": "c6c240db193485aa74cdfdd8619564bb52b9020c629b48305917c44a05236322",
+    "bench/src/generic_baseline.rs": "e79d84d2b5d9c9cbcb58108fca50086a411c0cf95b60e32318f312b8576f84bc",
+    "bench/src/main.rs": "53e1a0c43ab8e5f4ac2c93820ddb3e272af4c2eef47b5b7c29f362a71ba08313",
+    "bench/src/typed_helpers.rs": "6f79974238182539e709593f7ae6e20fe5e632b566a0fb0eea0fe14a6fae2831",
+    "fixtures/stateful_branch.py": "115f57c51b3684f1996b0cd34c38a873bc3a8a86349881584cb45379eec75bb3",
+    "fixtures/weighted_scan.py": "3682bfb78d4d4f288008b8cb79846dc65d2e2bd6b9e51d818acda6240ccf7f79",
+    "src/bin/minipy.rs": "1e88c5aa58f49b5fd4da1f960d108fcc6eea5b79b949855af96dc92d86882dd0",
+    "src/buffer.rs": "c8b2f53da5565f8e93ba1c914a1d4ce5780d9030e3808675e030cc26235da518",
+    "src/codegen.rs": "06899946020a043ea7f7ca4f670af26ea5d3cd6ac602be896db69b28295a1bca",
+    "src/error.rs": "ef532fc62b81437613ad2f38c8bb2444e8b2b1d755ec530a9eaa7d35a751190d",
+    "src/frontend.rs": "c9efa9a2c1a5a908b39fa0dc6fd7f1bb4ede07acc35292aae9379a5cc3d33544",
+    "src/ir.rs": "e24dcc85ff5d3d80c03db3d7321365d8d9fc23c82b82760b45e850cfe1c098e5",
+    "src/lib.rs": "3d9f5c357ae6de8f3ea889f3a4b3b03644b2b6c1a171f13f110b2be410f75653",
+    "src/provider.rs": "1c71f14967a2ad9e092c78afd8ae95ddf8b420834fada50439d0e72164d8133c",
+    "src/runtime.rs": "9661be933da843e6271f5da6fbee9823a2f78a82a341b43b88597892f79ecdb8",
+    "tools/run_generic.py": "f71f0ab59819e4fb1f35d830b8fdc14b0a851d0708c136576e0f4d16b8774d20",
+    "tools/summarize_generic.py": "ece79f89eb1bc5c193656642bef8258c83d8db3e7e9f69e8f82a7f3f50c041b4"
+  },
+  "stateful_branch": "unsupported by the fixed stateless helper",
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+  "macos": "ProductName:\t\tmacOS\nProductVersion:\t\t26.4.1\nBuildVersion:\t\t25E253",
+  "hardware": "hw.model: Mac16,10\nhw.memsize: 17179869184\nmachdep.cpu.brand_string: Apple M4",
+  "linux": "Linux pysolate-vm 6.18.52-0-virt #1-Alpine SMP PREEMPT_DYNAMIC 2026-09-15 05:37:48 aarch64 Linux\n              total        used        free      shared  buff/cache   available\nMem:           1972          73         288          47        1611        1763\nSwap:          1024           0        1024\nFilesystem                Size      Used Available Use% Mounted on\n/dev/vda3                18.3G      4.6G     13.0G  26% /\nPID   TIME  COMMAND\n    1  0:00 init\n    2  0:00 kthreadd\n    3  0:00 pool_workqueue_\n    4  0:00 kworker/R-rcu_g\n    5  0:00 kworker/R-sync_\n    6  0:00 kworker/R-kvfre\n    7  0:00 kworker/R-slub_\n    8  0:00 kworker/R-netns\n   10  0:00 kworker/0:0H-kb\n   11  0:02 kworker/0:1-eve\n   13  0:00 kworker/R-mm_pe\n   15  0:00 ksoftirqd/0\n   16  0:04 rcu_preempt\n   17  0:00 rcu_exp_par_gp_\n   18  0:00 rcu_exp_gp_kthr\n   19  0:00 migration/0\n   20  0:00 cpuhp/0\n   21  0:00 cpuhp/1\n   22  0:00 migration/1\n   23  0:00 ksoftirqd/1\n   24  0:00 kworker/1:0-eve\n   25  0:00 kworker/1:0H-ev\n   26  0:00 kdevtmpfs\n   27  0:00 kworker/R-inet_\n   28  0:00 rcu_tasks_kthre\n   29  0:00 rcu_tasks_trace\n   30  0:00 kauditd\n   31  0:00 khungtaskd\n   32  0:00 oom_reaper\n   33  0:00 kworker/R-write\n   34  0:04 kcompactd0\n   35  0:00 ksmd\n   36  0:00 khugepaged\n   37  0:00 kworker/R-kbloc\n   38  0:00 kworker/R-blkcg\n   39  0:00 kworker/R-kinte\n   40  0:00 kworker/R-md_bi\n   41  0:00 kworker/1:1-eve\n   42  0:00 kworker/R-quota\n   43  0:00 kworker/1:1H-kb\n   44  0:00 kswapd0\n   59  0:00 kworker/R-kthro\n  123  0:00 khvcd\n  146  0:00 kworker/R-mld\n  159  0:00 kworker/R-ipv6_\n  160  0:00 kworker/0:1H\n  161  0:00 kworker/R-kstrp\n  371  0:00 kworker/u9:0\n  390  0:00 kworker/0:2-eve\n  914  0:00 jbd2/vda3-8\n  915  0:00 kworker/R-ext4-\n 1415  0:00 jbd2/vda1-8\n 1416  0:00 kworker/R-ext4-\n 1588  0:00 udhcpc\n 1681  0:00 syslogd\n 1702  0:00 crond\n 1722  0:00 ntpd\n 1746  0:00 sshd\n 1753  0:00 getty\n 1754  0:00 getty\n 1758  0:00 getty\n 1762  0:00 getty\n 1765  0:00 getty\n 1770  0:00 getty\n 1774  0:00 getty\n 3729  0:08 kworker/u8:0-ev\n 4383  0:03 kworker/u8:2-ev\n 9293  0:06 kworker/u8:3-ev\n29505  0:00 sshd-session\n29507  0:00 sshd-session\n29508  0:00 ps\n"
+}

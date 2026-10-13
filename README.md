@@ -2,7 +2,7 @@
 
 A research prototype for compiling short Python-like agent programs into native code over typed data, with bounded execution and asynchronous Host calls.
 
-**Status: working bounded prototype, with real macOS and Linux ARM64 execution and reproducible synthetic comparisons. Independent review is pending.** Working name; independent of Pysolate's CPython/Wasm runtime.
+**Status: working bounded prototype, with real macOS and Linux ARM64 execution and reproducible synthetic comparisons. Independent implementation review completed; corrected baseline handoff awaits same-card approval.** Working name; independent of Pysolate's CPython/Wasm runtime.
 
 ## Goal
 
@@ -37,7 +37,7 @@ cargo clippy --all-targets -- -D warnings
 
 The demonstration provider performs two real delayed asynchronous operations. The source file determines the generated scan; its input rows are a small provider fixture. `--ir` prints the actual Cranelift IR. Errors exit unsuccessfully rather than recording a partial total.
 
-Comparisons live in a separate `bench/` crate. It needs Rust 1.96 and pins Monty to an upstream commit containing a fix missing from its published 1.1.0 package. Reproduction commands and limitations are in [Experiments](docs/experiments.md). At 10,000 rows the native cold path beats ordinary Monty, but loses to Monty plus a fixed typed host helper. The milestone does not justify replacing that simpler alternative or assuming cache reuse.
+Comparisons live in a separate `bench/` crate. It needs Rust 1.96 and pins Monty to an upstream commit containing a fix missing from its published 1.1.0 package. Reproduction commands and limitations are in [Experiments](docs/experiments.md). At 10,000 rows the weighted native cold path beats ordinary Monty, but loses to Monty plus a parameterized typed-buffer filter/product/sum helper. That finite primitive does not support the cross-row stateful variant. Earlier fixture-specific Rust helpers remain handwritten performance floors. These results do not decide the value of general compiled user logic or justify assuming cache reuse.
 
 ## Implemented boundary
 

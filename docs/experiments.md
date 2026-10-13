@@ -1,6 +1,6 @@
 # Experiments
 
-Status: real source-to-native execution and synthetic measurements recorded. Implementation is validated; one focused independent review is pending. These results do not establish production workload or sandbox-equivalence claims.
+Status: real source-to-native execution and synthetic measurements recorded. Independent review of 87e0131 found no confirmed implementation blocker, but identified the fixture-specific helper contract gap. The bounded generic-helper correction below is implemented and measured; same-card approval is pending. These results do not establish production workload or sandbox-equivalence claims.
 
 ## Questions
 
@@ -71,10 +71,10 @@ Four comparisons:
 
 - `native`: producer constructs the same typed QuoteBuffer for that request, transfers its owner through a one-shot provider, executes source-derived native code, then records. No row objects or per-row host callbacks. Two owned Tokio operations are dispatched, even when the underlying provider result is immediately ready.
 - `monty`: in-process Rust API, compiled source loop over a list of two-i64 tuples, two direct host suspension/resume boundaries. Producer generation, object/list/tuple construction, VM import, loop and cleanup are inside `total_ns`. No Python wrapper, JSON or IPC.
-- `monty_helper`: the same QuoteBuffer data layer, an opaque handle, and a finite checked weighted/monotonic aggregation host capability, then record. Three direct host boundaries, no per-row callback and no arbitrary execution plan. The helper mode is chosen by the benchmark's fixed capability configuration. It intentionally moves the supported aggregation into trusted host code; it is a stronger simple alternative, not arbitrary user-source compilation.
-- `host`: checked handwritten aggregation over the same imported buffer, including producer/import/cleanup. This is a performance floor with a different execution/authority contract, not an equivalent sandbox.
+- Historical `monty_helper`, now named `monty_fixture_helper` in emitted rows and derived summaries: the same QuoteBuffer layer and opaque handle, but the weighted/monotonic business logic is handwritten for these fixtures. Three host boundaries, no per-row callback or arbitrary plan. This is a fixture-specific handwritten performance floor, not the required general helper baseline.
+- Historical `host`, now `host_fixture`: checked handwritten fixture aggregation over the same imported buffer, including producer/import/cleanup. This is a performance floor with a different execution/authority contract, not an equivalent sandbox.
 
-`total_ns` is measured directly around each full invocation, including producer construction and cleanup. Compile, conversion and execution columns are attribution only; their medians need not sum to the median total. Warm Monty includes its required runner clone. For native, conversion includes producer/import/provider creation. For `monty_helper`, producer/import is inside execution, so `conversion_ns=0` does not mean it is free. `code_bytes=0` for non-native rows is an unmeasured/not-applicable sentinel, not zero bytecode storage. Printing, the correctness oracle and separate retention tracing are outside single-invocation timing. Fixed input settings are batch=7 and limit=700. Delayed operation correctness is tested separately; benchmark ready completions do not represent production I/O distributions.
+`total_ns` is measured directly around each full invocation, including producer construction and cleanup. Compile, conversion and execution columns are attribution only; their medians need not sum to the median total. Warm Monty includes its required runner clone. For native, conversion includes producer/import/provider creation. For the fixture helper, producer/import is inside execution, so `conversion_ns=0` does not mean it is free. `code_bytes=0` for non-native rows is an unmeasured/not-applicable sentinel, not zero bytecode storage. Printing, the correctness oracle and separate retention tracing are outside single-invocation timing. Fixed input settings are batch=17 and limit=700. Delayed operation correctness is tested separately; benchmark ready completions do not represent production I/O distributions.
 
 Four raw CSVs contain 5,976 unique samples, checked and reduced to 336 groups by `tools/summarize.py`. Per platform/opt run: 1,320 successful standalone invocations, 120 successful light tasks, six successful heavy tasks and 48 expected cancellations. Raw CSVs and derived `summary.csv` are committed; no manually transcribed sample aggregation is used.
 
@@ -82,14 +82,14 @@ Four raw CSVs contain 5,976 unique samples, checked and reduced to 336 groups by
 
 Source-to-result median microseconds, 10,000 rows, `speed` optimization, native chunk=4,096:
 
-| Source | Native cold | Native warm | Monty cold | Monty warm | Monty+helper cold | Monty+helper warm | Host |
+| Source | Native cold | Native warm | Monty cold | Monty warm | Monty+fixture floor cold | Monty+fixture floor warm | Host fixture floor |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | Weighted scan | 288.793 | 78.751 | 4749.298 | 4750.652 | 85.959 | 79.230 | 70.146 |
 | Stateful branch | 363.043 | 81.397 | 4764.548 | 4776.860 | 83.292 | 81.334 | 71.543 |
 
-The fresh native compile accounts for about 219/292 µs respectively. Native producer/import is about 45 µs on this cold path; execution plus cleanup is about 24/26 µs. Ordinary Monty spends about 2.5 ms constructing/importing objects and about 2.2 ms executing/cleaning up. Avoiding that object layer is the major win. The fixed typed helper avoids it too and is approximately 3.4–4.4× faster than cold native here. Warm native is approximately tied with Monty+helper and remains slower than the direct host helper. This milestone does **not** demonstrate a source-once win over the strong helper alternative.
+The fresh native compile accounts for about 219/292 µs respectively. Native producer/import is about 45 µs on this cold path; execution plus cleanup is about 24/26 µs. Ordinary Monty spends about 2.5 ms constructing/importing objects and about 2.2 ms executing/cleaning up. Avoiding that object layer is the major win. The handwritten fixture floors avoid it too and are approximately 3.4–4.4× faster than cold native here. Warm native is approximately tied with the Monty fixture floor. These historical comparisons alone do not answer the general-helper question; the corrected weighted comparison follows below.
 
-Empty and 100-row fresh-source execution is compile-dominated. At chunk=256 the weighted cold medians are 366/242 µs, and stateful medians are 335/306 µs. Variation across ordered cells includes process warm-up, VM scheduling and CPU frequency; these are small synthetic cells, not confidence intervals or production percentiles.
+Empty and 100-row fresh-source execution is compile-dominated. At 10,000 rows/chunk=256, weighted cold/warm medians are 304.918/97.334 µs, and stateful medians are 379.399/99.334 µs. Variation across ordered cells includes process warm-up, VM scheduling and CPU frequency; these are small synthetic cells, not confidence intervals or production percentiles.
 
 ### Checkpoints and optimization probes
 
@@ -120,4 +120,48 @@ Cancellation originally only checked after provider completion. Observation: a s
 
 ### Milestone decision and limits
 
-Keep the small typed native compiler as a research slice. The data/ownership boundary and chunked loop work, and generated code changes with source. The two finite host helpers cover these examples more cheaply for source-once execution. Do not expand language scope, implement a cache, infer representative reuse or claim an overall runtime replacement from this campaign. Compiler/lowering, dispatcher and trusted providers remain the TCB; test coverage is not a proof of safe arbitrary untrusted native execution. Exact integrated-commit review is the remaining gate, with findings to be returned separately rather than another open-ended optimization loop.
+Keep the small typed native compiler as a research slice. The data/ownership boundary and chunked loop work, and generated code changes with source. The two handwritten fixture floors cover these known businesses more cheaply; they do not replace a general helper comparison. Do not expand language scope, implement a cache, infer representative reuse or claim an overall runtime replacement from this campaign. Compiler/lowering, dispatcher and trusted providers remain the TCB; test coverage is not a proof of safe arbitrary untrusted native execution. Independent review of 87e0131 is recorded on the Kanban card; the correction and its remaining approval are described below.
+
+## Generic helper contract correction, 2026-10-13
+
+The independent Luna review of fixed commit `87e0131d97bafce631b98685000b2e7aded3dd18` found no confirmed runtime/lowering blocker. Its report is attached to task `t_eecdee0f` as `independent-review-87e0131.md`. The main experimental gap was the fixture-specific helper. This correction changes only benchmark code and reporting, leaving native semantics, cancellation and Linux acceptance evidence intact.
+
+### Fixed API and coverage
+
+Before the new measurement, Sol fixed one small Quote/v1 primitive, implemented in the bounded Luna lane (`gpt-6-luna/openai-codex`):
+
+`sum_product_where_gt_le(handle, gt_field, gt_bound, le_field, le_bound, left_field, right_field) -> i64`
+
+Field indices 0/1 select price/quantity. The primitive processes rows in order, tests `field > bound` then `field <= bound`, and performs checked multiply then checked accumulation only on selected rows. It accepts no source, IR, expression tree, fixture name or stateful mode. All field/threshold choices are decoded and validated from the actual Monty host call inside timing; the handle is scoped to the single owned buffer. Different field selections and thresholds have correctness tests. This is a finite general operation over the declared schema, not a general query engine. It fuses filtering and aggregation without an intermediate buffer.
+
+Weighted scan calls it with `(handle, 1, 0, 0, price_limit, 0, 1)`. Its compilation, argument construction/validation, producer/import, three direct Monty suspension/resume boundaries, checked helper execution, buffer release before record and final cleanup are inside the total. There is no additional plan compilation. The synchronous helper is bounded here to 10,000 benchmark rows and has no CPU yields/cancellation inside the call. Native has chunk checkpoints and two dispatched Tokio operations. This is not a scheduling, quota or safety-equivalence claim.
+
+The previous-price stateful variant is explicitly **unsupported** by this stateless primitive. Its existing ordinary Monty/native measurements remain valid; the handwritten stateful floor cannot establish its performance against a general helper solution. No arbitrary cross-row logic was rewritten as fixture-specific Rust to fill that cell.
+
+### Bounded rerun and results
+
+`tools/run_generic.py` builds with locked dependencies, records hashes for core/bench sources, fixtures and reproduction scripts, inspects the existing VM, and actually executes the binary on macOS and Linux ARM64. `generic-identity.json` records the parent commit, source hashes, Rust 1.96.0, commands and capacity/process observations. The VM was idle, with approximately 1,763 MiB available and 13 GiB free before running. Only weighted generic-helper, ordinary Monty and native chunk=256/4,096 cold/warm cells were rerun, interleaved per sample. No fairness/cancellation/opt-level campaign was repeated.
+
+```sh
+cargo +1.96.0 test --manifest-path bench/Cargo.toml
+cargo +1.96.0 clippy --manifest-path bench/Cargo.toml --all-targets -- -D warnings
+python3 tools/run_generic.py <idle-vm-user@host> <ssh-key-path> <known-hosts-path>
+python3 tools/summarize_generic.py
+python3 tools/summarize.py
+cargo test
+```
+
+Local-only reproduction omits the three VM arguments. Six benchmark tests passed, including field/threshold permutations, empty/filtered input, skipped overflow, multiply/add overflow and actual Monty helper call/receipt parity. Core macOS tests remained 30/30. The toolchain's missing Clippy component was installed specifically for Rust 1.96 without changing the global default; its pre-existing manual-async lint in the immediate record provider was corrected without changing its behavior.
+
+`generic-macos.csv` and `generic-linux.csv` each contain 480 unique successful invocations, covering 3 row counts × 2 modes × 4 engines/chunks × 20 samples. `summarize_generic.py` checks every receipt against its independently computed row oracle and writes 48 summary groups. Historical raw files and identity are unchanged; `summary.csv` now labels their old `monty_helper`/`host` columns as fixture floors.
+
+Full source-to-result medians, 10,000 weighted rows, microseconds:
+
+| Platform | Generic helper cold/warm | Ordinary Monty cold/warm | Native 256 cold/warm | Native 4,096 cold/warm |
+| --- | ---: | ---: | ---: | ---: |
+| macOS M4 | 25.459 / 18.625 | 2759.271 / 2590.333 | 140.500 / 22.250 | 136.667 / 20.250 |
+| Linux ARM64 VM | 83.334 / 71.772 | 5033.777 / 4996.402 | 312.168 / 82.147 | 279.334 / 67.355 |
+
+On Linux the helper's compile/clone attribution is 13.750/0.750 µs, with producer/import/execute/cleanup inside its 69.396/70.501 µs execution attribution. Native 4,096 cold compilation is 214.189 µs, producer/import 43.542 µs, and execution/cleanup 22.062 µs. Medians of attribution columns do not sum to the median total. Whole-process CPU/RSS are in `generic-*-resources.txt`; they still cannot attribute per-engine allocations or density. This rerun does not fill the previously unmeasured memory categories.
+
+Decision: the parameterized finite helper beats source-cold native by about 3.35× on the Linux weighted case. Warm native and helper are near each other, with the direction dependent on chunk/platform in these small samples. The result reinforces the value of avoiding object materialization for expressible aggregations; it does not resolve arbitrary/stateful user-code value. Keep the bounded native slice, no cache, syntax expansion, new runtime or unbounded campaign. Submit this baseline correction for the original same-card approval; do not repeat the completed global implementation review.
