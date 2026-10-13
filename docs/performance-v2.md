@@ -231,6 +231,14 @@ production capacity curve. Small pools give noisy p99, with no SLO or CI claim.
   receipts. Its raw VmHWM monotonicity assumption also exposed the kernel-reader
   issue; the benchmark retains raw observations and reports the cumulative max.
 
-C stops after one focused integrated review and signed publication. D is already
+One focused read-only review of e96083f was performed by gpt-6-luna/openai-codex
+(the returned model identity was checked). It confirmed one stale generated
+limitations sentence attributing Linux peak RSS to getrusage. Corrected the
+summary generator, regenerated summaries and checked all non-limitation numeric
+content unchanged; no measurement or native/runtime code changed for this fix.
+The review found no other confirmed issue in its bounded evidence scope. It did
+not repeat the completed core compiler audit or rerun the campaign.
+
+C stops after that focused integrated review and signed publication. D is already
 created by the operator and depends on this card; it owns subsequent optimization.
 See [next steps](next-steps.md) for the measured hottest paths and API decision.

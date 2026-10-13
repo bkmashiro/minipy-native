@@ -2,7 +2,7 @@
 
 A research prototype for compiling short Python-like agent programs into native code over typed data, with bounded execution and asynchronous Host calls.
 
-**Status: working bounded prototype, with real macOS and Linux ARM64 execution and reproducible synthetic comparisons. Initial implementation review completed; integrated cost/density evidence is available.** Working name; independent of Pysolate's CPython/Wasm runtime.
+**Status: working bounded prototype, with real macOS and Linux ARM64 execution and reproducible synthetic comparisons. Initial implementation and focused integrated evidence reviews completed; cost/density results are available.** Working name; independent of Pysolate's CPython/Wasm runtime.
 
 ## Goal
 

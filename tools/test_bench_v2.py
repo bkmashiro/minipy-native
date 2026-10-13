@@ -18,6 +18,8 @@ class SummaryTests(unittest.TestCase):
         self.assertEqual(len(plan('campaign')), 39)
         result = summarize([], [{'status': 'completed'}, {'status': 'failed'}, {'status': 'timeout'}])
         self.assertEqual(result['commands'], {'scheduled': 3, 'completed': 1, 'failed': 1, 'timeout': 1})
+        self.assertIn('cumulative max', result['limitations'][2])
+        self.assertNotIn('peak RSS is whole-process getrusage', result['limitations'][2])
 
     def test_fit_and_missing(self):
         result = fit([(0, 11), (1, 17), (8, 59)])

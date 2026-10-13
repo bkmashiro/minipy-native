@@ -32,7 +32,7 @@ See summary memory phase observations, task_slopes and byte_costs. Fits are diag
 
 - Speed uses default uninstrumented System allocator; memory is diagnostic and not a latency arm.
 - CPU getrusage is process-wide with microsecond resolution.
-- RSS/PSS are sampled current memory, peak RSS is whole-process getrusage. Requested allocator bytes exclude mmap/JIT/metadata.
+- RSS/PSS are sampled current memory. Current Linux observed HWM is cumulative max(sampled smaps RSS, reported VmHWM), with raw kernel readings retained; it is not an exact continuously traced peak. macOS and historical probes use getrusage; see each raw physical.method. Requested allocator bytes exclude mmap/JIT/metadata.
 - Small physical payload differences may be below page/allocator resolution; negative sampled slopes are not clamped.
 - Native bytes is a touched Vec<u8> ownership probe; native str/bytes language unsupported.
 - Request percentiles within one concurrent run are not independent run error bars.
