@@ -1,0 +1,15 @@
+[package]
+name = "minipy-native-bench"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+minipy-native = { path = ".." }
+monty = { git = "https://github.com/pydantic/monty", rev = "56949a4c45f51cedc7a96450782f58a8017e114d" }
+monty-types = { git = "https://github.com/pydantic/monty", rev = "56949a4c45f51cedc7a96450782f58a8017e114d" }
+tokio = { version = "=1.48.0", features = ["rt", "sync", "macros"] }
+
+[[bin]]
+name = "quote-bench"
+path = "src/main.rs"

@@ -1,0 +1,38 @@
+layout,weighted_scan,task_future=376,code_unit=480,provider=32,buffer_handle=16,cancellation_handle=8,load_future=32,record_future=24
+resource,weighted_scan,0,load_wait,0,0,192,2078
+resource,weighted_scan,0,record_wait,0,0,192,2078
+resource,weighted_scan,0,done,0,0,192,2078
+resource,weighted_scan,100,load_wait,0,0,192,2078
+resource,weighted_scan,100,record_wait,0,0,192,2078
+resource,weighted_scan,100,done,0,0,192,2078
+resource,weighted_scan,10000,load_wait,0,0,192,2078
+resource,weighted_scan,10000,record_wait,0,0,192,2078
+resource,weighted_scan,10000,done,0,0,192,2078
+layout,stateful_branch,task_future=376,code_unit=480,provider=32,buffer_handle=16,cancellation_handle=8,load_future=32,record_future=24
+resource,stateful_branch,0,load_wait,0,0,292,3058
+resource,stateful_branch,0,record_wait,0,0,292,3058
+resource,stateful_branch,0,done,0,0,292,3058
+resource,stateful_branch,100,load_wait,0,0,292,3058
+resource,stateful_branch,100,record_wait,0,0,292,3058
+resource,stateful_branch,100,done,0,0,292,3058
+resource,stateful_branch,10000,load_wait,0,0,292,3058
+resource,stateful_branch,10000,record_wait,0,0,292,3058
+resource,stateful_branch,10000,done,0,0,292,3058
+        1.33 real         0.56 user         0.02 sys
+            54657024  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                4279  page reclaims
+                   0  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                   0  voluntary context switches
+                   9  involuntary context switches
+         12605623431  instructions retired
+          2281596315  cycles elapsed
+            45220272  peak memory footprint

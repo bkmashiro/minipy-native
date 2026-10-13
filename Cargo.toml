@@ -1,0 +1,18 @@
+[package]
+name = "minipy-native"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.93"
+publish = false
+
+[dependencies]
+cranelift-codegen = "=0.128.3"
+cranelift-frontend = "=0.128.3"
+cranelift-jit = "=0.128.3"
+cranelift-module = "=0.128.3"
+cranelift-native = "=0.128.3"
+rustpython-parser = { version = "=0.4.0", default-features = false, features = ["num-bigint"] }
+tokio = { version = "=1.48.0", features = ["rt", "sync", "time", "macros"] }
+
+[profile.release]
+debug = 1

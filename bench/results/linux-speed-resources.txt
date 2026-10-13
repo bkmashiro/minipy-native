@@ -1,0 +1,43 @@
+layout,weighted_scan,task_future=376,code_unit=480,provider=24,buffer_handle=16,cancellation_handle=8,load_future=32,record_future=24
+resource,weighted_scan,0,load_wait,0,0,192,2073
+resource,weighted_scan,0,record_wait,0,0,192,2073
+resource,weighted_scan,0,done,0,0,192,2073
+resource,weighted_scan,100,load_wait,0,0,192,2073
+resource,weighted_scan,100,record_wait,0,0,192,2073
+resource,weighted_scan,100,done,0,0,192,2073
+resource,weighted_scan,10000,load_wait,0,0,192,2073
+resource,weighted_scan,10000,record_wait,0,0,192,2073
+resource,weighted_scan,10000,done,0,0,192,2073
+layout,stateful_branch,task_future=376,code_unit=480,provider=24,buffer_handle=16,cancellation_handle=8,load_future=32,record_future=24
+resource,stateful_branch,0,load_wait,0,0,292,3053
+resource,stateful_branch,0,record_wait,0,0,292,3053
+resource,stateful_branch,0,done,0,0,292,3053
+resource,stateful_branch,100,load_wait,0,0,292,3053
+resource,stateful_branch,100,record_wait,0,0,292,3053
+resource,stateful_branch,100,done,0,0,292,3053
+resource,stateful_branch,10000,load_wait,0,0,292,3053
+resource,stateful_branch,10000,record_wait,0,0,292,3053
+resource,stateful_branch,10000,done,0,0,292,3053
+	Command being timed: "env MINIPY_FIXTURES=/root/minipy-native-bench/fixtures /root/minipy-native-bench/quote-bench speed"
+	User time (seconds): 0.91
+	System time (seconds): 0.86
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0m 1.78s
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 40088
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 273993
+	Voluntary context switches: 0
+	Involuntary context switches: 5
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

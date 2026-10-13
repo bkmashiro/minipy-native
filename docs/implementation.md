@@ -32,3 +32,11 @@ Reference sources (verify versions when used):
 - https://docs.rs/cranelift-codegen/latest/cranelift_codegen/ir/struct.MemFlagsData.html
 
 No performance conclusions are inherited from Pysolate benchmarks. No arbitrary 20% gate; identify break-even regions and full-system cost. A project-specific decision record belongs in docs/experiments.md, not in global agent memory.
+
+## Integrated handoff
+
+The first native slice is implemented in one runtime crate with a small demonstration binary. The independent benchmark crate keeps Monty and its newer toolchain out of the runtime dependency graph. Source programs and reproducible raw results are committed in `fixtures/` and `bench/results/`; commands and cost limitations are recorded in `docs/experiments.md`.
+
+Thirty tests pass on macOS and on the actual Linux ARM64 VM. Integration additionally corrected cancellation during pending provider I/O and releases code after its final native call. The two useful Luna lanes in the resumed integration run were acceptance testing and an initial benchmark implementation; actual returned identities were gpt-6-luna/openai-codex. Sol corrected and completed the benchmark against pinned upstream Monty, added the stronger typed host-helper comparison, and reran the integrations and measurements. No other project or Hermes profile was modified.
+
+Remaining gate: one same-card focused independent review of the signed integrated commit. Review unsafe load/call bounds and code lifetime, checked expression/error order, cancellation versus late completion, pre-record owner release, and whether the cost report matches the raw measurements. Do not reopen architecture, expand syntax, run an unbounded campaign or add CI. The measured source-once path loses to the finite host-helper alternative on both sources; this negative result is part of the deliverable, not a reason to manufacture a cache/reuse assumption.

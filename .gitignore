@@ -1,4 +1,8 @@
 /target/
+/bench/target/
+/.linux-run/
+__pycache__/
+*.pyc
 /.worktrees/
 /.artifacts/
 .env
