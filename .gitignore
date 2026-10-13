@@ -1,0 +1,7 @@
+/target/
+/.worktrees/
+/.artifacts/
+.env
+.env.*
+.DS_Store
+*.profraw
