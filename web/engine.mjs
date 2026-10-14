@@ -1,13 +1,16 @@
 // Worker-local ABI adapter. Refresh memory views after every Wasm call/growth.
 export class Engine {
-  constructor(instance) { this.exports = instance.exports; }
+  constructor(instance, module) { this.exports = instance.exports; this.module = module; }
   static async load(url = new URL('./minipy_native.wasm', import.meta.url)) {
     const start = performance.now();
     const bytes = await (await fetch(url)).arrayBuffer();
-    const {instance} = await WebAssembly.instantiate(bytes, {});
-    const engine = new Engine(instance);
+    const module = await WebAssembly.compile(bytes);
+    const engine = new Engine(await WebAssembly.instantiate(module, {}), module);
     engine.initialization_ms = performance.now() - start;
     return engine;
+  }
+  async fork() {
+    return new Engine(await WebAssembly.instantiate(this.module, {}), this.module);
   }
   command(command) {
     const start = performance.now();

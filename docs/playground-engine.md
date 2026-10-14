@@ -53,6 +53,15 @@ not as Worker crashes. The valid operations are:
   Returns `{task,snapshot}`. All i64 input/value/result fields use decimal
   strings to preserve full precision in JS. Bool inputs use `'0'`/`'1'`.
   Multiple tasks share one immutable prepared unit.
+- `recompile`: `{source, input_types:[[name,'i64'|'bool'],...], inputs:['2',...],
+  limits?, provider?, batch?, trace?}`. Instantiate a candidate from the cached
+  compiled Wasm module, then run real prepare and create before replacing the
+  current session. Returns `{unit,tape,task,snapshot,epoch}` with A at PC 0 and
+  dispatch paused. Failure preserves the current engine, tasks and epoch.
+  Success discards the old instance, task configurations, ACKs and timers.
+  Only one candidate may be in flight; reset supersedes it. Old/failed instances
+  are not retained, although actual memory reclamation follows browser GC.
+  No additional Wasm fetch/compilation or native runtime change is required.
 - `run` / `pause`: resume/stop cooperative dispatch globally. Pausing does
   not stop already-launched provider operations; they can complete into a
   ready task while paused, without executing the next instruction.
@@ -67,7 +76,8 @@ not as Worker crashes. The valid operations are:
   earlier stdout and discards a late provider result. Other tasks continue.
   A launched provider remains detached until its timer completes.
 - `reset`: clears prepared units and tasks, stops dispatch and increments
-  `epoch`. Old provider deliveries cannot attach to newly reused task IDs.
+  `epoch`, returned in its reply. Pending timers are cleared. Old provider
+  deliveries cannot attach to newly reused task IDs.
 - `ack`: `{update_id}` without a reply id. Acknowledge rendered/ingested
   update batches, then the Worker can continue scheduling.
 
@@ -79,7 +89,9 @@ step/advance/cancel requires fewer than two outstanding updates. Step/cancel
 replies repeat their update contents for command confirmation: render events
 from the update channel only, not again from the reply. Event IDs are monotonic
 within an engine epoch; task IDs and event IDs reset with the engine. Ignore old
-epoch updates and clear frontend playback/selection on reset.
+epoch updates and clear frontend playback/selection on reset or successful
+recompile. Adopt the committed reply epoch before ingesting subsequent updates;
+do not preemptively change frontend epoch or clear state on recompile failure.
 
 `provider` has `{rows:512, delay:25, price:'7', quantity:'3', fail:false}` defaults.
 Rows are immutable Quote/v1 records built by Rust at actual Tool completion.
