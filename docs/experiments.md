@@ -663,3 +663,40 @@ After review only documentation/handoff records changed. Guest poweroff verified
 by vfkit exit=0, stopped restful endpoint and zero matching process. See
 `bench/results/n-compact/focused-review.json`.
 
+## S frozen compact-runtime WSL campaign (2026-10-14)
+
+Runtime and original request harness are frozen at `969e679`; no `src/`,
+fixture or demo changes. WSL `na@DESKTOP-UISID0V` is actually reachable and idle,
+Linux x86_64 on an i9-7920X with 24 visible CPUs and about 23 GiB RAM. Build trees,
+downloads and raw stay in `/home/na/benchmarks/minipy-s`; only small evidence
+returns to Mac. The task-local plan is `bench/results/s-wsl/plan.json`.
+
+Completed 690 planned commands: 660 supported completions, 20 observed old
+Pysolate ABI failures and 10 inferred unsupported skips. The existing real
+Guest has a 1 MiB Tool response limit; stateful 100k and every mixed window
+containing it are missing, without pagination, payload truncation or a larger
+ABI. Preserve original failed status and runner on WSL. All primary and
+ordinary Python request cells complete: 54,456 formal request/wait trace rows,
+324 prepared-owner and 9 process-startup diagnostics, plus separately counted
+initialization. Full reduction validates 88 shape / 64 mixed / 184 waiting
+memory cells, round/window accounting and all 23 frozen source hashes.
+
+Actual Linux fixture-reference acceptance passes 66 tests, including 14
+interpreter regressions; five harness invariants also pass under CPython/PyPy.
+Cold interpreter leads scalar/100-row/weighted 10k, while native already leads
+stateful 100k cold and reused long scans. Nominal 1 ms scan-mix cold short p99:
+native 22.69 ms, interpreter 8.13 ms; warm p99 is about 8.3 ms for both, native
+uses less CPU. Shared-code 32-task record_wait PSS: native 7.98 MiB,
+interpreter 9.70 MiB, common-body Monty 223.78 MiB. Requested owner release does
+not imply OS page reclamation. Ordinary Python and the old sync/JSON Guest
+adapter remain separate lifecycle/representation cohorts, without a global
+ranking or cross-host pooling. No default strategy or production changes.
+
+Full Chinese report, compact identities/summary and rendered SVG:
+[wsl-frozen-benchmark.md](wsl-frozen-benchmark.md), `bench/results/s-wsl/`,
+`tools/s_wsl_{campaign,secondary,summary,plot}.py`. Task tree is about 2.49 GB
+on WSL, raw JSONL about 1.57 MB; neither targets nor raw were copied to Mac/Git.
+Six delivered-file hashes match remote read-back. Old Pysolate worktree remains
+unchanged. The WSL host may be switched off after delivery; raw remains on its
+persistent task disk and has no independent archive.
+

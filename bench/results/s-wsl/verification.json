@@ -1,0 +1,36 @@
+{
+  "utc": "2026-10-14T07:40:13.658159+00:00",
+  "tests_passed": 66,
+  "acceptance_results": [
+    "test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s",
+    "test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s",
+    "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s",
+    "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.09s",
+    "test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.75s",
+    "test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s",
+    "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+  ],
+  "harness_tests": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.355s\n\nOK\n",
+  "pypy_tests": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.294s\n\nOK\n",
+  "go": "go version go1.27.1 linux/amd64\n",
+  "cargo": "cargo 1.96.0 (30a34c682 2026-05-25)\n",
+  "cc": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "postflight": " 15:40:13 up  2:08,  2 users,  load average: 0.16, 0.58, 2.29\n               total        used        free      shared  buff/cache   available\nMem:            23Gi       893Mi        22Gi        18Mi       468Mi        22Gi\nSwap:          6.0Gi          0B       6.0Gi\nFilesystem      Size  Used Avail Use% Mounted on\n/dev/sdd       1007G   31G  925G   4% /\n    PID COMMAND         %CPU %MEM\n  36434 bash            11.1  0.0\n  36271 python3         10.0  0.0\n  36124 fish             1.6  0.0\n  36091 sshd             1.2  0.0\n    200 tailscaled       0.2  0.3\n    184 redis-server     0.2  0.1\n    409 mariadbd         0.0  0.4\n  33605 wsl-pro-service  0.0  0.0\n      1 systemd          0.0  0.0\n     61 systemd-journal  0.0  0.0\n    436 postgres         0.0  0.1\n    174 dbus-daemon      0.0  0.0\n    198 systemd-logind   0.0  0.0\n    165 systemd-timesyn  0.0  0.0\n    216 rsyslogd         0.0  0.0\n    113 systemd-udevd    0.0  0.0\n    254 unattended-upgr  0.0  0.0\n    726 systemd          0.0  0.0\n    448 postgres         0.0  0.0\n    691 systemd-resolve  0.0  0.0\n    451 postgres         0.0  0.0\n    450 postgres         0.0  0.0\n    224 sshd             0.0  0.0\n    751 fish             0.0  0.0\n    673 fish             0.0  0.0\n    173 cron             0.0  0.0\n      2 init-systemd(Ub  0.0  0.0\n      3 init-watcher     0.0  0.0\n     10 init             0.0  0.0\n    245 agetty           0.0  0.0\n    447 postgres         0.0  0.0\n    452 postgres         0.0  0.0\n    670 SessionLeader    0.0  0.0\n    672 Relay(673)       0.0  0.0\n    675 login            0.0  0.0\n    727 (sd-pam)         0.0  0.0\n  36123 sshd             0.0  0.0\n  36585 ps               0.0  0.0\n",
+  "raw_archive_bytes": 1568999,
+  "remote_task_bytes": "2488730990\t/home/na/benchmarks/minipy-s\n",
+  "identities_sha256": {
+    "identity.json": "62d71c4baca4f6beb04518f9d58fddbd8ad1a07a35e55eaba6e30f12a73a6f41",
+    "secondary-identity.json": "6fa7a68a13127f23d5c1b2b1aab7574c1edab3820085b159980b37693129e42f",
+    "raw-identity.json": "56b7f847e4ec7a4d05a62021d944f11d22615d70ebd13ff3b9ed37f8b3aef334",
+    "runner-correction.json": "7dc8b760d0ea306a1955fc9c81cb867e0a8dad8fef8ef6a0800775b671cb0f36",
+    "summary.json": "aa67b4961f584a33cea57f082b89d1c2039db131cd51bf8bee4481e9a2883715",
+    "overview.svg": "4b2a622cd8d8d367f4e9fdc9d2c525e2f925107cb4b61cd5bf9a17ce22bfd25a"
+  },
+  "archived_runners": {
+    "campaign-before-abi-classification.py": "9c99fcee6a72077324e517226d9f6903ec5ad439ebcb75fe14285832f1b4daaf",
+    "campaign-classifier-executed.py": "e129366bff331f0cd49fd8981a808b8016e20485fa160ef48938b1ff3ba4404c",
+    "secondary-executed.py": "b85b295ce3bac8b93421a118d51156fabfd8cf9dac804feb3fd7247bd21cd0fa"
+  }
+}

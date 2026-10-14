@@ -1,0 +1,28 @@
+{
+  "runtime_commit": "969e6793d10f891fc28541a9892cc8e066e5a03e",
+  "files": {
+    "Cargo.lock": "810520a60dbad6d43c8f6c55357a9cf9a1f0d9a396a8cca9eb70d3f3e14207b3",
+    "Cargo.toml": "9a3faaccbde884440c7f66c1f7ee9ac9f90e928cbe8f03e9e9043148b1cc9360",
+    "bench/Cargo.lock": "593b4b2c9a0a97db19596641d5f8d8115d1f8f4f8fa1d68580a58ee993cf8bc6",
+    "bench/Cargo.toml": "a2f4330e6708953ce407bf5c77523f811c16c45f0dec0767baa89a75a6ee5836",
+    "bench/src/bin/interpreter_ab.rs": "4c13e756720195cac5644813d97f3eda66b337c95c6497ca30ec0167810a4215",
+    "bench/src/v2_common.rs": "751fd4fe89037e5551b28e730a430bcd9ba8e16dc44087955a7877170d127069",
+    "fixtures/common_scalar.py": "008fd3768dfa8cdc505ee9e358bc2b10fca542dc648d7ca17db4103c27614954",
+    "fixtures/common_stateful.py": "59bbc9edc6de385affd0d16d1b7a23f6b77abc85904855f0ca67e4874771893c",
+    "fixtures/common_weighted.py": "d696a3da28a69d20c12ec805e9bf1e0ad452855a4b974d6ba3583fab69b0883c",
+    "src/bin/minipy.rs": "14c157179b8156816de8b6bd2736407af8998059b5f1940b79073528f154a76f",
+    "src/buffer.rs": "728e3dc082ed1f8bed96864f608c1ddb22f7f6b9016531dba0e5deff7d9d2867",
+    "src/codegen.rs": "7f2bdeadba5154e555f34a8345782182175ef221c2eb59f34fe2b60eb0984841",
+    "src/compiler_profile.rs": "7fdb8442d6d37d630fcf9c679c2abb1da0c49ab52ffc6b2741cd05ff46fcaefb",
+    "src/error.rs": "f86a4e601c69fbe208813d526fa2da4b6faad551f28d589ebdbceb3931bf56d8",
+    "src/fixture_reference.rs": "d3c67f1003a5816832fbd15c6d377edbb4d422c6db9be1b3cab7c40ae58aff53",
+    "src/frontend.rs": "08bc1744622fce842dfc7a56e7ef2a564aa31540cb9213ac5bb0a0dc892bc64e",
+    "src/interpreter.rs": "32da52a200289e67156ae1815bb85d259de5d5d3b9680da812ab8be6395a29d7",
+    "src/interpreter/tape.rs": "dd75745ecdaefce84a0f7e438c026f59c366f62fff843ee9014877d4d7b77d34",
+    "src/interpreter_profile.rs": "ca14500ff28ec156553ae1d2e0672381afdad261b2f309ea72455bd11fa7722c",
+    "src/ir.rs": "e22a78aa97c7762bdfde1914adb0c5d5f9e3fac27567a14779b971eab0f9aea6",
+    "src/lib.rs": "0267aa342b34acd5ddf532c64d41379df31017d7beddebb889522570f2cec27a",
+    "src/provider.rs": "df14c16b61c6e9f78a51b07e6ba162d1a71b288a5690fd007117fe3676eb5952",
+    "src/runtime.rs": "01772bd991bdfa6238425058814ff564dbcd2b1426788576f130eb60d5b699ce"
+  }
+}

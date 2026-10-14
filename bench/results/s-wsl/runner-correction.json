@@ -1,0 +1,38 @@
+{
+  "reason": "Classify observed old Guest ABI rejection; do not repeat remaining unsupported cells or alter payload/ABI. Existing successful raw preserved.",
+  "original_runner_sha256": "9c99fcee6a72077324e517226d9f6903ec5ad439ebcb75fe14285832f1b4daaf",
+  "corrected_runner_sha256": "e129366bff331f0cd49fd8981a808b8016e20485fa160ef48938b1ff3ba4404c",
+  "abi": {
+    "guest_sha256": "ef49a628d71ab43c2523712fc47bb59ca8ebc3bfd52cfd46cbc4f493721ee8e4",
+    "observed_failed_commands": [
+      "old-0-fresh-stateful-100000",
+      "old-0-cow-stateful-100000",
+      "old-0-fresh-light-0",
+      "old-0-cow-light-0",
+      "old-0-fresh-light-1000",
+      "old-0-cow-light-1000",
+      "old-0-fresh-scan-0",
+      "old-0-cow-scan-0",
+      "old-0-fresh-scan-1000",
+      "old-0-cow-scan-1000",
+      "old-1-cow-stateful-100000",
+      "old-1-fresh-stateful-100000",
+      "old-1-cow-light-0",
+      "old-1-fresh-light-0",
+      "old-1-cow-light-1000",
+      "old-1-fresh-light-1000",
+      "old-1-cow-scan-0",
+      "old-1-fresh-scan-0",
+      "old-1-cow-scan-1000",
+      "old-1-fresh-scan-1000"
+    ],
+    "observed_failure_count": 20,
+    "guest_runtime_c_sha256": "a38807ae1b8372a543dacff44739b40be47adcba22936fcc792a6ba9efd5a475",
+    "max_message_source_line": "#define MAX_MESSAGE (1 << 20)",
+    "reason": "RuntimeError: Host tool response exceeds buffer or ABI bounds",
+    "guest_max_message_bytes": 1048576,
+    "source": "agent-python-runtime/guest/runtime.c:12,31",
+    "missing_cells": "old Pysolate stateful 100000 and every mixed window containing it; no paging, increased bound or replacement kernel",
+    "classification": "observed ABI rejection; remaining same-artifact cells inferred unsupported and not executed"
+  }
+}

@@ -1,0 +1,40 @@
+--- executed/tools/s_wsl_campaign.py
++++ delivery/tools/s_wsl_campaign.py
+@@ -109,0 +110,4 @@
++def old_abi_case(item):
++    return item['key'].startswith('old-') and (item['kind']=='mixed' or (item['kind']=='speed' and item['argv'][7]=='100000'))
++
++
+@@ -127,0 +132,8 @@
++    previous={s['key']:s for s in json.loads((OUT/'status.json').read_text())} if (OUT/'status.json').exists() else {}
++    abi_path=ROOT/'bench/results/s-wsl/abi-limit.json'
++    abi=json.loads(abi_path.read_text()) if abi_path.exists() else None
++    if abi:
++        assert hashlib.sha256(GUEST.read_bytes()).hexdigest()==abi['guest_sha256']
++        (OUT/'runner-correction.json').write_text(json.dumps(dict(reason='Classify observed old Guest ABI rejection; do not repeat remaining unsupported cells or alter payload/ABI. Existing successful raw preserved.',
++            original_runner_sha256=json.loads(identity.read_text())['files'][str(ROOT/'tools/s_wsl_campaign.py')]['sha256'],
++            corrected_runner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),abi=abi),indent=2)+'\n')
+@@ -131,0 +144 @@
++        if (OUT/'smoke.json').exists(): break
+@@ -136 +149 @@
+-    (OUT/'smoke.json').write_text(json.dumps(smoke,indent=2)+'\n')
++    if smoke: (OUT/'smoke.json').write_text(json.dumps(smoke,indent=2)+'\n')
+@@ -137,0 +151,7 @@
++        if abi and old_abi_case(item):
++            prior=previous.get(item['key'],{})
++            status.append(dict(key=item['key'],state='unsupported',rows=0,scheduled_rows=item['expected'],reason=abi['reason'],
++                               observed_failure=prior.get('observed_failure',prior.get('state')=='failed' and abi['reason'] in prior.get('error','')),
++                               prior_error=prior.get('error',prior.get('prior_error'))))
++            (OUT/'status.json').write_text(json.dumps(status,indent=2)+'\n')
++            continue
+@@ -157 +177 @@
+-    print('scheduled',len(work),'completed',sum(s['state']=='completed' for s in status),'failed',sum(s['state']=='failed' for s in status),flush=True)
++    print('scheduled',len(work),'completed',sum(s['state']=='completed' for s in status),'failed',sum(s['state']=='failed' for s in status),'unsupported',sum(s['state']=='unsupported' for s in status),flush=True)
+--- executed/tools/s_wsl_secondary.py
++++ delivery/tools/s_wsl_secondary.py
+@@ -30,0 +31,5 @@
++    identity=OUT/'secondary-identity.json'
++    if identity.exists():
++        assert len(json.loads(identity.read_text())['commands'])==126
++        print('secondary already complete; reduction validates all retained rows',flush=True)
++        return

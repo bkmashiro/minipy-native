@@ -1,0 +1,1466 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "/home/na/.nvm/versions/node/v24.20.0/bin/node",
+        "/home/na/benchmarks/minipy-s/source/tools/final_pyodide.mjs",
+        "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide",
+        "/home/na/benchmarks/minipy-s/results",
+        "common",
+        "0"
+      ],
+      "kind": "pyodide-round",
+      "expected_rows": 1810
+    },
+    {
+      "argv": [
+        "/home/na/.nvm/versions/node/v24.20.0/bin/node",
+        "/home/na/benchmarks/minipy-s/source/tools/final_pyodide.mjs",
+        "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide",
+        "/home/na/benchmarks/minipy-s/results",
+        "common",
+        "1"
+      ],
+      "kind": "pyodide-round",
+      "expected_rows": 1810
+    },
+    {
+      "argv": [
+        "/home/na/.nvm/versions/node/v24.20.0/bin/node",
+        "/home/na/benchmarks/minipy-s/source/tools/final_pyodide.mjs",
+        "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide",
+        "/home/na/benchmarks/minipy-s/results",
+        "common",
+        "2"
+      ],
+      "kind": "pyodide-round",
+      "expected_rows": 1810
+    },
+    {
+      "argv": [
+        "/home/na/.nvm/versions/node/v24.20.0/bin/node",
+        "/home/na/benchmarks/minipy-s/source/tools/final_pyodide.mjs",
+        "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide",
+        "/home/na/benchmarks/minipy-s/results",
+        "memory",
+        "unique"
+      ],
+      "kind": "pyodide-memory",
+      "expected_rows": 4
+    },
+    {
+      "argv": [
+        "/home/na/.nvm/versions/node/v24.20.0/bin/node",
+        "/home/na/benchmarks/minipy-s/source/tools/final_pyodide.mjs",
+        "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide",
+        "/home/na/benchmarks/minipy-s/results",
+        "memory",
+        "shared"
+      ],
+      "kind": "pyodide-memory",
+      "expected_rows": 4
+    },
+    {
+      "argv": [
+        "/home/na/.nvm/versions/node/v24.20.0/bin/node",
+        "/home/na/benchmarks/minipy-s/source/tools/final_pyodide.mjs",
+        "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide",
+        "/home/na/benchmarks/minipy-s/results",
+        "memory",
+        "unique"
+      ],
+      "kind": "pyodide-memory",
+      "expected_rows": 4
+    },
+    {
+      "argv": [
+        "/home/na/.nvm/versions/node/v24.20.0/bin/node",
+        "/home/na/benchmarks/minipy-s/source/tools/final_pyodide.mjs",
+        "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide",
+        "/home/na/benchmarks/minipy-s/results",
+        "memory",
+        "shared"
+      ],
+      "kind": "pyodide-memory",
+      "expected_rows": 4
+    },
+    {
+      "argv": [
+        "/home/na/.nvm/versions/node/v24.20.0/bin/node",
+        "/home/na/benchmarks/minipy-s/source/tools/final_pyodide.mjs",
+        "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide",
+        "/home/na/benchmarks/minipy-s/results",
+        "memory",
+        "unique"
+      ],
+      "kind": "pyodide-memory",
+      "expected_rows": 4
+    },
+    {
+      "argv": [
+        "/home/na/.nvm/versions/node/v24.20.0/bin/node",
+        "/home/na/benchmarks/minipy-s/source/tools/final_pyodide.mjs",
+        "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide",
+        "/home/na/benchmarks/minipy-s/results",
+        "memory",
+        "shared"
+      ],
+      "kind": "pyodide-memory",
+      "expected_rows": 4
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "scalar",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "scalar",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "scalar",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "scalar",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "scalar",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "scalar",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "scalar",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "scalar",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "scalar",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "scalar",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "scalar",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "scalar",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "weighted",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "weighted",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "weighted",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "weighted",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "weighted",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "weighted",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "weighted",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "weighted",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "weighted",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "weighted",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "weighted",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "weighted",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "stateful",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "stateful",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "stateful",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "stateful",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "stateful",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "stateful",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "stateful",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "stateful",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "stateful",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "stateful",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "stateful",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "stateful",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "scalar",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "scalar",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "scalar",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "scalar",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "scalar",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "scalar",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "scalar",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "scalar",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "scalar",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "scalar",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "scalar",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "scalar",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "weighted",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "weighted",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "weighted",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "weighted",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "weighted",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "weighted",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "weighted",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "weighted",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "weighted",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "weighted",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "weighted",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "weighted",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "stateful",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "stateful",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "stateful",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "stateful",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "stateful",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "stateful",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "stateful",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "stateful",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "stateful",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "stateful",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "stateful",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "stateful",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "scalar",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "scalar",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "scalar",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "scalar",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "scalar",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "scalar",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "scalar",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "scalar",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "scalar",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "scalar",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "scalar",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "scalar",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "weighted",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "weighted",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "weighted",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "weighted",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "weighted",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "weighted",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "weighted",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "weighted",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "weighted",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "weighted",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "weighted",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "weighted",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "stateful",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "stateful",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "stateful",
+        "1",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "stateful",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "stateful",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "stateful",
+        "1",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "stateful",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "stateful",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "stateful",
+        "32",
+        "unique"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "native",
+        "stateful",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "interpreter",
+        "stateful",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/prepared",
+        "monty",
+        "stateful",
+        "32",
+        "shared"
+      ],
+      "kind": "prepared-owner",
+      "expected_rows": 3
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "/home/na/benchmarks/minipy-s/source/tools/final_python.py",
+        "worker"
+      ],
+      "kind": "process-startup",
+      "expected_rows": 1
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/runtime/pypy3.11-v7.3.20-linux64/bin/pypy3",
+        "/home/na/benchmarks/minipy-s/source/tools/final_python.py",
+        "worker"
+      ],
+      "kind": "process-startup",
+      "expected_rows": 1
+    },
+    {
+      "argv": [
+        "/home/na/.nvm/versions/node/v24.20.0/bin/node",
+        "/home/na/benchmarks/minipy-s/source/tools/final_pyodide.mjs",
+        "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide",
+        "/home/na/benchmarks/minipy-s/results",
+        "init",
+        "0"
+      ],
+      "kind": "process-startup",
+      "expected_rows": 1
+    },
+    {
+      "argv": [
+        "/home/na/.nvm/versions/node/v24.20.0/bin/node",
+        "/home/na/benchmarks/minipy-s/source/tools/final_pyodide.mjs",
+        "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide",
+        "/home/na/benchmarks/minipy-s/results",
+        "init",
+        "1"
+      ],
+      "kind": "process-startup",
+      "expected_rows": 1
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/runtime/pypy3.11-v7.3.20-linux64/bin/pypy3",
+        "/home/na/benchmarks/minipy-s/source/tools/final_python.py",
+        "worker"
+      ],
+      "kind": "process-startup",
+      "expected_rows": 1
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "/home/na/benchmarks/minipy-s/source/tools/final_python.py",
+        "worker"
+      ],
+      "kind": "process-startup",
+      "expected_rows": 1
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "/home/na/benchmarks/minipy-s/source/tools/final_python.py",
+        "worker"
+      ],
+      "kind": "process-startup",
+      "expected_rows": 1
+    },
+    {
+      "argv": [
+        "/home/na/benchmarks/minipy-s/runtime/pypy3.11-v7.3.20-linux64/bin/pypy3",
+        "/home/na/benchmarks/minipy-s/source/tools/final_python.py",
+        "worker"
+      ],
+      "kind": "process-startup",
+      "expected_rows": 1
+    },
+    {
+      "argv": [
+        "/home/na/.nvm/versions/node/v24.20.0/bin/node",
+        "/home/na/benchmarks/minipy-s/source/tools/final_pyodide.mjs",
+        "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide",
+        "/home/na/benchmarks/minipy-s/results",
+        "init",
+        "2"
+      ],
+      "kind": "process-startup",
+      "expected_rows": 1
+    }
+  ],
+  "files": {
+    "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide/package.json": {
+      "sha256": "81f7cf8ee62633854d610a040efe15d3f9e80cfc78fbc32426860419b8712924",
+      "bytes": 3010
+    },
+    "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide/pyodide.mjs": {
+      "sha256": "23213d27e9dacbda6f25f955fb38dabfc40ada082c04ee253047ea5dddcaa3b5",
+      "bytes": 17616
+    },
+    "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide/pyodide.asm.js": {
+      "sha256": "1263f02b5b26099b96112378156f242dd98b39a8201ba7765e5fe3d455c5ce91",
+      "bytes": 1074322
+    },
+    "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide/ffi.d.ts": {
+      "sha256": "4cef95f06d393712a6e2de2fed2ec11edca1669099a8bec9780b579fbfe2a313",
+      "bytes": 44174
+    },
+    "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide/pyodide-lock.json": {
+      "sha256": "3256ffc76388de0e37f4b34d42ab484268d1afc675179ff97b2a5bb14f84ccac",
+      "bytes": 120010
+    },
+    "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide/README.md": {
+      "sha256": "7d434f487a81a9ea4944000fbbb5a771da89ca32fd1ff5edca0c5954b90cedec",
+      "bytes": 1867
+    },
+    "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide/python_stdlib.zip": {
+      "sha256": "4298b6ee445cb724c3973437da47789752b9e6ff4e26619026b283ec801fc46b",
+      "bytes": 2423989
+    },
+    "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide/pyodide.d.ts": {
+      "sha256": "350f2ef1447259b1451c96af727f1b1ce8bd679a4d50006553bfa002fc68be79",
+      "bytes": 66027
+    },
+    "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide/pyodide.mjs.map": {
+      "sha256": "79fc6accc3f5bb97698881a572d7733cfe528d80dd680b5b15b7e686e3fb356b",
+      "bytes": 83719
+    },
+    "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide/pyodide.asm.wasm": {
+      "sha256": "e2f4ee75b325e35eb31bfb8c613d4dd5098f5502c156a97847686875b5025480",
+      "bytes": 8647684
+    },
+    "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide/console-v2.html": {
+      "sha256": "1b6f8595802c6dc753ddca4bd5c1271b9a23f2de2d014ad9c6a0624975b0db54",
+      "bytes": 13315
+    },
+    "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide/console.html": {
+      "sha256": "e7be5fc9db7c510c9287c5e25c4d63141ed8ad6707404136aec299699e42a6bd",
+      "bytes": 10037
+    },
+    "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide/pyodide.js": {
+      "sha256": "718d40f1c015dd25ec724cc8fc4e2325d6a45a92ae225121ff6953f224a16f72",
+      "bytes": 18597
+    },
+    "/home/na/benchmarks/minipy-s/runtime/node_modules/pyodide/pyodide.js.map": {
+      "sha256": "70ca2a53dfadf7d0c6c9eae6b34a5765474a9aa4819891b223cd7302ed76cfab",
+      "bytes": 84097
+    },
+    "/home/na/benchmarks/minipy-s/prepared": {
+      "sha256": "bfc0e888e3505e9cc0cbe5eaf996f324b7f633a69d48d525efbb1a43515714be",
+      "bytes": 12349520
+    },
+    "/home/na/benchmarks/minipy-s/source/tools/s_wsl_secondary.py": {
+      "sha256": "b85b295ce3bac8b93421a118d51156fabfd8cf9dac804feb3fd7247bd21cd0fa",
+      "bytes": 5173
+    },
+    "/home/na/benchmarks/minipy-s/runtime/package-lock.json": {
+      "sha256": "15ba78c57e8fb467f21b2f1f18a5cb070fed11cf7f6c94a7061ca928b33e81b0",
+      "bytes": 1503
+    },
+    "/home/na/projects/agent-python-runtime/dist/pysolate.manifest.json": {
+      "sha256": "2d1f5799c323715dcde093b4cfdc361cfe9d15c615ccc2f376c28be8ae26e6cf",
+      "bytes": 1714
+    }
+  },
+  "postflight": " 15:34:44 up  2:03,  2 users,  load average: 1.58, 1.53, 3.24\n               total        used        free      shared  buff/cache   available\nMem:            23Gi       936Mi        22Gi        18Mi       530Mi        22Gi\nSwap:          6.0Gi          0B       6.0Gi\n    PID COMMAND         %CPU %MEM\n  31729 bash             5.5  0.0\n    200 tailscaled       0.2  0.2\n    184 redis-server     0.2  0.1\n  31139 python3          0.1  0.0\n    409 mariadbd         0.0  0.4\n      1 systemd          0.0  0.0\n     61 systemd-journal  0.0  0.0\n    436 postgres         0.0  0.1\n  30889 bash             0.0  0.0\n  30742 fish             0.0  0.0\n  30709 sshd             0.0  0.0\n    174 dbus-daemon      0.0  0.0\n    198 systemd-logind   0.0  0.0\n    165 systemd-timesyn  0.0  0.0\n    113 systemd-udevd    0.0  0.0\n    216 rsyslogd         0.0  0.0\n    254 unattended-upgr  0.0  0.0\n    726 systemd          0.0  0.0\n    691 systemd-resolve  0.0  0.0\n    451 postgres         0.0  0.0\n    448 postgres         0.0  0.0\n    450 postgres         0.0  0.0\n    751 fish             0.0  0.0\n    673 fish             0.0  0.0\n    224 sshd             0.0  0.0\n    173 cron             0.0  0.0\n      2 init-systemd(Ub  0.0  0.0\n      3 init-watcher     0.0  0.0\n     10 init             0.0  0.0\n    245 agetty           0.0  0.0\n    447 postgres         0.0  0.0\n    452 postgres         0.0  0.0\n    670 SessionLeader    0.0  0.0\n    672 Relay(673)       0.0  0.0\n    675 login            0.0  0.0\n    727 (sd-pam)         0.0  0.0\n  30741 sshd             0.0  0.0\n  31879 ps               0.0  0.0\n",
+  "cpu": "startup uses controller SELF + reaped CHILDREN; no double counted child self report"
+}
