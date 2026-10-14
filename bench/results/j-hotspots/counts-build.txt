@@ -1,0 +1,3 @@
+cargo zigbuild --release --features interpreter-profile --target aarch64-unknown-linux-musl --example interpreter_counts
+Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `release` profile [optimized + debuginfo] target(s) in 1.31s

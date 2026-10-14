@@ -532,3 +532,25 @@ three raw summaries exactly and verified both logged 61-test totals and ready
 p99 round values. Final changes only clarify those conclusions and add the
 requested Chinese entry; no further runtime candidate or campaign.
 
+## J: bounded hotspot iteration (2026-10-14)
+
+Revisited I's leaf-operand inline with genuine AB/BA/BA/AB ordering; the earlier
+two-configuration campaign loop inadvertently always ran baseline then candidate.
+Actual exclusive Linux ARM64 execution retained 58,128 raw rows across a chunk
+sensitivity experiment, one row-present-check candidate and a final mixed regression.
+Keep leaf inline under the user-authorized average CPU objective: final six mixed
+CPU cells improve 6.66--20.48%, all 24 pair directions improve. Disclose the scan
+delayed short p99 +9.39% (all four pairs worse), scan warm pooled +11.92%, and
+nonuniform tiny/weighted standalone values; do not claim a tail optimization.
+The row-present-check removal has no stable net gain and is reverted. Default
+chunk, checked arithmetic, bounds, permissions, cancellation and cumulative fuel
+are unchanged. No mixed scan JIT, cache, scheduler or new language contract.
+
+macOS all-feature and actual Linux fixture-reference each pass 61 tests. Linux
+test executable SHA256 values were read back before serial execution. Core strict
+clippy and both fmt checks pass; bench Rust 1.96 clippy retains only its two prior
+intentional lint exceptions. Diagnostic counts are separate from speed; final
+rebuilt speed binary exactly matches the measured leaf SHA256. The initially-off
+VM was restored off (vfkit exit 0). Full trade-offs, commands, patches, raw and
+identities: [hotspot-iterations.md](hotspot-iterations.md), `bench/results/j-hotspots/`.
+

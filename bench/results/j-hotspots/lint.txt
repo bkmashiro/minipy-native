@@ -1,0 +1,18 @@
+cargo clippy --all-targets --all-features -- -D warnings && cargo fmt --check && cargo fmt --manifest-path bench/Cargo.toml --check && cargo clippy --manifest-path bench/Cargo.toml --bin interpreter_ab -- -D warnings -A clippy::large_enum_variant -A clippy::assertions_on_constants
+Checking minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.87s
+error: rustc 1.93.1 is not supported by the following packages:
+  monty@1.1.0 requires rustc 1.96
+  monty-macros@1.1.0 requires rustc 1.96
+  monty-types@1.1.0 requires rustc 1.96
+  ruff_python_ast@0.0.14 requires rustc 1.96
+  ruff_python_codegen@0.0.14 requires rustc 1.96
+  ruff_python_literal@0.0.14 requires rustc 1.96
+  ruff_python_parser@0.0.14 requires rustc 1.96
+  ruff_python_stdlib@0.0.14 requires rustc 1.96
+  ruff_python_trivia@0.0.14 requires rustc 1.96
+  ruff_source_file@0.0.14 requires rustc 1.96
+  ruff_text_size@0.0.14 requires rustc 1.96
+Either upgrade rustc or select compatible dependency versions with
+`cargo update <name>@<current-ver> --precise <compatible-ver>`
+where `<compatible-ver>` is the latest version supporting rustc 1.93.1

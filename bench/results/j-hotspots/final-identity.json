@@ -1,0 +1,7 @@
+{
+  "benchmark_sha256": "e1065d30d3a4238fe0560dc3165c1a9a75d1715840859d475d36565c47295c6f",
+  "counts_sha256": "a0870b5a4a7b8cf2c35a9d3cc0d1150f3284284048ec72eb525b0d5540d3eca9",
+  "raw_total": 58128,
+  "final_rebuild": "cargo +1.96.0 zigbuild --manifest-path bench/Cargo.toml --release --target aarch64-unknown-linux-musl --bin interpreter_ab",
+  "binary_identical_to_measured_leaf": true
+}

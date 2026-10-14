@@ -141,6 +141,34 @@ struct State {
     row: Option<Quote>,
 }
 impl State {
+    // Avoid a recursive eval call/prologue for sealed typed leaf operands.
+    // Compound operands still evaluate exactly once, left-to-right.
+    #[inline]
+    fn operand(&self, e: &Expr) -> Result<i64, TaskError> {
+        #[cfg(feature = "interpreter-profile")]
+        if matches!(
+            e,
+            Expr::Int(_) | Expr::Bool(_) | Expr::Local(_) | Expr::Field(_)
+        ) {
+            crate::interpreter_profile::update(|c| c.leaf_operands += 1);
+        }
+        Ok(match e {
+            Expr::Int(v) => *v,
+            Expr::Bool(v) => i64::from(*v),
+            Expr::Local(i) => self.locals[*i],
+            Expr::Field(f) => {
+                let row = self
+                    .row
+                    .as_ref()
+                    .expect("sealed frontend binds fields inside scans");
+                match f {
+                    Field::Price => row.unit_price_cents,
+                    Field::Quantity => row.quantity,
+                }
+            }
+            _ => return self.eval(e),
+        })
+    }
     fn eval(&self, e: &Expr) -> Result<i64, TaskError> {
         #[cfg(feature = "interpreter-profile")]
         crate::interpreter_profile::update(|c| {
@@ -167,9 +195,9 @@ impl State {
                     Field::Quantity => row.quantity,
                 }
             }
-            Expr::Not(e) => i64::from(self.eval(e)? == 0),
+            Expr::Not(e) => i64::from(self.operand(e)? == 0),
             Expr::Binary(op, a, b) => {
-                let a = self.eval(a)?;
+                let a = self.operand(a)?;
                 if matches!(op, BinOp::And) && a == 0 {
                     #[cfg(feature = "interpreter-profile")]
                     crate::interpreter_profile::update(|c| c.expr[6] += 1);
@@ -180,7 +208,7 @@ impl State {
                     crate::interpreter_profile::update(|c| c.expr[6] += 1);
                     return Ok(1);
                 }
-                let b = self.eval(b)?;
+                let b = self.operand(b)?;
                 match op {
                     BinOp::Add => a.checked_add(b).ok_or(TaskError::Overflow)?,
                     BinOp::Sub => a.checked_sub(b).ok_or(TaskError::Overflow)?,

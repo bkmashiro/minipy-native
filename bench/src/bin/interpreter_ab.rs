@@ -21,6 +21,7 @@ use std::{
 #[global_allocator]
 static ALLOC: common::CountingAllocator = common::CountingAllocator;
 const INPUTS: &[(&str, Type)] = &[("batch_id", Type::I64), ("price_limit", Type::I64)];
+static OPTIONS: std::sync::OnceLock<ScriptLimits> = std::sync::OnceLock::new();
 fn source(case: &str) -> String {
     match case {
         "scalar"=>include_str!("../../../fixtures/scalar_script.py").into(),
@@ -142,7 +143,7 @@ async fn native_run(code: Rc<CodeUnit>, p: Arc<RequestProvider>) -> String {
         code,
         p,
         &[BATCH, LIMIT],
-        ScriptLimits::default(),
+        *OPTIONS.get().unwrap(),
         Cancellation::default(),
         None,
     )
@@ -155,7 +156,7 @@ async fn interpreted_run(code: Rc<InterpreterUnit>, p: Arc<RequestProvider>) -> 
         code,
         p,
         &[BATCH, LIMIT],
-        ScriptLimits::default(),
+        *OPTIONS.get().unwrap(),
         Cancellation::default(),
         None,
     )
@@ -182,7 +183,7 @@ async fn reference_run(fixture: Fixture, p: Arc<RequestProvider>) -> String {
         fixture,
         p,
         &[BATCH, LIMIT],
-        ScriptLimits::default(),
+        *OPTIONS.get().unwrap(),
         Cancellation::default(),
         None,
     )
@@ -419,6 +420,12 @@ async fn mixed(engine: &str, mix: &str, mode: &str, reps: usize) {
     }
 }
 fn main() {
+    let mut options = ScriptLimits::default();
+    if let Ok(chunk) = std::env::var("MINIPY_CHUNK") {
+        options.limits.chunk = chunk.parse().unwrap();
+    }
+    assert!((1..=4096).contains(&options.limits.chunk));
+    assert!(OPTIONS.set(options).is_ok());
     let args: Vec<_> = std::env::args().collect();
     assert_eq!(args.len(), 6, "engine case cold|warm|hold rows reps");
     let (engine, case, mode) = (&args[1], &args[2], &args[3]);

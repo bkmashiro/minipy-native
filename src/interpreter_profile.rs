@@ -2,6 +2,7 @@
 use std::cell::RefCell;
 #[derive(Clone, Debug, Default)]
 pub struct Counts {
+    pub leaf_operands: u64,
     pub expr: [u64; 7], // int, bool, local, field, not, binary, short-circuit
     pub ops: [u64; 10], // set, eval, return, print, branch, jump, start, scan, next, tool
     pub fuel_reservations: u64,

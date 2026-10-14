@@ -1,0 +1,4 @@
+cargo +1.96.0 clippy --manifest-path bench/Cargo.toml --bin interpreter_ab -- -D warnings -A clippy::large_enum_variant -A clippy::assertions_on_constants
+Checking minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Checking minipy-native-bench v0.1.0 (/Users/yuzhe/projects/minipy-native/bench)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.55s

@@ -1,0 +1,113 @@
+diff --git a/src/interpreter.rs b/src/interpreter.rs
+index 514a160..1238ece 100644
+--- a/src/interpreter.rs
++++ b/src/interpreter.rs
+@@ -138,9 +138,35 @@ struct State {
+     index: usize,
+     chunk_left: usize,
+     remaining: u64,
+-    row: Option<Quote>,
++    // Sealed frontend permits fields only inside a scan. This is an owned copy.
++    row: Quote,
+ }
+ impl State {
++    // Avoid a recursive eval call/prologue for sealed typed leaf operands.
++    // Compound operands still evaluate exactly once, left-to-right.
++    #[inline]
++    fn operand(&self, e: &Expr) -> Result<i64, TaskError> {
++        #[cfg(feature = "interpreter-profile")]
++        if matches!(
++            e,
++            Expr::Int(_) | Expr::Bool(_) | Expr::Local(_) | Expr::Field(_)
++        ) {
++            crate::interpreter_profile::update(|c| c.leaf_operands += 1);
++        }
++        Ok(match e {
++            Expr::Int(v) => *v,
++            Expr::Bool(v) => i64::from(*v),
++            Expr::Local(i) => self.locals[*i],
++            Expr::Field(f) => {
++                let row = &self.row;
++                match f {
++                    Field::Price => row.unit_price_cents,
++                    Field::Quantity => row.quantity,
++                }
++            }
++            _ => return self.eval(e),
++        })
++    }
+     fn eval(&self, e: &Expr) -> Result<i64, TaskError> {
+         #[cfg(feature = "interpreter-profile")]
+         crate::interpreter_profile::update(|c| {
+@@ -158,18 +184,15 @@ impl State {
+             Expr::Bool(v) => i64::from(*v),
+             Expr::Local(i) => self.locals[*i],
+             Expr::Field(f) => {
+-                let row = self
+-                    .row
+-                    .as_ref()
+-                    .expect("sealed frontend binds fields inside scans");
++                let row = &self.row;
+                 match f {
+                     Field::Price => row.unit_price_cents,
+                     Field::Quantity => row.quantity,
+                 }
+             }
+-            Expr::Not(e) => i64::from(self.eval(e)? == 0),
++            Expr::Not(e) => i64::from(self.operand(e)? == 0),
+             Expr::Binary(op, a, b) => {
+-                let a = self.eval(a)?;
++                let a = self.operand(a)?;
+                 if matches!(op, BinOp::And) && a == 0 {
+                     #[cfg(feature = "interpreter-profile")]
+                     crate::interpreter_profile::update(|c| c.expr[6] += 1);
+@@ -180,7 +203,7 @@ impl State {
+                     crate::interpreter_profile::update(|c| c.expr[6] += 1);
+                     return Ok(1);
+                 }
+-                let b = self.eval(b)?;
++                let b = self.operand(b)?;
+                 match op {
+                     BinOp::Add => a.checked_add(b).ok_or(TaskError::Overflow)?,
+                     BinOp::Sub => a.checked_sub(b).ok_or(TaskError::Overflow)?,
+@@ -254,7 +277,10 @@ async fn run<P: Provider>(
+         index: 0,
+         chunk_left: 0,
+         remaining: limits.rows,
+-        row: None,
++        row: Quote {
++            unit_price_cents: 0,
++            quantity: 0,
++        },
+     };
+     state.locals[..inputs.len()].copy_from_slice(inputs);
+     let mut owners: Vec<Option<QuoteBuffer>> = (0..unit.buffers).map(|_| None).collect();
+@@ -305,7 +331,6 @@ async fn run<P: Provider>(
+                     .expect("sealed frontend initializes scan owner")
+                     .rows();
+                 if state.index == rows.len() {
+-                    state.row = None;
+                     state.pc = *end;
+                     continue;
+                 }
+@@ -321,7 +346,7 @@ async fn run<P: Provider>(
+                     state.remaining -= count as u64;
+                     state.chunk_left = count;
+                 }
+-                state.row = Some(rows[state.index]);
++                state.row = rows[state.index];
+             }
+             Op::Next(header) => {
+                 state.index += 1;
+diff --git a/src/interpreter_profile.rs b/src/interpreter_profile.rs
+index b750b2a..9a06ece 100644
+--- a/src/interpreter_profile.rs
++++ b/src/interpreter_profile.rs
+@@ -2,6 +2,7 @@
+ use std::cell::RefCell;
+ #[derive(Clone, Debug, Default)]
+ pub struct Counts {
++    pub leaf_operands: u64,
+     pub expr: [u64; 7], // int, bool, local, field, not, binary, short-circuit
+     pub ops: [u64; 10], // set, eval, return, print, branch, jump, start, scan, next, tool
+     pub fuel_reservations: u64,
