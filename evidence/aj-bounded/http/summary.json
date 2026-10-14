@@ -1,0 +1,106 @@
+[
+  {
+    "syntax": "assigned",
+    "engine": "native",
+    "lifecycle": "prepared",
+    "median_process_us": 89.95680666666667,
+    "process_means_us": [
+      82.78374666666667,
+      89.95680666666667,
+      90.31889
+    ],
+    "prepared_bytes": 0,
+    "code_bytes": 492
+  },
+  {
+    "syntax": "assigned",
+    "engine": "native",
+    "lifecycle": "source_cold",
+    "median_process_us": 196.3236,
+    "process_means_us": [
+      211.00485,
+      195.58888333333334,
+      196.3236
+    ],
+    "prepared_bytes": 0,
+    "code_bytes": 492
+  },
+  {
+    "syntax": "assigned",
+    "engine": "tape",
+    "lifecycle": "prepared",
+    "median_process_us": 92.07499666666668,
+    "process_means_us": [
+      137.34097333333332,
+      92.07499666666668,
+      91.32305666666667
+    ],
+    "prepared_bytes": 990,
+    "code_bytes": 0
+  },
+  {
+    "syntax": "assigned",
+    "engine": "tape",
+    "lifecycle": "source_cold",
+    "median_process_us": 112.1375,
+    "process_means_us": [
+      273.7909666666667,
+      111.07083333333333,
+      112.1375
+    ],
+    "prepared_bytes": 990,
+    "code_bytes": 0
+  },
+  {
+    "syntax": "direct",
+    "engine": "native",
+    "lifecycle": "prepared",
+    "median_process_us": 90.43624666666668,
+    "process_means_us": [
+      90.19125,
+      91.71083333333333,
+      90.43624666666668
+    ],
+    "prepared_bytes": 0,
+    "code_bytes": 492
+  },
+  {
+    "syntax": "direct",
+    "engine": "native",
+    "lifecycle": "source_cold",
+    "median_process_us": 202.60625,
+    "process_means_us": [
+      183.82083333333335,
+      202.86735000000002,
+      202.60625
+    ],
+    "prepared_bytes": 0,
+    "code_bytes": 492
+  },
+  {
+    "syntax": "direct",
+    "engine": "tape",
+    "lifecycle": "prepared",
+    "median_process_us": 82.57805666666667,
+    "process_means_us": [
+      82.45583333333333,
+      82.57805666666667,
+      92.52583666666666
+    ],
+    "prepared_bytes": 990,
+    "code_bytes": 0
+  },
+  {
+    "syntax": "direct",
+    "engine": "tape",
+    "lifecycle": "source_cold",
+    "median_process_us": 94.8757,
+    "process_means_us": [
+      88.03331666666666,
+      94.8757,
+      116.36319999999999
+    ],
+    "prepared_bytes": 990,
+    "code_bytes": 0
+  }
+]

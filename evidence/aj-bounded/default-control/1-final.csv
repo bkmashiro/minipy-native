@@ -1,0 +1,13 @@
+workload,arm,lifecycle,iterations,total_ns,prepared_bytes,code_bytes,checksum
+scalar,tape,source_cold,20,175500,626,0,11840
+scalar,tape,prepared,1000,185625,626,0,592000
+scalar,native,source_cold,20,1346209,0,264,11840
+scalar,native,prepared,1000,172083,0,264,592000
+weighted,tape,source_cold,20,490000,1122,0,5500
+weighted,tape,prepared,1000,7761667,1122,0,275000
+weighted,native,source_cold,20,2967458,0,552,5500
+weighted,native,prepared,1000,1903875,0,552,275000
+stateful,tape,source_cold,20,566416,1146,0,5260
+stateful,tape,prepared,1000,7316833,1146,0,263000
+stateful,native,source_cold,20,3285875,0,576,5260
+stateful,native,prepared,1000,1978250,0,576,263000

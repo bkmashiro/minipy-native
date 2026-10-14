@@ -1,0 +1,42 @@
+{
+  "base": "f7167add303a52de73f449d1ef5c57df9552e2f4",
+  "pre_ah": "c3dff6a",
+  "branch": "exp/aj-bounded",
+  "platform": "aarch64-apple-darwin / Apple M4 / macOS 26.4.1 (25E253)",
+  "rustc": "1.93.1 (01f6ddf75 2026-02-11)",
+  "cargo": "1.93.1 (083ac5135 2025-12-15)",
+  "build": "--offline --locked --release; CARGO_BUILD_JOBS=1; shared existing target",
+  "timing_features": "tool-json",
+  "allocation_features": "json-allocation-profile",
+  "sha256": {
+    "Cargo.lock": "15a236e43daf854bedbd6a83a6a667d1e7a173e9100008be03d82efbc3efe97e",
+    "src/bin/minipy.rs": "14c157179b8156816de8b6bd2736407af8998059b5f1940b79073528f154a76f",
+    "src/buffer.rs": "728e3dc082ed1f8bed96864f608c1ddb22f7f6b9016531dba0e5deff7d9d2867",
+    "src/codegen.rs": "8b3088e434e143d42b801ebb8c6bf463434f0b55d239e421b4d9ce41e0db46c0",
+    "src/compiler_profile.rs": "7fdb8442d6d37d630fcf9c679c2abb1da0c49ab52ffc6b2741cd05ff46fcaefb",
+    "src/error.rs": "71b911094d7d0cc11b0d1445abd15c059e2b9ae6a32f76e14cda16020afb142c",
+    "src/fixture_reference.rs": "d3c67f1003a5816832fbd15c6d377edbb4d422c6db9be1b3cab7c40ae58aff53",
+    "src/frontend.rs": "966116a7980d2d32cb3c8bcff72624e6286a753bffdcfc51faecaca7abdf89e4",
+    "src/http_provider.rs": "1471ba083bb9d9183dfbe92770e0d5ed2323fbc6eba5e40bd860834db6c9ceeb",
+    "src/interpreter/debug.rs": "c46ea90a2cf6deddb8b7db9227447235efbb561c4f0376e73ea38ff0a49906b5",
+    "src/interpreter/tape.rs": "3b5ca3b55437aa1dab72611bbdb8fd76e89e154ec886edb41e73fcf20efbe33f",
+    "src/interpreter.rs": "3bb04bee642574114d8613fc8a7e579efaa5bab1318942b1ee5edb9d9b6a357a",
+    "src/interpreter_profile.rs": "ca14500ff28ec156553ae1d2e0672381afdad261b2f309ea72455bd11fa7722c",
+    "src/ir.rs": "b7368888a1fee52bd259a4749441ce66a0299be629069949b09b183bc058ab24",
+    "src/json_view.rs": "bb84cf77e831c77799e68271acf4d02878c052717e75cffb27a9a4e1274a0cce",
+    "src/lib.rs": "d4e08a6ac47ee51961389937efa9d630d94c77005e2a45882705ca946a7153b6",
+    "src/provider.rs": "f3d33fe20a82ad3b926815d78122c09ed2e47252a2d3a36686c89f43724674df",
+    "src/runtime.rs": "014c9e1d7560823eb45915627f5f54d2b9b02305c9ce5eb53104adf02a391c9e",
+    "src/tool.rs": "10333044560f19a416b157c2447f8b2ae9c97b4b85efa2f4a7037540b7e4ac96",
+    "src/wasm.rs": "d29e071173a706dd80a506557075af0fe3d6a26b7d2ed4be261658123edfb623",
+    "examples/json_probe.rs": "5a5fc831f2eb3e15adb9274e275fd28b1b8069745eddae33547bb78829d34ebe",
+    "examples/fastpath_probe.rs": "dfa8e4808326f2a7df615aada0dc717e81867560f96c1cadeae4009480be929d",
+    "examples/aj_http_probe.rs": "efc48419090cabf1251ea5254c090bb202d8e3321a4c5e61df97015e43869d31"
+  },
+  "notes": [
+    "Only frontend.rs changes production code from AH. Candidate patch was reverted before final builds.",
+    "Timing executables saved before separate allocation build; binary hashes in each timing directory.",
+    "HTTP final-only qualification uses enabled I/O and same-runtime localhost fixture.",
+    "Default-control is a separate four-round three-arm control, not pooled into AH/feature-enabled pairs."
+  ]
+}

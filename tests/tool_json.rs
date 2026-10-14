@@ -20,6 +20,150 @@ use std::{
     time::Duration,
 };
 
+#[tokio::test]
+async fn direct_scalar_tool_print_matches_explicit_binding_and_bounds() {
+    for native in [false, true] {
+        for direct in [false, true] {
+            let suffix = if direct {
+                "print(tools.publish(total=p[\"data\"][\"count\"] * 2, batch_id=batch_id))\n"
+            } else {
+                "receipt = tools.publish(total=p[\"data\"][\"count\"] * 2, batch_id=batch_id)\nprint(receipt)\n"
+            };
+            let source = format!("print(1)\np = tools.fetch(batch_id)\n{suffix}");
+            for (options, expected) in [
+                (ScriptLimits::default(), Ok(())),
+                (
+                    ScriptLimits {
+                        stdout_bytes: 2,
+                        ..ScriptLimits::default()
+                    },
+                    Err(TaskError::Budget),
+                ),
+                (
+                    ScriptLimits {
+                        tool_calls: 1,
+                        ..ScriptLimits::default()
+                    },
+                    Err(TaskError::Budget),
+                ),
+            ] {
+                let p = Arc::new(P::new(br#"{"data":{"count":10}}"#));
+                let r = run(native, &source, p.clone(), options, Cancellation::default()).await;
+                assert_eq!(r.status, expected);
+                assert_eq!(r.stdout, if expected.is_ok() { "1\n27\n" } else { "1\n" });
+                assert_eq!(p.live.load(Ordering::SeqCst), 0);
+                assert_eq!(
+                    p.calls.lock().unwrap().len(),
+                    if options.tool_calls == 1 { 1 } else { 2 }
+                );
+                if options.tool_calls > 1 {
+                    assert_eq!(*p.wait_live.lock().unwrap(), vec![0]);
+                }
+            }
+        }
+        let mut p = P::new(b"{}");
+        p.denied = true;
+        let p = Arc::new(p);
+        let r = run(
+            native,
+            "print(1)\nprint(tools.publish(total=3, batch_id=batch_id))",
+            p.clone(),
+            ScriptLimits::default(),
+            Cancellation::default(),
+        )
+        .await;
+        assert_eq!(r.status, Err(TaskError::Permission));
+        assert_eq!(r.stdout, "1\n");
+        assert!(p.calls.lock().unwrap().is_empty());
+        let p = Arc::new(P::new(b"{}"));
+        let r = run(
+            native,
+            "print(tools.publish(batch_id, 3))",
+            p.clone(),
+            ScriptLimits {
+                allow_print: false,
+                ..ScriptLimits::default()
+            },
+            Cancellation::default(),
+        )
+        .await;
+        assert_eq!(r.status, Err(TaskError::Permission));
+        assert_eq!(r.stdout, "");
+        assert_eq!(
+            p.calls.lock().unwrap().len(),
+            1,
+            "Tool argument to print is evaluated before print permission"
+        );
+        let p = Arc::new(P::new(b"{}"));
+        let r = run(
+            native,
+            "print(1)\nprint(tools.publish(batch_id, 9223372036854775807))",
+            p.clone(),
+            ScriptLimits::default(),
+            Cancellation::default(),
+        )
+        .await;
+        assert_eq!(
+            r.status,
+            Err(TaskError::Overflow),
+            "provider failure is propagated"
+        );
+        assert_eq!(r.stdout, "1\n");
+        assert_eq!(p.calls.lock().unwrap().len(), 1);
+        let p = Arc::new(P::new(br#"{"data":{"count":null}}"#));
+        let r = run(native, "p = tools.fetch(batch_id)\nprint(1)\nprint(tools.publish(total=9223372036854775807+1, batch_id=p[\"data\"][\"count\"]))", p.clone(), ScriptLimits::default(), Cancellation::default()).await;
+        assert_eq!(r.status, Err(TaskError::Overflow));
+        assert_eq!(r.stdout, "1\n");
+        assert_eq!(p.calls.lock().unwrap().len(), 1);
+    }
+}
+
+#[tokio::test]
+async fn direct_tool_print_suspends_and_cancellation_preserves_prefix() {
+    for native in [false, true] {
+        let mut p = P::new(b"{}");
+        p.hold_publish = true;
+        let p = Arc::new(p);
+        let cancel = Cancellation::default();
+        let task = run(
+            native,
+            "print(1)\nprint(tools.publish(batch_id, 3))\nprint(2)",
+            p.clone(),
+            ScriptLimits::default(),
+            cancel.clone(),
+        );
+        tokio::pin!(task);
+        tokio::select! {r=&mut task=>panic!("unexpected {:?}",r.status),_=p.loaded.notified()=>{}}
+        cancel.cancel();
+        let r = task.await;
+        assert_eq!(r.status, Err(TaskError::Cancelled));
+        assert_eq!(r.stdout, "1\n");
+        assert_eq!(p.calls.lock().unwrap().len(), 1);
+        p.proceed.notify_one();
+        tokio::task::yield_now().await;
+    }
+}
+
+#[test]
+fn direct_tool_print_rejects_json_nested_calls_and_loop_effects() {
+    for source in [
+        "print(tools.fetch(batch_id))",
+        "print(tools.publish(batch_id, 2) + 1)",
+        "print(tools.publish(batch_id, tools.publish(batch_id, 2)))",
+        "print(tools.publish(batch_id, total=2, batch_id=3))",
+        "print(tools.publish(other=3, total=2))",
+        "print(tools.publish(batch_id))",
+        "print(tools.publish(**batch_id))",
+        "print(tools.publish(batch_id, True))",
+        "q = tools.load_quotes(batch_id)\nfor row in q:\n    print(tools.publish(batch_id, 2))",
+    ] {
+        assert!(
+            frontend::parse_with_tools(source, &[("batch_id", Type::I64)], &schema()).is_err(),
+            "{source}"
+        );
+    }
+}
+
 fn schema() -> Vec<ToolSchema> {
     vec![
         ToolSchema {

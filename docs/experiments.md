@@ -811,3 +811,31 @@ workspace debug target, then removed only that redundant target. Frozen `bench/`
 sources and AF/WSL artifacts are untouched. Submit a signed branch snapshot for
 one focused review before any main merge.
 
+## AJ: bounded source preparation candidate and direct Tool output (2026-10-15)
+
+Based on approved opt-in AH f7167add, not merged main. The single candidate
+removed transient ToolSchema clones during binding; four AB/BA/BA/AB pairs
+showed JSON cold changes of +1.5–2.6%, with repeated cold slower in every
+pair. Reverted it and stopped optimization, retaining the patch/raw evidence.
+Added only ordinary Python `print(tools.name(...))` for declared i64 replies:
+frontend expansion reuses Tool suspension and bounded Print, without new
+runtime instructions, owner state, helper ABI or strategy. JSON print,
+nested effect expressions and Tool-in-loop remain rejected.
+
+Small pre-AH/default/opt-in controls did not reproduce the prior 20–33%
+scalar-cold regression; they do not erase AH's negative result or prove
+zero overhead. Same opt-in executable with I/O enabled still adds about
+14 us to prepared 1000-row ready-provider scans at default chunk=256.
+No fairness/cancellation/budget check was changed to reduce that cost.
+Three actual localhost HTTP processes validated both syntaxes with real
+fetch/publish waits, output, argument, pool/permit and response-count checks.
+Direct/assigned tape logical bytes (990) and native code bytes (492) match;
+these are not RSS/PSS or measured peak memory.
+
+Final macOS verification: 89 all-feature and 63 default tests, strict clippy,
+fmt, Wasm/debug lib check. See [aj-bounded-results.md](aj-bounded-results.md)
+for source identity, costs, boundaries, commands and all 2217 small batch/
+diagnostic rows; `python3 tools/aj_verify.py` recomputes summaries exactly.
+No frozen benchmark, AF/WSL workload, main, website or dependency change.
+Signed independent branch is submitted for focused review, not auto-merge.
+

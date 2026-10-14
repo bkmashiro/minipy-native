@@ -540,6 +540,20 @@ impl Compiler {
                 }
                 if let Some(arg) = Self::print_arg(&e.value)? {
                     self.node(depth + 1)?;
+                    #[cfg(feature = "tool-json")]
+                    if !self.tools.is_empty() && Self::call_parts(arg).is_some() {
+                        // Reuse ordinary Tool binding/suspension, then the bounded
+                        // scalar printer. NUL names cannot collide with source names.
+                        let name = format!("\0print{}", self.locals.len());
+                        if self.compile_tool(&name, arg, depth + 2, in_loop, out)? {
+                            if self.json.calls.last().expect("bound Tool").json {
+                                return Err(err("print accepts only scalar Tool results"));
+                            }
+                            let slot = self.lookup(&name)?;
+                            out.push(Stmt::Print(Expr::Local(slot), Type::I64));
+                            return Ok(());
+                        }
+                    }
                     if let Some((batch, total)) =
                         self.tool_call(arg, "record_total", depth + 2, in_loop)?
                     {
