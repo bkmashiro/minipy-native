@@ -1,8 +1,9 @@
 //! Thread-local iterative task dispatcher with owned, detached I/O operations.
+use crate::error::TaskError;
+#[cfg(not(target_arch = "wasm32"))]
 use crate::{
     buffer::QuoteBuffer,
     codegen::{CodeUnit, Frame, View},
-    error::TaskError,
     provider::Provider,
 };
 use std::{
@@ -13,7 +14,9 @@ use std::{
         atomic::{AtomicBool, Ordering},
     },
 };
-use tokio::sync::{Notify, oneshot};
+use tokio::sync::Notify;
+#[cfg(not(target_arch = "wasm32"))]
+use tokio::sync::oneshot;
 #[derive(Default)]
 struct CancelState {
     cancelled: AtomicBool,
@@ -29,6 +32,7 @@ impl Cancellation {
     pub fn is_cancelled(&self) -> bool {
         self.0.cancelled.load(Ordering::Acquire)
     }
+    #[cfg(not(target_arch = "wasm32"))]
     async fn cancelled(&self) {
         let notification = self.0.notify.notified();
         tokio::pin!(notification);
@@ -67,6 +71,7 @@ pub struct Event {
     pub index: u64,
 }
 pub type Trace = Rc<RefCell<Vec<Event>>>;
+#[cfg(not(target_arch = "wasm32"))]
 pub(crate) fn event(
     trace: &Option<Trace>,
     phase: &'static str,
@@ -108,6 +113,7 @@ pub(crate) fn authorize_tool(
     Ok(())
 }
 /// Futures own all required arguments. Dropping the receiver does not drop the operation.
+#[cfg(not(target_arch = "wasm32"))]
 pub(crate) async fn receive<T>(
     rx: oneshot::Receiver<Result<T, TaskError>>,
     cancel: &Cancellation,
@@ -120,6 +126,7 @@ pub(crate) async fn receive<T>(
     check(cancel)?;
     result
 }
+#[cfg(not(target_arch = "wasm32"))]
 pub async fn execute<P: Provider>(
     code: Rc<CodeUnit>,
     provider: Arc<P>,
@@ -174,6 +181,7 @@ pub(crate) struct Output {
     pub(crate) stdout: String,
     max: usize,
     allowed: bool,
+    #[cfg(not(target_arch = "wasm32"))]
     error: Option<TaskError>,
 }
 impl Output {
@@ -182,12 +190,14 @@ impl Output {
             stdout: String::new(),
             max,
             allowed,
+            #[cfg(not(target_arch = "wasm32"))]
             error: None,
         }
     }
 }
 /// Fixed native ABI, task-private output only. No I/O, callback dispatch or panic
 /// on user data. One atomic line append: a rejected line leaves earlier output intact.
+#[cfg(not(target_arch = "wasm32"))]
 pub(crate) unsafe extern "C" fn native_print(output: *mut Output, value: i64, boolean: i64) -> i64 {
     // Only generated code calls this with its dispatcher-owned live Output.
     let output = unsafe { &mut *output };
@@ -250,6 +260,7 @@ impl Output {
         Ok(())
     }
 }
+#[cfg(not(target_arch = "wasm32"))]
 pub async fn execute_script<P: Provider>(
     code: Rc<CodeUnit>,
     provider: Arc<P>,
@@ -268,6 +279,7 @@ pub async fn execute_script<P: Provider>(
     }
 }
 #[allow(clippy::too_many_arguments)]
+#[cfg(not(target_arch = "wasm32"))]
 async fn run<P: Provider>(
     code: Rc<CodeUnit>,
     provider: Arc<P>,

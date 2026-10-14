@@ -712,3 +712,48 @@ persistent task disk and has no independent archive.
 - Requested independent gpt-6-luna Codex lane was rejected by ChatGPT account (400 unsupported). No substitute model or claimed child result; parent implemented the bounded benchmark additions.
 - Final fixed-fixture admission uses compile-time exact byte assertions. Original measured reference harness separately archived; guarded ELF has a distinct hash, but complete executable `.text` matches measured binary byte-for-byte (SHA `24911366c36aaac77580341ef2bf678c67fa722cab22ba35df82010befdf2697`). Fresh 5/5 tests plus exact/mismatched fixture-copy rustc probes pass. No repeated campaign or changed source/runtime fixtures.
 
+## U browser interpreter and bounded debugger (2026-10-14)
+
+The browser target reuses the existing bounded frontend, sealed tape lowering,
+checked dispatcher, output formatter and capability/budget checks. An opt-in
+`debug-runtime` specialization retains scratch for actual instruction stops;
+native default retains stack-local scratch and has no debugger module or
+serialization. Cranelift/native async execution is target-excluded from Wasm.
+No guest-language, native strategy or service-worker/permit contract changes.
+
+The trusted Quote fixture provider completes asynchronously in a module Worker.
+Eight independent task slots share prepared units; the Worker schedules bounded
+turns and two-outstanding-batch ACK backpressure. Snapshots carry real Wasm frame,
+IR tape and input addresses, byte sizes, scalar state and small previews. Row,
+instruction and write events derive from execution. Cancellation drops inputs
+and ignores detached late completion; reset invalidates old delivery epochs.
+Terminal debug frames and prepared tapes stay until reset and are explicitly
+documented as retained, while linear memory capacity is distinct from live ranges.
+
+WSL Rust1.96.0 `wasm32-unknown-unknown` ran real compilation under the shared
+`/home/na/benchmarks/minipy-s/compute.lock`; no heavy Mac toolchain/download.
+TUNA's old default1.87 target returned404; the already installed1.96 toolchain's
+target was installed from official distribution, with no replacement compiler
+or blind repeated build. Source/build stays `/home/na/projects/minipy-u` and
+the reused WSL target stays `/home/na/benchmarks/minipy-s/source/target`.
+`scripts/build_playground.py` emits a stripped static package and source/compiler
+manifest, with a 256MiB Wasm maximum. Artifact paths and exact final sizes/hashes
+are in `bench/results/u-playground/verification.json` and package manifest.
+
+Mac `cargo test --tests --features debug-runtime,fixture-reference` passed72
+tests, including six debugger invariants; default tests passed63 earlier.
+`cargo clippy --features debug-runtime --lib -- -D warnings`, formatting, JS
+syntax and real Wasm import/export inspection pass. Chrome's actual module
+Worker/Wasm acceptance passed31 checks, including editing source -> changed
+output, PC/scratch, three tasks, timed wait/resume, chunk yields, last-use input
+release, late cancellation, errors, lossless i64 and transport backpressure.
+The first acceptance failure was a75ms test wait racing actual timer delivery;
+a bounded state-based await replaced that timing assumption, without weakening
+the required ready-state invariant. Browser command timings include ABI/debug
+projection costs and are not native benchmark scores.
+
+Engine integration and reproduction: [playground-engine.md](playground-engine.md).
+Three editable samples are in `web/samples.mjs`; V owns the Canvas workbench,
+responsive UI, final site-wide browser QA and deployment. U adds no web framework,
+network Tool, simulated trace or unrelated engine optimization.
+

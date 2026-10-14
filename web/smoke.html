@@ -1,0 +1,6 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MiniPy Wasm acceptance</title><style>body{font:16px system-ui;margin:32px;background:#f7f7f5;color:#222}pre{white-space:pre-wrap;overflow-wrap:anywhere}</style><h1>MiniPy Wasm / Worker acceptance</h1><pre id="result">Running actual engine…</pre><script type="module">
+import {smoke} from './browser-test.mjs';
+try {window.__qa=await smoke(new URL('./worker.mjs',import.meta.url));}
+catch(error){window.__qa={passed:false,error:String(error),stack:error.stack};}
+document.querySelector('#result').textContent=JSON.stringify(window.__qa,null,2);
+</script>

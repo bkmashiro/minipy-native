@@ -44,6 +44,22 @@ pub(super) enum Op {
     Return,
 }
 impl Op {
+    #[cfg(feature = "debug-runtime")]
+    pub(super) fn destination(&self) -> Option<Dest> {
+        match self {
+            Self::Copy(d, _)
+            | Self::Add(d, _, _)
+            | Self::Sub(d, _, _)
+            | Self::Mul(d, _, _)
+            | Self::Eq(d, _, _)
+            | Self::Ne(d, _, _)
+            | Self::Lt(d, _, _)
+            | Self::Le(d, _, _)
+            | Self::Gt(d, _, _)
+            | Self::Ge(d, _, _) => Some(*d),
+            _ => None,
+        }
+    }
     pub(super) fn target(&mut self) -> &mut usize {
         match self {
             Self::EqJump(_, _, t)
@@ -248,6 +264,8 @@ pub(super) enum Boundary {
     Record(usize, i64, i64),
     Yield,
     Done,
+    #[cfg(feature = "debug-runtime")]
+    Step,
 }
 #[inline]
 fn read(a: Operand, state: &State, temps: &[i64; MAX_NODES]) -> i64 {
@@ -272,6 +290,7 @@ fn write(dest: Dest, v: i64, state: &mut State, temps: &mut [i64; MAX_NODES]) {
     }
 }
 // This is deliberately synchronous: no scratch array is captured in a waiting future.
+#[cfg(not(target_arch = "wasm32"))]
 pub(super) fn run_until_boundary(
     unit: &InterpreterUnit,
     state: &mut State,
@@ -280,6 +299,17 @@ pub(super) fn run_until_boundary(
     output: &mut Output,
 ) -> Result<Boundary, TaskError> {
     let mut temps = [0; MAX_NODES];
+    run::<false>(unit, state, owners, limits, output, &mut temps)
+}
+// Constant specialization removes step accounting from production dispatch.
+pub(super) fn run<const STEP: bool>(
+    unit: &InterpreterUnit,
+    state: &mut State,
+    owners: &[Option<QuoteBuffer>],
+    limits: &runtime::Limits,
+    output: &mut Output,
+    temps: &mut [i64; MAX_NODES],
+) -> Result<Boundary, TaskError> {
     while state.pc < unit.ops.len() {
         let op = &unit.ops[state.pc];
         state.pc += 1;
@@ -287,18 +317,18 @@ pub(super) fn run_until_boundary(
         crate::interpreter_profile::update(|c| c.tape_dispatches += 1);
         macro_rules! calc {
             ($d:expr,$a:expr,$b:expr,$method:ident) => {{
-                let a = read(*$a, state, &temps);
-                let b = read(*$b, state, &temps);
+                let a = read(*$a, state, temps);
+                let b = read(*$b, state, temps);
                 let v = a.$method(b).ok_or(TaskError::Overflow)?;
-                write(*$d, v, state, &mut temps);
+                write(*$d, v, state, temps);
             }};
         }
-        macro_rules! cmp { ($d:expr,$a:expr,$b:expr,$operator:tt) => {{ let v=i64::from(read(*$a,state,&temps) $operator read(*$b,state,&temps)); write(*$d,v,state,&mut temps); }} }
-        macro_rules! jump { ($a:expr,$b:expr,$target:expr,$operator:tt) => { if read(*$a,state,&temps) $operator read(*$b,state,&temps) {state.pc=*$target;} } }
+        macro_rules! cmp { ($d:expr,$a:expr,$b:expr,$operator:tt) => {{ let v=i64::from(read(*$a,state,temps) $operator read(*$b,state,temps)); write(*$d,v,state,temps); }} }
+        macro_rules! jump { ($a:expr,$b:expr,$target:expr,$operator:tt) => { if read(*$a,state,temps) $operator read(*$b,state,temps) {state.pc=*$target;} } }
         match op {
             Op::Copy(d, a) => {
-                let v = read(*a, state, &temps);
-                write(*d, v, state, &mut temps);
+                let v = read(*a, state, temps);
+                write(*d, v, state, temps);
             }
             Op::Add(d, a, b) => calc!(d, a, b, checked_add),
             Op::Sub(d, a, b) => calc!(d, a, b, checked_sub),
@@ -316,19 +346,19 @@ pub(super) fn run_until_boundary(
             Op::GtJump(a, b, t) => jump!(a,b,t,>),
             Op::GeJump(a, b, t) => jump!(a,b,t,>=),
             Op::Branch(a, on, t) => {
-                if (read(*a, state, &temps) != 0) == *on {
+                if (read(*a, state, temps) != 0) == *on {
                     state.pc = *t;
                 }
             }
             Op::Jump(t) => state.pc = *t,
-            Op::Print(a, t) => output.append(read(*a, state, &temps), *t == Type::Bool)?,
+            Op::Print(a, t) => output.append(read(*a, state, temps), *t == Type::Bool)?,
             Op::Return => return Ok(Boundary::Done),
-            Op::Load(i, a) => return Ok(Boundary::Load(*i, read(*a, state, &temps))),
+            Op::Load(i, a) => return Ok(Boundary::Load(*i, read(*a, state, temps))),
             Op::Record(i, a, b) => {
                 return Ok(Boundary::Record(
                     *i,
-                    read(*a, state, &temps),
-                    read(*b, state, &temps),
+                    read(*a, state, temps),
+                    read(*b, state, temps),
                 ));
             }
             Op::Start => {
@@ -340,6 +370,10 @@ pub(super) fn run_until_boundary(
                 if state.index == rows.len() {
                     state.row = None;
                     state.pc = *end;
+                    #[cfg(feature = "debug-runtime")]
+                    if STEP {
+                        return Ok(Boundary::Step);
+                    }
                     continue;
                 }
                 if state.chunk_left == 0 {
@@ -369,6 +403,10 @@ pub(super) fn run_until_boundary(
                     return Ok(Boundary::Yield);
                 }
             }
+        }
+        #[cfg(feature = "debug-runtime")]
+        if STEP {
+            return Ok(Boundary::Step);
         }
     }
     Ok(Boundary::Done)

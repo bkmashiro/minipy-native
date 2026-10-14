@@ -1,15 +1,23 @@
 //! Explicit lightweight backend: sealed computation tape and resumable bounded turns.
 //! Preparation never constructs a CodeUnit or calls Cranelift. Prepared units are immutable.
+#[cfg(not(target_arch = "wasm32"))]
+use crate::provider::Provider;
+#[cfg(not(target_arch = "wasm32"))]
+use crate::runtime::{ScriptOutcome, Trace};
 use crate::{
     buffer::{Quote, QuoteBuffer},
     error::TaskError,
     frontend,
     ir::{BinOp, CompileError, Expr, Field, MAX_LOCALS, Stmt, Type},
-    provider::Provider,
-    runtime::{self, Cancellation, Output, ScriptLimits, ScriptOutcome, Trace},
+    runtime::{self, Cancellation, Output, ScriptLimits},
 };
-use std::{rc::Rc, sync::Arc};
+use std::rc::Rc;
+#[cfg(not(target_arch = "wasm32"))]
+use std::sync::Arc;
+#[cfg(not(target_arch = "wasm32"))]
 use tokio::sync::oneshot;
+#[cfg(feature = "debug-runtime")]
+pub mod debug;
 mod tape;
 use tape::{Boundary, Op, flatten};
 /// Only the existing bounded frontend can construct this sealed executable.
@@ -84,6 +92,7 @@ fn release(owners: &mut [Option<QuoteBuffer>], live: u64) -> usize {
 }
 /// Same script outcome, limits, typed provider and detached-operation cancellation
 /// contract as native execution. One task, no OS thread or per-row object tree.
+#[cfg(not(target_arch = "wasm32"))]
 pub async fn execute_script<P: Provider>(
     unit: Rc<InterpreterUnit>,
     provider: Arc<P>,
@@ -99,6 +108,7 @@ pub async fn execute_script<P: Provider>(
         stdout: output.stdout,
     }
 }
+#[cfg(not(target_arch = "wasm32"))]
 async fn run<P: Provider>(
     unit: &InterpreterUnit,
     provider: Arc<P>,
@@ -136,6 +146,8 @@ async fn run<P: Provider>(
     // and chunk yield. Scalar dispatch remains bounded by frontend admission.
     loop {
         match tape::run_until_boundary(unit, &mut state, &owners, &limits, output)? {
+            #[cfg(feature = "debug-runtime")]
+            Boundary::Step => unreachable!("production specialization never stops per instruction"),
             Boundary::Done => break,
             Boundary::Yield => {
                 let held = release(&mut owners, unit.live[state.pc]);

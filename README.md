@@ -55,6 +55,7 @@ Engineering compile bounds are 16 KiB of source, 512 frontend nodes, depth 32, 3
 - [Design and semantic contract](docs/design.md)
 - [Experiments and redesign record](docs/experiments.md)
 - [Implementation mission and handoff](docs/implementation.md)
+- [Opt-in browser Wasm interpreter and Worker/debugger API](docs/playground-engine.md)
 - [Integrated cost, density and finite-load evidence](docs/performance-v2.md)
 - [Frozen end-to-end benchmark, Python lifecycles and figures](docs/benchmark-overview.md)
 - [Execution reference and bounded strategy qualification](docs/stage-strategy-experiment.md)

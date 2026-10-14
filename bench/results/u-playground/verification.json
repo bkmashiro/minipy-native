@@ -1,0 +1,36 @@
+{
+  "task": "t_ceca4b64",
+  "baseline": "33f4128",
+  "target": "wasm32-unknown-unknown",
+  "toolchain": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+  "wasm_bytes": 2703548,
+  "wasm_sha256": "4ea39d8eea57404addaf2b0f88ae7fee616b1de046093c3ad174af17f5100250",
+  "wasm_imports": [],
+  "build": "flock /home/na/benchmarks/minipy-s/compute.lock env CARGO_TARGET_DIR=/home/na/benchmarks/minipy-s/source/target python3 scripts/build_playground.py",
+  "build_directory": "/home/na/projects/minipy-u",
+  "artifact_directory": "/Users/yuzhe/projects/minipy-native/.artifacts/playground",
+  "source_identity_manifest": "package manifest.json",
+  "native_validation": {
+    "toolchain": "rustc 1.93.1 (01f6ddf75 2026-02-11)",
+    "command": "cargo test --tests --features debug-runtime,fixture-reference",
+    "tests_by_target": {"lib":20,"acceptance":7,"boundaries":8,"debug_runtime":6,"fixture_lifecycle":1,"fixture_reference":2,"interpreter":14,"scripts":14},
+    "total_passed": 72,
+    "default_tests_passed": 63,
+    "additional_checks": ["cargo fmt --check", "cargo clippy --features debug-runtime --lib -- -D warnings", "git diff --check", "node --check web/worker.mjs", "node --check web/browser-test.mjs", "WebAssembly.Module import/export inspection"]
+  },
+  "browser": {
+    "engine": "HeadlessChrome/155.0.0.0 on macOS",
+    "url": "http://127.0.0.1:8769/smoke.html?build=4ea39d8e",
+    "viewports": [1280,390],
+    "narrow_content_width": 390,
+    "qa": {"passed":true,"checks":31,"messages":159,"max_event_batch":130,"retained_test_events":256,"reads":2081,"yields":64,"releasedAtRecord":4,"memory_bytes":2686976}
+  },
+  "limits": {"tasks":8,"units":16,"events_per_batch":2048,"command_bytes":65536,"wasm_memory_max_bytes":268435456},
+  "limitations": [
+    "Browser is the real shared Rust interpreter compiled to Wasm, not native guest compilation.",
+    "Trusted fixture provider returns immutable repeated Quote rows and echoes record total; no network tools.",
+    "Terminal debug frames and prepared units stay bounded until reset; memory capacity does not shrink with payload release.",
+    "This is an engine acceptance page. V owns Canvas UI, playback and deployment.",
+    "No native performance score or clean kernel timing inferred from browser debug commands."
+  ]
+}

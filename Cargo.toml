@@ -6,15 +6,23 @@ rust-version = "1.93"
 publish = false
 
 [dependencies]
+serde = { version = "1", features = ["derive"], optional = true }
+serde_json = { version = "1", optional = true }
+rustpython-parser = { version = "=0.4.0", default-features = false, features = ["num-bigint"] }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 cranelift-codegen = { version = "=0.128.3", default-features = false, features = ["std", "unwind", "host-arch"] }
 cranelift-frontend = "=0.128.3"
 cranelift-jit = "=0.128.3"
 cranelift-module = "=0.128.3"
 cranelift-native = "=0.128.3"
-rustpython-parser = { version = "=0.4.0", default-features = false, features = ["num-bigint"] }
 tokio = { version = "=1.48.0", features = ["rt", "sync", "time", "macros"] }
 
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+tokio = { version = "=1.48.0", features = ["rt", "sync", "macros"] }
+
 [features]
+debug-runtime = ["dep:serde", "dep:serde_json"]
 fixture-reference = []
 interpreter-profile = []
 # Optional compiler pass profiling, absent from the default execution path.
