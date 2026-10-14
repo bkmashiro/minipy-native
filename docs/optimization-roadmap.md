@@ -1,5 +1,19 @@
 # Current optimization pointer
 
+## N: current compact interpreter qualification
+
+[compact-interpreter-experiment.md](compact-interpreter-experiment.md) replaces
+recursive interpreted expressions with a sealed computation tape in the existing
+flatten traversal. Two frontend simplifications are separately attributed.
+Native predicate lowering and the interpreter's static leaf fast path remain;
+the reverted K header candidate remains absent. New paired measurements qualify
+this production version, including small-input/tail regressions. L is frozen
+historical evidence, not a benchmark of N. No compiler worker, global Provider
+permit, cross-scan allowance, JIT, cache or JSON support is introduced.
+
+The sections below are historical snapshots. In particular I's reverted leaf
+candidate was later retested and retained by J; K reverted only header motion.
+
 ## I: execution reference and bounded strategy qualification
 
 [stage-strategy-experiment.md](stage-strategy-experiment.md) records 145,200 actual
@@ -15,7 +29,7 @@ gate. One-resume native dispatch elimination shrinks code without stable mixed
 net benefit. Both are reverted, preserving patches/raw rather than retained
 alternatives. No further campaign, automatic JIT/cache or scheduler is scheduled.
 61 correctness tests pass on macOS and actual Linux. Final review/publication
-belongs in the card. This is the current stop point; prior pointers below are
+belongs in the card. This was I's stop point; prior pointers below are
 historical evidence.
 
 ## H: historical integrated explicit backends

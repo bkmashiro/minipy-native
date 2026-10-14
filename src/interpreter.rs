@@ -1,4 +1,4 @@
-//! Explicit lightweight backend: bound typed expressions plus a flat resumable statement stream.
+//! Explicit lightweight backend: sealed computation tape and resumable bounded turns.
 //! Preparation never constructs a CodeUnit or calls Cranelift. Prepared units are immutable.
 use crate::{
     buffer::{Quote, QuoteBuffer},
@@ -10,21 +10,8 @@ use crate::{
 };
 use std::{rc::Rc, sync::Arc};
 use tokio::sync::oneshot;
-
-#[derive(Debug)]
-enum Op {
-    Set(usize, Expr),
-    Branch(Expr, usize),
-    Jump(usize),
-    Start,
-    Scan { buffer: usize, end: usize },
-    Next(usize),
-    Load(usize, Expr),
-    Record(usize, Expr, Expr),
-    Print(Expr, Type),
-    Eval(Expr),
-    Return(Expr),
-}
+mod tape;
+use tape::{Boundary, Op, flatten};
 /// Only the existing bounded frontend can construct this sealed executable.
 pub struct InterpreterUnit {
     ops: Vec<Op>,
@@ -45,11 +32,11 @@ impl InterpreterUnit {
             for pc in (0..ops.len()).rev() {
                 let next = live[pc + 1];
                 let before = match &ops[pc] {
-                    Op::Branch(_, target) => next | live[*target],
+                    op if op.branch_target().is_some() => next | live[op.branch_target().unwrap()],
                     Op::Jump(target) | Op::Next(target) => live[*target],
                     Op::Scan { buffer, end } => next | live[*end] | (1 << buffer),
                     Op::Load(target, _) => next & !(1 << target),
-                    Op::Return(_) => 0,
+                    Op::Return => 0,
                     _ => next,
                 };
                 changed |= before != live[pc];
@@ -68,68 +55,10 @@ impl InterpreterUnit {
     }
     /// Logical owned preparation bytes, excluding allocator rounding and Rc header.
     pub fn prepared_bytes(&self) -> usize {
-        fn expr_bytes(e: &Expr) -> usize {
-            match e {
-                Expr::Binary(_, a, b) => {
-                    2 * std::mem::size_of::<Expr>() + expr_bytes(a) + expr_bytes(b)
-                }
-                Expr::Not(e) => std::mem::size_of::<Expr>() + expr_bytes(e),
-                _ => 0,
-            }
-        }
         std::mem::size_of::<Self>()
             + self.ops.capacity() * std::mem::size_of::<Op>()
             + self.live.capacity() * 8
             + self.inputs.capacity() * std::mem::size_of::<Type>()
-            + self
-                .ops
-                .iter()
-                .map(|op| match op {
-                    Op::Set(_, e)
-                    | Op::Branch(e, _)
-                    | Op::Load(_, e)
-                    | Op::Print(e, _)
-                    | Op::Eval(e)
-                    | Op::Return(e) => expr_bytes(e),
-                    Op::Record(_, a, b) => expr_bytes(a) + expr_bytes(b),
-                    _ => 0,
-                })
-                .sum::<usize>()
-    }
-}
-fn flatten(statements: Vec<Stmt>, ops: &mut Vec<Op>) {
-    for stmt in statements {
-        match stmt {
-            Stmt::Set(i, e) => ops.push(Op::Set(i, e)),
-            Stmt::Load(i, e) => ops.push(Op::Load(i, e)),
-            Stmt::Record(i, a, b) => ops.push(Op::Record(i, a, b)),
-            Stmt::Print(e, ty) => ops.push(Op::Print(e, ty)),
-            Stmt::Eval(e) => ops.push(Op::Eval(e)),
-            Stmt::Return(e) => ops.push(Op::Return(e)),
-            Stmt::If(e, yes, no) => {
-                let branch = ops.len();
-                ops.push(Op::Branch(e, 0));
-                flatten(yes, ops);
-                let jump = ops.len();
-                ops.push(Op::Jump(0));
-                let no_start = ops.len();
-                flatten(no, ops);
-                let end = ops.len();
-                if let Op::Branch(_, target) = &mut ops[branch] {
-                    *target = no_start;
-                }
-                ops[jump] = Op::Jump(end);
-            }
-            Stmt::For(buffer, body) => {
-                ops.push(Op::Start);
-                let header = ops.len();
-                ops.push(Op::Scan { buffer, end: 0 });
-                flatten(body, ops);
-                ops.push(Op::Next(header));
-                let end = ops.len();
-                ops[header] = Op::Scan { buffer, end };
-            }
-        }
     }
 }
 struct State {
@@ -140,91 +69,7 @@ struct State {
     remaining: u64,
     row: Option<Quote>,
 }
-impl State {
-    // Avoid a recursive eval call/prologue for sealed typed leaf operands.
-    // Compound operands still evaluate exactly once, left-to-right.
-    #[inline]
-    fn operand(&self, e: &Expr) -> Result<i64, TaskError> {
-        #[cfg(feature = "interpreter-profile")]
-        if matches!(
-            e,
-            Expr::Int(_) | Expr::Bool(_) | Expr::Local(_) | Expr::Field(_)
-        ) {
-            crate::interpreter_profile::update(|c| c.leaf_operands += 1);
-        }
-        Ok(match e {
-            Expr::Int(v) => *v,
-            Expr::Bool(v) => i64::from(*v),
-            Expr::Local(i) => self.locals[*i],
-            Expr::Field(f) => {
-                let row = self
-                    .row
-                    .as_ref()
-                    .expect("sealed frontend binds fields inside scans");
-                match f {
-                    Field::Price => row.unit_price_cents,
-                    Field::Quantity => row.quantity,
-                }
-            }
-            _ => return self.eval(e),
-        })
-    }
-    fn eval(&self, e: &Expr) -> Result<i64, TaskError> {
-        #[cfg(feature = "interpreter-profile")]
-        crate::interpreter_profile::update(|c| {
-            c.expr[match e {
-                Expr::Int(_) => 0,
-                Expr::Bool(_) => 1,
-                Expr::Local(_) => 2,
-                Expr::Field(_) => 3,
-                Expr::Not(_) => 4,
-                Expr::Binary(..) => 5,
-            }] += 1
-        });
-        Ok(match e {
-            Expr::Int(v) => *v,
-            Expr::Bool(v) => i64::from(*v),
-            Expr::Local(i) => self.locals[*i],
-            Expr::Field(f) => {
-                let row = self
-                    .row
-                    .as_ref()
-                    .expect("sealed frontend binds fields inside scans");
-                match f {
-                    Field::Price => row.unit_price_cents,
-                    Field::Quantity => row.quantity,
-                }
-            }
-            Expr::Not(e) => i64::from(self.operand(e)? == 0),
-            Expr::Binary(op, a, b) => {
-                let a = self.operand(a)?;
-                if matches!(op, BinOp::And) && a == 0 {
-                    #[cfg(feature = "interpreter-profile")]
-                    crate::interpreter_profile::update(|c| c.expr[6] += 1);
-                    return Ok(0);
-                }
-                if matches!(op, BinOp::Or) && a != 0 {
-                    #[cfg(feature = "interpreter-profile")]
-                    crate::interpreter_profile::update(|c| c.expr[6] += 1);
-                    return Ok(1);
-                }
-                let b = self.operand(b)?;
-                match op {
-                    BinOp::Add => a.checked_add(b).ok_or(TaskError::Overflow)?,
-                    BinOp::Sub => a.checked_sub(b).ok_or(TaskError::Overflow)?,
-                    BinOp::Mul => a.checked_mul(b).ok_or(TaskError::Overflow)?,
-                    BinOp::Eq => i64::from(a == b),
-                    BinOp::Ne => i64::from(a != b),
-                    BinOp::Lt => i64::from(a < b),
-                    BinOp::Le => i64::from(a <= b),
-                    BinOp::Gt => i64::from(a > b),
-                    BinOp::Ge => i64::from(a >= b),
-                    BinOp::And | BinOp::Or => i64::from(b != 0),
-                }
-            }
-        })
-    }
-}
+
 fn release(owners: &mut [Option<QuoteBuffer>], live: u64) -> usize {
     let mut held = 0;
     for (i, owner) in owners.iter_mut().enumerate() {
@@ -289,95 +134,25 @@ async fn run<P: Provider>(
     let mut calls = options.tool_calls;
     // Cancellation is checked at the same bounded turns as native: entry, Tool,
     // and chunk yield. Scalar dispatch remains bounded by frontend admission.
-    while state.pc < unit.ops.len() {
-        let op = &unit.ops[state.pc];
-        #[cfg(feature = "interpreter-profile")]
-        crate::interpreter_profile::update(|c| {
-            c.ops[match op {
-                Op::Set(..) => 0,
-                Op::Eval(..) => 1,
-                Op::Return(..) => 2,
-                Op::Print(..) => 3,
-                Op::Branch(..) => 4,
-                Op::Jump(..) => 5,
-                Op::Start => 6,
-                Op::Scan { .. } => 7,
-                Op::Next(..) => 8,
-                Op::Load(..) | Op::Record(..) => 9,
-            }] += 1
-        });
-        state.pc += 1;
-        match op {
-            Op::Set(i, e) => state.locals[*i] = state.eval(e)?,
-            Op::Eval(e) => {
-                state.eval(e)?;
+    loop {
+        match tape::run_until_boundary(unit, &mut state, &owners, &limits, output)? {
+            Boundary::Done => break,
+            Boundary::Yield => {
+                let held = release(&mut owners, unit.live[state.pc]);
+                #[cfg(feature = "interpreter-profile")]
+                crate::interpreter_profile::update(|c| c.yields += 1);
+                runtime::event(
+                    &trace,
+                    "yield",
+                    held,
+                    std::mem::size_of::<State>(),
+                    state.remaining,
+                    state.index as u64,
+                );
+                tokio::task::yield_now().await;
+                runtime::check(&cancel)?;
             }
-            Op::Return(e) => {
-                state.eval(e)?;
-                break;
-            }
-            Op::Print(e, ty) => output.append(state.eval(e)?, *ty == Type::Bool)?,
-            Op::Branch(e, no) => {
-                if state.eval(e)? == 0 {
-                    state.pc = *no;
-                }
-            }
-            Op::Jump(pc) => state.pc = *pc,
-            Op::Start => {
-                state.index = 0;
-                state.chunk_left = 0;
-            }
-            Op::Scan { buffer, end } => {
-                let rows = owners[*buffer]
-                    .as_ref()
-                    .expect("sealed frontend initializes scan owner")
-                    .rows();
-                if state.index == rows.len() {
-                    state.row = None;
-                    state.pc = *end;
-                    continue;
-                }
-                if state.chunk_left == 0 {
-                    #[cfg(feature = "interpreter-profile")]
-                    crate::interpreter_profile::update(|c| c.fuel_reservations += 1);
-                    if state.remaining == 0 {
-                        return Err(TaskError::Budget);
-                    }
-                    let count = (rows.len() - state.index)
-                        .min(limits.chunk)
-                        .min(state.remaining as usize);
-                    state.remaining -= count as u64;
-                    state.chunk_left = count;
-                }
-                state.row = Some(rows[state.index]);
-            }
-            Op::Next(header) => {
-                state.index += 1;
-                state.chunk_left -= 1;
-                state.pc = *header;
-                let Op::Scan { buffer, .. } = unit.ops[*header] else {
-                    unreachable!()
-                };
-                if state.chunk_left == 0
-                    && state.index < owners[buffer].as_ref().unwrap().rows().len()
-                {
-                    let held = release(&mut owners, unit.live[state.pc]);
-                    #[cfg(feature = "interpreter-profile")]
-                    crate::interpreter_profile::update(|c| c.yields += 1);
-                    runtime::event(
-                        &trace,
-                        "yield",
-                        held,
-                        std::mem::size_of::<State>(),
-                        state.remaining,
-                        state.index as u64,
-                    );
-                    tokio::task::yield_now().await;
-                    runtime::check(&cancel)?;
-                }
-            }
-            Op::Load(target, batch) => {
-                let batch = state.eval(batch)?;
+            Boundary::Load(target, batch) => {
                 let held = release(&mut owners, unit.live[state.pc]);
                 runtime::authorize_tool(&cancel, limits.allow_load, &mut calls)?;
                 runtime::event(
@@ -398,12 +173,10 @@ async fn run<P: Provider>(
                     return Err(TaskError::Budget);
                 }
                 if unit.live[state.pc] & (1 << target) != 0 {
-                    owners[*target] = Some(quotes);
+                    owners[target] = Some(quotes);
                 }
             }
-            Op::Record(target, batch, total) => {
-                let batch = state.eval(batch)?;
-                let total = state.eval(total)?;
+            Boundary::Record(target, batch, total) => {
                 let held = release(&mut owners, unit.live[state.pc]);
                 runtime::authorize_tool(&cancel, limits.allow_record, &mut calls)?;
                 runtime::event(
@@ -419,7 +192,7 @@ async fn run<P: Provider>(
                 tokio::spawn(async move {
                     let _ = tx.send(p.record_total(batch, total).await);
                 });
-                state.locals[*target] = runtime::receive(rx, &cancel).await?;
+                state.locals[target] = runtime::receive(rx, &cancel).await?;
             }
         }
     }

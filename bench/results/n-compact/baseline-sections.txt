@@ -1,0 +1,21 @@
+
+target/n-compact/baseline-linux:	file format elf64-littleaarch64
+
+Sections:
+Idx Name              Size     VMA              Type
+  0                   00000000 0000000000000000 
+  1 .gcc_except_table 0007e90c 0000000001000238 DATA
+  2 .rodata           0028e568 000000000107eb80 DATA
+  3 .eh_frame_hdr     0001ca1c 000000000130d0e8 DATA
+  4 .eh_frame         000f5ca0 0000000001329b08 DATA
+  5 .text             00849948 000000000142f7b0 TEXT
+  6 .tdata            00001930 0000000001c890f8 DATA
+  7 .tbss             00000098 0000000001c8aa28 BSS
+  8 .data.rel.ro      00073b40 0000000001c8aa28 DATA
+  9 .init_array       00000010 0000000001cfe568 DATA
+ 10 .got              00000690 0000000001cfe578 DATA
+ 11 .relro_padding    000003f8 0000000001cfec08 BSS
+ 12 .data             00000d78 0000000001d0ec10 DATA
+ 13 .bss              00001c30 0000000001d0f988 BSS
+ 14 .comment          00000078 0000000000000000 
+ 15 .shstrtab         00000091 0000000000000000 

@@ -1,7 +1,10 @@
 //! Diagnostic event counts, absent from ordinary builds. No inferred time shares.
+//! The tape replaces recursive expression/statement counts with tape_dispatches;
+//! historical expr/ops/leaf fields remain zero on the tape path.
 use std::cell::RefCell;
 #[derive(Clone, Debug, Default)]
 pub struct Counts {
+    pub tape_dispatches: u64,
     pub leaf_operands: u64,
     pub expr: [u64; 7], // int, bool, local, field, not, binary, short-circuit
     pub ops: [u64; 10], // set, eval, return, print, branch, jump, start, scan, next, tool

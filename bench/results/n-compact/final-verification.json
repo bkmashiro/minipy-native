@@ -1,0 +1,40 @@
+{
+  "macos_tests": 66,
+  "linux_tests": 66,
+  "summary_recomputed": true,
+  "source_sha256": {
+    "src/frontend.rs": "08bc1744622fce842dfc7a56e7ef2a564aa31540cb9213ac5bb0a0dc892bc64e",
+    "src/runtime.rs": "01772bd991bdfa6238425058814ff564dbcd2b1426788576f130eb60d5b699ce",
+    "src/ir.rs": "e22a78aa97c7762bdfde1914adb0c5d5f9e3fac27567a14779b971eab0f9aea6",
+    "src/error.rs": "f86a4e601c69fbe208813d526fa2da4b6faad551f28d589ebdbceb3931bf56d8",
+    "src/interpreter_profile.rs": "ca14500ff28ec156553ae1d2e0672381afdad261b2f309ea72455bd11fa7722c",
+    "src/lib.rs": "0267aa342b34acd5ddf532c64d41379df31017d7beddebb889522570f2cec27a",
+    "src/provider.rs": "df14c16b61c6e9f78a51b07e6ba162d1a71b288a5690fd007117fe3676eb5952",
+    "src/fixture_reference.rs": "d3c67f1003a5816832fbd15c6d377edbb4d422c6db9be1b3cab7c40ae58aff53",
+    "src/codegen.rs": "7f2bdeadba5154e555f34a8345782182175ef221c2eb59f34fe2b60eb0984841",
+    "src/buffer.rs": "728e3dc082ed1f8bed96864f608c1ddb22f7f6b9016531dba0e5deff7d9d2867",
+    "src/interpreter.rs": "32da52a200289e67156ae1815bb85d259de5d5d3b9680da812ab8be6395a29d7",
+    "src/compiler_profile.rs": "7fdb8442d6d37d630fcf9c679c2abb1da0c49ab52ffc6b2741cd05ff46fcaefb",
+    "src/interpreter/tape.rs": "dd75745ecdaefce84a0f7e438c026f59c366f62fff843ee9014877d4d7b77d34",
+    "src/bin/minipy.rs": "14c157179b8156816de8b6bd2736407af8998059b5f1940b79073528f154a76f",
+    "tests/acceptance.rs": "1e5fde78027721f1e474662c462de9c9cb8da207f28ec6168ca18e2ff5b0c644",
+    "tests/fixture_lifecycle.rs": "887632623971d11454b2199fb503e491929ffe793519f9f60ee29556e4f121c0",
+    "tests/boundaries.rs": "dca5fa9b3afdcd0cd94ac1804c4dfb2686d0fcc2d9ecad9a2b72b65a793ce6a6",
+    "tests/fixture_reference.rs": "b7fe6a49570defd549ea7705a94f00711de3f5630bbe786cb67d90271a729c07",
+    "tests/scripts.rs": "a552b3c314cf60caadd38cbc04fb5e65dc08401c3fd09ce68474cacc95dd4cb4",
+    "tests/interpreter.rs": "d139961b007d55967ac2a3bcf6c9650a68025cad3770f9918b4d9512d0b5619c",
+    "tools/compact_summary.py": "cd47f460edc87898e447ffa5a7a15708bf064dd728f7d6de725c02fc1d446e2b",
+    "tools/compact_verify.py": "46a567869c47a02357689df76cbc90877333d0392310789a41cbccd169f3dc7e",
+    "tools/compact_ab.py": "ca5162bf7f6abba7305355ac20eba1bf58dd1aeafd7a3b86be3522343502e292",
+    "bench/src/bin/interpreter_ab.rs": "4c13e756720195cac5644813d97f3eda66b337c95c6497ca30ec0167810a4215",
+    "bench/src/v2_common.rs": "751fd4fe89037e5551b28e730a430bcd9ba8e16dc44087955a7877170d127069",
+    "Cargo.toml": "9a3faaccbde884440c7f66c1f7ee9ac9f90e928cbe8f03e9e9043148b1cc9360",
+    "Cargo.lock": "810520a60dbad6d43c8f6c55357a9cf9a1f0d9a396a8cca9eb70d3f3e14207b3",
+    "bench/Cargo.toml": "a2f4330e6708953ce407bf5c77523f811c16c45f0dec0767baa89a75a6ee5836",
+    "bench/Cargo.lock": "593b4b2c9a0a97db19596641d5f8d8115d1f8f4f8fa1d68580a58ee993cf8bc6"
+  },
+  "forced_rebuild_byte_identical": [
+    "speed",
+    "allocation-diagnostics"
+  ]
+}

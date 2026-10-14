@@ -1,0 +1,81 @@
+N command record (2026-10-14), same host and exclusive existing ARM64 guest.
+
+Initial repository: 839503936b4d1eeca892ebeeed49abcb378be4bf, main, clean.
+git diff --exit-code 8a293ec HEAD -- src Cargo.toml Cargo.lock
+Baseline macOS speed and allocation binaries saved under target/n-compact/:
+cargo +1.96.0 build --release --locked --manifest-path bench/Cargo.toml --bin interpreter_ab
+cp bench/target/release/interpreter_ab target/n-compact/baseline
+cargo +1.96.0 build --release --locked --manifest-path bench/Cargo.toml --bin interpreter_ab --features allocation-diagnostics
+cp bench/target/release/interpreter_ab target/n-compact/baseline-memory
+
+After bitset a4d68c1 and container 81d5df0, separately:
+cargo fmt
+cargo test --release --lib frontend
+cargo +1.96.0 build --release --locked --manifest-path bench/Cargo.toml --bin interpreter_ab
+cp bench/target/release/interpreter_ab target/n-compact/bitset  (or frontend)
+Signed each frontend stage before the next. New tape macOS saved to tape.
+
+Baseline Linux source archive, no dependency-cache copy:
+mkdir -p target/n-source-baseline
+git archive 8395039 | tar -x -C target/n-source-baseline
+CARGO_TARGET_DIR=$PWD/bench/target cargo +1.96.0 zigbuild --manifest-path target/n-source-baseline/bench/Cargo.toml --release --locked --target aarch64-unknown-linux-musl --bin interpreter_ab
+cp bench/target/aarch64-unknown-linux-musl/release/interpreter_ab target/n-compact/baseline-linux
+CARGO_TARGET_DIR=$PWD/bench/target cargo +1.96.0 zigbuild --manifest-path target/n-source-baseline/bench/Cargo.toml --release --locked --target aarch64-unknown-linux-musl --bin interpreter_ab --features allocation-diagnostics
+cp bench/target/aarch64-unknown-linux-musl/release/interpreter_ab target/n-compact/baseline-memory-linux
+Candidate analogous root build saved tape-linux/tape-memory-linux.
+
+Existing VM startup (off before this task):
+/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/run-vm.sh (PTY)
+Guest root@192.168.64.3, remote /root/minipy-native-n.
+Existing command-key and strict known_hosts; no secrets in results.
+Verified restful state, uname/uptime/free/df/ps before workload, no concurrent guest experiments.
+
+python3 tools/compact_ab.py linux HOST KEY KNOWN_HOSTS
+Four speed pairs finished; memory assert found mixed-hold reps=40 windows, not count.
+No speed re-run; file preserved. First failed memory output not appended, memory file empty.
+python3 tools/compact_ab.py linux-memory-resume HOST KEY KNOWN_HOSTS
+Revalidated speed count=20560, hashes, resumed only corrected memory cells (96 snapshots).
+python3 tools/compact_ab.py attribution
+python3 tools/compact_summary.py
+
+Acceptance:
+cargo test --release --test interpreter
+cargo test --release --all-features > bench/results/n-compact/macos-tests.log 2>&1
+cargo clippy --all-targets --all-features -- -D warnings
+cargo zigbuild --release --locked --features fixture-reference --target aarch64-unknown-linux-musl --tests --message-format=json > target/n-compact/linux-tests-build.json
+
+Diagnostics (separate from speed):
+cargo zigbuild --release --locked --features interpreter-profile --target aarch64-unknown-linux-musl --example interpreter_counts
+cp target/aarch64-unknown-linux-musl/release/examples/interpreter_counts target/n-compact/tape-counts-linux
+CARGO_TARGET_DIR=$PWD/target cargo zigbuild --manifest-path target/n-source-baseline/Cargo.toml --release --locked --features interpreter-profile --target aarch64-unknown-linux-musl --example interpreter_counts
+cp target/aarch64-unknown-linux-musl/release/examples/interpreter_counts target/n-compact/baseline-counts-linux
+After historical-source build, ordinary current-source diagnostic build incorrectly reused old binary.
+Observed through identical Counts with no tape_dispatches, not through a guessed profile.
+Force package rebuild, keep dependency caches:
+cargo clean -p minipy-native --release --target aarch64-unknown-linux-musl
+cargo zigbuild --release --locked --features interpreter-profile --target aarch64-unknown-linux-musl --example interpreter_counts
+cp target/aarch64-unknown-linux-musl/release/examples/interpreter_counts target/n-compact/tape-counts-linux
+
+Independently force bench rebuild and byte-verify measured speed/allocator:
+cargo clean -p minipy-native --manifest-path bench/Cargo.toml --release --target aarch64-unknown-linux-musl
+cargo +1.96.0 zigbuild --manifest-path bench/Cargo.toml --release --locked --target aarch64-unknown-linux-musl --bin interpreter_ab
+cmp bench/target/aarch64-unknown-linux-musl/release/interpreter_ab target/n-compact/tape-linux
+cargo +1.96.0 zigbuild --manifest-path bench/Cargo.toml --release --locked --target aarch64-unknown-linux-musl --bin interpreter_ab --features allocation-diagnostics
+cmp bench/target/aarch64-unknown-linux-musl/release/interpreter_ab target/n-compact/tape-memory-linux
+Both cmp exit 0. No primary raw replacement.
+Rebuild Linux tests after package clean (clean removed test artifacts too):
+cargo zigbuild --release --locked --features fixture-reference --target aarch64-unknown-linux-musl --tests --message-format=json > target/n-compact/linux-tests-build.json
+python3 tools/compact_verify.py HOST KEY KNOWN_HOSTS
+Uploads/readbacks and actual test commands/hashes in linux-verification.json, output linux-tests.log.
+66 passed, corrected diagnostic stdout/fuel/yields agree with baseline.
+
+xcrun llvm-objdump --section-headers target/n-compact/baseline-linux > bench/results/n-compact/baseline-sections.txt
+xcrun llvm-objdump --section-headers target/n-compact/tape-linux > bench/results/n-compact/tape-sections.txt
+cargo fmt --check
+cargo fmt --manifest-path bench/Cargo.toml --check
+python3 -m py_compile tools/compact_ab.py tools/compact_summary.py tools/compact_verify.py
+git diff --check
+
+Focused integrated review uses signed snapshot, exact returned model verified separately.
+Guest cleanup: authenticated poweroff, verify vfkit session exited and restful stopped.
+Publication: signed commits, git push origin main, git ls-remote origin refs/heads/main exact-head verification.

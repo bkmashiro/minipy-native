@@ -1,0 +1,4876 @@
+{
+  "raw_count": 20560,
+  "overloaded_windows": 0,
+  "mixed": {
+    "light/mixed-cold/0/base": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 441.04017857142856,
+      "mean_latency_us": 1795.0165696428571,
+      "short_p95_us": 1925.985,
+      "short_p99_us": 2727.745,
+      "scalar_p95_us": 1778.012,
+      "scalar_p99_us": 2070.463,
+      "mean_batch_wall_us": 23841.94510714286,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 898.6190386904763,
+          "mean_prepare_us": 38.17023809523809
+        },
+        "stateful:100": {
+          "mean_latency_us": 1206.5850982142856,
+          "mean_prepare_us": 125.56759821428571
+        },
+        "stateful:100000": {
+          "mean_latency_us": 15456.986285714285,
+          "mean_prepare_us": 134.58582142857142
+        },
+        "weighted:100": {
+          "mean_latency_us": 1039.4310580357144,
+          "mean_prepare_us": 95.7783794642857
+        },
+        "weighted:10000": {
+          "mean_latency_us": 3089.022214285714,
+          "mean_prepare_us": 94.52446428571429
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 513.7821428571428,
+          "mean_latency_us": 1969.0901607142857,
+          "short_p95_us": 1954.895,
+          "short_p99_us": 2967.057,
+          "scalar_p95_us": 1752.61,
+          "scalar_p99_us": 2039.786,
+          "mean_batch_wall_us": 24205.779142857144,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 884.4826666666667,
+              "mean_prepare_us": 43.44077380952381
+            },
+            "stateful:100": {
+              "mean_latency_us": 1399.2566428571429,
+              "mean_prepare_us": 153.61807142857143
+            },
+            "stateful:100000": {
+              "mean_latency_us": 18514.7885,
+              "mean_prepare_us": 155.11764285714287
+            },
+            "weighted:100": {
+              "mean_latency_us": 1017.1451607142857,
+              "mean_prepare_us": 107.655875
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3386.128785714286,
+              "mean_prepare_us": 101.89392857142856
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 177.38214285714287,
+          "mean_latency_us": 1189.5050714285715,
+          "short_p95_us": 1937.491,
+          "short_p99_us": 2150.482,
+          "scalar_p95_us": 1937.491,
+          "scalar_p99_us": 2070.463,
+          "mean_batch_wall_us": 20761.087571428572,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 1010.9316071428572,
+              "mean_prepare_us": 14.541529761904762
+            },
+            "stateful:100": {
+              "mean_latency_us": 924.9465357142857,
+              "mean_prepare_us": 43.999785714285714
+            },
+            "stateful:100000": {
+              "mean_latency_us": 4167.0475,
+              "mean_prepare_us": 47.03142857142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 1072.676767857143,
+              "mean_prepare_us": 37.79967857142857
+            },
+            "weighted:10000": {
+              "mean_latency_us": 1351.2745,
+              "mean_prepare_us": 35.39342857142857
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 518.1464285714286,
+          "mean_latency_us": 1928.03735,
+          "short_p95_us": 1888.819,
+          "short_p99_us": 2946.691,
+          "scalar_p95_us": 1696.683,
+          "scalar_p99_us": 1954.799,
+          "mean_batch_wall_us": 24396.752285714287,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 819.7051785714285,
+              "mean_prepare_us": 45.34778571428572
+            },
+            "stateful:100": {
+              "mean_latency_us": 1156.02075,
+              "mean_prepare_us": 149.44157142857142
+            },
+            "stateful:100000": {
+              "mean_latency_us": 18753.990142857143,
+              "mean_prepare_us": 162.40564285714288
+            },
+            "weighted:100": {
+              "mean_latency_us": 1003.7735178571428,
+              "mean_prepare_us": 113.04558928571429
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3643.159142857143,
+              "mean_prepare_us": 113.4825
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 554.85,
+          "mean_latency_us": 2093.4336964285712,
+          "short_p95_us": 1955.745,
+          "short_p99_us": 2727.745,
+          "scalar_p95_us": 1774.776,
+          "scalar_p99_us": 2102.484,
+          "mean_batch_wall_us": 26004.161428571428,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 879.3567023809525,
+              "mean_prepare_us": 49.35086309523809
+            },
+            "stateful:100": {
+              "mean_latency_us": 1346.1164642857143,
+              "mean_prepare_us": 155.21096428571428
+            },
+            "stateful:100000": {
+              "mean_latency_us": 20392.119,
+              "mean_prepare_us": 173.78857142857143
+            },
+            "weighted:100": {
+              "mean_latency_us": 1064.1287857142856,
+              "mean_prepare_us": 124.612375
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3975.526428571429,
+              "mean_prepare_us": 127.328
+            }
+          }
+        }
+      ]
+    },
+    "light/mixed-cold/0/candidate": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 337.8410714285714,
+      "mean_latency_us": 1558.7203285714286,
+      "short_p95_us": 1941.264,
+      "short_p99_us": 2528.929,
+      "scalar_p95_us": 1831.792,
+      "scalar_p99_us": 2140.758,
+      "mean_batch_wall_us": 21037.4915,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 927.1741889880952,
+          "mean_prepare_us": 35.48730208333333
+        },
+        "stateful:100": {
+          "mean_latency_us": 1191.3119375,
+          "mean_prepare_us": 122.42225892857144
+        },
+        "stateful:100000": {
+          "mean_latency_us": 11353.557553571429,
+          "mean_prepare_us": 129.53844642857143
+        },
+        "weighted:100": {
+          "mean_latency_us": 1007.6077589285715,
+          "mean_prepare_us": 89.6835
+        },
+        "weighted:10000": {
+          "mean_latency_us": 2281.703839285714,
+          "mean_prepare_us": 86.20703571428571
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 411.07142857142856,
+          "mean_latency_us": 1656.6739357142858,
+          "short_p95_us": 1983.76,
+          "short_p99_us": 2837.059,
+          "scalar_p95_us": 1864.795,
+          "scalar_p99_us": 2201.709,
+          "mean_batch_wall_us": 21510.127,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 865.5884226190476,
+              "mean_prepare_us": 43.62471428571428
+            },
+            "stateful:100": {
+              "mean_latency_us": 1286.907,
+              "mean_prepare_us": 154.8874285714286
+            },
+            "stateful:100000": {
+              "mean_latency_us": 13867.587785714286,
+              "mean_prepare_us": 160.9182142857143
+            },
+            "weighted:100": {
+              "mean_latency_us": 954.055625,
+              "mean_prepare_us": 108.88089285714285
+            },
+            "weighted:10000": {
+              "mean_latency_us": 2488.793357142857,
+              "mean_prepare_us": 108.90392857142857
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 101.09285714285714,
+          "mean_latency_us": 1195.7759571428571,
+          "short_p95_us": 1955.344,
+          "short_p99_us": 2387.807,
+          "scalar_p95_us": 1900.177,
+          "scalar_p99_us": 2140.758,
+          "mean_batch_wall_us": 20666.810857142857,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 1111.912761904762,
+              "mean_prepare_us": 12.963791666666665
+            },
+            "stateful:100": {
+              "mean_latency_us": 956.2628214285714,
+              "mean_prepare_us": 40.31478571428572
+            },
+            "stateful:100000": {
+              "mean_latency_us": 2507.6994285714286,
+              "mean_prepare_us": 41.522285714285715
+            },
+            "weighted:100": {
+              "mean_latency_us": 1170.9905357142857,
+              "mean_prepare_us": 34.088482142857146
+            },
+            "weighted:10000": {
+              "mean_latency_us": 1468.3787857142856,
+              "mean_prepare_us": 33.827
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 434.7892857142857,
+          "mean_latency_us": 1709.0739642857143,
+          "short_p95_us": 1797.795,
+          "short_p99_us": 2554.896,
+          "scalar_p95_us": 1682.152,
+          "scalar_p99_us": 2058.942,
+          "mean_batch_wall_us": 21219.488285714287,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 828.8215238095238,
+              "mean_prepare_us": 43.70230357142857
+            },
+            "stateful:100": {
+              "mean_latency_us": 1204.879107142857,
+              "mean_prepare_us": 150.19417857142858
+            },
+            "stateful:100000": {
+              "mean_latency_us": 15266.184714285715,
+              "mean_prepare_us": 157.54035714285712
+            },
+            "weighted:100": {
+              "mean_latency_us": 966.1414464285715,
+              "mean_prepare_us": 111.47458928571429
+            },
+            "weighted:10000": {
+              "mean_latency_us": 2695.112285714286,
+              "mean_prepare_us": 104.9842857142857
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 404.4107142857143,
+          "mean_latency_us": 1673.3574571428571,
+          "short_p95_us": 1937.041,
+          "short_p99_us": 2528.929,
+          "scalar_p95_us": 1854.953,
+          "scalar_p99_us": 2499.04,
+          "mean_batch_wall_us": 20753.53985714286,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 902.3740476190476,
+              "mean_prepare_us": 41.65839880952381
+            },
+            "stateful:100": {
+              "mean_latency_us": 1317.1988214285714,
+              "mean_prepare_us": 144.29264285714288
+            },
+            "stateful:100000": {
+              "mean_latency_us": 13772.758285714286,
+              "mean_prepare_us": 158.17292857142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 939.2434285714285,
+              "mean_prepare_us": 104.29003571428571
+            },
+            "weighted:10000": {
+              "mean_latency_us": 2474.530928571429,
+              "mean_prepare_us": 97.11292857142857
+            }
+          }
+        }
+      ]
+    },
+    "light/mixed-cold/1000/base": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 540.1410714285714,
+      "mean_latency_us": 3669.3499526785713,
+      "short_p95_us": 6862.566,
+      "short_p99_us": 8146.391,
+      "scalar_p95_us": 1846.631,
+      "scalar_p99_us": 2259.84,
+      "mean_batch_wall_us": 28894.163464285713,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 922.9303571428571,
+          "mean_prepare_us": 49.29947023809524
+        },
+        "stateful:100": {
+          "mean_latency_us": 5780.959241071429,
+          "mean_prepare_us": 164.45176785714287
+        },
+        "stateful:100000": {
+          "mean_latency_us": 22895.261607142857,
+          "mean_prepare_us": 178.318
+        },
+        "weighted:100": {
+          "mean_latency_us": 5174.2065,
+          "mean_prepare_us": 130.23878125
+        },
+        "weighted:10000": {
+          "mean_latency_us": 7157.828678571428,
+          "mean_prepare_us": 123.68519642857143
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 536.5214285714285,
+          "mean_latency_us": 3653.454525,
+          "short_p95_us": 7050.066,
+          "short_p99_us": 8756.515,
+          "scalar_p95_us": 1875.031,
+          "scalar_p99_us": 3595.524,
+          "mean_batch_wall_us": 28670.104571428572,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 917.086505952381,
+              "mean_prepare_us": 49.16911904761905
+            },
+            "stateful:100": {
+              "mean_latency_us": 5815.734607142857,
+              "mean_prepare_us": 152.8628214285714
+            },
+            "stateful:100000": {
+              "mean_latency_us": 22680.04607142857,
+              "mean_prepare_us": 177.88992857142858
+            },
+            "weighted:100": {
+              "mean_latency_us": 5181.761339285715,
+              "mean_prepare_us": 120.95016071428572
+            },
+            "weighted:10000": {
+              "mean_latency_us": 7025.4917857142855,
+              "mean_prepare_us": 117.87357142857144
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 525.3285714285714,
+          "mean_latency_us": 3614.7035857142855,
+          "short_p95_us": 6937.159,
+          "short_p99_us": 8294.164,
+          "scalar_p95_us": 1770.677,
+          "scalar_p99_us": 2199.595,
+          "mean_batch_wall_us": 28694.205,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 872.6242261904762,
+              "mean_prepare_us": 47.79846428571428
+            },
+            "stateful:100": {
+              "mean_latency_us": 5933.842,
+              "mean_prepare_us": 165.17685714285713
+            },
+            "stateful:100000": {
+              "mean_latency_us": 22410.01228571429,
+              "mean_prepare_us": 170.4972857142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 5139.128357142858,
+              "mean_prepare_us": 127.24908928571429
+            },
+            "weighted:10000": {
+              "mean_latency_us": 6988.3712857142855,
+              "mean_prepare_us": 119.21085714285715
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 552.3464285714285,
+          "mean_latency_us": 3560.5491357142855,
+          "short_p95_us": 6206.617,
+          "short_p99_us": 7872.035,
+          "scalar_p95_us": 1830.52,
+          "scalar_p99_us": 2017.426,
+          "mean_batch_wall_us": 28632.304,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 834.1246904761905,
+              "mean_prepare_us": 50.165803571428576
+            },
+            "stateful:100": {
+              "mean_latency_us": 5326.878678571428,
+              "mean_prepare_us": 166.51478571428572
+            },
+            "stateful:100000": {
+              "mean_latency_us": 23138.67414285714,
+              "mean_prepare_us": 182.3195714285714
+            },
+            "weighted:100": {
+              "mean_latency_us": 5075.395285714286,
+              "mean_prepare_us": 132.362375
+            },
+            "weighted:10000": {
+              "mean_latency_us": 7107.473785714285,
+              "mean_prepare_us": 122.665
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 546.3678571428571,
+          "mean_latency_us": 3848.692564285714,
+          "short_p95_us": 7031.026,
+          "short_p99_us": 8147.154,
+          "scalar_p95_us": 1975.36,
+          "scalar_p99_us": 2358.057,
+          "mean_batch_wall_us": 29580.040285714287,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 1067.886005952381,
+              "mean_prepare_us": 50.06449404761904
+            },
+            "stateful:100": {
+              "mean_latency_us": 6047.381678571428,
+              "mean_prepare_us": 173.25260714285713
+            },
+            "stateful:100000": {
+              "mean_latency_us": 23352.313928571428,
+              "mean_prepare_us": 182.5652142857143
+            },
+            "weighted:100": {
+              "mean_latency_us": 5300.541017857143,
+              "mean_prepare_us": 140.3935
+            },
+            "weighted:10000": {
+              "mean_latency_us": 7509.977857142857,
+              "mean_prepare_us": 134.99135714285714
+            }
+          }
+        }
+      ]
+    },
+    "light/mixed-cold/1000/candidate": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 346.67589285714286,
+      "mean_latency_us": 3328.07845,
+      "short_p95_us": 6712.981,
+      "short_p99_us": 8059.425,
+      "scalar_p95_us": 1908.158,
+      "scalar_p99_us": 2209.676,
+      "mean_batch_wall_us": 25365.14742857143,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 977.5387157738095,
+          "mean_prepare_us": 38.87411904761905
+        },
+        "stateful:100": {
+          "mean_latency_us": 5790.343428571428,
+          "mean_prepare_us": 124.765375
+        },
+        "stateful:100000": {
+          "mean_latency_us": 15788.091035714286,
+          "mean_prepare_us": 119.59685714285715
+        },
+        "weighted:100": {
+          "mean_latency_us": 5325.184,
+          "mean_prepare_us": 98.48058928571429
+        },
+        "weighted:10000": {
+          "mean_latency_us": 6161.590517857143,
+          "mean_prepare_us": 97.82557142857144
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 420.45,
+          "mean_latency_us": 3447.615935714286,
+          "short_p95_us": 6624.44,
+          "short_p99_us": 8279.92,
+          "scalar_p95_us": 2054.234,
+          "scalar_p99_us": 2209.676,
+          "mean_batch_wall_us": 25345.89857142857,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 1013.2789285714285,
+              "mean_prepare_us": 45.718857142857146
+            },
+            "stateful:100": {
+              "mean_latency_us": 5686.0431071428575,
+              "mean_prepare_us": 151.24342857142858
+            },
+            "stateful:100000": {
+              "mean_latency_us": 18264.367928571428,
+              "mean_prepare_us": 146.9755714285714
+            },
+            "weighted:100": {
+              "mean_latency_us": 5229.189767857143,
+              "mean_prepare_us": 115.58657142857143
+            },
+            "weighted:10000": {
+              "mean_latency_us": 6239.758357142858,
+              "mean_prepare_us": 113.15857142857143
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 104.4857142857143,
+          "mean_latency_us": 2944.6431035714286,
+          "short_p95_us": 6744.313,
+          "short_p99_us": 7743.395,
+          "scalar_p95_us": 1873.047,
+          "scalar_p99_us": 2104.015,
+          "mean_batch_wall_us": 24593.887857142858,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 980.5031964285715,
+              "mean_prepare_us": 13.773839285714287
+            },
+            "stateful:100": {
+              "mean_latency_us": 5650.924,
+              "mean_prepare_us": 45.2145
+            },
+            "stateful:100000": {
+              "mean_latency_us": 6951.377714285714,
+              "mean_prepare_us": 42.623642857142855
+            },
+            "weighted:100": {
+              "mean_latency_us": 5754.343732142857,
+              "mean_prepare_us": 34.75075
+            },
+            "weighted:10000": {
+              "mean_latency_us": 5856.2230714285715,
+              "mean_prepare_us": 39.49707142857143
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 404.4321428571428,
+          "mean_latency_us": 3402.045035714286,
+          "short_p95_us": 6665.704,
+          "short_p99_us": 7999.392,
+          "scalar_p95_us": 1807.865,
+          "scalar_p99_us": 2284.644,
+          "mean_batch_wall_us": 25644.041,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 957.2641845238095,
+              "mean_prepare_us": 42.147125
+            },
+            "stateful:100": {
+              "mean_latency_us": 5834.66625,
+              "mean_prepare_us": 142.9281785714286
+            },
+            "stateful:100000": {
+              "mean_latency_us": 17907.48764285714,
+              "mean_prepare_us": 134.0825
+            },
+            "weighted:100": {
+              "mean_latency_us": 5191.1077857142855,
+              "mean_prepare_us": 112.03407142857144
+            },
+            "weighted:10000": {
+              "mean_latency_us": 6212.479214285715,
+              "mean_prepare_us": 109.68835714285714
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 457.3357142857143,
+          "mean_latency_us": 3518.009725,
+          "short_p95_us": 6903.013,
+          "short_p99_us": 8159.054,
+          "scalar_p95_us": 1913.834,
+          "scalar_p99_us": 2337.798,
+          "mean_batch_wall_us": 25876.76228571429,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 959.1085535714285,
+              "mean_prepare_us": 53.856654761904764
+            },
+            "stateful:100": {
+              "mean_latency_us": 5989.740357142858,
+              "mean_prepare_us": 159.67539285714287
+            },
+            "stateful:100000": {
+              "mean_latency_us": 20029.13085714286,
+              "mean_prepare_us": 154.7057142857143
+            },
+            "weighted:100": {
+              "mean_latency_us": 5126.094714285715,
+              "mean_prepare_us": 131.5509642857143
+            },
+            "weighted:10000": {
+              "mean_latency_us": 6337.901428571428,
+              "mean_prepare_us": 128.95828571428572
+            }
+          }
+        }
+      ]
+    },
+    "light/mixed-warm/0/base": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 485.41517857142856,
+      "mean_latency_us": 1729.2956142857142,
+      "short_p95_us": 1611.855,
+      "short_p99_us": 2013.763,
+      "scalar_p95_us": 1533.809,
+      "scalar_p99_us": 1937.804,
+      "mean_batch_wall_us": 23703.22775,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 724.1802723214286,
+          "mean_prepare_us": 0.5479389880952381
+        },
+        "stateful:100": {
+          "mean_latency_us": 957.0216428571429,
+          "mean_prepare_us": 0.5303928571428571
+        },
+        "stateful:100000": {
+          "mean_latency_us": 17832.50557142857,
+          "mean_prepare_us": 0.5642857142857143
+        },
+        "weighted:100": {
+          "mean_latency_us": 735.1648080357144,
+          "mean_prepare_us": 0.4801696428571428
+        },
+        "weighted:10000": {
+          "mean_latency_us": 3208.5409285714286,
+          "mean_prepare_us": 0.5003214285714286
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 481.5285714285714,
+          "mean_latency_us": 1707.0383321428571,
+          "short_p95_us": 1567.556,
+          "short_p99_us": 2175.054,
+          "scalar_p95_us": 1504.201,
+          "scalar_p99_us": 1780.658,
+          "mean_batch_wall_us": 23369.26028571429,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 726.1551547619048,
+              "mean_prepare_us": 0.48990476190476195
+            },
+            "stateful:100": {
+              "mean_latency_us": 941.2443214285714,
+              "mean_prepare_us": 0.47946428571428573
+            },
+            "stateful:100000": {
+              "mean_latency_us": 17353.42442857143,
+              "mean_prepare_us": 0.5092142857142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 775.7846071428571,
+              "mean_prepare_us": 0.44292857142857145
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3087.853285714286,
+              "mean_prepare_us": 0.44957142857142857
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 488.96785714285716,
+          "mean_latency_us": 1791.7154428571428,
+          "short_p95_us": 1615.826,
+          "short_p99_us": 2025.69,
+          "scalar_p95_us": 1497.133,
+          "scalar_p99_us": 2025.69,
+          "mean_batch_wall_us": 24055.660428571427,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 763.8283333333334,
+              "mean_prepare_us": 0.5000595238095238
+            },
+            "stateful:100": {
+              "mean_latency_us": 1056.4448214285715,
+              "mean_prepare_us": 0.51225
+            },
+            "stateful:100000": {
+              "mean_latency_us": 18241.59285714286,
+              "mean_prepare_us": 0.5509285714285714
+            },
+            "weighted:100": {
+              "mean_latency_us": 745.1067678571428,
+              "mean_prepare_us": 0.49808928571428573
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3333.459285714286,
+              "mean_prepare_us": 0.49742857142857144
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 479.87857142857143,
+          "mean_latency_us": 1642.360542857143,
+          "short_p95_us": 1487.016,
+          "short_p99_us": 2013.763,
+          "scalar_p95_us": 1462.617,
+          "scalar_p99_us": 1939.711,
+          "mean_batch_wall_us": 23495.551714285713,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 642.1709523809524,
+              "mean_prepare_us": 0.6906130952380952
+            },
+            "stateful:100": {
+              "mean_latency_us": 877.0672857142857,
+              "mean_prepare_us": 0.62675
+            },
+            "stateful:100000": {
+              "mean_latency_us": 17758.93392857143,
+              "mean_prepare_us": 0.6490714285714285
+            },
+            "weighted:100": {
+              "mean_latency_us": 641.2628035714285,
+              "mean_prepare_us": 0.4905535714285714
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3063.039714285714,
+              "mean_prepare_us": 0.43792857142857144
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 491.2857142857143,
+          "mean_latency_us": 1776.0681392857143,
+          "short_p95_us": 1659.86,
+          "short_p99_us": 2000.898,
+          "scalar_p95_us": 1634.119,
+          "scalar_p99_us": 1911.783,
+          "mean_batch_wall_us": 23892.43857142857,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 764.5666488095238,
+              "mean_prepare_us": 0.5111785714285715
+            },
+            "stateful:100": {
+              "mean_latency_us": 953.3301428571428,
+              "mean_prepare_us": 0.5031071428571429
+            },
+            "stateful:100000": {
+              "mean_latency_us": 17976.07107142857,
+              "mean_prepare_us": 0.5479285714285714
+            },
+            "weighted:100": {
+              "mean_latency_us": 778.5050535714286,
+              "mean_prepare_us": 0.48910714285714285
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3349.8114285714287,
+              "mean_prepare_us": 0.6163571428571429
+            }
+          }
+        }
+      ]
+    },
+    "light/mixed-warm/0/candidate": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 355.54910714285717,
+      "mean_latency_us": 1444.7374375,
+      "short_p95_us": 1760.406,
+      "short_p99_us": 2129.811,
+      "scalar_p95_us": 1731.419,
+      "scalar_p99_us": 2089.88,
+      "mean_batch_wall_us": 20825.387785714287,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 783.87221875,
+          "mean_prepare_us": 0.48749107142857145
+        },
+        "stateful:100": {
+          "mean_latency_us": 910.1140892857143,
+          "mean_prepare_us": 0.49838392857142855
+        },
+        "stateful:100000": {
+          "mean_latency_us": 12460.627196428572,
+          "mean_prepare_us": 0.565
+        },
+        "weighted:100": {
+          "mean_latency_us": 752.54034375,
+          "mean_prepare_us": 0.45470982142857147
+        },
+        "weighted:10000": {
+          "mean_latency_us": 2197.265375,
+          "mean_prepare_us": 0.458625
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 358.76785714285717,
+          "mean_latency_us": 1368.8398321428572,
+          "short_p95_us": 1742.313,
+          "short_p99_us": 2088.897,
+          "scalar_p95_us": 1629.334,
+          "scalar_p99_us": 2089.88,
+          "mean_batch_wall_us": 20809.416142857142,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 694.0567976190475,
+              "mean_prepare_us": 0.4702678571428572
+            },
+            "stateful:100": {
+              "mean_latency_us": 825.5820357142857,
+              "mean_prepare_us": 0.5419642857142857
+            },
+            "stateful:100000": {
+              "mean_latency_us": 12752.76907142857,
+              "mean_prepare_us": 0.5479285714285714
+            },
+            "weighted:100": {
+              "mean_latency_us": 632.978125,
+              "mean_prepare_us": 0.45271428571428574
+            },
+            "weighted:10000": {
+              "mean_latency_us": 2112.2694285714288,
+              "mean_prepare_us": 0.45571428571428574
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 307.6928571428572,
+          "mean_latency_us": 1477.9731857142858,
+          "short_p95_us": 1867.203,
+          "short_p99_us": 2445.194,
+          "scalar_p95_us": 1815.954,
+          "scalar_p99_us": 2170.149,
+          "mean_batch_wall_us": 21071.28714285714,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 929.4678035714285,
+              "mean_prepare_us": 0.4380178571428572
+            },
+            "stateful:100": {
+              "mean_latency_us": 1021.9131428571428,
+              "mean_prepare_us": 0.42578571428571427
+            },
+            "stateful:100000": {
+              "mean_latency_us": 10629.140785714286,
+              "mean_prepare_us": 0.533
+            },
+            "weighted:100": {
+              "mean_latency_us": 933.2300357142857,
+              "mean_prepare_us": 0.3983035714285714
+            },
+            "weighted:10000": {
+              "mean_latency_us": 1999.962857142857,
+              "mean_prepare_us": 0.3871428571428572
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 374.8535714285714,
+          "mean_latency_us": 1453.202242857143,
+          "short_p95_us": 1707.062,
+          "short_p99_us": 2221.719,
+          "scalar_p95_us": 1590.665,
+          "scalar_p99_us": 2023.432,
+          "mean_batch_wall_us": 20487.48457142857,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 738.2319285714285,
+              "mean_prepare_us": 0.5119345238095238
+            },
+            "stateful:100": {
+              "mean_latency_us": 946.3571785714286,
+              "mean_prepare_us": 0.5122142857142856
+            },
+            "stateful:100000": {
+              "mean_latency_us": 13078.587142857144,
+              "mean_prepare_us": 0.5509285714285714
+            },
+            "weighted:100": {
+              "mean_latency_us": 731.9675892857143,
+              "mean_prepare_us": 0.485375
+            },
+            "weighted:10000": {
+              "mean_latency_us": 2306.0898571428575,
+              "mean_prepare_us": 0.4794285714285714
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 380.88214285714287,
+          "mean_latency_us": 1478.9344892857143,
+          "short_p95_us": 1737.205,
+          "short_p99_us": 2005.061,
+          "scalar_p95_us": 1731.419,
+          "scalar_p99_us": 2005.061,
+          "mean_batch_wall_us": 20933.363285714287,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 773.7323452380953,
+              "mean_prepare_us": 0.5297440476190476
+            },
+            "stateful:100": {
+              "mean_latency_us": 846.604,
+              "mean_prepare_us": 0.5135714285714286
+            },
+            "stateful:100000": {
+              "mean_latency_us": 13382.011785714285,
+              "mean_prepare_us": 0.6281428571428571
+            },
+            "weighted:100": {
+              "mean_latency_us": 711.985625,
+              "mean_prepare_us": 0.48244642857142855
+            },
+            "weighted:10000": {
+              "mean_latency_us": 2370.7393571428574,
+              "mean_prepare_us": 0.5122142857142856
+            }
+          }
+        }
+      ]
+    },
+    "scan/mixed-cold/0/base": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 735.4410714285715,
+      "mean_latency_us": 3649.9918214285713,
+      "short_p95_us": 2480.293,
+      "short_p99_us": 3514.147,
+      "scalar_p95_us": 1583.042,
+      "scalar_p99_us": 1770.716,
+      "mean_batch_wall_us": 32382.628964285712,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 777.8972589285714,
+          "mean_prepare_us": 42.90773660714286
+        },
+        "stateful:100": {
+          "mean_latency_us": 1002.9838258928571,
+          "mean_prepare_us": 108.58196428571429
+        },
+        "stateful:100000": {
+          "mean_latency_us": 22122.27230357143,
+          "mean_prepare_us": 114.63042857142857
+        },
+        "weighted:100": {
+          "mean_latency_us": 1334.498908482143,
+          "mean_prepare_us": 95.98972991071429
+        },
+        "weighted:10000": {
+          "mean_latency_us": 5477.888107142857,
+          "mean_prepare_us": 100.39476785714285
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 536.2892857142857,
+          "mean_latency_us": 2460.8296464285713,
+          "short_p95_us": 2154.598,
+          "short_p99_us": 3037.465,
+          "scalar_p95_us": 1529.535,
+          "scalar_p99_us": 2023.259,
+          "mean_batch_wall_us": 25294.749714285714,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 760.6780178571429,
+              "mean_prepare_us": 29.924964285714285
+            },
+            "stateful:100": {
+              "mean_latency_us": 877.5308035714286,
+              "mean_prepare_us": 70.22189285714286
+            },
+            "stateful:100000": {
+              "mean_latency_us": 13451.883,
+              "mean_prepare_us": 77.95989285714286
+            },
+            "weighted:100": {
+              "mean_latency_us": 1109.341419642857,
+              "mean_prepare_us": 64.615625
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3442.630142857143,
+              "mean_prepare_us": 70.99546428571429
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 800.0785714285714,
+          "mean_latency_us": 3922.5403321428576,
+          "short_p95_us": 2440.965,
+          "short_p99_us": 2749.393,
+          "scalar_p95_us": 1729.692,
+          "scalar_p99_us": 1881.04,
+          "mean_batch_wall_us": 34470.22157142858,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 766.38775,
+              "mean_prepare_us": 45.353625
+            },
+            "stateful:100": {
+              "mean_latency_us": 951.5166071428572,
+              "mean_prepare_us": 111.86776785714285
+            },
+            "stateful:100000": {
+              "mean_latency_us": 24672.26475,
+              "mean_prepare_us": 116.27146428571429
+            },
+            "weighted:100": {
+              "mean_latency_us": 1318.792142857143,
+              "mean_prepare_us": 102.41873214285714
+            },
+            "weighted:10000": {
+              "mean_latency_us": 5842.161285714285,
+              "mean_prepare_us": 106.7552857142857
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 760.2178571428572,
+          "mean_latency_us": 3783.041717857143,
+          "short_p95_us": 2352.25,
+          "short_p99_us": 3085.359,
+          "scalar_p95_us": 1609.973,
+          "scalar_p99_us": 1687.931,
+          "mean_batch_wall_us": 33525.53342857143,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 837.7047678571429,
+              "mean_prepare_us": 45.177910714285716
+            },
+            "stateful:100": {
+              "mean_latency_us": 1013.866375,
+              "mean_prepare_us": 106.86448214285714
+            },
+            "stateful:100000": {
+              "mean_latency_us": 23516.619857142858,
+              "mean_prepare_us": 116.76382142857143
+            },
+            "weighted:100": {
+              "mean_latency_us": 1372.1942232142858,
+              "mean_prepare_us": 93.90176785714286
+            },
+            "weighted:10000": {
+              "mean_latency_us": 5121.878142857143,
+              "mean_prepare_us": 99.57767857142856
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 845.1785714285714,
+          "mean_latency_us": 4433.555589285715,
+          "short_p95_us": 2841.439,
+          "short_p99_us": 4143.36,
+          "scalar_p95_us": 1538.227,
+          "scalar_p99_us": 1647.32,
+          "mean_batch_wall_us": 36240.01114285714,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 746.8185,
+              "mean_prepare_us": 51.17444642857143
+            },
+            "stateful:100": {
+              "mean_latency_us": 1169.021517857143,
+              "mean_prepare_us": 145.3737142857143
+            },
+            "stateful:100000": {
+              "mean_latency_us": 26848.321607142858,
+              "mean_prepare_us": 147.5265357142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 1537.6678482142856,
+              "mean_prepare_us": 123.02279464285715
+            },
+            "weighted:10000": {
+              "mean_latency_us": 7504.882857142858,
+              "mean_prepare_us": 124.25064285714285
+            }
+          }
+        }
+      ]
+    },
+    "scan/mixed-cold/0/candidate": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 396.8080357142857,
+      "mean_latency_us": 2133.2404160714286,
+      "short_p95_us": 2249.337,
+      "short_p99_us": 3059.787,
+      "scalar_p95_us": 1814.67,
+      "scalar_p99_us": 2104.751,
+      "mean_batch_wall_us": 24056.556428571428,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 951.3641026785715,
+          "mean_prepare_us": 33.07389285714285
+        },
+        "stateful:100": {
+          "mean_latency_us": 990.48025,
+          "mean_prepare_us": 73.76321428571428
+        },
+        "stateful:100000": {
+          "mean_latency_us": 9858.978044642856,
+          "mean_prepare_us": 80.43422321428571
+        },
+        "weighted:100": {
+          "mean_latency_us": 1239.756607142857,
+          "mean_prepare_us": 68.52997098214286
+        },
+        "weighted:10000": {
+          "mean_latency_us": 2630.710982142857,
+          "mean_prepare_us": 69.55430357142856
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 175.10357142857143,
+          "mean_latency_us": 1190.3334392857141,
+          "short_p95_us": 1962.53,
+          "short_p99_us": 2153.914,
+          "scalar_p95_us": 1791.109,
+          "scalar_p99_us": 2007.244,
+          "mean_batch_wall_us": 20643.874,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 1079.8618392857143,
+              "mean_prepare_us": 13.931589285714287
+            },
+            "stateful:100": {
+              "mean_latency_us": 990.5886607142857,
+              "mean_prepare_us": 32.41142857142857
+            },
+            "stateful:100000": {
+              "mean_latency_us": 2511.6195714285714,
+              "mean_prepare_us": 33.15239285714286
+            },
+            "weighted:100": {
+              "mean_latency_us": 1050.7740267857143,
+              "mean_prepare_us": 28.152446428571427
+            },
+            "weighted:10000": {
+              "mean_latency_us": 1047.7177142857142,
+              "mean_prepare_us": 28.863785714285715
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 467.775,
+          "mean_latency_us": 2468.479742857143,
+          "short_p95_us": 2382.749,
+          "short_p99_us": 3137.863,
+          "scalar_p95_us": 1981.07,
+          "scalar_p99_us": 2104.751,
+          "mean_batch_wall_us": 25156.843285714287,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 914.578375,
+              "mean_prepare_us": 38.330571428571425
+            },
+            "stateful:100": {
+              "mean_latency_us": 1043.3044464285715,
+              "mean_prepare_us": 84.3189107142857
+            },
+            "stateful:100000": {
+              "mean_latency_us": 12251.649857142856,
+              "mean_prepare_us": 92.43967857142856
+            },
+            "weighted:100": {
+              "mean_latency_us": 1343.516125,
+              "mean_prepare_us": 78.82567857142857
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3143.3174285714285,
+              "mean_prepare_us": 80.135
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 652.4357142857143,
+          "mean_latency_us": 3270.860517857143,
+          "short_p95_us": 2524.967,
+          "short_p99_us": 4016.498,
+          "scalar_p95_us": 1784.489,
+          "scalar_p99_us": 2345.366,
+          "mean_batch_wall_us": 28754.411714285714,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 816.9839107142857,
+              "mean_prepare_us": 52.87482142857143
+            },
+            "stateful:100": {
+              "mean_latency_us": 958.1257857142857,
+              "mean_prepare_us": 119.32308928571429
+            },
+            "stateful:100000": {
+              "mean_latency_us": 19187.39303571429,
+              "mean_prepare_us": 130.04382142857145
+            },
+            "weighted:100": {
+              "mean_latency_us": 1395.910107142857,
+              "mean_prepare_us": 110.94134821428571
+            },
+            "weighted:10000": {
+              "mean_latency_us": 4387.3523214285715,
+              "mean_prepare_us": 109.93775
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 291.91785714285714,
+          "mean_latency_us": 1603.2879642857142,
+          "short_p95_us": 2178.445,
+          "short_p99_us": 2667.784,
+          "scalar_p95_us": 1888.458,
+          "scalar_p99_us": 2210.341,
+          "mean_batch_wall_us": 21671.09671428571,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 994.0322857142856,
+              "mean_prepare_us": 27.158589285714285
+            },
+            "stateful:100": {
+              "mean_latency_us": 969.9021071428572,
+              "mean_prepare_us": 58.999428571428574
+            },
+            "stateful:100000": {
+              "mean_latency_us": 5485.249714285715,
+              "mean_prepare_us": 66.101
+            },
+            "weighted:100": {
+              "mean_latency_us": 1168.826169642857,
+              "mean_prepare_us": 56.20041071428572
+            },
+            "weighted:10000": {
+              "mean_latency_us": 1944.4564642857142,
+              "mean_prepare_us": 59.280678571428574
+            }
+          }
+        }
+      ]
+    },
+    "scan/mixed-cold/1000/base": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 584.9214285714286,
+      "mean_latency_us": 6276.7742151785715,
+      "short_p95_us": 7579.068,
+      "short_p99_us": 8725.718,
+      "scalar_p95_us": 1722.297,
+      "scalar_p99_us": 1936.993,
+      "mean_batch_wall_us": 32566.19503571429,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 957.7397455357143,
+          "mean_prepare_us": 33.20247767857143
+        },
+        "stateful:100": {
+          "mean_latency_us": 5439.968459821428,
+          "mean_prepare_us": 80.75273660714285
+        },
+        "stateful:100000": {
+          "mean_latency_us": 19339.62727678571,
+          "mean_prepare_us": 85.3174375
+        },
+        "weighted:100": {
+          "mean_latency_us": 5614.762654017857,
+          "mean_prepare_us": 74.02912946428572
+        },
+        "weighted:10000": {
+          "mean_latency_us": 8173.647848214286,
+          "mean_prepare_us": 78.2715
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 322.425,
+          "mean_latency_us": 4705.153889285714,
+          "short_p95_us": 6208.708,
+          "short_p99_us": 6789.838,
+          "scalar_p95_us": 1771.671,
+          "scalar_p99_us": 1891.422,
+          "mean_batch_wall_us": 24902.109285714287,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 986.1306607142857,
+              "mean_prepare_us": 13.827964285714286
+            },
+            "stateful:100": {
+              "mean_latency_us": 5172.06,
+              "mean_prepare_us": 34.43421428571428
+            },
+            "stateful:100000": {
+              "mean_latency_us": 8556.40257142857,
+              "mean_prepare_us": 32.88710714285715
+            },
+            "weighted:100": {
+              "mean_latency_us": 5170.450107142858,
+              "mean_prepare_us": 30.954991071428573
+            },
+            "weighted:10000": {
+              "mean_latency_us": 5496.954571428571,
+              "mean_prepare_us": 32.9735
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 851.0107142857144,
+          "mean_latency_us": 7754.114117857143,
+          "short_p95_us": 8125.286,
+          "short_p99_us": 8903.364,
+          "scalar_p95_us": 1835.55,
+          "scalar_p99_us": 2084.052,
+          "mean_batch_wall_us": 39903.099571428575,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 933.2068928571429,
+              "mean_prepare_us": 53.930321428571425
+            },
+            "stateful:100": {
+              "mean_latency_us": 5592.539357142858,
+              "mean_prepare_us": 127.66616071428571
+            },
+            "stateful:100000": {
+              "mean_latency_us": 29905.876607142858,
+              "mean_prepare_us": 133.19089285714287
+            },
+            "weighted:100": {
+              "mean_latency_us": 6031.710723214285,
+              "mean_prepare_us": 113.34483928571429
+            },
+            "weighted:10000": {
+              "mean_latency_us": 10456.929178571429,
+              "mean_prepare_us": 115.22814285714286
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 846.7178571428572,
+          "mean_latency_us": 7963.919046428571,
+          "short_p95_us": 8254.9,
+          "short_p99_us": 9200.641,
+          "scalar_p95_us": 1809.772,
+          "scalar_p99_us": 1936.993,
+          "mean_batch_wall_us": 40320.25457142857,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 949.5015,
+              "mean_prepare_us": 51.48057142857143
+            },
+            "stateful:100": {
+              "mean_latency_us": 5813.943267857143,
+              "mean_prepare_us": 127.02505357142857
+            },
+            "stateful:100000": {
+              "mean_latency_us": 30387.99064285714,
+              "mean_prepare_us": 141.2220357142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 6112.4494107142855,
+              "mean_prepare_us": 121.24525892857143
+            },
+            "weighted:10000": {
+              "mean_latency_us": 11274.512642857144,
+              "mean_prepare_us": 132.8799285714286
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 319.53214285714284,
+          "mean_latency_us": 4683.909807142857,
+          "short_p95_us": 6256.052,
+          "short_p99_us": 6790.271,
+          "scalar_p95_us": 1558.1,
+          "scalar_p99_us": 1995.009,
+          "mean_batch_wall_us": 25139.316714285713,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 962.1199285714285,
+              "mean_prepare_us": 13.571053571428571
+            },
+            "stateful:100": {
+              "mean_latency_us": 5181.331214285715,
+              "mean_prepare_us": 33.88551785714286
+            },
+            "stateful:100000": {
+              "mean_latency_us": 8508.239285714286,
+              "mean_prepare_us": 33.96971428571428
+            },
+            "weighted:100": {
+              "mean_latency_us": 5144.440375,
+              "mean_prepare_us": 30.571428571428573
+            },
+            "weighted:10000": {
+              "mean_latency_us": 5466.195,
+              "mean_prepare_us": 32.00442857142857
+            }
+          }
+        }
+      ]
+    },
+    "scan/mixed-cold/1000/candidate": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 415.01696428571427,
+      "mean_latency_us": 5863.70551875,
+      "short_p95_us": 7750.049,
+      "short_p99_us": 9001.982,
+      "scalar_p95_us": 1782.82,
+      "scalar_p99_us": 2208.979,
+      "mean_batch_wall_us": 28526.55682142857,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 996.5801160714285,
+          "mean_prepare_us": 35.159348214285714
+        },
+        "stateful:100": {
+          "mean_latency_us": 5640.572129464285,
+          "mean_prepare_us": 80.91323214285714
+        },
+        "stateful:100000": {
+          "mean_latency_us": 14704.30532142857,
+          "mean_prepare_us": 88.79409821428571
+        },
+        "weighted:100": {
+          "mean_latency_us": 5810.783814732143,
+          "mean_prepare_us": 72.69721651785714
+        },
+        "weighted:10000": {
+          "mean_latency_us": 7415.310116071428,
+          "mean_prepare_us": 74.57440178571429
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 178.04285714285714,
+          "mean_latency_us": 4851.54375,
+          "short_p95_us": 7301.68,
+          "short_p99_us": 8072.653,
+          "scalar_p95_us": 1677.024,
+          "scalar_p99_us": 1953.533,
+          "mean_batch_wall_us": 24765.481571428572,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 962.198875,
+              "mean_prepare_us": 13.249410714285714
+            },
+            "stateful:100": {
+              "mean_latency_us": 5570.0236428571425,
+              "mean_prepare_us": 33.58976785714285
+            },
+            "stateful:100000": {
+              "mean_latency_us": 6944.947714285715,
+              "mean_prepare_us": 32.5995
+            },
+            "weighted:100": {
+              "mean_latency_us": 5633.331044642858,
+              "mean_prepare_us": 28.754446428571427
+            },
+            "weighted:10000": {
+              "mean_latency_us": 5972.720571428572,
+              "mean_prepare_us": 29.783714285714286
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 648.9357142857143,
+          "mean_latency_us": 6949.205792857143,
+          "short_p95_us": 8375.728,
+          "short_p99_us": 9623.423,
+          "scalar_p95_us": 2208.979,
+          "scalar_p99_us": 3113.074,
+          "mean_batch_wall_us": 31881.11285714286,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 1041.3084107142856,
+              "mean_prepare_us": 57.827178571428576
+            },
+            "stateful:100": {
+              "mean_latency_us": 5852.174339285714,
+              "mean_prepare_us": 134.0037857142857
+            },
+            "stateful:100000": {
+              "mean_latency_us": 22343.359357142857,
+              "mean_prepare_us": 150.3535
+            },
+            "weighted:100": {
+              "mean_latency_us": 6052.3697678571425,
+              "mean_prepare_us": 118.89108035714285
+            },
+            "weighted:10000": {
+              "mean_latency_us": 9152.254,
+              "mean_prepare_us": 117.24167857142857
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 656.2321428571429,
+          "mean_latency_us": 6795.018089285714,
+          "short_p95_us": 7950.943,
+          "short_p99_us": 8907.333,
+          "scalar_p95_us": 1782.82,
+          "scalar_p99_us": 1845.439,
+          "mean_batch_wall_us": 32695.223285714288,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 894.5439285714285,
+              "mean_prepare_us": 56.31742857142857
+            },
+            "stateful:100": {
+              "mean_latency_us": 5465.968642857143,
+              "mean_prepare_us": 122.55294642857143
+            },
+            "stateful:100000": {
+              "mean_latency_us": 22874.070785714288,
+              "mean_prepare_us": 139.43596428571428
+            },
+            "weighted:100": {
+              "mean_latency_us": 5909.647464285715,
+              "mean_prepare_us": 114.68570535714285
+            },
+            "weighted:10000": {
+              "mean_latency_us": 8716.495107142857,
+              "mean_prepare_us": 120.02114285714285
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 176.85714285714286,
+          "mean_latency_us": 4859.054442857143,
+          "short_p95_us": 7026.939,
+          "short_p99_us": 7969.874,
+          "scalar_p95_us": 1762.25,
+          "scalar_p99_us": 1855.038,
+          "mean_batch_wall_us": 24764.409571428572,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 1088.26925,
+              "mean_prepare_us": 13.243375
+            },
+            "stateful:100": {
+              "mean_latency_us": 5674.1218928571425,
+              "mean_prepare_us": 33.50642857142857
+            },
+            "stateful:100000": {
+              "mean_latency_us": 6654.843428571428,
+              "mean_prepare_us": 32.78742857142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 5647.786982142858,
+              "mean_prepare_us": 28.45763392857143
+            },
+            "weighted:10000": {
+              "mean_latency_us": 5819.770785714285,
+              "mean_prepare_us": 31.25107142857143
+            }
+          }
+        }
+      ]
+    },
+    "scan/mixed-warm/0/base": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 525.8758928571428,
+      "mean_latency_us": 2395.9288598214284,
+      "short_p95_us": 1917.371,
+      "short_p99_us": 2939.067,
+      "scalar_p95_us": 1685.469,
+      "scalar_p99_us": 2201.071,
+      "mean_batch_wall_us": 27255.14217857143,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 787.6099642857143,
+          "mean_prepare_us": 0.32905357142857145
+        },
+        "stateful:100": {
+          "mean_latency_us": 739.64275,
+          "mean_prepare_us": 0.30785267857142856
+        },
+        "stateful:100000": {
+          "mean_latency_us": 13939.909892857144,
+          "mean_prepare_us": 0.3260178571428572
+        },
+        "weighted:100": {
+          "mean_latency_us": 1071.3157477678571,
+          "mean_prepare_us": 0.34281919642857145
+        },
+        "weighted:10000": {
+          "mean_latency_us": 2679.610285714286,
+          "mean_prepare_us": 0.36111607142857144
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 286.99642857142857,
+          "mean_latency_us": 1149.535157142857,
+          "short_p95_us": 1619.839,
+          "short_p99_us": 1910.795,
+          "scalar_p95_us": 1619.839,
+          "scalar_p99_us": 1972.704,
+          "mean_batch_wall_us": 20844.50385714286,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 769.7919285714286,
+              "mean_prepare_us": 0.16151785714285713
+            },
+            "stateful:100": {
+              "mean_latency_us": 635.996875,
+              "mean_prepare_us": 0.1705357142857143
+            },
+            "stateful:100000": {
+              "mean_latency_us": 4102.911892857142,
+              "mean_prepare_us": 0.17117857142857143
+            },
+            "weighted:100": {
+              "mean_latency_us": 862.0647410714286,
+              "mean_prepare_us": 0.1686160714285714
+            },
+            "weighted:10000": {
+              "mean_latency_us": 1132.603107142857,
+              "mean_prepare_us": 0.1741785714285714
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 780.2642857142857,
+          "mean_latency_us": 3599.4665464285713,
+          "short_p95_us": 1963.029,
+          "short_p99_us": 2677.92,
+          "scalar_p95_us": 1681.008,
+          "scalar_p99_us": 1917.371,
+          "mean_batch_wall_us": 34231.602,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 748.096375,
+              "mean_prepare_us": 0.5338035714285715
+            },
+            "stateful:100": {
+              "mean_latency_us": 757.8030357142857,
+              "mean_prepare_us": 0.4757142857142857
+            },
+            "stateful:100000": {
+              "mean_latency_us": 24306.83610714286,
+              "mean_prepare_us": 0.5300714285714285
+            },
+            "weighted:100": {
+              "mean_latency_us": 1143.3892767857144,
+              "mean_prepare_us": 0.5516160714285715
+            },
+            "weighted:10000": {
+              "mean_latency_us": 4102.4734285714285,
+              "mean_prepare_us": 0.6075357142857143
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 746.7785714285715,
+          "mean_latency_us": 3578.2210214285715,
+          "short_p95_us": 2329.551,
+          "short_p99_us": 4788.792,
+          "scalar_p95_us": 2179.516,
+          "scalar_p99_us": 2939.067,
+          "mean_batch_wall_us": 33300.779428571426,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 781.7882678571428,
+              "mean_prepare_us": 0.44291071428571427
+            },
+            "stateful:100": {
+              "mean_latency_us": 834.189125,
+              "mean_prepare_us": 0.4235892857142857
+            },
+            "stateful:100000": {
+              "mean_latency_us": 23189.868607142856,
+              "mean_prepare_us": 0.4437142857142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 1301.2291875,
+              "mean_prepare_us": 0.4328660714285714
+            },
+            "weighted:10000": {
+              "mean_latency_us": 4155.470071428571,
+              "mean_prepare_us": 0.5003214285714286
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 289.4642857142857,
+          "mean_latency_us": 1256.4927142857143,
+          "short_p95_us": 1872.164,
+          "short_p99_us": 2201.071,
+          "scalar_p95_us": 1978.327,
+          "scalar_p99_us": 2201.071,
+          "mean_batch_wall_us": 20643.68342857143,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 850.7632857142856,
+              "mean_prepare_us": 0.17798214285714287
+            },
+            "stateful:100": {
+              "mean_latency_us": 730.5819642857143,
+              "mean_prepare_us": 0.1615714285714286
+            },
+            "stateful:100000": {
+              "mean_latency_us": 4160.022964285714,
+              "mean_prepare_us": 0.15910714285714286
+            },
+            "weighted:100": {
+              "mean_latency_us": 978.5797857142857,
+              "mean_prepare_us": 0.21817857142857142
+            },
+            "weighted:10000": {
+              "mean_latency_us": 1327.8945357142857,
+              "mean_prepare_us": 0.16242857142857142
+            }
+          }
+        }
+      ]
+    },
+    "scan/mixed-warm/0/candidate": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 357.2544642857143,
+      "mean_latency_us": 1780.4722839285714,
+      "short_p95_us": 1804.988,
+      "short_p99_us": 2187.759,
+      "scalar_p95_us": 1661.575,
+      "scalar_p99_us": 1862.726,
+      "mean_batch_wall_us": 23307.33525,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 805.0581116071428,
+          "mean_prepare_us": 0.30780357142857145
+        },
+        "stateful:100": {
+          "mean_latency_us": 704.4737946428571,
+          "mean_prepare_us": 0.301875
+        },
+        "stateful:100000": {
+          "mean_latency_us": 9032.2844375,
+          "mean_prepare_us": 0.34800892857142857
+        },
+        "weighted:100": {
+          "mean_latency_us": 984.8289709821429,
+          "mean_prepare_us": 0.3429977678571428
+        },
+        "weighted:10000": {
+          "mean_latency_us": 1814.058705357143,
+          "mean_prepare_us": 0.320875
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 149.0285714285714,
+          "mean_latency_us": 1055.0033035714287,
+          "short_p95_us": 1780.067,
+          "short_p99_us": 2036.813,
+          "scalar_p95_us": 1593.616,
+          "scalar_p99_us": 1819.924,
+          "mean_batch_wall_us": 20316.948,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 860.1817321428572,
+              "mean_prepare_us": 0.16446428571428573
+            },
+            "stateful:100": {
+              "mean_latency_us": 739.1462857142857,
+              "mean_prepare_us": 0.15785714285714286
+            },
+            "stateful:100000": {
+              "mean_latency_us": 2473.926571428571,
+              "mean_prepare_us": 0.16228571428571428
+            },
+            "weighted:100": {
+              "mean_latency_us": 976.8856607142857,
+              "mean_prepare_us": 0.1708660714285714
+            },
+            "weighted:10000": {
+              "mean_latency_us": 969.9077857142856,
+              "mean_prepare_us": 0.16528571428571429
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 572.8785714285715,
+          "mean_latency_us": 2446.811857142857,
+          "short_p95_us": 1682.724,
+          "short_p99_us": 2284.097,
+          "scalar_p95_us": 1527.26,
+          "scalar_p99_us": 1682.724,
+          "mean_batch_wall_us": 26280.563142857143,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 586.7409821428572,
+              "mean_prepare_us": 0.4577857142857143
+            },
+            "stateful:100": {
+              "mean_latency_us": 559.884875,
+              "mean_prepare_us": 0.4496785714285714
+            },
+            "stateful:100000": {
+              "mean_latency_us": 15775.012428571428,
+              "mean_prepare_us": 0.4898214285714286
+            },
+            "weighted:100": {
+              "mean_latency_us": 918.1641160714286,
+              "mean_prepare_us": 0.5568392857142856
+            },
+            "weighted:10000": {
+              "mean_latency_us": 2727.197964285714,
+              "mean_prepare_us": 0.4868928571428572
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 558.2,
+          "mean_latency_us": 2535.4467321428574,
+          "short_p95_us": 1934.426,
+          "short_p99_us": 2306.372,
+          "scalar_p95_us": 1675.488,
+          "scalar_p99_us": 1756.154,
+          "mean_batch_wall_us": 25908.362142857142,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 755.43875,
+              "mean_prepare_us": 0.4474107142857143
+            },
+            "stateful:100": {
+              "mean_latency_us": 724.168875,
+              "mean_prepare_us": 0.43764285714285717
+            },
+            "stateful:100000": {
+              "mean_latency_us": 15426.791357142856,
+              "mean_prepare_us": 0.5791428571428571
+            },
+            "weighted:100": {
+              "mean_latency_us": 1087.6905267857144,
+              "mean_prepare_us": 0.4723482142857143
+            },
+            "weighted:10000": {
+              "mean_latency_us": 2617.6986071428573,
+              "mean_prepare_us": 0.4556428571428572
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 148.91071428571428,
+          "mean_latency_us": 1084.6272428571428,
+          "short_p95_us": 1862.726,
+          "short_p99_us": 2083.012,
+          "scalar_p95_us": 1862.726,
+          "scalar_p99_us": 2259.448,
+          "mean_batch_wall_us": 20723.467714285714,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 1017.8709821428572,
+              "mean_prepare_us": 0.1615535714285714
+            },
+            "stateful:100": {
+              "mean_latency_us": 794.6951428571429,
+              "mean_prepare_us": 0.1623214285714286
+            },
+            "stateful:100000": {
+              "mean_latency_us": 2453.407392857143,
+              "mean_prepare_us": 0.16078571428571428
+            },
+            "weighted:100": {
+              "mean_latency_us": 956.5755803571428,
+              "mean_prepare_us": 0.1719375
+            },
+            "weighted:10000": {
+              "mean_latency_us": 941.4304642857143,
+              "mean_prepare_us": 0.1756785714285714
+            }
+          }
+        }
+      ]
+    }
+  },
+  "shapes": {
+    "scalar:0/cold/base": {
+      "cpu_us": 48.96666666666666,
+      "wall_us": 47.811475,
+      "prepare_us": 38.76705833333333,
+      "execute_us": 6.990616666666667,
+      "rounds": [
+        {
+          "cpu_us": 31.366666666666667,
+          "wall_us": 30.763566666666666,
+          "prepare_us": 24.593033333333334,
+          "execute_us": 4.840566666666667
+        },
+        {
+          "cpu_us": 70.26666666666667,
+          "wall_us": 69.18939999999999,
+          "prepare_us": 56.93383333333333,
+          "execute_us": 9.4818
+        },
+        {
+          "cpu_us": 63.96666666666666,
+          "wall_us": 62.880300000000005,
+          "prepare_us": 49.5875,
+          "execute_us": 9.9759
+        },
+        {
+          "cpu_us": 30.26666666666667,
+          "wall_us": 28.412633333333336,
+          "prepare_us": 23.953866666666666,
+          "execute_us": 3.6641999999999997
+        }
+      ]
+    },
+    "scalar:0/cold/candidate": {
+      "cpu_us": 45.458333333333336,
+      "wall_us": 44.0985,
+      "prepare_us": 37.076933333333336,
+      "execute_us": 5.535699999999999,
+      "rounds": [
+        {
+          "cpu_us": 31.8,
+          "wall_us": 31.247066666666665,
+          "prepare_us": 24.863933333333335,
+          "execute_us": 4.0553333333333335
+        },
+        {
+          "cpu_us": 75.4,
+          "wall_us": 73.3629,
+          "prepare_us": 63.714333333333336,
+          "execute_us": 8.164533333333333
+        },
+        {
+          "cpu_us": 55.63333333333333,
+          "wall_us": 53.10476666666667,
+          "prepare_us": 44.235033333333334,
+          "execute_us": 7.510833333333333
+        },
+        {
+          "cpu_us": 19.0,
+          "wall_us": 18.679266666666667,
+          "prepare_us": 15.494433333333333,
+          "execute_us": 2.4120999999999997
+        }
+      ]
+    },
+    "scalar:0/warm/base": {
+      "cpu_us": 4.183333333333333,
+      "wall_us": 3.5526999999999997,
+      "prepare_us": 0.22444166666666665,
+      "execute_us": 1.9239916666666665,
+      "rounds": [
+        {
+          "cpu_us": 5.833333333333333,
+          "wall_us": 5.226866666666667,
+          "prepare_us": 0.16533333333333333,
+          "execute_us": 2.6419
+        },
+        {
+          "cpu_us": 4.9,
+          "wall_us": 4.095466666666667,
+          "prepare_us": 0.3127,
+          "execute_us": 2.425
+        },
+        {
+          "cpu_us": 3.8,
+          "wall_us": 3.0362666666666667,
+          "prepare_us": 0.2557666666666667,
+          "execute_us": 1.6535666666666666
+        },
+        {
+          "cpu_us": 2.2,
+          "wall_us": 1.8522,
+          "prepare_us": 0.16396666666666668,
+          "execute_us": 0.9755
+        }
+      ]
+    },
+    "scalar:0/warm/candidate": {
+      "cpu_us": 7.158333333333333,
+      "wall_us": 5.437024999999999,
+      "prepare_us": 0.20534166666666667,
+      "execute_us": 3.7833333333333337,
+      "rounds": [
+        {
+          "cpu_us": 8.8,
+          "wall_us": 8.495466666666667,
+          "prepare_us": 0.17096666666666666,
+          "execute_us": 5.521533333333334
+        },
+        {
+          "cpu_us": 3.8,
+          "wall_us": 3.0795333333333335,
+          "prepare_us": 0.26413333333333333,
+          "execute_us": 1.6551
+        },
+        {
+          "cpu_us": 11.733333333333334,
+          "wall_us": 7.733066666666667,
+          "prepare_us": 0.21673333333333333,
+          "execute_us": 6.481066666666667
+        },
+        {
+          "cpu_us": 4.3,
+          "wall_us": 2.4400333333333335,
+          "prepare_us": 0.16953333333333334,
+          "execute_us": 1.4756333333333334
+        }
+      ]
+    },
+    "stateful:100/cold/base": {
+      "cpu_us": 85.58333333333333,
+      "wall_us": 85.28740833333335,
+      "prepare_us": 71.29238333333333,
+      "execute_us": 12.77455,
+      "rounds": [
+        {
+          "cpu_us": 46.166666666666664,
+          "wall_us": 45.7659,
+          "prepare_us": 38.18066666666667,
+          "execute_us": 6.844533333333334
+        },
+        {
+          "cpu_us": 128.46666666666667,
+          "wall_us": 129.17373333333333,
+          "prepare_us": 108.0351,
+          "execute_us": 19.700133333333333
+        },
+        {
+          "cpu_us": 120.73333333333333,
+          "wall_us": 119.66843333333334,
+          "prepare_us": 100.2533,
+          "execute_us": 17.460133333333335
+        },
+        {
+          "cpu_us": 46.96666666666666,
+          "wall_us": 46.54156666666667,
+          "prepare_us": 38.700466666666664,
+          "execute_us": 7.0934
+        }
+      ]
+    },
+    "stateful:100/cold/candidate": {
+      "cpu_us": 88.275,
+      "wall_us": 88.045825,
+      "prepare_us": 76.491675,
+      "execute_us": 10.4688,
+      "rounds": [
+        {
+          "cpu_us": 44.13333333333333,
+          "wall_us": 44.02693333333333,
+          "prepare_us": 37.8969,
+          "execute_us": 5.364433333333333
+        },
+        {
+          "cpu_us": 117.23333333333333,
+          "wall_us": 117.70596666666665,
+          "prepare_us": 99.26066666666667,
+          "execute_us": 16.970733333333335
+        },
+        {
+          "cpu_us": 147.9,
+          "wall_us": 146.96006666666668,
+          "prepare_us": 131.24793333333332,
+          "execute_us": 14.358600000000001
+        },
+        {
+          "cpu_us": 43.833333333333336,
+          "wall_us": 43.49033333333334,
+          "prepare_us": 37.5612,
+          "execute_us": 5.181433333333334
+        }
+      ]
+    },
+    "stateful:100/warm/base": {
+      "cpu_us": 11.716666666666667,
+      "wall_us": 11.058708333333334,
+      "prepare_us": 0.24183333333333334,
+      "execute_us": 9.744441666666667,
+      "rounds": [
+        {
+          "cpu_us": 6.8,
+          "wall_us": 6.2969333333333335,
+          "prepare_us": 0.15976666666666667,
+          "execute_us": 5.433833333333333
+        },
+        {
+          "cpu_us": 16.566666666666666,
+          "wall_us": 15.696366666666666,
+          "prepare_us": 0.3113,
+          "execute_us": 13.963466666666667
+        },
+        {
+          "cpu_us": 17.2,
+          "wall_us": 16.202666666666666,
+          "prepare_us": 0.3211333333333333,
+          "execute_us": 14.419799999999999
+        },
+        {
+          "cpu_us": 6.3,
+          "wall_us": 6.038866666666666,
+          "prepare_us": 0.17513333333333334,
+          "execute_us": 5.160666666666667
+        }
+      ]
+    },
+    "stateful:100/warm/candidate": {
+      "cpu_us": 12.091666666666667,
+      "wall_us": 11.790799999999999,
+      "prepare_us": 0.2029,
+      "execute_us": 10.646116666666666,
+      "rounds": [
+        {
+          "cpu_us": 5.2,
+          "wall_us": 4.746066666666667,
+          "prepare_us": 0.16953333333333334,
+          "execute_us": 3.8692333333333333
+        },
+        {
+          "cpu_us": 28.166666666666668,
+          "wall_us": 28.485400000000002,
+          "prepare_us": 0.2557,
+          "execute_us": 26.931933333333333
+        },
+        {
+          "cpu_us": 9.566666666666666,
+          "wall_us": 8.886433333333333,
+          "prepare_us": 0.22376666666666667,
+          "execute_us": 7.638533333333334
+        },
+        {
+          "cpu_us": 5.433333333333333,
+          "wall_us": 5.0453,
+          "prepare_us": 0.1626,
+          "execute_us": 4.1447666666666665
+        }
+      ]
+    },
+    "stateful:100000/cold/base": {
+      "cpu_us": 2502.1916666666666,
+      "wall_us": 2503.003283333333,
+      "prepare_us": 43.43461666666667,
+      "execute_us": 2458.813783333333,
+      "rounds": [
+        {
+          "cpu_us": 2520.7666666666664,
+          "wall_us": 2521.6352333333334,
+          "prepare_us": 50.5713,
+          "execute_us": 2470.2968333333333
+        },
+        {
+          "cpu_us": 2462.5666666666666,
+          "wall_us": 2463.3641000000002,
+          "prepare_us": 37.77546666666667,
+          "execute_us": 2424.8507
+        },
+        {
+          "cpu_us": 2468.2333333333336,
+          "wall_us": 2469.0722333333333,
+          "prepare_us": 39.38363333333333,
+          "execute_us": 2428.9411
+        },
+        {
+          "cpu_us": 2557.2,
+          "wall_us": 2557.941566666667,
+          "prepare_us": 46.008066666666664,
+          "execute_us": 2511.1665
+        }
+      ]
+    },
+    "stateful:100000/cold/candidate": {
+      "cpu_us": 1294.0,
+      "wall_us": 1294.193575,
+      "prepare_us": 48.94354166666666,
+      "execute_us": 1244.429825,
+      "rounds": [
+        {
+          "cpu_us": 1250.4333333333332,
+          "wall_us": 1250.6606666666667,
+          "prepare_us": 50.039199999999994,
+          "execute_us": 1199.8279333333332
+        },
+        {
+          "cpu_us": 1392.5,
+          "wall_us": 1392.5903666666668,
+          "prepare_us": 50.81223333333333,
+          "execute_us": 1340.9139333333333
+        },
+        {
+          "cpu_us": 1334.1666666666667,
+          "wall_us": 1334.3949,
+          "prepare_us": 49.673366666666666,
+          "execute_us": 1283.8780333333334
+        },
+        {
+          "cpu_us": 1198.9,
+          "wall_us": 1199.1283666666668,
+          "prepare_us": 45.24936666666667,
+          "execute_us": 1153.0993999999998
+        }
+      ]
+    },
+    "stateful:100000/warm/base": {
+      "cpu_us": 2475.6833333333334,
+      "wall_us": 2476.612375,
+      "prepare_us": 0.16396666666666668,
+      "execute_us": 2475.7115750000003,
+      "rounds": [
+        {
+          "cpu_us": 2498.9333333333334,
+          "wall_us": 2500.0363333333335,
+          "prepare_us": 0.16256666666666666,
+          "execute_us": 2499.1193
+        },
+        {
+          "cpu_us": 2471.0666666666666,
+          "wall_us": 2472.0761666666667,
+          "prepare_us": 0.17086666666666667,
+          "execute_us": 2471.1853666666666
+        },
+        {
+          "cpu_us": 2437.9333333333334,
+          "wall_us": 2438.7097999999996,
+          "prepare_us": 0.16396666666666668,
+          "execute_us": 2437.812033333333
+        },
+        {
+          "cpu_us": 2494.8,
+          "wall_us": 2495.6272000000004,
+          "prepare_us": 0.15846666666666667,
+          "execute_us": 2494.7296
+        }
+      ]
+    },
+    "stateful:100000/warm/candidate": {
+      "cpu_us": 1161.3166666666668,
+      "wall_us": 1161.5174916666667,
+      "prepare_us": 0.16465833333333332,
+      "execute_us": 1160.6312666666665,
+      "rounds": [
+        {
+          "cpu_us": 1178.4,
+          "wall_us": 1178.7871666666667,
+          "prepare_us": 0.1626,
+          "execute_us": 1177.8949333333333
+        },
+        {
+          "cpu_us": 1156.3666666666668,
+          "wall_us": 1156.6045666666666,
+          "prepare_us": 0.1709,
+          "execute_us": 1155.7207666666666
+        },
+        {
+          "cpu_us": 1151.8666666666668,
+          "wall_us": 1151.9594333333334,
+          "prepare_us": 0.16119999999999998,
+          "execute_us": 1151.0812333333333
+        },
+        {
+          "cpu_us": 1158.6333333333332,
+          "wall_us": 1158.7188,
+          "prepare_us": 0.16393333333333335,
+          "execute_us": 1157.8281333333332
+        }
+      ]
+    },
+    "weighted:100/cold/base": {
+      "cpu_us": 74.175,
+      "wall_us": 73.58799166666667,
+      "prepare_us": 60.87829166666666,
+      "execute_us": 11.568058333333333,
+      "rounds": [
+        {
+          "cpu_us": 41.2,
+          "wall_us": 41.1659,
+          "prepare_us": 33.81946666666667,
+          "execute_us": 6.608333333333333
+        },
+        {
+          "cpu_us": 106.73333333333333,
+          "wall_us": 105.89363333333333,
+          "prepare_us": 86.9939,
+          "execute_us": 17.542
+        },
+        {
+          "cpu_us": 93.53333333333333,
+          "wall_us": 92.74283333333332,
+          "prepare_us": 76.1789,
+          "execute_us": 15.428600000000001
+        },
+        {
+          "cpu_us": 55.233333333333334,
+          "wall_us": 54.5496,
+          "prepare_us": 46.520900000000005,
+          "execute_us": 6.6933
+        }
+      ]
+    },
+    "weighted:100/cold/candidate": {
+      "cpu_us": 85.90833333333333,
+      "wall_us": 85.440825,
+      "prepare_us": 68.77771666666666,
+      "execute_us": 14.999983333333333,
+      "rounds": [
+        {
+          "cpu_us": 57.666666666666664,
+          "wall_us": 57.116,
+          "prepare_us": 47.754666666666665,
+          "execute_us": 8.285633333333333
+        },
+        {
+          "cpu_us": 95.2,
+          "wall_us": 96.13823333333333,
+          "prepare_us": 78.19733333333333,
+          "execute_us": 16.673433333333335
+        },
+        {
+          "cpu_us": 132.1,
+          "wall_us": 130.4148,
+          "prepare_us": 100.4079,
+          "execute_us": 27.101200000000002
+        },
+        {
+          "cpu_us": 58.666666666666664,
+          "wall_us": 58.09426666666667,
+          "prepare_us": 48.75096666666667,
+          "execute_us": 7.939666666666667
+        }
+      ]
+    },
+    "weighted:100/warm/base": {
+      "cpu_us": 16.125,
+      "wall_us": 15.201808333333332,
+      "prepare_us": 0.2167666666666667,
+      "execute_us": 13.64995,
+      "rounds": [
+        {
+          "cpu_us": 19.2,
+          "wall_us": 17.767833333333332,
+          "prepare_us": 0.1723,
+          "execute_us": 15.558366666666666
+        },
+        {
+          "cpu_us": 22.4,
+          "wall_us": 21.599866666666664,
+          "prepare_us": 0.22096666666666667,
+          "execute_us": 20.237933333333334
+        },
+        {
+          "cpu_us": 16.633333333333333,
+          "wall_us": 15.554933333333333,
+          "prepare_us": 0.31406666666666666,
+          "execute_us": 13.783333333333333
+        },
+        {
+          "cpu_us": 6.266666666666667,
+          "wall_us": 5.884600000000001,
+          "prepare_us": 0.1597333333333333,
+          "execute_us": 5.020166666666667
+        }
+      ]
+    },
+    "weighted:100/warm/candidate": {
+      "cpu_us": 19.35833333333333,
+      "wall_us": 17.90159166666667,
+      "prepare_us": 0.23099166666666668,
+      "execute_us": 15.22725,
+      "rounds": [
+        {
+          "cpu_us": 4.933333333333333,
+          "wall_us": 4.6042,
+          "prepare_us": 0.15843333333333334,
+          "execute_us": 3.7551
+        },
+        {
+          "cpu_us": 30.76666666666667,
+          "wall_us": 28.07016666666667,
+          "prepare_us": 0.2848333333333333,
+          "execute_us": 25.691
+        },
+        {
+          "cpu_us": 36.1,
+          "wall_us": 33.89216666666666,
+          "prepare_us": 0.314,
+          "execute_us": 27.336033333333333
+        },
+        {
+          "cpu_us": 5.633333333333333,
+          "wall_us": 5.039833333333333,
+          "prepare_us": 0.1667,
+          "execute_us": 4.1268666666666665
+        }
+      ]
+    },
+    "weighted:10000/cold/base": {
+      "cpu_us": 434.975,
+      "wall_us": 434.5675,
+      "prepare_us": 52.4595,
+      "execute_us": 380.9865416666667,
+      "rounds": [
+        {
+          "cpu_us": 303.4666666666667,
+          "wall_us": 303.1462333333333,
+          "prepare_us": 33.74153333333333,
+          "execute_us": 268.48313333333334
+        },
+        {
+          "cpu_us": 581.7,
+          "wall_us": 581.1896999999999,
+          "prepare_us": 73.72223333333334,
+          "execute_us": 506.08209999999997
+        },
+        {
+          "cpu_us": 551.1333333333333,
+          "wall_us": 550.6964,
+          "prepare_us": 64.19330000000001,
+          "execute_us": 485.0744
+        },
+        {
+          "cpu_us": 303.6,
+          "wall_us": 303.2376666666667,
+          "prepare_us": 38.180933333333336,
+          "execute_us": 264.30653333333333
+        }
+      ]
+    },
+    "weighted:10000/cold/candidate": {
+      "cpu_us": 332.6416666666667,
+      "wall_us": 332.10072499999995,
+      "prepare_us": 67.48949166666667,
+      "execute_us": 263.325775,
+      "rounds": [
+        {
+          "cpu_us": 186.8,
+          "wall_us": 186.46743333333333,
+          "prepare_us": 39.5701,
+          "execute_us": 146.151
+        },
+        {
+          "cpu_us": 490.8666666666667,
+          "wall_us": 490.27593333333334,
+          "prepare_us": 95.28989999999999,
+          "execute_us": 393.58366666666666
+        },
+        {
+          "cpu_us": 484.2666666666667,
+          "wall_us": 483.6904,
+          "prepare_us": 102.37653333333334,
+          "execute_us": 379.0502
+        },
+        {
+          "cpu_us": 168.63333333333335,
+          "wall_us": 167.96913333333333,
+          "prepare_us": 32.72143333333334,
+          "execute_us": 134.51823333333334
+        }
+      ]
+    },
+    "weighted:10000/warm/base": {
+      "cpu_us": 395.6333333333333,
+      "wall_us": 395.1528,
+      "prepare_us": 0.2511416666666667,
+      "execute_us": 393.8333666666666,
+      "rounds": [
+        {
+          "cpu_us": 274.93333333333334,
+          "wall_us": 274.60213333333337,
+          "prepare_us": 0.16676666666666667,
+          "execute_us": 273.69876666666664
+        },
+        {
+          "cpu_us": 497.0333333333333,
+          "wall_us": 496.41266666666667,
+          "prepare_us": 0.30010000000000003,
+          "execute_us": 494.70193333333333
+        },
+        {
+          "cpu_us": 529.1,
+          "wall_us": 528.5352666666668,
+          "prepare_us": 0.3626333333333333,
+          "execute_us": 526.8289666666667
+        },
+        {
+          "cpu_us": 281.4666666666667,
+          "wall_us": 281.0611333333334,
+          "prepare_us": 0.17506666666666668,
+          "execute_us": 280.1038
+        }
+      ]
+    },
+    "weighted:10000/warm/candidate": {
+      "cpu_us": 227.95833333333334,
+      "wall_us": 227.35191666666665,
+      "prepare_us": 0.25639999999999996,
+      "execute_us": 225.87200833333333,
+      "rounds": [
+        {
+          "cpu_us": 151.96666666666667,
+          "wall_us": 151.5445,
+          "prepare_us": 0.16269999999999998,
+          "execute_us": 150.64260000000002
+        },
+        {
+          "cpu_us": 284.7,
+          "wall_us": 283.96613333333335,
+          "prepare_us": 0.36546666666666666,
+          "execute_us": 282.24993333333333
+        },
+        {
+          "cpu_us": 288.9666666666667,
+          "wall_us": 288.18240000000003,
+          "prepare_us": 0.2876,
+          "execute_us": 286.1064
+        },
+        {
+          "cpu_us": 186.2,
+          "wall_us": 185.71463333333332,
+          "prepare_us": 0.20983333333333334,
+          "execute_us": 184.4891
+        }
+      ]
+    }
+  },
+  "frontend": {
+    "bitset/interpreter/scalar:0/baseline": {
+      "cpu_us": 9.2575,
+      "wall_us": 9.0475,
+      "prepare_us": 8.3325175,
+      "execute_us": 0.5965475,
+      "rounds": [
+        {
+          "cpu_us": 8.3,
+          "wall_us": 8.09709,
+          "prepare_us": 7.43379,
+          "execute_us": 0.54376
+        },
+        {
+          "cpu_us": 9.45,
+          "wall_us": 9.281690000000001,
+          "prepare_us": 8.563780000000001,
+          "execute_us": 0.60623
+        },
+        {
+          "cpu_us": 9.6,
+          "wall_us": 9.434989999999999,
+          "prepare_us": 8.67916,
+          "execute_us": 0.62288
+        },
+        {
+          "cpu_us": 9.68,
+          "wall_us": 9.37623,
+          "prepare_us": 8.65334,
+          "execute_us": 0.6133200000000001
+        }
+      ]
+    },
+    "bitset/interpreter/scalar:0/bitset": {
+      "cpu_us": 13.2075,
+      "wall_us": 12.894215,
+      "prepare_us": 11.8531125,
+      "execute_us": 0.90007,
+      "rounds": [
+        {
+          "cpu_us": 24.32,
+          "wall_us": 23.765060000000002,
+          "prepare_us": 21.76787,
+          "execute_us": 1.7545899999999999
+        },
+        {
+          "cpu_us": 9.42,
+          "wall_us": 9.14419,
+          "prepare_us": 8.43791,
+          "execute_us": 0.6028600000000001
+        },
+        {
+          "cpu_us": 9.64,
+          "wall_us": 9.34588,
+          "prepare_us": 8.61831,
+          "execute_us": 0.61412
+        },
+        {
+          "cpu_us": 9.45,
+          "wall_us": 9.321729999999999,
+          "prepare_us": 8.58836,
+          "execute_us": 0.62871
+        }
+      ]
+    },
+    "bitset/interpreter/stateful:100/baseline": {
+      "cpu_us": 31.105,
+      "wall_us": 30.8558175,
+      "prepare_us": 27.1709725,
+      "execute_us": 3.5630075000000003,
+      "rounds": [
+        {
+          "cpu_us": 36.81,
+          "wall_us": 36.439949999999996,
+          "prepare_us": 31.48173,
+          "execute_us": 4.7966999999999995
+        },
+        {
+          "cpu_us": 29.21,
+          "wall_us": 28.978369999999998,
+          "prepare_us": 25.73876,
+          "execute_us": 3.11583
+        },
+        {
+          "cpu_us": 29.33,
+          "wall_us": 29.10461,
+          "prepare_us": 25.763720000000003,
+          "execute_us": 3.2375
+        },
+        {
+          "cpu_us": 29.07,
+          "wall_us": 28.90034,
+          "prepare_us": 25.69968,
+          "execute_us": 3.102
+        }
+      ]
+    },
+    "bitset/interpreter/stateful:100/bitset": {
+      "cpu_us": 29.8525,
+      "wall_us": 29.5846875,
+      "prepare_us": 26.0076,
+      "execute_us": 3.4568725,
+      "rounds": [
+        {
+          "cpu_us": 32.69,
+          "wall_us": 32.418369999999996,
+          "prepare_us": 27.87455,
+          "execute_us": 4.370850000000001
+        },
+        {
+          "cpu_us": 28.78,
+          "wall_us": 28.506220000000003,
+          "prepare_us": 25.27333,
+          "execute_us": 3.12873
+        },
+        {
+          "cpu_us": 29.02,
+          "wall_us": 28.71463,
+          "prepare_us": 25.46002,
+          "execute_us": 3.15957
+        },
+        {
+          "cpu_us": 28.92,
+          "wall_us": 28.69953,
+          "prepare_us": 25.4225,
+          "execute_us": 3.16834
+        }
+      ]
+    },
+    "bitset/interpreter/weighted:100/baseline": {
+      "cpu_us": 31.1725,
+      "wall_us": 30.8355,
+      "prepare_us": 26.21529,
+      "execute_us": 4.459194999999999,
+      "rounds": [
+        {
+          "cpu_us": 47.67,
+          "wall_us": 47.097449999999995,
+          "prepare_us": 39.93667,
+          "execute_us": 6.892939999999999
+        },
+        {
+          "cpu_us": 26.04,
+          "wall_us": 25.732029999999998,
+          "prepare_us": 21.83542,
+          "execute_us": 3.7533499999999997
+        },
+        {
+          "cpu_us": 25.61,
+          "wall_us": 25.35295,
+          "prepare_us": 21.62621,
+          "execute_us": 3.59795
+        },
+        {
+          "cpu_us": 25.37,
+          "wall_us": 25.15957,
+          "prepare_us": 21.46286,
+          "execute_us": 3.59254
+        }
+      ]
+    },
+    "bitset/interpreter/weighted:100/bitset": {
+      "cpu_us": 28.7925,
+      "wall_us": 28.41625,
+      "prepare_us": 24.116242500000002,
+      "execute_us": 4.171465,
+      "rounds": [
+        {
+          "cpu_us": 38.65,
+          "wall_us": 38.04745,
+          "prepare_us": 32.2558,
+          "execute_us": 5.6153900000000005
+        },
+        {
+          "cpu_us": 25.11,
+          "wall_us": 24.761680000000002,
+          "prepare_us": 21.00332,
+          "execute_us": 3.65253
+        },
+        {
+          "cpu_us": 25.54,
+          "wall_us": 25.23883,
+          "prepare_us": 21.391650000000002,
+          "execute_us": 3.74005
+        },
+        {
+          "cpu_us": 25.87,
+          "wall_us": 25.61704,
+          "prepare_us": 21.8142,
+          "execute_us": 3.6778899999999997
+        }
+      ]
+    },
+    "bitset/native/scalar:0/baseline": {
+      "cpu_us": 67.9375,
+      "wall_us": 67.6725175,
+      "prepare_us": 64.7159,
+      "execute_us": 2.8450325,
+      "rounds": [
+        {
+          "cpu_us": 70.75,
+          "wall_us": 70.48496,
+          "prepare_us": 67.20711999999999,
+          "execute_us": 3.1604699999999997
+        },
+        {
+          "cpu_us": 67.38,
+          "wall_us": 67.13208,
+          "prepare_us": 64.21912,
+          "execute_us": 2.80293
+        },
+        {
+          "cpu_us": 65.97,
+          "wall_us": 65.70916,
+          "prepare_us": 62.9462,
+          "execute_us": 2.6592
+        },
+        {
+          "cpu_us": 67.65,
+          "wall_us": 67.36386999999999,
+          "prepare_us": 64.49116000000001,
+          "execute_us": 2.75753
+        }
+      ]
+    },
+    "bitset/native/scalar:0/bitset": {
+      "cpu_us": 67.5175,
+      "wall_us": 67.30583,
+      "prepare_us": 64.43603,
+      "execute_us": 2.7643575,
+      "rounds": [
+        {
+          "cpu_us": 64.44,
+          "wall_us": 64.2354,
+          "prepare_us": 61.34629,
+          "execute_us": 2.78209
+        },
+        {
+          "cpu_us": 68.57,
+          "wall_us": 68.31837,
+          "prepare_us": 65.41703,
+          "execute_us": 2.79748
+        },
+        {
+          "cpu_us": 69.65,
+          "wall_us": 69.3925,
+          "prepare_us": 66.41411,
+          "execute_us": 2.8675100000000002
+        },
+        {
+          "cpu_us": 67.41,
+          "wall_us": 67.27705,
+          "prepare_us": 64.56669000000001,
+          "execute_us": 2.61035
+        }
+      ]
+    },
+    "bitset/native/stateful:100/baseline": {
+      "cpu_us": 163.5425,
+      "wall_us": 163.33989749999998,
+      "prepare_us": 159.22938,
+      "execute_us": 3.9979975,
+      "rounds": [
+        {
+          "cpu_us": 163.52,
+          "wall_us": 163.33167,
+          "prepare_us": 159.14833,
+          "execute_us": 4.0671100000000004
+        },
+        {
+          "cpu_us": 162.45,
+          "wall_us": 162.21041,
+          "prepare_us": 158.17753,
+          "execute_us": 3.91747
+        },
+        {
+          "cpu_us": 164.75,
+          "wall_us": 164.49165,
+          "prepare_us": 160.39167,
+          "execute_us": 3.98996
+        },
+        {
+          "cpu_us": 163.45,
+          "wall_us": 163.32585999999998,
+          "prepare_us": 159.19998999999999,
+          "execute_us": 4.01745
+        }
+      ]
+    },
+    "bitset/native/stateful:100/bitset": {
+      "cpu_us": 163.705,
+      "wall_us": 163.423305,
+      "prepare_us": 159.377385,
+      "execute_us": 3.9380175,
+      "rounds": [
+        {
+          "cpu_us": 162.04,
+          "wall_us": 161.71958999999998,
+          "prepare_us": 157.69373000000002,
+          "execute_us": 3.91918
+        },
+        {
+          "cpu_us": 163.01,
+          "wall_us": 162.80742999999998,
+          "prepare_us": 158.8025,
+          "execute_us": 3.8987
+        },
+        {
+          "cpu_us": 164.15,
+          "wall_us": 163.75865,
+          "prepare_us": 159.79085999999998,
+          "execute_us": 3.8620300000000003
+        },
+        {
+          "cpu_us": 165.62,
+          "wall_us": 165.40755,
+          "prepare_us": 161.22245,
+          "execute_us": 4.07216
+        }
+      ]
+    },
+    "bitset/native/weighted:100/baseline": {
+      "cpu_us": 148.9,
+      "wall_us": 148.6624825,
+      "prepare_us": 144.50793249999998,
+      "execute_us": 4.0369475,
+      "rounds": [
+        {
+          "cpu_us": 146.75,
+          "wall_us": 146.39373999999998,
+          "prepare_us": 142.28042000000002,
+          "execute_us": 4.00336
+        },
+        {
+          "cpu_us": 150.26,
+          "wall_us": 150.13159,
+          "prepare_us": 145.91173999999998,
+          "execute_us": 4.10329
+        },
+        {
+          "cpu_us": 149.62,
+          "wall_us": 149.48127,
+          "prepare_us": 145.36578,
+          "execute_us": 3.9941199999999997
+        },
+        {
+          "cpu_us": 148.97,
+          "wall_us": 148.64333,
+          "prepare_us": 144.47379,
+          "execute_us": 4.04702
+        }
+      ]
+    },
+    "bitset/native/weighted:100/bitset": {
+      "cpu_us": 151.1825,
+      "wall_us": 150.95636499999998,
+      "prepare_us": 146.7349925,
+      "execute_us": 4.1070075,
+      "rounds": [
+        {
+          "cpu_us": 149.6,
+          "wall_us": 149.3896,
+          "prepare_us": 145.25375,
+          "execute_us": 4.02378
+        },
+        {
+          "cpu_us": 151.7,
+          "wall_us": 151.51545000000002,
+          "prepare_us": 147.20167999999998,
+          "execute_us": 4.199199999999999
+        },
+        {
+          "cpu_us": 152.33,
+          "wall_us": 152.03669,
+          "prepare_us": 147.85829999999999,
+          "execute_us": 4.0634
+        },
+        {
+          "cpu_us": 151.1,
+          "wall_us": 150.88372,
+          "prepare_us": 146.62624,
+          "execute_us": 4.141649999999999
+        }
+      ]
+    },
+    "container/interpreter/scalar:0/bitset": {
+      "cpu_us": 9.64,
+      "wall_us": 9.4112775,
+      "prepare_us": 8.66039,
+      "execute_us": 0.6391749999999999,
+      "rounds": [
+        {
+          "cpu_us": 9.4,
+          "wall_us": 9.22002,
+          "prepare_us": 8.48959,
+          "execute_us": 0.6254
+        },
+        {
+          "cpu_us": 9.68,
+          "wall_us": 9.39751,
+          "prepare_us": 8.677430000000001,
+          "execute_us": 0.61673
+        },
+        {
+          "cpu_us": 9.55,
+          "wall_us": 9.299629999999999,
+          "prepare_us": 8.565790000000002,
+          "execute_us": 0.6287
+        },
+        {
+          "cpu_us": 9.93,
+          "wall_us": 9.72795,
+          "prepare_us": 8.90875,
+          "execute_us": 0.68587
+        }
+      ]
+    },
+    "container/interpreter/scalar:0/frontend": {
+      "cpu_us": 13.41,
+      "wall_us": 13.0853325,
+      "prepare_us": 11.98816,
+      "execute_us": 0.9391425,
+      "rounds": [
+        {
+          "cpu_us": 25.09,
+          "wall_us": 24.53043,
+          "prepare_us": 22.38423,
+          "execute_us": 1.86165
+        },
+        {
+          "cpu_us": 9.48,
+          "wall_us": 9.314219999999999,
+          "prepare_us": 8.56292,
+          "execute_us": 0.61834
+        },
+        {
+          "cpu_us": 9.46,
+          "wall_us": 9.22124,
+          "prepare_us": 8.46545,
+          "execute_us": 0.64283
+        },
+        {
+          "cpu_us": 9.61,
+          "wall_us": 9.27544,
+          "prepare_us": 8.540040000000001,
+          "execute_us": 0.63375
+        }
+      ]
+    },
+    "container/interpreter/stateful:100/bitset": {
+      "cpu_us": 30.11,
+      "wall_us": 29.8415425,
+      "prepare_us": 25.9585375,
+      "execute_us": 3.75766,
+      "rounds": [
+        {
+          "cpu_us": 38.22,
+          "wall_us": 37.82325,
+          "prepare_us": 32.52245,
+          "execute_us": 5.11289
+        },
+        {
+          "cpu_us": 24.15,
+          "wall_us": 23.943740000000002,
+          "prepare_us": 20.573259999999998,
+          "execute_us": 3.28283
+        },
+        {
+          "cpu_us": 29.17,
+          "wall_us": 28.93748,
+          "prepare_us": 25.55503,
+          "execute_us": 3.28204
+        },
+        {
+          "cpu_us": 28.9,
+          "wall_us": 28.6617,
+          "prepare_us": 25.18341,
+          "execute_us": 3.3528800000000003
+        }
+      ]
+    },
+    "container/interpreter/stateful:100/frontend": {
+      "cpu_us": 29.205,
+      "wall_us": 28.940904999999997,
+      "prepare_us": 25.2612725,
+      "execute_us": 3.56425,
+      "rounds": [
+        {
+          "cpu_us": 31.82,
+          "wall_us": 31.57036,
+          "prepare_us": 27.185,
+          "execute_us": 4.23376
+        },
+        {
+          "cpu_us": 27.09,
+          "wall_us": 26.85584,
+          "prepare_us": 23.40293,
+          "execute_us": 3.3558600000000003
+        },
+        {
+          "cpu_us": 28.91,
+          "wall_us": 28.66742,
+          "prepare_us": 25.28547,
+          "execute_us": 3.26787
+        },
+        {
+          "cpu_us": 29.0,
+          "wall_us": 28.67,
+          "prepare_us": 25.171689999999998,
+          "execute_us": 3.3995100000000003
+        }
+      ]
+    },
+    "container/interpreter/weighted:100/bitset": {
+      "cpu_us": 31.535,
+      "wall_us": 31.1616725,
+      "prepare_us": 26.463845000000003,
+      "execute_us": 4.556025,
+      "rounds": [
+        {
+          "cpu_us": 49.02,
+          "wall_us": 48.30205,
+          "prepare_us": 41.04415,
+          "execute_us": 7.019979999999999
+        },
+        {
+          "cpu_us": 25.92,
+          "wall_us": 25.59462,
+          "prepare_us": 21.84627,
+          "execute_us": 3.6325
+        },
+        {
+          "cpu_us": 25.84,
+          "wall_us": 25.64419,
+          "prepare_us": 21.83036,
+          "execute_us": 3.71249
+        },
+        {
+          "cpu_us": 25.36,
+          "wall_us": 25.10583,
+          "prepare_us": 21.1346,
+          "execute_us": 3.85913
+        }
+      ]
+    },
+    "container/interpreter/weighted:100/frontend": {
+      "cpu_us": 28.1625,
+      "wall_us": 27.85555,
+      "prepare_us": 23.58099,
+      "execute_us": 4.14225,
+      "rounds": [
+        {
+          "cpu_us": 37.23,
+          "wall_us": 36.812110000000004,
+          "prepare_us": 31.17368,
+          "execute_us": 5.45036
+        },
+        {
+          "cpu_us": 25.02,
+          "wall_us": 24.80761,
+          "prepare_us": 21.00615,
+          "execute_us": 3.6878699999999998
+        },
+        {
+          "cpu_us": 25.23,
+          "wall_us": 24.94418,
+          "prepare_us": 21.11827,
+          "execute_us": 3.7233400000000003
+        },
+        {
+          "cpu_us": 25.17,
+          "wall_us": 24.8583,
+          "prepare_us": 21.02586,
+          "execute_us": 3.70743
+        }
+      ]
+    },
+    "container/native/scalar:0/bitset": {
+      "cpu_us": 68.4425,
+      "wall_us": 68.176965,
+      "prepare_us": 65.15155,
+      "execute_us": 2.9176325000000003,
+      "rounds": [
+        {
+          "cpu_us": 71.35,
+          "wall_us": 71.06418,
+          "prepare_us": 67.80328,
+          "execute_us": 3.1483499999999998
+        },
+        {
+          "cpu_us": 68.79,
+          "wall_us": 68.54329,
+          "prepare_us": 65.28041,
+          "execute_us": 3.1463
+        },
+        {
+          "cpu_us": 66.55,
+          "wall_us": 66.27459,
+          "prepare_us": 63.534980000000004,
+          "execute_us": 2.6387899999999997
+        },
+        {
+          "cpu_us": 67.08,
+          "wall_us": 66.8258,
+          "prepare_us": 63.98753,
+          "execute_us": 2.7370900000000002
+        }
+      ]
+    },
+    "container/native/scalar:0/frontend": {
+      "cpu_us": 67.515,
+      "wall_us": 67.2585375,
+      "prepare_us": 64.0309175,
+      "execute_us": 3.1180100000000004,
+      "rounds": [
+        {
+          "cpu_us": 65.45,
+          "wall_us": 65.20295,
+          "prepare_us": 61.83081,
+          "execute_us": 3.26873
+        },
+        {
+          "cpu_us": 69.5,
+          "wall_us": 69.18003,
+          "prepare_us": 65.86328999999999,
+          "execute_us": 3.20209
+        },
+        {
+          "cpu_us": 67.73,
+          "wall_us": 67.51243,
+          "prepare_us": 64.40583000000001,
+          "execute_us": 2.9962199999999997
+        },
+        {
+          "cpu_us": 67.38,
+          "wall_us": 67.13874,
+          "prepare_us": 64.02374,
+          "execute_us": 3.005
+        }
+      ]
+    },
+    "container/native/stateful:100/bitset": {
+      "cpu_us": 164.2175,
+      "wall_us": 163.9300825,
+      "prepare_us": 159.7474,
+      "execute_us": 4.069665,
+      "rounds": [
+        {
+          "cpu_us": 162.83,
+          "wall_us": 162.58708,
+          "prepare_us": 158.52879000000001,
+          "execute_us": 3.94414
+        },
+        {
+          "cpu_us": 163.24,
+          "wall_us": 162.98163,
+          "prepare_us": 158.79535,
+          "execute_us": 4.077030000000001
+        },
+        {
+          "cpu_us": 166.14,
+          "wall_us": 165.88664,
+          "prepare_us": 161.56083999999998,
+          "execute_us": 4.211270000000001
+        },
+        {
+          "cpu_us": 164.66,
+          "wall_us": 164.26498,
+          "prepare_us": 160.10461999999998,
+          "execute_us": 4.04622
+        }
+      ]
+    },
+    "container/native/stateful:100/frontend": {
+      "cpu_us": 163.725,
+      "wall_us": 163.47197500000001,
+      "prepare_us": 159.3233425,
+      "execute_us": 4.0377,
+      "rounds": [
+        {
+          "cpu_us": 165.23,
+          "wall_us": 165.04092,
+          "prepare_us": 160.7483,
+          "execute_us": 4.19129
+        },
+        {
+          "cpu_us": 162.63,
+          "wall_us": 162.34745999999998,
+          "prepare_us": 158.17872,
+          "execute_us": 4.05089
+        },
+        {
+          "cpu_us": 163.58,
+          "wall_us": 163.30365,
+          "prepare_us": 159.21299,
+          "execute_us": 3.97449
+        },
+        {
+          "cpu_us": 163.46,
+          "wall_us": 163.19586999999999,
+          "prepare_us": 159.15336,
+          "execute_us": 3.93413
+        }
+      ]
+    },
+    "container/native/weighted:100/bitset": {
+      "cpu_us": 158.4675,
+      "wall_us": 160.37719750000002,
+      "prepare_us": 155.6253075,
+      "execute_us": 4.6357225,
+      "rounds": [
+        {
+          "cpu_us": 181.41,
+          "wall_us": 189.70501000000002,
+          "prepare_us": 183.27247,
+          "execute_us": 6.3083800000000005
+        },
+        {
+          "cpu_us": 150.95,
+          "wall_us": 150.77002,
+          "prepare_us": 146.50917,
+          "execute_us": 4.14699
+        },
+        {
+          "cpu_us": 150.05,
+          "wall_us": 149.77873000000002,
+          "prepare_us": 145.64836,
+          "execute_us": 4.01413
+        },
+        {
+          "cpu_us": 151.46,
+          "wall_us": 151.25503,
+          "prepare_us": 147.07123,
+          "execute_us": 4.07339
+        }
+      ]
+    },
+    "container/native/weighted:100/frontend": {
+      "cpu_us": 148.29,
+      "wall_us": 148.0504125,
+      "prepare_us": 143.888115,
+      "execute_us": 4.0486525,
+      "rounds": [
+        {
+          "cpu_us": 147.23,
+          "wall_us": 147.06712,
+          "prepare_us": 142.93198,
+          "execute_us": 4.0221
+        },
+        {
+          "cpu_us": 149.85,
+          "wall_us": 149.54455,
+          "prepare_us": 145.24961,
+          "execute_us": 4.17415
+        },
+        {
+          "cpu_us": 147.98,
+          "wall_us": 147.70666,
+          "prepare_us": 143.62337,
+          "execute_us": 3.96879
+        },
+        {
+          "cpu_us": 148.1,
+          "wall_us": 147.88332,
+          "prepare_us": 143.7475,
+          "execute_us": 4.0295700000000005
+        }
+      ]
+    }
+  },
+  "memory": {
+    "light:0/unique/base": {
+      "startup": {
+        "live_requested_bytes": 12287,
+        "live_increment_bytes": 0,
+        "overhead_per_task_bytes": 0.0,
+        "pss_bytes": 1859584,
+        "rss_bytes": 1867776,
+        "sampled_peak_rss_bytes": 3235840,
+        "allocation_calls_since_start": 0
+      },
+      "load_wait": {
+        "live_requested_bytes": 3643187,
+        "live_increment_bytes": 3630900,
+        "overhead_per_task_bytes": 2292.5,
+        "pss_bytes": 7401472,
+        "rss_bytes": 7409664,
+        "sampled_peak_rss_bytes": 7409664,
+        "allocation_calls_since_start": 5150
+      },
+      "record_wait": {
+        "live_requested_bytes": 103541,
+        "live_increment_bytes": 91254,
+        "overhead_per_task_bytes": 2281.35,
+        "pss_bytes": 3854336,
+        "rss_bytes": 3862528,
+        "sampled_peak_rss_bytes": 7409664,
+        "allocation_calls_since_start": 5212
+      },
+      "reclaimed": {
+        "live_requested_bytes": 16385,
+        "live_increment_bytes": 4098,
+        "overhead_per_task_bytes": 102.45,
+        "pss_bytes": 3727360,
+        "rss_bytes": 3735552,
+        "sampled_peak_rss_bytes": 7409664,
+        "allocation_calls_since_start": 5259
+      },
+      "rounds": [
+        {
+          "startup": {
+            "live_requested_bytes": 12287,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1859584,
+            "rss_bytes": 1867776,
+            "sampled_peak_rss_bytes": 3235840,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 3643187,
+            "live_increment_bytes": 3630900,
+            "overhead_per_task_bytes": 2292.5,
+            "pss_bytes": 7401472,
+            "rss_bytes": 7409664,
+            "sampled_peak_rss_bytes": 7409664,
+            "allocation_calls_since_start": 5150
+          },
+          "record_wait": {
+            "live_requested_bytes": 103541,
+            "live_increment_bytes": 91254,
+            "overhead_per_task_bytes": 2281.35,
+            "pss_bytes": 3854336,
+            "rss_bytes": 3862528,
+            "sampled_peak_rss_bytes": 7409664,
+            "allocation_calls_since_start": 5212
+          },
+          "reclaimed": {
+            "live_requested_bytes": 16385,
+            "live_increment_bytes": 4098,
+            "overhead_per_task_bytes": 102.45,
+            "pss_bytes": 3727360,
+            "rss_bytes": 3735552,
+            "sampled_peak_rss_bytes": 7409664,
+            "allocation_calls_since_start": 5259
+          }
+        },
+        {
+          "startup": {
+            "live_requested_bytes": 12287,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1859584,
+            "rss_bytes": 1867776,
+            "sampled_peak_rss_bytes": 3235840,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 3643187,
+            "live_increment_bytes": 3630900,
+            "overhead_per_task_bytes": 2292.5,
+            "pss_bytes": 7401472,
+            "rss_bytes": 7409664,
+            "sampled_peak_rss_bytes": 7409664,
+            "allocation_calls_since_start": 5150
+          },
+          "record_wait": {
+            "live_requested_bytes": 103541,
+            "live_increment_bytes": 91254,
+            "overhead_per_task_bytes": 2281.35,
+            "pss_bytes": 3854336,
+            "rss_bytes": 3862528,
+            "sampled_peak_rss_bytes": 7409664,
+            "allocation_calls_since_start": 5212
+          },
+          "reclaimed": {
+            "live_requested_bytes": 16385,
+            "live_increment_bytes": 4098,
+            "overhead_per_task_bytes": 102.45,
+            "pss_bytes": 3727360,
+            "rss_bytes": 3735552,
+            "sampled_peak_rss_bytes": 7409664,
+            "allocation_calls_since_start": 5259
+          }
+        }
+      ]
+    },
+    "light:0/unique/candidate": {
+      "startup": {
+        "live_requested_bytes": 12292,
+        "live_increment_bytes": 0,
+        "overhead_per_task_bytes": 0.0,
+        "pss_bytes": 1863680,
+        "rss_bytes": 1871872,
+        "sampled_peak_rss_bytes": 3100672,
+        "allocation_calls_since_start": 0
+      },
+      "load_wait": {
+        "live_requested_bytes": 3638952,
+        "live_increment_bytes": 3626660,
+        "overhead_per_task_bytes": 2186.5,
+        "pss_bytes": 7397376,
+        "rss_bytes": 7405568,
+        "sampled_peak_rss_bytes": 7405568,
+        "allocation_calls_since_start": 4784
+      },
+      "record_wait": {
+        "live_requested_bytes": 99306,
+        "live_increment_bytes": 87014,
+        "overhead_per_task_bytes": 2175.35,
+        "pss_bytes": 3850240,
+        "rss_bytes": 3858432,
+        "sampled_peak_rss_bytes": 7405568,
+        "allocation_calls_since_start": 4846
+      },
+      "reclaimed": {
+        "live_requested_bytes": 16390,
+        "live_increment_bytes": 4098,
+        "overhead_per_task_bytes": 102.45,
+        "pss_bytes": 3723264,
+        "rss_bytes": 3731456,
+        "sampled_peak_rss_bytes": 7405568,
+        "allocation_calls_since_start": 4893
+      },
+      "rounds": [
+        {
+          "startup": {
+            "live_requested_bytes": 12292,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1863680,
+            "rss_bytes": 1871872,
+            "sampled_peak_rss_bytes": 3100672,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 3638952,
+            "live_increment_bytes": 3626660,
+            "overhead_per_task_bytes": 2186.5,
+            "pss_bytes": 7397376,
+            "rss_bytes": 7405568,
+            "sampled_peak_rss_bytes": 7405568,
+            "allocation_calls_since_start": 4784
+          },
+          "record_wait": {
+            "live_requested_bytes": 99306,
+            "live_increment_bytes": 87014,
+            "overhead_per_task_bytes": 2175.35,
+            "pss_bytes": 3850240,
+            "rss_bytes": 3858432,
+            "sampled_peak_rss_bytes": 7405568,
+            "allocation_calls_since_start": 4846
+          },
+          "reclaimed": {
+            "live_requested_bytes": 16390,
+            "live_increment_bytes": 4098,
+            "overhead_per_task_bytes": 102.45,
+            "pss_bytes": 3723264,
+            "rss_bytes": 3731456,
+            "sampled_peak_rss_bytes": 7405568,
+            "allocation_calls_since_start": 4893
+          }
+        },
+        {
+          "startup": {
+            "live_requested_bytes": 12292,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1863680,
+            "rss_bytes": 1871872,
+            "sampled_peak_rss_bytes": 3100672,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 3638952,
+            "live_increment_bytes": 3626660,
+            "overhead_per_task_bytes": 2186.5,
+            "pss_bytes": 7397376,
+            "rss_bytes": 7405568,
+            "sampled_peak_rss_bytes": 7405568,
+            "allocation_calls_since_start": 4784
+          },
+          "record_wait": {
+            "live_requested_bytes": 99306,
+            "live_increment_bytes": 87014,
+            "overhead_per_task_bytes": 2175.35,
+            "pss_bytes": 3850240,
+            "rss_bytes": 3858432,
+            "sampled_peak_rss_bytes": 7405568,
+            "allocation_calls_since_start": 4846
+          },
+          "reclaimed": {
+            "live_requested_bytes": 16390,
+            "live_increment_bytes": 4098,
+            "overhead_per_task_bytes": 102.45,
+            "pss_bytes": 3723264,
+            "rss_bytes": 3731456,
+            "sampled_peak_rss_bytes": 7405568,
+            "allocation_calls_since_start": 4893
+          }
+        }
+      ]
+    },
+    "scan:0/unique/base": {
+      "startup": {
+        "live_requested_bytes": 12285,
+        "live_increment_bytes": 0,
+        "overhead_per_task_bytes": 0.0,
+        "pss_bytes": 1859584,
+        "rss_bytes": 1867776,
+        "sampled_peak_rss_bytes": 3235840,
+        "allocation_calls_since_start": 0
+      },
+      "load_wait": {
+        "live_requested_bytes": 7220899,
+        "live_increment_bytes": 7208614,
+        "overhead_per_task_bytes": 3255.35,
+        "pss_bytes": 10997760,
+        "rss_bytes": 11005952,
+        "sampled_peak_rss_bytes": 11005952,
+        "allocation_calls_since_start": 6626
+      },
+      "record_wait": {
+        "live_requested_bytes": 141669,
+        "live_increment_bytes": 129384,
+        "overhead_per_task_bytes": 3234.6,
+        "pss_bytes": 3899392,
+        "rss_bytes": 3907584,
+        "sampled_peak_rss_bytes": 11005952,
+        "allocation_calls_since_start": 6720
+      },
+      "reclaimed": {
+        "live_requested_bytes": 16511,
+        "live_increment_bytes": 4226,
+        "overhead_per_task_bytes": 105.65,
+        "pss_bytes": 3723264,
+        "rss_bytes": 3731456,
+        "sampled_peak_rss_bytes": 11005952,
+        "allocation_calls_since_start": 6783
+      },
+      "rounds": [
+        {
+          "startup": {
+            "live_requested_bytes": 12285,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1859584,
+            "rss_bytes": 1867776,
+            "sampled_peak_rss_bytes": 3235840,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 7220899,
+            "live_increment_bytes": 7208614,
+            "overhead_per_task_bytes": 3255.35,
+            "pss_bytes": 10997760,
+            "rss_bytes": 11005952,
+            "sampled_peak_rss_bytes": 11005952,
+            "allocation_calls_since_start": 6626
+          },
+          "record_wait": {
+            "live_requested_bytes": 141669,
+            "live_increment_bytes": 129384,
+            "overhead_per_task_bytes": 3234.6,
+            "pss_bytes": 3899392,
+            "rss_bytes": 3907584,
+            "sampled_peak_rss_bytes": 11005952,
+            "allocation_calls_since_start": 6720
+          },
+          "reclaimed": {
+            "live_requested_bytes": 16511,
+            "live_increment_bytes": 4226,
+            "overhead_per_task_bytes": 105.65,
+            "pss_bytes": 3723264,
+            "rss_bytes": 3731456,
+            "sampled_peak_rss_bytes": 11005952,
+            "allocation_calls_since_start": 6783
+          }
+        },
+        {
+          "startup": {
+            "live_requested_bytes": 12285,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1859584,
+            "rss_bytes": 1867776,
+            "sampled_peak_rss_bytes": 3235840,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 7220899,
+            "live_increment_bytes": 7208614,
+            "overhead_per_task_bytes": 3255.35,
+            "pss_bytes": 10997760,
+            "rss_bytes": 11005952,
+            "sampled_peak_rss_bytes": 11005952,
+            "allocation_calls_since_start": 6626
+          },
+          "record_wait": {
+            "live_requested_bytes": 141669,
+            "live_increment_bytes": 129384,
+            "overhead_per_task_bytes": 3234.6,
+            "pss_bytes": 3899392,
+            "rss_bytes": 3907584,
+            "sampled_peak_rss_bytes": 11005952,
+            "allocation_calls_since_start": 6720
+          },
+          "reclaimed": {
+            "live_requested_bytes": 16511,
+            "live_increment_bytes": 4226,
+            "overhead_per_task_bytes": 105.65,
+            "pss_bytes": 3723264,
+            "rss_bytes": 3731456,
+            "sampled_peak_rss_bytes": 11005952,
+            "allocation_calls_since_start": 6783
+          }
+        }
+      ]
+    },
+    "scan:0/unique/candidate": {
+      "startup": {
+        "live_requested_bytes": 12290,
+        "live_increment_bytes": 0,
+        "overhead_per_task_bytes": 0.0,
+        "pss_bytes": 1863680,
+        "rss_bytes": 1871872,
+        "sampled_peak_rss_bytes": 3100672,
+        "allocation_calls_since_start": 0
+      },
+      "load_wait": {
+        "live_requested_bytes": 7212424,
+        "live_increment_bytes": 7200134,
+        "overhead_per_task_bytes": 3043.35,
+        "pss_bytes": 10989568,
+        "rss_bytes": 10997760,
+        "sampled_peak_rss_bytes": 10997760,
+        "allocation_calls_since_start": 6094
+      },
+      "record_wait": {
+        "live_requested_bytes": 133194,
+        "live_increment_bytes": 120904,
+        "overhead_per_task_bytes": 3022.6,
+        "pss_bytes": 3891200,
+        "rss_bytes": 3899392,
+        "sampled_peak_rss_bytes": 10997760,
+        "allocation_calls_since_start": 6188
+      },
+      "reclaimed": {
+        "live_requested_bytes": 16516,
+        "live_increment_bytes": 4226,
+        "overhead_per_task_bytes": 105.65,
+        "pss_bytes": 3727360,
+        "rss_bytes": 3735552,
+        "sampled_peak_rss_bytes": 10997760,
+        "allocation_calls_since_start": 6251
+      },
+      "rounds": [
+        {
+          "startup": {
+            "live_requested_bytes": 12290,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1863680,
+            "rss_bytes": 1871872,
+            "sampled_peak_rss_bytes": 3100672,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 7212424,
+            "live_increment_bytes": 7200134,
+            "overhead_per_task_bytes": 3043.35,
+            "pss_bytes": 10989568,
+            "rss_bytes": 10997760,
+            "sampled_peak_rss_bytes": 10997760,
+            "allocation_calls_since_start": 6094
+          },
+          "record_wait": {
+            "live_requested_bytes": 133194,
+            "live_increment_bytes": 120904,
+            "overhead_per_task_bytes": 3022.6,
+            "pss_bytes": 3891200,
+            "rss_bytes": 3899392,
+            "sampled_peak_rss_bytes": 10997760,
+            "allocation_calls_since_start": 6188
+          },
+          "reclaimed": {
+            "live_requested_bytes": 16516,
+            "live_increment_bytes": 4226,
+            "overhead_per_task_bytes": 105.65,
+            "pss_bytes": 3727360,
+            "rss_bytes": 3735552,
+            "sampled_peak_rss_bytes": 10997760,
+            "allocation_calls_since_start": 6251
+          }
+        },
+        {
+          "startup": {
+            "live_requested_bytes": 12290,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1863680,
+            "rss_bytes": 1871872,
+            "sampled_peak_rss_bytes": 3100672,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 7212424,
+            "live_increment_bytes": 7200134,
+            "overhead_per_task_bytes": 3043.35,
+            "pss_bytes": 10989568,
+            "rss_bytes": 10997760,
+            "sampled_peak_rss_bytes": 10997760,
+            "allocation_calls_since_start": 6094
+          },
+          "record_wait": {
+            "live_requested_bytes": 133194,
+            "live_increment_bytes": 120904,
+            "overhead_per_task_bytes": 3022.6,
+            "pss_bytes": 3891200,
+            "rss_bytes": 3899392,
+            "sampled_peak_rss_bytes": 10997760,
+            "allocation_calls_since_start": 6188
+          },
+          "reclaimed": {
+            "live_requested_bytes": 16516,
+            "live_increment_bytes": 4226,
+            "overhead_per_task_bytes": 105.65,
+            "pss_bytes": 3727360,
+            "rss_bytes": 3735552,
+            "sampled_peak_rss_bytes": 10997760,
+            "allocation_calls_since_start": 6251
+          }
+        }
+      ]
+    },
+    "stateful:100000/shared/base": {
+      "startup": {
+        "live_requested_bytes": 10763,
+        "live_increment_bytes": 0,
+        "overhead_per_task_bytes": 0.0,
+        "pss_bytes": 1855488,
+        "rss_bytes": 1863680,
+        "sampled_peak_rss_bytes": 2707456,
+        "allocation_calls_since_start": 0
+      },
+      "load_wait": {
+        "live_requested_bytes": 51272445,
+        "live_increment_bytes": 51261682,
+        "overhead_per_task_bytes": 1927.5625,
+        "pss_bytes": 55054336,
+        "rss_bytes": 55062528,
+        "sampled_peak_rss_bytes": 55066624,
+        "allocation_calls_since_start": 586
+      },
+      "record_wait": {
+        "live_requested_bytes": 72383,
+        "live_increment_bytes": 61620,
+        "overhead_per_task_bytes": 1925.625,
+        "pss_bytes": 3809280,
+        "rss_bytes": 3817472,
+        "sampled_peak_rss_bytes": 55066624,
+        "allocation_calls_since_start": 684
+      },
+      "reclaimed": {
+        "live_requested_bytes": 12819,
+        "live_increment_bytes": 2056,
+        "overhead_per_task_bytes": 64.25,
+        "pss_bytes": 3727360,
+        "rss_bytes": 3735552,
+        "sampled_peak_rss_bytes": 55066624,
+        "allocation_calls_since_start": 750
+      },
+      "rounds": [
+        {
+          "startup": {
+            "live_requested_bytes": 10763,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1855488,
+            "rss_bytes": 1863680,
+            "sampled_peak_rss_bytes": 2707456,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 51272445,
+            "live_increment_bytes": 51261682,
+            "overhead_per_task_bytes": 1927.5625,
+            "pss_bytes": 55054336,
+            "rss_bytes": 55062528,
+            "sampled_peak_rss_bytes": 55066624,
+            "allocation_calls_since_start": 586
+          },
+          "record_wait": {
+            "live_requested_bytes": 72383,
+            "live_increment_bytes": 61620,
+            "overhead_per_task_bytes": 1925.625,
+            "pss_bytes": 3809280,
+            "rss_bytes": 3817472,
+            "sampled_peak_rss_bytes": 55066624,
+            "allocation_calls_since_start": 684
+          },
+          "reclaimed": {
+            "live_requested_bytes": 12819,
+            "live_increment_bytes": 2056,
+            "overhead_per_task_bytes": 64.25,
+            "pss_bytes": 3727360,
+            "rss_bytes": 3735552,
+            "sampled_peak_rss_bytes": 55066624,
+            "allocation_calls_since_start": 750
+          }
+        },
+        {
+          "startup": {
+            "live_requested_bytes": 10763,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1855488,
+            "rss_bytes": 1863680,
+            "sampled_peak_rss_bytes": 2707456,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 51272445,
+            "live_increment_bytes": 51261682,
+            "overhead_per_task_bytes": 1927.5625,
+            "pss_bytes": 55054336,
+            "rss_bytes": 55062528,
+            "sampled_peak_rss_bytes": 55066624,
+            "allocation_calls_since_start": 586
+          },
+          "record_wait": {
+            "live_requested_bytes": 72383,
+            "live_increment_bytes": 61620,
+            "overhead_per_task_bytes": 1925.625,
+            "pss_bytes": 3809280,
+            "rss_bytes": 3817472,
+            "sampled_peak_rss_bytes": 55066624,
+            "allocation_calls_since_start": 684
+          },
+          "reclaimed": {
+            "live_requested_bytes": 12819,
+            "live_increment_bytes": 2056,
+            "overhead_per_task_bytes": 64.25,
+            "pss_bytes": 3727360,
+            "rss_bytes": 3735552,
+            "sampled_peak_rss_bytes": 55066624,
+            "allocation_calls_since_start": 750
+          }
+        }
+      ]
+    },
+    "stateful:100000/shared/candidate": {
+      "startup": {
+        "live_requested_bytes": 10768,
+        "live_increment_bytes": 0,
+        "overhead_per_task_bytes": 0.0,
+        "pss_bytes": 1859584,
+        "rss_bytes": 1867776,
+        "sampled_peak_rss_bytes": 2703360,
+        "allocation_calls_since_start": 0
+      },
+      "load_wait": {
+        "live_requested_bytes": 51272130,
+        "live_increment_bytes": 51261362,
+        "overhead_per_task_bytes": 1917.5625,
+        "pss_bytes": 55054336,
+        "rss_bytes": 55062528,
+        "sampled_peak_rss_bytes": 55066624,
+        "allocation_calls_since_start": 570
+      },
+      "record_wait": {
+        "live_requested_bytes": 72068,
+        "live_increment_bytes": 61300,
+        "overhead_per_task_bytes": 1915.625,
+        "pss_bytes": 3809280,
+        "rss_bytes": 3817472,
+        "sampled_peak_rss_bytes": 55066624,
+        "allocation_calls_since_start": 668
+      },
+      "reclaimed": {
+        "live_requested_bytes": 12824,
+        "live_increment_bytes": 2056,
+        "overhead_per_task_bytes": 64.25,
+        "pss_bytes": 3727360,
+        "rss_bytes": 3735552,
+        "sampled_peak_rss_bytes": 55066624,
+        "allocation_calls_since_start": 734
+      },
+      "rounds": [
+        {
+          "startup": {
+            "live_requested_bytes": 10768,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1859584,
+            "rss_bytes": 1867776,
+            "sampled_peak_rss_bytes": 2703360,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 51272130,
+            "live_increment_bytes": 51261362,
+            "overhead_per_task_bytes": 1917.5625,
+            "pss_bytes": 55054336,
+            "rss_bytes": 55062528,
+            "sampled_peak_rss_bytes": 55066624,
+            "allocation_calls_since_start": 570
+          },
+          "record_wait": {
+            "live_requested_bytes": 72068,
+            "live_increment_bytes": 61300,
+            "overhead_per_task_bytes": 1915.625,
+            "pss_bytes": 3809280,
+            "rss_bytes": 3817472,
+            "sampled_peak_rss_bytes": 55066624,
+            "allocation_calls_since_start": 668
+          },
+          "reclaimed": {
+            "live_requested_bytes": 12824,
+            "live_increment_bytes": 2056,
+            "overhead_per_task_bytes": 64.25,
+            "pss_bytes": 3727360,
+            "rss_bytes": 3735552,
+            "sampled_peak_rss_bytes": 55066624,
+            "allocation_calls_since_start": 734
+          }
+        },
+        {
+          "startup": {
+            "live_requested_bytes": 10768,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1859584,
+            "rss_bytes": 1867776,
+            "sampled_peak_rss_bytes": 2703360,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 51272130,
+            "live_increment_bytes": 51261362,
+            "overhead_per_task_bytes": 1917.5625,
+            "pss_bytes": 55054336,
+            "rss_bytes": 55062528,
+            "sampled_peak_rss_bytes": 55066624,
+            "allocation_calls_since_start": 570
+          },
+          "record_wait": {
+            "live_requested_bytes": 72068,
+            "live_increment_bytes": 61300,
+            "overhead_per_task_bytes": 1915.625,
+            "pss_bytes": 3809280,
+            "rss_bytes": 3817472,
+            "sampled_peak_rss_bytes": 55066624,
+            "allocation_calls_since_start": 668
+          },
+          "reclaimed": {
+            "live_requested_bytes": 12824,
+            "live_increment_bytes": 2056,
+            "overhead_per_task_bytes": 64.25,
+            "pss_bytes": 3727360,
+            "rss_bytes": 3735552,
+            "sampled_peak_rss_bytes": 55066624,
+            "allocation_calls_since_start": 734
+          }
+        }
+      ]
+    },
+    "stateful:100000/unique/base": {
+      "startup": {
+        "live_requested_bytes": 10763,
+        "live_increment_bytes": 0,
+        "overhead_per_task_bytes": 0.0,
+        "pss_bytes": 1855488,
+        "rss_bytes": 1863680,
+        "sampled_peak_rss_bytes": 2707456,
+        "allocation_calls_since_start": 0
+      },
+      "load_wait": {
+        "live_requested_bytes": 51317395,
+        "live_increment_bytes": 51306632,
+        "overhead_per_task_bytes": 3332.25,
+        "pss_bytes": 55111680,
+        "rss_bytes": 55119872,
+        "sampled_peak_rss_bytes": 55123968,
+        "allocation_calls_since_start": 6662
+      },
+      "record_wait": {
+        "live_requested_bytes": 117333,
+        "live_increment_bytes": 106570,
+        "overhead_per_task_bytes": 3330.3125,
+        "pss_bytes": 3866624,
+        "rss_bytes": 3874816,
+        "sampled_peak_rss_bytes": 55123968,
+        "allocation_calls_since_start": 6760
+      },
+      "reclaimed": {
+        "live_requested_bytes": 12819,
+        "live_increment_bytes": 2056,
+        "overhead_per_task_bytes": 64.25,
+        "pss_bytes": 3727360,
+        "rss_bytes": 3735552,
+        "sampled_peak_rss_bytes": 55123968,
+        "allocation_calls_since_start": 6826
+      },
+      "rounds": [
+        {
+          "startup": {
+            "live_requested_bytes": 10763,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1855488,
+            "rss_bytes": 1863680,
+            "sampled_peak_rss_bytes": 2707456,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 51317395,
+            "live_increment_bytes": 51306632,
+            "overhead_per_task_bytes": 3332.25,
+            "pss_bytes": 55111680,
+            "rss_bytes": 55119872,
+            "sampled_peak_rss_bytes": 55123968,
+            "allocation_calls_since_start": 6662
+          },
+          "record_wait": {
+            "live_requested_bytes": 117333,
+            "live_increment_bytes": 106570,
+            "overhead_per_task_bytes": 3330.3125,
+            "pss_bytes": 3866624,
+            "rss_bytes": 3874816,
+            "sampled_peak_rss_bytes": 55123968,
+            "allocation_calls_since_start": 6760
+          },
+          "reclaimed": {
+            "live_requested_bytes": 12819,
+            "live_increment_bytes": 2056,
+            "overhead_per_task_bytes": 64.25,
+            "pss_bytes": 3727360,
+            "rss_bytes": 3735552,
+            "sampled_peak_rss_bytes": 55123968,
+            "allocation_calls_since_start": 6826
+          }
+        },
+        {
+          "startup": {
+            "live_requested_bytes": 10763,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1855488,
+            "rss_bytes": 1863680,
+            "sampled_peak_rss_bytes": 2707456,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 51317395,
+            "live_increment_bytes": 51306632,
+            "overhead_per_task_bytes": 3332.25,
+            "pss_bytes": 55111680,
+            "rss_bytes": 55119872,
+            "sampled_peak_rss_bytes": 55123968,
+            "allocation_calls_since_start": 6662
+          },
+          "record_wait": {
+            "live_requested_bytes": 117333,
+            "live_increment_bytes": 106570,
+            "overhead_per_task_bytes": 3330.3125,
+            "pss_bytes": 3866624,
+            "rss_bytes": 3874816,
+            "sampled_peak_rss_bytes": 55123968,
+            "allocation_calls_since_start": 6760
+          },
+          "reclaimed": {
+            "live_requested_bytes": 12819,
+            "live_increment_bytes": 2056,
+            "overhead_per_task_bytes": 64.25,
+            "pss_bytes": 3727360,
+            "rss_bytes": 3735552,
+            "sampled_peak_rss_bytes": 55123968,
+            "allocation_calls_since_start": 6826
+          }
+        }
+      ]
+    },
+    "stateful:100000/unique/candidate": {
+      "startup": {
+        "live_requested_bytes": 10768,
+        "live_increment_bytes": 0,
+        "overhead_per_task_bytes": 0.0,
+        "pss_bytes": 1861632,
+        "rss_bytes": 1869824,
+        "sampled_peak_rss_bytes": 2703360,
+        "allocation_calls_since_start": 0
+      },
+      "load_wait": {
+        "live_requested_bytes": 51307160,
+        "live_increment_bytes": 51296392,
+        "overhead_per_task_bytes": 3012.25,
+        "pss_bytes": 55101440,
+        "rss_bytes": 55109632,
+        "sampled_peak_rss_bytes": 55113728,
+        "allocation_calls_since_start": 6150
+      },
+      "record_wait": {
+        "live_requested_bytes": 107098,
+        "live_increment_bytes": 96330,
+        "overhead_per_task_bytes": 3010.3125,
+        "pss_bytes": 3856384,
+        "rss_bytes": 3864576,
+        "sampled_peak_rss_bytes": 55113728,
+        "allocation_calls_since_start": 6248
+      },
+      "reclaimed": {
+        "live_requested_bytes": 12824,
+        "live_increment_bytes": 2056,
+        "overhead_per_task_bytes": 64.25,
+        "pss_bytes": 3729408,
+        "rss_bytes": 3737600,
+        "sampled_peak_rss_bytes": 55113728,
+        "allocation_calls_since_start": 6314
+      },
+      "rounds": [
+        {
+          "startup": {
+            "live_requested_bytes": 10768,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1859584,
+            "rss_bytes": 1867776,
+            "sampled_peak_rss_bytes": 2703360,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 51307160,
+            "live_increment_bytes": 51296392,
+            "overhead_per_task_bytes": 3012.25,
+            "pss_bytes": 55099392,
+            "rss_bytes": 55107584,
+            "sampled_peak_rss_bytes": 55111680,
+            "allocation_calls_since_start": 6150
+          },
+          "record_wait": {
+            "live_requested_bytes": 107098,
+            "live_increment_bytes": 96330,
+            "overhead_per_task_bytes": 3010.3125,
+            "pss_bytes": 3854336,
+            "rss_bytes": 3862528,
+            "sampled_peak_rss_bytes": 55111680,
+            "allocation_calls_since_start": 6248
+          },
+          "reclaimed": {
+            "live_requested_bytes": 12824,
+            "live_increment_bytes": 2056,
+            "overhead_per_task_bytes": 64.25,
+            "pss_bytes": 3727360,
+            "rss_bytes": 3735552,
+            "sampled_peak_rss_bytes": 55111680,
+            "allocation_calls_since_start": 6314
+          }
+        },
+        {
+          "startup": {
+            "live_requested_bytes": 10768,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1863680,
+            "rss_bytes": 1871872,
+            "sampled_peak_rss_bytes": 2703360,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 51307160,
+            "live_increment_bytes": 51296392,
+            "overhead_per_task_bytes": 3012.25,
+            "pss_bytes": 55103488,
+            "rss_bytes": 55111680,
+            "sampled_peak_rss_bytes": 55115776,
+            "allocation_calls_since_start": 6150
+          },
+          "record_wait": {
+            "live_requested_bytes": 107098,
+            "live_increment_bytes": 96330,
+            "overhead_per_task_bytes": 3010.3125,
+            "pss_bytes": 3858432,
+            "rss_bytes": 3866624,
+            "sampled_peak_rss_bytes": 55115776,
+            "allocation_calls_since_start": 6248
+          },
+          "reclaimed": {
+            "live_requested_bytes": 12824,
+            "live_increment_bytes": 2056,
+            "overhead_per_task_bytes": 64.25,
+            "pss_bytes": 3731456,
+            "rss_bytes": 3739648,
+            "sampled_peak_rss_bytes": 55115776,
+            "allocation_calls_since_start": 6314
+          }
+        }
+      ]
+    },
+    "weighted:100/shared/base": {
+      "startup": {
+        "live_requested_bytes": 10741,
+        "live_increment_bytes": 0,
+        "overhead_per_task_bytes": 0.0,
+        "pss_bytes": 1855488,
+        "rss_bytes": 1863680,
+        "sampled_peak_rss_bytes": 1867776,
+        "allocation_calls_since_start": 0
+      },
+      "load_wait": {
+        "live_requested_bytes": 123511,
+        "live_increment_bytes": 112770,
+        "overhead_per_task_bytes": 1924.0625,
+        "pss_bytes": 3852288,
+        "rss_bytes": 3860480,
+        "sampled_peak_rss_bytes": 3864576,
+        "allocation_calls_since_start": 548
+      },
+      "record_wait": {
+        "live_requested_bytes": 71289,
+        "live_increment_bytes": 60548,
+        "overhead_per_task_bytes": 1892.125,
+        "pss_bytes": 3799040,
+        "rss_bytes": 3807232,
+        "sampled_peak_rss_bytes": 3864576,
+        "allocation_calls_since_start": 646
+      },
+      "reclaimed": {
+        "live_requested_bytes": 11837,
+        "live_increment_bytes": 1096,
+        "overhead_per_task_bytes": 34.25,
+        "pss_bytes": 3717120,
+        "rss_bytes": 3725312,
+        "sampled_peak_rss_bytes": 3864576,
+        "allocation_calls_since_start": 712
+      },
+      "rounds": [
+        {
+          "startup": {
+            "live_requested_bytes": 10741,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1855488,
+            "rss_bytes": 1863680,
+            "sampled_peak_rss_bytes": 1867776,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 123511,
+            "live_increment_bytes": 112770,
+            "overhead_per_task_bytes": 1924.0625,
+            "pss_bytes": 3854336,
+            "rss_bytes": 3862528,
+            "sampled_peak_rss_bytes": 3866624,
+            "allocation_calls_since_start": 548
+          },
+          "record_wait": {
+            "live_requested_bytes": 71289,
+            "live_increment_bytes": 60548,
+            "overhead_per_task_bytes": 1892.125,
+            "pss_bytes": 3801088,
+            "rss_bytes": 3809280,
+            "sampled_peak_rss_bytes": 3866624,
+            "allocation_calls_since_start": 646
+          },
+          "reclaimed": {
+            "live_requested_bytes": 11837,
+            "live_increment_bytes": 1096,
+            "overhead_per_task_bytes": 34.25,
+            "pss_bytes": 3719168,
+            "rss_bytes": 3727360,
+            "sampled_peak_rss_bytes": 3866624,
+            "allocation_calls_since_start": 712
+          }
+        },
+        {
+          "startup": {
+            "live_requested_bytes": 10741,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1855488,
+            "rss_bytes": 1863680,
+            "sampled_peak_rss_bytes": 1867776,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 123511,
+            "live_increment_bytes": 112770,
+            "overhead_per_task_bytes": 1924.0625,
+            "pss_bytes": 3850240,
+            "rss_bytes": 3858432,
+            "sampled_peak_rss_bytes": 3862528,
+            "allocation_calls_since_start": 548
+          },
+          "record_wait": {
+            "live_requested_bytes": 71289,
+            "live_increment_bytes": 60548,
+            "overhead_per_task_bytes": 1892.125,
+            "pss_bytes": 3796992,
+            "rss_bytes": 3805184,
+            "sampled_peak_rss_bytes": 3862528,
+            "allocation_calls_since_start": 646
+          },
+          "reclaimed": {
+            "live_requested_bytes": 11837,
+            "live_increment_bytes": 1096,
+            "overhead_per_task_bytes": 34.25,
+            "pss_bytes": 3715072,
+            "rss_bytes": 3723264,
+            "sampled_peak_rss_bytes": 3862528,
+            "allocation_calls_since_start": 712
+          }
+        }
+      ]
+    },
+    "weighted:100/shared/candidate": {
+      "startup": {
+        "live_requested_bytes": 10746,
+        "live_increment_bytes": 0,
+        "overhead_per_task_bytes": 0.0,
+        "pss_bytes": 1859584,
+        "rss_bytes": 1867776,
+        "sampled_peak_rss_bytes": 1871872,
+        "allocation_calls_since_start": 0
+      },
+      "load_wait": {
+        "live_requested_bytes": 123284,
+        "live_increment_bytes": 112538,
+        "overhead_per_task_bytes": 1916.8125,
+        "pss_bytes": 3856384,
+        "rss_bytes": 3864576,
+        "sampled_peak_rss_bytes": 3868672,
+        "allocation_calls_since_start": 533
+      },
+      "record_wait": {
+        "live_requested_bytes": 71062,
+        "live_increment_bytes": 60316,
+        "overhead_per_task_bytes": 1884.875,
+        "pss_bytes": 3807232,
+        "rss_bytes": 3815424,
+        "sampled_peak_rss_bytes": 3868672,
+        "allocation_calls_since_start": 631
+      },
+      "reclaimed": {
+        "live_requested_bytes": 11842,
+        "live_increment_bytes": 1096,
+        "overhead_per_task_bytes": 34.25,
+        "pss_bytes": 3721216,
+        "rss_bytes": 3729408,
+        "sampled_peak_rss_bytes": 3868672,
+        "allocation_calls_since_start": 697
+      },
+      "rounds": [
+        {
+          "startup": {
+            "live_requested_bytes": 10746,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1859584,
+            "rss_bytes": 1867776,
+            "sampled_peak_rss_bytes": 1871872,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 123284,
+            "live_increment_bytes": 112538,
+            "overhead_per_task_bytes": 1916.8125,
+            "pss_bytes": 3858432,
+            "rss_bytes": 3866624,
+            "sampled_peak_rss_bytes": 3870720,
+            "allocation_calls_since_start": 533
+          },
+          "record_wait": {
+            "live_requested_bytes": 71062,
+            "live_increment_bytes": 60316,
+            "overhead_per_task_bytes": 1884.875,
+            "pss_bytes": 3809280,
+            "rss_bytes": 3817472,
+            "sampled_peak_rss_bytes": 3870720,
+            "allocation_calls_since_start": 631
+          },
+          "reclaimed": {
+            "live_requested_bytes": 11842,
+            "live_increment_bytes": 1096,
+            "overhead_per_task_bytes": 34.25,
+            "pss_bytes": 3723264,
+            "rss_bytes": 3731456,
+            "sampled_peak_rss_bytes": 3870720,
+            "allocation_calls_since_start": 697
+          }
+        },
+        {
+          "startup": {
+            "live_requested_bytes": 10746,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1859584,
+            "rss_bytes": 1867776,
+            "sampled_peak_rss_bytes": 1871872,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 123284,
+            "live_increment_bytes": 112538,
+            "overhead_per_task_bytes": 1916.8125,
+            "pss_bytes": 3854336,
+            "rss_bytes": 3862528,
+            "sampled_peak_rss_bytes": 3866624,
+            "allocation_calls_since_start": 533
+          },
+          "record_wait": {
+            "live_requested_bytes": 71062,
+            "live_increment_bytes": 60316,
+            "overhead_per_task_bytes": 1884.875,
+            "pss_bytes": 3805184,
+            "rss_bytes": 3813376,
+            "sampled_peak_rss_bytes": 3866624,
+            "allocation_calls_since_start": 631
+          },
+          "reclaimed": {
+            "live_requested_bytes": 11842,
+            "live_increment_bytes": 1096,
+            "overhead_per_task_bytes": 34.25,
+            "pss_bytes": 3719168,
+            "rss_bytes": 3727360,
+            "sampled_peak_rss_bytes": 3866624,
+            "allocation_calls_since_start": 697
+          }
+        }
+      ]
+    },
+    "weighted:100/unique/base": {
+      "startup": {
+        "live_requested_bytes": 10741,
+        "live_increment_bytes": 0,
+        "overhead_per_task_bytes": 0.0,
+        "pss_bytes": 1855488,
+        "rss_bytes": 1863680,
+        "sampled_peak_rss_bytes": 1867776,
+        "allocation_calls_since_start": 0
+      },
+      "load_wait": {
+        "live_requested_bytes": 164989,
+        "live_increment_bytes": 154248,
+        "overhead_per_task_bytes": 3220.25,
+        "pss_bytes": 3909632,
+        "rss_bytes": 3917824,
+        "sampled_peak_rss_bytes": 3921920,
+        "allocation_calls_since_start": 5446
+      },
+      "record_wait": {
+        "live_requested_bytes": 112767,
+        "live_increment_bytes": 102026,
+        "overhead_per_task_bytes": 3188.3125,
+        "pss_bytes": 3856384,
+        "rss_bytes": 3864576,
+        "sampled_peak_rss_bytes": 3921920,
+        "allocation_calls_since_start": 5544
+      },
+      "reclaimed": {
+        "live_requested_bytes": 11837,
+        "live_increment_bytes": 1096,
+        "overhead_per_task_bytes": 34.25,
+        "pss_bytes": 3725312,
+        "rss_bytes": 3733504,
+        "sampled_peak_rss_bytes": 3921920,
+        "allocation_calls_since_start": 5610
+      },
+      "rounds": [
+        {
+          "startup": {
+            "live_requested_bytes": 10741,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1855488,
+            "rss_bytes": 1863680,
+            "sampled_peak_rss_bytes": 1867776,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 164989,
+            "live_increment_bytes": 154248,
+            "overhead_per_task_bytes": 3220.25,
+            "pss_bytes": 3907584,
+            "rss_bytes": 3915776,
+            "sampled_peak_rss_bytes": 3919872,
+            "allocation_calls_since_start": 5446
+          },
+          "record_wait": {
+            "live_requested_bytes": 112767,
+            "live_increment_bytes": 102026,
+            "overhead_per_task_bytes": 3188.3125,
+            "pss_bytes": 3854336,
+            "rss_bytes": 3862528,
+            "sampled_peak_rss_bytes": 3919872,
+            "allocation_calls_since_start": 5544
+          },
+          "reclaimed": {
+            "live_requested_bytes": 11837,
+            "live_increment_bytes": 1096,
+            "overhead_per_task_bytes": 34.25,
+            "pss_bytes": 3723264,
+            "rss_bytes": 3731456,
+            "sampled_peak_rss_bytes": 3919872,
+            "allocation_calls_since_start": 5610
+          }
+        },
+        {
+          "startup": {
+            "live_requested_bytes": 10741,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1855488,
+            "rss_bytes": 1863680,
+            "sampled_peak_rss_bytes": 1867776,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 164989,
+            "live_increment_bytes": 154248,
+            "overhead_per_task_bytes": 3220.25,
+            "pss_bytes": 3911680,
+            "rss_bytes": 3919872,
+            "sampled_peak_rss_bytes": 3923968,
+            "allocation_calls_since_start": 5446
+          },
+          "record_wait": {
+            "live_requested_bytes": 112767,
+            "live_increment_bytes": 102026,
+            "overhead_per_task_bytes": 3188.3125,
+            "pss_bytes": 3858432,
+            "rss_bytes": 3866624,
+            "sampled_peak_rss_bytes": 3923968,
+            "allocation_calls_since_start": 5544
+          },
+          "reclaimed": {
+            "live_requested_bytes": 11837,
+            "live_increment_bytes": 1096,
+            "overhead_per_task_bytes": 34.25,
+            "pss_bytes": 3727360,
+            "rss_bytes": 3735552,
+            "sampled_peak_rss_bytes": 3923968,
+            "allocation_calls_since_start": 5610
+          }
+        }
+      ]
+    },
+    "weighted:100/unique/candidate": {
+      "startup": {
+        "live_requested_bytes": 10746,
+        "live_increment_bytes": 0,
+        "overhead_per_task_bytes": 0.0,
+        "pss_bytes": 1861632,
+        "rss_bytes": 1869824,
+        "sampled_peak_rss_bytes": 1873920,
+        "allocation_calls_since_start": 0
+      },
+      "load_wait": {
+        "live_requested_bytes": 157570,
+        "live_increment_bytes": 146824,
+        "overhead_per_task_bytes": 2988.25,
+        "pss_bytes": 3907584,
+        "rss_bytes": 3915776,
+        "sampled_peak_rss_bytes": 3919872,
+        "allocation_calls_since_start": 4966
+      },
+      "record_wait": {
+        "live_requested_bytes": 105348,
+        "live_increment_bytes": 94602,
+        "overhead_per_task_bytes": 2956.3125,
+        "pss_bytes": 3854336,
+        "rss_bytes": 3862528,
+        "sampled_peak_rss_bytes": 3919872,
+        "allocation_calls_since_start": 5064
+      },
+      "reclaimed": {
+        "live_requested_bytes": 11842,
+        "live_increment_bytes": 1096,
+        "overhead_per_task_bytes": 34.25,
+        "pss_bytes": 3727360,
+        "rss_bytes": 3735552,
+        "sampled_peak_rss_bytes": 3919872,
+        "allocation_calls_since_start": 5130
+      },
+      "rounds": [
+        {
+          "startup": {
+            "live_requested_bytes": 10746,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1859584,
+            "rss_bytes": 1867776,
+            "sampled_peak_rss_bytes": 1871872,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 157570,
+            "live_increment_bytes": 146824,
+            "overhead_per_task_bytes": 2988.25,
+            "pss_bytes": 3907584,
+            "rss_bytes": 3915776,
+            "sampled_peak_rss_bytes": 3919872,
+            "allocation_calls_since_start": 4966
+          },
+          "record_wait": {
+            "live_requested_bytes": 105348,
+            "live_increment_bytes": 94602,
+            "overhead_per_task_bytes": 2956.3125,
+            "pss_bytes": 3854336,
+            "rss_bytes": 3862528,
+            "sampled_peak_rss_bytes": 3919872,
+            "allocation_calls_since_start": 5064
+          },
+          "reclaimed": {
+            "live_requested_bytes": 11842,
+            "live_increment_bytes": 1096,
+            "overhead_per_task_bytes": 34.25,
+            "pss_bytes": 3727360,
+            "rss_bytes": 3735552,
+            "sampled_peak_rss_bytes": 3919872,
+            "allocation_calls_since_start": 5130
+          }
+        },
+        {
+          "startup": {
+            "live_requested_bytes": 10746,
+            "live_increment_bytes": 0,
+            "overhead_per_task_bytes": 0.0,
+            "pss_bytes": 1863680,
+            "rss_bytes": 1871872,
+            "sampled_peak_rss_bytes": 1875968,
+            "allocation_calls_since_start": 0
+          },
+          "load_wait": {
+            "live_requested_bytes": 157570,
+            "live_increment_bytes": 146824,
+            "overhead_per_task_bytes": 2988.25,
+            "pss_bytes": 3907584,
+            "rss_bytes": 3915776,
+            "sampled_peak_rss_bytes": 3919872,
+            "allocation_calls_since_start": 4966
+          },
+          "record_wait": {
+            "live_requested_bytes": 105348,
+            "live_increment_bytes": 94602,
+            "overhead_per_task_bytes": 2956.3125,
+            "pss_bytes": 3854336,
+            "rss_bytes": 3862528,
+            "sampled_peak_rss_bytes": 3919872,
+            "allocation_calls_since_start": 5064
+          },
+          "reclaimed": {
+            "live_requested_bytes": 11842,
+            "live_increment_bytes": 1096,
+            "overhead_per_task_bytes": 34.25,
+            "pss_bytes": 3727360,
+            "rss_bytes": 3735552,
+            "sampled_peak_rss_bytes": 3919872,
+            "allocation_calls_since_start": 5130
+          }
+        }
+      ]
+    }
+  }
+}

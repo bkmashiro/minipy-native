@@ -1,0 +1,65 @@
+{
+  "commands": [
+    "/root/minipy-native-n/test-acceptance --test-threads=1",
+    "/root/minipy-native-n/test-boundaries --test-threads=1",
+    "/root/minipy-native-n/test-fixture_lifecycle --test-threads=1",
+    "/root/minipy-native-n/test-fixture_reference --test-threads=1",
+    "/root/minipy-native-n/test-interpreter --test-threads=1",
+    "/root/minipy-native-n/test-minipy --test-threads=1",
+    "/root/minipy-native-n/test-minipy_native --test-threads=1",
+    "/root/minipy-native-n/test-scripts --test-threads=1",
+    "/root/minipy-native-n/baseline-counts weighted 256",
+    "/root/minipy-native-n/baseline-counts stateful 256",
+    "/root/minipy-native-n/tape-counts weighted 256",
+    "/root/minipy-native-n/tape-counts stateful 256"
+  ],
+  "executables": {
+    "test-acceptance": {
+      "sha256": "942a86cd64aa183923637d4999a843a7ebb0b788dfb03106aec0216bc9af9d7a",
+      "bytes": 37003024
+    },
+    "test-boundaries": {
+      "sha256": "42cc5651cca45fc5a0ad071def96f1f052207bb779923d467f7c249a9ccec589",
+      "bytes": 37189576
+    },
+    "test-fixture_lifecycle": {
+      "sha256": "27412df9ee84aa00d65f1e3d86b401fd9340f839cd4a1e84f0b3c301318afbe1",
+      "bytes": 36635640
+    },
+    "test-fixture_reference": {
+      "sha256": "b8f0c23c370a903fdf43da2c39329ed4ae5b304c12c7dbf064c85ea95ff5b577",
+      "bytes": 36800576
+    },
+    "test-interpreter": {
+      "sha256": "54e9658d56c351726344e2695da08314ce09f228b8fc74a45df89cd0225fda38",
+      "bytes": 37847048
+    },
+    "test-minipy": {
+      "sha256": "8efb5702a2ffb28da93407b38d7e2c950361281c6a1c67ed345afa789586d1f1",
+      "bytes": 8007160
+    },
+    "test-minipy_native": {
+      "sha256": "faeb45cc915e40a21309d8f597eac2f53fcaeec7b27273984756eff74015d6d1",
+      "bytes": 18390144
+    },
+    "test-scripts": {
+      "sha256": "e52490f7705148d222440894b19c2a1900e246fa9a6bc3980ab61a25bca7fb53",
+      "bytes": 36993160
+    },
+    "baseline-counts": {
+      "sha256": "db9be17a8ce6992faff91b95d24e0fdb485886f1d149d5589488117c04f7b76f",
+      "bytes": 31258688
+    },
+    "tape-counts": {
+      "sha256": "30620449db26b026b58937c8ed5be8438e10d9ea0ff33431c7381ace6b68e17a",
+      "bytes": 31181792
+    }
+  },
+  "counts": {
+    "baseline/weighted": "weighted rows=100000 chunk=256 stdout=\"57270790\\n\" Counts { leaf_operands: 520172, expr: [2, 0, 4, 0, 0, 360086, 33334], ops: [93421, 0, 1, 1, 100000, 46710, 1, 100001, 100000, 2], fuel_reservations: 391, yields: 390 }\n",
+    "baseline/stateful": "stateful rows=100000 chunk=256 stdout=\"178552\\n\" Counts { leaf_operands: 427064, expr: [3, 0, 4, 78, 0, 413532, 86624], ops: [236, 0, 1, 1, 100000, 78, 1, 100001, 100000, 2], fuel_reservations: 391, yields: 390 }\n",
+    "tape/weighted": "weighted rows=100000 chunk=256 stdout=\"57270790\\n\" Counts { tape_dispatches: 506803, leaf_operands: 0, expr: [0, 0, 0, 0, 0, 0, 0], ops: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], fuel_reservations: 391, yields: 390 }\n",
+    "tape/stateful": "stateful rows=100000 chunk=256 stdout=\"178552\\n\" Counts { tape_dispatches: 413696, leaf_operands: 0, expr: [0, 0, 0, 0, 0, 0, 0], ops: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], fuel_reservations: 391, yields: 390 }\n"
+  },
+  "test_count": 66
+}

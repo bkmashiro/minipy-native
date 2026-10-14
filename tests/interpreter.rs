@@ -83,6 +83,101 @@ async fn differential(
     y
 }
 #[tokio::test]
+async fn computed_operands_self_assignment_and_boolean_consumers() {
+    let source = "x=3\nx=(x+1)*(x-1)+(x*2)\nprint(x)\nflag=(a or b) and (not c or a)\nflag=flag and (not flag or b)\nprint(flag)\nprint((a and b) == (c or not a))\nif not ((a and not b) or (c and (x+1 > x*2))):\n    print(x+2)\nelse:\n    print(x-2)\nreceipt=tools.record_total((x+1)*(x-1), (x*2)+(x-3))\nprint(receipt)";
+    for a in [0, 1] {
+        for b in [0, 1] {
+            for c in [0, 1] {
+                let out = differential(
+                    source,
+                    &[("a", Type::Bool), ("b", Type::Bool), ("c", Type::Bool)],
+                    &[a, b, c],
+                    rows(),
+                    ScriptLimits::default(),
+                )
+                .await;
+                assert_eq!(out.status, Ok(()));
+                assert!(out.stdout.starts_with("14\n"));
+            }
+        }
+    }
+    for expression in [
+        "False and (True or 9223372036854775807+1 > 0)",
+        "True or (False and 9223372036854775807+1 > 0)",
+        "not (False or (True and False))",
+        "(False and 9223372036854775807+1 > 0) == (True or False)",
+        "(9223372036854775807+1 > 0) and False",
+        "True and (False or 9223372036854775807+1 > 0)",
+    ] {
+        for source in [
+            format!("print(7)\nprint({expression})"),
+            format!("print(7)\nif {expression}:\n    print(1)\nelse:\n    print(2)"),
+        ] {
+            differential(&source, &[], &[], rows(), ScriptLimits::default()).await;
+        }
+    }
+}
+#[tokio::test]
+async fn scratch_is_recomputed_after_tool_and_chunk_boundaries() {
+    let source = "x=2\nq=tools.load_quotes((x+1)*(x+2))\nfor row in q:\n    x=(x+row.quantity)*(row.unit_price_cents-1)\n    flag=(x > 0 and row.quantity > 0) or (x == 0)\n    print(flag)\nr=tools.record_total((x+1)*(x-1), x+2)\nx=(r+1)*(r-1)\nprint(x)\nsecond=tools.load_quotes(x+1)\nfor row in second:\n    x += (row.quantity+1)*(row.unit_price_cents-1)\nprint(x)";
+    let rows = vec![
+        Quote {
+            unit_price_cents: 2,
+            quantity: 1
+        };
+        5
+    ];
+    for chunk in [1, 2, 256] {
+        let mut limits = ScriptLimits::default();
+        limits.limits.chunk = chunk;
+        let out = differential(source, &[], &[], rows.clone(), limits).await;
+        assert_eq!(out.status, Ok(()));
+        assert_eq!(out.stdout, "True\nTrue\nTrue\nTrue\nTrue\n3248\n3258\n");
+    }
+}
+#[tokio::test]
+async fn exact_chunks_in_sequential_scans_are_not_a_task_time_slice() {
+    let source = "quotes=tools.load_quotes(1)\ntotal=0\nfor q in quotes:\n    total += q.quantity\nfor q in quotes:\n    total += q.quantity\nprint(total)";
+    let schema = [];
+    let quotes = vec![
+        Quote {
+            unit_price_cents: 1,
+            quantity: 1
+        };
+        256
+    ];
+    for interpreted in [false, true] {
+        let trace = Rc::new(RefCell::new(Vec::new()));
+        let p = Arc::new(TestProvider::new(quotes.clone(), Delays::default()));
+        let mut options = ScriptLimits::default();
+        options.limits.rows = 512;
+        let out = if interpreted {
+            interpreter::execute_script(
+                Rc::new(InterpreterUnit::prepare_script(source, &schema).unwrap()),
+                p,
+                &[],
+                options,
+                Cancellation::default(),
+                Some(trace.clone()),
+            )
+            .await
+        } else {
+            runtime::execute_script(
+                Rc::new(CodeUnit::compile_script(source, &schema).unwrap()),
+                p,
+                &[],
+                options,
+                Cancellation::default(),
+                Some(trace.clone()),
+            )
+            .await
+        };
+        assert_eq!(out.status, Ok(()));
+        assert_eq!(out.stdout, "512\n");
+        assert!(!trace.borrow().iter().any(|e| e.phase == "yield"));
+    }
+}
+#[tokio::test]
 async fn empty_else_joins_nested_scan_and_tool_continuations() {
     let source = "total=0\nif enabled:\n    print(1)\n    if enabled:\n        print(2)\nquotes=tools.load_quotes(7)\nfor q in quotes:\n    if q.quantity > 0:\n        if q.unit_price_cents < 700:\n            total += q.quantity\n    if q.quantity < 0:\n        print(9)\nreceipt=tools.record_total(7,total)\nprint(receipt)";
     for enabled in [0, 1] {

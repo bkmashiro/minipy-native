@@ -618,3 +618,40 @@ native/IR/reference cancellation, late completion, owner release and effect
 errors pass on macOS and actual Linux. Final focused review/recomputation and
 VM-off verification are delivered with the final evidence handoff.
 
+## N compact interpreter and approved corrections (2026-10-14)
+
+After L acceptance, independently committed the bounded definite-assignment
+bitset (`a4d68c1`) and existing-output statement emission (`81d5df0`). Replaced
+recursive interpreter expressions with one sealed computation tape during the
+existing flatten traversal, preserving static leaf operands, native predicates,
+checked arithmetic, short-circuit/error/effect order, owner/fuel/cancellation and
+the original Scan/Next header behavior. No retained Expr copy, global optimizer,
+JIT, cache, service worker, permit or JSON support. Scratch is synchronous-only.
+
+Same-round Linux ARM64 baseline 8395039 versus integrated candidate: 20,560 speed
+raw, four AB/BA/BA/AB pairs, six mixed CPU cells all improve in every pair. Cold
+mixed CPU improves 23.40–46.04%; 100k stateful cold/warm improves 48.29/53.09%.
+Weighted 100 cold regresses 15.82%, scalar warm adds 2.98 us, and some short p99
+cells regress. Preserve all raw/rounds and explicit reuse boundaries. 96 waiting
+snapshots show unique-unit overhead down 232/320 bytes per standalone task;
+shared-unit savings are proportionately smaller, physical PSS nearly unchanged.
+Preparation wall and two separately attributed macOS frontend stages (11,616
+raw) are included, without claiming uniform small-input or native compile gains.
+
+Confirmed/documented that chunk is per scan, not a task-wide CPU slice, and
+cancelled detached Providers lack global admission quotas. Both are existing
+reachable service limits; scheduling semantics are unchanged. New regression
+tests cover 0/32 initialized slots, self-reference, Boolean consumers, scratch
+after Tool/chunk boundaries, and consecutive exact-chunk scans without yield.
+macOS all-feature and actual Linux fixture-reference each pass 66 tests; strict
+clippy/core+bench fmt pass. Runner memory-parameter assertion and stale diagnostic
+build reuse were corrected transparently; speed raw was not rerun and forced
+speed/allocator rebuilds match measured binaries byte-for-byte.
+
+Full Chinese result, costs, limits and reproduction:
+[compact-interpreter-experiment.md](compact-interpreter-experiment.md),
+`bench/results/n-compact/`, `tools/compact_{ab,summary,verify}.py`.
+L figures remain a frozen older-version cohort, not evidence about N. Stop after
+one focused fixed-snapshot review and signed publication, without new follow-up
+cards or implementing proposals 2/3.
+

@@ -1,0 +1,21 @@
+
+target/n-compact/tape-linux:	file format elf64-littleaarch64
+
+Sections:
+Idx Name              Size     VMA              Type
+  0                   00000000 0000000000000000 
+  1 .gcc_except_table 0007e6b4 0000000001000238 DATA
+  2 .rodata           0028e3d8 000000000107e900 DATA
+  3 .eh_frame_hdr     0001c9d4 000000000130ccd8 DATA
+  4 .eh_frame         000f5aa8 00000000013296b0 DATA
+  5 .text             00849668 000000000142f160 TEXT
+  6 .tdata            00001930 0000000001c887c8 DATA
+  7 .tbss             00000098 0000000001c8a0f8 BSS
+  8 .data.rel.ro      00073988 0000000001c8a0f8 DATA
+  9 .init_array       00000010 0000000001cfda80 DATA
+ 10 .got              00000690 0000000001cfda90 DATA
+ 11 .relro_padding    00000ee0 0000000001cfe120 BSS
+ 12 .data             00000d78 0000000001d0e120 DATA
+ 13 .bss              00001c30 0000000001d0ee98 BSS
+ 14 .comment          00000078 0000000000000000 
+ 15 .shstrtab         00000091 0000000000000000 
