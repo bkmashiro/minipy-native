@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import shlex
 import subprocess
 
 p = argparse.ArgumentParser()
@@ -13,9 +14,14 @@ p.add_argument('--toolchain', default='1.96.0')
 p.add_argument('--output', default='.artifacts/playground')
 a = p.parse_args()
 root = Path(__file__).resolve().parents[1]
+env = os.environ.copy()
+flags = env.get('CARGO_ENCODED_RUSTFLAGS')
+flags = flags.split('\x1f') if flags else shlex.split(env.get('RUSTFLAGS', ''))
+flags += [f'--remap-path-prefix={Path.home()}=build-host', f'--remap-path-prefix={root}=project']
+env['CARGO_ENCODED_RUSTFLAGS'] = '\x1f'.join(flags)
 subprocess.run(['cargo', '+' + a.toolchain, 'rustc', '--locked', '--release', '--lib', '--crate-type', 'cdylib',
                 '--target', 'wasm32-unknown-unknown', '--features', 'debug-runtime', '--',
-                '-C', 'link-arg=--max-memory=268435456'], cwd=root, check=True)
+                '-C', 'link-arg=--max-memory=268435456'], cwd=root, env=env, check=True)
 target = Path(os.environ.get('CARGO_TARGET_DIR', root / 'target'))
 raw = (target / 'wasm32-unknown-unknown/release/minipy_native.wasm').read_bytes()
 assert raw[:8] == b'\0asm\1\0\0\0'
@@ -40,6 +46,9 @@ while i < len(raw):
     i = end
 out = root / a.output
 out.mkdir(parents=True, exist_ok=True)
+assert str(Path.home()).encode() not in output, 'host home path in public Wasm'
+assert str(root).encode() not in output, 'build workspace path in public Wasm'
+assert b'PRIVATE KEY' not in output and b'Bearer ' not in output, 'credential marker in Wasm'
 (out / 'minipy_native.wasm').write_bytes(output)
 for name in ['engine.mjs', 'worker.mjs', 'samples.mjs', 'browser-test.mjs', 'smoke.html']:
     shutil.copyfile(root / 'web' / name, out / name)
@@ -47,6 +56,7 @@ files = sorted([root / 'Cargo.toml', root / 'Cargo.lock', *root.glob('src/**/*.r
                 *root.glob('web/*.mjs'), root / 'scripts/build_playground.py'])
 manifest = {'toolchain': subprocess.check_output(['rustc', '+' + a.toolchain, '--version'], text=True).strip(),
             'features': ['debug-runtime'], 'target': 'wasm32-unknown-unknown',
+            'path_remapping': ['host home -> build-host', 'workspace -> project'],
             'wasm_bytes': len(output), 'unstripped_bytes': len(raw),
             'sha256': hashlib.sha256(output).hexdigest(),
             'sources': {str(f.relative_to(root)): hashlib.sha256(f.read_bytes()).hexdigest() for f in files}}

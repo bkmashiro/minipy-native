@@ -732,7 +732,7 @@ documented as retained, while linear memory capacity is distinct from live range
 
 WSL Rust1.96.0 `wasm32-unknown-unknown` ran real compilation under the shared
 `/home/na/benchmarks/minipy-s/compute.lock`; no heavy Mac toolchain/download.
-TUNA's old default1.87 target returned404; the already installed1.96 toolchain's
+TUNA's old default 1.87 target returned 404; the already installed 1.96 toolchain's
 target was installed from official distribution, with no replacement compiler
 or blind repeated build. Source/build stays `/home/na/projects/minipy-u` and
 the reused WSL target stays `/home/na/benchmarks/minipy-s/source/target`.
@@ -740,14 +740,14 @@ the reused WSL target stays `/home/na/benchmarks/minipy-s/source/target`.
 manifest, with a 256MiB Wasm maximum. Artifact paths and exact final sizes/hashes
 are in `bench/results/u-playground/verification.json` and package manifest.
 
-Mac `cargo test --tests --features debug-runtime,fixture-reference` passed72
+Mac `cargo test --tests --features debug-runtime,fixture-reference` passed 72
 tests, including six debugger invariants; default tests passed63 earlier.
 `cargo clippy --features debug-runtime --lib -- -D warnings`, formatting, JS
 syntax and real Wasm import/export inspection pass. Chrome's actual module
-Worker/Wasm acceptance passed31 checks, including editing source -> changed
+Worker/Wasm acceptance passed 31 checks, including editing source -> changed
 output, PC/scratch, three tasks, timed wait/resume, chunk yields, last-use input
 release, late cancellation, errors, lossless i64 and transport backpressure.
-The first acceptance failure was a75ms test wait racing actual timer delivery;
+The first acceptance failure was a 75ms test wait racing actual timer delivery;
 a bounded state-based await replaced that timing assumption, without weakening
 the required ready-state invariant. Browser command timings include ABI/debug
 projection costs and are not native benchmark scores.
@@ -756,4 +756,13 @@ Engine integration and reproduction: [playground-engine.md](playground-engine.md
 Three editable samples are in `web/samples.mjs`; V owns the Canvas workbench,
 responsive UI, final site-wide browser QA and deployment. U adds no web framework,
 network Tool, simulated trace or unrelated engine optimization.
+
+Publication scan caught dependency panic-location strings with the WSL home
+path even after custom-section stripping. Compiler-wide path remapping fixes
+the source of those strings; the final artifact has zero host-home/credential
+marker hits and repeats the 31 real browser checks. No blind binary rewriting.
+One read-only gpt-6-luna review was requested at signed 012216d and rejected by
+the Codex ChatGPT account with 400 unsupported. No substitute model or independent
+verdict is claimed; the parent performed scoped self-review and actual gates.
+The exact failed lane is retained in `bench/results/u-playground/focused-review.json`.
 

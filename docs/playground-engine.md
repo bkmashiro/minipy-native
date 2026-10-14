@@ -24,7 +24,10 @@ ordinary rlibs. Only this command requests cdylib, and Cranelift/native provider
 are target-excluded from Wasm. The output is `.artifacts/playground/` with
 `minipy_native.wasm`, `engine.mjs`, `worker.mjs`, `samples.mjs`, small acceptance
 files and `manifest.json`. The build drops Wasm custom sections (including debug
-paths), retaining all executable/data sections. The manifest records actual
+paths), retaining all executable/data sections. Compiler-wide path remapping
+also removes dependency panic-location home paths
+from executable data; the build rejects any remaining host home/workspace path
+or credential marker. The manifest records actual
 compiler identity, source hashes, byte sizes and the delivered Wasm SHA-256.
 
 For a site, copy these four engine/sample files into one same-origin static

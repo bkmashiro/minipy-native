@@ -1,0 +1,15 @@
+{
+  "requested_model": "gpt-6-luna",
+  "provider": "openai (Codex CLI ChatGPT account)",
+  "review_target": "012216d9c523a31a691bcdf90bc714d71b0567fa",
+  "baseline": "33f4128",
+  "sandbox": "read-only",
+  "result": "unavailable",
+  "exit_code": 1,
+  "error_status": 400,
+  "error_message": "The 'gpt-6-luna' model is not supported when using Codex with a ChatGPT account.",
+  "review_completed": false,
+  "substitute_model_used": false,
+  "lane_changes": [],
+  "note": "Parent self-review and executed correctness/browser gates are complete. No independent review verdict is claimed; V still owns integrated workbench/site QA."
+}
