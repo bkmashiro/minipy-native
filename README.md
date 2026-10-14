@@ -55,6 +55,7 @@ Engineering compile bounds are 16 KiB of source, 512 frontend nodes, depth 32, 3
 - [Implementation mission and handoff](docs/implementation.md)
 - [Integrated cost, density and finite-load evidence](docs/performance-v2.md)
 - [Execution reference and bounded strategy qualification](docs/stage-strategy-experiment.md)
+- [阶段性能结论与使用建议（中文）](docs/stage-performance-conclusion.md)
 - [Bounded follow-up candidates and pending API decisions](docs/next-steps.md)
 - [Current optimization pointer and historical decisions](docs/optimization-roadmap.md)
 

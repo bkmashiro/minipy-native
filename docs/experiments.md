@@ -498,9 +498,11 @@ work without pretending to provide Linux per-subphase cycle shares.
 
 Candidate A bypasses recursive eval for leaf operands, removing 520172/427064
 eval crossings for 100k weighted/stateful diagnostic inputs. Mixed CPU improves
-4--14%, but independent tiny cells and short tails regress/noise: ready short p99
-2561.5 -> 2990.8 us light and 3468.0 -> 4095.9 us scan. Revert under the net-cost
-gate, preserve positive and negative evidence. Candidate B eliminates PC load/
+4--14% in all six cells and every paired round. Ready short p99 rises in all three
+rounds (pooled 2561.5 -> 2990.8 us light, 3468.0 -> 4095.9 us scan); other tails
+and tiny cells are noisy. This supports conservative reversion, not a claim of
+stable causal degradation or a requirement that every cell improve. Preserve
+the CPU gain and tail uncertainty. Candidate B eliminates PC load/
 Switch for exactly one actual resume state, scalar code 264 -> 236 B in auxiliary
 Mac CLIF inventory. Mixed CPU is not consistently better and prepared/delayed
 cells regress. Revert. No third attempt, hidden alternative or new optimizer.
@@ -517,6 +519,16 @@ allowed. Rejected patches apply cleanly to the final tree. Linux test binaries
 were SHA256 read back and executed serially, not merely cross-built. Guest was
 restored off after validation. Full cost/architecture recommendation, limits,
 commands and identities: [stage-strategy-experiment.md](stage-strategy-experiment.md)
-and `bench/results/i-stage/`. Finish with one fixed-commit independent review and
-signed publication, without further optimization.
+and `bench/results/i-stage/`. Chinese stage conclusion:
+[stage-performance-conclusion.md](stage-performance-conclusion.md).
+
+The sole independent read-only review examined signed d8f8d99 through native
+Hermes delegation, with actual returned model gpt-6-luna / openai-codex. The
+earlier Codex CLI request for that model failed HTTP 400 and performed no review;
+it is not counted as a completed review. Native delegation succeeded without a
+global profile change or model substitution. No blocking finding. The reviewer
+reran macOS all-feature release tests; the parent independently reproduced all
+three raw summaries exactly and verified both logged 61-test totals and ready
+p99 round values. Final changes only clarify those conclusions and add the
+requested Chinese entry; no further runtime candidate or campaign.
 
