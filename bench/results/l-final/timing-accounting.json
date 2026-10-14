@@ -1,0 +1,87 @@
+{
+  "scope": "Sum of directly measured serial request boundaries plus nominal-or-draining mixed windows, including warmups; not entire subprocess/SSH duration. Historical assembly/refinement/recheck observations counted separately, never pooled for performance ranking.",
+  "cohorts": [
+    {
+      "cohort": "speed",
+      "raw_observations": 60696,
+      "single_requests": 21816,
+      "mixed_windows": 972,
+      "accounted_guest_window_wall_s": 177.66730893,
+      "accounted_guest_cpu_s": 107.294552
+    },
+    {
+      "cohort": "cpython",
+      "raw_observations": 10860,
+      "single_requests": 1260,
+      "mixed_windows": 240,
+      "accounted_guest_window_wall_s": 101.323218868,
+      "accounted_guest_cpu_s": 164.609833946
+    },
+    {
+      "cohort": "pyodide",
+      "raw_observations": 5430,
+      "single_requests": 630,
+      "mixed_windows": 120,
+      "accounted_guest_window_wall_s": 31.21117932,
+      "accounted_guest_cpu_s": 31.402431
+    },
+    {
+      "cohort": "common-primary",
+      "raw_observations": 14490,
+      "single_requests": 3690,
+      "mixed_windows": 270,
+      "accounted_guest_window_wall_s": 85.476250974,
+      "accounted_guest_cpu_s": 70.226883
+    },
+    {
+      "cohort": "common-cpython",
+      "raw_observations": 5430,
+      "single_requests": 630,
+      "mixed_windows": 120,
+      "accounted_guest_window_wall_s": 20.645527034,
+      "accounted_guest_cpu_s": 19.341027005
+    },
+    {
+      "cohort": "common-pyodide",
+      "raw_observations": 5430,
+      "single_requests": 630,
+      "mixed_windows": 120,
+      "accounted_guest_window_wall_s": 50.225894168,
+      "accounted_guest_cpu_s": 50.437046
+    },
+    {
+      "cohort": "assembly",
+      "raw_observations": 12120,
+      "single_requests": 12120,
+      "mixed_windows": 0,
+      "accounted_guest_window_wall_s": 23.000153018,
+      "accounted_guest_cpu_s": 4.25642
+    },
+    {
+      "cohort": "assembly-v2",
+      "raw_observations": 12120,
+      "single_requests": 12120,
+      "mixed_windows": 0,
+      "accounted_guest_window_wall_s": 22.838639199,
+      "accounted_guest_cpu_s": 4.256312
+    },
+    {
+      "cohort": "assembly-full",
+      "raw_observations": 7272,
+      "single_requests": 7272,
+      "mixed_windows": 0,
+      "accounted_guest_window_wall_s": 20.07463563,
+      "accounted_guest_cpu_s": 2.543586
+    },
+    {
+      "cohort": "scalar-recheck",
+      "raw_observations": 12012,
+      "single_requests": 12012,
+      "mixed_windows": 0,
+      "accounted_guest_window_wall_s": 0.050145634,
+      "accounted_guest_cpu_s": 0.055109
+    }
+  ],
+  "accounted_guest_window_wall_s": 532.512952775,
+  "not_measured": "Component-level elapsed time for reading/designing harness, initial installs, SSH setup/serialization, analysis, report/review and compilation; do not assign the remaining task elapsed time to CPU speed or installation"
+}

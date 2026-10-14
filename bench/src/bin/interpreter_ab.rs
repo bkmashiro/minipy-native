@@ -11,7 +11,9 @@ use minipy_native::{
     runtime::{self, Cancellation, ScriptLimits},
 };
 use monty::{MontyRun, RunProgress};
-use monty_types::{CompileOptions, ExtFunctionResult, MontyObject, PrintWriter, ResourceTracker};
+use monty_types::{
+    CompileOptions, ExtFunctionResult, MontyObject, MontyUuid, PrintWriter, ResourceTracker,
+};
 use std::{
     rc::Rc,
     sync::Arc,
@@ -22,7 +24,17 @@ use std::{
 static ALLOC: common::CountingAllocator = common::CountingAllocator;
 const INPUTS: &[(&str, Type)] = &[("batch_id", Type::I64), ("price_limit", Type::I64)];
 static OPTIONS: std::sync::OnceLock<ScriptLimits> = std::sync::OnceLock::new();
+static COMMON: std::sync::OnceLock<bool> = std::sync::OnceLock::new();
 fn source(case: &str) -> String {
+    if *COMMON.get().unwrap() {
+        return match case {
+            "scalar" => include_str!("../../../fixtures/common_scalar.py"),
+            "weighted" => include_str!("../../../fixtures/common_weighted.py"),
+            "stateful" => include_str!("../../../fixtures/common_stateful.py"),
+            _ => panic!("case"),
+        }
+        .into();
+    }
     match case {
         "scalar"=>include_str!("../../../fixtures/scalar_script.py").into(),
         "weighted"=>include_str!("../../../fixtures/weighted_script.py").into(),
@@ -49,6 +61,16 @@ fn expected(case: &str, n: usize) -> String {
     }
 }
 fn monty(source: &str, clear: bool) -> MontyRun {
+    if *COMMON.get().unwrap() {
+        assert!(!clear, "common body must not be rewritten");
+        return MontyRun::new(
+            source.into(),
+            "common.py",
+            vec!["batch_id".into(), "price_limit".into(), "tools".into()],
+            CompileOptions::default(),
+        )
+        .unwrap();
+    }
     // Secondary strong baseline for these two known benchmark shapes only:
     // the Quote list has no future consumer at the final record. Do not infer
     // this from arbitrary user source or add a source-rewriting runtime path.
@@ -87,14 +109,35 @@ fn monty(source: &str, clear: bool) -> MontyRun {
 }
 async fn monty_run(code: MontyRun, p: Arc<RequestProvider>) -> String {
     let mut stdout = String::new();
+    let functions = [
+        MontyObject::function("load_quotes", None),
+        MontyObject::function("record_total", None),
+    ];
+    let inputs = if *COMMON.get().unwrap() {
+        vec![
+            MontyObject::int(BATCH),
+            MontyObject::int(LIMIT),
+            MontyObject::module(
+                "tools",
+                MontyUuid::from_u128(1),
+                ["load_quotes", "record_total"]
+                    .into_iter()
+                    .zip(functions)
+                    .map(|(name, value)| (MontyObject::string(name), value)),
+            ),
+        ]
+    } else {
+        let [load, record] = functions;
+        vec![
+            MontyObject::int(BATCH),
+            MontyObject::int(LIMIT),
+            load,
+            record,
+        ]
+    };
     let mut progress = code
         .start(
-            vec![
-                MontyObject::int(BATCH),
-                MontyObject::int(LIMIT),
-                MontyObject::function("load_quotes", None),
-                MontyObject::function("record_total", None),
-            ],
+            inputs,
             ResourceTracker::default(),
             PrintWriter::CollectString(&mut stdout, Some(16384)),
         )
@@ -118,7 +161,35 @@ async fn monty_run(code: MontyRun, p: Arc<RequestProvider>) -> String {
                 let pp = p.clone();
                 tokio::spawn(async move {
                     let value = if load {
-                        pp.load_quotes(batch).await.map(|b| common::object(&b))
+                        pp.load_quotes(batch).await.map(|b| {
+                            if *COMMON.get().unwrap() {
+                                let class = MontyObject::class_type(
+                                    "Quote",
+                                    MontyUuid::from_u128(3),
+                                    true,
+                                    false,
+                                    [],
+                                );
+                                MontyObject::list(b.rows().iter().enumerate().map(|(i, q)| {
+                                    MontyObject::class_instance(
+                                        class.clone(),
+                                        MontyUuid::from_u128(i as u128 + 1000),
+                                        [
+                                            (
+                                                MontyObject::string("unit_price_cents"),
+                                                MontyObject::int(q.unit_price_cents),
+                                            ),
+                                            (
+                                                MontyObject::string("quantity"),
+                                                MontyObject::int(q.quantity),
+                                            ),
+                                        ],
+                                    )
+                                }))
+                            } else {
+                                common::object(&b)
+                            }
+                        })
                     } else {
                         pp.record_total(batch, total.unwrap())
                             .await
@@ -222,8 +293,9 @@ impl Prepared {
     }
 }
 fn snapshot(engine: &str, case: &str, n: usize, count: usize, phase: &str) {
+    let code = std::env::var("MINIPY_HOLD_CODE").unwrap_or_else(|_| "unique".into());
     common::emit(
-        &serde_json::json!({"kind":"hold","engine":engine,"case":case,"rows":n,"count":count,"phase":phase,"allocation":common::allocation(),"physical":common::physical(),"input_payload_bytes":if phase=="load_wait" {n*16*count} else {0}}),
+        &serde_json::json!({"kind":"hold","engine":engine,"case":case,"rows":n,"count":count,"code":code,"phase":phase,"allocation":common::allocation(),"physical":common::physical(),"input_payload_bytes":if phase=="load_wait" {n*16*count} else {0}}),
     );
 }
 async fn hold(engine: &str, case: &str, source: &str, n: usize, count: usize) {
@@ -231,6 +303,9 @@ async fn hold(engine: &str, case: &str, source: &str, n: usize, count: usize) {
     let load = Arc::new(common::Gate::new());
     let record = Arc::new(common::Gate::new());
     snapshot(engine, case, n, count, "startup");
+    let code_mode = std::env::var("MINIPY_HOLD_CODE").unwrap_or_else(|_| "unique".into());
+    assert!(["unique", "shared"].contains(&code_mode.as_str()));
+    let shared = (code_mode == "shared").then(|| prepare(engine, source, case));
     let mut jobs = Vec::new();
     for _ in 0..count {
         let mut p = RequestProvider::ready(n, Duration::ZERO);
@@ -239,7 +314,10 @@ async fn hold(engine: &str, case: &str, source: &str, n: usize, count: usize) {
         let p = Arc::new(p);
         let expected = expected(case, n);
         // Distinct concrete task futures; no inactive Monty union retained by other engines.
-        match prepare(engine, source, case) {
+        match shared
+            .as_ref()
+            .map_or_else(|| prepare(engine, source, case), Prepared::duplicate)
+        {
             Prepared::Reference(c) => jobs.push(tokio::task::spawn_local(async move {
                 assert_eq!(reference_run(c, p).await, expected)
             })),
@@ -263,6 +341,7 @@ async fn hold(engine: &str, case: &str, source: &str, n: usize, count: usize) {
     for j in jobs {
         j.await.unwrap();
     }
+    drop(shared);
     snapshot(engine, case, n, count, "reclaimed");
 }
 // Two synthetic mixes, 40 arrivals at 500 us intervals per 100 ms window.
@@ -292,6 +371,12 @@ async fn mixed(engine: &str, mix: &str, mode: &str, reps: usize) {
         .parse()
         .unwrap();
     let hold = mode == "mixed-hold";
+    let inflight: usize = std::env::var("MINIPY_INFLIGHT")
+        .unwrap_or_else(|_| "40".into())
+        .parse()
+        .unwrap();
+    assert!((1..=40).contains(&inflight));
+    let admission = Arc::new(tokio::sync::Semaphore::new(inflight));
     assert_eq!(cfg!(feature = "allocation-diagnostics"), hold);
     let sources: Vec<_> = shapes.iter().map(|(case, _, _)| source(case)).collect();
     let expected_outputs: Vec<_> = shapes
@@ -336,6 +421,7 @@ async fn mixed(engine: &str, mix: &str, mode: &str, reps: usize) {
             .map(|(_, _, n)| n)
             .sum();
         for arrival in 0..40 {
+            let admission = admission.clone();
             let shape = schedule[(arrival * 17) % 40];
             let (case, n, _) = shapes[shape];
             let s = sources[shape].clone();
@@ -361,6 +447,7 @@ async fn mixed(engine: &str, mix: &str, mode: &str, reps: usize) {
                         if !hold {
                             tokio::time::sleep_until(due).await;
                         }
+                        let _permit = admission.acquire_owned().await.unwrap();
                         let prep_start = Instant::now();
                         let code = code.unwrap_or_else(|| ($compile)(&s));
                         let prepare_ns = common::now_ns(prep_start);
@@ -411,7 +498,7 @@ async fn mixed(engine: &str, mix: &str, mode: &str, reps: usize) {
         } else {
             for (case, n, prepare_ns, latency_ns) in rows {
                 common::emit(&serde_json::json!({"kind":"mixed","engine":engine,
-                    "mix":mix,"delay_us":delay_us,"mode":mode,"sample":sample,"case":case,"rows":n,
+                    "mix":mix,"delay_us":delay_us,"mode":mode,"sample":sample,"case":case,"rows":n,"inflight":inflight,
                     "prepare_ns":prepare_ns,"latency_ns":latency_ns,
                     "batch_wall_ns":wall_ns,"batch_cpu_ns":cpu_ns,"overloaded":wall_ns>100_000_000,"completed":true}));
             }
@@ -420,6 +507,9 @@ async fn mixed(engine: &str, mix: &str, mode: &str, reps: usize) {
     }
 }
 fn main() {
+    COMMON
+        .set(std::env::var("MINIPY_COMMON").is_ok_and(|v| v == "1"))
+        .unwrap();
     let mut options = ScriptLimits::default();
     if let Ok(chunk) = std::env::var("MINIPY_CHUNK") {
         options.limits.chunk = chunk.parse().unwrap();

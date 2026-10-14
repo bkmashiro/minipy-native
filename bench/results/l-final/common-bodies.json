@@ -1,0 +1,5 @@
+{
+  "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+  "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+  "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+}

@@ -1,0 +1,120 @@
+{
+  "scope": "Offline deterministic source-level accounting for the actual successful input corpus; not instrumented timing/hardware-counter evidence",
+  "producer": {
+    "price": "(i*37)%1000",
+    "quantity": "i%9-2",
+    "price_limit": 700,
+    "batch_id": 17
+  },
+  "rows": [
+    {
+      "case": "weighted",
+      "rows": 0,
+      "quantity_positive": 0,
+      "price_filter_hits": 0,
+      "selected_rows": 0,
+      "accumulator_multiplications": 0,
+      "accumulator_additions": 0,
+      "state_updates": 0,
+      "selected_fraction": null
+    },
+    {
+      "case": "weighted",
+      "rows": 100,
+      "quantity_positive": 66,
+      "price_filter_hits": 48,
+      "selected_rows": 48,
+      "accumulator_multiplications": 48,
+      "accumulator_additions": 48,
+      "state_updates": 0,
+      "selected_fraction": 0.48
+    },
+    {
+      "case": "weighted",
+      "rows": 10000,
+      "quantity_positive": 6666,
+      "price_filter_hits": 4650,
+      "selected_rows": 4650,
+      "accumulator_multiplications": 4650,
+      "accumulator_additions": 4650,
+      "state_updates": 0,
+      "selected_fraction": 0.465
+    },
+    {
+      "case": "weighted",
+      "rows": 100000,
+      "quantity_positive": 66666,
+      "price_filter_hits": 46710,
+      "selected_rows": 46710,
+      "accumulator_multiplications": 46710,
+      "accumulator_additions": 46710,
+      "state_updates": 0,
+      "selected_fraction": 0.4671
+    },
+    {
+      "case": "stateful",
+      "rows": 0,
+      "quantity_positive": 0,
+      "price_filter_hits": 0,
+      "selected_rows": 0,
+      "accumulator_multiplications": 0,
+      "accumulator_additions": 0,
+      "state_updates": 0,
+      "selected_fraction": null
+    },
+    {
+      "case": "stateful",
+      "rows": 100,
+      "quantity_positive": 66,
+      "price_filter_hits": 48,
+      "selected_rows": 12,
+      "accumulator_multiplications": 12,
+      "accumulator_additions": 12,
+      "state_updates": 12,
+      "selected_fraction": 0.12
+    },
+    {
+      "case": "stateful",
+      "rows": 10000,
+      "quantity_positive": 6666,
+      "price_filter_hits": 4650,
+      "selected_rows": 18,
+      "accumulator_multiplications": 18,
+      "accumulator_additions": 18,
+      "state_updates": 18,
+      "selected_fraction": 0.0018
+    },
+    {
+      "case": "stateful",
+      "rows": 100000,
+      "quantity_positive": 66666,
+      "price_filter_hits": 46710,
+      "selected_rows": 78,
+      "accumulator_multiplications": 78,
+      "accumulator_additions": 78,
+      "state_updates": 78,
+      "selected_fraction": 0.00078
+    }
+  ],
+  "mixes": [
+    {
+      "mix": "light",
+      "requests": 40,
+      "visited_rows": 221200,
+      "selected_rows": 9888,
+      "accumulator_multiplications": 9888,
+      "accumulator_additions": 9888,
+      "state_updates": 204
+    },
+    {
+      "mix": "scan",
+      "requests": 40,
+      "visited_rows": 442400,
+      "selected_rows": 19776,
+      "accumulator_multiplications": 19776,
+      "accumulator_additions": 19776,
+      "state_updates": 408
+    }
+  ],
+  "exclusions": "Receipt +batch and scalar arithmetic not counted in accumulator operation columns; input materialization and predicate execution still cost CPU even for rejected rows"
+}

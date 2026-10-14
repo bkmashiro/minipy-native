@@ -1,0 +1,18 @@
+{
+  "independent_numeric_checks": 1810,
+  "retained_raw_counts": {
+    "speed": 60696,
+    "cpython": 10860,
+    "pyodide": 5430,
+    "common-primary": 14490,
+    "common-cpython": 5430,
+    "common-pyodide": 5430,
+    "assembly": 12120,
+    "assembly-v2": 12120,
+    "assembly-full": 7272,
+    "scalar-recheck": 12012
+  },
+  "retained_speed_observations": 145860,
+  "result": "pass",
+  "scope": "means, whole batch CPU once, nearest-rank tails, overload, finite-window throughput, physical memory and corrected assembly boundaries independently recomputed; SVG XML parses"
+}

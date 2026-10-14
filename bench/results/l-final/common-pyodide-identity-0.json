@@ -1,0 +1,254 @@
+{
+  "init": {
+    "kind": "initialization",
+    "engine": "pyodide-node",
+    "round": 0,
+    "runtime_init_wall_ns": 1121450866,
+    "runtime_init_cpu_ns": 1486442000,
+    "version": "314.0.7",
+    "python": "3.14.2 (main, Sep 14 2026, 03:03:51) [Clang 23.0.0git (https:/github.com/llvm/llvm-project e5927fecf8a6ce89e1a4eac5b8",
+    "node": "v24.18.1",
+    "physical": {
+      "rss_bytes": 162586624,
+      "pss_bytes": 162021376,
+      "pid": 10099,
+      "node_memory": {
+        "rss": 161472512,
+        "heapTotal": 36651008,
+        "heapUsed": 20348216,
+        "external": 47305504,
+        "arrayBuffers": 12417279
+      }
+    },
+    "includes": "dynamic import, WASM compile/instantiate, stdlib initialization, benchmark Python imports; Node process startup separately recorded by controller"
+  },
+  "commands": [
+    {
+      "engine": "pyodide-resident",
+      "kind": "speed",
+      "case": "scalar",
+      "rows": 0,
+      "reps": 21,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-prepared",
+      "kind": "speed",
+      "case": "scalar",
+      "rows": 0,
+      "reps": 21,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-resident",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 100,
+      "reps": 21,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-prepared",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 100,
+      "reps": 21,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-resident",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100,
+      "reps": 21,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-prepared",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100,
+      "reps": 21,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-resident",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 10000,
+      "reps": 21,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-prepared",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 10000,
+      "reps": 21,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-resident",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100000,
+      "reps": 21,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-prepared",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100000,
+      "reps": 21,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-resident",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-prepared",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-resident",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-prepared",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-resident",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-prepared",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-resident",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    },
+    {
+      "engine": "pyodide-prepared",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5,
+      "bodies": {
+        "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0\n",
+        "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n",
+        "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"
+      }
+    }
+  ],
+  "raw_count": 1810,
+  "input": "same Python signed-64-array producer and tuple conversion, inside measured WASM execution; only small JSON request config crosses JS boundary",
+  "cpu": "Node process.cpuUsage includes Node + WASM; direct readings before/after request/window; no division of command CPU to fabricate per-request CPU"
+}

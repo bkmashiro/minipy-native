@@ -1,0 +1,109 @@
+{
+  "commands": [
+    [
+      "./speed",
+      "native",
+      "scalar",
+      "warm",
+      "0",
+      "1001"
+    ],
+    [
+      "./speed",
+      "interpreter",
+      "scalar",
+      "warm",
+      "0",
+      "1001"
+    ],
+    [
+      "./speed",
+      "monty",
+      "scalar",
+      "warm",
+      "0",
+      "1001"
+    ],
+    [
+      "./speed",
+      "reference",
+      "scalar",
+      "warm",
+      "0",
+      "1001"
+    ],
+    [
+      "./speed",
+      "native",
+      "scalar",
+      "warm",
+      "0",
+      "1001"
+    ],
+    [
+      "./speed",
+      "reference",
+      "scalar",
+      "warm",
+      "0",
+      "1001"
+    ],
+    [
+      "./speed",
+      "monty",
+      "scalar",
+      "warm",
+      "0",
+      "1001"
+    ],
+    [
+      "./speed",
+      "interpreter",
+      "scalar",
+      "warm",
+      "0",
+      "1001"
+    ],
+    [
+      "./speed",
+      "monty",
+      "scalar",
+      "warm",
+      "0",
+      "1001"
+    ],
+    [
+      "./speed",
+      "reference",
+      "scalar",
+      "warm",
+      "0",
+      "1001"
+    ],
+    [
+      "./speed",
+      "native",
+      "scalar",
+      "warm",
+      "0",
+      "1001"
+    ],
+    [
+      "./speed",
+      "interpreter",
+      "scalar",
+      "warm",
+      "0",
+      "1001"
+    ]
+  ],
+  "raw_count": 12012,
+  "initialization_processes": 6,
+  "source_sha256": {
+    "final_python.py": "6e2b64135b7d3770926aa524773715ef439d307864e24741dd1dbe8a15a3b788",
+    "final_pyodide.mjs": "9d6f8d331ad71bbd7421b6381aa2ad102e712dca9bead0319ec0d682b03eb7cb",
+    "final_probes.py": "1d27d002ad93e4ba8e7c09bf941791edf3715bbdfc8ed05d9ad9a3a9e28727ef"
+  },
+  "original_speed_sha256": "4ceab23cc1a745c6ead17c02f064e0acf3562c110374b5b4f270c0f3a47904b7",
+  "cpu": "whole in-VM controller SELF + reaped CHILDREN; direct wall including child teardown; no SSH latency"
+}

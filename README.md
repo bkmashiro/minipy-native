@@ -54,6 +54,7 @@ Engineering compile bounds are 16 KiB of source, 512 frontend nodes, depth 32, 3
 - [Experiments and redesign record](docs/experiments.md)
 - [Implementation mission and handoff](docs/implementation.md)
 - [Integrated cost, density and finite-load evidence](docs/performance-v2.md)
+- [Frozen end-to-end benchmark, Python lifecycles and figures](docs/benchmark-overview.md)
 - [Execution reference and bounded strategy qualification](docs/stage-strategy-experiment.md)
 - [阶段性能结论与使用建议（中文）](docs/stage-performance-conclusion.md)
 - [Bounded follow-up candidates and pending API decisions](docs/next-steps.md)
@@ -62,3 +63,5 @@ Engineering compile bounds are 16 KiB of source, 512 frontend nodes, depth 32, 3
 D's current results and cost trade-offs are in [Experiments](docs/experiments.md#d-script-entry-and-bounded-performance-iteration-2026-10-14). Small source-cold scripts still lose to ordinary Monty. General continuations increase cold compilation cost and code footprint; prepared execution and large typed workloads improve. The observer API is now `QuoteWeak = Weak<Box<[Quote]>>`, and scalar input mismatch uses `TaskError::Input`. Explicit old Weak types or exhaustive error matches need migration.
 
 No packages, dynamic imports, generic object model, automatic result replay, or cross-task fusion in the first slice. Code and mutable task state are separate. Native lowering remains part of the trusted computing base.
+
+Final frozen-version evidence includes actual Linux ARM64 MiniPy codegen/typed IR, ordinary Monty, CPython spawn/resident/prewarm+fork and Node/Pyodide resident lifecycles. Common source bodies and a checked handwritten AArch64 reference are recorded separately. [Overview figure](docs/figures/benchmark-overview.svg) and [Python lifecycle figure](docs/figures/benchmark-python-lifecycles.svg) use current-round raw only; cold preparation, explicit reuse, finite-window overload and waiting PSS have distinct boundaries.

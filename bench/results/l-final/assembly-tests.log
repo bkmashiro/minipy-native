@@ -1,0 +1,9 @@
+
+running 4 tests
+test assembly::tests::differential_boundaries_and_chunks ... ok
+test common::tests::explicit_list_clear_preserves_receipt_and_del_is_unsupported ... ok
+test common::tests::ordinary_monty_runs_both_user_programs ... ok
+test tests::full_contract_budget_permission_cancel_and_late_completion ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+

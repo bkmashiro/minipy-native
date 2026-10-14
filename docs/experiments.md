@@ -580,3 +580,41 @@ The exclusively started existing VM is restored off. Full accounting and stoppin
 decision: [final-hotspot-round.md](final-hotspot-round.md),
 `bench/results/k-final-hotspot/`. L owns the final frozen-version benchmark/plots.
 
+## L: frozen end-to-end benchmark and figures (2026-10-14)
+
+Freeze production `8a293ec54c6e7aed72e23a5c1557a3bdc3b44f60`; `src/` and dependency
+locks remain unchanged. Actual serial Linux ARM64 execution covers 60,696 primary
+requests (108 speed cells), 360 primary allocator/physical snapshots (120 cells),
+CPython 3.14.7 spawn/resident/prepared/prewarm+fork, and Pyodide 314.0.7 on
+task-local Node 24.18.1. No affinity change, Docker, CI or global package install.
+
+Add 25,350 common-body observations: MiniPy/Monty read identical body bytes;
+CPython/Pyodide add only an explicit async-function wrapper and indentation,
+asserting an exact body round trip. Data adapters and their costs are explicit.
+At the pinned Monty revision the initial namedtuple Tools adapter fails its
+attribute lookup smoke; retain the failure and use existing module/eager
+HostClass interfaces without rewriting the program algorithm.
+
+A real handwritten checked AArch64 kernel retains multiply/add overflow,
+predicate order and chunk boundaries. Keep the initial 108B version and one
+160B mode-hoisting refinement. The latter roughly matches the optimized Rust
+weighted kernel, while stateful remains slower; no physical-optimum claim.
+Remove an unnecessary out-of-timer retained fixture from full-path harness;
+final full values use 7,272 separately paired observations, kernel-only values
+use their own valid cohort. All prior raw is retained, not pooled as a winner.
+
+Record a bounded 12,012-row longer warm-scalar recheck separately because tiny
+primary values vary by round. Independent process bootstrap probes include
+actual CPython/Node startup, import/init, IPC where applicable and reap. Treat
+stateful100k as predicate-dominated: only 78 selected rows execute mul/add for
+the actual generated input, not an arithmetic-heavy workload inferred from N.
+
+Report, raw plans, identity, hashes, commands and two SVG/PNG figures:
+[benchmark-overview.md](benchmark-overview.md), `bench/results/l-final/`,
+`tools/final_{summary,workload,plot,report}.py`. Waiting process-tree PSS is
+separate from compiler/execution cost, source and isolation equivalence.
+Five reduction/wrapper tests and real Linux assembly/Host tests pass; frozen
+native/IR/reference cancellation, late completion, owner release and effect
+errors pass on macOS and actual Linux. Final focused review/recomputation and
+VM-off verification are delivered with the final evidence handoff.
+

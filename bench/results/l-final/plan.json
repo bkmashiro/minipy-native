@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "runtime_commit": "8a293ec54c6e7aed72e23a5c1557a3bdc3b44f60",
+  "question": "Frozen MiniPy end-to-end cost, explicit reuse, finite-window scheduling and waiting retention; separately scoped CPython/Pyodide lifecycles",
+  "host": "Existing Linux ARM64 Alpine VM, 2 vCPU/2048 MiB on Apple M4; exclusive serial campaigns; restore off",
+  "primary_engines": ["native", "interpreter", "monty", "reference"],
+  "reference_scope": "Precompiled fixed program; no source preparation; not a general compiler or universal lower bound",
+  "shapes": [["scalar",0],["weighted",0],["stateful",0],["weighted",100],["stateful",100],["weighted",10000],["stateful",10000],["weighted",100000],["stateful",100000]],
+  "shape_modes": ["cold","warm"],
+  "shape_samples": 101,
+  "shape_keep_from": 21,
+  "mixed": {"light_weights":[24,8,4,2,2],"scan_weights":[8,16,8,4,4],"shapes":[["scalar",0],["weighted",100],["stateful",100],["weighted",10000],["stateful",100000]],"arrivals":40,"spacing_us":500,"window_ms":100,"modes":[["mixed-cold",0],["mixed-cold",1000],["mixed-warm",0]],"samples":9,"keep_from":2,"default_inflight":40,"capacity_probe":{"mix":"scan","mode":"mixed-cold","delay_us":1000,"inflight":[1,8,32]}},
+  "memory": {"engines":["native","interpreter","reference","monty","monty-clear"],"case":"weighted","rows":10000,"tasks":[1,8,32],"code":["unique","shared"],"phases":["startup","load_wait","record_wait","reclaimed"],"separate_allocator_binary":true,"rounds":3},
+  "rounds":3,
+  "order":"rotate engines once per round, reverse odd round; no simultaneous benchmarks",
+  "speed_expected_rows":60696,
+  "memory_expected_rows":360,
+  "secondary": {"engines":["cpython-spawn","cpython-resident","cpython-prepared","cpython-fork","pyodide-resident","pyodide-prepared"],"shapes":[["scalar",0],["weighted",100],["stateful",100],["weighted",10000],["stateful",100000]],"shape_samples":21,"shape_keep_from":1,"rounds":3,"mixed_samples":5,"mixed_keep_from":1,"input":"deterministic producer builds signed-64 array then tuple list inside worker; small JSON request config only","status":"planned; runtime availability must be verified; missing cells explicit"},
+  "metrics":"Direct wall and total process CPU per completed task; phase wall attribution only; pooled nearest-rank short p50/p95/p99; completed counts; window throughput and overload; allocator requested bytes + process/tree RSS/PSS snapshots, no density capacity extrapolation",
+  "uncertainty":"Three actual round summaries/range, not synthetic CI; retain all raw warmup/overload/failure observations",
+  "no_claims":["sustained production SLO","equivalent sandbox/authority for CPython/Pyodide","full Python compatibility","10-byte input scaling","browser Pyodide measured","historical optimization speedup from this unmatched round"]
+}

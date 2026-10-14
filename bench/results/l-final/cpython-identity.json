@@ -1,0 +1,929 @@
+{
+  "version": "3.14.7 (main, Aug 15 2026, 07:18:27) [GCC 15.2.0]",
+  "executable": "/usr/bin/python3",
+  "platform": "Linux-6.18.52-0-virt-aarch64-with-musl1",
+  "cpu_accounting": "getrusage SELF + reaped CHILDREN; no double-counted child self-report",
+  "commands": [
+    {
+      "round": 0,
+      "engine": "cpython-spawn",
+      "kind": "speed",
+      "case": "scalar",
+      "rows": 0,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-resident",
+      "kind": "speed",
+      "case": "scalar",
+      "rows": 0,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-prepared",
+      "kind": "speed",
+      "case": "scalar",
+      "rows": 0,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-fork",
+      "kind": "speed",
+      "case": "scalar",
+      "rows": 0,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-spawn",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-resident",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-prepared",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-fork",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-spawn",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-resident",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-prepared",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-fork",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-spawn",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 10000,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-resident",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 10000,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-prepared",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 10000,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-fork",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 10000,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-spawn",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100000,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-resident",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100000,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-prepared",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100000,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-fork",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100000,
+      "reps": 21
+    },
+    {
+      "round": 0,
+      "engine": "cpython-spawn",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 0,
+      "engine": "cpython-resident",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 0,
+      "engine": "cpython-prepared",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 0,
+      "engine": "cpython-fork",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 0,
+      "engine": "cpython-spawn",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 0,
+      "engine": "cpython-resident",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 0,
+      "engine": "cpython-prepared",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 0,
+      "engine": "cpython-fork",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 0,
+      "engine": "cpython-spawn",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 0,
+      "engine": "cpython-resident",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 0,
+      "engine": "cpython-prepared",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 0,
+      "engine": "cpython-fork",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 0,
+      "engine": "cpython-spawn",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 0,
+      "engine": "cpython-resident",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 0,
+      "engine": "cpython-prepared",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 0,
+      "engine": "cpython-fork",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-spawn",
+      "kind": "speed",
+      "case": "scalar",
+      "rows": 0,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-fork",
+      "kind": "speed",
+      "case": "scalar",
+      "rows": 0,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-prepared",
+      "kind": "speed",
+      "case": "scalar",
+      "rows": 0,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-resident",
+      "kind": "speed",
+      "case": "scalar",
+      "rows": 0,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-spawn",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-fork",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-prepared",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-resident",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-spawn",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-fork",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-prepared",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-resident",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-spawn",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 10000,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-fork",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 10000,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-prepared",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 10000,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-resident",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 10000,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-spawn",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100000,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-fork",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100000,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-prepared",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100000,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-resident",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100000,
+      "reps": 21
+    },
+    {
+      "round": 1,
+      "engine": "cpython-spawn",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-fork",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-prepared",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-resident",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-spawn",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-fork",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-prepared",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-resident",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-spawn",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-fork",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-prepared",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-resident",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-spawn",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-fork",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-prepared",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 1,
+      "engine": "cpython-resident",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-prepared",
+      "kind": "speed",
+      "case": "scalar",
+      "rows": 0,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-fork",
+      "kind": "speed",
+      "case": "scalar",
+      "rows": 0,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-spawn",
+      "kind": "speed",
+      "case": "scalar",
+      "rows": 0,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-resident",
+      "kind": "speed",
+      "case": "scalar",
+      "rows": 0,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-prepared",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-fork",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-spawn",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-resident",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-prepared",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-fork",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-spawn",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-resident",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-prepared",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 10000,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-fork",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 10000,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-spawn",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 10000,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-resident",
+      "kind": "speed",
+      "case": "weighted",
+      "rows": 10000,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-prepared",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100000,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-fork",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100000,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-spawn",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100000,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-resident",
+      "kind": "speed",
+      "case": "stateful",
+      "rows": 100000,
+      "reps": 21
+    },
+    {
+      "round": 2,
+      "engine": "cpython-prepared",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-fork",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-spawn",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-resident",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-prepared",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-fork",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-spawn",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-resident",
+      "kind": "mixed",
+      "mix": "light",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-prepared",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-fork",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-spawn",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-resident",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 0,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-prepared",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-fork",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-spawn",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    },
+    {
+      "round": 2,
+      "engine": "cpython-resident",
+      "kind": "mixed",
+      "mix": "scan",
+      "delay_us": 1000,
+      "inflight": 40,
+      "reps": 5
+    }
+  ],
+  "raw_count": 10860,
+  "completed_commands": 108,
+  "source": {
+    "scalar": "value = batch_id * 2 + price_limit\nprint(value)\nprint(value > 0)\nvalue > 0",
+    "weighted": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote[1] > 0 and quote[0] <= price_limit:\n        amount = quote[0] * quote[1]\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)",
+    "stateful": "quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote[1] > 0 and quote[0] <= price_limit and quote[0] >= previous:\n        amount = quote[0] * quote[1]\n        total += amount\n        previous = quote[0]\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)"
+  },
+  "setup": "controller imports excluded from steady-process rows; spawn includes full child interpreter/import/init and teardown; fork includes fork, child loop and teardown; resident and prepared keep interpreter process alive",
+  "differences": "ordinary Python ints, tuple objects, blocking scans, asyncio sleeps, no MiniPy fuel/capabilities; bounded successful corpus only"
+}
