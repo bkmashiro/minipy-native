@@ -57,7 +57,7 @@
 | weighted 10k | 434.98→332.64 | 395.63→227.96 |
 | stateful 100k | 2502.19→1294.00 | 2475.68→1161.32 |
 
-小输入没有一律改善：scalar warm +71.12%，绝对 +2.98 µs；weighted 100 cold +11.73 µs，三配对上升一个下降。stateful 100 cold +3.15%，三降一升。大扫描八个 cold/warm 逐配对全部改善。100k stateful 多数行只执行 predicate，不能泛化成所有重算术任务的 crossover。
+小输入没有一律改善：scalar warm +71.12%，绝对 +2.98 µs；weighted 100 cold +11.73 µs，三配对上升一个下降。stateful 100 cold +3.15%，三降一升。两大扫描 shape 的 cold/warm 四个单元、各四配对，全部改善。100k stateful 多数行只执行 predicate，不能泛化成所有重算术任务的 crossover。
 
 Linux cold prepare 壁钟 scalar 38.77→37.08、weighted 100 60.88→68.78、stateful 100 71.29→76.49、weighted 10k 52.46→67.49、stateful 100k 43.43→48.94 µs。Tape preparation 成本真实存在，大扫描执行支付了这部分；不从 warm 结果推定源码有缓存命中。
 
@@ -131,3 +131,9 @@ python3 tools/compact_verify.py HOST KEY KNOWN_HOSTS
 Runner 默认拒绝覆盖 raw；复现用新 result 目录。Baseline 使用8395039的源码与同版 harness，前端三个阶段在 identity 中，候选源 patch/hash 在 Linux identity。完整构建命令、最终 source identity、实际 Linux executable hashes/commands 和日志均另存。无新依赖或全套跨引擎 campaign。
 
 停止在当前提案验收与一次固定快照 focused review，不实施提案2服务worker/permit、提案3scanJIT、自动策略/缓存、JSON/字符串或新backend。
+
+### 固定快照审查与环境恢复
+
+唯一独立只读审查固定签名 `6c150eaf7aa0f4d513ca3f2a7dbd9d9269ceefc2`，native Hermes delegation 实际返回模型 `gpt-6-luna` / openai-codex，无替代。无 blocker；独立重算 summary 完全相等，定向 interpreter 14 tests 通过，核对 baseline/src 身份，未启动 VM 或重跑 benchmark，也未改文件。唯一非阻塞发现是原始 ELF section/test log 的尾随空白或末尾空行，保留原始证据格式，源码/docs/tools scoped `git diff --check 8395039..HEAD` 通过。审查之后只有此记录和 README措辞，不改 runtime/tests/raw。
+
+主控 authenticated poweroff 恢复 VM off，原 vfkit session exit=0，restful endpoint 停止，运行进程匹配=0。结果见 `focused-review.json`。后续签名发布与远端精确 HEAD 回读交接在 Kanban；不追加另一轮优化。

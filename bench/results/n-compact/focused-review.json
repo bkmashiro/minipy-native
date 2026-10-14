@@ -1,0 +1,25 @@
+{
+  "reviewed_commit": "6c150eaf7aa0f4d513ca3f2a7dbd9d9269ceefc2",
+  "actual_model": "gpt-6-luna",
+  "provider": "openai-codex",
+  "mode": "one native Hermes read-only focused review",
+  "blockers": [],
+  "non_blocking": ["Raw section/test-log text contains trailing whitespace or blank EOF lines. Preserve original evidence formatting; source/docs/tools scoped diff check passes."],
+  "independent_validation": {
+    "interpreter_tests_passed": 14,
+    "summary_recomputed_exact": true,
+    "baseline_8395039_vs_review_8a293ec_src_equal": true,
+    "benchmark_rerun": false,
+    "vm_started_by_reviewer": false,
+    "workspace_modified": false
+  },
+  "controller_validation": {
+    "macos_tests_passed": 66,
+    "actual_linux_tests_passed": 66,
+    "speed_and_allocator_force_rebuild_byte_identical": true,
+    "vm_restored_off": true,
+    "vm_session_exit_code": 0,
+    "vfkit_running_matches": 0,
+    "restful_endpoint_stopped": true
+  }
+}

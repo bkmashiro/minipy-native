@@ -655,3 +655,11 @@ L figures remain a frozen older-version cohort, not evidence about N. Stop after
 one focused fixed-snapshot review and signed publication, without new follow-up
 cards or implementing proposals 2/3.
 
+Focused read-only review fixed signed `6c150ea`, actual delegated model
+gpt-6-luna/openai-codex: no blocker, independent summary exactly matches and
+14 interpreter tests pass. Only raw log/section whitespace is non-blocking;
+source/docs/tools scoped diff check passes and evidence formatting is preserved.
+After review only documentation/handoff records changed. Guest poweroff verified
+by vfkit exit=0, stopped restful endpoint and zero matching process. See
+`bench/results/n-compact/focused-review.json`.
+
