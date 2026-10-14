@@ -1,0 +1,20 @@
+diff --git a/src/interpreter.rs b/src/interpreter.rs
+index 13d8c5e..bbd301e 100644
+--- a/src/interpreter.rs
++++ b/src/interpreter.rs
+@@ -110,6 +110,15 @@ fn flatten(statements: Vec<Stmt>, ops: &mut Vec<Op>) {
+                 let branch = ops.len();
+                 ops.push(Op::Branch(e, 0));
+                 flatten(yes, ops);
++                // With no else arm, successful predicates already fall through
++                // to the join. Do not retain or dispatch an unconditional jump.
++                if no.is_empty() {
++                    let end = ops.len();
++                    if let Op::Branch(_, target) = &mut ops[branch] {
++                        *target = end;
++                    }
++                    continue;
++                }
+                 let jump = ops.len();
+                 ops.push(Op::Jump(0));
+                 let no_start = ops.len();

@@ -40,6 +40,8 @@ cargo clippy --all-targets -- -D warnings
 
 The demonstration Host injects `batch_id=7`, `price_limit=700`. Its provider performs real delayed asynchronous operations; scripts without a Tool have no provider call. The source determines generated computation, not a recognized business template. `--ir` prints actual Cranelift IR. Errors exit unsuccessfully and preserve earlier task output. Library Hosts can use `CodeUnit::compile_script(source, input_schema)` and `runtime::execute_script` for a declared schema, including zero inputs.
 
+Library Hosts may explicitly use `InterpreterUnit::prepare_script` and `interpreter::execute_script` instead. This lightweight typed-IR path shares the frontend, typed buffers, Tool authority, cancellation, budgets, checked arithmetic and bounded stdout contract; it skips native compilation and interprets the prepared statements/expressions. The CLI stays native. There is no automatic backend choice, source cache or hot-loop JIT. Cold small scripts favor interpretation; prepared reuse and long scans can favor native. Integrated mixed-cost measurements, waiting memory and a reverted local optimization are in [H average-cost experiment](docs/average-cost-experiment.md).
+
 Comparisons live in a separate `bench/` crate. It needs Rust 1.96 and pins Monty to an upstream commit containing a fix missing from its published 1.1.0 package. Reproduction commands and limitations are in [Experiments](docs/experiments.md). At 10,000 rows the weighted native cold path beats ordinary Monty, but loses to Monty plus a parameterized typed-buffer filter/product/sum helper. That finite primitive does not support the cross-row stateful variant. Earlier fixture-specific Rust helpers remain handwritten performance floors. These results do not decide the value of general compiled user logic or justify assuming cache reuse.
 
 ## Implemented boundary
@@ -53,7 +55,7 @@ Engineering compile bounds are 16 KiB of source, 512 frontend nodes, depth 32, 3
 - [Implementation mission and handoff](docs/implementation.md)
 - [Integrated cost, density and finite-load evidence](docs/performance-v2.md)
 - [Bounded follow-up candidates and pending API decisions](docs/next-steps.md)
-- [Current D optimization pointer](docs/optimization-roadmap.md)
+- [Current optimization pointer and historical decisions](docs/optimization-roadmap.md)
 
 D's current results and cost trade-offs are in [Experiments](docs/experiments.md#d-script-entry-and-bounded-performance-iteration-2026-10-14). Small source-cold scripts still lose to ordinary Monty. General continuations increase cold compilation cost and code footprint; prepared execution and large typed workloads improve. The observer API is now `QuoteWeak = Weak<Box<[Quote]>>`, and scalar input mismatch uses `TaskError::Input`. Explicit old Weak types or exhaustive error matches need migration.
 

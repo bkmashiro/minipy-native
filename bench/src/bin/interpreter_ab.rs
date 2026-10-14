@@ -235,13 +235,171 @@ async fn hold(engine: &str, case: &str, source: &str, n: usize, count: usize) {
     }
     snapshot(engine, case, n, count, "reclaimed");
 }
+// Two synthetic mixes, 40 arrivals at 500 us intervals per 100 ms window.
+// Latency starts at planned arrival, including compiler/CPU queueing.
+const LIGHT: &[(&str, usize, usize)] = &[
+    ("scalar", 0, 24),
+    ("weighted", 100, 8),
+    ("stateful", 100, 4),
+    ("weighted", 10000, 2),
+    ("stateful", 100000, 2),
+];
+const SCAN: &[(&str, usize, usize)] = &[
+    ("scalar", 0, 8),
+    ("weighted", 100, 16),
+    ("stateful", 100, 8),
+    ("weighted", 10000, 4),
+    ("stateful", 100000, 4),
+];
+async fn mixed(engine: &str, mix: &str, mode: &str, reps: usize) {
+    let shapes = match mix {
+        "light" => LIGHT,
+        "scan" => SCAN,
+        _ => panic!("mix"),
+    };
+    let delay_us: u64 = std::env::var("MINIPY_TOOL_DELAY_US")
+        .unwrap_or_else(|_| "0".into())
+        .parse()
+        .unwrap();
+    let hold = mode == "mixed-hold";
+    assert_eq!(cfg!(feature = "allocation-diagnostics"), hold);
+    let sources: Vec<_> = shapes.iter().map(|(case, _, _)| source(case)).collect();
+    let expected_outputs: Vec<_> = shapes
+        .iter()
+        .map(|(case, n, _)| Rc::<str>::from(expected(case, *n)))
+        .collect();
+    let memory_snapshot = |phase: &str| {
+        common::emit(&serde_json::json!({
+        "kind":"hold","engine":engine,"mix":mix,"count":40,"phase":phase,
+        "allocation":common::allocation(),"physical":common::physical(),
+        "input_payload_bytes":if phase == "load_wait" {shapes.iter().map(|(_, n, c)| n*c*16).sum::<usize>()} else {0}}))
+    };
+    let warm: Vec<_> = if mode == "mixed-warm" {
+        sources.iter().map(|s| prepare(engine, s)).collect()
+    } else {
+        Vec::new()
+    };
+    for sample in 0..reps {
+        let load = Arc::new(common::Gate::new());
+        let record = Arc::new(common::Gate::new());
+        if hold {
+            memory_snapshot("startup");
+        }
+        let cpu = common::cpu_ns();
+        let start = Instant::now();
+        let arrival_start = tokio::time::Instant::now();
+        let deadline = arrival_start + Duration::from_millis(100);
+        let mut jobs = Vec::new();
+        // A coprime permutation intersperses long scans with short arrivals.
+        let schedule: Vec<_> = shapes
+            .iter()
+            .enumerate()
+            .flat_map(|(i, (_, _, count))| std::iter::repeat_n(i, *count))
+            .collect();
+        let waits: usize = shapes
+            .iter()
+            .filter(|(c, _, _)| *c != "scalar")
+            .map(|(_, _, n)| n)
+            .sum();
+        for arrival in 0..40 {
+            let shape = schedule[(arrival * 17) % 40];
+            let (case, n, _) = shapes[shape];
+            let s = sources[shape].clone();
+            let expected_output = expected_outputs[shape].clone();
+            let prepared = warm.get(shape).map(Prepared::duplicate);
+            let engine = engine.to_owned();
+            let due = arrival_start + Duration::from_micros(arrival as u64 * 500);
+            let offset_ns = arrival as u64 * 500_000;
+            let mut p = RequestProvider::ready(n, Duration::from_micros(delay_us));
+            if hold {
+                p.delay = Duration::ZERO;
+                p.load_gate = Some(load.clone());
+                p.record_gate = Some(record.clone());
+            }
+            let p = Arc::new(p);
+            macro_rules! launch {
+                ($variant:ident, $compile:expr, $run:ident) => {{
+                    let code = prepared.map(|c| match c {
+                        Prepared::$variant(c) => c,
+                        _ => unreachable!(),
+                    });
+                    jobs.push(tokio::task::spawn_local(async move {
+                        if !hold {
+                            tokio::time::sleep_until(due).await;
+                        }
+                        let prep_start = Instant::now();
+                        let code = code.unwrap_or_else(|| ($compile)(&s));
+                        let prepare_ns = common::now_ns(prep_start);
+                        let result = $run(code, p).await;
+                        let latency_ns =
+                            common::now_ns(start).saturating_sub(if hold { 0 } else { offset_ns });
+                        assert_eq!(result, expected_output.as_ref());
+                        (case, n, prepare_ns, latency_ns)
+                    }));
+                }};
+            }
+            match engine.as_str() {
+                "native" => launch!(
+                    Native,
+                    |s: &str| Rc::new(CodeUnit::compile_script(s, INPUTS).unwrap()),
+                    native_run
+                ),
+                "interpreter" => launch!(
+                    Interpreted,
+                    |s: &str| Rc::new(InterpreterUnit::prepare_script(s, INPUTS).unwrap()),
+                    interpreted_run
+                ),
+                "monty" | "monty-clear" => launch!(
+                    Monty,
+                    |s: &str| monty(s, engine == "monty-clear"),
+                    monty_run
+                ),
+                _ => unreachable!(),
+            }
+        }
+        if hold {
+            common::barrier(&load, waits).await.unwrap();
+            memory_snapshot("load_wait");
+            load.release(waits);
+            common::barrier(&record, waits).await.unwrap();
+            memory_snapshot("record_wait");
+            record.release(waits);
+        }
+        let mut rows = Vec::new();
+        for j in jobs {
+            rows.push(j.await.unwrap());
+        }
+        let wall_ns = common::now_ns(start);
+        let cpu_ns = common::cpu_ns() - cpu;
+        if hold {
+            memory_snapshot("reclaimed");
+        } else {
+            for (case, n, prepare_ns, latency_ns) in rows {
+                common::emit(&serde_json::json!({"kind":"mixed","engine":engine,
+                    "mix":mix,"delay_us":delay_us,"mode":mode,"sample":sample,"case":case,"rows":n,
+                    "prepare_ns":prepare_ns,"latency_ns":latency_ns,
+                    "batch_wall_ns":wall_ns,"batch_cpu_ns":cpu_ns,"overloaded":wall_ns>100_000_000,"completed":true}));
+            }
+            tokio::time::sleep_until(deadline).await;
+        }
+    }
+}
 fn main() {
     let args: Vec<_> = std::env::args().collect();
     assert_eq!(args.len(), 6, "engine case cold|warm|hold rows reps");
     let (engine, case, mode) = (&args[1], &args[2], &args[3]);
     let n: usize = args[4].parse().unwrap();
     let reps: usize = args[5].parse().unwrap();
-    assert!(reps > 0 && n <= 10000);
+    assert!(reps > 0 && n <= 100000);
+    if mode.starts_with("mixed-") {
+        assert!(["mixed-cold", "mixed-warm", "mixed-hold"].contains(&mode.as_str()));
+        let rt = tokio::runtime::Builder::new_current_thread()
+            .enable_time()
+            .build()
+            .unwrap();
+        tokio::task::LocalSet::new().block_on(&rt, mixed(engine, case, mode, reps));
+        return;
+    }
     let source = source(case);
     let expected = expected(case, n);
     let rt = tokio::runtime::Builder::new_current_thread()

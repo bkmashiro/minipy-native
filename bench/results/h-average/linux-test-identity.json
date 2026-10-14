@@ -1,0 +1,11 @@
+{
+  "command": "cargo zigbuild --tests --release --locked --target aarch64-unknown-linux-musl --message-format=json",
+  "test_sha256": {
+    "minipy_native-8c54e42020c5f39e": "51a0100a8195f6f79f7d345186c3dfea8e36696849aab7f7d61fdffb14ca9fcd",
+    "acceptance-bf8cebb28cfab792": "c697be649785f8e4a6751032e5384ecd862fa885a594fbcec3f116c471e9c59b",
+    "boundaries-509bef2cb40ee1dc": "4b2b356d4a8ec0cea61476e38f7da4609550c7c0c66face711f49da3734a397f",
+    "scripts-380000f09c65e071": "ba0f4ba4fe72a6378f02a4648cbddb72ac7609291968127ffbef78d5a1e58268",
+    "interpreter-05f33d478d209c0d": "77a097e6219ef524ff21562e0828146585a84214be7d72b987f2e36b67fc8580"
+  },
+  "production_source": "b3a12fd; candidate reverted; test adds empty-else differential"
+}

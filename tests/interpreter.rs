@@ -83,6 +83,26 @@ async fn differential(
     y
 }
 #[tokio::test]
+async fn empty_else_joins_nested_scan_and_tool_continuations() {
+    let source = "total=0\nif enabled:\n    print(1)\n    if enabled:\n        print(2)\nquotes=tools.load_quotes(7)\nfor q in quotes:\n    if q.quantity > 0:\n        if q.unit_price_cents < 700:\n            total += q.quantity\n    if q.quantity < 0:\n        print(9)\nreceipt=tools.record_total(7,total)\nprint(receipt)";
+    for enabled in [0, 1] {
+        for chunk in [1, 2, 256] {
+            let mut limits = ScriptLimits::default();
+            limits.limits.chunk = chunk;
+            let out = differential(
+                source,
+                &[("enabled", Type::Bool)],
+                &[enabled],
+                rows(),
+                limits,
+            )
+            .await;
+            assert_eq!(out.status, Ok(()));
+            assert_eq!(out.stdout, if enabled == 0 { "12\n" } else { "1\n2\n12\n" });
+        }
+    }
+}
+#[tokio::test]
 async fn scripts_and_sequential_conditional_tools() {
     for file in [
         include_str!("../fixtures/scalar_script.py"),

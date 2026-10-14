@@ -1,4 +1,29 @@
-# D current optimization pointer
+# Current optimization pointer
+
+## H: integrated explicit backends, stop point
+
+Signed merge `b3a12fd` combines reviewed G (`9b28716`) with F (`8cb905b`),
+preserving native predicate lowering. Library callers explicitly select native or
+typed-IR interpretation; native remains the CLI default. No automatic backend
+policy, hot-loop JIT, threshold, OSR, source cache or state migration is introduced.
+
+[average-cost-experiment.md](average-cost-experiment.md) records actual Linux
+ARM64 two-mix measurements with ready/delayed providers, explicit prepared reuse,
+planned short/long arrivals, overload flags, CPU/task and short-task p95/p99,
+waiting-memory snapshots and per-shape preparation/execution costs. The light
+cold mix saves 17--20% CPU/task with interpretation; scan-heavy cold CPU is roughly
+equal, prepared native is cheaper, and cold short-task queueing differs materially.
+The finite windows are not sustained service-capacity evidence.
+
+One empty-else Jump-removal candidate was tested and reverted: mixed CPU changes
+are small/inconsistent, with regressions in two conditions and noisy standalone
+controls. Final runtime remains the reviewed integration. All 58 core tests pass
+on macOS default/diagnostic and actual Linux default. Small raw, identities,
+candidate.patch and Linux execution evidence are in `bench/results/h-average/`.
+Stop at one focused fixed-commit review and signed publication; no additional
+optimization experiment or new framework is scheduled.
+
+## D historical pointer
 
 D follows C (`d42e0cd`). Default top-level scripts now compile to the same semantic
 IR/native CFG as the old benchmark entry. No implicit expression echo. Tool calls

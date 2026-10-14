@@ -1,0 +1,19 @@
+{
+  "baseline": "b3a12fdb34a319816351ca7801571d15be04be07",
+  "candidate": "reverted; production unchanged from integration",
+  "baseline_source_sha256_rechecked": true,
+  "native_codegen_unchanged_from_F": true,
+  "macos_release_tests": 58,
+  "macos_compiler_profile_release_tests": 58,
+  "actual_linux_release_tests": 58,
+  "core_clippy_default_and_compiler_profile": "pass -D warnings",
+  "bench_strict_clippy": "fails on pre-existing Prepared large-enum and cfg-constant assertion diagnostics",
+  "bench_scoped_clippy": "pass -D warnings -A clippy::large_enum_variant -A clippy::assertions_on_constants",
+  "format_and_diff": "pass",
+  "speed_rows": 72600,
+  "memory_snapshots": 40,
+  "vm_initial": "off",
+  "vm_final": "off; graceful poweroff, vfkit exit 0",
+  "review": "pending one same-card fixed-commit review",
+  "no_CI_Docker_paid_infrastructure": true
+}

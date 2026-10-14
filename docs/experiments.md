@@ -440,3 +440,39 @@ restored off with vfkit exit 0. Detailed boundaries, density caveats, keep decis
 commands and source/binary identities: [interpreter-experiment.md](interpreter-experiment.md),
 `bench/results/g-interpreter/`. No main integration or hot-loop JIT was performed.
 
+## H: explicit interpreter integration and average CPU cost (2026-10-14)
+
+Signed merge `b3a12fd` integrates reviewed G `9b28716` into F `8cb905b`;
+native predicate lowering is preserved byte-for-byte. Runtime/IR interpreter
+production source remains reviewed G. Caller-selected library interpretation
+shares the native semantic/authority/lifecycle contract. CLI remains native;
+there is no automatic backend policy, threshold, hot-loop JIT, OSR or source cache.
+
+Actual Linux ARM64 campaign records 72,600 speed rows and 40 gated memory
+snapshots. Two controlled 40-task mixes have 60%/20% scalar work, 100/10k/100k
+scans, planned 500-us arrivals, 100-ms finite window budget, real ready/1-ms Tool
+providers, and explicitly labeled prepared reuse. Cumulative CPU/task, arithmetic
+latency and short-task p95/p99 are recomputed from raw, not averaged shape medians.
+Overloaded windows remain in raw and summaries; these finite draining batches
+do not establish sustained fixed-rate service capacity.
+
+Light cold interpreter CPU/task is 578.94/587.95 us (ready/delayed), versus native
+698.88/730.55 us and ordinary Monty 1855.33/1963.86 us. Scan-heavy cold native and
+interpreter CPU are roughly equal. Prepared native is cheaper in both mixes;
+100k stateful native cold CPU 843.88 us versus interpreted 2629.60 us. Interpreter
+reduces measured short-task cold tails. Record-wait requested increments are
+86,134/124,264 bytes (light/scan) interpreter versus native 181,436/301,874,
+ordinary Monty 27.37/54.48 MB and the secondary list-clearing Monty 26.21/52.14 MB.
+RSS/PSS and sampled high-water are retained because JIT mappings are not all
+counted by requested allocations; no density capacity extrapolation is made.
+
+The single candidate removed retained/dispatched Jump after an if with empty
+else. Mixed CPU changes -2.29/-0.53/-0.85% (light ready/delayed/prepared) and
+-1.61/+0.29/+1.27% (scan) are not stable net value; small cold scan cells regress.
+Revert the candidate, preserve the exact patch/raw, retain its differential test,
+and stop without adding another optimization. Final macOS default/diagnostic and
+actual Linux default each pass 58 tests, including repaired G cancellation tests.
+The initially off VM was restored off after execution. Full boundaries,
+commands, identities and limitations: [average-cost-experiment.md](average-cost-experiment.md)
+and `bench/results/h-average/`. One final focused fixed-commit review remains.
+
