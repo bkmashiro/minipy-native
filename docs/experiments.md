@@ -392,3 +392,23 @@ commands and limitations. Exact hashes, gzip raw and recomputed summary are in
 `bench/results/e-compiler-profile/`; both runner and summarizer use Python stdlib.
 No default profiling/IR traversal/formatting, source cache, new backend, verifier
 suppression, runtime/string/scheduler change or Monty rerun was introduced.
+
+## G: explicit lightweight typed-IR interpreter
+
+G is isolated at `51e83bd`, with native lowering unchanged and no automatic backend switch.
+The resident-service library path shares frontend/Quote/Provider/cancellation/output
+contracts and replaces native compilation with bounded statement flattening and
+typed expression interpretation. Actual same-round ARM64 Linux cold medians:
+scalar native/interpreter/Monty 167.123/27.026/38.659 us; weighted 100 rows
+262.770/50.673/133.056 us; weighted 10k 328.899/328.696/3940.481 us.
+Weighted 10k is neutral cold and slower prepared (interpreter 300.340 vs native
+79.716 us), so this remains an explicit experimental small-task option, not a
+native replacement. No F measurements enter G's comparison.
+
+18,090 primary raw samples, 4824 strong Monty list-release control samples and
+40 separately instrumented gate-memory rows are retained. Initial 52 core tests
+ran on actual Linux and macOS; final macOS passes 54 (the final two error/receiver
+tests have not been rerun on Linux; production code is unchanged). Both VM sessions
+restored off with vfkit exit 0. Detailed boundaries, density caveats, keep decision,
+commands and source/binary identities: [interpreter-experiment.md](interpreter-experiment.md),
+`bench/results/g-interpreter/`. No main integration or hot-loop JIT was performed.
