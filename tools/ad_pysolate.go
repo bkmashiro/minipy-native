@@ -128,7 +128,7 @@ func main() {
 				return nil, fmt.Errorf("bad batch")
 			}
 			rows := n
-			if mode == "mixed-cold" {
+			if mode == "mixed-cold" || mode == "capacity" {
 				rows = a.Batch - 17
 			}
 			qs := make([]map[string]int64, rows)
@@ -216,6 +216,10 @@ func main() {
 			panic(e)
 		}
 		return out
+	}
+	if mode == "capacity" {
+		afServe(run, &loads, &records)
+		return
 	}
 	check := func(c string, n int, out string) {
 		if want := oracle(c, n); out != want {

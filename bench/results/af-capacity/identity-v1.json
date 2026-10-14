@@ -1,0 +1,188 @@
+{
+  "cohort": "af-open-loop-v1",
+  "files": {
+    "af-capacity/worker": {
+      "sha256": "f5e16b60c47b70bdabd20f69b6b9ad024143c6a410e6bc6622fbf1c47bc27a31",
+      "bytes": 9904982
+    },
+    "af-capacity/interpreter_ab": {
+      "sha256": "4b6b0febda9ea2fe0016b9afb9afc4ba9a1e4628e0476395cdf07eef1f95eb4d",
+      "bytes": 21339664
+    },
+    "af-capacity/af_capacity.py": {
+      "sha256": "556064f732399a9b4bbed83db3a362cb2cd417593cba674ed171bff14ec8f638",
+      "bytes": 13204
+    },
+    "af-capacity/source/bench/src/af_ipc.rs": {
+      "sha256": "29cb64aa46c0dafa369c8c073b6e42687fd18ecdc31735ca6da7dce6c20e62d0",
+      "bytes": 3240
+    },
+    "af-capacity/source/bench/src/bin/interpreter_ab.rs": {
+      "sha256": "51df001480e1c65f0889bc3b52616759404437149972af40b360d91f0da55931",
+      "bytes": 24681
+    },
+    "af-capacity/source/bench/Cargo.toml": {
+      "sha256": "a2f4330e6708953ce407bf5c77523f811c16c45f0dec0767baa89a75a6ee5836",
+      "bytes": 788
+    },
+    "af-capacity/source/bench/Cargo.lock": {
+      "sha256": "593b4b2c9a0a97db19596641d5f8d8115d1f8f4f8fa1d68580a58ee993cf8bc6",
+      "bytes": 63115
+    },
+    "ad-corrected/native.py": {
+      "sha256": "747c95d5ab841dc0d6244ac763276a3920e962e19a9558f764e4be4a78d5d6ca",
+      "bytes": 6454
+    },
+    "w-guest/runtime/dist/pysolate.wasm": {
+      "sha256": "ecd4f6d13f686b067255020670f1809427972f4d9e7aeaf86cb774d1c6cf19ee",
+      "bytes": 34670112
+    },
+    "w-guest/runtime/runner.go": {
+      "sha256": "a751738bd2cd6aeb7cd52077e3e8e8c367a14368dca7abcdc5e926f7f6f4c34f",
+      "bytes": 11986
+    },
+    "w-guest/runtime/guest/runtime.c": {
+      "sha256": "3debfe151b2eead4f326ba29a2c021ffdfc994231adfb6419391bb83b8d2c940",
+      "bytes": 5133
+    },
+    "af-capacity/source/src/bin/minipy.rs": {
+      "sha256": "14c157179b8156816de8b6bd2736407af8998059b5f1940b79073528f154a76f",
+      "bytes": 2947
+    },
+    "af-capacity/source/src/buffer.rs": {
+      "sha256": "728e3dc082ed1f8bed96864f608c1ddb22f7f6b9016531dba0e5deff7d9d2867",
+      "bytes": 6635
+    },
+    "af-capacity/source/src/codegen.rs": {
+      "sha256": "7f2bdeadba5154e555f34a8345782182175ef221c2eb59f34fe2b60eb0984841",
+      "bytes": 26824
+    },
+    "af-capacity/source/src/compiler_profile.rs": {
+      "sha256": "7fdb8442d6d37d630fcf9c679c2abb1da0c49ab52ffc6b2741cd05ff46fcaefb",
+      "bytes": 2218
+    },
+    "af-capacity/source/src/error.rs": {
+      "sha256": "f86a4e601c69fbe208813d526fa2da4b6faad551f28d589ebdbceb3931bf56d8",
+      "bytes": 354
+    },
+    "af-capacity/source/src/fixture_reference.rs": {
+      "sha256": "d3c67f1003a5816832fbd15c6d377edbb4d422c6db9be1b3cab7c40ae58aff53",
+      "bytes": 4721
+    },
+    "af-capacity/source/src/frontend.rs": {
+      "sha256": "08bc1744622fce842dfc7a56e7ef2a564aa31540cb9213ac5bb0a0dc892bc64e",
+      "bytes": 37668
+    },
+    "af-capacity/source/src/interpreter/tape.rs": {
+      "sha256": "dd75745ecdaefce84a0f7e438c026f59c366f62fff843ee9014877d4d7b77d34",
+      "bytes": 13716
+    },
+    "af-capacity/source/src/interpreter.rs": {
+      "sha256": "32da52a200289e67156ae1815bb85d259de5d5d3b9680da812ab8be6395a29d7",
+      "bytes": 7386
+    },
+    "af-capacity/source/src/interpreter_profile.rs": {
+      "sha256": "ca14500ff28ec156553ae1d2e0672381afdad261b2f309ea72455bd11fa7722c",
+      "bytes": 937
+    },
+    "af-capacity/source/src/ir.rs": {
+      "sha256": "e22a78aa97c7762bdfde1914adb0c5d5f9e3fac27567a14779b971eab0f9aea6",
+      "bytes": 1511
+    },
+    "af-capacity/source/src/lib.rs": {
+      "sha256": "0267aa342b34acd5ddf532c64d41379df31017d7beddebb889522570f2cec27a",
+      "bytes": 331
+    },
+    "af-capacity/source/src/provider.rs": {
+      "sha256": "df14c16b61c6e9f78a51b07e6ba162d1a71b288a5690fd007117fe3676eb5952",
+      "bytes": 6206
+    },
+    "af-capacity/source/src/runtime.rs": {
+      "sha256": "01772bd991bdfa6238425058814ff564dbcd2b1426788576f130eb60d5b699ce",
+      "bytes": 13141
+    },
+    "af-capacity/source/fixtures/common_scalar.py": {
+      "sha256": "008fd3768dfa8cdc505ee9e358bc2b10fca542dc648d7ca17db4103c27614954",
+      "bytes": 75
+    },
+    "af-capacity/source/fixtures/common_stateful.py": {
+      "sha256": "59bbc9edc6de385affd0d16d1b7a23f6b77abc85904855f0ca67e4874771893c",
+      "bytes": 385
+    },
+    "af-capacity/source/fixtures/common_weighted.py": {
+      "sha256": "d696a3da28a69d20c12ec805e9bf1e0ad452855a4b974d6ba3583fab69b0883c",
+      "bytes": 291
+    },
+    "af-capacity/source/fixtures/predicate_nested.py": {
+      "sha256": "07426a8b1d6a4d9021c33f1a3b6f7319539488a279fbd457ad736c967e458556",
+      "bytes": 582
+    },
+    "af-capacity/source/fixtures/print_loop_script.py": {
+      "sha256": "f5950ec83e981d8a9bab70c8d0d69c982c165715ef429bc8822c3267ee2605b9",
+      "bytes": 134
+    },
+    "af-capacity/source/fixtures/profile_two_scan.py": {
+      "sha256": "699466219f817554b82544897959128001eef9976463ee85dc4c649e978134c4",
+      "bytes": 517
+    },
+    "af-capacity/source/fixtures/scalar_script.py": {
+      "sha256": "cef0195dec5e222a76a43807706a5cf054058418c38f89ec200ffaf7d506cca2",
+      "bytes": 136
+    },
+    "af-capacity/source/fixtures/scan_script.py": {
+      "sha256": "ad33b826535c6c62f9234acbb45d842316daef78a024e26df7a48361d6632c6f",
+      "bytes": 262
+    },
+    "af-capacity/source/fixtures/stateful_branch.py": {
+      "sha256": "115f57c51b3684f1996b0cd34c38a873bc3a8a86349881584cb45379eec75bb3",
+      "bytes": 527
+    },
+    "af-capacity/source/fixtures/weighted_scan.py": {
+      "sha256": "3682bfb78d4d4f288008b8cb79846dc65d2e2bd6b9e51d818acda6240ccf7f79",
+      "bytes": 314
+    },
+    "af-capacity/source/fixtures/weighted_script.py": {
+      "sha256": "9d28d5a3f59f76f7c142ef78389920ea9bb831c09c571d1e3dfdbb2481946e8a",
+      "bytes": 340
+    },
+    "af-capacity/harness/af_service.go": {
+      "sha256": "219d0afea87e38d189ab84e4fa686d6f3d362b6a3387c61fcf21fbe8ad7e7fe5",
+      "bytes": 1537
+    },
+    "af-capacity/harness/go.mod": {
+      "sha256": "75f3bcb7850ad0298cd83d74871a3d76f8f184b389aad7ae84bdd1afc83ace52",
+      "bytes": 298
+    },
+    "af-capacity/harness/go.sum": {
+      "sha256": "7259e3e42da0f60f3a8134f7080ac4f80f22b9cf41ac0852fbfd20330d6c9bde",
+      "bytes": 686
+    },
+    "af-capacity/harness/main.go": {
+      "sha256": "833cfc8750340577f04f4d08257f3ea15d0e31b04b35cce19b6ccc7390abb6e0",
+      "bytes": 10020
+    },
+    "af-capacity/harness/native.go": {
+      "sha256": "59034bffd6e0903f52f749dcc99abf53958f9b6ac87fe3b73da05dd76a616aa2",
+      "bytes": 5935
+    }
+  },
+  "runtime_frozen_commit": "969e679",
+  "ad_evidence_commit": "c3dff6a74dcaa3136b2cb8b48635cd70199c253b",
+  "environment": "Linux DESKTOP-UISID0V 6.18.54.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux\nPython 3.12.3\ngo version go1.27.1 linux/amd64\ncargo 1.96.0 (30a34c682 2026-05-25)\nArchitecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           46 bits physical, 48 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  24\nOn-line CPU(s) list:                     0-23\nVendor ID:                               GenuineIntel\nModel name:                              Intel(R) Core(TM) i9-7920X CPU @ 2.90GHz\nCPU family:                              6\nModel:                                   85\nThread(s) per core:                      2\nCore(s) per socket:                      12\nSocket(s):                               1\nStepping:                                4\nBogoMIPS:                                5807.99\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm arch_perfmon rep_good nopl xtopology cpuid tsc_known_freq pni pclmulqdq ssse3 fma cx16 pdcm pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch pti ssbd ibrs ibpb stibp fsgsbase bmi1 hle avx2 smep bmi2 erms invpcid rtm avx512f avx512dq rdseed adx smap clflushopt clwb avx512cd avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves md_clear flush_l1d arch_capabilities\nHypervisor vendor:                       Microsoft\nVirtualization type:                     full\nL1d cache:                               384 KiB (12 instances)\nL1i cache:                               384 KiB (12 instances)\nL2 cache:                                12 MiB (12 instances)\nL3 cache:                                16.5 MiB (1 instance)\nNUMA node(s):                            1\nNUMA node0 CPU(s):                       0-23\nVulnerability Gather data sampling:      Unknown: Dependent on hypervisor status\nVulnerability Ghostwrite:                Not affected\nVulnerability Indirect target selection: Mitigation; Aligned branch/return thunks\nVulnerability Itlb multihit:             KVM: Mitigation: VMX unsupported\nVulnerability L1tf:                      Mitigation; PTE Inversion\nVulnerability Mds:                       Mitigation; Clear CPU buffers; SMT Host state unknown\nVulnerability Meltdown:                  Mitigation; PTI\nVulnerability Mmio stale data:           Mitigation; Clear CPU buffers; SMT Host state unknown\nVulnerability Old microcode:             Not affected\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Mitigation; IBRS\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; IBRS; IBPB conditional; STIBP conditional; RSB filling; PBRSB-eIBRS Not affected; BHI SW loop, KVM SW loop\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Mitigation; Clear CPU buffers; SMT Host state unknown\nVulnerability Vmscape:                   Not affected\n               total        used        free      shared  buff/cache   available\nMem:           23872         967       22673          18         501       22905\nSwap:           6144           0        6144\n    PID COMMAND         %CPU\n 127132 python3         37.7\n 127133 ps               7.1\n 126984 bash             1.4\n 126836 fish             1.1\n 126803 sshd             0.9\n    184 redis-server     0.2\n    200 tailscaled       0.1\n    409 mariadbd         0.0\n      1 systemd          0.0\n     61 systemd-journal  0.0\n    436 postgres         0.0\n    174 dbus-daemon      0.0\n  87931 polkitd          0.0\n    198 systemd-logind   0.0\n    165 systemd-timesyn  0.0\n    216 rsyslogd         0.0\n    451 postgres         0.0\n    448 postgres         0.0\n    113 systemd-udevd    0.0\n    450 postgres         0.0\n    224 sshd             0.0\n    691 systemd-resolve  0.0\n    726 systemd          0.0\n    173 cron             0.0\n    254 unattended-upgr  0.0\n    751 fish             0.0\n    673 fish             0.0\n    452 postgres         0.0\n    447 postgres         0.0\n      2 init-systemd(Ub  0.0\n      3 init-watcher     0.0\n     10 init             0.0\n    245 agetty           0.0\n    670 SessionLeader    0.0\n    672 Relay(673)       0.0\n    675 login            0.0\n    727 (sd-pam)         0.0\n 126835 sshd             0.0\n",
+  "affinity": {
+    "service_tree": [
+      2
+    ],
+    "driver": [
+      4
+    ],
+    "unused_smt_siblings": [
+      3,
+      5
+    ]
+  },
+  "ad_cpu": "Host getrusage SELF + native parent CPUCLOCK_SCHED + monotonic max cumulative reaped-child RUSAGE_CHILDREN; no sampling RPC",
+  "locks": [
+    "/home/na/benchmarks/minipy-s/compute.lock"
+  ]
+}

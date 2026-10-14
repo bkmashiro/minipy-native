@@ -1,0 +1,99 @@
+{
+  "cohort": "af-open-loop-v1",
+  "duration_s": 15,
+  "warmup_s": 3,
+  "confirmation_rounds": 3,
+  "cells": [
+    {
+      "arm": "interpreter",
+      "workload": "cpu",
+      "rates": [
+        4,
+        3800,
+        5000
+      ]
+    },
+    {
+      "arm": "native",
+      "workload": "cpu",
+      "rates": [
+        4,
+        1450,
+        1850
+      ]
+    },
+    {
+      "arm": "monty",
+      "workload": "cpu",
+      "rates": [
+        4,
+        45,
+        65
+      ]
+    },
+    {
+      "arm": "fork",
+      "workload": "cpu",
+      "rates": [
+        4,
+        30,
+        40
+      ]
+    },
+    {
+      "arm": "cow",
+      "workload": "cpu",
+      "rates": [
+        4,
+        6,
+        9
+      ]
+    },
+    {
+      "arm": "interpreter",
+      "workload": "mixed",
+      "rates": [
+        10,
+        5000,
+        7500
+      ]
+    },
+    {
+      "arm": "native",
+      "workload": "mixed",
+      "rates": [
+        10,
+        1900,
+        2600
+      ]
+    },
+    {
+      "arm": "monty",
+      "workload": "mixed",
+      "rates": [
+        10,
+        40,
+        70
+      ]
+    },
+    {
+      "arm": "fork",
+      "workload": "mixed",
+      "rates": [
+        10,
+        45,
+        65
+      ]
+    },
+    {
+      "arm": "cow",
+      "workload": "mixed",
+      "rates": [
+        10,
+        12,
+        16
+      ]
+    }
+  ],
+  "selection": "Frozen after pilot; full-drain process-tree CPU constrains mixed transient bias. Public representative + two nearby rates, not full grid."
+}

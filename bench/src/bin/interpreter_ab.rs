@@ -507,8 +507,14 @@ async fn mixed(engine: &str, mix: &str, mode: &str, reps: usize) {
     }
 }
 fn monotonic_ns() -> u64 {
-    let mut ts = libc::timespec { tv_sec: 0, tv_nsec: 0 };
-    assert_eq!(unsafe { libc::clock_gettime(libc::CLOCK_MONOTONIC, &mut ts) }, 0);
+    let mut ts = libc::timespec {
+        tv_sec: 0,
+        tv_nsec: 0,
+    };
+    assert_eq!(
+        unsafe { libc::clock_gettime(libc::CLOCK_MONOTONIC, &mut ts) },
+        0
+    );
     ts.tv_sec as u64 * 1_000_000_000 + ts.tv_nsec as u64
 }
 fn main() {
@@ -528,6 +534,16 @@ fn main() {
     let n: usize = args[4].parse().unwrap();
     let reps: usize = args[5].parse().unwrap();
     assert!(reps > 0 && n <= 100000);
+    if mode == "capacity" {
+        #[path = "../af_ipc.rs"]
+        mod af_ipc;
+        let rt = tokio::runtime::Builder::new_current_thread()
+            .enable_time()
+            .build()
+            .unwrap();
+        tokio::task::LocalSet::new().block_on(&rt, af_ipc::serve(engine));
+        return;
+    }
     if mode.starts_with("mixed-") {
         assert!(["mixed-cold", "mixed-warm", "mixed-hold"].contains(&mode.as_str()));
         let rt = tokio::runtime::Builder::new_current_thread()

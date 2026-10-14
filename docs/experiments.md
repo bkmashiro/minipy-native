@@ -621,6 +621,12 @@ Report, raw plans, identity, hashes, commands and two SVG/PNG figures:
 [benchmark-overview.md](benchmark-overview.md), `bench/results/l-final/`,
 `tools/final_{summary,workload,plot,report}.py`. Waiting process-tree PSS is
 separate from compiler/execution cost, source and isolation equivalence.
+AF's subsequent source-once open-loop capacity campaign is documented in
+[AF capacity report](af-capacity-benchmark.md). It retains 90/90 confirmations,
+870,063 offered requests with exact raw reduction and separate planned-arrival
+latency, rejection/debt accounting and finite-window capacity brackets.
+Production runtime and Guest remain frozen; no new website changes.
+
 Five reduction/wrapper tests and real Linux assembly/Host tests pass; frozen
 native/IR/reference cancellation, late completion, owner release and effect
 errors pass on macOS and actual Linux. Final focused review/recomputation and
