@@ -1,0 +1,26 @@
+{
+  "coverage": {
+    "scheduled_commands": 300,
+    "completed_commands": 300,
+    "failed_commands": 0,
+    "unsupported_commands": 0,
+    "scheduled_rows": 11769,
+    "completed_rows": 11769,
+    "initialization_rows": 300,
+    "speed_cells": 60,
+    "mixed_cells": 16,
+    "memory_cells": 51,
+    "first_cells": 12
+  },
+  "identity_files_verified": 13,
+  "raw_files_verified": 300,
+  "rounds_per_cell": 3,
+  "first_exact_phase_sum": true,
+  "matched_memory_pid_sets": true,
+  "raw_directory": "/home/na/benchmarks/minipy-s/ad-corrected",
+  "lock_contract": [
+    "/home/na/benchmarks/minipy-s/compute.lock",
+    "/home/na/benchmarks/minipy-s/wsl-heavy.lock"
+  ],
+  "source_commit": "1c8d9fffd0e7714d774e47bdc93913bed36e8dc6"
+}

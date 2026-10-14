@@ -1,5 +1,7 @@
 # S 补充：规模曲线、x86_64 参考与同运行首请求分段
 
+历史存档：本文的原 S 数值和 raw 不改写。旧 Pysolate 的 curve/mixed/memory/first 已由 [AD 修正计时与 JSON prefork 配对](corrected-prefork-benchmark.md) 整臂替换；新数据在 `bench/results/ad-wsl/`。其余引擎仍保留本轮来源，原 namedtuple CPython 不等同于 AD 的 JSON-object prefork/resident。
+
 ## 结论
 
 本轮补齐首轮审查的三个实测缺口。生产 runtime、Provider、资源与权限语义、common fixtures 和 demo 均未改动。原有五个成功形状及其 raw 继续使用，新增十个缺失形状、独立参考对照和首请求观测，没有重跑原主表以改善成绩。

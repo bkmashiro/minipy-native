@@ -1,0 +1,13 @@
+{
+  "scheduled_commands": 300,
+  "completed_commands": 300,
+  "failed_commands": 0,
+  "unsupported_commands": 0,
+  "scheduled_rows": 11769,
+  "completed_rows": 11769,
+  "initialization_rows": 300,
+  "speed_cells": 60,
+  "mixed_cells": 16,
+  "memory_cells": 51,
+  "first_cells": 12
+}

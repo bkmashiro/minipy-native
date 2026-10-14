@@ -1,0 +1,21 @@
+{
+  "go_tests": 5,
+  "python_tests": 8,
+  "real_smoke_commands": 16,
+  "formal_commands": 300,
+  "formal_measured_rows": 11769,
+  "initialization_rows": 300,
+  "offline_replay": "all accounting and aggregate values exact",
+  "review": {
+    "model": "gpt-6-luna",
+    "target": "660cd5e6071e95544dd4531631c2017a1372e99c",
+    "finding": "first oracle inside external full window",
+    "fixed_by": "37408e9ff52ba70d5bb72e4b28c0dfdd71f405ca"
+  },
+  "native_cpu_fix": "1c8d9fffd0e7714d774e47bdc93913bed36e8dc6",
+  "aggregate_sha256": "5aa8b074df2f458b206e74f94831fce1f79c8926089226c3a8a3c37b749b77c5",
+  "pilot_preserved_identity_files": 13,
+  "original_w_unchanged_identity_files": 9,
+  "production_diff_since_task_base": [],
+  "no_additional_benchmarks": true
+}

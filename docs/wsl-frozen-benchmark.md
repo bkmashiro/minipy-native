@@ -1,5 +1,7 @@
 # S：冻结 compact runtime 的 WSL 实测
 
+历史存档：本文的原 S 数值和 raw 不改写。旧 Pysolate 的 curve/mixed/memory/first 已由 [AD 修正计时与 JSON prefork 配对](corrected-prefork-benchmark.md) 整臂替换；新数据在 `bench/results/ad-wsl/`。其余引擎仍保留本轮来源，原 namedtuple CPython 不等同于 AD 的 JSON-object prefork/resident。
+
 ## 结论
 
 本轮补齐 `969e679` 在 Linux x86_64 WSL2 上的真实请求、队列尾延迟、等待内存和 prepared-owner 成本。生产 `src/`、原有请求 harness、fixtures 和 demo 保持冻结，23 个关键文件 SHA-256 回读一致。全部可执行单元完成，旧 Pysolate 的大输入 ABI 拒绝作为缺失保留。

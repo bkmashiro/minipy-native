@@ -1,0 +1,64 @@
+{
+  "cohort": "ad-corrected-json-prefork-v2",
+  "files": {
+    "/home/na/benchmarks/minipy-s/ad-corrected/worker": {
+      "sha256": "9513be0382ecff3f4c3d48a5706a81e479506d4dbcb8ac8fbfacdaf3b8682d8d",
+      "bytes": 9885662
+    },
+    "/home/na/benchmarks/minipy-s/ad-corrected/native.py": {
+      "sha256": "747c95d5ab841dc0d6244ac763276a3920e962e19a9558f764e4be4a78d5d6ca",
+      "bytes": 6454
+    },
+    "/home/na/benchmarks/minipy-s/ad-corrected/harness/main.go": {
+      "sha256": "789f17822fa10618c6e6331e9272e9ec107b3c05ed74c929fb7442f243cd2930",
+      "bytes": 9928
+    },
+    "/home/na/benchmarks/minipy-s/ad-corrected/harness/native.go": {
+      "sha256": "59034bffd6e0903f52f749dcc99abf53958f9b6ac87fe3b73da05dd76a616aa2",
+      "bytes": 5935
+    },
+    "/home/na/benchmarks/minipy-s/ad-corrected/harness/go.mod": {
+      "sha256": "75f3bcb7850ad0298cd83d74871a3d76f8f184b389aad7ae84bdd1afc83ace52",
+      "bytes": 298
+    },
+    "/home/na/benchmarks/minipy-s/ad-corrected/harness/go.sum": {
+      "sha256": "7259e3e42da0f60f3a8134f7080ac4f80f22b9cf41ac0852fbfd20330d6c9bde",
+      "bytes": 686
+    },
+    "/home/na/benchmarks/minipy-s/ad-corrected/campaign.py": {
+      "sha256": "539ed2d4c05a6a077a2f82dc71b553c43f82d09403e1da036e70dcef5bf85385",
+      "bytes": 9446
+    },
+    "/home/na/benchmarks/minipy-s/w-guest/runtime/dist/pysolate.wasm": {
+      "sha256": "ecd4f6d13f686b067255020670f1809427972f4d9e7aeaf86cb774d1c6cf19ee",
+      "bytes": 34670112
+    },
+    "/home/na/benchmarks/minipy-s/w-guest/runtime/runner.go": {
+      "sha256": "a751738bd2cd6aeb7cd52077e3e8e8c367a14368dca7abcdc5e926f7f6f4c34f",
+      "bytes": 11986
+    },
+    "/home/na/benchmarks/minipy-s/w-guest/runtime/guest/runtime.c": {
+      "sha256": "3debfe151b2eead4f326ba29a2c021ffdfc994231adfb6419391bb83b8d2c940",
+      "bytes": 5133
+    },
+    "/home/na/benchmarks/minipy-s/source/fixtures/common_stateful.py": {
+      "sha256": "59bbc9edc6de385affd0d16d1b7a23f6b77abc85904855f0ca67e4874771893c",
+      "bytes": 385
+    },
+    "/home/na/benchmarks/minipy-s/source/fixtures/common_weighted.py": {
+      "sha256": "d696a3da28a69d20c12ec805e9bf1e0ad452855a4b974d6ba3583fab69b0883c",
+      "bytes": 291
+    },
+    "/home/na/benchmarks/minipy-s/source/fixtures/common_scalar.py": {
+      "sha256": "008fd3768dfa8cdc505ee9e358bc2b10fca542dc648d7ca17db4103c27614954",
+      "bytes": 75
+    }
+  },
+  "source_commit": "1c8d9fffd0e7714d774e47bdc93913bed36e8dc6",
+  "environment": "Linux DESKTOP-UISID0V 6.18.54.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux\nPython 3.12.3\ngo version go1.27.1 linux/amd64\n 22:36:04 up  9:06,  2 users,  load average: 0.31, 0.46, 0.65\n               total        used        free      shared  buff/cache   available\nMem:            23Gi       977Mi        22Gi        18Mi       615Mi        22Gi\nSwap:          6.0Gi          0B       6.0Gi\nArchitecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           46 bits physical, 48 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  24\nOn-line CPU(s) list:                     0-23\nVendor ID:                               GenuineIntel\nModel name:                              Intel(R) Core(TM) i9-7920X CPU @ 2.90GHz\nCPU family:                              6\nModel:                                   85\nThread(s) per core:                      2\nCore(s) per socket:                      12\nSocket(s):                               1\nStepping:                                4\nBogoMIPS:                                5807.99\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm arch_perfmon rep_good nopl xtopology cpuid tsc_known_freq pni pclmulqdq ssse3 fma cx16 pdcm pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch pti ssbd ibrs ibpb stibp fsgsbase bmi1 hle avx2 smep bmi2 erms invpcid rtm avx512f avx512dq rdseed adx smap clflushopt clwb avx512cd avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves md_clear flush_l1d arch_capabilities\nHypervisor vendor:                       Microsoft\nVirtualization type:                     full\nL1d cache:                               384 KiB (12 instances)\nL1i cache:                               384 KiB (12 instances)\nL2 cache:                                12 MiB (12 instances)\nL3 cache:                                16.5 MiB (1 instance)\nNUMA node(s):                            1\nNUMA node0 CPU(s):                       0-23\nVulnerability Gather data sampling:      Unknown: Dependent on hypervisor status\nVulnerability Ghostwrite:                Not affected\nVulnerability Indirect target selection: Mitigation; Aligned branch/return thunks\nVulnerability Itlb multihit:             KVM: Mitigation: VMX unsupported\nVulnerability L1tf:                      Mitigation; PTE Inversion\nVulnerability Mds:                       Mitigation; Clear CPU buffers; SMT Host state unknown\nVulnerability Meltdown:                  Mitigation; PTI\nVulnerability Mmio stale data:           Mitigation; Clear CPU buffers; SMT Host state unknown\nVulnerability Old microcode:             Not affected\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Mitigation; IBRS\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; IBRS; IBPB conditional; STIBP conditional; RSB filling; PBRSB-eIBRS Not affected; BHI SW loop, KVM SW loop\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Mitigation; Clear CPU buffers; SMT Host state unknown\nVulnerability Vmscape:                   Not affected\n    PID COMMAND         %CPU\n 114936 python3         41.1\n 114937 ps              10.0\n 114786 bash             1.9\n 114639 fish             1.4\n 114597 sshd             0.8\n    184 redis-server     0.2\n    200 tailscaled       0.2\n    409 mariadbd         0.0\n      1 systemd          0.0\n     61 systemd-journal  0.0\n    436 postgres         0.0\n    174 dbus-daemon      0.0\n  87931 polkitd          0.0\n    198 systemd-logind   0.0\n    165 systemd-timesyn  0.0\n    216 rsyslogd         0.0\n    451 postgres         0.0\n    448 postgres         0.0\n    113 systemd-udevd    0.0\n    450 postgres         0.0\n    224 sshd             0.0\n    691 systemd-resolve  0.0\n    726 systemd          0.0\n    254 unattended-upgr  0.0\n    173 cron             0.0\n    751 fish             0.0\n    673 fish             0.0\n    452 postgres         0.0\n    447 postgres         0.0\n      2 init-systemd(Ub  0.0\n      3 init-watcher     0.0\n     10 init             0.0\n    245 agetty           0.0\n    670 SessionLeader    0.0\n    672 Relay(673)       0.0\n    675 login            0.0\n    727 (sd-pam)         0.0\n 114638 sshd             0.0\n 114934 flock            0.0\n 114935 flock            0.0\n",
+  "locks": [
+    "/home/na/benchmarks/minipy-s/compute.lock",
+    "/home/na/benchmarks/minipy-s/wsl-heavy.lock"
+  ],
+  "affinity": 2
+}

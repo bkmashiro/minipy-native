@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "cohort": "ad-corrected-json-prefork",
+  "import_file": "import-summary.json",
+  "remove_current_engines": [
+    "pysolate-cow",
+    "pysolate-fresh"
+  ],
+  "remove_from": [
+    "curve",
+    "mixed",
+    "memory",
+    "first",
+    "initialization"
+  ],
+  "removed_cohorts": [
+    "w-expanded-tool-response",
+    "old-pysolate-adapted"
+  ],
+  "add_engines": [
+    "pysolate-cow",
+    "pysolate-fresh",
+    "cpython-fork-json",
+    "cpython-resident-json"
+  ],
+  "primary_baseline": "cpython-fork-json",
+  "optional_resident": "cpython-resident-json",
+  "request_mapping": "speed -> curve; scalar and seven sizes for both scan cases. Replace whole Pysolate arms, never fill gaps from S/W.",
+  "memory_mapping": "memory raw startup remains controller-only for fork. Import precomputed incremental_pss_bytes and its row-specific matched baseline. Include empty_tree as diagnostic, not additional task stage.",
+  "unchanged": {
+    "source": "existing S + extension summaries",
+    "engines": "MiniPy native/interpreter, Monty, Rust/assembly, PyPy, Pyodide and original namedtuple CPython lifecycles",
+    "rule": "Preserve original cohort identity. Original cpython-fork/resident are separate common/namedtuple context, not this matched JSON baseline."
+  },
+  "group": "ad-json-object: same Go-generated Quote fields, JSON dict + SimpleNamespace; paired subset, not silently the typed/namedtuple common group",
+  "first_mapping": "First-request now 12 cells, each 3 independent fresh processes. All five mean phases sum to full launch-through-reap wall. source_prepare is host adaptation, Python compile remains inside execute. Oracle is controller-side after wall/CPU end."
+}

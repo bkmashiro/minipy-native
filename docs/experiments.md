@@ -1,5 +1,13 @@
 # Experiments
 
+## AD: corrected JSON/prefork measurement (2026-10-14)
+
+Formal v2 completed 300/300 commands, 11,769 measured rows + 300 initialization rows, three independent processes per cell. Pysolate source reading/adaptation and all oracles are outside request/window timing; user Python compilation remains inside. CPython is a real import-prewarmed per-request fork/exit/waitpid path, not a worker pool, using the same Go Quote producer and JSON/dict/SimpleNamespace representation. Native CPU reads the kernel parent clock plus reaped-child counters, without a sampling RPC. The full previous pilot is preserved and not pooled; no further campaign is scheduled.
+
+COW/prefork scalar wall is 3.092/3.221 ms; weighted 10k is 139.313/31.437 ms, weighted 100k 1403.057/223.674 ms. Mixed COW short p99 is lower, while prefork CPU and finite throughput are better. Whole-tree memory and matched per-row empty baselines are exported; counts 1/8/32 suffice for an intercept-allowed KiB/task fit. Production src/Cargo and upstream Pysolate runtime are unchanged by this task; other engines keep original cohort/runtime identities.
+
+See [brief](ad-benchmark-brief.md), [methods/results](corrected-prefork-benchmark.md), and `bench/results/ad-wsl/{raw.jsonl.gz,import-summary.json,replacement.json}`. Offline verification: `python3 tools/ad_reduce.py --replay bench/results/ad-wsl`. Full commands, identities, boundaries and first-phase additivity are in the export. Website import/publication is the pre-created AE task, not this implementation phase.
+
 Status: real source-to-native execution and synthetic measurements recorded. Independent review of 87e0131 found no confirmed implementation blocker, but identified the fixture-specific helper contract gap. The bounded generic-helper correction below is implemented and measured; same-card approval is pending. These results do not establish production workload or sandbox-equivalence claims.
 
 ## Questions
