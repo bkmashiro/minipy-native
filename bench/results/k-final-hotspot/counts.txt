@@ -1,0 +1,11 @@
+/root/minipy-native-k/base-counts weighted 256
+weighted rows=100000 chunk=256 stdout="57270790\n" Counts { leaf_operands: 520172, next_header_lookups: 100000, expr: [2, 0, 4, 0, 0, 360086, 33334], ops: [93421, 0, 1, 1, 100000, 46710, 1, 100001, 100000, 2], fuel_reservations: 391, yields: 390 }
+
+/root/minipy-native-k/base-counts stateful 256
+stateful rows=100000 chunk=256 stdout="178552\n" Counts { leaf_operands: 427064, next_header_lookups: 100000, expr: [3, 0, 4, 78, 0, 413532, 86624], ops: [236, 0, 1, 1, 100000, 78, 1, 100001, 100000, 2], fuel_reservations: 391, yields: 390 }
+
+/root/minipy-native-k/candidate-counts weighted 256
+weighted rows=100000 chunk=256 stdout="57270790\n" Counts { leaf_operands: 520172, next_header_lookups: 391, expr: [2, 0, 4, 0, 0, 360086, 33334], ops: [93421, 0, 1, 1, 100000, 46710, 1, 100001, 100000, 2], fuel_reservations: 391, yields: 390 }
+
+/root/minipy-native-k/candidate-counts stateful 256
+stateful rows=100000 chunk=256 stdout="178552\n" Counts { leaf_operands: 427064, next_header_lookups: 391, expr: [3, 0, 4, 78, 0, 413532, 86624], ops: [236, 0, 1, 1, 100000, 78, 1, 100001, 100000, 2], fuel_reservations: 391, yields: 390 }

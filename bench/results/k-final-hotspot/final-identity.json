@@ -1,0 +1,6 @@
+{
+  "benchmark_sha256": "e1065d30d3a4238fe0560dc3165c1a9a75d1715840859d475d36565c47295c6f",
+  "binary_identical_to_measured_base": true,
+  "production_src_identical_to": "b76be2dc804c54aa2725d45e403906bdfc0d263a",
+  "raw_count": 20560
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "name": "minipy",
+    "sha256": "8efb5702a2ffb28da93407b38d7e2c950361281c6a1c67ed345afa789586d1f1",
+    "command": "/root/minipy-native-k/final-test-minipy --test-threads=1"
+  },
+  {
+    "name": "minipy_native",
+    "sha256": "7eb7dc2e4e064f638ce4aff7bb54e51043e1330e35a7751e6d6a75b8124a86a9",
+    "command": "/root/minipy-native-k/final-test-minipy_native --test-threads=1"
+  },
+  {
+    "name": "fixture_lifecycle",
+    "sha256": "77971a5a5525ed22c425c6439bce348e4dab9896a54083867408e2f52dbdb0fe",
+    "command": "/root/minipy-native-k/final-test-fixture_lifecycle --test-threads=1"
+  },
+  {
+    "name": "acceptance",
+    "sha256": "df752516e8b696fdc97bf21b3d93ca31810550c4d6d446ee2889cbd345fb0c3e",
+    "command": "/root/minipy-native-k/final-test-acceptance --test-threads=1"
+  },
+  {
+    "name": "fixture_reference",
+    "sha256": "393983d6667217971aaa8b27dae98ebad16e79dd81f86e9e6b31d69d5bb5cfd3",
+    "command": "/root/minipy-native-k/final-test-fixture_reference --test-threads=1"
+  },
+  {
+    "name": "boundaries",
+    "sha256": "c929795182073f4ae8df51c2f49ecac5289e68a821d4b843073deb247ceb238a",
+    "command": "/root/minipy-native-k/final-test-boundaries --test-threads=1"
+  },
+  {
+    "name": "scripts",
+    "sha256": "18b7cb1e0d68c2046d2178657e0d6557d3b666eb9228eebd5d518265d6d4e24f",
+    "command": "/root/minipy-native-k/final-test-scripts --test-threads=1"
+  },
+  {
+    "name": "interpreter",
+    "sha256": "acd57a862c150b18cd61a65e06a2e748f013528ac5c617164c4388a2cadd2fa7",
+    "command": "/root/minipy-native-k/final-test-interpreter --test-threads=1"
+  }
+]

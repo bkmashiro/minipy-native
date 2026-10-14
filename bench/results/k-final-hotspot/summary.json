@@ -1,0 +1,2712 @@
+{
+  "raw_count": 20560,
+  "all_raw_overloaded_batches": 0,
+  "mixed": {
+    "light/mixed-cold/0/base": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 513.5714285714286,
+      "mean_latency_us": 1983.5584785714286,
+      "short_p95_us": 2076.467,
+      "short_p99_us": 2810.142,
+      "scalar_p95_us": 1868.473,
+      "scalar_p99_us": 2240.966,
+      "mean_batch_wall_us": 24572.127392857143,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 879.4506279761905,
+          "mean_prepare_us": 45.74915178571428
+        },
+        "stateful:100": {
+          "mean_latency_us": 1426.7958392857142,
+          "mean_prepare_us": 191.70189285714287
+        },
+        "stateful:100000": {
+          "mean_latency_us": 18794.68942857143,
+          "mean_prepare_us": 172.11292857142857
+        },
+        "weighted:100": {
+          "mean_latency_us": 990.5415758928572,
+          "mean_prepare_us": 116.04675892857144
+        },
+        "weighted:10000": {
+          "mean_latency_us": 3507.314625,
+          "mean_prepare_us": 120.53194642857143
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 471.61071428571427,
+          "mean_latency_us": 1897.3421928571427,
+          "short_p95_us": 2113.152,
+          "short_p99_us": 2878.202,
+          "scalar_p95_us": 1929.534,
+          "scalar_p99_us": 2301.899,
+          "mean_batch_wall_us": 23395.089,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 902.4304702380953,
+              "mean_prepare_us": 42.33695238095238
+            },
+            "stateful:100": {
+              "mean_latency_us": 1430.49125,
+              "mean_prepare_us": 148.85139285714288
+            },
+            "stateful:100000": {
+              "mean_latency_us": 17153.961571428572,
+              "mean_prepare_us": 152.1949285714286
+            },
+            "weighted:100": {
+              "mean_latency_us": 994.8731607142856,
+              "mean_prepare_us": 106.782375
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3123.2415,
+              "mean_prepare_us": 109.04057142857144
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 528.0928571428572,
+          "mean_latency_us": 2079.751060714286,
+          "short_p95_us": 2330.447,
+          "short_p99_us": 3947.789,
+          "scalar_p95_us": 1963.029,
+          "scalar_p99_us": 3051.273,
+          "mean_batch_wall_us": 24982.89957142857,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 928.9220059523809,
+              "mean_prepare_us": 47.14360119047619
+            },
+            "stateful:100": {
+              "mean_latency_us": 1577.90575,
+              "mean_prepare_us": 283.72360714285713
+            },
+            "stateful:100000": {
+              "mean_latency_us": 19394.8535,
+              "mean_prepare_us": 189.0397142857143
+            },
+            "weighted:100": {
+              "mean_latency_us": 1070.3994642857144,
+              "mean_prepare_us": 117.54164285714286
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3615.694285714286,
+              "mean_prepare_us": 124.88871428571429
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 505.05,
+          "mean_latency_us": 1886.9270571428572,
+          "short_p95_us": 1973.406,
+          "short_p99_us": 2498.519,
+          "scalar_p95_us": 1794.605,
+          "scalar_p99_us": 2010.887,
+          "mean_batch_wall_us": 24177.556285714287,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 805.022875,
+              "mean_prepare_us": 42.68369047619047
+            },
+            "stateful:100": {
+              "mean_latency_us": 1293.6303214285713,
+              "mean_prepare_us": 155.0662142857143
+            },
+            "stateful:100000": {
+              "mean_latency_us": 18444.65714285714,
+              "mean_prepare_us": 162.4542857142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 901.9483392857143,
+              "mean_prepare_us": 112.56789285714285
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3438.5555,
+              "mean_prepare_us": 110.68535714285714
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 549.5321428571428,
+          "mean_latency_us": 2070.213603571429,
+          "short_p95_us": 2047.363,
+          "short_p99_us": 2810.142,
+          "scalar_p95_us": 1809.53,
+          "scalar_p99_us": 2150.99,
+          "mean_batch_wall_us": 25732.964714285714,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 881.4271607142857,
+              "mean_prepare_us": 50.832363095238094
+            },
+            "stateful:100": {
+              "mean_latency_us": 1405.1560357142857,
+              "mean_prepare_us": 179.16635714285712
+            },
+            "stateful:100000": {
+              "mean_latency_us": 20185.2855,
+              "mean_prepare_us": 184.7627857142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 994.9453392857143,
+              "mean_prepare_us": 127.295125
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3851.767214285714,
+              "mean_prepare_us": 137.51314285714287
+            }
+          }
+        }
+      ]
+    },
+    "light/mixed-cold/0/candidate": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 522.6026785714286,
+      "mean_latency_us": 1975.2161205357143,
+      "short_p95_us": 1955.283,
+      "short_p99_us": 2506.633,
+      "scalar_p95_us": 1764.513,
+      "scalar_p99_us": 2132.381,
+      "mean_batch_wall_us": 24925.31525,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 846.1041145833334,
+          "mean_prepare_us": 49.640870535714285
+        },
+        "stateful:100": {
+          "mean_latency_us": 1333.077330357143,
+          "mean_prepare_us": 169.03458928571428
+        },
+        "stateful:100000": {
+          "mean_latency_us": 19050.372,
+          "mean_prepare_us": 175.36630357142857
+        },
+        "weighted:100": {
+          "mean_latency_us": 985.30625,
+          "mean_prepare_us": 126.68558928571429
+        },
+        "weighted:10000": {
+          "mean_latency_us": 3693.321375,
+          "mean_prepare_us": 135.51519642857141
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 531.2535714285715,
+          "mean_latency_us": 2035.985857142857,
+          "short_p95_us": 1944.104,
+          "short_p99_us": 2534.133,
+          "scalar_p95_us": 1742.593,
+          "scalar_p99_us": 2127.282,
+          "mean_batch_wall_us": 25140.83642857143,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 877.732130952381,
+              "mean_prepare_us": 47.54654166666666
+            },
+            "stateful:100": {
+              "mean_latency_us": 1462.0534642857144,
+              "mean_prepare_us": 180.58585714285712
+            },
+            "stateful:100000": {
+              "mean_latency_us": 19550.34571428571,
+              "mean_prepare_us": 188.47235714285713
+            },
+            "weighted:100": {
+              "mean_latency_us": 994.79675,
+              "mean_prepare_us": 124.73764285714286
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3733.291928571429,
+              "mean_prepare_us": 137.758
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 498.4535714285714,
+          "mean_latency_us": 1922.1618642857143,
+          "short_p95_us": 2040.031,
+          "short_p99_us": 3099.132,
+          "scalar_p95_us": 1764.513,
+          "scalar_p99_us": 2040.031,
+          "mean_batch_wall_us": 24389.228714285713,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 877.5997202380953,
+              "mean_prepare_us": 44.900595238095235
+            },
+            "stateful:100": {
+              "mean_latency_us": 1293.811,
+              "mean_prepare_us": 158.64685714285713
+            },
+            "stateful:100000": {
+              "mean_latency_us": 17706.808142857142,
+              "mean_prepare_us": 159.95714285714286
+            },
+            "weighted:100": {
+              "mean_latency_us": 1054.12225,
+              "mean_prepare_us": 114.98621428571428
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3401.1215,
+              "mean_prepare_us": 114.29178571428571
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 544.275,
+          "mean_latency_us": 1974.4462892857143,
+          "short_p95_us": 1944.861,
+          "short_p99_us": 2467.749,
+          "scalar_p95_us": 1715.772,
+          "scalar_p99_us": 2198.679,
+          "mean_batch_wall_us": 25643.55971428571,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 766.233,
+              "mean_prepare_us": 56.67419642857143
+            },
+            "stateful:100": {
+              "mean_latency_us": 1289.30475,
+              "mean_prepare_us": 173.3497857142857
+            },
+            "stateful:100000": {
+              "mean_latency_us": 20101.4735,
+              "mean_prepare_us": 190.94264285714286
+            },
+            "weighted:100": {
+              "mean_latency_us": 948.8939285714285,
+              "mean_prepare_us": 142.85325
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3818.4710714285716,
+              "mean_prepare_us": 156.6307857142857
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 516.4285714285714,
+          "mean_latency_us": 1968.2704714285715,
+          "short_p95_us": 1876.909,
+          "short_p99_us": 2437.111,
+          "scalar_p95_us": 1780.372,
+          "scalar_p99_us": 2222.207,
+          "mean_batch_wall_us": 24527.636142857144,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 862.8516071428571,
+              "mean_prepare_us": 49.44214880952381
+            },
+            "stateful:100": {
+              "mean_latency_us": 1287.140107142857,
+              "mean_prepare_us": 163.55585714285712
+            },
+            "stateful:100000": {
+              "mean_latency_us": 18842.86064285714,
+              "mean_prepare_us": 162.09307142857142
+            },
+            "weighted:100": {
+              "mean_latency_us": 943.4120714285715,
+              "mean_prepare_us": 124.16525
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3820.401,
+              "mean_prepare_us": 133.3802142857143
+            }
+          }
+        }
+      ]
+    },
+    "light/mixed-cold/1000/base": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 524.2919642857144,
+      "mean_latency_us": 3694.1184973214285,
+      "short_p95_us": 6932.824,
+      "short_p99_us": 8107.101,
+      "scalar_p95_us": 1941.348,
+      "scalar_p99_us": 2192.376,
+      "mean_batch_wall_us": 28807.456,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 965.4582991071428,
+          "mean_prepare_us": 51.465864583333335
+        },
+        "stateful:100": {
+          "mean_latency_us": 5899.726017857142,
+          "mean_prepare_us": 162.6782232142857
+        },
+        "stateful:100000": {
+          "mean_latency_us": 22667.22167857143,
+          "mean_prepare_us": 173.732375
+        },
+        "weighted:100": {
+          "mean_latency_us": 5238.611830357143,
+          "mean_prepare_us": 129.16040625
+        },
+        "weighted:10000": {
+          "mean_latency_us": 6875.749321428571,
+          "mean_prepare_us": 118.05067857142856
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 508.5785714285714,
+          "mean_latency_us": 3553.6570607142858,
+          "short_p95_us": 6466.382,
+          "short_p99_us": 7829.979,
+          "scalar_p95_us": 1919.953,
+          "scalar_p99_us": 2019.487,
+          "mean_batch_wall_us": 28442.47714285714,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 895.0590952380952,
+              "mean_prepare_us": 48.56530357142857
+            },
+            "stateful:100": {
+              "mean_latency_us": 5589.035071428571,
+              "mean_prepare_us": 154.50264285714286
+            },
+            "stateful:100000": {
+              "mean_latency_us": 21813.34364285714,
+              "mean_prepare_us": 163.501
+            },
+            "weighted:100": {
+              "mean_latency_us": 5190.4361607142855,
+              "mean_prepare_us": 123.92573214285714
+            },
+            "weighted:10000": {
+              "mean_latency_us": 6579.2736428571425,
+              "mean_prepare_us": 108.70714285714286
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 544.7035714285714,
+          "mean_latency_us": 3733.752275,
+          "short_p95_us": 6506.237,
+          "short_p99_us": 7950.127,
+          "scalar_p95_us": 1916.209,
+          "scalar_p99_us": 2177.258,
+          "mean_batch_wall_us": 29125.798,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 964.8778392857143,
+              "mean_prepare_us": 54.39495238095238
+            },
+            "stateful:100": {
+              "mean_latency_us": 5750.1578928571425,
+              "mean_prepare_us": 172.231
+            },
+            "stateful:100000": {
+              "mean_latency_us": 23499.66,
+              "mean_prepare_us": 194.78164285714286
+            },
+            "weighted:100": {
+              "mean_latency_us": 5258.3875,
+              "mean_prepare_us": 132.1439464285714
+            },
+            "weighted:10000": {
+              "mean_latency_us": 7062.985642857143,
+              "mean_prepare_us": 123.39092857142856
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 554.4535714285714,
+          "mean_latency_us": 3729.0183035714285,
+          "short_p95_us": 6932.824,
+          "short_p99_us": 8425.847,
+          "scalar_p95_us": 1878.313,
+          "scalar_p99_us": 2167.527,
+          "mean_batch_wall_us": 29082.67328571429,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 934.5595297619047,
+              "mean_prepare_us": 54.38242857142857
+            },
+            "stateful:100": {
+              "mean_latency_us": 5986.947714285715,
+              "mean_prepare_us": 172.94410714285712
+            },
+            "stateful:100000": {
+              "mean_latency_us": 23596.15357142857,
+              "mean_prepare_us": 177.8797857142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 5175.169767857143,
+              "mean_prepare_us": 136.1528392857143
+            },
+            "weighted:10000": {
+              "mean_latency_us": 7094.923642857143,
+              "mean_prepare_us": 126.22621428571429
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 489.4321428571428,
+          "mean_latency_us": 3760.04635,
+          "short_p95_us": 7348.222,
+          "short_p99_us": 8762.642,
+          "scalar_p95_us": 2036.867,
+          "scalar_p99_us": 2368.394,
+          "mean_batch_wall_us": 28578.875571428573,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 1067.336732142857,
+              "mean_prepare_us": 48.52077380952381
+            },
+            "stateful:100": {
+              "mean_latency_us": 6272.763392857143,
+              "mean_prepare_us": 151.03514285714286
+            },
+            "stateful:100000": {
+              "mean_latency_us": 21759.7295,
+              "mean_prepare_us": 158.76707142857143
+            },
+            "weighted:100": {
+              "mean_latency_us": 5330.453892857143,
+              "mean_prepare_us": 124.41910714285714
+            },
+            "weighted:10000": {
+              "mean_latency_us": 6765.814357142857,
+              "mean_prepare_us": 113.87842857142857
+            }
+          }
+        }
+      ]
+    },
+    "light/mixed-cold/1000/candidate": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 535.1178571428571,
+      "mean_latency_us": 3619.7187937500003,
+      "short_p95_us": 6639.313,
+      "short_p99_us": 8247.0,
+      "scalar_p95_us": 1857.504,
+      "scalar_p99_us": 2215.178,
+      "mean_batch_wall_us": 28462.12317857143,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 892.0849375,
+          "mean_prepare_us": 52.494846726190474
+        },
+        "stateful:100": {
+          "mean_latency_us": 5679.205142857143,
+          "mean_prepare_us": 164.48148214285712
+        },
+        "stateful:100000": {
+          "mean_latency_us": 22821.641053571428,
+          "mean_prepare_us": 202.342125
+        },
+        "weighted:100": {
+          "mean_latency_us": 5127.1879017857145,
+          "mean_prepare_us": 133.1575580357143
+        },
+        "weighted:10000": {
+          "mean_latency_us": 7000.5536785714285,
+          "mean_prepare_us": 121.83841071428571
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 537.5142857142857,
+          "mean_latency_us": 3671.6738535714285,
+          "short_p95_us": 6770.0,
+          "short_p99_us": 8580.181,
+          "scalar_p95_us": 1937.468,
+          "scalar_p99_us": 2246.554,
+          "mean_batch_wall_us": 28806.750285714286,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 944.4504523809525,
+              "mean_prepare_us": 52.654625
+            },
+            "stateful:100": {
+              "mean_latency_us": 5751.070214285714,
+              "mean_prepare_us": 177.3148214285714
+            },
+            "stateful:100000": {
+              "mean_latency_us": 23068.819642857143,
+              "mean_prepare_us": 169.2285
+            },
+            "weighted:100": {
+              "mean_latency_us": 5139.040785714285,
+              "mean_prepare_us": 134.96735714285714
+            },
+            "weighted:10000": {
+              "mean_latency_us": 6972.948428571428,
+              "mean_prepare_us": 121.44764285714285
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 538.4714285714285,
+          "mean_latency_us": 3574.1386749999997,
+          "short_p95_us": 6595.222,
+          "short_p99_us": 8410.144,
+          "scalar_p95_us": 1822.989,
+          "scalar_p99_us": 2187.089,
+          "mean_batch_wall_us": 28641.42242857143,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 805.8203392857143,
+              "mean_prepare_us": 52.431619047619044
+            },
+            "stateful:100": {
+              "mean_latency_us": 5685.663571428572,
+              "mean_prepare_us": 168.49589285714288
+            },
+            "stateful:100000": {
+              "mean_latency_us": 23155.081857142857,
+              "mean_prepare_us": 179.4329285714286
+            },
+            "weighted:100": {
+              "mean_latency_us": 5055.484892857143,
+              "mean_prepare_us": 136.699875
+            },
+            "weighted:10000": {
+              "mean_latency_us": 7064.580857142857,
+              "mean_prepare_us": 124.35142857142857
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 526.9071428571428,
+          "mean_latency_us": 3559.1208642857146,
+          "short_p95_us": 6359.079,
+          "short_p99_us": 7391.897,
+          "scalar_p95_us": 1847.42,
+          "scalar_p99_us": 2266.31,
+          "mean_batch_wall_us": 28158.907285714286,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 842.4231666666666,
+              "mean_prepare_us": 49.86143452380953
+            },
+            "stateful:100": {
+              "mean_latency_us": 5633.904285714286,
+              "mean_prepare_us": 154.0247857142857
+            },
+            "stateful:100000": {
+              "mean_latency_us": 22496.463428571427,
+              "mean_prepare_us": 290.7825
+            },
+            "weighted:100": {
+              "mean_latency_us": 5106.519910714285,
+              "mean_prepare_us": 128.08057142857143
+            },
+            "weighted:10000": {
+              "mean_latency_us": 6882.987642857142,
+              "mean_prepare_us": 114.50178571428572
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 537.5785714285714,
+          "mean_latency_us": 3673.941782142857,
+          "short_p95_us": 6426.94,
+          "short_p99_us": 7985.856,
+          "scalar_p95_us": 1849.56,
+          "scalar_p99_us": 2104.345,
+          "mean_batch_wall_us": 28241.412714285714,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 975.6457916666666,
+              "mean_prepare_us": 55.031708333333334
+            },
+            "stateful:100": {
+              "mean_latency_us": 5646.1825,
+              "mean_prepare_us": 158.0904285714286
+            },
+            "stateful:100000": {
+              "mean_latency_us": 22566.199285714287,
+              "mean_prepare_us": 169.92457142857143
+            },
+            "weighted:100": {
+              "mean_latency_us": 5207.706017857143,
+              "mean_prepare_us": 132.8824285714286
+            },
+            "weighted:10000": {
+              "mean_latency_us": 7081.697785714286,
+              "mean_prepare_us": 127.0527857142857
+            }
+          }
+        }
+      ]
+    },
+    "light/mixed-warm/0/base": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 485.8026785714286,
+      "mean_latency_us": 1713.724517857143,
+      "short_p95_us": 1566.757,
+      "short_p99_us": 2072.071,
+      "scalar_p95_us": 1553.397,
+      "scalar_p99_us": 1822.236,
+      "mean_batch_wall_us": 23667.004357142858,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 719.0969270833334,
+          "mean_prepare_us": 0.5050684523809524
+        },
+        "stateful:100": {
+          "mean_latency_us": 907.4131339285715,
+          "mean_prepare_us": 0.5135357142857143
+        },
+        "stateful:100000": {
+          "mean_latency_us": 17489.65064285714,
+          "mean_prepare_us": 0.534875
+        },
+        "weighted:100": {
+          "mean_latency_us": 768.3278928571428,
+          "mean_prepare_us": 0.47328125
+        },
+        "weighted:10000": {
+          "mean_latency_us": 3267.53875,
+          "mean_prepare_us": 0.4856607142857143
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 481.65,
+          "mean_latency_us": 1695.725292857143,
+          "short_p95_us": 1574.996,
+          "short_p99_us": 2090.589,
+          "scalar_p95_us": 1577.76,
+          "scalar_p99_us": 1822.236,
+          "mean_batch_wall_us": 23359.750285714286,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 703.4789880952382,
+              "mean_prepare_us": 0.5071428571428571
+            },
+            "stateful:100": {
+              "mean_latency_us": 895.3763214285715,
+              "mean_prepare_us": 0.4895
+            },
+            "stateful:100000": {
+              "mean_latency_us": 17227.30385714286,
+              "mean_prepare_us": 0.5941428571428571
+            },
+            "weighted:100": {
+              "mean_latency_us": 777.2306785714285,
+              "mean_prepare_us": 0.4537321428571428
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3345.7787857142857,
+              "mean_prepare_us": 0.47478571428571426
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 456.0464285714286,
+          "mean_latency_us": 1644.0006464285714,
+          "short_p95_us": 1648.476,
+          "short_p99_us": 2084.663,
+          "scalar_p95_us": 1547.95,
+          "scalar_p99_us": 1933.301,
+          "mean_batch_wall_us": 22987.10485714286,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 725.1438928571429,
+              "mean_prepare_us": 0.4722142857142857
+            },
+            "stateful:100": {
+              "mean_latency_us": 933.2353571428572,
+              "mean_prepare_us": 0.5116428571428572
+            },
+            "stateful:100000": {
+              "mean_latency_us": 16423.670714285716,
+              "mean_prepare_us": 0.5072857142857142
+            },
+            "weighted:100": {
+              "mean_latency_us": 753.3960357142856,
+              "mean_prepare_us": 0.41332142857142856
+            },
+            "weighted:10000": {
+              "mean_latency_us": 2874.5606428571427,
+              "mean_prepare_us": 0.4655
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 495.0785714285714,
+          "mean_latency_us": 1783.0222714285712,
+          "short_p95_us": 1593.696,
+          "short_p99_us": 2246.26,
+          "scalar_p95_us": 1517.027,
+          "scalar_p99_us": 1685.792,
+          "mean_batch_wall_us": 23852.117,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 764.4239226190476,
+              "mean_prepare_us": 0.4996607142857143
+            },
+            "stateful:100": {
+              "mean_latency_us": 972.8458214285715,
+              "mean_prepare_us": 0.5548214285714286
+            },
+            "stateful:100000": {
+              "mean_latency_us": 17857.965714285714,
+              "mean_prepare_us": 0.5281428571428571
+            },
+            "weighted:100": {
+              "mean_latency_us": 846.2130535714285,
+              "mean_prepare_us": 0.5011785714285715
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3298.848785714286,
+              "mean_prepare_us": 0.4774285714285714
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 510.43571428571425,
+          "mean_latency_us": 1732.1498607142855,
+          "short_p95_us": 1544.57,
+          "short_p99_us": 1849.936,
+          "scalar_p95_us": 1544.57,
+          "scalar_p99_us": 1796.901,
+          "mean_batch_wall_us": 24469.04528571429,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 683.3409047619048,
+              "mean_prepare_us": 0.5412559523809524
+            },
+            "stateful:100": {
+              "mean_latency_us": 828.1950357142857,
+              "mean_prepare_us": 0.49817857142857147
+            },
+            "stateful:100000": {
+              "mean_latency_us": 18449.662285714287,
+              "mean_prepare_us": 0.5099285714285714
+            },
+            "weighted:100": {
+              "mean_latency_us": 696.4718035714285,
+              "mean_prepare_us": 0.5248928571428572
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3550.966785714286,
+              "mean_prepare_us": 0.5249285714285714
+            }
+          }
+        }
+      ]
+    },
+    "light/mixed-warm/0/candidate": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 468.44910714285714,
+      "mean_latency_us": 1694.9123098214286,
+      "short_p95_us": 1576.877,
+      "short_p99_us": 2171.336,
+      "scalar_p95_us": 1543.87,
+      "scalar_p99_us": 1826.709,
+      "mean_batch_wall_us": 23099.850035714288,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 730.7964017857144,
+          "mean_prepare_us": 0.5668199404761904
+        },
+        "stateful:100": {
+          "mean_latency_us": 940.4798214285714,
+          "mean_prepare_us": 0.8096517857142856
+        },
+        "stateful:100000": {
+          "mean_latency_us": 17095.437857142857,
+          "mean_prepare_us": 0.5854642857142857
+        },
+        "weighted:100": {
+          "mean_latency_us": 762.3098392857144,
+          "mean_prepare_us": 0.470625
+        },
+        "weighted:10000": {
+          "mean_latency_us": 3103.052517857143,
+          "mean_prepare_us": 0.46469642857142857
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 464.45,
+          "mean_latency_us": 1608.743892857143,
+          "short_p95_us": 1503.694,
+          "short_p99_us": 2056.043,
+          "scalar_p95_us": 1503.694,
+          "scalar_p99_us": 1795.56,
+          "mean_batch_wall_us": 22871.212571428572,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 673.4528928571428,
+              "mean_prepare_us": 0.47683333333333333
+            },
+            "stateful:100": {
+              "mean_latency_us": 838.1320714285715,
+              "mean_prepare_us": 0.5267142857142857
+            },
+            "stateful:100000": {
+              "mean_latency_us": 16736.177,
+              "mean_prepare_us": 0.5402857142857144
+            },
+            "weighted:100": {
+              "mean_latency_us": 670.66,
+              "mean_prepare_us": 0.45517857142857143
+            },
+            "weighted:10000": {
+              "mean_latency_us": 2998.362,
+              "mean_prepare_us": 0.4565714285714286
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 476.73214285714283,
+          "mean_latency_us": 1862.3372785714284,
+          "short_p95_us": 1731.86,
+          "short_p99_us": 2894.646,
+          "scalar_p95_us": 1627.421,
+          "scalar_p99_us": 1869.051,
+          "mean_batch_wall_us": 23782.666285714287,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 841.911630952381,
+              "mean_prepare_us": 0.7964702380952381
+            },
+            "stateful:100": {
+              "mean_latency_us": 1052.2531428571428,
+              "mean_prepare_us": 1.6754642857142859
+            },
+            "stateful:100000": {
+              "mean_latency_us": 17925.613214285713,
+              "mean_prepare_us": 0.6385
+            },
+            "weighted:100": {
+              "mean_latency_us": 955.5849642857144,
+              "mean_prepare_us": 0.4781964285714286
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3291.346642857143,
+              "mean_prepare_us": 0.4833571428571428
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 454.0678571428572,
+          "mean_latency_us": 1612.2457964285716,
+          "short_p95_us": 1569.296,
+          "short_p99_us": 2112.545,
+          "scalar_p95_us": 1546.058,
+          "scalar_p99_us": 1840.241,
+          "mean_batch_wall_us": 22515.599857142857,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 693.4915416666666,
+              "mean_prepare_us": 0.47132738095238097
+            },
+            "stateful:100": {
+              "mean_latency_us": 967.2568214285715,
+              "mean_prepare_us": 0.5130714285714285
+            },
+            "stateful:100000": {
+              "mean_latency_us": 16463.744714285716,
+              "mean_prepare_us": 0.6204285714285714
+            },
+            "weighted:100": {
+              "mean_latency_us": 666.3390357142857,
+              "mean_prepare_us": 0.4712678571428572
+            },
+            "weighted:10000": {
+              "mean_latency_us": 2859.4029285714287,
+              "mean_prepare_us": 0.43257142857142855
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 478.5464285714286,
+          "mean_latency_us": 1696.3222714285714,
+          "short_p95_us": 1523.783,
+          "short_p99_us": 2035.354,
+          "scalar_p95_us": 1473.56,
+          "scalar_p99_us": 1605.21,
+          "mean_batch_wall_us": 23229.92142857143,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 714.3295416666666,
+              "mean_prepare_us": 0.5226488095238095
+            },
+            "stateful:100": {
+              "mean_latency_us": 904.27725,
+              "mean_prepare_us": 0.5233571428571429
+            },
+            "stateful:100000": {
+              "mean_latency_us": 17256.2165,
+              "mean_prepare_us": 0.5426428571428571
+            },
+            "weighted:100": {
+              "mean_latency_us": 756.6553571428572,
+              "mean_prepare_us": 0.4778571428571428
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3263.0985,
+              "mean_prepare_us": 0.48628571428571427
+            }
+          }
+        }
+      ]
+    },
+    "scan/mixed-cold/0/base": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 799.9732142857143,
+      "mean_latency_us": 4094.557064285714,
+      "short_p95_us": 3001.419,
+      "short_p99_us": 5160.109,
+      "scalar_p95_us": 1766.861,
+      "scalar_p99_us": 3001.419,
+      "mean_batch_wall_us": 34575.54385714286,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 858.9238035714285,
+          "mean_prepare_us": 47.64117410714285
+        },
+        "stateful:100": {
+          "mean_latency_us": 1171.9886875,
+          "mean_prepare_us": 120.80253571428571
+        },
+        "stateful:100000": {
+          "mean_latency_us": 24793.192303571428,
+          "mean_prepare_us": 128.65324107142857
+        },
+        "weighted:100": {
+          "mean_latency_us": 1523.5057142857142,
+          "mean_prepare_us": 107.06338616071429
+        },
+        "weighted:10000": {
+          "mean_latency_us": 5996.5305,
+          "mean_prepare_us": 117.12058928571429
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 763.6821428571428,
+          "mean_latency_us": 3806.550157142857,
+          "short_p95_us": 2454.267,
+          "short_p99_us": 3419.747,
+          "scalar_p95_us": 1629.028,
+          "scalar_p99_us": 1688.241,
+          "mean_batch_wall_us": 33497.676857142855,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 831.8165892857144,
+              "mean_prepare_us": 45.07326785714285
+            },
+            "stateful:100": {
+              "mean_latency_us": 1090.6413035714286,
+              "mean_prepare_us": 111.67494642857143
+            },
+            "stateful:100000": {
+              "mean_latency_us": 23523.516464285713,
+              "mean_prepare_us": 117.94221428571429
+            },
+            "weighted:100": {
+              "mean_latency_us": 1364.722625,
+              "mean_prepare_us": 99.31044642857144
+            },
+            "weighted:10000": {
+              "mean_latency_us": 5238.178821428572,
+              "mean_prepare_us": 118.06614285714285
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 831.7928571428572,
+          "mean_latency_us": 4703.935789285715,
+          "short_p95_us": 4411.99,
+          "short_p99_us": 7000.922,
+          "scalar_p95_us": 3001.419,
+          "scalar_p99_us": 3880.422,
+          "mean_batch_wall_us": 35907.057857142856,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 1035.1808214285716,
+              "mean_prepare_us": 51.58242857142857
+            },
+            "stateful:100": {
+              "mean_latency_us": 1545.506767857143,
+              "mean_prepare_us": 133.64048214285714
+            },
+            "stateful:100000": {
+              "mean_latency_us": 26407.19717857143,
+              "mean_prepare_us": 134.28571428571428
+            },
+            "weighted:100": {
+              "mean_latency_us": 1939.4068392857143,
+              "mean_prepare_us": 115.52879464285715
+            },
+            "weighted:10000": {
+              "mean_latency_us": 7713.158178571428,
+              "mean_prepare_us": 120.54385714285715
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 755.2642857142857,
+          "mean_latency_us": 3507.3780142857145,
+          "short_p95_us": 2301.517,
+          "short_p99_us": 3105.978,
+          "scalar_p95_us": 1817.03,
+          "scalar_p99_us": 1878.243,
+          "mean_batch_wall_us": 32532.556428571428,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 802.5503571428571,
+              "mean_prepare_us": 44.64028571428572
+            },
+            "stateful:100": {
+              "mean_latency_us": 976.2866785714285,
+              "mean_prepare_us": 104.09166071428571
+            },
+            "stateful:100000": {
+              "mean_latency_us": 22281.223107142858,
+              "mean_prepare_us": 117.53803571428571
+            },
+            "weighted:100": {
+              "mean_latency_us": 1258.21525,
+              "mean_prepare_us": 95.9199375
+            },
+            "weighted:10000": {
+              "mean_latency_us": 4202.021964285715,
+              "mean_prepare_us": 103.06489285714285
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 849.1535714285715,
+          "mean_latency_us": 4360.364296428572,
+          "short_p95_us": 2663.11,
+          "short_p99_us": 4162.99,
+          "scalar_p95_us": 1748.443,
+          "scalar_p99_us": 1859.704,
+          "mean_batch_wall_us": 36364.88428571428,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 766.1474464285715,
+              "mean_prepare_us": 49.26871428571428
+            },
+            "stateful:100": {
+              "mean_latency_us": 1075.52,
+              "mean_prepare_us": 133.8030535714286
+            },
+            "stateful:100000": {
+              "mean_latency_us": 26960.83246428571,
+              "mean_prepare_us": 144.847
+            },
+            "weighted:100": {
+              "mean_latency_us": 1531.678142857143,
+              "mean_prepare_us": 117.49436607142856
+            },
+            "weighted:10000": {
+              "mean_latency_us": 6832.763035714285,
+              "mean_prepare_us": 126.80746428571429
+            }
+          }
+        }
+      ]
+    },
+    "scan/mixed-cold/0/candidate": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 778.66875,
+      "mean_latency_us": 3929.203446428571,
+      "short_p95_us": 2602.489,
+      "short_p99_us": 3928.972,
+      "scalar_p95_us": 1687.91,
+      "scalar_p99_us": 1807.047,
+      "mean_batch_wall_us": 33817.80635714286,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 773.3986785714285,
+          "mean_prepare_us": 49.048964285714284
+        },
+        "stateful:100": {
+          "mean_latency_us": 1046.8946428571428,
+          "mean_prepare_us": 118.63163839285714
+        },
+        "stateful:100000": {
+          "mean_latency_us": 24019.177160714287,
+          "mean_prepare_us": 129.20266964285713
+        },
+        "weighted:100": {
+          "mean_latency_us": 1445.5318125,
+          "mean_prepare_us": 106.35538392857144
+        },
+        "weighted:10000": {
+          "mean_latency_us": 5850.143410714286,
+          "mean_prepare_us": 110.561625
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 740.7464285714285,
+          "mean_latency_us": 3651.5420464285717,
+          "short_p95_us": 2694.127,
+          "short_p99_us": 3839.056,
+          "scalar_p95_us": 1719.963,
+          "scalar_p99_us": 1833.075,
+          "mean_batch_wall_us": 32636.39214285714,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 734.706875,
+              "mean_prepare_us": 47.938071428571426
+            },
+            "stateful:100": {
+              "mean_latency_us": 986.3981607142857,
+              "mean_prepare_us": 105.88917857142856
+            },
+            "stateful:100000": {
+              "mean_latency_us": 22734.523785714286,
+              "mean_prepare_us": 116.69471428571428
+            },
+            "weighted:100": {
+              "mean_latency_us": 1364.194517857143,
+              "mean_prepare_us": 98.33257142857144
+            },
+            "weighted:10000": {
+              "mean_latency_us": 4881.908535714286,
+              "mean_prepare_us": 101.37410714285714
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 809.725,
+          "mean_latency_us": 4162.643939285715,
+          "short_p95_us": 2592.384,
+          "short_p99_us": 4132.779,
+          "scalar_p95_us": 1712.481,
+          "scalar_p99_us": 1807.047,
+          "mean_batch_wall_us": 34929.59628571428,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 751.0588571428572,
+              "mean_prepare_us": 49.33458928571428
+            },
+            "stateful:100": {
+              "mean_latency_us": 1077.9148214285713,
+              "mean_prepare_us": 128.12351785714284
+            },
+            "stateful:100000": {
+              "mean_latency_us": 25443.18257142857,
+              "mean_prepare_us": 139.02575
+            },
+            "weighted:100": {
+              "mean_latency_us": 1489.4668035714287,
+              "mean_prepare_us": 113.40701785714286
+            },
+            "weighted:10000": {
+              "mean_latency_us": 6567.44225,
+              "mean_prepare_us": 115.26517857142856
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 763.7392857142856,
+          "mean_latency_us": 3830.9514821428575,
+          "short_p95_us": 2521.605,
+          "short_p99_us": 3460.999,
+          "scalar_p95_us": 1559.682,
+          "scalar_p99_us": 1747.152,
+          "mean_batch_wall_us": 33247.80114285714,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 806.3842321428572,
+              "mean_prepare_us": 48.83605357142857
+            },
+            "stateful:100": {
+              "mean_latency_us": 1018.5006607142857,
+              "mean_prepare_us": 113.65201785714285
+            },
+            "stateful:100000": {
+              "mean_latency_us": 23206.55725,
+              "mean_prepare_us": 127.75267857142856
+            },
+            "weighted:100": {
+              "mean_latency_us": 1413.315169642857,
+              "mean_prepare_us": 103.37001785714286
+            },
+            "weighted:10000": {
+              "mean_latency_us": 5799.9271071428575,
+              "mean_prepare_us": 106.92685714285714
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 800.4642857142857,
+          "mean_latency_us": 4071.676317857143,
+          "short_p95_us": 2599.839,
+          "short_p99_us": 3274.456,
+          "scalar_p95_us": 1757.342,
+          "scalar_p99_us": 1850.584,
+          "mean_batch_wall_us": 34457.43585714286,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 801.44475,
+              "mean_prepare_us": 50.08714285714286
+            },
+            "stateful:100": {
+              "mean_latency_us": 1104.7649285714285,
+              "mean_prepare_us": 126.8618392857143
+            },
+            "stateful:100000": {
+              "mean_latency_us": 24692.44503571429,
+              "mean_prepare_us": 133.3375357142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 1515.1507589285713,
+              "mean_prepare_us": 110.31192857142857
+            },
+            "weighted:10000": {
+              "mean_latency_us": 6151.29575,
+              "mean_prepare_us": 118.68035714285715
+            }
+          }
+        }
+      ]
+    },
+    "scan/mixed-cold/1000/base": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 821.2294642857144,
+      "mean_latency_us": 7476.862055357144,
+      "short_p95_us": 7791.284,
+      "short_p99_us": 8617.846,
+      "scalar_p95_us": 1741.315,
+      "scalar_p99_us": 1883.943,
+      "mean_batch_wall_us": 38287.348535714285,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 844.7098883928571,
+          "mean_prepare_us": 50.9883125
+        },
+        "stateful:100": {
+          "mean_latency_us": 5501.497450892857,
+          "mean_prepare_us": 117.28136160714286
+        },
+        "stateful:100000": {
+          "mean_latency_us": 28484.448026785714,
+          "mean_prepare_us": 128.88866964285714
+        },
+        "weighted:100": {
+          "mean_latency_us": 5823.599506696428,
+          "mean_prepare_us": 110.70629241071428
+        },
+        "weighted:10000": {
+          "mean_latency_us": 10297.35982142857,
+          "mean_prepare_us": 118.6984375
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 796.1678571428572,
+          "mean_latency_us": 7284.177239285714,
+          "short_p95_us": 7676.936,
+          "short_p99_us": 8579.207,
+          "scalar_p95_us": 1819.763,
+          "scalar_p99_us": 2194.925,
+          "mean_batch_wall_us": 37150.73528571428,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 871.5270357142857,
+              "mean_prepare_us": 52.99066071428572
+            },
+            "stateful:100": {
+              "mean_latency_us": 5380.864446428572,
+              "mean_prepare_us": 112.01621428571428
+            },
+            "stateful:100000": {
+              "mean_latency_us": 27373.75225,
+              "mean_prepare_us": 121.52964285714286
+            },
+            "weighted:100": {
+              "mean_latency_us": 5787.987383928572,
+              "mean_prepare_us": 110.88886607142857
+            },
+            "weighted:10000": {
+              "mean_latency_us": 9811.287642857144,
+              "mean_prepare_us": 101.25364285714285
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 824.8571428571429,
+          "mean_latency_us": 7335.129096428571,
+          "short_p95_us": 7159.033,
+          "short_p99_us": 8287.107,
+          "scalar_p95_us": 1796.836,
+          "scalar_p99_us": 1856.694,
+          "mean_batch_wall_us": 37992.81742857143,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 791.2545178571428,
+              "mean_prepare_us": 51.84710714285715
+            },
+            "stateful:100": {
+              "mean_latency_us": 5421.434875,
+              "mean_prepare_us": 113.40098214285715
+            },
+            "stateful:100000": {
+              "mean_latency_us": 28148.304,
+              "mean_prepare_us": 125.01567857142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 5664.959642857143,
+              "mean_prepare_us": 110.13792857142856
+            },
+            "weighted:10000": {
+              "mean_latency_us": 10117.769607142856,
+              "mean_prepare_us": 126.25239285714285
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 811.9464285714286,
+          "mean_latency_us": 7290.251075,
+          "short_p95_us": 7369.143,
+          "short_p99_us": 8179.4,
+          "scalar_p95_us": 1658.07,
+          "scalar_p99_us": 1754.838,
+          "mean_batch_wall_us": 38176.49257142858,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 809.1441607142857,
+              "mean_prepare_us": 48.71158928571428
+            },
+            "stateful:100": {
+              "mean_latency_us": 5416.875410714286,
+              "mean_prepare_us": 118.55875
+            },
+            "stateful:100000": {
+              "mean_latency_us": 28046.44596428571,
+              "mean_prepare_us": 126.37867857142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 5661.009267857143,
+              "mean_prepare_us": 104.47658035714285
+            },
+            "weighted:10000": {
+              "mean_latency_us": 9759.98857142857,
+              "mean_prepare_us": 112.36282142857144
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 851.9464285714286,
+          "mean_latency_us": 7997.890810714286,
+          "short_p95_us": 8166.177,
+          "short_p99_us": 8880.827,
+          "scalar_p95_us": 1716.205,
+          "scalar_p99_us": 1883.943,
+          "mean_batch_wall_us": 39829.34885714286,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 906.9138392857143,
+              "mean_prepare_us": 50.40389285714286
+            },
+            "stateful:100": {
+              "mean_latency_us": 5786.815071428572,
+              "mean_prepare_us": 125.1495
+            },
+            "stateful:100000": {
+              "mean_latency_us": 30369.28989285714,
+              "mean_prepare_us": 142.63067857142858
+            },
+            "weighted:100": {
+              "mean_latency_us": 6180.441732142857,
+              "mean_prepare_us": 117.32179464285714
+            },
+            "weighted:10000": {
+              "mean_latency_us": 11500.393464285715,
+              "mean_prepare_us": 134.92489285714288
+            }
+          }
+        }
+      ]
+    },
+    "scan/mixed-cold/1000/candidate": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 807.3821428571429,
+      "mean_latency_us": 7661.525290178572,
+      "short_p95_us": 8234.691,
+      "short_p99_us": 9036.24,
+      "scalar_p95_us": 1685.004,
+      "scalar_p99_us": 2012.68,
+      "mean_batch_wall_us": 38340.58046428572,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 915.1440580357144,
+          "mean_prepare_us": 56.28116517857143
+        },
+        "stateful:100": {
+          "mean_latency_us": 5705.156549107142,
+          "mean_prepare_us": 126.86487053571429
+        },
+        "stateful:100000": {
+          "mean_latency_us": 28358.756660714287,
+          "mean_prepare_us": 136.25761607142857
+        },
+        "weighted:100": {
+          "mean_latency_us": 6067.473736607143,
+          "mean_prepare_us": 112.75984598214285
+        },
+        "weighted:10000": {
+          "mean_latency_us": 10746.000080357144,
+          "mean_prepare_us": 114.80247321428571
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 818.9357142857143,
+          "mean_latency_us": 7900.223467857143,
+          "short_p95_us": 8234.691,
+          "short_p99_us": 8993.206,
+          "scalar_p95_us": 1664.854,
+          "scalar_p99_us": 1787.244,
+          "mean_batch_wall_us": 38854.31585714286,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 978.9384285714285,
+              "mean_prepare_us": 57.443
+            },
+            "stateful:100": {
+              "mean_latency_us": 5760.257464285714,
+              "mean_prepare_us": 138.09276785714286
+            },
+            "stateful:100000": {
+              "mean_latency_us": 29281.987285714287,
+              "mean_prepare_us": 142.4039642857143
+            },
+            "weighted:100": {
+              "mean_latency_us": 6189.1419910714285,
+              "mean_prepare_us": 119.5185
+            },
+            "weighted:10000": {
+              "mean_latency_us": 11485.287642857144,
+              "mean_prepare_us": 119.31814285714286
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 830.7785714285715,
+          "mean_latency_us": 7779.9965999999995,
+          "short_p95_us": 8122.054,
+          "short_p99_us": 8832.551,
+          "scalar_p95_us": 1700.293,
+          "scalar_p99_us": 1823.967,
+          "mean_batch_wall_us": 39622.18357142858,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 978.4052678571428,
+              "mean_prepare_us": 58.54291071428572
+            },
+            "stateful:100": {
+              "mean_latency_us": 5754.876928571428,
+              "mean_prepare_us": 132.37960714285714
+            },
+            "stateful:100000": {
+              "mean_latency_us": 29423.452178571428,
+              "mean_prepare_us": 148.67892857142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 6015.670705357143,
+              "mean_prepare_us": 117.64459821428571
+            },
+            "weighted:10000": {
+              "mean_latency_us": 10847.266607142856,
+              "mean_prepare_us": 128.56878571428572
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 767.0107142857144,
+          "mean_latency_us": 7209.142789285715,
+          "short_p95_us": 7838.983,
+          "short_p99_us": 8806.326,
+          "scalar_p95_us": 1625.33,
+          "scalar_p99_us": 1685.004,
+          "mean_batch_wall_us": 36783.741714285716,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 779.0684285714285,
+              "mean_prepare_us": 55.758892857142854
+            },
+            "stateful:100": {
+              "mean_latency_us": 5492.471928571428,
+              "mean_prepare_us": 117.00175
+            },
+            "stateful:100000": {
+              "mean_latency_us": 26565.123964285714,
+              "mean_prepare_us": 127.83560714285714
+            },
+            "weighted:100": {
+              "mean_latency_us": 5852.486517857143,
+              "mean_prepare_us": 105.464375
+            },
+            "weighted:10000": {
+              "mean_latency_us": 9573.277142857143,
+              "mean_prepare_us": 98.98817857142856
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 812.8035714285714,
+          "mean_latency_us": 7756.738303571428,
+          "short_p95_us": 8366.152,
+          "short_p99_us": 9278.337,
+          "scalar_p95_us": 2012.68,
+          "scalar_p99_us": 2944.522,
+          "mean_batch_wall_us": 38102.080714285716,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 924.1641071428571,
+              "mean_prepare_us": 53.37985714285715
+            },
+            "stateful:100": {
+              "mean_latency_us": 5813.019875,
+              "mean_prepare_us": 119.98535714285714
+            },
+            "stateful:100000": {
+              "mean_latency_us": 28164.46321428571,
+              "mean_prepare_us": 126.1119642857143
+            },
+            "weighted:100": {
+              "mean_latency_us": 6212.595732142857,
+              "mean_prepare_us": 108.41191071428571
+            },
+            "weighted:10000": {
+              "mean_latency_us": 11078.16892857143,
+              "mean_prepare_us": 112.33478571428572
+            }
+          }
+        }
+      ]
+    },
+    "scan/mixed-warm/0/base": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 767.51875,
+      "mean_latency_us": 3446.217690178571,
+      "short_p95_us": 1981.091,
+      "short_p99_us": 2535.255,
+      "scalar_p95_us": 1607.32,
+      "scalar_p99_us": 1816.063,
+      "mean_batch_wall_us": 33630.87914285714,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 652.8603482142856,
+          "mean_prepare_us": 0.4683705357142857
+        },
+        "stateful:100": {
+          "mean_latency_us": 719.0315982142857,
+          "mean_prepare_us": 0.45848660714285716
+        },
+        "stateful:100000": {
+          "mean_latency_us": 23446.616276785713,
+          "mean_prepare_us": 0.49109821428571426
+        },
+        "weighted:100": {
+          "mean_latency_us": 1080.726845982143,
+          "mean_prepare_us": 0.473390625
+        },
+        "weighted:10000": {
+          "mean_latency_us": 3948.8693482142858,
+          "mean_prepare_us": 0.5044910714285714
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 778.0928571428572,
+          "mean_latency_us": 3467.797653571429,
+          "short_p95_us": 2116.585,
+          "short_p99_us": 2769.254,
+          "scalar_p95_us": 1607.32,
+          "scalar_p99_us": 2371.557,
+          "mean_batch_wall_us": 34069.394,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 583.5104821428572,
+              "mean_prepare_us": 0.4485
+            },
+            "stateful:100": {
+              "mean_latency_us": 693.4428392857143,
+              "mean_prepare_us": 0.46419642857142857
+            },
+            "stateful:100000": {
+              "mean_latency_us": 23874.21907142857,
+              "mean_prepare_us": 0.5043214285714286
+            },
+            "weighted:100": {
+              "mean_latency_us": 1060.9933571428571,
+              "mean_prepare_us": 0.4521607142857143
+            },
+            "weighted:10000": {
+              "mean_latency_us": 4005.8773928571427,
+              "mean_prepare_us": 0.49096428571428574
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 752.6714285714286,
+          "mean_latency_us": 3336.515532142857,
+          "short_p95_us": 1922.151,
+          "short_p99_us": 2383.58,
+          "scalar_p95_us": 1766.858,
+          "scalar_p99_us": 1880.347,
+          "mean_batch_wall_us": 33177.71742857143,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 687.9062678571429,
+              "mean_prepare_us": 0.44823214285714286
+            },
+            "stateful:100": {
+              "mean_latency_us": 701.4787142857143,
+              "mean_prepare_us": 0.44076785714285716
+            },
+            "stateful:100000": {
+              "mean_latency_us": 22846.939964285713,
+              "mean_prepare_us": 0.46242857142857147
+            },
+            "weighted:100": {
+              "mean_latency_us": 1051.438107142857,
+              "mean_prepare_us": 0.46805357142857146
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3533.692964285714,
+              "mean_prepare_us": 0.46242857142857147
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 778.55,
+          "mean_latency_us": 3658.714592857143,
+          "short_p95_us": 2108.217,
+          "short_p99_us": 2464.055,
+          "scalar_p95_us": 1563.806,
+          "scalar_p99_us": 1782.606,
+          "mean_batch_wall_us": 34346.519428571424,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 747.3510357142857,
+              "mean_prepare_us": 0.4839821428571428
+            },
+            "stateful:100": {
+              "mean_latency_us": 807.8631964285714,
+              "mean_prepare_us": 0.46521428571428575
+            },
+            "stateful:100000": {
+              "mean_latency_us": 24378.88935714286,
+              "mean_prepare_us": 0.5012142857142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 1189.113669642857,
+              "mean_prepare_us": 0.4958214285714286
+            },
+            "weighted:10000": {
+              "mean_latency_us": 4341.373428571428,
+              "mean_prepare_us": 0.5263928571428571
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 760.7607142857144,
+          "mean_latency_us": 3321.842982142857,
+          "short_p95_us": 1811.379,
+          "short_p99_us": 2112.552,
+          "scalar_p95_us": 1435.937,
+          "scalar_p99_us": 1790.86,
+          "mean_batch_wall_us": 32929.885714285716,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 592.6736071428571,
+              "mean_prepare_us": 0.49276785714285715
+            },
+            "stateful:100": {
+              "mean_latency_us": 673.3416428571428,
+              "mean_prepare_us": 0.4637678571428572
+            },
+            "stateful:100000": {
+              "mean_latency_us": 22686.41671428571,
+              "mean_prepare_us": 0.49642857142857144
+            },
+            "weighted:100": {
+              "mean_latency_us": 1021.36225,
+              "mean_prepare_us": 0.4775267857142857
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3914.5336071428574,
+              "mean_prepare_us": 0.5381785714285714
+            }
+          }
+        }
+      ]
+    },
+    "scan/mixed-warm/0/candidate": {
+      "tasks": 1120,
+      "batches": 28,
+      "cpu_us_per_task": 716.45,
+      "mean_latency_us": 3204.7427535714282,
+      "short_p95_us": 1927.027,
+      "short_p99_us": 2653.33,
+      "scalar_p95_us": 1637.013,
+      "scalar_p99_us": 1894.467,
+      "mean_batch_wall_us": 31795.69314285714,
+      "overloaded_batches": 0,
+      "per_shape": {
+        "scalar:0": {
+          "mean_latency_us": 680.8496919642856,
+          "mean_prepare_us": 0.46838839285714284
+        },
+        "stateful:100": {
+          "mean_latency_us": 676.55740625,
+          "mean_prepare_us": 0.44995089285714285
+        },
+        "stateful:100000": {
+          "mean_latency_us": 21507.238169642857,
+          "mean_prepare_us": 0.4754553571428572
+        },
+        "weighted:100": {
+          "mean_latency_us": 1055.868515625,
+          "mean_prepare_us": 0.48051339285714284
+        },
+        "weighted:10000": {
+          "mean_latency_us": 3601.901107142857,
+          "mean_prepare_us": 0.47028571428571425
+        }
+      },
+      "rounds": [
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 749.5071428571429,
+          "mean_latency_us": 3458.7882357142857,
+          "short_p95_us": 1960.051,
+          "short_p99_us": 2653.33,
+          "scalar_p95_us": 1609.488,
+          "scalar_p99_us": 1752.337,
+          "mean_batch_wall_us": 33160.04542857143,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 700.1324107142857,
+              "mean_prepare_us": 0.46710714285714283
+            },
+            "stateful:100": {
+              "mean_latency_us": 728.5360714285715,
+              "mean_prepare_us": 0.463375
+            },
+            "stateful:100000": {
+              "mean_latency_us": 23169.62589285714,
+              "mean_prepare_us": 0.5163214285714286
+            },
+            "weighted:100": {
+              "mean_latency_us": 1135.995044642857,
+              "mean_prepare_us": 0.5242053571428571
+            },
+            "weighted:10000": {
+              "mean_latency_us": 4016.9393214285715,
+              "mean_prepare_us": 0.5074642857142857
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 750.6321428571429,
+          "mean_latency_us": 3415.525721428571,
+          "short_p95_us": 1949.388,
+          "short_p99_us": 2611.772,
+          "scalar_p95_us": 1894.467,
+          "scalar_p99_us": 2177.713,
+          "mean_batch_wall_us": 33204.551857142855,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 720.5000178571429,
+              "mean_prepare_us": 0.5415
+            },
+            "stateful:100": {
+              "mean_latency_us": 681.6416964285714,
+              "mean_prepare_us": 0.5266785714285714
+            },
+            "stateful:100000": {
+              "mean_latency_us": 23219.089,
+              "mean_prepare_us": 0.5326071428571428
+            },
+            "weighted:100": {
+              "mean_latency_us": 1073.6882232142857,
+              "mean_prepare_us": 0.5143125
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3837.1318928571427,
+              "mean_prepare_us": 0.48928571428571427
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 717.7642857142857,
+          "mean_latency_us": 3151.0420357142857,
+          "short_p95_us": 1809.862,
+          "short_p99_us": 2371.95,
+          "scalar_p95_us": 1628.515,
+          "scalar_p99_us": 1886.33,
+          "mean_batch_wall_us": 31400.234285714287,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 666.8320714285715,
+              "mean_prepare_us": 0.4571071428571428
+            },
+            "stateful:100": {
+              "mean_latency_us": 654.698625,
+              "mean_prepare_us": 0.44589285714285715
+            },
+            "stateful:100000": {
+              "mean_latency_us": 21212.42978571429,
+              "mean_prepare_us": 0.4712142857142857
+            },
+            "weighted:100": {
+              "mean_latency_us": 1034.5095982142857,
+              "mean_prepare_us": 0.46792857142857147
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3516.890785714286,
+              "mean_prepare_us": 0.49078571428571427
+            }
+          }
+        },
+        {
+          "tasks": 280,
+          "batches": 7,
+          "cpu_us_per_task": 647.8964285714285,
+          "mean_latency_us": 2793.6150214285717,
+          "short_p95_us": 1848.643,
+          "short_p99_us": 2739.342,
+          "scalar_p95_us": 1637.013,
+          "scalar_p99_us": 1819.35,
+          "mean_batch_wall_us": 29417.941,
+          "overloaded_batches": 0,
+          "per_shape": {
+            "scalar:0": {
+              "mean_latency_us": 635.9342678571428,
+              "mean_prepare_us": 0.40783928571428574
+            },
+            "stateful:100": {
+              "mean_latency_us": 641.3532321428571,
+              "mean_prepare_us": 0.3638571428571428
+            },
+            "stateful:100000": {
+              "mean_latency_us": 18427.808,
+              "mean_prepare_us": 0.3816785714285714
+            },
+            "weighted:100": {
+              "mean_latency_us": 979.2811964285714,
+              "mean_prepare_us": 0.41560714285714284
+            },
+            "weighted:10000": {
+              "mean_latency_us": 3036.642428571429,
+              "mean_prepare_us": 0.3936071428571428
+            }
+          }
+        }
+      ]
+    }
+  },
+  "shapes": {
+    "scalar:0/cold/base": {
+      "cpu_mean_us": 62.675,
+      "wall_mean_us": 61.58423333333333,
+      "prepare_mean_us": 51.8261,
+      "execute_mean_us": 7.965675,
+      "rounds": [
+        {
+          "cpu_mean_us": 51.5,
+          "wall_mean_us": 50.67666666666666,
+          "prepare_mean_us": 42.347966666666665,
+          "execute_mean_us": 6.828600000000001
+        },
+        {
+          "cpu_mean_us": 71.03333333333333,
+          "wall_mean_us": 70.26783333333333,
+          "prepare_mean_us": 59.652833333333334,
+          "execute_mean_us": 8.474933333333333
+        },
+        {
+          "cpu_mean_us": 68.56666666666668,
+          "wall_mean_us": 67.5128,
+          "prepare_mean_us": 56.8924,
+          "execute_mean_us": 8.909666666666666
+        },
+        {
+          "cpu_mean_us": 59.6,
+          "wall_mean_us": 57.87963333333333,
+          "prepare_mean_us": 48.411199999999994,
+          "execute_mean_us": 7.6495
+        }
+      ]
+    },
+    "scalar:0/cold/candidate": {
+      "cpu_mean_us": 61.775,
+      "wall_mean_us": 60.563449999999996,
+      "prepare_mean_us": 49.81723333333333,
+      "execute_mean_us": 8.762208333333334,
+      "rounds": [
+        {
+          "cpu_mean_us": 56.36666666666667,
+          "wall_mean_us": 58.15716666666666,
+          "prepare_mean_us": 45.303599999999996,
+          "execute_mean_us": 11.102966666666667
+        },
+        {
+          "cpu_mean_us": 78.8,
+          "wall_mean_us": 74.22473333333333,
+          "prepare_mean_us": 65.23896666666667,
+          "execute_mean_us": 7.517033333333334
+        },
+        {
+          "cpu_mean_us": 68.06666666666668,
+          "wall_mean_us": 66.94056666666667,
+          "prepare_mean_us": 52.9184,
+          "execute_mean_us": 10.612066666666667
+        },
+        {
+          "cpu_mean_us": 43.86666666666667,
+          "wall_mean_us": 42.931333333333335,
+          "prepare_mean_us": 35.807966666666665,
+          "execute_mean_us": 5.816766666666666
+        }
+      ]
+    },
+    "scalar:0/warm/base": {
+      "cpu_mean_us": 9.158333333333333,
+      "wall_mean_us": 7.517241666666667,
+      "prepare_mean_us": 0.28994166666666665,
+      "execute_mean_us": 4.9370666666666665,
+      "rounds": [
+        {
+          "cpu_mean_us": 5.6,
+          "wall_mean_us": 4.475066666666667,
+          "prepare_mean_us": 0.3857333333333334,
+          "execute_mean_us": 2.438733333333333
+        },
+        {
+          "cpu_mean_us": 11.0,
+          "wall_mean_us": 9.910466666666666,
+          "prepare_mean_us": 0.3105333333333334,
+          "execute_mean_us": 5.808533333333334
+        },
+        {
+          "cpu_mean_us": 16.433333333333334,
+          "wall_mean_us": 12.837733333333334,
+          "prepare_mean_us": 0.23523333333333332,
+          "execute_mean_us": 9.929933333333333
+        },
+        {
+          "cpu_mean_us": 3.6,
+          "wall_mean_us": 2.8457,
+          "prepare_mean_us": 0.22826666666666667,
+          "execute_mean_us": 1.5710666666666666
+        }
+      ]
+    },
+    "scalar:0/warm/candidate": {
+      "cpu_mean_us": 9.183333333333334,
+      "wall_mean_us": 7.909558333333333,
+      "prepare_mean_us": 0.28614999999999996,
+      "execute_mean_us": 5.2452,
+      "rounds": [
+        {
+          "cpu_mean_us": 3.3333333333333335,
+          "wall_mean_us": 2.7226999999999997,
+          "prepare_mean_us": 0.2298,
+          "execute_mean_us": 1.4775666666666667
+        },
+        {
+          "cpu_mean_us": 25.333333333333332,
+          "wall_mean_us": 22.7112,
+          "prepare_mean_us": 0.39126666666666665,
+          "execute_mean_us": 16.153366666666667
+        },
+        {
+          "cpu_mean_us": 3.2666666666666666,
+          "wall_mean_us": 2.6586,
+          "prepare_mean_us": 0.2311,
+          "execute_mean_us": 1.4350333333333334
+        },
+        {
+          "cpu_mean_us": 4.8,
+          "wall_mean_us": 3.545733333333333,
+          "prepare_mean_us": 0.2924333333333333,
+          "execute_mean_us": 1.9148333333333332
+        }
+      ]
+    },
+    "stateful:100/cold/base": {
+      "cpu_mean_us": 129.60833333333332,
+      "wall_mean_us": 129.23861666666667,
+      "prepare_mean_us": 109.94298333333333,
+      "execute_mean_us": 17.870233333333335,
+      "rounds": [
+        {
+          "cpu_mean_us": 106.56666666666668,
+          "wall_mean_us": 105.89989999999999,
+          "prepare_mean_us": 89.57156666666667,
+          "execute_mean_us": 15.0777
+        },
+        {
+          "cpu_mean_us": 165.2,
+          "wall_mean_us": 164.57313333333335,
+          "prepare_mean_us": 144.1877,
+          "execute_mean_us": 18.862433333333335
+        },
+        {
+          "cpu_mean_us": 125.6,
+          "wall_mean_us": 124.79973333333334,
+          "prepare_mean_us": 104.9554,
+          "execute_mean_us": 18.32033333333333
+        },
+        {
+          "cpu_mean_us": 121.06666666666668,
+          "wall_mean_us": 121.68169999999999,
+          "prepare_mean_us": 101.05726666666666,
+          "execute_mean_us": 19.220466666666667
+        }
+      ]
+    },
+    "stateful:100/cold/candidate": {
+      "cpu_mean_us": 114.80833333333332,
+      "wall_mean_us": 114.7764,
+      "prepare_mean_us": 97.28420833333332,
+      "execute_mean_us": 16.128983333333334,
+      "rounds": [
+        {
+          "cpu_mean_us": 99.03333333333333,
+          "wall_mean_us": 99.86373333333334,
+          "prepare_mean_us": 85.1371,
+          "execute_mean_us": 13.530266666666666
+        },
+        {
+          "cpu_mean_us": 118.76666666666667,
+          "wall_mean_us": 118.07246666666666,
+          "prepare_mean_us": 99.90566666666668,
+          "execute_mean_us": 16.763266666666667
+        },
+        {
+          "cpu_mean_us": 119.3,
+          "wall_mean_us": 119.78453333333334,
+          "prepare_mean_us": 101.00093333333334,
+          "execute_mean_us": 17.398666666666667
+        },
+        {
+          "cpu_mean_us": 122.13333333333333,
+          "wall_mean_us": 121.38486666666667,
+          "prepare_mean_us": 103.09313333333333,
+          "execute_mean_us": 16.823733333333333
+        }
+      ]
+    },
+    "stateful:100/warm/base": {
+      "cpu_mean_us": 22.0,
+      "wall_mean_us": 20.380808333333334,
+      "prepare_mean_us": 0.33689166666666664,
+      "execute_mean_us": 17.901141666666668,
+      "rounds": [
+        {
+          "cpu_mean_us": 16.933333333333334,
+          "wall_mean_us": 16.047,
+          "prepare_mean_us": 0.30223333333333335,
+          "execute_mean_us": 14.3422
+        },
+        {
+          "cpu_mean_us": 20.7,
+          "wall_mean_us": 19.431866666666664,
+          "prepare_mean_us": 0.3941,
+          "execute_mean_us": 17.206966666666666
+        },
+        {
+          "cpu_mean_us": 33.13333333333333,
+          "wall_mean_us": 29.752066666666664,
+          "prepare_mean_us": 0.3353333333333333,
+          "execute_mean_us": 25.51503333333333
+        },
+        {
+          "cpu_mean_us": 17.23333333333333,
+          "wall_mean_us": 16.2923,
+          "prepare_mean_us": 0.31589999999999996,
+          "execute_mean_us": 14.540366666666667
+        }
+      ]
+    },
+    "stateful:100/warm/candidate": {
+      "cpu_mean_us": 22.366666666666667,
+      "wall_mean_us": 21.091391666666667,
+      "prepare_mean_us": 0.3108,
+      "execute_mean_us": 19.060599999999997,
+      "rounds": [
+        {
+          "cpu_mean_us": 16.366666666666667,
+          "wall_mean_us": 15.3033,
+          "prepare_mean_us": 0.3188666666666667,
+          "execute_mean_us": 13.4856
+        },
+        {
+          "cpu_mean_us": 39.06666666666666,
+          "wall_mean_us": 37.0343,
+          "prepare_mean_us": 0.3078,
+          "execute_mean_us": 34.320933333333336
+        },
+        {
+          "cpu_mean_us": 17.2,
+          "wall_mean_us": 16.2269,
+          "prepare_mean_us": 0.31723333333333337,
+          "execute_mean_us": 14.4047
+        },
+        {
+          "cpu_mean_us": 16.833333333333332,
+          "wall_mean_us": 15.801066666666667,
+          "prepare_mean_us": 0.2993,
+          "execute_mean_us": 14.031166666666666
+        }
+      ]
+    },
+    "stateful:100000/cold/base": {
+      "cpu_mean_us": 2415.125,
+      "wall_mean_us": 2420.2276333333334,
+      "prepare_mean_us": 39.223925,
+      "execute_mean_us": 2380.2512916666665,
+      "rounds": [
+        {
+          "cpu_mean_us": 2420.4,
+          "wall_mean_us": 2426.3844,
+          "prepare_mean_us": 38.9411,
+          "execute_mean_us": 2386.6843333333336
+        },
+        {
+          "cpu_mean_us": 2405.2,
+          "wall_mean_us": 2410.5641333333333,
+          "prepare_mean_us": 39.66506666666667,
+          "execute_mean_us": 2370.1444
+        },
+        {
+          "cpu_mean_us": 2358.8,
+          "wall_mean_us": 2363.4666,
+          "prepare_mean_us": 38.31576666666667,
+          "execute_mean_us": 2324.3964333333333
+        },
+        {
+          "cpu_mean_us": 2476.1,
+          "wall_mean_us": 2480.4954,
+          "prepare_mean_us": 39.97376666666667,
+          "execute_mean_us": 2439.78
+        }
+      ]
+    },
+    "stateful:100000/cold/candidate": {
+      "cpu_mean_us": 2388.7083333333335,
+      "wall_mean_us": 2393.714433333333,
+      "prepare_mean_us": 45.09735,
+      "execute_mean_us": 2347.843391666667,
+      "rounds": [
+        {
+          "cpu_mean_us": 2356.5666666666666,
+          "wall_mean_us": 2362.5211666666664,
+          "prepare_mean_us": 37.94936666666667,
+          "execute_mean_us": 2323.796033333333
+        },
+        {
+          "cpu_mean_us": 2415.0666666666666,
+          "wall_mean_us": 2420.5345666666667,
+          "prepare_mean_us": 51.384433333333334,
+          "execute_mean_us": 2368.3814666666667
+        },
+        {
+          "cpu_mean_us": 2373.8333333333335,
+          "wall_mean_us": 2378.4461333333334,
+          "prepare_mean_us": 47.26136666666667,
+          "execute_mean_us": 2330.3968666666665
+        },
+        {
+          "cpu_mean_us": 2409.3666666666663,
+          "wall_mean_us": 2413.3558666666668,
+          "prepare_mean_us": 43.79423333333333,
+          "execute_mean_us": 2368.7992000000004
+        }
+      ]
+    },
+    "stateful:100000/warm/base": {
+      "cpu_mean_us": 2365.025,
+      "wall_mean_us": 2370.030241666667,
+      "prepare_mean_us": 0.17055833333333334,
+      "execute_mean_us": 2369.143883333333,
+      "rounds": [
+        {
+          "cpu_mean_us": 2396.0333333333333,
+          "wall_mean_us": 2402.190466666667,
+          "prepare_mean_us": 0.17276666666666668,
+          "execute_mean_us": 2401.298
+        },
+        {
+          "cpu_mean_us": 2329.6333333333337,
+          "wall_mean_us": 2334.8508666666667,
+          "prepare_mean_us": 0.16283333333333333,
+          "execute_mean_us": 2333.9807333333333
+        },
+        {
+          "cpu_mean_us": 2394.7,
+          "wall_mean_us": 2399.3626666666664,
+          "prepare_mean_us": 0.17406666666666668,
+          "execute_mean_us": 2398.4552000000003
+        },
+        {
+          "cpu_mean_us": 2339.7333333333336,
+          "wall_mean_us": 2343.716966666667,
+          "prepare_mean_us": 0.17256666666666667,
+          "execute_mean_us": 2342.8416
+        }
+      ]
+    },
+    "stateful:100000/warm/candidate": {
+      "cpu_mean_us": 2349.5583333333334,
+      "wall_mean_us": 2354.525908333333,
+      "prepare_mean_us": 0.16636666666666666,
+      "execute_mean_us": 2353.620716666667,
+      "rounds": [
+        {
+          "cpu_mean_us": 2315.8333333333335,
+          "wall_mean_us": 2321.7299,
+          "prepare_mean_us": 0.1559,
+          "execute_mean_us": 2320.8428
+        },
+        {
+          "cpu_mean_us": 2377.5333333333333,
+          "wall_mean_us": 2382.8137333333334,
+          "prepare_mean_us": 0.15606666666666666,
+          "execute_mean_us": 2381.9018333333333
+        },
+        {
+          "cpu_mean_us": 2350.4666666666667,
+          "wall_mean_us": 2355.0607999999997,
+          "prepare_mean_us": 0.1782,
+          "execute_mean_us": 2354.1491666666666
+        },
+        {
+          "cpu_mean_us": 2354.4,
+          "wall_mean_us": 2358.4992,
+          "prepare_mean_us": 0.1753,
+          "execute_mean_us": 2357.589066666667
+        }
+      ]
+    },
+    "weighted:100/cold/base": {
+      "cpu_mean_us": 115.30833333333332,
+      "wall_mean_us": 114.70174166666666,
+      "prepare_mean_us": 92.02170833333332,
+      "execute_mean_us": 21.437716666666667,
+      "rounds": [
+        {
+          "cpu_mean_us": 141.26666666666665,
+          "wall_mean_us": 140.00893333333332,
+          "prepare_mean_us": 109.49846666666666,
+          "execute_mean_us": 29.164900000000003
+        },
+        {
+          "cpu_mean_us": 92.73333333333333,
+          "wall_mean_us": 92.5488,
+          "prepare_mean_us": 76.59706666666666,
+          "execute_mean_us": 14.786200000000001
+        },
+        {
+          "cpu_mean_us": 95.03333333333333,
+          "wall_mean_us": 94.64416666666668,
+          "prepare_mean_us": 76.91383333333333,
+          "execute_mean_us": 16.477400000000003
+        },
+        {
+          "cpu_mean_us": 132.2,
+          "wall_mean_us": 131.6050666666667,
+          "prepare_mean_us": 105.07746666666667,
+          "execute_mean_us": 25.322366666666664
+        }
+      ]
+    },
+    "weighted:100/cold/candidate": {
+      "cpu_mean_us": 119.91666666666667,
+      "wall_mean_us": 118.990475,
+      "prepare_mean_us": 94.655075,
+      "execute_mean_us": 22.580791666666666,
+      "rounds": [
+        {
+          "cpu_mean_us": 139.36666666666665,
+          "wall_mean_us": 138.69436666666667,
+          "prepare_mean_us": 113.30630000000001,
+          "execute_mean_us": 23.186
+        },
+        {
+          "cpu_mean_us": 151.26666666666665,
+          "wall_mean_us": 149.4952,
+          "prepare_mean_us": 109.91073333333334,
+          "execute_mean_us": 37.292633333333335
+        },
+        {
+          "cpu_mean_us": 96.3,
+          "wall_mean_us": 95.60296666666666,
+          "prepare_mean_us": 78.90023333333333,
+          "execute_mean_us": 15.411200000000001
+        },
+        {
+          "cpu_mean_us": 92.73333333333333,
+          "wall_mean_us": 92.16936666666666,
+          "prepare_mean_us": 76.50303333333333,
+          "execute_mean_us": 14.433333333333334
+        }
+      ]
+    },
+    "weighted:100/warm/base": {
+      "cpu_mean_us": 32.525,
+      "wall_mean_us": 30.913841666666666,
+      "prepare_mean_us": 0.25098333333333334,
+      "execute_mean_us": 28.34655,
+      "rounds": [
+        {
+          "cpu_mean_us": 32.233333333333334,
+          "wall_mean_us": 31.050766666666668,
+          "prepare_mean_us": 0.22563333333333332,
+          "execute_mean_us": 25.433866666666663
+        },
+        {
+          "cpu_mean_us": 45.6,
+          "wall_mean_us": 43.02336666666667,
+          "prepare_mean_us": 0.2772,
+          "execute_mean_us": 41.34
+        },
+        {
+          "cpu_mean_us": 16.066666666666666,
+          "wall_mean_us": 15.038133333333333,
+          "prepare_mean_us": 0.2700666666666667,
+          "execute_mean_us": 13.487433333333332
+        },
+        {
+          "cpu_mean_us": 36.2,
+          "wall_mean_us": 34.543099999999995,
+          "prepare_mean_us": 0.23103333333333334,
+          "execute_mean_us": 33.124900000000004
+        }
+      ]
+    },
+    "weighted:100/warm/candidate": {
+      "cpu_mean_us": 23.416666666666668,
+      "wall_mean_us": 22.051616666666664,
+      "prepare_mean_us": 0.522025,
+      "execute_mean_us": 20.060975,
+      "rounds": [
+        {
+          "cpu_mean_us": 12.1,
+          "wall_mean_us": 11.428666666666667,
+          "prepare_mean_us": 0.24516666666666664,
+          "execute_mean_us": 10.070733333333333
+        },
+        {
+          "cpu_mean_us": 14.533333333333333,
+          "wall_mean_us": 13.5289,
+          "prepare_mean_us": 0.2576333333333333,
+          "execute_mean_us": 12.048933333333332
+        },
+        {
+          "cpu_mean_us": 26.96666666666667,
+          "wall_mean_us": 25.087866666666663,
+          "prepare_mean_us": 1.3043,
+          "execute_mean_us": 22.458333333333332
+        },
+        {
+          "cpu_mean_us": 40.06666666666666,
+          "wall_mean_us": 38.161033333333336,
+          "prepare_mean_us": 0.281,
+          "execute_mean_us": 35.6659
+        }
+      ]
+    },
+    "weighted:10000/cold/base": {
+      "cpu_mean_us": 621.5,
+      "wall_mean_us": 621.9143833333333,
+      "prepare_mean_us": 77.16713333333333,
+      "execute_mean_us": 543.1363166666666,
+      "rounds": [
+        {
+          "cpu_mean_us": 666.8333333333334,
+          "wall_mean_us": 667.5172333333333,
+          "prepare_mean_us": 80.64123333333333,
+          "execute_mean_us": 585.3565
+        },
+        {
+          "cpu_mean_us": 535.3666666666667,
+          "wall_mean_us": 535.8222,
+          "prepare_mean_us": 60.34243333333333,
+          "execute_mean_us": 474.13890000000004
+        },
+        {
+          "cpu_mean_us": 562.5,
+          "wall_mean_us": 562.7923666666667,
+          "prepare_mean_us": 82.2826,
+          "execute_mean_us": 479.08326666666665
+        },
+        {
+          "cpu_mean_us": 721.3,
+          "wall_mean_us": 721.5257333333333,
+          "prepare_mean_us": 85.40226666666666,
+          "execute_mean_us": 633.9666
+        }
+      ]
+    },
+    "weighted:10000/cold/candidate": {
+      "cpu_mean_us": 605.3083333333334,
+      "wall_mean_us": 605.4641583333333,
+      "prepare_mean_us": 79.15389166666667,
+      "execute_mean_us": 524.7595,
+      "rounds": [
+        {
+          "cpu_mean_us": 578.0,
+          "wall_mean_us": 578.2568666666667,
+          "prepare_mean_us": 79.0033,
+          "execute_mean_us": 497.74123333333335
+        },
+        {
+          "cpu_mean_us": 637.2333333333333,
+          "wall_mean_us": 637.0442333333333,
+          "prepare_mean_us": 79.32463333333334,
+          "execute_mean_us": 556.1353333333334
+        },
+        {
+          "cpu_mean_us": 693.5333333333334,
+          "wall_mean_us": 694.0433666666667,
+          "prepare_mean_us": 98.30476666666667,
+          "execute_mean_us": 594.0348333333334
+        },
+        {
+          "cpu_mean_us": 512.4666666666667,
+          "wall_mean_us": 512.5121666666666,
+          "prepare_mean_us": 59.982866666666666,
+          "execute_mean_us": 451.1266
+        }
+      ]
+    },
+    "weighted:10000/warm/base": {
+      "cpu_mean_us": 527.6,
+      "wall_mean_us": 527.9996916666666,
+      "prepare_mean_us": 0.2955583333333333,
+      "execute_mean_us": 526.490625,
+      "rounds": [
+        {
+          "cpu_mean_us": 443.1,
+          "wall_mean_us": 443.53066666666666,
+          "prepare_mean_us": 0.3315666666666667,
+          "execute_mean_us": 441.9304333333333
+        },
+        {
+          "cpu_mean_us": 418.56666666666666,
+          "wall_mean_us": 418.74190000000004,
+          "prepare_mean_us": 0.31603333333333333,
+          "execute_mean_us": 417.234
+        },
+        {
+          "cpu_mean_us": 466.1666666666667,
+          "wall_mean_us": 466.36973333333333,
+          "prepare_mean_us": 0.29660000000000003,
+          "execute_mean_us": 464.75236666666666
+        },
+        {
+          "cpu_mean_us": 782.5666666666666,
+          "wall_mean_us": 783.3564666666666,
+          "prepare_mean_us": 0.23803333333333332,
+          "execute_mean_us": 782.0456999999999
+        }
+      ]
+    },
+    "weighted:10000/warm/candidate": {
+      "cpu_mean_us": 424.43333333333334,
+      "wall_mean_us": 424.66515833333335,
+      "prepare_mean_us": 0.2836416666666666,
+      "execute_mean_us": 423.1630916666667,
+      "rounds": [
+        {
+          "cpu_mean_us": 416.1666666666667,
+          "wall_mean_us": 416.56393333333335,
+          "prepare_mean_us": 0.2675,
+          "execute_mean_us": 415.06826666666666
+        },
+        {
+          "cpu_mean_us": 424.8666666666667,
+          "wall_mean_us": 425.20343333333335,
+          "prepare_mean_us": 0.2687,
+          "execute_mean_us": 423.68576666666667
+        },
+        {
+          "cpu_mean_us": 502.1666666666667,
+          "wall_mean_us": 502.24826666666667,
+          "prepare_mean_us": 0.3645,
+          "execute_mean_us": 500.54609999999997
+        },
+        {
+          "cpu_mean_us": 354.5333333333333,
+          "wall_mean_us": 354.645,
+          "prepare_mean_us": 0.23386666666666667,
+          "execute_mean_us": 353.35223333333334
+        }
+      ]
+    }
+  }
+}

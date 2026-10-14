@@ -1,0 +1,8 @@
+{
+  "initial": "off",
+  "final": "off",
+  "poweroff_ssh_exit": 0,
+  "vfkit_exit": 0,
+  "vfkit_message": "VM is stopped",
+  "endpoint_18081_closed": true
+}

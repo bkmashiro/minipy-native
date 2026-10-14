@@ -554,3 +554,29 @@ rebuilt speed binary exactly matches the measured leaf SHA256. The initially-off
 VM was restored off (vfkit exit 0). Full trade-offs, commands, patches, raw and
 identities: [hotspot-iterations.md](hotspot-iterations.md), `bench/results/j-hotspots/`.
 
+## K: final low-cost hotspot round (2026-10-14)
+
+Revert the sole candidate, gating interpreter Next's scan-header lookup on the
+existing chunk boundary. An uninstrumented macOS ARM64 sample still locates
+eval/dispatch work; release assembly confirms the old header bounds/tag lookup
+precedes the chunk branch. Separate actual Linux diagnostic counts drop those
+lookups from 100000 to 391, with all other work counts and stdout unchanged.
+This work elimination does not translate into stable source-cold average gains.
+
+Four matched AB/BA/BA/AB Linux pairs retain 20,560 raw requests. Cold light CPU
+regresses 1.76--2.06%; cold scan improves 1.69--2.66%, with mixed pair directions.
+Scan warm improves 6.65%, while 100k stateful cold/warm differ by only -1.09/-0.65%
+with mixed directions. Delayed scan short p99 rises in all four pairs, pooled
+8617.85 -> 9036.24 us. All raw overload windows: zero. Keep noisy shape/block
+values, not a selected best-cell conclusion. No second candidate or final
+four-engine campaign in this round.
+
+Production src is identical to b76be2d; rebuilt speed is byte-identical to the
+measured baseline and J leaf. Retain one new chunk-boundary/budget differential
+test, the rejected patch, raw, hashes, commands and summary. Candidate interpreter
+tests pass on macOS and actual Linux; final macOS all-feature and actual Linux
+fixture-reference each pass 62 tests. Core strict clippy and both fmt checks pass.
+The exclusively started existing VM is restored off. Full accounting and stopping
+decision: [final-hotspot-round.md](final-hotspot-round.md),
+`bench/results/k-final-hotspot/`. L owns the final frozen-version benchmark/plots.
+

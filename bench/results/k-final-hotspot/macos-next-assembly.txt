@@ -1,0 +1,33 @@
+Auxiliary macOS ARM64 uninstrumented release, not Linux cycle shares.
+Binary SHA256: 1dfa3d4a833f96d73e31047f494ce44712b593fafd346baa2b7634d0967ddfec
+Command: xcrun llvm-objdump --disassemble --demangle target/k-base-speed-macos
+Next: index/chunk updates; header bounds/tag lookup before chunk cbnz at 10001e69c.
+
+10001e65c: f9437268    	ldr	x8, [x19, #0x6e0]
+10001e660: 9100050b    	add	x11, x8, #0x1
+10001e664: f903726b    	str	x11, [x19, #0x6e0]
+10001e668: f9437668    	ldr	x8, [x19, #0x6e8]
+10001e66c: d1000508    	sub	x8, x8, #0x1
+10001e670: f9037668    	str	x8, [x19, #0x6e8]
+10001e674: f9400740    	ldr	x0, [x26, #0x8]
+10001e678: f9036e60    	str	x0, [x19, #0x6d8]
+10001e67c: f9400941    	ldr	x1, [x10, #0x10]
+10001e680: eb01001f    	cmp	x0, x1
+10001e684: 54004ca2    	b.hs	0x10001f018 <interpreter_ab::Prepared::run::_$u7b$$u7b$closure$u7d$$u7d$::h542fe5ddc5ac14c0+0x3230>
+10001e688: f9400549    	ldr	x9, [x10, #0x8]
+10001e68c: 9b1c2409    	madd	x9, x0, x28, x9
+10001e690: 3940012c    	ldrb	w12, [x9]
+10001e694: 7100299f    	cmp	w12, #0xa
+10001e698: 54004801    	b.ne	0x10001ef98 <interpreter_ab::Prepared::run::_$u7b$$u7b$closure$u7d$$u7d$::h542fe5ddc5ac14c0+0x31b0>
+10001e69c: b5fff108    	cbnz	x8, 0x10001e4bc <interpreter_ab::Prepared::run::_$u7b$$u7b$closure$u7d$$u7d$::h542fe5ddc5ac14c0+0x26d4>
+10001e6a0: f9400529    	ldr	x9, [x9, #0x8]
+10001e6a4: f9438661    	ldr	x1, [x19, #0x708]
+10001e6a8: eb01013f    	cmp	x9, x1
+10001e6ac: 54004e02    	b.hs	0x10001f06c <interpreter_ab::Prepared::run::_$u7b$$u7b$closure$u7d$$u7d$::h542fe5ddc5ac14c0+0x3284>
+10001e6b0: f9438268    	ldr	x8, [x19, #0x700]
+10001e6b4: f8697909    	ldr	x9, [x8, x9, lsl #3]
+10001e6b8: b4004909    	cbz	x9, 0x10001efd8 <interpreter_ab::Prepared::run::_$u7b$$u7b$closure$u7d$$u7d$::h542fe5ddc5ac14c0+0x31f0>
+10001e6bc: f9400d29    	ldr	x9, [x9, #0x18]
+10001e6c0: eb09017f    	cmp	x11, x9
+10001e6c4: 54ffefc2    	b.hs	0x10001e4bc <interpreter_ab::Prepared::run::_$u7b$$u7b$closure$u7d$$u7d$::h542fe5ddc5ac14c0+0x26d4>
+10001e6c8: 14000201    	b	0x10001eecc <interpreter_ab::Prepared::run::_$u7b$$u7b$closure$u7d$$u7d$::h542fe5ddc5ac14c0+0x30e4>

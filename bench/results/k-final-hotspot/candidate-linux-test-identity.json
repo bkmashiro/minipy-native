@@ -1,0 +1,4 @@
+{
+  "sha256": "61831ed02e2eeab4658e9b5b3963b0f564c78656250ffd61b7233ade64c27395",
+  "command": "/root/minipy-native-k/candidate-interpreter-test --test-threads=1"
+}

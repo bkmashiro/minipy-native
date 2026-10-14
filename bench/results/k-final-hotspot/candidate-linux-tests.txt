@@ -1,0 +1,16 @@
+
+running 11 tests
+test budget_across_yields_tools_live_owner_and_empty_scan ... ok
+test chunk_cancellation_and_shared_unit_state ... ok
+test dropped_task_receiver_releases_late_load_without_resuming ... ok
+test empty_else_joins_nested_scan_and_tool_continuations ... ok
+test overflow_filter_and_loop_stdout_bound ... ok
+test provider_failures_and_cancelled_entry_do_not_run_later_effects ... ok
+test real_await_cancellation_late_completion_release_and_stdout ... ok
+test scalar_short_circuit_error_order_and_stdout ... ok
+test scan_next_chunk_boundary_and_final_partial_chunk ... ok
+test scripts_and_sequential_conditional_tools ... ok
+test sealed_preparation_rejects_unsupported_and_unbound_source ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.79s
+

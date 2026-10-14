@@ -186,6 +186,49 @@ async fn budget_across_yields_tools_live_owner_and_empty_scan() {
     }
 }
 #[tokio::test]
+async fn scan_next_chunk_boundary_and_final_partial_chunk() {
+    let source = "q=tools.load_quotes(1)\ntotal=0\nfor row in q:\n    total += row.quantity\nprint(total)\ntools.record_total(1,total)";
+    for chunk in [64usize, 256, 4096] {
+        for n in [0, 1, chunk - 1, chunk, chunk + 1, 2 * chunk, 2 * chunk + 1] {
+            for fuel in [n.saturating_sub(1), n] {
+                let mut limits = ScriptLimits::default();
+                limits.limits.chunk = chunk;
+                limits.limits.rows = fuel as u64;
+                let out = differential(
+                    source,
+                    &[],
+                    &[],
+                    vec![
+                        Quote {
+                            unit_price_cents: 1,
+                            quantity: 1
+                        };
+                        n
+                    ],
+                    limits,
+                )
+                .await;
+                assert_eq!(
+                    out.status,
+                    if fuel < n {
+                        Err(TaskError::Budget)
+                    } else {
+                        Ok(())
+                    }
+                );
+                assert_eq!(
+                    out.stdout,
+                    if fuel < n {
+                        String::new()
+                    } else {
+                        format!("{n}\n")
+                    }
+                );
+            }
+        }
+    }
+}
+#[tokio::test]
 async fn overflow_filter_and_loop_stdout_bound() {
     let s = "q=tools.load_quotes(1)\ntotal=0\nfor row in q:\n    if row.quantity > 0 and row.unit_price_cents < 700:\n        total += row.quantity * row.unit_price_cents\nprint(total)\ntools.record_total(1,total)";
     differential(

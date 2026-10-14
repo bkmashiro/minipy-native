@@ -1,0 +1,54 @@
+K execution commands (2026-10-14), serial guest work. Existing target trees reused.
+
+Baseline (b76be2d, before runtime candidate):
+cargo +1.96.0 zigbuild --manifest-path bench/Cargo.toml --release --target aarch64-unknown-linux-musl --bin interpreter_ab
+cp bench/target/aarch64-unknown-linux-musl/release/interpreter_ab target/k-base-speed-linux
+cargo +1.96.0 build --manifest-path bench/Cargo.toml --release --bin interpreter_ab
+cp bench/target/release/interpreter_ab target/k-base-speed-macos
+target/k-base-speed-macos interpreter stateful warm 100000 8000
+sample PID 3 -file target/k-sample.txt
+xcrun llvm-objdump --disassemble --demangle target/k-base-speed-macos
+
+Existing VM startup: /Users/yuzhe/.hermes/tmp/pysolate-durable/vm/run-vm.sh (PTY)
+Guest SSH authenticated with existing command-key and strict known_hosts; no secret values in artifacts.
+Host root@192.168.64.3; guest remote directory /root/minipy-native-k.
+
+Diagnostic baseline includes only candidate.patch's next_header_lookups counter, before early-continue change:
+cargo zigbuild --release --features interpreter-profile --target aarch64-unknown-linux-musl --example interpreter_counts
+cp target/aarch64-unknown-linux-musl/release/examples/interpreter_counts target/k-base-counts-linux
+
+Candidate applied (full source diff retained in candidate.patch):
+cargo fmt
+cargo test --release --test interpreter
+cargo +1.96.0 zigbuild --manifest-path bench/Cargo.toml --release --target aarch64-unknown-linux-musl --bin interpreter_ab
+cp bench/target/aarch64-unknown-linux-musl/release/interpreter_ab target/k-candidate-speed-linux
+cargo zigbuild --release --features interpreter-profile --target aarch64-unknown-linux-musl --example interpreter_counts
+cp target/aarch64-unknown-linux-musl/release/examples/interpreter_counts target/k-candidate-counts-linux
+python3 tools/final_hotspot_ab.py root@192.168.64.3 KEY KNOWN_HOSTS target/k-base-speed-linux target/k-candidate-speed-linux
+python3 tools/summarize_final_hotspot.py
+
+Both counts executables uploaded, remote sha256sum compared to local SHA256 before actual commands:
+/root/minipy-native-k/base-counts weighted 256
+/root/minipy-native-k/base-counts stateful 256
+/root/minipy-native-k/candidate-counts weighted 256
+/root/minipy-native-k/candidate-counts stateful 256
+
+Candidate Linux acceptance:
+cargo zigbuild --release --features fixture-reference --target aarch64-unknown-linux-musl --test interpreter --message-format=json > target/k-candidate-tests.json
+compiler-artifact executable uploaded to /root/minipy-native-k/candidate-interpreter-test, SHA256 read back.
+/root/minipy-native-k/candidate-interpreter-test --test-threads=1
+
+Revert candidate/counter, keep new test:
+cargo fmt --check
+cargo clippy --all-targets --all-features -- -D warnings
+cargo test --release --all-features > bench/results/k-final-hotspot/macos-tests.txt 2>&1
+cargo zigbuild --release --features fixture-reference --target aarch64-unknown-linux-musl --tests --message-format=json > target/k-final-linux-tests.json
+Each compiler-artifact test executable uploaded to /root/minipy-native-k/final-test-NAME, SHA256 read back, serial --test-threads=1.
+The exact remote commands and hashes are linux-test-identity.json; output linux-tests.txt. 62 passed.
+cargo +1.96.0 zigbuild --manifest-path bench/Cargo.toml --release --target aarch64-unknown-linux-musl --bin interpreter_ab
+Compare byte-for-byte with target/k-base-speed-linux, assert git diff b76be2d -- src/ is empty.
+cargo fmt --manifest-path bench/Cargo.toml --check
+git diff --check
+
+Guest cleanup: authenticated ssh root@192.168.64.3 poweroff; wait for existing vfkit PTY process to exit, verify restful endpoint no longer serves and process is gone.
+No build tree or speed executable is committed. Raw retained, no second candidate or full campaign.
