@@ -108,7 +108,7 @@ struct Compiler {
     nodes: usize,
     locals: Vec<Type>,
     names: Vec<String>,
-    initialized: HashSet<usize>,
+    initialized: u32,
     buffers: HashMap<String, usize>,
     rows: HashSet<String>,
     next_buffer: usize,
@@ -124,7 +124,7 @@ impl Compiler {
             nodes: 0,
             locals: inputs.iter().map(|x| x.1).collect(),
             names: inputs.iter().map(|x| x.0.to_owned()).collect(),
-            initialized: (0..inputs.len()).collect(),
+            initialized: ((1u64 << inputs.len()) - 1) as u32,
             buffers: HashMap::new(),
             rows: HashSet::new(),
             next_buffer: 0,
@@ -256,7 +256,7 @@ impl Compiler {
             if self.locals[i] != ty {
                 return Err(err(format!("local '{name}' changes type")));
             }
-            if !allow_existing && self.initialized.contains(&i) {
+            if !allow_existing && self.initialized & (1 << i) != 0 {
                 return Err(err(format!("local '{name}' is already initialized")));
             }
             return Ok(i);
@@ -288,7 +288,7 @@ impl Compiler {
                         return Err(err("tool calls are unsupported inside loops"));
                     }
                     let i = self.declare(&name, Type::I64, true)?;
-                    self.initialized.insert(i);
+                    self.initialized |= 1 << i;
                     return Ok(vec![Stmt::Record(i, batch, total)]);
                 }
                 if Self::is_tool(&a.value, "load_quotes") {
@@ -330,7 +330,7 @@ impl Compiler {
                     return Err(err(format!("initializer for '{name}' has the wrong type")));
                 }
                 let i = self.declare(&name, ty, true)?;
-                self.initialized.insert(i);
+                self.initialized |= 1 << i;
                 Ok(vec![Stmt::Set(i, value)])
             }
             ast::Stmt::AnnAssign(a) if a.simple => {
@@ -345,13 +345,13 @@ impl Compiler {
                     return Err(err(format!("initializer for '{name}' has the wrong type")));
                 }
                 let i = self.declare(&name, ty, true)?;
-                self.initialized.insert(i);
+                self.initialized |= 1 << i;
                 Ok(vec![Stmt::Set(i, value)])
             }
             ast::Stmt::AugAssign(a) => {
                 let n = Self::target_name(&a.target)?;
                 let i = self.lookup(&n)?;
-                if i < self.inputs || !self.initialized.contains(&i) {
+                if i < self.inputs || self.initialized & (1 << i) == 0 {
                     return Err(err(format!("local '{n}' is immutable or uninitialized")));
                 }
                 if self.locals[i] != Type::I64 {
@@ -378,19 +378,18 @@ impl Compiler {
                     return Err(err("if condition must be bool"));
                 }
                 let buffers_before = self.next_buffer;
-                let incoming = self.initialized.clone();
+                let incoming = self.initialized;
                 let then_body = self.compile_block(&a.body, depth + 1, in_loop, in_loop_body)?;
                 if self.next_buffer != buffers_before {
                     return Err(err("buffer loads must be unconditional"));
                 }
-                let then_set = self.initialized.clone();
-                self.initialized = incoming.clone();
+                let then_set = self.initialized;
+                self.initialized = incoming;
                 let else_body = self.compile_block(&a.orelse, depth + 1, in_loop, in_loop_body)?;
                 if self.next_buffer != buffers_before {
                     return Err(err("buffer loads must be unconditional"));
                 }
-                let else_set = self.initialized.clone();
-                self.initialized = then_set.intersection(&else_set).copied().collect();
+                self.initialized &= then_set;
                 Ok(vec![Stmt::If(test, then_body, else_body)])
             }
             ast::Stmt::For(f) => {
@@ -417,7 +416,7 @@ impl Compiler {
                     ));
                 }
                 self.rows.insert(row.clone());
-                let before = self.initialized.clone();
+                let before = self.initialized;
                 let compiled = self.compile_block(&f.body, depth + 1, true, true)?;
                 self.initialized = before;
                 self.rows.remove(&row);
@@ -432,7 +431,7 @@ impl Compiler {
                         return Err(err("tool calls are unsupported inside loops"));
                     }
                     let i = self.hidden_scalar(Type::I64)?;
-                    self.initialized.insert(i);
+                    self.initialized |= 1 << i;
                     return Ok(vec![Stmt::Record(i, batch, total)]);
                 }
                 if Self::is_tool(&e.value, "load_quotes") {
@@ -459,7 +458,7 @@ impl Compiler {
                             return Err(err("tool calls are unsupported inside loops"));
                         }
                         let i = self.hidden_scalar(Type::I64)?;
-                        self.initialized.insert(i);
+                        self.initialized |= 1 << i;
                         return Ok(vec![
                             Stmt::Record(i, batch, total),
                             Stmt::Print(Expr::Local(i), Type::I64),
@@ -510,7 +509,7 @@ impl Compiler {
     fn compile_legacy_return(&mut self, e: &ast::Expr, depth: usize) -> Result<Vec<Stmt>> {
         if let Some((batch, total)) = self.tool_call(e, "record_total", depth + 1, false)? {
             let i = self.hidden_scalar(Type::I64)?;
-            self.initialized.insert(i);
+            self.initialized |= 1 << i;
             return Ok(vec![
                 Stmt::Record(i, batch, total),
                 Stmt::Return(Expr::Local(i)),
@@ -642,7 +641,7 @@ impl Compiler {
                     )));
                 }
                 let i = self.lookup(name)?;
-                if !self.initialized.contains(&i) {
+                if self.initialized & (1 << i) == 0 {
                     return Err(err(format!("local '{name}' used before initialization")));
                 }
                 Ok((Expr::Local(i), self.locals[i]))
@@ -759,6 +758,25 @@ impl Compiler {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn initialization_mask_covers_zero_and_all_32_slots() {
+        assert!(parse_with_inputs("x=1\nprint(x)", &[]).is_ok());
+        let names: Vec<_> = (0..32).map(|i| format!("input{i}")).collect();
+        let schema: Vec<_> = names.iter().map(|s| (s.as_str(), Type::I64)).collect();
+        assert!(parse_with_inputs("print(input31)", &schema).is_ok());
+        assert!(parse_with_inputs("extra=0", &schema).is_err());
+        let prefix: String = (0..31).map(|i| format!("x{i}=0\n")).collect();
+        assert!(
+            parse_with_inputs(
+                &format!("{prefix}if True:\n    x31=1\nelse:\n    x31=2\nprint(x31)"),
+                &[]
+            )
+            .is_ok()
+        );
+        assert!(
+            parse_with_inputs(&format!("{prefix}if True:\n    x31=1\nprint(x31)"), &[]).is_err()
+        );
+    }
     #[test]
     fn parses_script_inputs_tools_print_and_loops() {
         let p = parse_with_inputs("batch = tools.load_quotes(seed)\ntotal = 0\nfor row in batch:\n    if row.quantity > 0:\n        total += row.unit_price_cents * row.quantity\nprint(total)\nreceipt = await tools.record_total(seed, total)\nreceipt", &[("seed", Type::I64)]).unwrap();
