@@ -11,6 +11,30 @@
     "core_clippy": "all-targets -D warnings pass",
     "bench_common": 2
   },
+  "review_repair": {
+    "reviewed_commit": "ac08ca1cd8cf8fa81f9950ad0f900726430042a0",
+    "environment": "macOS 26.4.1 (25E253), rustc/cargo 1.93.1",
+    "original_reproduced_failure": "focused release test exit 101 at tests/interpreter.rs:281, first yield absent",
+    "original_test_sha256": "8f9ac1f362182456fa9b04c9654261cf1edd530d94ab1bcb21263233f52817bb",
+    "synchronization": "test-only gated provider load entry/release, directly poll real execution future to first chunk Pending, cancel before next poll; five-second failure timeouts replace iteration bounds",
+    "assertions": ["one yield at row index 1", "cumulative fuel decremented by 1", "16000 buffer bytes retained before cancellation", "Cancelled with empty stdout", "no record dispatch", "owner released", "shared prepared unit requests remain independent"],
+    "commands": [
+      "cargo test --locked --release --test interpreter chunk_cancellation_and_shared_unit_state -- --exact --nocapture",
+      "cargo test --locked --release --test interpreter chunk_cancellation_and_shared_unit_state -- --exact",
+      "cargo test --locked --release --test interpreter",
+      "cargo test --locked --release",
+      "cargo clippy --locked --all-targets -- -D warnings",
+      "cargo fmt --check",
+      "git diff --check"
+    ],
+    "focused_consecutive_repetitions_passed": 50,
+    "interpreter_suite_consecutive_repetitions_passed": 10,
+    "macos_release_tests_passed": 54,
+    "repaired_tests_linux_rerun": false,
+    "linux_52_tests_are_historical": true,
+    "production_and_performance_evidence_unchanged": true,
+    "vm_ci_main_touched": false
+  },
   "vm": {
     "initial": "off",
     "final": "off",
@@ -27,7 +51,7 @@
   "final_source_sha256": {
     "src/interpreter.rs": "abfde58520c1c208fd81027d5e3dc7ffcb63ccdc2d6cdeb146b419ae240e0d75",
     "src/runtime.rs": "01772bd991bdfa6238425058814ff564dbcd2b1426788576f130eb60d5b699ce",
-    "tests/interpreter.rs": "8f9ac1f362182456fa9b04c9654261cf1edd530d94ab1bcb21263233f52817bb",
+    "tests/interpreter.rs": "a7fe2a561ee8555f334ef22f4d7d59f6bbcfa8abffeef0698e45e6f26277745b",
     "bench/src/bin/interpreter_ab.rs": "dd2a0ddeb4352924ce5fc2b3f0c631dc909bc63f58b86eb9ffee4c68750eae60",
     "tools/interpreter_ab.py": "1c3b8b0dd5075239c66615bc8c5c3ff6c662bad829be6b90ad806a6fc0b4fbec",
     "tools/interpreter_clear_ab.py": "ba5cd97bdd6302c03635b375d1630ed6593224d8f05d189d888234584cf31464",

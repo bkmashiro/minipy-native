@@ -407,8 +407,11 @@ native replacement. No F measurements enter G's comparison.
 
 18,090 primary raw samples, 4824 strong Monty list-release control samples and
 40 separately instrumented gate-memory rows are retained. Initial 52 core tests
-ran on actual Linux and macOS; final macOS passes 54 (the final two error/receiver
-tests have not been rerun on Linux; production code is unchanged). Both VM sessions
+ran on actual Linux and macOS. Review reproduced a flaky chunk-cancellation wait
+in `ac08ca1`; a test-only gated-load/first-chunk handshake repair now passes all
+54 macOS release tests, plus 50 focused and 10 interpreter-suite repetitions.
+The repaired tests and final two error/receiver suites have not been rerun on
+Linux; production code and performance evidence are unchanged. Both VM sessions
 restored off with vfkit exit 0. Detailed boundaries, density caveats, keep decision,
 commands and source/binary identities: [interpreter-experiment.md](interpreter-experiment.md),
 `bench/results/g-interpreter/`. No main integration or hot-loop JIT was performed.

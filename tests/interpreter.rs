@@ -9,11 +9,14 @@ use minipy_native::{
 };
 use std::{
     cell::RefCell,
+    future::{Future, poll_fn},
     rc::Rc,
     sync::{
         Arc, Mutex,
         atomic::{AtomicUsize, Ordering},
     },
+    task::Poll,
+    time::Duration,
 };
 use tokio::sync::Semaphore;
 const INPUTS: &[(&str, Type)] = &[("batch_id", Type::I64), ("price_limit", Type::I64)];
@@ -208,6 +211,7 @@ async fn overflow_filter_and_loop_stdout_bound() {
     );
 }
 struct Gate {
+    rows: Vec<Quote>,
     load_gate: Semaphore,
     record_gate: Semaphore,
     loads: AtomicUsize,
@@ -217,7 +221,11 @@ struct Gate {
 }
 impl Gate {
     fn new() -> Self {
+        Self::with_rows(rows())
+    }
+    fn with_rows(rows: Vec<Quote>) -> Self {
         Self {
+            rows,
             load_gate: Semaphore::new(0),
             record_gate: Semaphore::new(0),
             loads: AtomicUsize::new(0),
@@ -231,7 +239,7 @@ impl Provider for Gate {
     async fn load_quotes(&self, _: i64) -> Result<QuoteBuffer, TaskError> {
         self.loads.fetch_add(1, Ordering::SeqCst);
         self.load_gate.acquire().await.unwrap().forget();
-        let b = QuoteBuffer::from_quotes(rows())?;
+        let b = QuoteBuffer::from_quotes(self.rows.clone())?;
         *self.weak.lock().unwrap() = Some(b.downgrade());
         self.completed.fetch_add(1, Ordering::SeqCst);
         Ok(b)
@@ -244,13 +252,13 @@ impl Provider for Gate {
     }
 }
 async fn until(counter: &AtomicUsize, n: usize) {
-    for _ in 0..1000 {
-        if counter.load(Ordering::SeqCst) == n {
-            return;
+    tokio::time::timeout(Duration::from_secs(5), async {
+        while counter.load(Ordering::SeqCst) != n {
+            tokio::task::yield_now().await;
         }
-        tokio::task::yield_now().await;
-    }
-    panic!("gate did not reach {n}");
+    })
+    .await
+    .unwrap_or_else(|_| panic!("gate did not reach {n}"));
 }
 #[tokio::test]
 async fn real_await_cancellation_late_completion_release_and_stdout() {
@@ -270,17 +278,86 @@ async fn real_await_cancellation_late_completion_release_and_stdout() {
 }
 #[tokio::test]
 async fn chunk_cancellation_and_shared_unit_state() {
-    tokio::task::LocalSet::new().run_until(async {
-        let s="q=tools.load_quotes(1)\ntotal=0\nfor row in q:\n    total+=row.quantity\nprint(total)\ntools.record_total(1,total)";
-        let unit=Rc::new(InterpreterUnit::prepare_script(s,&[]).unwrap());
-        let cancel=Cancellation::default(); let trace:Trace=Rc::new(RefCell::new(Vec::new())); let p=Arc::new(TestProvider::new(vec![Quote{unit_price_cents:1,quantity:1};1000],Delays::default()));
-        let mut l=ScriptLimits::default(); l.limits.chunk=1;
-        let (u,pp,c,t)=(unit.clone(),p.clone(),cancel.clone(),trace.clone());
-        let job=tokio::task::spawn_local(async move {interpreter::execute_script(u,pp,&[],l,c,Some(t)).await});
-        for _ in 0..1000 { if trace.borrow().iter().any(|e|e.phase=="yield") {break;} tokio::task::yield_now().await; }
-        assert!(trace.borrow().iter().any(|e|e.phase=="yield")); cancel.cancel(); assert_eq!(job.await.unwrap().status,Err(TaskError::Cancelled)); assert_eq!(p.record_count(),0);
-        for n in [1,3] { let p=Arc::new(TestProvider::new(rows()[..n].to_vec(),Delays::default())); let out=interpreter::execute_script(unit.clone(),p,&[],ScriptLimits::default(),Cancellation::default(),None).await; assert_eq!(out.status,Ok(())); assert_eq!(out.stdout,if n==1 {"3\n"} else {"6\n"}); }
-    }).await;
+    let s = "q=tools.load_quotes(1)\ntotal=0\nfor row in q:\n    total+=row.quantity\nprint(total)\ntools.record_total(1,total)";
+    let unit = Rc::new(InterpreterUnit::prepare_script(s, &[]).unwrap());
+    let cancel = Cancellation::default();
+    let trace: Trace = Rc::new(RefCell::new(Vec::new()));
+    let p = Arc::new(Gate::with_rows(vec![
+        Quote {
+            unit_price_cents: 1,
+            quantity: 1
+        };
+        1000
+    ]));
+    let mut l = ScriptLimits::default();
+    l.limits.chunk = 1;
+    let job = interpreter::execute_script(
+        unit.clone(),
+        p.clone(),
+        &[],
+        l,
+        cancel.clone(),
+        Some(trace.clone()),
+    );
+    tokio::pin!(job);
+    tokio::select! {
+        out = &mut job => panic!("task finished before load gate: {:?}", out.status),
+        _ = until(&p.loads, 1) => {}
+    }
+    assert!(trace.borrow().iter().all(|e| e.phase != "yield"));
+    p.load_gate.add_permits(1);
+    // Drive the actual task future only to its first chunk suspension, then
+    // stop polling it. This test-only handshake cannot race a resumed scan.
+    tokio::time::timeout(
+        Duration::from_secs(5),
+        poll_fn(|cx| {
+            assert!(
+                job.as_mut().poll(cx).is_pending(),
+                "task finished before chunk yield"
+            );
+            if trace.borrow().iter().any(|e| e.phase == "yield") {
+                Poll::Ready(())
+            } else {
+                Poll::Pending
+            }
+        }),
+    )
+    .await
+    .expect("task did not reach chunk yield");
+    {
+        let events = trace.borrow();
+        let yields: Vec<_> = events.iter().filter(|e| e.phase == "yield").collect();
+        assert_eq!(yields.len(), 1);
+        assert_eq!(
+            (yields[0].index, yields[0].remaining, yields[0].buffer_bytes),
+            (1, l.limits.rows - 1, 16_000)
+        );
+    }
+    assert!(p.weak.lock().unwrap().as_ref().unwrap().upgrade().is_some());
+    cancel.cancel();
+    let out = job.await;
+    assert_eq!(out.status, Err(TaskError::Cancelled));
+    assert!(out.stdout.is_empty());
+    assert_eq!(p.records.load(Ordering::SeqCst), 0);
+    assert!(p.weak.lock().unwrap().as_ref().unwrap().upgrade().is_none());
+    assert_eq!(
+        trace.borrow().iter().filter(|e| e.phase == "yield").count(),
+        1
+    );
+    for n in [1, 3] {
+        let p = Arc::new(TestProvider::new(rows()[..n].to_vec(), Delays::default()));
+        let out = interpreter::execute_script(
+            unit.clone(),
+            p,
+            &[],
+            ScriptLimits::default(),
+            Cancellation::default(),
+            None,
+        )
+        .await;
+        assert_eq!(out.status, Ok(()));
+        assert_eq!(out.stdout, if n == 1 { "3\n" } else { "6\n" });
+    }
 }
 #[test]
 fn sealed_preparation_rejects_unsupported_and_unbound_source() {

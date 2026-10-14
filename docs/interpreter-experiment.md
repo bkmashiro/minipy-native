@@ -133,10 +133,13 @@ retention are recorded; no workaround was added to Monty to manufacture a loss.
 
 ## Correctness, identity and reproduction
 
-Existing 45 core tests plus initial seven interpreter suites passed on macOS
-release and actual Linux ARM64 release (52 tests). The final two suites add
-provider load/record failure and dropped-task-receiver checks; final macOS release
-is 54 tests, interpreter 9. Those two additional tests have not been run on Linux.
+Existing 45 core tests plus initial seven interpreter suites passed during the
+macOS and actual Linux ARM64 release campaign (52 tests). Two later suites add
+provider load/record failure and dropped-task-receiver checks. Review of `ac08ca1`
+then reproduced a flaky chunk-cancellation wait, invalidating its reproducible
+54-test macOS acceptance claim. The test-only repair below passes all 54 macOS
+release tests (interpreter 9). Linux's 52-test result remains historical: neither
+the repaired tests nor the two added suites have been rerun on Linux.
 The production runtime/interpreter did not change after Linux qualification.
 Clippy all core targets with `-D warnings`, fmt and diff checks pass. Two common
 Monty benchmark tests pass. Tests compare status/stdout, Tool counts and trace
@@ -146,6 +149,31 @@ atomic stdout bounds, real load/record suspension, token cancellation, chunk
 cancellation, late completion and last-use owner release. Ordinary user errors
 become TaskError, not worker panics. Private PC/row invariant failures remain TCB
 programmer errors, not an untrusted-execution claim.
+
+### Review repair: deterministic chunk cancellation
+
+Before the repair, the focused release command failed at `tests/interpreter.rs:281`
+with no scan yield observed. `TestProvider` awaits `sleep(Duration::ZERO)` even
+with default delays; 1,000 `yield_now` polls could finish before its timer advanced.
+The test now uses the existing gated provider with configurable rows. It observes
+load entry, releases the gate, and directly polls the real execution future until
+the first actual chunk suspension, then stops polling before issuing cancellation.
+The gate/counter helper's other fixed-spin waits now have a five-second timeout,
+as does the chunk handshake. This is a test failure bound, not an inserted delay.
+No production synchronization, trace overhead or scheduler change was added.
+
+Assertions prove exactly one yield at index 1, one row of cumulative fuel charged,
+16,000 buffer bytes still owned before cancellation, `Cancelled` status, empty
+stdout, no record dispatch and owner release afterward. Reuse of the same prepared
+unit still produces independent results for one-row and three-row requests.
+
+On macOS 26.4.1 / Rust 1.93.1, the focused release test passed once, then 50 consecutive
+fresh invocations passed. All nine interpreter suites passed in 10 consecutive
+invocations. `cargo test --locked --release` passed all 54 tests;
+`cargo clippy --locked --all-targets -- -D warnings`, `cargo fmt --check` and
+`git diff --check` passed. Commands and updated test hash are recorded in
+`bench/results/g-interpreter/final-validation.json`. The performance campaign,
+raw evidence and production sources are unchanged; no VM, main or CI changes.
 
 Evidence: `bench/results/g-interpreter/` contains compressed raw, identity,
 Linux test log and recomputable summary. `primary-harness.rs.txt` has exactly the
