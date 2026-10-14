@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	pysolate "github.com/bkmashiro/agent-python-runtime"
+	"golang.org/x/sys/unix"
 	"net"
 	"os"
 	"os/exec"
@@ -24,6 +25,7 @@ type nativeRunner struct {
 	server     net.Listener
 	empty      chan struct{}
 	emptyCount atomic.Int64
+	childCPU   atomic.Int64
 	sources    map[string]string
 }
 
@@ -134,20 +136,40 @@ func (r *nativeRunner) run(s string, in map[string]any) (string, error) {
 		return "", fmt.Errorf("unknown body")
 	}
 	out := r.rpc(map[string]any{"op": "run", "case": name, "inputs": in})
+	var childCost int64
+	if e := json.Unmarshal(out["children_cpu_ns"], &childCost); e != nil {
+		return "", e
+	}
+	r.observeChildCPU(childCost)
 	var stdout string
 	if e := json.Unmarshal(out["stdout"], &stdout); e != nil {
 		return "", e
 	}
 	return stdout, nil
 }
-func (r *nativeRunner) cpu() int64 {
-	out := r.rpc(map[string]any{"op": "cpu"})
-	var cost int64
-	if e := json.Unmarshal(out["cpu_ns"], &cost); e != nil {
+func (r *nativeRunner) observeChildCPU(cost int64) {
+	if cost < 0 {
+		panic("negative child CPU")
+	}
+	for {
+		previous := r.childCPU.Load()
+		if cost <= previous || r.childCPU.CompareAndSwap(previous, cost) {
+			return
+		}
+	}
+}
+func (r *nativeRunner) parentCPU() int64 {
+	// Linux process CPUCLOCK_SCHED ABI, equivalent to clock_getcpuclockid(pid).
+	// Per-process (not per-thread), includes user+system CPU, nanosecond clock.
+	// Read from the kernel; never send a sampling RPC across the timed boundary.
+	clockID := int32(^r.cmd.Process.Pid)<<3 | 2
+	var ts unix.Timespec
+	if e := unix.ClockGettime(clockID, &ts); e != nil {
 		panic(e)
 	}
-	return cost
+	return ts.Nano()
 }
+func (r *nativeRunner) cpu() int64 { return r.parentCPU() + r.childCPU.Load() }
 func (r *nativeRunner) close() {
 	out := r.rpc(map[string]any{"op": "cpu"})
 	var children int

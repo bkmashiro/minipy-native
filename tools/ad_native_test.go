@@ -6,6 +6,7 @@ import (
 	"fmt"
 	pysolate "github.com/bkmashiro/agent-python-runtime"
 	"os"
+	"sync/atomic"
 	"testing"
 )
 
@@ -38,10 +39,10 @@ func TestNativeRequestLifecycleAndJSON(t *testing.T) {
 		t.Fatal("real native script required")
 	}
 	for _, arm := range []string{"fork", "resident"} {
-		loads, records := 0, 0
+		var loads, records atomic.Int64
 		manifest := pysolate.Manifest{
 			"load": {Call: func(ctx context.Context, raw json.RawMessage) (any, error) {
-				loads++
+				loads.Add(1)
 				return []map[string]int64{{"quantity": 3, "unit_price_cents": 11}}, nil
 			}},
 			"record": {Call: func(ctx context.Context, raw json.RawMessage) (any, error) {
@@ -49,7 +50,7 @@ func TestNativeRequestLifecycleAndJSON(t *testing.T) {
 				if e := json.Unmarshal(raw, &a); e != nil {
 					return nil, e
 				}
-				records++
+				records.Add(1)
 				return a["total"] + 17, nil
 			}},
 		}
@@ -81,10 +82,50 @@ func TestNativeRequestLifecycleAndJSON(t *testing.T) {
 				t.Fatal("request returned before reap", children)
 			}
 		}
-		if r.cpu() <= before || loads != 3 || records != 3 {
-			t.Fatal("CPU/tool accounting", loads, records)
+		if r.cpu() <= before || loads.Load() != 3 || records.Load() != 3 {
+			t.Fatal("CPU/tool accounting", loads.Load(), records.Load())
 		}
 		r.close()
 		native = nil
 	}
+}
+
+func TestChildCPUResponseOrder(t *testing.T) {
+	r := &nativeRunner{}
+	for _, cost := range []int64{200, 100, 300, 250} {
+		r.observeChildCPU(cost)
+	}
+	if r.childCPU.Load() != 300 {
+		t.Fatal("cumulative child CPU went backwards")
+	}
+}
+
+func TestNativeKernelCPUAndReapedChildCPU(t *testing.T) {
+	r := startNative(pysolate.Manifest{}, "fork", false)
+	defer r.close()
+	body := "x=0\nfor i in range(500000): x+=i\nprint(x)\n"
+	r.configure(map[string]string{"probe": body})
+	original := r.address
+	// Sampling must still work when its control socket is unavailable.
+	r.address = "127.0.0.1:1"
+	before := r.cpu()
+	r.address = original
+	out, e := r.run(body, map[string]any{})
+	if e != nil || out != "124999750000\n" {
+		t.Fatal(out, e)
+	}
+	if r.childCPU.Load() < 1000000 {
+		t.Fatal("reaped child CPU missing", r.childCPU.Load())
+	}
+	sampled := r.cpu()
+	if sampled <= before || sampled < r.childCPU.Load() {
+		t.Fatal("CPU sum", sampled)
+	}
+	var diagnostic int64
+	json.Unmarshal(r.rpc(map[string]any{"op": "cpu"})["cpu_ns"], &diagnostic)
+	difference := diagnostic - sampled
+	if difference < -2000000 || difference > 2000000 {
+		t.Fatal("kernel clock disagrees with native self+children RUSAGE", sampled, diagnostic)
+	}
+	t.Logf("kernel parent + child: %d ns; diagnostic RUSAGE: %d ns; reaped child: %d ns", sampled, diagnostic, r.childCPU.Load())
 }

@@ -77,6 +77,7 @@ async def main(arm, host, port):
     children = set()
     async def handler(reader, writer):
         nonlocal empty
+        result: dict
         try:
             req = json.loads(await reader.readline())
             op = req['op']
@@ -132,6 +133,8 @@ async def main(arm, host, port):
                     result = json.loads(payload)
                     if status != 0:
                         result = {'error': result.get('error', f'child status {status}')}
+                usage = resource.getrusage(resource.RUSAGE_CHILDREN)
+                result['children_cpu_ns'] = round((usage.ru_utime + usage.ru_stime) * 1e9)
             else:
                 raise ValueError(op)
         except BaseException as exc:

@@ -13,7 +13,7 @@ import subprocess
 import sys
 import time
 
-COHORT = 'ad-corrected-json-prefork'
+COHORT = 'ad-corrected-json-prefork-v2'
 ARMS = ['cow', 'fork', 'fresh', 'resident']
 SHAPES = [('scalar', 0)] + [(c, n) for c in ['weighted', 'stateful']
                                     for n in [100, 300, 1000, 3000, 10000, 30000, 100000]]
