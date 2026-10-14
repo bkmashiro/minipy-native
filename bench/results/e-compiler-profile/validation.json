@@ -1,0 +1,29 @@
+{
+  "platform": "macOS",
+  "vm_restored_initial_off_state": true,
+  "vm_shutdown_evidence": "guest poweroff succeeded; vfkit process proc_d59ba83873ec exited 0 with VM is stopped; 127.0.0.1:18081 refused connection",
+  "core_tests_default": 45,
+  "core_tests_compiler_profile": 45,
+  "linux_driver_process_oracles": 36,
+  "linux_inventory_oracles": 6,
+  "commands_passed": [
+    "cargo test --locked",
+    "cargo test --locked --features compiler-profile",
+    "cargo clippy --locked --all-targets -- -D warnings",
+    "cargo clippy --locked --all-targets --features compiler-profile -- -D warnings",
+    "cargo fmt --all -- --check",
+    "git diff --check",
+    "python3 tools/summarize_compiler_profile.py"
+  ],
+  "default_binary_diagnostic_symbol_matches": 0,
+  "raw_rows": 2208,
+  "recorded_source_hashes_match": true,
+  "summary_recomputation_matches": true,
+  "upstream_cranelift_0_128_3_sha256": {
+    "timing.rs": "518f3e18cf2339b391b5ceb21864c911d217b123e98a6da56b5c4b64491959af",
+    "context.rs": "0d3ef2f7065924f7c64b5f88a0932c4b93cadec50fc8daa2396068ad9ee4f334",
+    "settings.rs": "15a84a4a61eabe44dba05c9d7ce1ce68bec7fa97b709223d76512633d3c5e823",
+    "machinst/compile.rs": "4cb77990d53681b60f17864037030ef9b8a8bdc7879df33d09f0e6c5bad38e12",
+    "verifier/mod.rs": "054ebd4a94169bbec4bfb1635b4236c93c07eb4c17b6436dbe9594d4bf93c823"
+  }
+}

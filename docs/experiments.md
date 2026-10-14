@@ -354,3 +354,30 @@ record. Native delegation was capped at two already-consumed frontend lanes;
 the review did not change that budget or any configuration. Review text and
 identity are archived as `focused-review.txt` and `focused-review-identity.json`.
 No per-candidate review loop was added.
+
+## E cold-compiler diagnosis (2026-10-14)
+
+E profiles the unchanged D compiler/backend, without implementing an optimization.
+The bounded real-Linux campaign starts from `4abb2a1`: six source shapes, three
+rounds, interleaved ordinary/diagnostic release builds, 2196 compile observations
+plus 12 untimed pre/post CLIF inventories. First process compilations and scratch
+transition samples are separated from fresh-source steady-process compilations.
+Both default and opt-in macOS configurations pass 45 core tests and clippy;
+36 Linux driver processes and six inventory oracles execute actual generated code.
+
+Ordinary compile medians are 227.46 us scalar, 330.12 us weighted and 459.25 us
+two-scan/conditional-Tool; empty-source control is 121.63 us but still includes our
+generic frame/PC entry. Diagnostic `define_function` accounts for 82.1--85.8% of
+compile wall. Weighted exclusive register allocation is 87.57 us and verification
+75.74 us. Each compile performs five verifier calls, all retained. Setup/finalize
+are only a few us. This favors a bounded same-backend allocator/CFG experiment
+before a backend replacement, while not identifying a universal fixed-cost floor.
+Profiling perturbation is material: weighted round-matched overhead is +4.9--8.2%,
+and other cases vary more widely. No uninstrumented pass times are inferred.
+
+See [compiler-profile.md](compiler-profile.md) for the phase/pass boundaries,
+nested-timer accounting, IR inventories, at most three ranked untested hypotheses,
+commands and limitations. Exact hashes, gzip raw and recomputed summary are in
+`bench/results/e-compiler-profile/`; both runner and summarizer use Python stdlib.
+No default profiling/IR traversal/formatting, source cache, new backend, verifier
+suppression, runtime/string/scheduler change or Monty rerun was introduced.

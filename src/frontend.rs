@@ -24,9 +24,18 @@ pub fn parse_with_inputs(source: &str, inputs: &[(&str, Type)]) -> Result<Progra
     }
     check_delimiter_depth(source)?;
     validate_inputs(inputs)?;
+    #[cfg(feature = "compiler-profile")]
+    let start = std::time::Instant::now();
     let module = ast::Suite::parse(source, "<minipy>")
         .map_err(|e| err(format!("Python syntax error: {e}")))?;
-    Compiler::new(inputs)?.program(module)
+    #[cfg(feature = "compiler-profile")]
+    crate::compiler_profile::update(|p| p.parse_ns = crate::compiler_profile::elapsed(start));
+    #[cfg(feature = "compiler-profile")]
+    let start = std::time::Instant::now();
+    let result = Compiler::new(inputs)?.program(module);
+    #[cfg(feature = "compiler-profile")]
+    crate::compiler_profile::update(|p| p.type_ns = crate::compiler_profile::elapsed(start));
+    result
 }
 
 fn validate_inputs(inputs: &[(&str, Type)]) -> Result<()> {

@@ -90,12 +90,24 @@ impl CodeUnit {
         Self::compile_internal(source, opt, true)
     }
     fn compile_internal(source: &str, opt: &str, retain_ir: bool) -> Result<Self, CompileError> {
+        #[cfg(feature = "compiler-profile")]
+        let start = std::time::Instant::now();
         let program = crate::frontend::parse(source)?;
+        #[cfg(feature = "compiler-profile")]
+        crate::compiler_profile::update(|p| {
+            p.frontend_ns = crate::compiler_profile::elapsed(start)
+        });
         Self::lower(program, opt, retain_ir)
     }
     /// Bind the declared Host input schema at compile time. No runtime names.
     pub fn compile_script(source: &str, inputs: &[(&str, ir::Type)]) -> Result<Self, CompileError> {
+        #[cfg(feature = "compiler-profile")]
+        let start = std::time::Instant::now();
         let program = crate::frontend::parse_with_inputs(source, inputs)?;
+        #[cfg(feature = "compiler-profile")]
+        crate::compiler_profile::update(|p| {
+            p.frontend_ns = crate::compiler_profile::elapsed(start)
+        });
         Self::lower(program, "speed", false)
     }
     fn lower(program: ir::Program, opt: &str, retain_ir: bool) -> Result<Self, CompileError> {
@@ -106,8 +118,12 @@ impl CodeUnit {
             )
         });
         let result = Self::lower_into(program, opt, retain_ir, &mut ctx, &mut fc);
+        #[cfg(feature = "compiler-profile")]
+        let start = std::time::Instant::now();
         ctx.clear();
         SCRATCH.with(|s| *s.borrow_mut() = Some((ctx, fc)));
+        #[cfg(feature = "compiler-profile")]
+        crate::compiler_profile::update(|p| p.cleanup_ns = crate::compiler_profile::elapsed(start));
         result
     }
     fn lower_into(
@@ -117,6 +133,8 @@ impl CodeUnit {
         ctx: &mut cranelift_codegen::Context,
         fc: &mut FunctionBuilderContext,
     ) -> Result<Self, CompileError> {
+        #[cfg(feature = "compiler-profile")]
+        let start = std::time::Instant::now();
         let mut flags = settings::builder();
         flags.set("opt_level", opt).map_err(error)?;
         let isa = cranelift_native::builder()
@@ -142,6 +160,14 @@ impl CodeUnit {
         let id = module
             .declare_function("scan", Linkage::Local, &ctx.func.signature)
             .map_err(error)?;
+        #[cfg(feature = "compiler-profile")]
+        crate::compiler_profile::update(|p| {
+            p.setup_ns = crate::compiler_profile::elapsed(start);
+            p.scalar_slots = program.locals.len();
+            p.buffer_slots = program.buffers;
+        });
+        #[cfg(feature = "compiler-profile")]
+        let start = std::time::Instant::now();
         {
             let mut b = FunctionBuilder::new(&mut ctx.func, fc);
             let entry = b.create_block();
@@ -186,6 +212,8 @@ impl CodeUnit {
             };
             flow.stmts(&program.statements, Live::default());
             let resumes = flow.resumes;
+            #[cfg(feature = "compiler-profile")]
+            crate::compiler_profile::update(|p| p.resume_states = resumes.len());
             b.switch_to_block(dispatch);
             let pc = b.ins().load(types::I64, MemFlags::trusted(), frame, 264);
             let mut switch = Switch::new();
@@ -205,21 +233,39 @@ impl CodeUnit {
             b.seal_all_blocks();
             b.finalize();
         }
+        #[cfg(feature = "compiler-profile")]
+        crate::compiler_profile::update(|p| {
+            p.lowering_ns = crate::compiler_profile::elapsed(start)
+        });
+        #[cfg(feature = "compiler-profile")]
+        crate::compiler_profile::inventory(&ctx.func, true);
         let clif = if retain_ir {
             ctx.func.display().to_string()
         } else {
             String::new()
         };
+        #[cfg(feature = "compiler-profile")]
+        let start = std::time::Instant::now();
         module.define_function(id, ctx).map_err(error)?;
+        #[cfg(feature = "compiler-profile")]
+        crate::compiler_profile::update(|p| p.backend_ns = crate::compiler_profile::elapsed(start));
+        #[cfg(feature = "compiler-profile")]
+        crate::compiler_profile::inventory(&ctx.func, false);
         let code_bytes = ctx
             .compiled_code()
             .ok_or_else(|| CompileError("missing machine code".into()))?
             .code_info()
             .total_size as usize;
+        #[cfg(feature = "compiler-profile")]
+        let start = std::time::Instant::now();
         module.finalize_definitions().map_err(error)?;
         let ptr = module.get_finalized_function(id);
         // Signature and frame offsets above are fixed, audited, and layout-tested.
         let entry: Entry = unsafe { std::mem::transmute(ptr) };
+        #[cfg(feature = "compiler-profile")]
+        crate::compiler_profile::update(|p| {
+            p.finalize_ns = crate::compiler_profile::elapsed(start)
+        });
         Ok(Self {
             module: Some(module),
             entry,

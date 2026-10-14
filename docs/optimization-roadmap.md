@@ -58,3 +58,21 @@ tests were independently rerun. See `focused-review.txt` and its identity JSON.
 Native delegation's two-child budget was exhausted by frontend/correction lanes,
 so the review used a separate read-only Hermes CLI session without changing
 profiles, budgets or configuration. No further optimization lane is scheduled.
+
+## E diagnostic follow-up
+
+The explicitly assigned E lane is complete as a diagnosis, not a new optimization.
+[compiler-profile.md](compiler-profile.md) contains the six-shape, same-machine
+Linux profile and its reproducible raw evidence. D's runtime/semantics are unchanged.
+Backend define occupies 82.1--85.8% of diagnostic compile wall; register allocation
+and five enabled verifier calls lead the exclusive buckets. ISA/module preparation
+and finalize/load remain small. IR grows from 17 instructions/6 blocks for empty
+source to 168/41 for two scans and conditional Tool continuations.
+
+There is no backend-replacement case yet. Recommended first bounded experiment:
+the existing Cranelift single-pass allocator, with all checks retained and cold
+source-to-result plus prepared runtime/code-size qualification. Predicate-oriented
+CFG lowering and no-suspension entry specialization are secondary hypotheses.
+None has been implemented or scheduled by E. Profiling adds material overhead and
+process variation, so pass costs are diagnostic observations, not plain-release
+times. New experiments still require a focused replacement contract and evidence.

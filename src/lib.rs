@@ -1,5 +1,7 @@
 pub mod buffer;
 pub mod codegen;
+#[cfg(feature = "compiler-profile")]
+pub mod compiler_profile;
 pub mod error;
 pub mod frontend;
 pub mod ir;
