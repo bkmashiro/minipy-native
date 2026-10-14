@@ -76,6 +76,8 @@ cargo clippy --all-targets --all-features -- -D warnings
 
 A/B 脚本拒绝覆盖 raw。候选 patch 可用于诊断/速度重建，default 速度不会启用 profile；不得将候选用于 L 最终 campaign。精确发布 SHA 与 focused review 身份/结果在 K Kanban handoff。
 
+独立只读审查固定签名快照 `97a660150936a8ce4847e866f151576b5ad83130`，原生 delegation 返回的实际模型为 `gpt-6-luna`。无 blocker 或非阻塞发现；独立导入 summarizer 重算与提交 JSON 完全相同，并重跑新增定向差分测试（1 passed）。审查未重建候选二进制或启动 VM，不将提交中的运行记录当作其独立执行。主控已经实际执行并核对上述平台验证及哈希。审查后的提交只追加此记录，不改 runtime、tests、harness 或 raw。
+
 ## 停止点
 
 局部 header 读取不是当前平均成本的足够杠杆。递归 eval/dispatch 与 frontend preparation 仍值得定位，但进一步寄存器/融合表示需改变准备/状态布局并重新算成本，本轮不实现。native 冷编译共队列隔离涉及 CodeUnit/owner 与跨线程契约，不通过添加线程框架解决。无自动 JIT、OSR、缓存、新 backend、JSON/字符串支持或第三轮。进入已安排的最终 benchmark。
