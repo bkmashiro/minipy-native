@@ -1,0 +1,13 @@
+{
+  "target_commit": "ae0f97a5282f5906317aee3b3a4446fd61171590",
+  "model": "gpt-6-luna",
+  "provider": "openai-codex",
+  "session_id": "20261014_140017_19059e",
+  "duration_ms": 87845,
+  "mode": "read-only isolated detached checkout; successful Hermes CLI API tool calls",
+  "result": "no actionable findings",
+  "reviewer_text": "未发现需要在发布前修正的具体正确性、证据或图表问题。\n\n我核对了目标提交 `ae0f97a5282f5906317aee3b3a4446fd61171590`、相关 harness、汇总与绘图逻辑，以及当前报告和图表标签。汇编的 `Quote` 布局与指针传递相符；有符号乘加检查、切片边界、预算与分块逻辑未见问题。最终汇编汇总使用独立的 `assembly-v2.jsonl.gz` kernel cohort 和 `assembly-full.jsonl.gz` full cohort，报告也明确区分两者。摘要中的范围、缺失值、有限窗口指标和图表统计口径一致；固定参考、输入适配、普通 Python 语义差异及三轮不确定性均有说明。\n\n证据文件记录了 1,810 项独立数值核对通过；汇编测试日志记录 4/4 通过，Linux 生命周期日志也记录测试通过。我没有重跑 Linux 二进制或正式 campaign，只核验了这些留存报告。工作树干净，目标提交未改动 `src/`。\n\n结论限于此次指定的最终 benchmark 与图表范围；已披露的三轮样本量、有限窗口而非持续 SLO、共同源码 cohort 缺少 waiting-memory 数据等，是明确的研究边界，不构成发布阻塞。",
+  "parent_validation": "145860 preserved speed observations, 1810 independently recomputed numeric checks, 5 Python tests, actual Linux assembler/Host tests 4/4, macOS/Linux frozen lifecycle pass, rendered PNG QA by lead; src and locks frozen",
+  "visual_scope": "independent reviewer checked plotting/summary/label semantics; lead opened both actual PNGs",
+  "failed_attempt": "Codex CLI ChatGPT account refused exact gpt-6-luna with 400 before review; not counted as a successful review; no model substitution or global settings change"
+}
