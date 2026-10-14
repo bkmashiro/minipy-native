@@ -183,10 +183,10 @@ impl Compiler {
                     .value
                     .as_deref()
                     .ok_or_else(|| err("return requires an expression"))?;
-                statements.extend(self.compile_legacy_return(value, 0)?);
+                self.compile_legacy_return(value, 0, &mut statements)?;
                 continue;
             }
-            statements.extend(self.compile_stmt(statement, 0, false, false)?);
+            self.compile_stmt(statement, 0, false, false, &mut statements)?;
         }
         if !matches!(statements.last(), Some(Stmt::Return(_))) {
             statements.push(Stmt::Return(Expr::Int(0)));
@@ -275,7 +275,8 @@ impl Compiler {
         depth: usize,
         in_loop: bool,
         in_loop_body: bool,
-    ) -> Result<Vec<Stmt>> {
+        out: &mut Vec<Stmt>,
+    ) -> Result<()> {
         self.node(depth)?;
         match s {
             ast::Stmt::Assign(a) if a.targets.len() == 1 && a.type_comment.is_none() => {
@@ -289,7 +290,8 @@ impl Compiler {
                     }
                     let i = self.declare(&name, Type::I64, true)?;
                     self.initialized |= 1 << i;
-                    return Ok(vec![Stmt::Record(i, batch, total)]);
+                    out.push(Stmt::Record(i, batch, total));
+                    return Ok(());
                 }
                 if Self::is_tool(&a.value, "load_quotes") {
                     if in_loop {
@@ -316,7 +318,8 @@ impl Compiler {
                     let slot = self.next_buffer;
                     self.next_buffer += 1;
                     self.buffers.insert(name, slot);
-                    return Ok(vec![Stmt::Load(slot, batch)]);
+                    out.push(Stmt::Load(slot, batch));
+                    return Ok(());
                 }
                 let expected = self
                     .names
@@ -331,7 +334,8 @@ impl Compiler {
                 }
                 let i = self.declare(&name, ty, true)?;
                 self.initialized |= 1 << i;
-                Ok(vec![Stmt::Set(i, value)])
+                out.push(Stmt::Set(i, value));
+                Ok(())
             }
             ast::Stmt::AnnAssign(a) if a.simple => {
                 let name = Self::target_name(&a.target)?;
@@ -346,7 +350,8 @@ impl Compiler {
                 }
                 let i = self.declare(&name, ty, true)?;
                 self.initialized |= 1 << i;
-                Ok(vec![Stmt::Set(i, value)])
+                out.push(Stmt::Set(i, value));
+                Ok(())
             }
             ast::Stmt::AugAssign(a) => {
                 let n = Self::target_name(&a.target)?;
@@ -367,10 +372,11 @@ impl Compiler {
                 if ty != Type::I64 {
                     return Err(err("augmented arithmetic requires i64"));
                 }
-                Ok(vec![Stmt::Set(
+                out.push(Stmt::Set(
                     i,
                     Expr::Binary(op, Box::new(Expr::Local(i)), Box::new(rhs)),
-                )])
+                ));
+                Ok(())
             }
             ast::Stmt::If(a) => {
                 let (test, ty) = self.expr(&a.test, depth + 1, in_loop)?;
@@ -390,7 +396,8 @@ impl Compiler {
                     return Err(err("buffer loads must be unconditional"));
                 }
                 self.initialized &= then_set;
-                Ok(vec![Stmt::If(test, then_body, else_body)])
+                out.push(Stmt::If(test, then_body, else_body));
+                Ok(())
             }
             ast::Stmt::For(f) => {
                 if in_loop {
@@ -420,7 +427,8 @@ impl Compiler {
                 let compiled = self.compile_block(&f.body, depth + 1, true, true)?;
                 self.initialized = before;
                 self.rows.remove(&row);
-                Ok(vec![Stmt::For(slot, compiled)])
+                out.push(Stmt::For(slot, compiled));
+                Ok(())
             }
             ast::Stmt::Expr(e) => {
                 if Self::is_tool(&e.value, "record_total") {
@@ -432,7 +440,8 @@ impl Compiler {
                     }
                     let i = self.hidden_scalar(Type::I64)?;
                     self.initialized |= 1 << i;
-                    return Ok(vec![Stmt::Record(i, batch, total)]);
+                    out.push(Stmt::Record(i, batch, total));
+                    return Ok(());
                 }
                 if Self::is_tool(&e.value, "load_quotes") {
                     let (batch, _) = self
@@ -447,7 +456,8 @@ impl Compiler {
                     }
                     self.next_buffer += 1;
                     self.buffers.insert(format!("\0discard{slot}"), slot);
-                    return Ok(vec![Stmt::Load(slot, batch)]);
+                    out.push(Stmt::Load(slot, batch));
+                    return Ok(());
                 }
                 if let Some(arg) = Self::print_arg(&e.value)? {
                     self.node(depth + 1)?;
@@ -459,19 +469,22 @@ impl Compiler {
                         }
                         let i = self.hidden_scalar(Type::I64)?;
                         self.initialized |= 1 << i;
-                        return Ok(vec![
+                        out.extend([
                             Stmt::Record(i, batch, total),
                             Stmt::Print(Expr::Local(i), Type::I64),
                         ]);
+                        return Ok(());
                     }
                     let (value, ty) = self.expr(arg, depth + 2, in_loop)?;
                     if !matches!(ty, Type::I64 | Type::Bool) {
                         return Err(err("print accepts one i64 or bool argument"));
                     }
-                    return Ok(vec![Stmt::Print(value, ty)]);
+                    out.push(Stmt::Print(value, ty));
+                    return Ok(());
                 }
                 let (value, _) = self.expr(&e.value, depth + 1, in_loop)?;
-                Ok(vec![Stmt::Eval(value)])
+                out.push(Stmt::Eval(value));
+                Ok(())
             }
             _ => Err(err("unsupported statement in restricted program")),
         }
@@ -485,7 +498,7 @@ impl Compiler {
     ) -> Result<Vec<Stmt>> {
         let mut out = Vec::new();
         for s in body {
-            out.extend(self.compile_stmt(s, depth, in_loop, in_loop_body)?);
+            self.compile_stmt(s, depth, in_loop, in_loop_body, &mut out)?;
         }
         Ok(out)
     }
@@ -506,20 +519,24 @@ impl Compiler {
             _ => Err(err("local annotations must be i64 or bool")),
         }
     }
-    fn compile_legacy_return(&mut self, e: &ast::Expr, depth: usize) -> Result<Vec<Stmt>> {
+    fn compile_legacy_return(
+        &mut self,
+        e: &ast::Expr,
+        depth: usize,
+        out: &mut Vec<Stmt>,
+    ) -> Result<()> {
         if let Some((batch, total)) = self.tool_call(e, "record_total", depth + 1, false)? {
             let i = self.hidden_scalar(Type::I64)?;
             self.initialized |= 1 << i;
-            return Ok(vec![
-                Stmt::Record(i, batch, total),
-                Stmt::Return(Expr::Local(i)),
-            ]);
+            out.extend([Stmt::Record(i, batch, total), Stmt::Return(Expr::Local(i))]);
+            return Ok(());
         }
         let (value, ty) = self.expr(e, depth + 1, false)?;
         if ty != Type::I64 {
             return Err(err("return expression must be i64"));
         }
-        Ok(vec![Stmt::Return(value)])
+        out.push(Stmt::Return(value));
+        Ok(())
     }
     fn call_parts(e: &ast::Expr) -> Option<(&ast::Expr, bool)> {
         match e {
