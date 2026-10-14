@@ -225,17 +225,10 @@ func main() {
 	if mode == "first-request" {
 		out := run(c, 17)
 		executed := monotonic()
-		check(c, n, out)
-		want := int64(1)
-		if c == "scalar" {
-			want = 0
-		}
-		if loads.Load() != want || records.Load() != want {
-			panic("first tool count")
-		}
+		// First output/Tool oracle is validated by the controller after process reap.
 		emit(map[string]any{"kind": "first-request", "engine": engine, "case": c, "rows": n,
 			"init_begin_ns": initBegin, "ready_ns": ready, "prepared_ns": prepared, "executed_ns": executed,
-			"stdout": out, "completed": true, "prepare_boundary": "Host read/adaptation of three bodies, native parent preload if applicable; no user code compilation",
+			"stdout": out, "loads": loads.Load(), "records": records.Load(), "completed": true, "prepare_boundary": "Host read/adaptation of three bodies, native parent preload if applicable; no user code compilation",
 			"execute_boundary": "unknown-source Python compile, per-request COW instance or fork/exit/reap (resident has neither), producer/JSON/transport/object conversion/scan/output; oracle excluded"})
 		return
 	}

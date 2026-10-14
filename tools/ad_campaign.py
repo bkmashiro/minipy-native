@@ -85,6 +85,8 @@ def validate(rows, item):
     else:
         for r in rs:
             assert r['completed'] and r['stdout'] == oracle(item['case'], item['rows'])
+            want = 0 if item['case'] == 'scalar' else 1
+            assert (r['loads'], r['records']) == (want, want)
             assert sum(r[p] for p in PHASES) == r['wall_ns']
             assert all(r[p] >= 0 for p in PHASES)
 

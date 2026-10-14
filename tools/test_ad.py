@@ -5,6 +5,7 @@ from pathlib import Path
 import unittest
 
 spec = importlib.util.spec_from_file_location('campaign', Path(__file__).with_name('ad_campaign.py'))
+assert spec is not None and spec.loader is not None
 c = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(c)
 
@@ -25,7 +26,7 @@ class Contract(unittest.TestCase):
         item = next(i for i in c.schedule(Path('/x')) if i['kind'] == 'first-request')
         common = dict(cohort=c.COHORT, command_key=item['key'], round=item['round'])
         rows = [dict(common, kind='initialization'), dict(common, kind='first-request', completed=True,
-                  stdout=c.oracle(item['case'], item['rows']), wall_ns=15,
+                  stdout=c.oracle(item['case'], item['rows']), wall_ns=15, loads=0, records=0,
                   **dict(zip(c.PHASES, [1,2,3,4,5])))]
         return item, rows
 
