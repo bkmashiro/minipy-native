@@ -370,13 +370,24 @@ two-scan/conditional-Tool; empty-source control is 121.63 us but still includes 
 generic frame/PC entry. Diagnostic `define_function` accounts for 82.1--85.8% of
 compile wall. Weighted exclusive register allocation is 87.57 us and verification
 75.74 us. Each compile performs five verifier calls, all retained. Setup/finalize
-are only a few us. This favors a bounded same-backend allocator/CFG experiment
+are only a few us. This favors a bounded same-backend predicate-CFG experiment
 before a backend replacement, while not identifying a universal fixed-cost floor.
 Profiling perturbation is material: weighted round-matched overhead is +4.9--8.2%,
 and other cases vary more widely. No uninstrumented pass times are inferred.
 
+Historical single-pass evidence lowers allocator priority: four alternating
+ablation rounds at `564381d`, old IR/macOS M4, 10k weighted rows/chunk4096 and
+ready providers, with diagnostics omitted and repeated verifier retained, give
+source-cold 117.604 -> 134.7705 us and prepared 20.2295 -> 42.792 us.
+Source: `/Users/yuzhe/.hermes/cache/scratch/minipy-hotspots/FINDINGS.md:3,10,14--21,33`.
+These are old end-to-end negative results, not E's Linux measurements. E did not
+implement any candidate; the current general CFG/Linux allocator combination
+remains untested. Predicate lowering ranks first, no-suspension specialization
+second, and allocator retest only third under those explicit new conditions.
+The regalloc bucket is not an expected net saving; runtime regressions must count.
+
 See [compiler-profile.md](compiler-profile.md) for the phase/pass boundaries,
-nested-timer accounting, IR inventories, at most three ranked untested hypotheses,
+nested-timer accounting, IR inventories, three ranked candidates and their history,
 commands and limitations. Exact hashes, gzip raw and recomputed summary are in
 `bench/results/e-compiler-profile/`; both runner and summarizer use Python stdlib.
 No default profiling/IR traversal/formatting, source cache, new backend, verifier

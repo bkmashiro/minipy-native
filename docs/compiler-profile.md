@@ -3,9 +3,11 @@
 ## Conclusion
 
 Keep Cranelift. Between simplifying lowering and exploring a lighter backend,
-prefer a bounded local experiment first. An even cheaper first probe is Cranelift's
-existing single-pass allocator. Backend replacement is not justified by this data.
-**Only diagnostics were implemented; all candidates below remain untested.**
+prefer a bounded predicate-lowering experiment first. Backend replacement is not
+justified by this data. **E implemented only diagnostics, not the candidates below.**
+Single-pass allocation already has a negative old-IR/M4 result; the current
+general-continuation CFG on Linux has not been retested. That history lowers its
+priority rather than making it an untested first choice.
 
 Ordinary-release empty/weighted/two-scan compiles cost 121.63/330.12/459.25 us.
 ISA/module setup and finalize/load cost only a few us. Backend work has both a
@@ -145,31 +147,46 @@ memory traffic. Machine bytes match plain/diagnostic in every round.
   state or all stores waste. Backend removes forwarded SSA parameters, but leaves
   most scan blocks. Twelve exact pre/post dumps are committed in the evidence dir.
 
-## Ranked untested candidates
+## Ranked candidates and historical negative evidence
 
-1. **Existing `regalloc_algorithm=single_pass` A/B.** Replace Ion/backtracking with
-   Fastalloc; no old allocator on success, no extra guard/backend. Addressed
-   weighted bucket: 87.57 us (75--123 us across nonempty cases), a zero-cost ideal
-   ceiling rather than predicted saving. A planning target is tens of us, but this
-   profile cannot forecast the difference. Minimal validation: one setting change,
-   matched plain-build cold source-to-result and prepared 10k-row execution, code
-   bytes and existing semantic/lifecycle tests; keep verifier enabled. Risk: worse
-   spills/code/runtime can erase compile savings. Pinned mapping is in
-   `machinst/compile.rs:57--79`. One bounded session, not backend development.
-2. **Predicate-oriented conditional lowering.** Remove approximately two helper
+Historical evidence: `/Users/yuzhe/.hermes/cache/scratch/minipy-hotspots/FINDINGS.md:3,10,14--21,33`
+records four alternating ablation rounds on `564381d`'s old IR, macOS M4,
+10,000 weighted rows/chunk4096, ready providers. With diagnostics omitted and
+the original repeated verifier retained, backtracking versus `single_pass` gives
+source-cold totals 117.604 -> 134.7705 us and prepared totals 20.2295 -> 42.792 us
+(about 2.1x). These are historical source-to-result measurements, not E's Linux
+compile times. They reject an unconditional allocator switch. E's larger CFG and
+Linux environment are new conditions, not evidence that the regression vanished.
+
+The order below favors plausible net absolute savings after known regression
+risk. Planning ranges are hypotheses, not measured gains; allocator net benefit
+is unknown and may be negative, so its larger bucket does not rank it first.
+
+1. **Predicate-oriented conditional lowering.** Remove approximately two helper
    blocks per consumed and/or, conversions and a bool block parameter. Planning-only
    5--20 us: roughly 8% fewer weighted blocks applied to relevant traversal/regalloc
    buckets, less any fixed cost. No measured effect/bound is claimed. Minimal test:
    one local `if` lowering change, same compiler/default checks, cold-result A/B
    and bool-expression/short-circuit overflow tests. Risk: RHS skip/error order and
    join semantics. No new IR pass or metadata cache.
-3. **No-suspension entry specialization.** Omit PC dispatch for statically proven
+2. **No-suspension entry specialization.** Omit PC dispatch for statically proven
    scalar/no-yield code. Planning-only 5--15 us from a small fraction of scalar's
    75-us regalloc/41-us verifier buckets; not the 1.62-us setup. Minimal test: one
    local codegen branch, scalar cold-result A/B and print/overflow/entry tests.
    Risk: proving non-entry resume impossible under the current runtime contract.
    Reject if it requires API/threat-model changes; retain checked arithmetic and
    output errors. No second backend. Its proof burden makes it lower priority.
+3. **Conditional `regalloc_algorithm=single_pass` retest, not default adoption.**
+   Only if a new bounded experiment is authorized for the current general CFG on
+   Linux: replace Ion/backtracking with Fastalloc; no old allocator on success,
+   no extra guard/backend. The diagnostic weighted bucket is 87.57 us (75--123 us
+   across nonempty cases), an addressed-cost ceiling, not expected net savings.
+   The old end-to-end regression above makes both compile and execution benefit
+   uncertain. Minimal validation: one setting change, matched plain-build cold
+   source-to-result and prepared 10k-row execution, code bytes and existing
+   semantic/lifecycle tests, with all verifier calls retained. Reject if extra
+   spills/code/runtime erase any compile saving. Pinned allocator mapping is in
+   `machinst/compile.rs:57--79`. No E retest or backend development was performed.
 
 ## Reproduce and verify
 

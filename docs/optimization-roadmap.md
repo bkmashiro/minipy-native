@@ -70,9 +70,17 @@ and finalize/load remain small. IR grows from 17 instructions/6 blocks for empty
 source to 168/41 for two scans and conditional Tool continuations.
 
 There is no backend-replacement case yet. Recommended first bounded experiment:
-the existing Cranelift single-pass allocator, with all checks retained and cold
-source-to-result plus prepared runtime/code-size qualification. Predicate-oriented
-CFG lowering and no-suspension entry specialization are secondary hypotheses.
-None has been implemented or scheduled by E. Profiling adds material overhead and
+predicate-oriented CFG lowering, then no-suspension entry specialization. The
+single-pass allocator is a lower-priority conditional retest, not a new first
+choice. Historical `564381d` old-IR/M4 ablation (10k weighted rows/chunk4096,
+ready providers, four rounds) with diagnostics omitted and repeated verification
+retained regressed source-cold 117.604 -> 134.7705 us and prepared
+20.2295 -> 42.792 us. Evidence: `/Users/yuzhe/.hermes/cache/scratch/minipy-hotspots/FINDINGS.md:3,10,14--21,33`.
+Those are old source-to-result observations, not current Linux compile times.
+The current general CFG/Linux combination has not been retested; its larger
+regalloc bucket does not predict a net gain or cancel the known runtime risk.
+Any authorized retest must retain all checks and qualify cold source-to-result,
+prepared runtime and code size. E implemented or scheduled none of these
+candidates. Profiling adds material overhead and
 process variation, so pass costs are diagnostic observations, not plain-release
 times. New experiments still require a focused replacement contract and evidence.
