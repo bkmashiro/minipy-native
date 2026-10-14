@@ -416,3 +416,27 @@ for boundaries, all round changes, reproduction and limitations. Small raw,
 source/binary identity, CLIF, patch and test log are in `bench/results/f-predicate/`.
 No new Monty/C/D matrix, second optimization, cache, backend, CI or PR. Stop at the
 focused same-card review handoff.
+
+## G: explicit lightweight typed-IR interpreter
+
+G is isolated at `51e83bd`, with native lowering unchanged and no automatic backend switch.
+The resident-service library path shares frontend/Quote/Provider/cancellation/output
+contracts and replaces native compilation with bounded statement flattening and
+typed expression interpretation. Actual same-round ARM64 Linux cold medians:
+scalar native/interpreter/Monty 167.123/27.026/38.659 us; weighted 100 rows
+262.770/50.673/133.056 us; weighted 10k 328.899/328.696/3940.481 us.
+Weighted 10k is neutral cold and slower prepared (interpreter 300.340 vs native
+79.716 us), so this remains an explicit experimental small-task option, not a
+native replacement. No F measurements enter G's comparison.
+
+18,090 primary raw samples, 4824 strong Monty list-release control samples and
+40 separately instrumented gate-memory rows are retained. Initial 52 core tests
+ran on actual Linux and macOS. Review reproduced a flaky chunk-cancellation wait
+in `ac08ca1`; a test-only gated-load/first-chunk handshake repair now passes all
+54 macOS release tests, plus 50 focused and 10 interpreter-suite repetitions.
+The repaired tests and final two error/receiver suites have not been rerun on
+Linux; production code and performance evidence are unchanged. Both VM sessions
+restored off with vfkit exit 0. Detailed boundaries, density caveats, keep decision,
+commands and source/binary identities: [interpreter-experiment.md](interpreter-experiment.md),
+`bench/results/g-interpreter/`. No main integration or hot-loop JIT was performed.
+

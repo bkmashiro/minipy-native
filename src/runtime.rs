@@ -67,7 +67,7 @@ pub struct Event {
     pub index: u64,
 }
 pub type Trace = Rc<RefCell<Vec<Event>>>;
-fn event(
+pub(crate) fn event(
     trace: &Option<Trace>,
     phase: &'static str,
     buffer_bytes: usize,
@@ -85,15 +85,30 @@ fn event(
         });
     }
 }
-fn check(cancel: &Cancellation) -> Result<(), TaskError> {
+pub(crate) fn check(cancel: &Cancellation) -> Result<(), TaskError> {
     if cancel.is_cancelled() {
         Err(TaskError::Cancelled)
     } else {
         Ok(())
     }
 }
+pub(crate) fn authorize_tool(
+    cancel: &Cancellation,
+    allowed: bool,
+    calls: &mut u64,
+) -> Result<(), TaskError> {
+    check(cancel)?;
+    if !allowed {
+        return Err(TaskError::Permission);
+    }
+    if *calls == 0 {
+        return Err(TaskError::Budget);
+    }
+    *calls -= 1;
+    Ok(())
+}
 /// Futures own all required arguments. Dropping the receiver does not drop the operation.
-async fn receive<T>(
+pub(crate) async fn receive<T>(
     rx: oneshot::Receiver<Result<T, TaskError>>,
     cancel: &Cancellation,
 ) -> Result<T, TaskError> {
@@ -156,13 +171,13 @@ pub struct ScriptOutcome {
     pub stdout: String,
 }
 pub(crate) struct Output {
-    stdout: String,
+    pub(crate) stdout: String,
     max: usize,
     allowed: bool,
     error: Option<TaskError>,
 }
 impl Output {
-    fn new(max: usize, allowed: bool) -> Self {
+    pub(crate) fn new(max: usize, allowed: bool) -> Self {
         Self {
             stdout: String::new(),
             max,
@@ -176,55 +191,64 @@ impl Output {
 pub(crate) unsafe extern "C" fn native_print(output: *mut Output, value: i64, boolean: i64) -> i64 {
     // Only generated code calls this with its dispatcher-owned live Output.
     let output = unsafe { &mut *output };
-    if !output.allowed {
-        output.error = Some(TaskError::Permission);
-        return 1;
+    match output.append(value, boolean != 0) {
+        Ok(()) => 0,
+        Err(error) => {
+            output.error = Some(error);
+            1
+        }
     }
-    let mut bytes = [0u8; 21];
-    bytes[20] = b'\n';
-    let line = if boolean != 0 {
-        if value == 0 { "False\n" } else { "True\n" }
-    } else {
-        let mut n = value.unsigned_abs();
-        let mut position = 20;
-        loop {
-            position -= 1;
-            bytes[position] = b'0' + (n % 10) as u8;
-            n /= 10;
-            if n == 0 {
-                break;
+}
+impl Output {
+    pub(crate) fn append(&mut self, value: i64, boolean: bool) -> Result<(), TaskError> {
+        let output = self;
+        if !output.allowed {
+            return Err(TaskError::Permission);
+        }
+        let mut bytes = [0u8; 21];
+        bytes[20] = b'\n';
+        let line = if boolean {
+            if value == 0 { "False\n" } else { "True\n" }
+        } else {
+            let mut n = value.unsigned_abs();
+            let mut position = 20;
+            loop {
+                position -= 1;
+                bytes[position] = b'0' + (n % 10) as u8;
+                n /= 10;
+                if n == 0 {
+                    break;
+                }
+            }
+            if value < 0 {
+                position -= 1;
+                bytes[position] = b'-';
+            }
+            // The stack buffer contains only ASCII digits, minus and newline.
+            unsafe { std::str::from_utf8_unchecked(&bytes[position..]) }
+        };
+        if line.len() > output.max.saturating_sub(output.stdout.len()) {
+            return Err(TaskError::Budget);
+        }
+        let required = output.stdout.len() + line.len();
+        if required > output.stdout.capacity() {
+            // Amortize repeated line appends without letting capacity exceed the
+            // task's explicit output bound. Small single-line output stays small.
+            let capacity = required
+                .checked_next_power_of_two()
+                .unwrap_or(output.max)
+                .min(output.max);
+            if output
+                .stdout
+                .try_reserve_exact(capacity - output.stdout.len())
+                .is_err()
+            {
+                return Err(TaskError::Budget);
             }
         }
-        if value < 0 {
-            position -= 1;
-            bytes[position] = b'-';
-        }
-        // The stack buffer contains only ASCII digits, minus and newline.
-        unsafe { std::str::from_utf8_unchecked(&bytes[position..]) }
-    };
-    if line.len() > output.max.saturating_sub(output.stdout.len()) {
-        output.error = Some(TaskError::Budget);
-        return 1;
+        output.stdout.push_str(line);
+        Ok(())
     }
-    let required = output.stdout.len() + line.len();
-    if required > output.stdout.capacity() {
-        // Amortize repeated line appends without letting capacity exceed the
-        // task's explicit output bound. Small single-line output stays small.
-        let capacity = required
-            .checked_next_power_of_two()
-            .unwrap_or(output.max)
-            .min(output.max);
-        if output
-            .stdout
-            .try_reserve_exact(capacity - output.stdout.len())
-            .is_err()
-        {
-            output.error = Some(TaskError::Budget);
-            return 1;
-        }
-    }
-    output.stdout.push_str(line);
-    0
 }
 pub async fn execute_script<P: Provider>(
     code: Rc<CodeUnit>,
@@ -302,14 +326,15 @@ async fn run<P: Provider>(
                 tokio::task::yield_now().await;
             }
             2 | 3 | 7 => {
-                check(&cancel)?;
-                if (status == 2 && !limits.allow_load) || (status != 2 && !limits.allow_record) {
-                    return Err(TaskError::Permission);
-                }
-                if calls == 0 {
-                    return Err(TaskError::Budget);
-                }
-                calls -= 1;
+                authorize_tool(
+                    &cancel,
+                    if status == 2 {
+                        limits.allow_load
+                    } else {
+                        limits.allow_record
+                    },
+                    &mut calls,
+                )?;
                 let batch = frame.batch;
                 let total = frame.total;
                 let target = frame.target as usize;

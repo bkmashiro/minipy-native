@@ -1,0 +1,71 @@
+{
+  "baseline": "51e83bd2bc6f31d04ba0973b71e702f12da9134e",
+  "production_unchanged_since_linux_campaign": true,
+  "tests": {
+    "macos_release": 54,
+    "linux_arm64_release": 52,
+    "later_macos_only_tests": [
+      "provider_failures_and_cancelled_entry_do_not_run_later_effects",
+      "dropped_task_receiver_releases_late_load_without_resuming"
+    ],
+    "core_clippy": "all-targets -D warnings pass",
+    "bench_common": 2
+  },
+  "review_repair": {
+    "reviewed_commit": "ac08ca1cd8cf8fa81f9950ad0f900726430042a0",
+    "environment": "macOS 26.4.1 (25E253), rustc/cargo 1.93.1",
+    "original_reproduced_failure": "focused release test exit 101 at tests/interpreter.rs:281, first yield absent",
+    "original_test_sha256": "8f9ac1f362182456fa9b04c9654261cf1edd530d94ab1bcb21263233f52817bb",
+    "synchronization": "test-only gated provider load entry/release, directly poll real execution future to first chunk Pending, cancel before next poll; five-second failure timeouts replace iteration bounds",
+    "assertions": ["one yield at row index 1", "cumulative fuel decremented by 1", "16000 buffer bytes retained before cancellation", "Cancelled with empty stdout", "no record dispatch", "owner released", "shared prepared unit requests remain independent"],
+    "commands": [
+      "cargo test --locked --release --test interpreter chunk_cancellation_and_shared_unit_state -- --exact --nocapture",
+      "cargo test --locked --release --test interpreter chunk_cancellation_and_shared_unit_state -- --exact",
+      "cargo test --locked --release --test interpreter",
+      "cargo test --locked --release",
+      "cargo clippy --locked --all-targets -- -D warnings",
+      "cargo fmt --check",
+      "git diff --check"
+    ],
+    "focused_consecutive_repetitions_passed": 50,
+    "interpreter_suite_consecutive_repetitions_passed": 10,
+    "macos_release_tests_passed": 54,
+    "repaired_tests_linux_rerun": false,
+    "linux_52_tests_are_historical": true,
+    "production_and_performance_evidence_unchanged": true,
+    "vm_ci_main_touched": false
+  },
+  "vm": {
+    "initial": "off",
+    "final": "off",
+    "launcher_sessions": [
+      "proc_200dec91c442",
+      "proc_a9d57ccc7e48"
+    ],
+    "exit_codes": [
+      0,
+      0
+    ],
+    "shutdown_confirmed": "both process wait results: VM is stopped"
+  },
+  "final_source_sha256": {
+    "src/interpreter.rs": "abfde58520c1c208fd81027d5e3dc7ffcb63ccdc2d6cdeb146b419ae240e0d75",
+    "src/runtime.rs": "01772bd991bdfa6238425058814ff564dbcd2b1426788576f130eb60d5b699ce",
+    "tests/interpreter.rs": "a7fe2a561ee8555f334ef22f4d7d59f6bbcfa8abffeef0698e45e6f26277745b",
+    "bench/src/bin/interpreter_ab.rs": "dd2a0ddeb4352924ce5fc2b3f0c631dc909bc63f58b86eb9ffee4c68750eae60",
+    "tools/interpreter_ab.py": "1c3b8b0dd5075239c66615bc8c5c3ff6c662bad829be6b90ad806a6fc0b4fbec",
+    "tools/interpreter_clear_ab.py": "ba5cd97bdd6302c03635b375d1630ed6593224d8f05d189d888234584cf31464",
+    "tools/summarize_interpreter_ab.py": "a14f049627d045b9b89ebbc6a1b928309970362f1fd11afee3fb5ea2a4c79f54"
+  },
+  "evidence_sha256": {
+    "clear-identity.json": "b3bc8dd24469bc6f866c23e28cc1dadeb0a3cc8513e61fa673e2c9859523f114",
+    "clear-linux.jsonl.gz": "77a11534909f16e5a475234cc6392b3958fa56bae843291ad0ed2a3212c946a3",
+    "clear-memory.jsonl": "74177602db09768b7b84dd5a7d6de04496af94dcaa58e437c9b14c6125436014",
+    "identity.json": "5200e548739a70f8879bd9ba281ea541c50b557be29209dbe5955c1917432414",
+    "linux-tests.txt": "c6fde28cbba2fa5d650c5ad9bfba40eeccdd567aeb5b5c5b84c6be8104f8b980",
+    "linux.jsonl.gz": "905c9ffa5cb610b5fa4f36b25d54c332d4ffa4d063e71f03e6af279bb8cb20d8",
+    "memory.jsonl": "6051330826c8f7efeebe6df5b824fde7299eeaa5ef02217f2196ae802bbad538",
+    "primary-harness.rs.txt": "9b4cc327273b2e05358a8a080f5d7398d4c7d292c659c49b57e210e1e5a0078d",
+    "summary.json": "e5ceb7e312c160444ac01248433b2fd5bf3a95bad244284fa2287585c2b411bb"
+  }
+}

@@ -1,0 +1,860 @@
+{
+  "speed": [
+    {
+      "engine": "interpreter",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "cold",
+      "samples": 300,
+      "wall_ns_us": 27.0255,
+      "cpu_ns_us": 28.0,
+      "prepare_ns_us": 22.222,
+      "execute_ns_us": 3.593,
+      "round_wall_us": [
+        26.468,
+        28.9055,
+        26.816
+      ],
+      "prepared_bytes": 770
+    },
+    {
+      "engine": "interpreter",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "warm",
+      "samples": 300,
+      "wall_ns_us": 3.425,
+      "cpu_ns_us": 5.0,
+      "prepare_ns_us": 0.292,
+      "execute_ns_us": 1.859,
+      "round_wall_us": [
+        4.9515,
+        3.091,
+        2.882
+      ],
+      "prepared_bytes": 770
+    },
+    {
+      "engine": "interpreter",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "cold",
+      "samples": 300,
+      "wall_ns_us": 57.228,
+      "cpu_ns_us": 57.5,
+      "prepare_ns_us": 47.973,
+      "execute_ns_us": 8.103,
+      "round_wall_us": [
+        57.6955,
+        52.823,
+        60.436
+      ],
+      "prepared_bytes": 1434
+    },
+    {
+      "engine": "interpreter",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "warm",
+      "samples": 300,
+      "wall_ns_us": 13.1145,
+      "cpu_ns_us": 14.0,
+      "prepare_ns_us": 0.251,
+      "execute_ns_us": 10.965,
+      "round_wall_us": [
+        20.1575,
+        7.4565,
+        13.49
+      ],
+      "prepared_bytes": 1434
+    },
+    {
+      "engine": "interpreter",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "cold",
+      "samples": 300,
+      "wall_ns_us": 313.077,
+      "cpu_ns_us": 313.0,
+      "prepare_ns_us": 40.142,
+      "execute_ns_us": 270.539,
+      "round_wall_us": [
+        311.6835,
+        317.119,
+        310.0825
+      ],
+      "prepared_bytes": 1434
+    },
+    {
+      "engine": "interpreter",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "warm",
+      "samples": 300,
+      "wall_ns_us": 269.946,
+      "cpu_ns_us": 270.0,
+      "prepare_ns_us": 0.167,
+      "execute_ns_us": 269.0565,
+      "round_wall_us": [
+        272.4015,
+        265.874,
+        270.317
+      ],
+      "prepared_bytes": 1434
+    },
+    {
+      "engine": "interpreter",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "cold",
+      "samples": 300,
+      "wall_ns_us": 50.673,
+      "cpu_ns_us": 51.5,
+      "prepare_ns_us": 39.9945,
+      "execute_ns_us": 8.231,
+      "round_wall_us": [
+        42.616,
+        54.093,
+        57.6825
+      ],
+      "prepared_bytes": 1322
+    },
+    {
+      "engine": "interpreter",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "warm",
+      "samples": 300,
+      "wall_ns_us": 11.636,
+      "cpu_ns_us": 12.0,
+      "prepare_ns_us": 0.25,
+      "execute_ns_us": 10.027,
+      "round_wall_us": [
+        11.469,
+        17.1055,
+        9.607
+      ],
+      "prepared_bytes": 1322
+    },
+    {
+      "engine": "interpreter",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "cold",
+      "samples": 300,
+      "wall_ns_us": 328.696,
+      "cpu_ns_us": 328.0,
+      "prepare_ns_us": 28.905,
+      "execute_ns_us": 296.677,
+      "round_wall_us": [
+        334.6405,
+        320.8835,
+        326.7225
+      ],
+      "prepared_bytes": 1322
+    },
+    {
+      "engine": "interpreter",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "warm",
+      "samples": 300,
+      "wall_ns_us": 300.34,
+      "cpu_ns_us": 300.0,
+      "prepare_ns_us": 0.167,
+      "execute_ns_us": 299.463,
+      "round_wall_us": [
+        300.744,
+        297.3955,
+        302.095
+      ],
+      "prepared_bytes": 1322
+    },
+    {
+      "engine": "monty",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "cold",
+      "samples": 300,
+      "wall_ns_us": 38.659,
+      "cpu_ns_us": 40.0,
+      "prepare_ns_us": 21.011,
+      "execute_ns_us": 15.747,
+      "round_wall_us": [
+        38.418,
+        39.2645,
+        37.635
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "monty",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "warm",
+      "samples": 300,
+      "wall_ns_us": 22.765,
+      "cpu_ns_us": 24.0,
+      "prepare_ns_us": 0.334,
+      "execute_ns_us": 20.739,
+      "round_wall_us": [
+        43.954,
+        21.971,
+        21.6375
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "monty",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "cold",
+      "samples": 300,
+      "wall_ns_us": 108.3515,
+      "cpu_ns_us": 109.0,
+      "prepare_ns_us": 21.8465,
+      "execute_ns_us": 85.1525,
+      "round_wall_us": [
+        107.265,
+        110.951,
+        107.736
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "monty",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "warm",
+      "samples": 300,
+      "wall_ns_us": 104.648,
+      "cpu_ns_us": 105.0,
+      "prepare_ns_us": 0.209,
+      "execute_ns_us": 103.2855,
+      "round_wall_us": [
+        108.33,
+        110.47,
+        84.2005
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "monty",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "cold",
+      "samples": 300,
+      "wall_ns_us": 3662.9155,
+      "cpu_ns_us": 3654.0,
+      "prepare_ns_us": 22.9535,
+      "execute_ns_us": 3637.376,
+      "round_wall_us": [
+        3660.333,
+        3665.6335,
+        3665.2545
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "monty",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "warm",
+      "samples": 300,
+      "wall_ns_us": 3612.702,
+      "cpu_ns_us": 3603.0,
+      "prepare_ns_us": 0.167,
+      "execute_ns_us": 3611.7,
+      "round_wall_us": [
+        3621.155,
+        3631.722,
+        3580.342
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "monty",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "cold",
+      "samples": 300,
+      "wall_ns_us": 133.056,
+      "cpu_ns_us": 133.0,
+      "prepare_ns_us": 26.4055,
+      "execute_ns_us": 104.0635,
+      "round_wall_us": [
+        132.5695,
+        117.2725,
+        153.667
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "monty",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "warm",
+      "samples": 300,
+      "wall_ns_us": 103.193,
+      "cpu_ns_us": 104.0,
+      "prepare_ns_us": 0.209,
+      "execute_ns_us": 102.169,
+      "round_wall_us": [
+        132.361,
+        102.5485,
+        95.943
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "monty",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "cold",
+      "samples": 300,
+      "wall_ns_us": 3940.4815,
+      "cpu_ns_us": 3932.0,
+      "prepare_ns_us": 24.852,
+      "execute_ns_us": 3914.2095,
+      "round_wall_us": [
+        4294.443,
+        3870.6215,
+        3933.318
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "monty",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "warm",
+      "samples": 300,
+      "wall_ns_us": 3758.763,
+      "cpu_ns_us": 3749.5,
+      "prepare_ns_us": 0.167,
+      "execute_ns_us": 3757.8165,
+      "round_wall_us": [
+        3751.166,
+        3786.186,
+        3754.3765
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "native",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "cold",
+      "samples": 300,
+      "wall_ns_us": 167.123,
+      "cpu_ns_us": 167.0,
+      "prepare_ns_us": 162.779,
+      "execute_ns_us": 3.259,
+      "round_wall_us": [
+        183.7545,
+        150.937,
+        167.603
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "native",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "warm",
+      "samples": 300,
+      "wall_ns_us": 4.72,
+      "cpu_ns_us": 6.0,
+      "prepare_ns_us": 0.417,
+      "execute_ns_us": 2.507,
+      "round_wall_us": [
+        4.764,
+        4.6155,
+        4.532
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "native",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "cold",
+      "samples": 300,
+      "wall_ns_us": 284.386,
+      "cpu_ns_us": 284.0,
+      "prepare_ns_us": 276.9555,
+      "execute_ns_us": 6.682,
+      "round_wall_us": [
+        271.8905,
+        287.1935,
+        286.4115
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "native",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "warm",
+      "samples": 300,
+      "wall_ns_us": 5.89,
+      "cpu_ns_us": 6.5,
+      "prepare_ns_us": 0.25,
+      "execute_ns_us": 4.553,
+      "round_wall_us": [
+        4.596,
+        6.976,
+        6.098
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "native",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "cold",
+      "samples": 300,
+      "wall_ns_us": 357.461,
+      "cpu_ns_us": 357.0,
+      "prepare_ns_us": 283.713,
+      "execute_ns_us": 72.6795,
+      "round_wall_us": [
+        360.5845,
+        353.7325,
+        355.445
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "native",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "warm",
+      "samples": 300,
+      "wall_ns_us": 89.082,
+      "cpu_ns_us": 89.0,
+      "prepare_ns_us": 0.167,
+      "execute_ns_us": 88.1035,
+      "round_wall_us": [
+        88.713,
+        90.565,
+        83.3205
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "native",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "cold",
+      "samples": 300,
+      "wall_ns_us": 262.77,
+      "cpu_ns_us": 262.0,
+      "prepare_ns_us": 255.5425,
+      "execute_ns_us": 6.4335,
+      "round_wall_us": [
+        265.306,
+        262.364,
+        258.9445
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "native",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "warm",
+      "samples": 300,
+      "wall_ns_us": 5.346,
+      "cpu_ns_us": 6.0,
+      "prepare_ns_us": 0.209,
+      "execute_ns_us": 4.136,
+      "round_wall_us": [
+        4.93,
+        6.767,
+        5.305
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "native",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "cold",
+      "samples": 300,
+      "wall_ns_us": 328.899,
+      "cpu_ns_us": 328.5,
+      "prepare_ns_us": 259.059,
+      "execute_ns_us": 69.126,
+      "round_wall_us": [
+        344.1665,
+        321.0865,
+        322.9905
+      ],
+      "prepared_bytes": null
+    },
+    {
+      "engine": "native",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "warm",
+      "samples": 300,
+      "wall_ns_us": 79.7155,
+      "cpu_ns_us": 80.0,
+      "prepare_ns_us": 0.167,
+      "execute_ns_us": 78.755,
+      "round_wall_us": [
+        80.133,
+        86.5705,
+        73.028
+      ],
+      "prepared_bytes": null
+    }
+  ],
+  "memory": [
+    {
+      "engine": "native",
+      "rows": 100,
+      "count": 32,
+      "phase": "load_wait",
+      "live_increment_requested_bytes": 336272,
+      "per_task_increment_bytes": 10508.5,
+      "input_payload_bytes": 51200,
+      "non_payload_per_task_bytes": 8908.5,
+      "rss_increment_bytes": 3768320,
+      "pss_increment_bytes": 3768320
+    },
+    {
+      "engine": "native",
+      "rows": 100,
+      "count": 32,
+      "phase": "record_wait",
+      "live_increment_requested_bytes": 284050,
+      "per_task_increment_bytes": 8876.5625,
+      "input_payload_bytes": 0,
+      "non_payload_per_task_bytes": 8876.5625,
+      "rss_increment_bytes": 3719168,
+      "pss_increment_bytes": 3719168
+    },
+    {
+      "engine": "native",
+      "rows": 100,
+      "count": 32,
+      "phase": "reclaimed",
+      "live_increment_requested_bytes": 27856,
+      "per_task_increment_bytes": 870.5,
+      "input_payload_bytes": 0,
+      "non_payload_per_task_bytes": 870.5,
+      "rss_increment_bytes": 3231744,
+      "pss_increment_bytes": 3231744
+    },
+    {
+      "engine": "native",
+      "rows": 10000,
+      "count": 8,
+      "phase": "load_wait",
+      "live_increment_requested_bytes": 1372160,
+      "per_task_increment_bytes": 171520.0,
+      "input_payload_bytes": 1280000,
+      "non_payload_per_task_bytes": 11520.0,
+      "rss_increment_bytes": 4644864,
+      "pss_increment_bytes": 4644864
+    },
+    {
+      "engine": "native",
+      "rows": 10000,
+      "count": 8,
+      "phase": "record_wait",
+      "live_increment_requested_bytes": 92098,
+      "per_task_increment_bytes": 11512.25,
+      "input_payload_bytes": 0,
+      "non_payload_per_task_bytes": 11512.25,
+      "rss_increment_bytes": 3338240,
+      "pss_increment_bytes": 3338240
+    },
+    {
+      "engine": "native",
+      "rows": 10000,
+      "count": 8,
+      "phase": "reclaimed",
+      "live_increment_requested_bytes": 28048,
+      "per_task_increment_bytes": 3506.0,
+      "input_payload_bytes": 0,
+      "non_payload_per_task_bytes": 3506.0,
+      "rss_increment_bytes": 3215360,
+      "pss_increment_bytes": 3215360
+    },
+    {
+      "engine": "interpreter",
+      "rows": 100,
+      "count": 32,
+      "phase": "load_wait",
+      "live_increment_requested_bytes": 154242,
+      "per_task_increment_bytes": 4820.0625,
+      "input_payload_bytes": 51200,
+      "non_payload_per_task_bytes": 3220.0625,
+      "rss_increment_bytes": 1990656,
+      "pss_increment_bytes": 1990656
+    },
+    {
+      "engine": "interpreter",
+      "rows": 100,
+      "count": 32,
+      "phase": "record_wait",
+      "live_increment_requested_bytes": 102020,
+      "per_task_increment_bytes": 3188.125,
+      "input_payload_bytes": 0,
+      "non_payload_per_task_bytes": 3188.125,
+      "rss_increment_bytes": 1941504,
+      "pss_increment_bytes": 1941504
+    },
+    {
+      "engine": "interpreter",
+      "rows": 100,
+      "count": 32,
+      "phase": "reclaimed",
+      "live_increment_requested_bytes": 1090,
+      "per_task_increment_bytes": 34.0625,
+      "input_payload_bytes": 0,
+      "non_payload_per_task_bytes": 34.0625,
+      "rss_increment_bytes": 1810432,
+      "pss_increment_bytes": 1810432
+    },
+    {
+      "engine": "interpreter",
+      "rows": 10000,
+      "count": 8,
+      "phase": "load_wait",
+      "live_increment_requested_bytes": 1306578,
+      "per_task_increment_bytes": 163322.25,
+      "input_payload_bytes": 1280000,
+      "non_payload_per_task_bytes": 3322.25,
+      "rss_increment_bytes": 3137536,
+      "pss_increment_bytes": 3137536
+    },
+    {
+      "engine": "interpreter",
+      "rows": 10000,
+      "count": 8,
+      "phase": "record_wait",
+      "live_increment_requested_bytes": 26516,
+      "per_task_increment_bytes": 3314.5,
+      "input_payload_bytes": 0,
+      "non_payload_per_task_bytes": 3314.5,
+      "rss_increment_bytes": 1830912,
+      "pss_increment_bytes": 1830912
+    },
+    {
+      "engine": "interpreter",
+      "rows": 10000,
+      "count": 8,
+      "phase": "reclaimed",
+      "live_increment_requested_bytes": 1282,
+      "per_task_increment_bytes": 160.25,
+      "input_payload_bytes": 0,
+      "non_payload_per_task_bytes": 160.25,
+      "rss_increment_bytes": 1798144,
+      "pss_increment_bytes": 1798144
+    },
+    {
+      "engine": "monty",
+      "rows": 100,
+      "count": 32,
+      "phase": "load_wait",
+      "live_increment_requested_bytes": 1676570,
+      "per_task_increment_bytes": 52392.8125,
+      "input_payload_bytes": 51200,
+      "non_payload_per_task_bytes": 50792.8125,
+      "rss_increment_bytes": 5005312,
+      "pss_increment_bytes": 5005312
+    },
+    {
+      "engine": "monty",
+      "rows": 100,
+      "count": 32,
+      "phase": "record_wait",
+      "live_increment_requested_bytes": 1677084,
+      "per_task_increment_bytes": 52408.875,
+      "input_payload_bytes": 0,
+      "non_payload_per_task_bytes": 52408.875,
+      "rss_increment_bytes": 5754880,
+      "pss_increment_bytes": 5754880
+    },
+    {
+      "engine": "monty",
+      "rows": 100,
+      "count": 32,
+      "phase": "reclaimed",
+      "live_increment_requested_bytes": 1498,
+      "per_task_increment_bytes": 46.8125,
+      "input_payload_bytes": 0,
+      "non_payload_per_task_bytes": 46.8125,
+      "rss_increment_bytes": 4608000,
+      "pss_increment_bytes": 4608000
+    },
+    {
+      "engine": "monty",
+      "rows": 10000,
+      "count": 8,
+      "phase": "load_wait",
+      "live_increment_requested_bytes": 1687466,
+      "per_task_increment_bytes": 210933.25,
+      "input_payload_bytes": 1280000,
+      "non_payload_per_task_bytes": 50933.25,
+      "rss_increment_bytes": 5500928,
+      "pss_increment_bytes": 5500928
+    },
+    {
+      "engine": "monty",
+      "rows": 10000,
+      "count": 8,
+      "phase": "record_wait",
+      "live_increment_requested_bytes": 9998316,
+      "per_task_increment_bytes": 1249789.5,
+      "input_payload_bytes": 0,
+      "non_payload_per_task_bytes": 1249789.5,
+      "rss_increment_bytes": 16203776,
+      "pss_increment_bytes": 16203776
+    },
+    {
+      "engine": "monty",
+      "rows": 10000,
+      "count": 8,
+      "phase": "reclaimed",
+      "live_increment_requested_bytes": 1498,
+      "per_task_increment_bytes": 187.25,
+      "input_payload_bytes": 0,
+      "non_payload_per_task_bytes": 187.25,
+      "rss_increment_bytes": 4706304,
+      "pss_increment_bytes": 4706304
+    }
+  ],
+  "clear_speed": [
+    {
+      "engine": "monty",
+      "case": "stateful",
+      "mode": "cold",
+      "rows": 10000,
+      "wall_us": 3680.129,
+      "round_wall_us": [
+        3687.22,
+        3684.4985,
+        3665.352
+      ]
+    },
+    {
+      "engine": "monty",
+      "case": "stateful",
+      "mode": "warm",
+      "rows": 10000,
+      "wall_us": 3644.422,
+      "round_wall_us": [
+        3617.295,
+        3658.7255,
+        3653.2015
+      ]
+    },
+    {
+      "engine": "monty",
+      "case": "weighted",
+      "mode": "cold",
+      "rows": 10000,
+      "wall_us": 3907.565,
+      "round_wall_us": [
+        3920.4415,
+        3893.6925,
+        3916.2425
+      ]
+    },
+    {
+      "engine": "monty",
+      "case": "weighted",
+      "mode": "warm",
+      "rows": 10000,
+      "wall_us": 3793.5335,
+      "round_wall_us": [
+        3797.26,
+        3806.397,
+        3757.6385
+      ]
+    },
+    {
+      "engine": "monty-clear",
+      "case": "stateful",
+      "mode": "cold",
+      "rows": 10000,
+      "wall_us": 4009.876,
+      "round_wall_us": [
+        3991.71,
+        4024.6165,
+        4009.459
+      ]
+    },
+    {
+      "engine": "monty-clear",
+      "case": "stateful",
+      "mode": "warm",
+      "rows": 10000,
+      "wall_us": 3813.8315,
+      "round_wall_us": [
+        3787.0065,
+        3829.765,
+        3822.1255
+      ]
+    },
+    {
+      "engine": "monty-clear",
+      "case": "weighted",
+      "mode": "cold",
+      "rows": 10000,
+      "wall_us": 3936.8325,
+      "round_wall_us": [
+        4322.387,
+        3852.367,
+        3933.455
+      ]
+    },
+    {
+      "engine": "monty-clear",
+      "case": "weighted",
+      "mode": "warm",
+      "rows": 10000,
+      "wall_us": 3773.8215,
+      "round_wall_us": [
+        3793.4295,
+        3777.618,
+        3747.5025
+      ]
+    }
+  ],
+  "clear_memory": [
+    {
+      "engine": "monty",
+      "rows": 100,
+      "count": 32,
+      "record_wait_increment_requested_bytes": 1677084,
+      "per_task_increment_bytes": 52408.875
+    },
+    {
+      "engine": "monty",
+      "rows": 10000,
+      "count": 8,
+      "record_wait_increment_requested_bytes": 9998316,
+      "per_task_increment_bytes": 1249789.5
+    },
+    {
+      "engine": "monty-clear",
+      "rows": 100,
+      "count": 32,
+      "record_wait_increment_requested_bytes": 1657884,
+      "per_task_increment_bytes": 51808.875
+    },
+    {
+      "engine": "monty-clear",
+      "rows": 10000,
+      "count": 8,
+      "record_wait_increment_requested_bytes": 9766700,
+      "per_task_increment_bytes": 1220837.5
+    }
+  ]
+}
