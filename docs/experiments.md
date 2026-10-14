@@ -774,3 +774,40 @@ the Codex ChatGPT account with 400 unsupported. No substitute model or independe
 verdict is claimed; the parent performed scoped self-review and actual gates.
 The exact failed lane is retained in `bench/results/u-playground/focused-review.json`.
 
+## AH: static Tools, borrowed JSON and pooled HTTP (2026-10-15)
+
+Opt-in `tool-json` adds Host-declared numeric Tool IDs and at most two i64
+arguments, borrowed Bytes roots/static field paths, repeated-path cells and a
+shared bounded HTTP pool through the existing frontend/native/tape pipeline.
+No general object/array language, new backend, automatic strategy or website
+claim. Source argument order, permissions, error order, short circuit, owner
+last use and detached-operation cancellation remain explicit contracts.
+
+The bounded macOS M4 experiment retains 297 timing rows over 33 cells, 33
+separate allocation diagnostics and 72 paired old-fastpath rows over 12 cells.
+Few-field lazy parsing wins on the resident valid fixture; full-array typed
+serde/sonic decoding (~33 us) beats lazy/row-slots (~128–158 us), so array
+expansion stopped. Repeated lazy accesses need caching. Prepared JSON native
+and tape are close; native cold preparation costs much more. Native leaves
+still pay shared JSON helper parsing/cache/type/error work and crossings, not
+zero-cost compiled JSON access. See [tool-json-results.md](tool-json-results.md)
+and [bounded contract](tool-json-view.md) for exact boundaries and raw paths.
+
+Adding Tokio networking changed `enable_all` reactor behavior in the initial
+comparison. Preserve that observation separately; final ready-provider pairs
+explicitly enable only time in both arms. HTTP still enables I/O and pays its
+scheduling costs. No yield, permission, fuel or error check was removed.
+Scalar/weighted optional-feature regressions remain visible; no universal
+zero-overhead or native superiority claim.
+
+Close-out reran all 86 all-feature tests and all 63 default tests on macOS,
+including 10 new Tool/JSON and four real localhost HTTP tests. An earlier
+card comment's 96-test count was a transcription error, not a separate result.
+Strict all-target clippy, fmt and the existing Wasm/debug library check are
+verification gates. Measurements were not repeated in this close-out. Reuse
+`CARGO_TARGET_DIR=/Users/yuzhe/projects/minipy-native/target` with one build job;
+the close-out initially missed that variable and created a redundant 1.3 GiB
+workspace debug target, then removed only that redundant target. Frozen `bench/`
+sources and AF/WSL artifacts are untouched. Submit a signed branch snapshot for
+one focused review before any main merge.
+

@@ -63,6 +63,8 @@ pub struct CodeUnit {
     pub(crate) inputs: Vec<ir::Type>,
     pub(crate) buffers: usize,
     pub(crate) legacy: bool,
+    #[cfg(feature = "tool-json")]
+    pub(crate) json: Option<std::rc::Rc<crate::tool::Plan>>,
 }
 impl Drop for CodeUnit {
     fn drop(&mut self) {
@@ -110,6 +112,18 @@ impl CodeUnit {
         });
         Self::lower(program, "speed", false)
     }
+    #[cfg(feature = "tool-json")]
+    pub fn compile_with_tools(
+        source: &str,
+        inputs: &[(&str, ir::Type)],
+        tools: &[crate::tool::ToolSchema],
+    ) -> Result<Self, CompileError> {
+        Self::lower(
+            crate::frontend::parse_with_tools(source, inputs, tools)?,
+            "speed",
+            false,
+        )
+    }
     fn lower(program: ir::Program, opt: &str, retain_ir: bool) -> Result<Self, CompileError> {
         let (mut ctx, mut fc) = SCRATCH.with(|s| s.borrow_mut().take()).unwrap_or_else(|| {
             (
@@ -146,6 +160,17 @@ impl CodeUnit {
         }
         let mut builder = JITBuilder::with_isa(isa, cranelift_module::default_libcall_names());
         builder.symbol("minipy_print", crate::runtime::native_print as *const u8);
+        #[cfg(feature = "tool-json")]
+        if program.json.roots > 0 {
+            builder.symbol(
+                "minipy_json_read",
+                crate::json_view::native_read as *const u8,
+            );
+            builder.symbol(
+                "minipy_json_release",
+                crate::json_view::native_release as *const u8,
+            );
+        }
         let mut module = JITModule::new(builder);
         module.clear_context(ctx);
         ctx.func.signature.params = vec![AbiParam::new(types::I64); 3];
@@ -157,6 +182,26 @@ impl CodeUnit {
             .declare_function("minipy_print", Linkage::Import, &print_sig)
             .map_err(error)?;
         let print = module.declare_func_in_func(print, &mut ctx.func);
+        #[cfg(feature = "tool-json")]
+        let json_read = if program.json.roots > 0 {
+            let id = module
+                .declare_function("minipy_json_read", Linkage::Import, &print_sig)
+                .map_err(error)?;
+            Some(module.declare_func_in_func(id, &mut ctx.func))
+        } else {
+            None
+        };
+        #[cfg(feature = "tool-json")]
+        let json_release = if program.json.roots > 0 {
+            let mut sig = module.make_signature();
+            sig.params = vec![AbiParam::new(types::I64); 2];
+            let id = module
+                .declare_function("minipy_json_release", Linkage::Import, &sig)
+                .map_err(error)?;
+            Some(module.declare_func_in_func(id, &mut ctx.func))
+        } else {
+            None
+        };
         let id = module
             .declare_function("scan", Linkage::Local, &ctx.func.signature)
             .map_err(error)?;
@@ -203,6 +248,11 @@ impl CodeUnit {
                 views,
                 output,
                 print,
+                #[cfg(feature = "tool-json")]
+                json_read,
+                #[cfg(feature = "tool-json")]
+                json_release,
+
                 overflow,
                 budget,
                 output_error,
@@ -274,6 +324,8 @@ impl CodeUnit {
             inputs: program.locals[..program.inputs].to_vec(),
             buffers: program.buffers,
             legacy: program.legacy,
+            #[cfg(feature = "tool-json")]
+            json: (!program.json.calls.is_empty()).then(|| std::rc::Rc::new(program.json)),
         })
     }
     pub(crate) fn resume(
@@ -300,6 +352,10 @@ struct Flow<'a, 'b> {
     views: Value,
     output: Value,
     print: cranelift_codegen::ir::FuncRef,
+    #[cfg(feature = "tool-json")]
+    json_read: Option<cranelift_codegen::ir::FuncRef>,
+    #[cfg(feature = "tool-json")]
+    json_release: Option<cranelift_codegen::ir::FuncRef>,
     overflow: cranelift_codegen::ir::Block,
     budget: cranelift_codegen::ir::Block,
     output_error: cranelift_codegen::ir::Block,
@@ -311,12 +367,16 @@ struct Flow<'a, 'b> {
 struct Live {
     scalars: u32,
     buffers: u64,
+    #[cfg(feature = "tool-json")]
+    json: u32,
 }
 impl Live {
     fn union(self, other: Self) -> Self {
         Self {
             scalars: self.scalars | other.scalars,
             buffers: self.buffers | other.buffers,
+            #[cfg(feature = "tool-json")]
+            json: self.json | other.json,
         }
     }
 }
@@ -344,7 +404,27 @@ fn live_loop(buffer: usize, body: &[Stmt], following: Live) -> Live {
         live = next;
     }
 }
+#[cfg(feature = "tool-json")]
+fn json_used(e: &Expr) -> u32 {
+    match e {
+        Expr::JsonI64 { root, .. } | Expr::JsonView { root, .. } => 1 << root,
+        Expr::Binary(_, a, b) => json_used(a) | json_used(b),
+        Expr::Not(e) => json_used(e),
+        _ => 0,
+    }
+}
 fn live_statement(s: &Stmt, mut live: Live) -> Live {
+    #[cfg(feature = "tool-json")]
+    {
+        match s {
+            Stmt::Set(_, e) | Stmt::Load(_, e) | Stmt::Eval(e) | Stmt::Print(e, _) => {
+                live.json |= json_used(e)
+            }
+            Stmt::Record(_, a, b) => live.json |= json_used(a) | json_used(b),
+
+            _ => {}
+        }
+    }
     match s {
         Stmt::Set(i, e) => live.scalars = (live.scalars & !(1u32 << i)) | used(e),
         Stmt::Record(i, batch, total) => {
@@ -359,13 +439,33 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
             return Live {
                 scalars: used(e),
                 buffers: 0,
+                #[cfg(feature = "tool-json")]
+                json: json_used(e),
             };
         }
         Stmt::If(e, yes, no) => {
             live = live_before(yes, live).union(live_before(no, live));
             live.scalars |= used(e);
+            #[cfg(feature = "tool-json")]
+            {
+                live.json |= json_used(e);
+            }
         }
         Stmt::For(i, body) => live = live_loop(*i, body, live),
+        #[cfg(feature = "tool-json")]
+        Stmt::Tool {
+            target, json, args, ..
+        } => {
+            if *json {
+                live.json &= !(1 << target);
+            } else {
+                live.scalars &= !(1 << target);
+            }
+            for e in args {
+                live.scalars |= used(e);
+                live.json |= json_used(e);
+            }
+        }
     }
     live
 }
@@ -376,6 +476,10 @@ impl Flow<'_, '_> {
             vars: self.vars,
             row: self.row,
             overflow: self.overflow,
+            #[cfg(feature = "tool-json")]
+            json: self
+                .json_read
+                .map(|read| (self.output, self.frame, read, self.output_error)),
         }
         .expr(expr)
     }
@@ -404,6 +508,11 @@ impl Flow<'_, '_> {
         }
     }
     fn suspend(&mut self, status: i64, pc: usize, live: Live) {
+        #[cfg(feature = "tool-json")]
+        if let Some(helper) = self.json_release {
+            let mask = self.b.ins().iconst(types::I64, live.json as i64);
+            self.b.ins().call(helper, &[self.output, mask]);
+        }
         self.spill(live.scalars);
         self.constant(264, pc as i64);
         self.constant(312, live.buffers as i64);
@@ -442,6 +551,10 @@ impl Flow<'_, '_> {
                         vars: self.vars,
                         row: self.row,
                         overflow: self.overflow,
+                        #[cfg(feature = "tool-json")]
+                        json: self
+                            .json_read
+                            .map(|read| (self.output, self.frame, read, self.output_error)),
                     }
                     .predicate(e, y, n);
                     self.b.switch_to_block(y);
@@ -451,6 +564,31 @@ impl Flow<'_, '_> {
                     self.stmts(no, live);
                     self.b.ins().jump(join, &[]);
                     self.b.switch_to_block(join);
+                }
+                #[cfg(feature = "tool-json")]
+                Stmt::Tool {
+                    call,
+                    target,
+                    json,
+                    args,
+                } => {
+                    let a = args
+                        .first()
+                        .map(|e| self.expr(e))
+                        .unwrap_or_else(|| self.b.ins().iconst(types::I64, 0));
+                    let b = args
+                        .get(1)
+                        .map(|e| self.expr(e))
+                        .unwrap_or_else(|| self.b.ins().iconst(types::I64, 0));
+                    self.store(280, a);
+                    self.store(272, b);
+                    self.constant(288, *target as i64);
+                    if !*json {
+                        live.scalars &= !(1 << target);
+                    }
+                    let (pc, next) = self.continuation();
+                    self.suspend(8 + *call as i64, pc, live);
+                    self.b.switch_to_block(next);
                 }
                 Stmt::Load(target, batch) => {
                     let v = self.expr(batch);
@@ -565,6 +703,13 @@ struct Emit<'a, 'b> {
     vars: &'a [Variable],
     row: Option<Value>,
     overflow: cranelift_codegen::ir::Block,
+    #[cfg(feature = "tool-json")]
+    json: Option<(
+        Value,
+        Value,
+        cranelift_codegen::ir::FuncRef,
+        cranelift_codegen::ir::Block,
+    )>,
 }
 impl Emit<'_, '_> {
     // Predicate consumers need control flow, not a materialized bool join.
@@ -601,6 +746,25 @@ impl Emit<'_, '_> {
             Expr::Int(v) => self.b.ins().iconst(types::I64, *v),
             Expr::Bool(v) => self.b.ins().iconst(types::I64, i64::from(*v)),
             Expr::Local(i) => self.b.use_var(self.vars[*i]),
+            #[cfg(feature = "tool-json")]
+            Expr::JsonI64 { slot, .. } | Expr::JsonView { slot, .. } => {
+                let (output, frame, helper, error) = self.json.expect("frontend bound JSON plan");
+                let slot = if matches!(e, Expr::JsonView { .. }) {
+                    -(*slot as i64) - 1
+                } else {
+                    *slot as i64
+                };
+                let slot = self.b.ins().iconst(types::I64, slot);
+                let result = self.b.ins().iadd_imm(frame, 272);
+                let call = self.b.ins().call(helper, &[output, slot, result]);
+                let failed = self.b.inst_results(call)[0];
+                let next = self.b.create_block();
+                self.b.ins().brif(failed, error, &[], next, &[]);
+                self.b.switch_to_block(next);
+                self.b
+                    .ins()
+                    .load(types::I64, MemFlags::trusted(), frame, 272)
+            }
             Expr::Field(f) => self.b.ins().load(
                 types::I64,
                 MemFlags::trusted(),

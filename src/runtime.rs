@@ -182,7 +182,9 @@ pub(crate) struct Output {
     max: usize,
     allowed: bool,
     #[cfg(not(target_arch = "wasm32"))]
-    error: Option<TaskError>,
+    pub(crate) error: Option<TaskError>,
+    #[cfg(feature = "tool-json")]
+    pub(crate) json: Option<Box<crate::json_view::State>>,
 }
 impl Output {
     pub(crate) fn new(max: usize, allowed: bool) -> Self {
@@ -192,6 +194,8 @@ impl Output {
             allowed,
             #[cfg(not(target_arch = "wasm32"))]
             error: None,
+            #[cfg(feature = "tool-json")]
+            json: None,
         }
     }
 }
@@ -302,6 +306,12 @@ async fn run<P: Provider>(
     if limits.chunk == 0 || limits.chunk > 4096 {
         return Err(TaskError::Budget);
     }
+    #[cfg(feature = "tool-json")]
+    if let Some(plan) = &code.json
+        && plan.roots > 0
+    {
+        output.json = Some(Box::new(crate::json_view::State::new(plan.clone())));
+    }
     let mut calls = options.tool_calls;
     let mut owners: Vec<Option<QuoteBuffer>> = (0..code.buffers).map(|_| None).collect();
     let mut views = vec![View::default(); code.buffers];
@@ -309,7 +319,10 @@ async fn run<P: Provider>(
     loop {
         check(&cancel)?;
         let status = code.resume(&mut frame, &views, output);
-        if matches!(status, 0 | 2 | 3 | 4 | 7) {
+        let boundary = matches!(status, 0 | 2 | 3 | 4 | 7);
+        #[cfg(feature = "tool-json")]
+        let boundary = boundary || status >= 8;
+        if boundary {
             for (i, owner) in owners.iter_mut().enumerate() {
                 if frame.live & (1u64 << i) == 0 {
                     *owner = None;
@@ -382,6 +395,8 @@ async fn run<P: Provider>(
                         let _ = tx.send(p.load_quotes(batch).await);
                     });
                     let quotes = receive(rx, &cancel).await?;
+                    #[cfg(feature = "tool-json")]
+                    let held = held + output.json.as_ref().map_or(0, |j| j.held());
                     if quotes.bytes() > limits.buffer_bytes.saturating_sub(held) {
                         return Err(TaskError::Budget);
                     }
@@ -406,6 +421,34 @@ async fn run<P: Provider>(
                         let _ = tx.send(p.record_total(batch, total).await);
                     });
                     frame.locals[target] = receive(rx, &cancel).await?;
+                }
+            }
+            #[cfg(feature = "tool-json")]
+            status if status >= 8 => {
+                let call = code
+                    .json
+                    .as_ref()
+                    .ok_or(TaskError::Input)?
+                    .calls
+                    .get((status - 8) as usize)
+                    .ok_or(TaskError::Input)?;
+                authorize_tool(&cancel, provider.allows_tool(call.id), &mut calls)?;
+                let (id, count, json) = (call.id, call.arguments, call.json);
+                let target = frame.target as usize;
+                let args = [frame.batch, frame.total];
+                let p = provider.clone();
+                let (tx, rx) = oneshot::channel();
+                tokio::spawn(async move {
+                    let _ = tx.send(p.call_tool(id, args, count).await);
+                });
+                match (json, receive(rx, &cancel).await?) {
+                    (true, crate::tool::Reply::Json(bytes)) => output
+                        .json
+                        .as_mut()
+                        .expect("sealed JSON plan")
+                        .install(target, bytes, limits.buffer_bytes.saturating_sub(held))?,
+                    (false, crate::tool::Reply::I64(v)) => frame.locals[target] = v,
+                    _ => return Err(TaskError::Json("Tool reply does not match declaration")),
                 }
             }
             _ => return Err(TaskError::Budget),

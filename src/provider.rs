@@ -9,6 +9,20 @@ use std::time::Duration;
 
 /// Capability-facing asynchronous operations for the quote vertical slice.
 pub trait Provider: Send + Sync + 'static {
+    /// The Host binds a task capability set in its Provider instance. Schema is not authority.
+    #[cfg(feature = "tool-json")]
+    fn allows_tool(&self, _id: u32) -> bool {
+        false
+    }
+    #[cfg(feature = "tool-json")]
+    fn call_tool(
+        &self,
+        _id: u32,
+        _args: [i64; 2],
+        _count: usize,
+    ) -> impl Future<Output = Result<crate::tool::Reply, TaskError>> + Send {
+        async { Err(TaskError::Permission) }
+    }
     fn load_quotes(
         &self,
         batch_id: i64,
