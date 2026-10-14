@@ -1,0 +1,265 @@
+function u0:0(i64, i64, i64) -> i64 system_v {
+    sig0 = (i64, i64, i64) -> i64 system_v
+    fn0 = u0:0 sig0
+
+block0(v0: i64, v1: i64, v2: i64):
+    v3 = load.i64 notrap aligned v0
+    v90 -> v3
+    v108 -> v3
+    v141 -> v3
+    v142 -> v3
+    v143 -> v141
+    v144 -> v141
+    v145 -> v141
+    v146 -> v141
+    v147 -> v141
+    v148 -> v141
+    v8 -> v108
+    v4 = load.i64 notrap aligned v0+8
+    v110 -> v4
+    v5 = load.i64 notrap aligned v0+16
+    v6 = load.i64 notrap aligned v0+24
+    v7 = load.i64 notrap aligned v0+32
+    v96 -> v7
+    jump block5
+
+block4:
+    store.i64 notrap aligned v8, v0+280
+    v9 = iconst.i64 0
+    store notrap aligned v9, v0+288  ; v9 = 0
+    v10 = iconst.i64 1
+    store notrap aligned v10, v0+264  ; v10 = 1
+    v11 = iconst.i64 1
+    store notrap aligned v11, v0+312  ; v11 = 1
+    v12 = iconst.i64 2
+    return v12  ; v12 = 2
+
+block6:
+    v13 = iconst.i64 0
+    v14 = iconst.i64 0
+    v15 = iconst.i64 0
+    store notrap aligned v15, v0+256  ; v15 = 0
+    jump block7(v14, v13)  ; v14 = 0, v13 = 0
+
+block7(v113: i64, v118: i64):
+    v16 = load.i64 notrap aligned v0+256
+    v17 = load.i64 notrap aligned v1+8
+    v18 = load.i64 notrap aligned v1
+    v19 = isub v17, v16
+    v20 = load.i64 notrap aligned v0+296
+    v21 = load.i64 notrap aligned v0+304
+    v22 = umin v19, v21
+    v23 = umin v22, v20
+    v24 = icmp_imm ne v19, 0
+    v25 = icmp_imm eq v20, 0
+    v26 = band v24, v25
+    brif v26, block2, block8
+
+block8:
+    v27 = isub.i64 v20, v23
+    store notrap aligned v27, v0+296
+    v28 = iadd.i64 v16, v23
+    jump block9(v16, v4, v113, v118)
+
+block9(v29: i64, v109: i64, v112: i64, v117: i64):
+    v83 -> v29
+    v122 -> v29
+    v129 -> v29
+    v130 -> v29
+    v133 -> v29
+    v134 -> v29
+    v135 -> v29
+    v136 -> v29
+    v39 -> v109
+    v124 -> v109
+    v131 -> v109
+    v132 -> v109
+    v137 -> v109
+    v138 -> v109
+    v139 -> v109
+    v140 -> v109
+    v43 -> v112
+    v50 -> v112
+    v59 -> v112
+    v86 -> v112
+    v114 -> v112
+    v115 -> v112
+    v126 -> v112
+    v65 -> v117
+    v72 -> v117
+    v76 -> v117
+    v85 -> v117
+    v91 -> v117
+    v116 -> v117
+    v120 -> v117
+    v127 -> v117
+    v128 -> v117
+    v30 = icmp ult v29, v28
+    brif v30, block10, block11
+
+block10:
+    v31 = ishl_imm.i64 v29, 4
+    v32 = iadd.i64 v18, v31
+    v33 = load.i64 notrap aligned v32+8
+    v34 = iconst.i64 0
+    v35 = icmp sle v33, v34  ; v34 = 0
+    v36 = uextend.i64 v35
+    brif v36, block13, block12
+
+block13:
+    jump block14(v36)
+
+block12:
+    v38 = load.i64 notrap aligned v32
+    v40 = icmp sgt v38, v39
+    v41 = uextend.i64 v40
+    brif v41, block15, block16
+
+block16:
+    jump block17(v41)
+
+block15:
+    v44 = iconst.i64 0
+    v45 = icmp.i64 sgt v43, v44  ; v44 = 0
+    v46 = uextend.i64 v45
+    jump block17(v46)
+
+block17(v42: i64):
+    jump block14(v42)
+
+block14(v37: i64):
+    v47 = icmp_imm eq v37, 0
+    v48 = uextend.i64 v47
+    brif v48, block18, block19
+
+block18:
+    v49 = load.i64 notrap aligned v32
+    v51 = icmp sge v49, v50
+    v52 = uextend.i64 v51
+    brif v52, block21, block22
+
+block22:
+    jump block23(v52)
+
+block21:
+    v54 = load.i64 notrap aligned v32+8
+    v55 = iconst.i64 1
+    v56 = icmp sgt v54, v55  ; v55 = 1
+    v57 = uextend.i64 v56
+    jump block23(v57)
+
+block23(v53: i64):
+    brif v53, block25, block24
+
+block25:
+    jump block26(v53)
+
+block24:
+    v60 = iconst.i64 0
+    v61 = icmp.i64 sgt v59, v60  ; v60 = 0
+    v62 = uextend.i64 v61
+    v63 = icmp_imm eq v62, 0
+    v64 = uextend.i64 v63
+    jump block26(v64)
+
+block26(v58: i64):
+    brif v58, block27, block28
+
+block27:
+    v66 = load.i64 notrap aligned v32
+    v67 = load.i64 notrap aligned v32+8
+    v68, v69 = smul_overflow v66, v67
+    brif v69, block1, block30
+
+block30:
+    v70, v71 = sadd_overflow.i64 v65, v68
+    brif v71, block1, block31
+
+block31:
+    jump block29(v129, v131, v70)
+
+block28:
+    v73 = load.i64 notrap aligned v32+8
+    v74, v75 = ssub_overflow.i64 v72, v73
+    brif v75, block1, block32
+
+block32:
+    jump block29(v130, v132, v74)
+
+block29(v121: i64, v123: i64, v125: i64):
+    jump block20(v121, v123, v125)
+
+block19:
+    v77 = iconst.i64 1
+    v78, v79 = sadd_overflow.i64 v76, v77  ; v77 = 1
+    brif v79, block1, block33
+
+block33:
+    jump block20(v122, v124, v78)
+
+block20(v81: i64, v111: i64, v119: i64):
+    v80 = load.i64 notrap aligned v32
+    v82 = iadd_imm v81, 1
+    jump block9(v82, v111, v80, v119)
+
+block11:
+    store.i64 notrap aligned v83, v0+256
+    v84 = icmp.i64 ult v83, v17
+    brif v84, block34, block35
+
+block34:
+    store.i64 notrap aligned v85, v0+16
+    store.i64 notrap aligned v86, v0+24
+    v87 = iconst.i64 2
+    store notrap aligned v87, v0+264  ; v87 = 2
+    v88 = iconst.i64 1
+    store notrap aligned v88, v0+312  ; v88 = 1
+    v89 = iconst.i64 4
+    return v89  ; v89 = 4
+
+block35:
+    store.i64 notrap aligned v90, v0+280
+    store.i64 notrap aligned v91, v0+272
+    v92 = iconst.i64 4
+    store notrap aligned v92, v0+288  ; v92 = 4
+    v93 = iconst.i64 3
+    store notrap aligned v93, v0+264  ; v93 = 3
+    v94 = iconst.i64 0
+    store notrap aligned v94, v0+312  ; v94 = 0
+    v95 = iconst.i64 3
+    return v95  ; v95 = 3
+
+block36:
+    v97 = iconst.i64 0
+    v98 = call fn0(v2, v96, v97)  ; v97 = 0
+    brif v98, block3, block37
+
+block37:
+    v99 = iconst.i64 0
+    store notrap aligned v99, v0+272  ; v99 = 0
+    v100 = iconst.i64 0
+    store notrap aligned v100, v0+312  ; v100 = 0
+    v101 = iconst.i64 0
+    return v101  ; v101 = 0
+
+block5:
+    v102 = load.i64 notrap aligned v0+264
+    v103 = icmp_imm ugt v102, 0xffff_ffff
+    brif v103, block2, block38
+
+block38:
+    v104 = ireduce.i32 v102
+    br_table v104, block2, [block4, block6, block7(v6, v5), block36]
+
+block1:
+    v105 = iconst.i64 1
+    return v105  ; v105 = 1
+
+block2:
+    v106 = iconst.i64 5
+    return v106  ; v106 = 5
+
+block3:
+    v107 = iconst.i64 6
+    return v107  ; v107 = 6
+}

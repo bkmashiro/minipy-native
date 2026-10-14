@@ -84,3 +84,17 @@ prepared runtime and code size. E implemented or scheduled none of these
 candidates. Profiling adds material overhead and
 process variation, so pass costs are diagnostic observations, not plain-release
 times. New experiments still require a focused replacement contract and evidence.
+
+## F bounded predicate follow-up
+
+F keeps the explicitly authorized predicate-only lowering: weighted/nested
+blocks 25 -> 23 / 39 -> 31, bytes 572 -> 548 / 704 -> 636. Value consumers,
+checks, effects and suspension remain unchanged. The single noise follow-up on
+identical Linux binaries gives cold 10k source-to-result 324.437 -> 287.923 us
+weighted and 466.784 -> 414.577 us nested, with unchanged scalar cold control
+130.797 -> 130.881 us. All three cold rounds agree; prepared nested has a +6.7%
+first round retained beside two improved rounds, so no blanket execution claim.
+Mac default/diagnostic and actual Linux each pass 48 tests. Full boundaries,
+initial noisy evidence, the one follow-up and keep decision are appended to
+[compiler-profile.md](compiler-profile.md#f-predicate-lowering-experiment-2026-10-14).
+F stops at focused same-card review, without implementing another E candidate.

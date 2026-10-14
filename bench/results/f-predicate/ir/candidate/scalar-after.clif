@@ -1,0 +1,54 @@
+function u0:0(i64, i64, i64) -> i64 system_v {
+    sig0 = (i64, i64, i64) -> i64 system_v
+    fn0 = u0:0 sig0
+
+block0(v0: i64, v1: i64, v2: i64):
+    v3 = load.i64 notrap aligned v0
+    v4 = load.i64 notrap aligned v0+8
+    v5 = load.i64 notrap aligned v0+16
+    jump block5
+
+block4:
+    v7 = iconst.i64 2
+    v8, v9 = smul_overflow.i64 v3, v7  ; v7 = 2
+    brif v9, block1, block6
+
+block6:
+    v11, v12 = sadd_overflow.i64 v8, v4
+    brif v12, block1, block7
+
+block7:
+    v13 = iconst.i64 0
+    v14 = call fn0(v2, v11, v13)  ; v13 = 0
+    brif v14, block3, block8
+
+block8:
+    v33 = iconst.i64 0
+    v34 = icmp.i64 sgt v11, v33  ; v33 = 0
+    v18 = uextend.i64 v34
+    v29 = iconst.i64 1
+    v20 = call fn0(v2, v18, v29)  ; v29 = 1
+    brif v20, block3, block9
+
+block9:
+    v35 = iconst.i64 0
+    store notrap aligned v35, v0+272  ; v35 = 0
+    store notrap aligned v35, v0+312  ; v35 = 0
+    return v35  ; v35 = 0
+
+block5:
+    v28 = load.i64 notrap aligned v0+264
+    brif v28, block2, block4
+
+block1:
+    v36 = iconst.i64 1
+    return v36  ; v36 = 1
+
+block2:
+    v30 = iconst.i64 5
+    return v30  ; v30 = 5
+
+block3:
+    v31 = iconst.i64 6
+    return v31  ; v31 = 6
+}

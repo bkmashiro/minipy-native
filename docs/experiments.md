@@ -392,3 +392,27 @@ commands and limitations. Exact hashes, gzip raw and recomputed summary are in
 `bench/results/e-compiler-profile/`; both runner and summarizer use Python stdlib.
 No default profiling/IR traversal/formatting, source cache, new backend, verifier
 suppression, runtime/string/scheduler change or Monty rerun was introduced.
+
+## F predicate-oriented conditional lowering (2026-10-14)
+
+Keep the local `Stmt::If` replacement over `51e83bd`: short-circuit predicates
+branch directly; bool assignment/print still materialize their ordinary values.
+Weighted/nested CLIF blocks fall 25 -> 23 / 39 -> 31, code bytes 572 -> 548 /
+704 -> 636; total SSA parameters do not uniformly decrease. No safety, effect,
+resource, allocator, verifier, runtime or language contract changed.
+
+The initial Linux 6060 samples + 12 inventories exposed scalar control noise up
+to ~24%. Exactly one longer follow-up used the same binaries, 36036 retained
+samples, final 500/process for steady-process summaries. Cold source-to-result
+wall medians: scalar 130.797 -> 130.881 us, weighted/10k 324.437 -> 287.923 us,
+nested/10k 466.784 -> 414.577 us. Cold CPU tracks wall; all three rounds improve
+both scan shapes while the scalar cold control stays within 0.7%. Nested prepared
+round zero regresses 6.7%, later rounds improve ~21/22%; no universal execution
+speedup claimed. Both macOS configurations and actual Linux pass 48 core tests;
+clippy passes. The VM is restored off and released to the separate G lane.
+
+See [compiler-profile.md](compiler-profile.md#f-predicate-lowering-experiment-2026-10-14)
+for boundaries, all round changes, reproduction and limitations. Small raw,
+source/binary identity, CLIF, patch and test log are in `bench/results/f-predicate/`.
+No new Monty/C/D matrix, second optimization, cache, backend, CI or PR. Stop at the
+focused same-card review handoff.

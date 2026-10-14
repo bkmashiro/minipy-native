@@ -1,0 +1,1246 @@
+{
+  "rows": 36036,
+  "inventory": [],
+  "rounds": [
+    {
+      "round": 0,
+      "variant": "baseline",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 464868.0,
+        "cpu_ns": 464500.0,
+        "compile_ns": 386402.0,
+        "code_bytes": 704.0
+      },
+      "first": {
+        "wall_ns": 1085137,
+        "cpu_ns": 1084042,
+        "compile_ns": 970943,
+        "code_bytes": 704
+      },
+      "transition": {
+        "wall_ns": 474366.5,
+        "cpu_ns": 473979.0,
+        "compile_ns": 394439.0,
+        "code_bytes": 704.0
+      }
+    },
+    {
+      "round": 0,
+      "variant": "baseline",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 76462.0,
+        "cpu_ns": 76750.0,
+        "compile_ns": 0.0,
+        "code_bytes": 704.0
+      },
+      "first": {
+        "wall_ns": 111019,
+        "cpu_ns": 111666,
+        "compile_ns": 0,
+        "code_bytes": 704
+      },
+      "transition": {
+        "wall_ns": 77150.0,
+        "cpu_ns": 77417.0,
+        "compile_ns": 0.0,
+        "code_bytes": 704.0
+      }
+    },
+    {
+      "round": 0,
+      "variant": "baseline",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 130307.0,
+        "cpu_ns": 130500.0,
+        "compile_ns": 127823.5,
+        "code_bytes": 260.0
+      },
+      "first": {
+        "wall_ns": 455656,
+        "cpu_ns": 455750,
+        "compile_ns": 443677,
+        "code_bytes": 260
+      },
+      "transition": {
+        "wall_ns": 132560.5,
+        "cpu_ns": 132771.0,
+        "compile_ns": 130243.5,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "round": 0,
+      "variant": "baseline",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 918.0,
+        "cpu_ns": 1334.0,
+        "compile_ns": 0.0,
+        "code_bytes": 260.0
+      },
+      "first": {
+        "wall_ns": 5551,
+        "cpu_ns": 6500,
+        "compile_ns": 0,
+        "code_bytes": 260
+      },
+      "transition": {
+        "wall_ns": 960.0,
+        "cpu_ns": 1417.0,
+        "compile_ns": 0.0,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "round": 0,
+      "variant": "baseline",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 310050.5,
+        "cpu_ns": 309938.0,
+        "compile_ns": 242395.0,
+        "code_bytes": 572.0
+      },
+      "first": {
+        "wall_ns": 1059816,
+        "cpu_ns": 1059083,
+        "compile_ns": 925628,
+        "code_bytes": 572
+      },
+      "transition": {
+        "wall_ns": 320883.5,
+        "cpu_ns": 320771.5,
+        "compile_ns": 250638.0,
+        "code_bytes": 572.0
+      }
+    },
+    {
+      "round": 0,
+      "variant": "baseline",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 82432.0,
+        "cpu_ns": 82708.5,
+        "compile_ns": 0.0,
+        "code_bytes": 572.0
+      },
+      "first": {
+        "wall_ns": 102842,
+        "cpu_ns": 103417,
+        "compile_ns": 0,
+        "code_bytes": 572
+      },
+      "transition": {
+        "wall_ns": 83100.0,
+        "cpu_ns": 83375.0,
+        "compile_ns": 0.0,
+        "code_bytes": 572.0
+      }
+    },
+    {
+      "round": 0,
+      "variant": "candidate",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 416286.0,
+        "cpu_ns": 416000.0,
+        "compile_ns": 345145.0,
+        "code_bytes": 636.0
+      },
+      "first": {
+        "wall_ns": 1003401,
+        "cpu_ns": 1002375,
+        "compile_ns": 884659,
+        "code_bytes": 636
+      },
+      "transition": {
+        "wall_ns": 419311.5,
+        "cpu_ns": 419146.0,
+        "compile_ns": 347732.0,
+        "code_bytes": 636.0
+      }
+    },
+    {
+      "round": 0,
+      "variant": "candidate",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 81615.5,
+        "cpu_ns": 81916.0,
+        "compile_ns": 0.0,
+        "code_bytes": 636.0
+      },
+      "first": {
+        "wall_ns": 90443,
+        "cpu_ns": 90917,
+        "compile_ns": 0,
+        "code_bytes": 636
+      },
+      "transition": {
+        "wall_ns": 83202.0,
+        "cpu_ns": 83479.5,
+        "compile_ns": 0.0,
+        "code_bytes": 636.0
+      }
+    },
+    {
+      "round": 0,
+      "variant": "candidate",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 130515.5,
+        "cpu_ns": 130708.5,
+        "compile_ns": 128053.0,
+        "code_bytes": 260.0
+      },
+      "first": {
+        "wall_ns": 441966,
+        "cpu_ns": 441958,
+        "compile_ns": 430237,
+        "code_bytes": 260
+      },
+      "transition": {
+        "wall_ns": 132456.0,
+        "cpu_ns": 132666.5,
+        "compile_ns": 130118.5,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "round": 0,
+      "variant": "candidate",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 1085.0,
+        "cpu_ns": 1625.0,
+        "compile_ns": 0.0,
+        "code_bytes": 260.0
+      },
+      "first": {
+        "wall_ns": 6928,
+        "cpu_ns": 7833,
+        "compile_ns": 0,
+        "code_bytes": 260
+      },
+      "transition": {
+        "wall_ns": 1127.0,
+        "cpu_ns": 1708.0,
+        "compile_ns": 0.0,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "round": 0,
+      "variant": "candidate",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 290348.0,
+        "cpu_ns": 290312.5,
+        "compile_ns": 221084.5,
+        "code_bytes": 548.0
+      },
+      "first": {
+        "wall_ns": 898111,
+        "cpu_ns": 897250,
+        "compile_ns": 791763,
+        "code_bytes": 548
+      },
+      "transition": {
+        "wall_ns": 295085.0,
+        "cpu_ns": 295000.0,
+        "compile_ns": 226907.0,
+        "code_bytes": 548.0
+      }
+    },
+    {
+      "round": 0,
+      "variant": "candidate",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 66696.5,
+        "cpu_ns": 67000.0,
+        "compile_ns": 0.0,
+        "code_bytes": 548.0
+      },
+      "first": {
+        "wall_ns": 88985,
+        "cpu_ns": 89584,
+        "compile_ns": 0,
+        "code_bytes": 548
+      },
+      "transition": {
+        "wall_ns": 67135.5,
+        "cpu_ns": 67520.5,
+        "compile_ns": 0.0,
+        "code_bytes": 548.0
+      }
+    },
+    {
+      "round": 1,
+      "variant": "baseline",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 468403.5,
+        "cpu_ns": 468083.5,
+        "compile_ns": 390732.5,
+        "code_bytes": 704.0
+      },
+      "first": {
+        "wall_ns": 991368,
+        "cpu_ns": 990375,
+        "compile_ns": 887277,
+        "code_bytes": 704
+      },
+      "transition": {
+        "wall_ns": 468450.5,
+        "cpu_ns": 468146.0,
+        "compile_ns": 391069.0,
+        "code_bytes": 704.0
+      }
+    },
+    {
+      "round": 1,
+      "variant": "baseline",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 88918.5,
+        "cpu_ns": 89167.0,
+        "compile_ns": 0.0,
+        "code_bytes": 704.0
+      },
+      "first": {
+        "wall_ns": 91944,
+        "cpu_ns": 92375,
+        "compile_ns": 0,
+        "code_bytes": 704
+      },
+      "transition": {
+        "wall_ns": 88730.5,
+        "cpu_ns": 88959.0,
+        "compile_ns": 0.0,
+        "code_bytes": 704.0
+      }
+    },
+    {
+      "round": 1,
+      "variant": "baseline",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 130901.5,
+        "cpu_ns": 131083.0,
+        "compile_ns": 128627.0,
+        "code_bytes": 260.0
+      },
+      "first": {
+        "wall_ns": 397066,
+        "cpu_ns": 397125,
+        "compile_ns": 386590,
+        "code_bytes": 260
+      },
+      "transition": {
+        "wall_ns": 132466.0,
+        "cpu_ns": 132708.0,
+        "compile_ns": 130130.0,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "round": 1,
+      "variant": "baseline",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 1252.0,
+        "cpu_ns": 1833.0,
+        "compile_ns": 0.0,
+        "code_bytes": 260.0
+      },
+      "first": {
+        "wall_ns": 6594,
+        "cpu_ns": 7542,
+        "compile_ns": 0,
+        "code_bytes": 260
+      },
+      "transition": {
+        "wall_ns": 1210.0,
+        "cpu_ns": 1833.0,
+        "compile_ns": 0.0,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "round": 1,
+      "variant": "baseline",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 330148.5,
+        "cpu_ns": 330041.5,
+        "compile_ns": 258989.5,
+        "code_bytes": 572.0
+      },
+      "first": {
+        "wall_ns": 827572,
+        "cpu_ns": 826916,
+        "compile_ns": 726196,
+        "code_bytes": 572
+      },
+      "transition": {
+        "wall_ns": 330858.0,
+        "cpu_ns": 330771.0,
+        "compile_ns": 261618.5,
+        "code_bytes": 572.0
+      }
+    },
+    {
+      "round": 1,
+      "variant": "baseline",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 81509.0,
+        "cpu_ns": 81791.0,
+        "compile_ns": 0.0,
+        "code_bytes": 572.0
+      },
+      "first": {
+        "wall_ns": 99414,
+        "cpu_ns": 100083,
+        "compile_ns": 0,
+        "code_bytes": 572
+      },
+      "transition": {
+        "wall_ns": 82574.0,
+        "cpu_ns": 82812.5,
+        "compile_ns": 0.0,
+        "code_bytes": 572.0
+      }
+    },
+    {
+      "round": 1,
+      "variant": "candidate",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 405533.0,
+        "cpu_ns": 405291.5,
+        "compile_ns": 333287.0,
+        "code_bytes": 636.0
+      },
+      "first": {
+        "wall_ns": 1018581,
+        "cpu_ns": 1017791,
+        "compile_ns": 903513,
+        "code_bytes": 636
+      },
+      "transition": {
+        "wall_ns": 410124.0,
+        "cpu_ns": 409833.0,
+        "compile_ns": 337544.5,
+        "code_bytes": 636.0
+      }
+    },
+    {
+      "round": 1,
+      "variant": "candidate",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 70534.0,
+        "cpu_ns": 70834.0,
+        "compile_ns": 0.0,
+        "code_bytes": 636.0
+      },
+      "first": {
+        "wall_ns": 94950,
+        "cpu_ns": 95458,
+        "compile_ns": 0,
+        "code_bytes": 636
+      },
+      "transition": {
+        "wall_ns": 70805.5,
+        "cpu_ns": 71125.0,
+        "compile_ns": 0.0,
+        "code_bytes": 636.0
+      }
+    },
+    {
+      "round": 1,
+      "variant": "candidate",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 131402.5,
+        "cpu_ns": 131625.0,
+        "compile_ns": 129086.0,
+        "code_bytes": 260.0
+      },
+      "first": {
+        "wall_ns": 426870,
+        "cpu_ns": 426833,
+        "compile_ns": 416645,
+        "code_bytes": 260
+      },
+      "transition": {
+        "wall_ns": 131966.0,
+        "cpu_ns": 132250.0,
+        "compile_ns": 129587.0,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "round": 1,
+      "variant": "candidate",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 876.0,
+        "cpu_ns": 1292.0,
+        "compile_ns": 0.0,
+        "code_bytes": 260.0
+      },
+      "first": {
+        "wall_ns": 5843,
+        "cpu_ns": 6666,
+        "compile_ns": 0,
+        "code_bytes": 260
+      },
+      "transition": {
+        "wall_ns": 876.0,
+        "cpu_ns": 1292.0,
+        "compile_ns": 0.0,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "round": 1,
+      "variant": "candidate",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 286265.5,
+        "cpu_ns": 286229.5,
+        "compile_ns": 218089.5,
+        "code_bytes": 548.0
+      },
+      "first": {
+        "wall_ns": 887809,
+        "cpu_ns": 887083,
+        "compile_ns": 785012,
+        "code_bytes": 548
+      },
+      "transition": {
+        "wall_ns": 279965.0,
+        "cpu_ns": 279937.5,
+        "compile_ns": 211998.0,
+        "code_bytes": 548.0
+      }
+    },
+    {
+      "round": 1,
+      "variant": "candidate",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 66443.0,
+        "cpu_ns": 66729.5,
+        "compile_ns": 0.0,
+        "code_bytes": 548.0
+      },
+      "first": {
+        "wall_ns": 91985,
+        "cpu_ns": 92583,
+        "compile_ns": 0,
+        "code_bytes": 548
+      },
+      "transition": {
+        "wall_ns": 68529.5,
+        "cpu_ns": 68875.0,
+        "compile_ns": 0.0,
+        "code_bytes": 548.0
+      }
+    },
+    {
+      "round": 2,
+      "variant": "baseline",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 466793.5,
+        "cpu_ns": 466458.0,
+        "compile_ns": 389960.5,
+        "code_bytes": 704.0
+      },
+      "first": {
+        "wall_ns": 810346,
+        "cpu_ns": 809666,
+        "compile_ns": 715110,
+        "code_bytes": 704
+      },
+      "transition": {
+        "wall_ns": 469172.0,
+        "cpu_ns": 468937.5,
+        "compile_ns": 390504.0,
+        "code_bytes": 704.0
+      }
+    },
+    {
+      "round": 2,
+      "variant": "baseline",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 88642.0,
+        "cpu_ns": 88917.0,
+        "compile_ns": 0.0,
+        "code_bytes": 704.0
+      },
+      "first": {
+        "wall_ns": 93190,
+        "cpu_ns": 93750,
+        "compile_ns": 0,
+        "code_bytes": 704
+      },
+      "transition": {
+        "wall_ns": 89956.5,
+        "cpu_ns": 90250.0,
+        "compile_ns": 0.0,
+        "code_bytes": 704.0
+      }
+    },
+    {
+      "round": 2,
+      "variant": "baseline",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 131318.5,
+        "cpu_ns": 131542.0,
+        "compile_ns": 128898.5,
+        "code_bytes": 260.0
+      },
+      "first": {
+        "wall_ns": 609079,
+        "cpu_ns": 609250,
+        "compile_ns": 592845,
+        "code_bytes": 260
+      },
+      "transition": {
+        "wall_ns": 136723.0,
+        "cpu_ns": 136958.0,
+        "compile_ns": 134219.5,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "round": 2,
+      "variant": "baseline",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 918.0,
+        "cpu_ns": 1334.0,
+        "compile_ns": 0.0,
+        "code_bytes": 260.0
+      },
+      "first": {
+        "wall_ns": 6218,
+        "cpu_ns": 6958,
+        "compile_ns": 0,
+        "code_bytes": 260
+      },
+      "transition": {
+        "wall_ns": 960.0,
+        "cpu_ns": 1417.0,
+        "compile_ns": 0.0,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "round": 2,
+      "variant": "baseline",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 328867.0,
+        "cpu_ns": 328791.5,
+        "compile_ns": 258273.5,
+        "code_bytes": 572.0
+      },
+      "first": {
+        "wall_ns": 1192560,
+        "cpu_ns": 1192416,
+        "compile_ns": 1035430,
+        "code_bytes": 572
+      },
+      "transition": {
+        "wall_ns": 333625.0,
+        "cpu_ns": 333521.0,
+        "compile_ns": 263323.5,
+        "code_bytes": 572.0
+      }
+    },
+    {
+      "round": 2,
+      "variant": "baseline",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 69696.0,
+        "cpu_ns": 69958.5,
+        "compile_ns": 0.0,
+        "code_bytes": 572.0
+      },
+      "first": {
+        "wall_ns": 97490,
+        "cpu_ns": 98042,
+        "compile_ns": 0,
+        "code_bytes": 572
+      },
+      "transition": {
+        "wall_ns": 72742.0,
+        "cpu_ns": 73021.0,
+        "compile_ns": 0.0,
+        "code_bytes": 572.0
+      }
+    },
+    {
+      "round": 2,
+      "variant": "candidate",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 419399.0,
+        "cpu_ns": 419125.0,
+        "compile_ns": 348139.5,
+        "code_bytes": 636.0
+      },
+      "first": {
+        "wall_ns": 978730,
+        "cpu_ns": 977792,
+        "compile_ns": 875607,
+        "code_bytes": 636
+      },
+      "transition": {
+        "wall_ns": 421757.0,
+        "cpu_ns": 421541.5,
+        "compile_ns": 349871.0,
+        "code_bytes": 636.0
+      }
+    },
+    {
+      "round": 2,
+      "variant": "candidate",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 68818.0,
+        "cpu_ns": 69083.0,
+        "compile_ns": 0.0,
+        "code_bytes": 636.0
+      },
+      "first": {
+        "wall_ns": 98783,
+        "cpu_ns": 99417,
+        "compile_ns": 0,
+        "code_bytes": 636
+      },
+      "transition": {
+        "wall_ns": 71176.5,
+        "cpu_ns": 71479.0,
+        "compile_ns": 0.0,
+        "code_bytes": 636.0
+      }
+    },
+    {
+      "round": 2,
+      "variant": "candidate",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 130463.5,
+        "cpu_ns": 130667.0,
+        "compile_ns": 128001.0,
+        "code_bytes": 260.0
+      },
+      "first": {
+        "wall_ns": 449902,
+        "cpu_ns": 449916,
+        "compile_ns": 438008,
+        "code_bytes": 260
+      },
+      "transition": {
+        "wall_ns": 130985.0,
+        "cpu_ns": 131229.5,
+        "compile_ns": 128585.5,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "round": 2,
+      "variant": "candidate",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 1002.0,
+        "cpu_ns": 1500.0,
+        "compile_ns": 0.0,
+        "code_bytes": 260.0
+      },
+      "first": {
+        "wall_ns": 6344,
+        "cpu_ns": 7250,
+        "compile_ns": 0,
+        "code_bytes": 260
+      },
+      "transition": {
+        "wall_ns": 1002.0,
+        "cpu_ns": 1500.0,
+        "compile_ns": 0.0,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "round": 2,
+      "variant": "candidate",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 500,
+      "medians": {
+        "wall_ns": 289069.5,
+        "cpu_ns": 289041.5,
+        "compile_ns": 219584.0,
+        "code_bytes": 548.0
+      },
+      "first": {
+        "wall_ns": 851381,
+        "cpu_ns": 850791,
+        "compile_ns": 754683,
+        "code_bytes": 548
+      },
+      "transition": {
+        "wall_ns": 295208.5,
+        "cpu_ns": 295145.5,
+        "compile_ns": 226096.0,
+        "code_bytes": 548.0
+      }
+    },
+    {
+      "round": 2,
+      "variant": "candidate",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 500,
+      "medians": {
+        "wall_ns": 66774.0,
+        "cpu_ns": 67083.0,
+        "compile_ns": 0.0,
+        "code_bytes": 548.0
+      },
+      "first": {
+        "wall_ns": 98909,
+        "cpu_ns": 99417,
+        "compile_ns": 0,
+        "code_bytes": 548
+      },
+      "transition": {
+        "wall_ns": 68068.0,
+        "cpu_ns": 68375.0,
+        "compile_ns": 0.0,
+        "code_bytes": 548.0
+      }
+    }
+  ],
+  "pooled": [
+    {
+      "variant": "baseline",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 1500,
+      "medians": {
+        "wall_ns": 466784.5,
+        "cpu_ns": 466479.0,
+        "compile_ns": 389355.0,
+        "code_bytes": 704.0
+      }
+    },
+    {
+      "variant": "baseline",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 1500,
+      "medians": {
+        "wall_ns": 87640.0,
+        "cpu_ns": 87875.0,
+        "compile_ns": 0.0,
+        "code_bytes": 704.0
+      }
+    },
+    {
+      "variant": "baseline",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "cold",
+      "n": 1500,
+      "medians": {
+        "wall_ns": 130797.0,
+        "cpu_ns": 131000.0,
+        "compile_ns": 128471.0,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "variant": "baseline",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "prepared",
+      "n": 1500,
+      "medians": {
+        "wall_ns": 1126.0,
+        "cpu_ns": 1625.0,
+        "compile_ns": 0.0,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "variant": "baseline",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 1500,
+      "medians": {
+        "wall_ns": 324437.0,
+        "cpu_ns": 324333.5,
+        "compile_ns": 254249.0,
+        "code_bytes": 572.0
+      }
+    },
+    {
+      "variant": "baseline",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 1500,
+      "medians": {
+        "wall_ns": 81073.5,
+        "cpu_ns": 81333.0,
+        "compile_ns": 0.0,
+        "code_bytes": 572.0
+      }
+    },
+    {
+      "variant": "candidate",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 1500,
+      "medians": {
+        "wall_ns": 414577.0,
+        "cpu_ns": 414354.0,
+        "compile_ns": 344023.5,
+        "code_bytes": 636.0
+      }
+    },
+    {
+      "variant": "candidate",
+      "case": "nested",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 1500,
+      "medians": {
+        "wall_ns": 70907.0,
+        "cpu_ns": 71187.5,
+        "compile_ns": 0.0,
+        "code_bytes": 636.0
+      }
+    },
+    {
+      "variant": "candidate",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "cold",
+      "n": 1500,
+      "medians": {
+        "wall_ns": 130881.0,
+        "cpu_ns": 131083.0,
+        "compile_ns": 128444.5,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "variant": "candidate",
+      "case": "scalar",
+      "rows": 0,
+      "mode": "prepared",
+      "n": 1500,
+      "medians": {
+        "wall_ns": 1002.0,
+        "cpu_ns": 1500.0,
+        "compile_ns": 0.0,
+        "code_bytes": 260.0
+      }
+    },
+    {
+      "variant": "candidate",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "cold",
+      "n": 1500,
+      "medians": {
+        "wall_ns": 287923.5,
+        "cpu_ns": 287875.0,
+        "compile_ns": 219138.0,
+        "code_bytes": 548.0
+      }
+    },
+    {
+      "variant": "candidate",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "prepared",
+      "n": 1500,
+      "medians": {
+        "wall_ns": 66655.0,
+        "cpu_ns": 67000.0,
+        "compile_ns": 0.0,
+        "code_bytes": 548.0
+      }
+    }
+  ],
+  "round_deltas_percent": [
+    {
+      "round": 0,
+      "case": "nested",
+      "rows": 10000,
+      "mode": "cold",
+      "wall_ns": -10.450708588244407,
+      "cpu_ns": -10.441334768568355
+    },
+    {
+      "round": 0,
+      "case": "nested",
+      "rows": 10000,
+      "mode": "prepared",
+      "wall_ns": 6.739949255839495,
+      "cpu_ns": 6.730944625407176
+    },
+    {
+      "round": 0,
+      "case": "scalar",
+      "rows": 0,
+      "mode": "cold",
+      "wall_ns": 0.1600067532826266,
+      "cpu_ns": 0.1597701149425257
+    },
+    {
+      "round": 0,
+      "case": "scalar",
+      "rows": 0,
+      "mode": "prepared",
+      "wall_ns": 18.191721132897598,
+      "cpu_ns": 21.814092953523236
+    },
+    {
+      "round": 0,
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "cold",
+      "wall_ns": -6.354609974826686,
+      "cpu_ns": -6.332072866186145
+    },
+    {
+      "round": 0,
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "prepared",
+      "wall_ns": -19.089067352484467,
+      "cpu_ns": -18.992606564017002
+    },
+    {
+      "round": 1,
+      "case": "nested",
+      "rows": 10000,
+      "mode": "cold",
+      "wall_ns": -13.42229509386672,
+      "cpu_ns": -13.414700582267901
+    },
+    {
+      "round": 1,
+      "case": "nested",
+      "rows": 10000,
+      "mode": "prepared",
+      "wall_ns": -20.675674915793675,
+      "cpu_ns": -20.56029697085244
+    },
+    {
+      "round": 1,
+      "case": "scalar",
+      "rows": 0,
+      "mode": "cold",
+      "wall_ns": 0.3827305263881531,
+      "cpu_ns": 0.413478483098495
+    },
+    {
+      "round": 1,
+      "case": "scalar",
+      "rows": 0,
+      "mode": "prepared",
+      "wall_ns": -30.031948881789138,
+      "cpu_ns": -29.514457174031637
+    },
+    {
+      "round": 1,
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "cold",
+      "wall_ns": -13.291897434033473,
+      "cpu_ns": -13.27469424299671
+    },
+    {
+      "round": 1,
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "prepared",
+      "wall_ns": -18.4838484093781,
+      "cpu_ns": -18.41461774522869
+    },
+    {
+      "round": 2,
+      "case": "nested",
+      "rows": 10000,
+      "mode": "cold",
+      "wall_ns": -10.153204789698233,
+      "cpu_ns": -10.14732301729202
+    },
+    {
+      "round": 2,
+      "case": "nested",
+      "rows": 10000,
+      "mode": "prepared",
+      "wall_ns": -22.364116333115224,
+      "cpu_ns": -22.30619566562074
+    },
+    {
+      "round": 2,
+      "case": "scalar",
+      "rows": 0,
+      "mode": "cold",
+      "wall_ns": -0.6510887651016373,
+      "cpu_ns": -0.6651867844490678
+    },
+    {
+      "round": 2,
+      "case": "scalar",
+      "rows": 0,
+      "mode": "prepared",
+      "wall_ns": 9.15032679738561,
+      "cpu_ns": 12.443778110944525
+    },
+    {
+      "round": 2,
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "cold",
+      "wall_ns": -12.101396613220539,
+      "cpu_ns": -12.089728596998405
+    },
+    {
+      "round": 2,
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "prepared",
+      "wall_ns": -4.192493112947659,
+      "cpu_ns": -4.110293959990563
+    }
+  ]
+}

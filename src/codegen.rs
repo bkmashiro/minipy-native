@@ -434,11 +434,16 @@ impl Flow<'_, '_> {
                     self.expr(e);
                 }
                 Stmt::If(e, yes, no) => {
-                    let c = self.expr(e);
                     let y = self.b.create_block();
                     let n = self.b.create_block();
                     let join = self.b.create_block();
-                    self.b.ins().brif(c, y, &[], n, &[]);
+                    Emit {
+                        b: self.b,
+                        vars: self.vars,
+                        row: self.row,
+                        overflow: self.overflow,
+                    }
+                    .predicate(e, y, n);
                     self.b.switch_to_block(y);
                     self.stmts(yes, live);
                     self.b.ins().jump(join, &[]);
@@ -562,6 +567,35 @@ struct Emit<'a, 'b> {
     overflow: cranelift_codegen::ir::Block,
 }
 impl Emit<'_, '_> {
+    // Predicate consumers need control flow, not a materialized bool join.
+    // Recurse left-to-right; only the selected RHS may run (including errors).
+    // Value consumers still use expr below, including bool assignment/print.
+    fn predicate(
+        &mut self,
+        e: &Expr,
+        yes: cranelift_codegen::ir::Block,
+        no: cranelift_codegen::ir::Block,
+    ) {
+        match e {
+            Expr::Not(x) => self.predicate(x, no, yes),
+            Expr::Binary(BinOp::And, l, r) => {
+                let rhs = self.b.create_block();
+                self.predicate(l, rhs, no);
+                self.b.switch_to_block(rhs);
+                self.predicate(r, yes, no);
+            }
+            Expr::Binary(BinOp::Or, l, r) => {
+                let rhs = self.b.create_block();
+                self.predicate(l, yes, rhs);
+                self.b.switch_to_block(rhs);
+                self.predicate(r, yes, no);
+            }
+            _ => {
+                let value = self.expr(e);
+                self.b.ins().brif(value, yes, &[], no, &[]);
+            }
+        }
+    }
     fn expr(&mut self, e: &Expr) -> Value {
         match e {
             Expr::Int(v) => self.b.ins().iconst(types::I64, *v),

@@ -81,6 +81,106 @@ async fn scalar_script_private_stdout_and_no_implicit_echo() {
 const SCAN: &str = "quotes = tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n";
 const INPUTS: &[(&str, Type)] = &[("batch_id", Type::I64), ("price_limit", Type::I64)];
 #[tokio::test]
+async fn nested_predicates_match_value_consumers_and_join_locals() {
+    type Oracle = fn(bool, bool, bool) -> bool;
+    let expressions: &[(&str, Oracle)] = &[
+        ("a and b", |a, b, _| a && b),
+        ("a or b", |a, b, _| a || b),
+        ("not (a and (b or not c))", |a, b, c| !(a && (b || !c))),
+        ("(a or b) and (not a or c)", |a, b, c| (a || b) && (!a || c)),
+        ("not (not a or (b and not c))", |a, b, c| !(!a || (b && !c))),
+    ];
+    for (expr, oracle) in expressions {
+        let source = format!(
+            "value = {expr}\nprint(value)\nprint({expr})\nif {expr}:\n    x = 11\nelse:\n    x = 23\nif not ({expr}):\n    x += 2\nelse:\n    x += 3\nprint(x)"
+        );
+        let code = Rc::new(
+            CodeUnit::compile_script(
+                &source,
+                &[("a", Type::Bool), ("b", Type::Bool), ("c", Type::Bool)],
+            )
+            .unwrap(),
+        );
+        for bits in 0..8 {
+            let inputs = [bits & 1, (bits >> 1) & 1, (bits >> 2) & 1];
+            let value = oracle(inputs[0] != 0, inputs[1] != 0, inputs[2] != 0);
+            let p = Arc::new(TestProvider::new(rows(), Delays::default()));
+            let out = runtime::execute_script(
+                code.clone(),
+                p.clone(),
+                &inputs,
+                ScriptLimits::default(),
+                Cancellation::default(),
+                None,
+            )
+            .await;
+            assert_eq!(out.status, Ok(()), "{expr} {inputs:?}");
+            let text = if value { "True" } else { "False" };
+            assert_eq!(
+                out.stdout,
+                format!("{text}\n{text}\n{}\n", if value { 14 } else { 25 })
+            );
+            assert_eq!(p.record_count(), 0);
+        }
+    }
+}
+#[tokio::test]
+async fn predicate_short_circuit_preserves_overflow_and_output_order() {
+    let schema = &[("x", Type::I64), ("a", Type::Bool)];
+    for (expr, a, expected) in [
+        ("a and x + 1 > 0", 0, Some(false)),
+        ("a or x + 1 > 0", 1, Some(true)),
+        ("not (a and (x + 1 > 0 or a))", 0, Some(true)),
+        ("a and x + 1 > 0", 1, None),
+        ("a or x + 1 > 0", 0, None),
+        ("x + 1 > 0 and a", 0, None),
+        ("x + 1 > 0 or a", 1, None),
+    ] {
+        // All three consumers must evaluate the same operand prefix.
+        for statement in [
+            format!("if {expr}:\n    print(True)\nelse:\n    print(False)"),
+            format!("v = {expr}\nprint(v)"),
+            format!("print({expr})"),
+        ] {
+            let source = format!("print(7)\n{statement}\ntools.record_total(1, 2)");
+            let (out, p) = run(&source, &[i64::MAX, a], schema, ScriptLimits::default()).await;
+            if let Some(value) = expected {
+                assert_eq!(out.status, Ok(()), "{statement}");
+                assert_eq!(out.stdout, if value { "7\nTrue\n" } else { "7\nFalse\n" });
+                assert_eq!(p.record_count(), 1);
+            } else {
+                assert_eq!(out.status, Err(TaskError::Overflow), "{statement}");
+                assert_eq!(out.stdout, "7\n");
+                assert_eq!(p.record_count(), 0);
+            }
+        }
+    }
+}
+#[tokio::test]
+async fn nested_predicates_preserve_chunk_carry_and_tool_join_order() {
+    let source = "quotes = tools.load_quotes(4)\ntotal = 0\nprevious = 0\nfor q in quotes:\n    if not (q.quantity <= 0 or (q.unit_price_cents > 700 and previous > 0)):\n        total += q.quantity\n    else:\n        total -= 1\n    previous = q.quantity\nif total > 0 and not (previous < 0 or total < previous):\n    receipt = tools.record_total(5, total)\nelse:\n    receipt = tools.record_total(6, previous)\nprint(total)\nprint(receipt)\ntools.record_total(receipt, total)";
+    let p = Arc::new(Ordered {
+        log: Mutex::new(vec![]),
+    });
+    let mut limits = ScriptLimits::default();
+    limits.limits.chunk = 1;
+    let out = runtime::execute_script(
+        Rc::new(CodeUnit::compile_script(source, &[]).unwrap()),
+        p.clone(),
+        &[],
+        limits,
+        Cancellation::default(),
+        None,
+    )
+    .await;
+    assert_eq!(out.status, Ok(()));
+    assert_eq!(out.stdout, "4\n9\n");
+    assert_eq!(
+        *p.log.lock().unwrap(),
+        vec![('l', 4, 0), ('r', 5, 4), ('r', 9, 4)]
+    );
+}
+#[tokio::test]
 async fn real_scan_without_record_and_then_record_receipt() {
     let (out, p) = run(
         "print(tools.record_total(1,2))",

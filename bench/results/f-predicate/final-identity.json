@@ -1,0 +1,39 @@
+{
+  "baseline": "51e83bd2bc6f31d04ba0973b71e702f12da9134e",
+  "source_sha256": {
+    "src/codegen.rs": "7f2bdeadba5154e555f34a8345782182175ef221c2eb59f34fe2b60eb0984841",
+    "tests/scripts.rs": "a552b3c314cf60caadd38cbc04fb5e65dc08401c3fd09ce68474cacc95dd4cb4",
+    "examples/predicate_ab.rs": "dba8104008f1e4ab8756509ff2649d9b40f94c0fde78aa2a5c35cc7daab8da14",
+    "fixtures/predicate_nested.py": "07426a8b1d6a4d9021c33f1a3b6f7319539488a279fbd457ad736c967e458556",
+    "tools/predicate_ab.py": "e9ccb9ce616a12d6edd4466db19dd949f9e27f25db8b9ba0e00f67fb758f5e2a",
+    "tools/predicate_followup.py": "e30c6bcc5b5f208f5bb9345d0370b5ef957435cba9341ac1a9c054b5c139f1f2",
+    "tools/summarize_predicate_ab.py": "b7529151019ebfcc89cb1a014cc155c4740a6298363160329fcde33ace6300f8",
+    "docs/compiler-profile.md": "8e60504563e89e217cc4aabb4fc07fb49d3580c5d844134e2cdfe01f39df83cb",
+    "docs/experiments.md": "3c080615f211b05d96bd3ccdd04cc02d78d4db7a4f7a2fd95520d08e79da7916",
+    "docs/optimization-roadmap.md": "37a878af8287f60752c5b29ac6a3b4c5f66b33ab348e5c1bfb0fc9fed78288cc"
+  },
+  "evidence_sha256": {
+    "candidate.patch": "5516abfec3ed9e83535b463c7e8fedbbbcac0f19c6cdeb7eeaff46724b0e1e01",
+    "followup-identity.json": "eba0871ab7631836cacd37dbd6e06a947b02b4f4cf94b4e75f20303b386959a4",
+    "followup-summary.json": "3abddaf234dae750e7f2b5be4a61ecf4220bad02376b4ea9cf5cb24e6de2d7e5",
+    "followup.jsonl.gz": "91eb2e84a17543505cd318d9b36863938ccec93b92328fbdbe44a31261d2e290",
+    "identity.json": "7faeb4a6ccc41f1c6660ef719267f8821ee7c6fa21b413267b050c503e369841",
+    "ir/baseline/nested-after.clif": "c1f828eb9ea6a46164b79dd922b6acc176db965d1d036d90ac6c88b70fbf6229",
+    "ir/baseline/nested-before.clif": "19c65187f5a58591dd9e8985531133559a5d09332a364ba9af00078f9f10c901",
+    "ir/baseline/scalar-after.clif": "7ae78012e8a1e441e4beff85e9852b3565565aa4d29f3faabb33cc0df5e4e3e8",
+    "ir/baseline/scalar-before.clif": "74b958db3f29d67cdb4831848c796416c2ab8680851169c2b438af2e2d362fab",
+    "ir/baseline/weighted-after.clif": "cba6c65f0009f34cb4923a8d4f60948071c00d3340f60a457ca3a2121fe35062",
+    "ir/baseline/weighted-before.clif": "3aa1893a683e582cabd3d5531f9bdc02d90a115b14fae0054bb8ff9b5967d0df",
+    "ir/candidate/nested-after.clif": "d2517965b6bf289e72224725de70c216f9bdb103de77194433ec243801e7ab79",
+    "ir/candidate/nested-before.clif": "27eef197a9896f977eb1252235c84b745bdd2ffa62f3b1e4755654605651117d",
+    "ir/candidate/scalar-after.clif": "7ae78012e8a1e441e4beff85e9852b3565565aa4d29f3faabb33cc0df5e4e3e8",
+    "ir/candidate/scalar-before.clif": "74b958db3f29d67cdb4831848c796416c2ab8680851169c2b438af2e2d362fab",
+    "ir/candidate/weighted-after.clif": "8dd76ee499f3b37392ce6a60a16d621bdeb404536b075cf6c8b989b5fe4518e0",
+    "ir/candidate/weighted-before.clif": "e40ba244c20b0c883d9e322f706a4db023aec8cbe0d70b1fd4ae8986be7abf3a",
+    "linux-tests.txt": "e3e3fa5bffe48f1350b14980127bc55832bacfe14d30aa1226ff3730abf96538",
+    "linux.jsonl.gz": "6d52ec4e89b27d568b619ce8029ecfebdaed0ed7a3daa214adea8b1c3836f643",
+    "summary.json": "e5a930a28f9a7b758f0055372e0c175356a977bb109199ecf39a3fc81654194b"
+  },
+  "vm_final_state": "off; poweroff acknowledged; vfkit PTY exited 0 (VM is stopped); released to G",
+  "decision": "keep; one same-card focused review pending"
+}
