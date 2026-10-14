@@ -1,0 +1,84 @@
+{
+  "files": {
+    "/home/na/benchmarks/minipy-s/speed": {
+      "sha256": "748346f39cff17305898335c95b64812fe275f6044200b9ce376cb414254e450",
+      "bytes": 21168464
+    },
+    "/home/na/benchmarks/minipy-s/speed-extension": {
+      "sha256": "54fddccc3cc2996bdbb3e380c8561fbb6898fe5a06fab9a5297d9513fc8d9f67",
+      "bytes": 21172856
+    },
+    "/home/na/benchmarks/minipy-s/assembly-extension": {
+      "sha256": "69feecc017077d544a8cb4f1a370dbcf2773e46c9db181deff46c7e2c42c29c6",
+      "bytes": 1236216
+    },
+    "/home/na/benchmarks/minipy-s/pysolate-bench": {
+      "sha256": "0bd9d5c4dfda949ea8a9a35ec384668f60127716cb44f9bc20c0937a176e88d6",
+      "bytes": 9670381
+    },
+    "/home/na/benchmarks/minipy-s/pysolate-extension": {
+      "sha256": "88af5cf2e32edb40d5ef4b5d96c2ed5cd342e042f3bc0b8e5feed17d433a1c54",
+      "bytes": 9670132
+    },
+    "/home/na/projects/agent-python-runtime/dist/pysolate.wasm": {
+      "sha256": "ef49a628d71ab43c2523712fc47bb59ca8ebc3bfd52cfd46cbc4f493721ee8e4",
+      "bytes": 34683734
+    },
+    "/home/na/.nvm/versions/node/v24.20.0/bin/node": {
+      "sha256": "89af8424dd53e560b1933f87ba650d8bf57c83ca5a04600eefb31f416aabbae7",
+      "bytes": 126458664
+    },
+    "/home/na/benchmarks/minipy-s/runtime/pypy3.11-v7.3.20-linux64/bin/pypy3": {
+      "sha256": "e81be690a7d945bd026dd7f4767a32e9779605de77a8a64f14e42eedb181d742",
+      "bytes": 14504
+    },
+    "/home/na/benchmarks/minipy-s/source/bench/src/weighted_x86_64.S": {
+      "sha256": "9cf0513eba9c1e2a5a2866e699c51bf972b56dddb9f49cbb0351d5bd5cd36a89",
+      "bytes": 1321
+    },
+    "/home/na/benchmarks/minipy-s/source/bench/src/assembly_reference.rs": {
+      "sha256": "54a76013d6f9b8b1a38eb1347686c3d624457a0a76eb37b0a44c43999b7d2231",
+      "bytes": 8882
+    },
+    "/home/na/benchmarks/minipy-s/source/bench/src/bin/assembly_ab.rs": {
+      "sha256": "d34c2feb99e89f283fe1a564db923ef3cd3da3a5753047b63786f986d9b10ad2",
+      "bytes": 11156
+    },
+    "/home/na/benchmarks/minipy-s/source/bench/src/bin/interpreter_ab.rs": {
+      "sha256": "d039e87807f40588d82d5f7aaf5ca481e8207f7785fe40b5b41dae5d39b8bf15",
+      "bytes": 24326
+    },
+    "/home/na/benchmarks/minipy-s/source/tools/s_wsl_extension.py": {
+      "sha256": "4b9e56cb6bafab4f5d253f2f742cfe8558778c2b7f0567bc5e88794a8f541b5f",
+      "bytes": 10628
+    },
+    "/home/na/benchmarks/minipy-s/source/tools/s_wsl_first.py": {
+      "sha256": "8b8f67380eb278959a74bf1fb7e6d484a374f54ae4805e388c07f55b27be3b0f",
+      "bytes": 1400
+    },
+    "/home/na/benchmarks/minipy-s/source/tools/s_wsl_first.mjs": {
+      "sha256": "3570f04708e63e480d8cbaceeab0ed6f64dd2f5c82c40c1ad686016357966de4",
+      "bytes": 1792
+    },
+    "/home/na/benchmarks/minipy-s/source/tools/s_wsl_curve.mjs": {
+      "sha256": "4732033c18b8b3bfa91c5ba161a3dfc21e08cd330037ed5a881662a291f03c86",
+      "bytes": 1171
+    },
+    "/home/na/benchmarks/minipy-s/source/tools/s_wsl_python.py": {
+      "sha256": "a7e891955f67e8b7ecdd41f8ef2abd8eb37aeb3f589201e8b318bed803b45a93",
+      "bytes": 2818
+    },
+    "/home/na/benchmarks/minipy-s/source/tools/final_python.py": {
+      "sha256": "6e2b64135b7d3770926aa524773715ef439d307864e24741dd1dbe8a15a3b788",
+      "bytes": 20245
+    },
+    "/home/na/benchmarks/minipy-s/source/tools/s_wsl_pysolate.go": {
+      "sha256": "90f863236ff85db8f6e76c05aec21fab7603eadeddb4a2ba524a904377a4307d",
+      "bytes": 8702
+    }
+  },
+  "preflight": "Linux DESKTOP-UISID0V 6.18.54.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux\n 16:06:06 up  2:34,  2 users,  load average: 0.21, 0.74, 0.85\n               total        used        free      shared  buff/cache   available\nMem:            23Gi       1.0Gi        22Gi        18Mi       511Mi        22Gi\nSwap:          6.0Gi          0B       6.0Gi\n    PID COMMAND         %CPU %MEM\n  46444 python3         70.3  0.1\n  46445 ps              11.1  0.0\n  46296 bash             2.0  0.0\n  46116 sshd             0.7  0.0\n    200 tailscaled       0.2  0.3\n    184 redis-server     0.2  0.1\n    409 mariadbd         0.0  0.4\n      1 systemd          0.0  0.0\n     61 systemd-journal  0.0  0.0\n    436 postgres         0.0  0.1\n    174 dbus-daemon      0.0  0.0\n    198 systemd-logind   0.0  0.0\n    165 systemd-timesyn  0.0  0.0\n    216 rsyslogd         0.0  0.0\n    113 systemd-udevd    0.0  0.0\n    451 postgres         0.0  0.0\n    448 postgres         0.0  0.0\n    254 unattended-upgr  0.0  0.0\n    726 systemd          0.0  0.0\n    450 postgres         0.0  0.0\n    691 systemd-resolve  0.0  0.0\n    224 sshd             0.0  0.0\n    751 fish             0.0  0.0\n    673 fish             0.0  0.0\n    173 cron             0.0  0.0\n      2 init-systemd(Ub  0.0  0.0\n      3 init-watcher     0.0  0.0\n     10 init             0.0  0.0\n    245 agetty           0.0  0.0\n    447 postgres         0.0  0.0\n    452 postgres         0.0  0.0\n    670 SessionLeader    0.0  0.0\n    672 Relay(673)       0.0  0.0\n    675 login            0.0  0.0\n    727 (sd-pam)         0.0  0.0\n  46148 sshd             0.0  0.0\n  46149 fish             0.0  0.0\n",
+  "units": "ns",
+  "rounds": 3,
+  "cpu": "controller SELF + reaped CHILDREN for fresh first-request; executable SELF for Rust and Node; Python SELF + children for isolated request modes"
+}

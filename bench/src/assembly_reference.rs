@@ -1,4 +1,4 @@
-//! L trusted, fixed-program AArch64 assembly reference. No user-code injection.
+//! Trusted fixed-program AArch64/x86_64 assembly reference. No user-code injection.
 //! Host wrapper retains input/tool/output/row bounds, detached waits and yields.
 use minipy_native::{
     buffer::Quote,
@@ -38,7 +38,9 @@ impl Cancellation {
 
 #[cfg(all(target_arch = "aarch64", target_os = "linux"))]
 std::arch::global_asm!(include_str!("weighted_aarch64.S"));
-#[cfg(all(target_arch = "aarch64", target_os = "linux"))]
+#[cfg(all(target_arch = "x86_64", target_os = "linux"))]
+std::arch::global_asm!(include_str!("weighted_x86_64.S"));
+#[cfg(all(any(target_arch = "aarch64", target_arch = "x86_64"), target_os = "linux"))]
 unsafe extern "C" {
     fn minipy_l_scan(
         rows: *const Quote,
@@ -52,11 +54,11 @@ unsafe extern "C" {
 }
 
 pub fn code_bytes() -> Option<usize> {
-    #[cfg(all(target_arch = "aarch64", target_os = "linux"))]
+    #[cfg(all(any(target_arch = "aarch64", target_arch = "x86_64"), target_os = "linux"))]
     {
         Some((&raw const minipy_l_scan_end as usize) - (minipy_l_scan as *const () as usize))
     }
-    #[cfg(not(all(target_arch = "aarch64", target_os = "linux")))]
+    #[cfg(not(all(any(target_arch = "aarch64", target_arch = "x86_64"), target_os = "linux")))]
     {
         None
     }
@@ -71,8 +73,10 @@ pub fn kernel(
 ) -> Result<(), TaskError> {
     const {
         assert!(std::mem::size_of::<Quote>() == 16);
+        assert!(std::mem::offset_of!(Quote, unit_price_cents) == 0);
+        assert!(std::mem::offset_of!(Quote, quantity) == 8);
     }
-    #[cfg(all(target_arch = "aarch64", target_os = "linux"))]
+    #[cfg(all(any(target_arch = "aarch64", target_arch = "x86_64"), target_os = "linux"))]
     {
         // The immutable slice proves the whole count*16 region is alive/readable;
         // out-pointers are distinct mutable i64s. Assembly uses caller-saved GPRs,
@@ -91,7 +95,7 @@ pub fn kernel(
             _ => Err(TaskError::Overflow),
         }
     }
-    #[cfg(not(all(target_arch = "aarch64", target_os = "linux")))]
+    #[cfg(not(all(any(target_arch = "aarch64", target_arch = "x86_64"), target_os = "linux")))]
     {
         let _ = (rows, total, previous, limit, stateful);
         Err(TaskError::Input)
@@ -228,7 +232,7 @@ pub async fn execute<P: Provider>(
     ScriptOutcome { status, stdout }
 }
 
-#[cfg(all(test, target_arch = "aarch64", target_os = "linux"))]
+#[cfg(all(test, any(target_arch = "aarch64", target_arch = "x86_64"), target_os = "linux"))]
 mod tests {
     use super::*;
     fn q(price: i64, quantity: i64) -> Quote {

@@ -506,7 +506,13 @@ async fn mixed(engine: &str, mix: &str, mode: &str, reps: usize) {
         }
     }
 }
+fn monotonic_ns() -> u64 {
+    let mut ts = libc::timespec { tv_sec: 0, tv_nsec: 0 };
+    assert_eq!(unsafe { libc::clock_gettime(libc::CLOCK_MONOTONIC, &mut ts) }, 0);
+    ts.tv_sec as u64 * 1_000_000_000 + ts.tv_nsec as u64
+}
 fn main() {
+    let init_begin = monotonic_ns();
     COMMON
         .set(std::env::var("MINIPY_COMMON").is_ok_and(|v| v == "1"))
         .unwrap();
@@ -537,6 +543,21 @@ fn main() {
         .enable_time()
         .build()
         .unwrap();
+    if mode == "first-request" {
+        // No probe prepare or executable reuse before these same-run boundaries.
+        let ready = monotonic_ns();
+        let code = prepare(engine, &source, case);
+        let prepared = monotonic_ns();
+        let p = Arc::new(RequestProvider::ready(n, Duration::ZERO));
+        let result = rt.block_on(code.run(p));
+        let executed = monotonic_ns();
+        assert_eq!(result, expected);
+        common::emit(&serde_json::json!({"kind":"first-request", "engine":engine,
+            "case":case,"rows":n,"init_begin_ns":init_begin,"ready_ns":ready,"prepared_ns":prepared,
+            "executed_ns":executed,"stdout":result,"completed":true,
+            "prepare_boundary":"source prepare/compile", "execute_boundary":"provider setup, generated input, conversion, tools, output and executable reclamation"}));
+        return;
+    }
     if mode == "hold" {
         tokio::task::LocalSet::new().block_on(&rt, hold(engine, case, &source, n, reps));
         return;

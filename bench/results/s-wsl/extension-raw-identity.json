@@ -1,0 +1,3050 @@
+{
+  "first-0-native-scalar-0.jsonl.gz": {
+    "sha256": "e6c0f4afc474a84a34df6573c8a688d8c4e3f4c62345d956888f3f041e1376e3",
+    "bytes": 463
+  },
+  "first-0-interpreter-scalar-0.jsonl.gz": {
+    "sha256": "7b22292362f58d0efc12ad2a1b2032245123755a78679dbe72782f0716b26943",
+    "bytes": 467
+  },
+  "first-0-monty-scalar-0.jsonl.gz": {
+    "sha256": "ebe557194498319dc01d06727db219967e82a8a7bc790b099cd5c829b8fc069b",
+    "bytes": 460
+  },
+  "first-0-cpython-scalar-0.jsonl.gz": {
+    "sha256": "7f110b7f0f203818d3358c4aafc46a6df80e6ffde86a76aa6a68e24aa60190a7",
+    "bytes": 477
+  },
+  "first-0-pypy-scalar-0.jsonl.gz": {
+    "sha256": "ff45f3ce27cbb108ae6b955fd0e2665bf6cc0a061fb66765600e79e6cf6e1154",
+    "bytes": 477
+  },
+  "first-0-pyodide-scalar-0.jsonl.gz": {
+    "sha256": "96af496fde6997e8eb489d58988941d53a62d3baebf1969a93c01d1de34fba80",
+    "bytes": 507
+  },
+  "first-0-pysolate-fresh-scalar-0.jsonl.gz": {
+    "sha256": "aa443ae7b40e1be7190d89bab546ff963ce1fea2255c2a6de5ea3c526bfe05f9",
+    "bytes": 660
+  },
+  "first-0-pysolate-cow-scalar-0.jsonl.gz": {
+    "sha256": "404964bb8206de07c2be812497f8ddb212a69390d73b574e24b07f7f3fc2f6b6",
+    "bytes": 652
+  },
+  "first-0-native-weighted-10000.jsonl.gz": {
+    "sha256": "0d71d2db547cea04a6dacaebe5d2953d988f5ff36eaaa173c28c22a9f6b43ede",
+    "bytes": 469
+  },
+  "first-0-interpreter-weighted-10000.jsonl.gz": {
+    "sha256": "2c4e7ca04a543e378758fcaa63d43e922a63db50add6565060643a5e54262140",
+    "bytes": 476
+  },
+  "first-0-monty-weighted-10000.jsonl.gz": {
+    "sha256": "9f002b69606e7525584b5b9f0f28a82234f05ed383f36558ec2ffb2c34de8b63",
+    "bytes": 470
+  },
+  "first-0-cpython-weighted-10000.jsonl.gz": {
+    "sha256": "de73fa78bc4ff748fcc6b2ca3cb2d2a8f25459fdc558d0abb96cb428a4933043",
+    "bytes": 487
+  },
+  "first-0-pypy-weighted-10000.jsonl.gz": {
+    "sha256": "e29e7d381df381362f61cc60e7c9363b53fed4c749746938e337ee76aafd7e93",
+    "bytes": 484
+  },
+  "first-0-pyodide-weighted-10000.jsonl.gz": {
+    "sha256": "b89418fa6f956f75d17b3759dd80e6259c4bdc0e6422ba4cce28d9c9b5186130",
+    "bytes": 516
+  },
+  "first-0-pysolate-fresh-weighted-10000.jsonl.gz": {
+    "sha256": "770829234891c49dc53ad1bc25979566da2d85865b8db754d0ecd0b6b78fac5f",
+    "bytes": 667
+  },
+  "first-0-pysolate-cow-weighted-10000.jsonl.gz": {
+    "sha256": "2e70fc7d4e522ac599e34a2548d5d304ee0fa5518c8eb54140b09810a3d24abe",
+    "bytes": 670
+  },
+  "first-0-native-stateful-10000.jsonl.gz": {
+    "sha256": "f45fbbcc190b0030c273c89359687ad3a897682d558d34d2c41e2937b62530f5",
+    "bytes": 465
+  },
+  "first-0-interpreter-stateful-10000.jsonl.gz": {
+    "sha256": "f0c0919758ac0a303292fd2e04768d221d7e184ecbd4931f035f23a87e2b5c1f",
+    "bytes": 474
+  },
+  "first-0-monty-stateful-10000.jsonl.gz": {
+    "sha256": "2ecd9d4a38158a0eea866173f7505c5b252b0f260e823d848a8fd5e3b69f65c7",
+    "bytes": 471
+  },
+  "first-0-cpython-stateful-10000.jsonl.gz": {
+    "sha256": "c9187c91ca39a851bf0e49c2c4a5df0eec319205782f24418d2572480dcbd2c8",
+    "bytes": 482
+  },
+  "first-0-pypy-stateful-10000.jsonl.gz": {
+    "sha256": "cf6bce5c77ab27a754c3452a13958618dc54f77b7ad69b64af7979df14eb060c",
+    "bytes": 483
+  },
+  "first-0-pyodide-stateful-10000.jsonl.gz": {
+    "sha256": "6178a6e1cf3a68dd9313ff9c42e2821b7802bb23278718ace58ce793c2837f7c",
+    "bytes": 511
+  },
+  "first-0-pysolate-fresh-stateful-10000.jsonl.gz": {
+    "sha256": "f7ed27b35b2e7e73d1fbeee103e350219ad6b89a79b743962d29547e0180ad53",
+    "bytes": 671
+  },
+  "first-0-pysolate-cow-stateful-10000.jsonl.gz": {
+    "sha256": "93b08548797ba4bea2803d66a773ac6d2bb65f79a93b8e01d0b3b5a9f10e7631",
+    "bytes": 662
+  },
+  "first-1-native-scalar-0.jsonl.gz": {
+    "sha256": "1030f91bfe8e4d4d75858905ccf8e92bebd0ae779517e95c269c12c2097e7181",
+    "bytes": 461
+  },
+  "first-1-monty-scalar-0.jsonl.gz": {
+    "sha256": "dd38ab989980cb5592c56cb80b0f6cfb51ddd750131c97f0eac8e220f90f9651",
+    "bytes": 459
+  },
+  "first-1-interpreter-scalar-0.jsonl.gz": {
+    "sha256": "c2dae9c6c57db8ebfbf3d436492c1aca4b11b57e7161273a4d51bda2ed5d81ad",
+    "bytes": 467
+  },
+  "first-1-cpython-scalar-0.jsonl.gz": {
+    "sha256": "53d1f7058343a56a18005c32cd802021ff23feadbf5a5eae0b758bba271997c9",
+    "bytes": 478
+  },
+  "first-1-pypy-scalar-0.jsonl.gz": {
+    "sha256": "839edd26218e2b3f6c3a2826ce70cca13705db6059625c53d88e550e6c79c06e",
+    "bytes": 476
+  },
+  "first-1-pyodide-scalar-0.jsonl.gz": {
+    "sha256": "6653241f16c0c2de239e6a8b750fcd14a7f6b49631acce55bdd4abfaebd7fd1c",
+    "bytes": 508
+  },
+  "first-1-pysolate-cow-scalar-0.jsonl.gz": {
+    "sha256": "cce266cd85da1bf181729ffb971d8bd1fdf3339cc9bbb8459335d4e9c55f5450",
+    "bytes": 653
+  },
+  "first-1-pysolate-fresh-scalar-0.jsonl.gz": {
+    "sha256": "1ab9f75789c33e22cce2b29fdafdb32c3cd70054f6d34f00946ec930be3cb778",
+    "bytes": 659
+  },
+  "first-1-native-weighted-10000.jsonl.gz": {
+    "sha256": "30ce2b38f627893233503005b8863b3130720fadc9c14ba1f918ee2ab2a895ed",
+    "bytes": 470
+  },
+  "first-1-monty-weighted-10000.jsonl.gz": {
+    "sha256": "e1b7f6872e25cdc247c7300b8a5edfbaa87704681a657fd9a21ec8b7006e4506",
+    "bytes": 473
+  },
+  "first-1-interpreter-weighted-10000.jsonl.gz": {
+    "sha256": "a2418094ddec2934e0d55918677b478225fd27f97225ee75e00484d8dc64862e",
+    "bytes": 479
+  },
+  "first-1-cpython-weighted-10000.jsonl.gz": {
+    "sha256": "b90c6b341656c3105ebd754cf01d683cf1db432fe1965ceff2a0a39e8f3eeaaa",
+    "bytes": 487
+  },
+  "first-1-pypy-weighted-10000.jsonl.gz": {
+    "sha256": "b1204de78447cf433469aba997059360997aadf024cf7a90ce1e2415470470e7",
+    "bytes": 487
+  },
+  "first-1-pyodide-weighted-10000.jsonl.gz": {
+    "sha256": "0840773877c739e68236b13c821233d4611511c4afa8e596a06e403170cc6d2d",
+    "bytes": 520
+  },
+  "first-1-pysolate-cow-weighted-10000.jsonl.gz": {
+    "sha256": "7da0f152069caef1b47d04f2f2ca2aef5e1c4b1def5196f4a8c4b1eb1a4283f7",
+    "bytes": 668
+  },
+  "first-1-pysolate-fresh-weighted-10000.jsonl.gz": {
+    "sha256": "ca68642208e2e2014423eb4ee1b33c3f067c4fd104366ad394c75c385cabe560",
+    "bytes": 672
+  },
+  "first-1-native-stateful-10000.jsonl.gz": {
+    "sha256": "ffc91a0d90f0f9bc8798cc473e936d1d8bad3c071c49299665e497675df91a89",
+    "bytes": 470
+  },
+  "first-1-monty-stateful-10000.jsonl.gz": {
+    "sha256": "33b5ebfa812de85e4135c2db1cfac5edc67025705f753761f8557b1ee83709cf",
+    "bytes": 467
+  },
+  "first-1-interpreter-stateful-10000.jsonl.gz": {
+    "sha256": "b311c3ea8fb736dd2fff72017d09e1d07f6a7d8ac2dc5601dcf16fc1f1468cc1",
+    "bytes": 477
+  },
+  "first-1-cpython-stateful-10000.jsonl.gz": {
+    "sha256": "773789c43329d58cbe1886da689355a817aea98f007b72e6fde40ab7ecd98969",
+    "bytes": 486
+  },
+  "first-1-pypy-stateful-10000.jsonl.gz": {
+    "sha256": "dd86ebdc91fe97c14199799d58e4a3462118502b8d850d3319c204b8fe241f60",
+    "bytes": 487
+  },
+  "first-1-pyodide-stateful-10000.jsonl.gz": {
+    "sha256": "7e2ae52490cf254016f07bd4ef57df6d427b4feaf90676e16942201bf34eaa05",
+    "bytes": 513
+  },
+  "first-1-pysolate-cow-stateful-10000.jsonl.gz": {
+    "sha256": "10b58105532cbaccfba60c47a3bd5da0e51cccd5528c7f6507f5da63e8222a7e",
+    "bytes": 669
+  },
+  "first-1-pysolate-fresh-stateful-10000.jsonl.gz": {
+    "sha256": "7ee0334f4fa2644934cf46b1c63ea51a8b2c6fef78e988c770572950993138d4",
+    "bytes": 666
+  },
+  "first-2-monty-scalar-0.jsonl.gz": {
+    "sha256": "555441b1711845cc2af6c1d952992e27571c50ea2855cb19da76214cfe34869e",
+    "bytes": 461
+  },
+  "first-2-native-scalar-0.jsonl.gz": {
+    "sha256": "ae6ca623e06d3fb9690c981cc013ea997c2db4ff61351270e945de84b7ba16ad",
+    "bytes": 461
+  },
+  "first-2-interpreter-scalar-0.jsonl.gz": {
+    "sha256": "edd98e5458dc412c7c108e214893d4d1ecf0f06e63de9a0f0e27ec1683c98144",
+    "bytes": 469
+  },
+  "first-2-cpython-scalar-0.jsonl.gz": {
+    "sha256": "1a67d380b3d2b687c9986fe88ef2251446204334ba4549218029286b6087d2ca",
+    "bytes": 476
+  },
+  "first-2-pypy-scalar-0.jsonl.gz": {
+    "sha256": "189f95522621d5163f5515c0e22d34a4d11f176be9cd944b2f84186f0ddc3a12",
+    "bytes": 477
+  },
+  "first-2-pyodide-scalar-0.jsonl.gz": {
+    "sha256": "88592aa2dcf88ec137abb9f5d2f12376ce3484c715337e32faf84f9cef0dbf2c",
+    "bytes": 507
+  },
+  "first-2-pysolate-fresh-scalar-0.jsonl.gz": {
+    "sha256": "378368658959c899483e8a168d990bab0981ad6d88b96c98281345efe08b4dce",
+    "bytes": 657
+  },
+  "first-2-pysolate-cow-scalar-0.jsonl.gz": {
+    "sha256": "d7068896ada9c1cfe7376b4a3f870f743e17d85337a868595bf99bbe5276a311",
+    "bytes": 655
+  },
+  "first-2-monty-weighted-10000.jsonl.gz": {
+    "sha256": "6978dd10c7baa3465639caa7024fd3a9627956c296e13f64a32c9cf421d07433",
+    "bytes": 472
+  },
+  "first-2-native-weighted-10000.jsonl.gz": {
+    "sha256": "00264531abe73a7b6b6765a6ebdff57c72ea447a9f31db5a48fcb7b5b18b34a1",
+    "bytes": 471
+  },
+  "first-2-interpreter-weighted-10000.jsonl.gz": {
+    "sha256": "66163d45b193afb5c16608a788b3fcc7b7dbda9ad1d30c3066d154c0b7d3076c",
+    "bytes": 476
+  },
+  "first-2-cpython-weighted-10000.jsonl.gz": {
+    "sha256": "7345b5af0d67aacf0a70290b26401339f34bcdb0382d73d2e36c902f4eb420bf",
+    "bytes": 489
+  },
+  "first-2-pypy-weighted-10000.jsonl.gz": {
+    "sha256": "959e6a3bc5969d9e53fc5de04b3c9864e734b899d7b2652cd8fbbac5ecb59373",
+    "bytes": 485
+  },
+  "first-2-pyodide-weighted-10000.jsonl.gz": {
+    "sha256": "9bb2201b2df26707826f8213c27b5791240fe45d81b0d29d7c2b6bb0c8c5c406",
+    "bytes": 516
+  },
+  "first-2-pysolate-fresh-weighted-10000.jsonl.gz": {
+    "sha256": "4d6d009c029b9d24d8c58ea8ff5934097475cbf9d6f8a25b89e5dd81301b4d3c",
+    "bytes": 674
+  },
+  "first-2-pysolate-cow-weighted-10000.jsonl.gz": {
+    "sha256": "0fa59c3eb1325249929e39e2bc9890dd50a232115012535d3d740b44b01bcb95",
+    "bytes": 665
+  },
+  "first-2-monty-stateful-10000.jsonl.gz": {
+    "sha256": "82e20e42c41194ed5ab70fa9f5cf7dd53a4572a4e53c4c27ef806024cff40a54",
+    "bytes": 472
+  },
+  "first-2-native-stateful-10000.jsonl.gz": {
+    "sha256": "e7fd0842e061b53649c95d2d5d87ad25cf4ec7972f88c4351b53a4b3591df540",
+    "bytes": 472
+  },
+  "first-2-interpreter-stateful-10000.jsonl.gz": {
+    "sha256": "55d0b4ff5e2605fb61ad1663f898dfe818c423a3031c6b3c9e3dd1e7bd04795e",
+    "bytes": 476
+  },
+  "first-2-cpython-stateful-10000.jsonl.gz": {
+    "sha256": "596eba79e9c87bd072c9d89c8780e061d406829c961558cc6e8aaf196e083690",
+    "bytes": 488
+  },
+  "first-2-pypy-stateful-10000.jsonl.gz": {
+    "sha256": "2d9793e15c5583e703d502a1acd33809a17d532b91e7e0faadb58a2563a6251b",
+    "bytes": 486
+  },
+  "first-2-pyodide-stateful-10000.jsonl.gz": {
+    "sha256": "f1cbdfe8bde0dbfa894ede5cd833a03e36f51285b6b58cd379e43d5a2f28f1c1",
+    "bytes": 516
+  },
+  "first-2-pysolate-fresh-stateful-10000.jsonl.gz": {
+    "sha256": "db8798aba53b6b09551706247bf089dc03235a4339b938e4f71782f5fabb1683",
+    "bytes": 669
+  },
+  "first-2-pysolate-cow-stateful-10000.jsonl.gz": {
+    "sha256": "df9c4236bb51e378770c9c26e8a0d9952bbfd2dff8badd3dd653a23beb19c0bb",
+    "bytes": 665
+  },
+  "reference-0-assembly-weighted-100-kernel.jsonl.gz": {
+    "sha256": "6557578bc2896157d684c37ccf52000b34c94f31ec18119bb1506efff03bd6d7",
+    "bytes": 468
+  },
+  "reference-0-rust-weighted-100-kernel.jsonl.gz": {
+    "sha256": "4c0405bc214aa808c3cd68fccac8707d772dbf8a5185324e9a1013d86d0dce16",
+    "bytes": 448
+  },
+  "reference-0-assembly-weighted-100-full.jsonl.gz": {
+    "sha256": "c00a2a4ca9bf984c19f1cf6d86470aec0163f4db68a9257401f1b3bb24906abd",
+    "bytes": 548
+  },
+  "reference-0-rust-weighted-100-full.jsonl.gz": {
+    "sha256": "1290de0b1382503f1850928fd69d39557a60159c037dd7f64f6b1dbaff380034",
+    "bytes": 525
+  },
+  "reference-0-assembly-weighted-300-kernel.jsonl.gz": {
+    "sha256": "b215c376dcc3998d74558fc76d6d87c52b02fec8ebdf40ce61712ad951dcd007",
+    "bytes": 461
+  },
+  "reference-0-rust-weighted-300-kernel.jsonl.gz": {
+    "sha256": "1e338bc856e6bbfc3a447539aad2aa6f91f288fd789ebd9ecc25ac3ce46a6efa",
+    "bytes": 453
+  },
+  "reference-0-assembly-weighted-300-full.jsonl.gz": {
+    "sha256": "79e082cd37c8e13e9c6cb457c90f8591184b9bd0cc366c8a8425ae5fa1ad5e47",
+    "bytes": 529
+  },
+  "reference-0-rust-weighted-300-full.jsonl.gz": {
+    "sha256": "4abeb4bde025aafd992b9e31be3207ca5f50611dee2dcefeb5e1215a056aec2b",
+    "bytes": 548
+  },
+  "reference-0-assembly-weighted-1000-kernel.jsonl.gz": {
+    "sha256": "b28b4a23f4f03b2031d4f04dab0b38e4f3faf3bc023b8134dfa56143d38d3d0c",
+    "bytes": 476
+  },
+  "reference-0-rust-weighted-1000-kernel.jsonl.gz": {
+    "sha256": "f046ef28438c906ffad9746a94c35f5d615058affe2f4c8ebe47180f63172e5d",
+    "bytes": 462
+  },
+  "reference-0-assembly-weighted-1000-full.jsonl.gz": {
+    "sha256": "b19b53c7e9b6dd288de964dff2971f4cd9c792e9b2091f949ca66999fb6843fb",
+    "bytes": 576
+  },
+  "reference-0-rust-weighted-1000-full.jsonl.gz": {
+    "sha256": "7f9c513b3fc03d80e822c3aac9f03cf28b401f44a35c7348b09cec05a8a66994",
+    "bytes": 552
+  },
+  "reference-0-assembly-weighted-3000-kernel.jsonl.gz": {
+    "sha256": "85e9ad245ca775e98f60217d9632c261314fbe80d79f40a0dc74f795a6cd5bb5",
+    "bytes": 494
+  },
+  "reference-0-rust-weighted-3000-kernel.jsonl.gz": {
+    "sha256": "5d398a2fb2124785da01654ff447c02f20cdd1e4b348c573aab79fa9df506d26",
+    "bytes": 466
+  },
+  "reference-0-assembly-weighted-3000-full.jsonl.gz": {
+    "sha256": "2f94cd03ca3dceee10b2e53c3a57a4fe67eaf220697dda1ffdf01db9e274a72a",
+    "bytes": 544
+  },
+  "reference-0-rust-weighted-3000-full.jsonl.gz": {
+    "sha256": "8800c8dc338338801110159952b6cc5174fc84edf33bcd4672888d4836d4b829",
+    "bytes": 530
+  },
+  "reference-0-assembly-weighted-10000-kernel.jsonl.gz": {
+    "sha256": "a48264ec0712b6355ed6a32d29e7970d6e15d72767d760e4b71e11e19212a817",
+    "bytes": 542
+  },
+  "reference-0-rust-weighted-10000-kernel.jsonl.gz": {
+    "sha256": "8a7153f33dd3b0353aaa8d0fdd0c425bd77e22139b0765e498fc876a5a26f99c",
+    "bytes": 483
+  },
+  "reference-0-assembly-weighted-10000-full.jsonl.gz": {
+    "sha256": "af5e28bba69a3357bc5c46c02cadc0a7480ae73677df1b64b9bbf930ee5a806a",
+    "bytes": 573
+  },
+  "reference-0-rust-weighted-10000-full.jsonl.gz": {
+    "sha256": "9bd7fe589be9a78de8fd985ced09a6c06d9f5ea10ba282ebf9a015c7eea37035",
+    "bytes": 565
+  },
+  "reference-0-assembly-weighted-30000-kernel.jsonl.gz": {
+    "sha256": "2d3cbe008553168f4c15e1ffa51737543e7e88bd8ee376bafcff10915ec25074",
+    "bytes": 572
+  },
+  "reference-0-rust-weighted-30000-kernel.jsonl.gz": {
+    "sha256": "2ab36845040a9d3d4d4aa45e52f874e816505d68c6c7b29db078c5941ce595e4",
+    "bytes": 533
+  },
+  "reference-0-assembly-weighted-30000-full.jsonl.gz": {
+    "sha256": "4e0d90184a3aa05269366a48d92f8f9fbdc3ddb4a562d2af5fe603b22a84980c",
+    "bytes": 634
+  },
+  "reference-0-rust-weighted-30000-full.jsonl.gz": {
+    "sha256": "f3ea182c1074fc770a330738d9e9a1ccb8300c02f46cf3badc37c9d3e9119116",
+    "bytes": 667
+  },
+  "reference-0-assembly-weighted-100000-kernel.jsonl.gz": {
+    "sha256": "c6aec548b167b4d153bb74009e8e3ae074e0eae275ef9a3bd70ad85b4423e9f1",
+    "bytes": 643
+  },
+  "reference-0-rust-weighted-100000-kernel.jsonl.gz": {
+    "sha256": "8294d294d94dbc358f2287b33239fb432ea4b0272c00817271153b19a9490017",
+    "bytes": 593
+  },
+  "reference-0-assembly-weighted-100000-full.jsonl.gz": {
+    "sha256": "cbcf67e533e1074e1a17a417aac7bb78aa560e2fd324f239f0a15308acee62f7",
+    "bytes": 696
+  },
+  "reference-0-rust-weighted-100000-full.jsonl.gz": {
+    "sha256": "5bd8bac5dd3837665c48e88922cc5f583cc1dda5d36e23ae3501ebb61df7e952",
+    "bytes": 705
+  },
+  "reference-0-assembly-stateful-100-kernel.jsonl.gz": {
+    "sha256": "4834edb04e5ec1ca5f6efe0e8f10caeb812e31bc7324ae9566fa916ad6324e2b",
+    "bytes": 465
+  },
+  "reference-0-rust-stateful-100-kernel.jsonl.gz": {
+    "sha256": "3490611c9c82bcf4d28fddc94bf7e7fc768139d37de6311745aaa818725db870",
+    "bytes": 448
+  },
+  "reference-0-assembly-stateful-100-full.jsonl.gz": {
+    "sha256": "7d43714ef99956679138922a0f45ed6947078801acb39f1253b87adf1fb7d880",
+    "bytes": 539
+  },
+  "reference-0-rust-stateful-100-full.jsonl.gz": {
+    "sha256": "bf22cb8a7434badd72d72cc6cb6e5b81fea1bb461ea2752ea6b2affca6d59b96",
+    "bytes": 536
+  },
+  "reference-0-assembly-stateful-300-kernel.jsonl.gz": {
+    "sha256": "ce4dfbe42f99f35fbbb0b8425e2f51339c3dfe01b1c9ec59a4a69f81a756626d",
+    "bytes": 484
+  },
+  "reference-0-rust-stateful-300-kernel.jsonl.gz": {
+    "sha256": "b6dcee6feaa84d9b96bf3f4bf0d8ba2a43abca2556fe53e885f9c983afdb900a",
+    "bytes": 471
+  },
+  "reference-0-assembly-stateful-300-full.jsonl.gz": {
+    "sha256": "c309cf6f2e56b14ce8e036ff23676b414e8b7018d2c0305f252ca0b54e36c375",
+    "bytes": 523
+  },
+  "reference-0-rust-stateful-300-full.jsonl.gz": {
+    "sha256": "39ec4d96e3cbde78cc83c1c225fcaa4fa4e512b729aeaad544eb0a29f716bad6",
+    "bytes": 535
+  },
+  "reference-0-assembly-stateful-1000-kernel.jsonl.gz": {
+    "sha256": "6de21715c4919d1b5ed2f798c2e44419933a5ee692f93e454df9c9f55d1b0ff1",
+    "bytes": 494
+  },
+  "reference-0-rust-stateful-1000-kernel.jsonl.gz": {
+    "sha256": "e5a91c3bdf90dc465b4bb43ee130ccb2c2d061cbf4744e3fc13a50c7fd3a6d85",
+    "bytes": 463
+  },
+  "reference-0-assembly-stateful-1000-full.jsonl.gz": {
+    "sha256": "5e5340c2834f30a7e81e2899e554e8ec914bfc4ff6375b526306d8684fe41e90",
+    "bytes": 550
+  },
+  "reference-0-rust-stateful-1000-full.jsonl.gz": {
+    "sha256": "6bca4cd5a670d672ac2d8518c0cf52e9aac40ad54d6667fe2a29c242d7471f57",
+    "bytes": 538
+  },
+  "reference-0-assembly-stateful-3000-kernel.jsonl.gz": {
+    "sha256": "736bf4c4dea713942c876f6e962cea47f0605164555ed735528d97a30989969b",
+    "bytes": 529
+  },
+  "reference-0-rust-stateful-3000-kernel.jsonl.gz": {
+    "sha256": "559525b17eff8937a885f890f924a560a25140680525cdbb29f4a8262db15c0d",
+    "bytes": 480
+  },
+  "reference-0-assembly-stateful-3000-full.jsonl.gz": {
+    "sha256": "d99521d8d12f4b41cf5059258deb08d1cd859baad87ff034a814ed819927f162",
+    "bytes": 563
+  },
+  "reference-0-rust-stateful-3000-full.jsonl.gz": {
+    "sha256": "c3b6d2c772d658459928ac6144cabfefc6acae82cff81bd91ce3ceb9c3ccbd0c",
+    "bytes": 535
+  },
+  "reference-0-assembly-stateful-10000-kernel.jsonl.gz": {
+    "sha256": "9f29746218a71de1a42054fa8a50203bdcbd7a0251f2c67f4aa63f74c57ceea1",
+    "bytes": 594
+  },
+  "reference-0-rust-stateful-10000-kernel.jsonl.gz": {
+    "sha256": "f44d61b278fadfa4352f2f83703fa765f373c4726f62f5c9e89657fd689d4487",
+    "bytes": 497
+  },
+  "reference-0-assembly-stateful-10000-full.jsonl.gz": {
+    "sha256": "1eaf52044462579d37e16d5d463962bea677d124d7783779036945e0e9f92fb5",
+    "bytes": 618
+  },
+  "reference-0-rust-stateful-10000-full.jsonl.gz": {
+    "sha256": "1372593238dd98158c75c3869b4c9ccb875ffaa94a46cca56d09167da594d8eb",
+    "bytes": 553
+  },
+  "reference-0-assembly-stateful-30000-kernel.jsonl.gz": {
+    "sha256": "7708eb8caae923db933eb6ac9f2c0d8dfe8e4c1dd1daf394eb4845b392b36e54",
+    "bytes": 634
+  },
+  "reference-0-rust-stateful-30000-kernel.jsonl.gz": {
+    "sha256": "3b6c091759a1565c0f925abe8b26b75a957cc39c326b491fb7cc1c79da3b1040",
+    "bytes": 505
+  },
+  "reference-0-assembly-stateful-30000-full.jsonl.gz": {
+    "sha256": "bf7e98667d31dbcf4013a6fe51eb24008680236558d1aa284384fc369722bfdc",
+    "bytes": 674
+  },
+  "reference-0-rust-stateful-30000-full.jsonl.gz": {
+    "sha256": "234b01ebd76ee314c820e0b9c776aeb9f5069a7aa3fae6f540ec64b8097ff713",
+    "bytes": 625
+  },
+  "reference-0-assembly-stateful-100000-kernel.jsonl.gz": {
+    "sha256": "688ddda287a5ecfbda280ba0196b1cfb778bcefd608ed8d631d95959c23301b7",
+    "bytes": 680
+  },
+  "reference-0-rust-stateful-100000-kernel.jsonl.gz": {
+    "sha256": "8ec4e18779fedcee9afb76bb88a531167e160911213d1fb16475ce3ca53911cf",
+    "bytes": 591
+  },
+  "reference-0-assembly-stateful-100000-full.jsonl.gz": {
+    "sha256": "6f898855213f252feac4bcba53efedc3c870c288e503e3b229b4f2f00482a911",
+    "bytes": 725
+  },
+  "reference-0-rust-stateful-100000-full.jsonl.gz": {
+    "sha256": "9c8ebc1350504848967e3d3470e0eae23e671b124b8e97d5a3ae4f09a8bd4286",
+    "bytes": 688
+  },
+  "reference-1-rust-weighted-100-kernel.jsonl.gz": {
+    "sha256": "2896044f7852ab85a1a41ae57aeae21a5c5c7523930ed92079aa396891966412",
+    "bytes": 458
+  },
+  "reference-1-assembly-weighted-100-kernel.jsonl.gz": {
+    "sha256": "573abba0c9ea8aba5cb8af692c529f8718f673de7d581b4b24273d645a055cef",
+    "bytes": 461
+  },
+  "reference-1-rust-weighted-100-full.jsonl.gz": {
+    "sha256": "a746657732e678e37d2d86112d43c1b90234f749d2f7742d9b745abe9fc4b57c",
+    "bytes": 530
+  },
+  "reference-1-assembly-weighted-100-full.jsonl.gz": {
+    "sha256": "8995f6fff25b21c957b6f44a36481e5d10cb35f4616609ea69cdc31a4f4b0a3a",
+    "bytes": 535
+  },
+  "reference-1-rust-weighted-300-kernel.jsonl.gz": {
+    "sha256": "957ebfa11e82488f00ed8cbfd29af4b809a1376546b60b5f5f6be53bf8accc9a",
+    "bytes": 464
+  },
+  "reference-1-assembly-weighted-300-kernel.jsonl.gz": {
+    "sha256": "2014335cc604b5f1cf19cd7a428a4992c7b1ef2d193ad123e96be29f4a33b809",
+    "bytes": 461
+  },
+  "reference-1-rust-weighted-300-full.jsonl.gz": {
+    "sha256": "960c5f7aafaa95a1be0537865f70e51c81cd52d4b86f021c0205689191891f81",
+    "bytes": 544
+  },
+  "reference-1-assembly-weighted-300-full.jsonl.gz": {
+    "sha256": "487da6ab2ac26217968ce0f7d407cf623c10d95531037bf7a7a59a9e8912ed9f",
+    "bytes": 547
+  },
+  "reference-1-rust-weighted-1000-kernel.jsonl.gz": {
+    "sha256": "a2180c9b56b0ba354a213d43bbe3564ae591e41ec16ceab7b19d9949e6ef0bfb",
+    "bytes": 470
+  },
+  "reference-1-assembly-weighted-1000-kernel.jsonl.gz": {
+    "sha256": "4657098b89b94b696f44f53a5a654ea6c0c877de30bb7d78d44556b37459b860",
+    "bytes": 488
+  },
+  "reference-1-rust-weighted-1000-full.jsonl.gz": {
+    "sha256": "f9fca7523afdd64c9f3d41cc547462acacdf5c83dad4750e891ebb7bb17d2c2d",
+    "bytes": 517
+  },
+  "reference-1-assembly-weighted-1000-full.jsonl.gz": {
+    "sha256": "6b2a6e912a099b0fee15a0ed9da9237255c8d5ab5ebb226542f75807a1ae1cb2",
+    "bytes": 557
+  },
+  "reference-1-rust-weighted-3000-kernel.jsonl.gz": {
+    "sha256": "4fc0e4037d67e1b388410e47adec97e599dd512e00b5b8de4f1138704aaffee2",
+    "bytes": 465
+  },
+  "reference-1-assembly-weighted-3000-kernel.jsonl.gz": {
+    "sha256": "23daed1eb97b2df253b681659bd362b1887880570cd18448d8028d5164e74140",
+    "bytes": 507
+  },
+  "reference-1-rust-weighted-3000-full.jsonl.gz": {
+    "sha256": "c1a95f699f7a986870ad1c3a4585deb0dfdf72875bec4f9510c545e2647c01af",
+    "bytes": 525
+  },
+  "reference-1-assembly-weighted-3000-full.jsonl.gz": {
+    "sha256": "412a979ea1a9f1af26f23ba4692c6d7cb7f625945f4416f033d8d33eb2c573c1",
+    "bytes": 546
+  },
+  "reference-1-rust-weighted-10000-kernel.jsonl.gz": {
+    "sha256": "6c3536d2fd82afe659f4b997e8fe210eb27d8cbf20112399d01eea1992cd091d",
+    "bytes": 491
+  },
+  "reference-1-assembly-weighted-10000-kernel.jsonl.gz": {
+    "sha256": "2d312f59afb7f1bf9f5d315b9c82779c7bd1d5df0c1c7626ff27a25c56050fc6",
+    "bytes": 555
+  },
+  "reference-1-rust-weighted-10000-full.jsonl.gz": {
+    "sha256": "1764eb0102320c0ec7875d4b80d11c7ad90548b87f14a1c1de3ea5737e0bf3d3",
+    "bytes": 578
+  },
+  "reference-1-assembly-weighted-10000-full.jsonl.gz": {
+    "sha256": "0c3876dc9cb9b8d75e2e82b02d2381fbdb374d6e725810d13ff1e0e6c563ce11",
+    "bytes": 571
+  },
+  "reference-1-rust-weighted-30000-kernel.jsonl.gz": {
+    "sha256": "0a92db095e5ada6e522951012c9662745a82eec6c08dd3edd2cf139fe7a65b67",
+    "bytes": 528
+  },
+  "reference-1-assembly-weighted-30000-kernel.jsonl.gz": {
+    "sha256": "5e4afe4b47a7b8cb55f8a8779073768ac9398bbc0c9a0101100dabfcd9481c00",
+    "bytes": 620
+  },
+  "reference-1-rust-weighted-30000-full.jsonl.gz": {
+    "sha256": "f4567a51ab4a0a376295910c3f5eed6182aa163f5f730eeac424ef0bcd2d6d70",
+    "bytes": 631
+  },
+  "reference-1-assembly-weighted-30000-full.jsonl.gz": {
+    "sha256": "c9196c4f16c06ac32656eae7e3a87885ae2e4bfe8038bbc8c80611d7cdccf184",
+    "bytes": 644
+  },
+  "reference-1-rust-weighted-100000-kernel.jsonl.gz": {
+    "sha256": "fbdce89a8122096dd0f41d04e6afae31f06e67ce9af4fbddc085cf20dcc5d59b",
+    "bytes": 567
+  },
+  "reference-1-assembly-weighted-100000-kernel.jsonl.gz": {
+    "sha256": "b6f707f698047c1694a26372bc10f69257eb263b4166d073ff7c716f81c0b41f",
+    "bytes": 634
+  },
+  "reference-1-rust-weighted-100000-full.jsonl.gz": {
+    "sha256": "1b597be58a720816eab9d47297054bdaca3fe3fbabf40eda656e5240dbd14671",
+    "bytes": 691
+  },
+  "reference-1-assembly-weighted-100000-full.jsonl.gz": {
+    "sha256": "ed14f16e6811d633d87cb96f358053824b8ca32712576678c9a95c6ec75921ed",
+    "bytes": 693
+  },
+  "reference-1-rust-stateful-100-kernel.jsonl.gz": {
+    "sha256": "1a5b732c2bdaca303ecc8ed88a8921165f037650d2da81ce381545eece3e1608",
+    "bytes": 456
+  },
+  "reference-1-assembly-stateful-100-kernel.jsonl.gz": {
+    "sha256": "b772786cf04a6b134f61755afe348831699ad0d76bce91b3eb3ad4e137b1ae4d",
+    "bytes": 464
+  },
+  "reference-1-rust-stateful-100-full.jsonl.gz": {
+    "sha256": "0f40830a210c17dd6d79bedd05bfdbd85292c29d15534aa687225017d31a74a2",
+    "bytes": 532
+  },
+  "reference-1-assembly-stateful-100-full.jsonl.gz": {
+    "sha256": "2994fade6c4382a02f9885090b68a69d491204fe1b0dafd83de292452706fd5d",
+    "bytes": 525
+  },
+  "reference-1-rust-stateful-300-kernel.jsonl.gz": {
+    "sha256": "4f5c9c8f0213e735d6d8325ee455d4eaa5382584a977741597551a22e9a25340",
+    "bytes": 478
+  },
+  "reference-1-assembly-stateful-300-kernel.jsonl.gz": {
+    "sha256": "4344e285a4e5bf7d87196ddfacba1423c0e725c5a9d187698210eeea524bc94c",
+    "bytes": 477
+  },
+  "reference-1-rust-stateful-300-full.jsonl.gz": {
+    "sha256": "103af9ce19944a9c7e604451c3be4fb360993d8f4d970ffb3b0c92f95043c866",
+    "bytes": 525
+  },
+  "reference-1-assembly-stateful-300-full.jsonl.gz": {
+    "sha256": "9fd8db044c079152304ae780889c60a6faab8d621c6d6fb5a2bcf9560022fb53",
+    "bytes": 546
+  },
+  "reference-1-rust-stateful-1000-kernel.jsonl.gz": {
+    "sha256": "d6297b998d36a1d3ddaaee036582ffd4f259859ef0b9134b3508ca09604ca5c3",
+    "bytes": 468
+  },
+  "reference-1-assembly-stateful-1000-kernel.jsonl.gz": {
+    "sha256": "8c1c8cbdef92f5ff574bdcf5c47145a3278a38768f79f8f3aa2d209a07c1afc5",
+    "bytes": 508
+  },
+  "reference-1-rust-stateful-1000-full.jsonl.gz": {
+    "sha256": "dbdcd9ef1c484e8147f65663c7f1a60962396ec8356ba9b32aa4bd3cca7d04de",
+    "bytes": 556
+  },
+  "reference-1-assembly-stateful-1000-full.jsonl.gz": {
+    "sha256": "487cc5d7b12d364d0a93d5a64a572d9d2c177b4157d58816156e504f59221ab2",
+    "bytes": 575
+  },
+  "reference-1-rust-stateful-3000-kernel.jsonl.gz": {
+    "sha256": "9bac6c84a1449d1ab26c833e00fdd39347dc8575c30a45c328858cfdda56a66f",
+    "bytes": 489
+  },
+  "reference-1-assembly-stateful-3000-kernel.jsonl.gz": {
+    "sha256": "abdb03778ff7c892bc6cadfd39bbfadf7db3ddc035e90f36ac56ec7444416a1e",
+    "bytes": 523
+  },
+  "reference-1-rust-stateful-3000-full.jsonl.gz": {
+    "sha256": "915facf34d841109e26adedcee9fbbff7388f1c30728dd9922e642e636503043",
+    "bytes": 567
+  },
+  "reference-1-assembly-stateful-3000-full.jsonl.gz": {
+    "sha256": "1394976921f1a514005e9d471b39a3407d815f7d26ef8f64d7cf3e4e246c9162",
+    "bytes": 576
+  },
+  "reference-1-rust-stateful-10000-kernel.jsonl.gz": {
+    "sha256": "1953bd9fae4606bb897a55636940ee3802f0c58d751ef4243d1ccd0a6c293869",
+    "bytes": 505
+  },
+  "reference-1-assembly-stateful-10000-kernel.jsonl.gz": {
+    "sha256": "3294e7d21adf7ee63b5a8fc14dc38d5183006bf83ffef6c40dc9715bf0d38f0e",
+    "bytes": 599
+  },
+  "reference-1-rust-stateful-10000-full.jsonl.gz": {
+    "sha256": "bd73ea1a941c2f3999e891a5959bc9d622a5b5c9c9cb0753d59cffd149dcc1c4",
+    "bytes": 571
+  },
+  "reference-1-assembly-stateful-10000-full.jsonl.gz": {
+    "sha256": "110a88dd4fda0e3a7ce86649a39f58e7761081869661a666fa9c5707c8650077",
+    "bytes": 599
+  },
+  "reference-1-rust-stateful-30000-kernel.jsonl.gz": {
+    "sha256": "fc2759875a040de6bf6d750b84c0416db6cdc9ce10c2bd18fd331b2ba2fed4a1",
+    "bytes": 534
+  },
+  "reference-1-assembly-stateful-30000-kernel.jsonl.gz": {
+    "sha256": "a92e10f254b0813fdc9140c7cf82cb0d32ae48deecfe11d6331f4df9deda4961",
+    "bytes": 625
+  },
+  "reference-1-rust-stateful-30000-full.jsonl.gz": {
+    "sha256": "5585a00157b666fbf62326d38cf273af786dece40f7ac5f16fc97842ae092383",
+    "bytes": 629
+  },
+  "reference-1-assembly-stateful-30000-full.jsonl.gz": {
+    "sha256": "f737ce3a95e8faa5eae9b05ff980dc4b5c597b7c6d09832540a4327b4c716450",
+    "bytes": 659
+  },
+  "reference-1-rust-stateful-100000-kernel.jsonl.gz": {
+    "sha256": "ebb63cea7f0477ee8cced6f97cc54587133952ca9c4ba64e70dfc4a7fb20578b",
+    "bytes": 589
+  },
+  "reference-1-assembly-stateful-100000-kernel.jsonl.gz": {
+    "sha256": "072bf0696d6416073ba7c54e3d0ac74bba0287d03bf40011c7459766a43c26c8",
+    "bytes": 700
+  },
+  "reference-1-rust-stateful-100000-full.jsonl.gz": {
+    "sha256": "4f78c209f2f216cb5e8d17b5784d573681967cf2f6b35a59e78fc11e9eb1bbad",
+    "bytes": 686
+  },
+  "reference-1-assembly-stateful-100000-full.jsonl.gz": {
+    "sha256": "6b2cc048f3b78b8d9a06737bac9d8f881bd42c9b5a25e30c6c566f9e88027907",
+    "bytes": 712
+  },
+  "reference-2-assembly-weighted-100-kernel.jsonl.gz": {
+    "sha256": "703f9100197a1af14fd400bca42abedb7a7460ae3967428700f6b74bb4c6f5a2",
+    "bytes": 462
+  },
+  "reference-2-rust-weighted-100-kernel.jsonl.gz": {
+    "sha256": "8a7bd0c982a7b9f87aff3e8e842dd3a34c3c00b5cf732e8bdb39638634df8a48",
+    "bytes": 457
+  },
+  "reference-2-assembly-weighted-100-full.jsonl.gz": {
+    "sha256": "ecc85164c4197b65924b6541d06f8dfdbb166e9bcc1355b5e5df6b42b6d6d863",
+    "bytes": 539
+  },
+  "reference-2-rust-weighted-100-full.jsonl.gz": {
+    "sha256": "8151e579bfd24cd3822be9b6703320452f18ecfde387715e05c868bd46e70acc",
+    "bytes": 537
+  },
+  "reference-2-assembly-weighted-300-kernel.jsonl.gz": {
+    "sha256": "d8cf526c78945b6d94c676ea5ed9a93991c08dd1680fc63f459ed61049f7bf5e",
+    "bytes": 475
+  },
+  "reference-2-rust-weighted-300-kernel.jsonl.gz": {
+    "sha256": "a843fd62829707dcc36da57d2c76d525ce2293a07a64d4beee0077145652b770",
+    "bytes": 463
+  },
+  "reference-2-assembly-weighted-300-full.jsonl.gz": {
+    "sha256": "f81e1a02b37652781773eb0aff981ee3640cb2f6e33b6bcef9a51e1ef2f1b957",
+    "bytes": 536
+  },
+  "reference-2-rust-weighted-300-full.jsonl.gz": {
+    "sha256": "d43b82dad1f9acc42878ff0e2e7a951635d786097beb26780ee289d05241b76a",
+    "bytes": 542
+  },
+  "reference-2-assembly-weighted-1000-kernel.jsonl.gz": {
+    "sha256": "1a20bcfe39161b5f69fa83fddcfb338de03991bfbcc86cf8568dce01de44dbd1",
+    "bytes": 486
+  },
+  "reference-2-rust-weighted-1000-kernel.jsonl.gz": {
+    "sha256": "78f5f298f26099a212d072f99326de216c14848c72d1db81f557d40903f34a99",
+    "bytes": 452
+  },
+  "reference-2-assembly-weighted-1000-full.jsonl.gz": {
+    "sha256": "3dca3738a498388ba28fe26eec8adf97cdf42ca013a6f635b7194342ac5a92f9",
+    "bytes": 543
+  },
+  "reference-2-rust-weighted-1000-full.jsonl.gz": {
+    "sha256": "7942fd956f4798dd4e9f5a98dc5fd0823002e0494a13d60dc024c132528f466f",
+    "bytes": 551
+  },
+  "reference-2-assembly-weighted-3000-kernel.jsonl.gz": {
+    "sha256": "7423c09a47eb8d6010fb0eb02fa3f50baa3e1b0bd0b72904a90f30489a598aeb",
+    "bytes": 484
+  },
+  "reference-2-rust-weighted-3000-kernel.jsonl.gz": {
+    "sha256": "f475f3410b83b912617496d129a42b536e7818948945ba1b213177902133b4ba",
+    "bytes": 481
+  },
+  "reference-2-assembly-weighted-3000-full.jsonl.gz": {
+    "sha256": "5a05fc1067882ff067defe887b9275ac15bddb817d66e39157a28e73b4d9c92d",
+    "bytes": 551
+  },
+  "reference-2-rust-weighted-3000-full.jsonl.gz": {
+    "sha256": "9fbb074c8fd80c92672ba45a1283dc8e5a77f40c0b0123af636b83219e667c25",
+    "bytes": 530
+  },
+  "reference-2-assembly-weighted-10000-kernel.jsonl.gz": {
+    "sha256": "2b4d66986b052c17858d202df942b1afcaa322c1dbf5e6d4d26b3c15189e5d96",
+    "bytes": 537
+  },
+  "reference-2-rust-weighted-10000-kernel.jsonl.gz": {
+    "sha256": "029332c02c43071903958ff90c31a60d887e1f7892354ff0c7f306f67fad488a",
+    "bytes": 485
+  },
+  "reference-2-assembly-weighted-10000-full.jsonl.gz": {
+    "sha256": "6c2da5fdcfc359a6da44a046a1e61397e5ee600659b1301441b55c2873916cc1",
+    "bytes": 569
+  },
+  "reference-2-rust-weighted-10000-full.jsonl.gz": {
+    "sha256": "cf8d3137fea6b5f929dd38e5bcf75d5a21cab06e0e5da3317ad989685c563eab",
+    "bytes": 555
+  },
+  "reference-2-assembly-weighted-30000-kernel.jsonl.gz": {
+    "sha256": "0f874984be86b6883b9cf645a2d2cb7b1096fd981958fa1b4e7a30993086c74a",
+    "bytes": 561
+  },
+  "reference-2-rust-weighted-30000-kernel.jsonl.gz": {
+    "sha256": "5dec7c71764249626a01de0cdd464a77c8540c7f57230e0c47e683f51d248ca6",
+    "bytes": 539
+  },
+  "reference-2-assembly-weighted-30000-full.jsonl.gz": {
+    "sha256": "175b3ba675e9102fbdd0d49ac199c4ea15a94b090df10cd9ea8896ec9cbcbc75",
+    "bytes": 641
+  },
+  "reference-2-rust-weighted-30000-full.jsonl.gz": {
+    "sha256": "2a9aa4791ab2210ed87dfab54cae1cf7a986bf8e89147b8945658fa987bd5432",
+    "bytes": 609
+  },
+  "reference-2-assembly-weighted-100000-kernel.jsonl.gz": {
+    "sha256": "b19a8973294992295e7f9c4e536a136eca70558c4173cc2bb9ef36d30415bec9",
+    "bytes": 619
+  },
+  "reference-2-rust-weighted-100000-kernel.jsonl.gz": {
+    "sha256": "c69b7b772bf7e6b2b7defc1320652016597347f30cfb033a58879569f728d784",
+    "bytes": 550
+  },
+  "reference-2-assembly-weighted-100000-full.jsonl.gz": {
+    "sha256": "af16c7ad377779c6174ef1183463b3ba616ddf4b98a011554136066003c0f85e",
+    "bytes": 700
+  },
+  "reference-2-rust-weighted-100000-full.jsonl.gz": {
+    "sha256": "fac149fd2ba6f8745f3706ed303782f19a468e3cb8555bb58d6c56a6ec8ae703",
+    "bytes": 687
+  },
+  "reference-2-assembly-stateful-100-kernel.jsonl.gz": {
+    "sha256": "29d303e8f307118e68b27ec7fcb6bd3dc4b6a2c9382dd9b4da0b17a82188af3f",
+    "bytes": 471
+  },
+  "reference-2-rust-stateful-100-kernel.jsonl.gz": {
+    "sha256": "f0c3d69b2514434fd0bcafef098228ba7469bd394ab03d240824751b370ec095",
+    "bytes": 450
+  },
+  "reference-2-assembly-stateful-100-full.jsonl.gz": {
+    "sha256": "1e4a6855afb4edbc5d5062b6bb7662c39a743e11bd1050008f5b7a3c6a0a16f2",
+    "bytes": 542
+  },
+  "reference-2-rust-stateful-100-full.jsonl.gz": {
+    "sha256": "be9e9bb184329d29b7b75cfc4dd9de06fec2964b9ad91cf2170fc6b8a8442297",
+    "bytes": 515
+  },
+  "reference-2-assembly-stateful-300-kernel.jsonl.gz": {
+    "sha256": "d212773f1a72b0df718f73efe4e0a08e0a05e15485ba50f68ad997c875eee1ad",
+    "bytes": 485
+  },
+  "reference-2-rust-stateful-300-kernel.jsonl.gz": {
+    "sha256": "0f34c9e8c6860d60e1fdc5159467a3749128f9546ef8bcf97c84f65c029b1143",
+    "bytes": 462
+  },
+  "reference-2-assembly-stateful-300-full.jsonl.gz": {
+    "sha256": "ac04313b721ad2b1331c6e9cf3d5a2be0bf2230beaddb1e7084222bc088dcf8e",
+    "bytes": 514
+  },
+  "reference-2-rust-stateful-300-full.jsonl.gz": {
+    "sha256": "9faf51565334002c9881e1673ed2984a48f0efa5182630acece265f74426044d",
+    "bytes": 536
+  },
+  "reference-2-assembly-stateful-1000-kernel.jsonl.gz": {
+    "sha256": "7fde18f33d6640265339e369b598c143c392b0e4ff7719898d99355811bb5a1e",
+    "bytes": 496
+  },
+  "reference-2-rust-stateful-1000-kernel.jsonl.gz": {
+    "sha256": "7b8378dbdefc30fa1ffd211a21e72019bb3681e4fa7d19d1fc365362f3c2343a",
+    "bytes": 465
+  },
+  "reference-2-assembly-stateful-1000-full.jsonl.gz": {
+    "sha256": "75dcc4e9c6ef4d664d347057c65cd823bbc40b460248e2f5f7dce48b751e4c10",
+    "bytes": 559
+  },
+  "reference-2-rust-stateful-1000-full.jsonl.gz": {
+    "sha256": "783f674c84751f47275caa793586de257d3b90947cb98141c04a424fd704e291",
+    "bytes": 548
+  },
+  "reference-2-assembly-stateful-3000-kernel.jsonl.gz": {
+    "sha256": "f309d8480e7df709d7564b05df3f7aefedf9c1dcd8d46e93e7d12ee932ec6144",
+    "bytes": 530
+  },
+  "reference-2-rust-stateful-3000-kernel.jsonl.gz": {
+    "sha256": "d228144ce0e870ca0b1b1cb277fb621784aac8d88f8ffd4e4d46f02ad316933c",
+    "bytes": 478
+  },
+  "reference-2-assembly-stateful-3000-full.jsonl.gz": {
+    "sha256": "7247e68af4b708a4ffc64f76a754fd865f250dbef6a7cce5ed93c5a3726930cb",
+    "bytes": 564
+  },
+  "reference-2-rust-stateful-3000-full.jsonl.gz": {
+    "sha256": "9e990baa3590f2a1a96fb2c3f0aea2be1f4e708a54e526bbb42d0743c6cdb485",
+    "bytes": 546
+  },
+  "reference-2-assembly-stateful-10000-kernel.jsonl.gz": {
+    "sha256": "95a79df827c477ba21c1a10c7449ecd8cfbb072472ca551234968a110894fe42",
+    "bytes": 596
+  },
+  "reference-2-rust-stateful-10000-kernel.jsonl.gz": {
+    "sha256": "377cd79e9234d218f4532f5724bb396118b94a1d4e5dade4f9c64af4c91cef8e",
+    "bytes": 513
+  },
+  "reference-2-assembly-stateful-10000-full.jsonl.gz": {
+    "sha256": "3f4269f68a9a2fa09edcebec10c6b433ae34a44bc7252eb06a691c400645096a",
+    "bytes": 617
+  },
+  "reference-2-rust-stateful-10000-full.jsonl.gz": {
+    "sha256": "37c6406c76f95cc8cdbb17f605ee5122de1054578a59c61cbab2b57db871e91c",
+    "bytes": 565
+  },
+  "reference-2-assembly-stateful-30000-kernel.jsonl.gz": {
+    "sha256": "f0a7c4cc762b4b0ecf85ac9551d2aef632d59ecafd17ee54701e6fa17bb75179",
+    "bytes": 639
+  },
+  "reference-2-rust-stateful-30000-kernel.jsonl.gz": {
+    "sha256": "95a17895a8f545105031006a8b95b103d20fa64eb841eed4fb5b34b73e47ab46",
+    "bytes": 518
+  },
+  "reference-2-assembly-stateful-30000-full.jsonl.gz": {
+    "sha256": "da44264008a0ea3aff90727a24718d22b8c0092e0a0efb862a0491fb250aad0b",
+    "bytes": 653
+  },
+  "reference-2-rust-stateful-30000-full.jsonl.gz": {
+    "sha256": "e27e4ed933305b9164a4671efafcf0ac1d26b5e819f51f10623f56dc32a47b31",
+    "bytes": 665
+  },
+  "reference-2-assembly-stateful-100000-kernel.jsonl.gz": {
+    "sha256": "1ae176ad5721fbec4c75e5d724326239b13ecdaecd178b7b0d0ccfca510659a3",
+    "bytes": 692
+  },
+  "reference-2-rust-stateful-100000-kernel.jsonl.gz": {
+    "sha256": "a66113170ae318c2cc552e106c697520b037cc8585654e173b4aec39e2f34f68",
+    "bytes": 572
+  },
+  "reference-2-assembly-stateful-100000-full.jsonl.gz": {
+    "sha256": "c8f3616750939984862a43d22fee710ce5a29d46d15801a948e9b265205cd872",
+    "bytes": 725
+  },
+  "reference-2-rust-stateful-100000-full.jsonl.gz": {
+    "sha256": "d7083646ed657704860a95be13879117f43eb57cbcb4f036b9daec1ae0c12ea5",
+    "bytes": 704
+  },
+  "curve-0-native-weighted-300-cold.jsonl.gz": {
+    "sha256": "69b3c3e21948b5ae01258dcb5e0ad1ac7c2684f4f884466313a1e633878fff0c",
+    "bytes": 1099
+  },
+  "curve-0-interpreter-weighted-300-cold.jsonl.gz": {
+    "sha256": "a5bfa7cacff0b1ee59e6221c3f352d3a73e9f0a8bcb2636b037500fea1506bab",
+    "bytes": 960
+  },
+  "curve-0-monty-weighted-300-cold.jsonl.gz": {
+    "sha256": "7932486948ea49e1af4be64f4a05defe7eb3b02cc5dcd4e905a72c27e911fc95",
+    "bytes": 1148
+  },
+  "curve-0-reference-weighted-300-cold.jsonl.gz": {
+    "sha256": "21a826ad6fa9f72b398e80d8ba20e6da4f0b70383db8301a51501794c2b0cec9",
+    "bytes": 699
+  },
+  "curve-0-native-weighted-300-warm.jsonl.gz": {
+    "sha256": "a17fd95313bee1abd569f67d3f6fa4cf5316a2c2ef8551eef57b27934e62e868",
+    "bytes": 668
+  },
+  "curve-0-interpreter-weighted-300-warm.jsonl.gz": {
+    "sha256": "d9a915b201cdca78beced168a37a737610bbc2a89edb7ca3f0369030d61ef5f9",
+    "bytes": 689
+  },
+  "curve-0-monty-weighted-300-warm.jsonl.gz": {
+    "sha256": "926f4832d63ed9e91494f360454fa7202dea9fb2c95ac0e074e9d231062a3b74",
+    "bytes": 978
+  },
+  "curve-0-reference-weighted-300-warm.jsonl.gz": {
+    "sha256": "bc9ffa36eea0bec2f84abb245507537d5f44c379ab2f046160bc944456c71db4",
+    "bytes": 710
+  },
+  "curve-0-cpython-resident-weighted-300.jsonl.gz": {
+    "sha256": "fd3376b4a8a88e864d4e3c6b7a80653cee4c205278503d0e37a8eb196a8876f2",
+    "bytes": 1623
+  },
+  "curve-0-cpython-prepared-weighted-300.jsonl.gz": {
+    "sha256": "581e14e06ae71d79c4545585e339b3eba7a0b5895b4c020cc1ddad50c853f49e",
+    "bytes": 1398
+  },
+  "curve-0-cpython-spawn-weighted-300.jsonl.gz": {
+    "sha256": "731013ebb75dc032768fb764f15755c0f309f6ecd897d664c4480c08dfe474a7",
+    "bytes": 1731
+  },
+  "curve-0-cpython-fork-weighted-300.jsonl.gz": {
+    "sha256": "a1b5954135bed32920b8bd601cca23e770c46e1c7f59c68a2f1d16b82d30983d",
+    "bytes": 1709
+  },
+  "curve-0-pypy-resident-weighted-300.jsonl.gz": {
+    "sha256": "42501616d69c02e98ccb4a74a6371478edfa29e0684bce956492034d451ae1cb",
+    "bytes": 7647
+  },
+  "curve-0-pypy-prepared-weighted-300.jsonl.gz": {
+    "sha256": "1e0ac47f8379ba98584935afd9d72f93d68711adcc6247726dee23fe3f053fdb",
+    "bytes": 6424
+  },
+  "curve-0-pyodide-resident-weighted-300.jsonl.gz": {
+    "sha256": "74d4e5a68c584274661b6e0d3b18940834faeec28ea6a1ae6d3f615f693b9b09",
+    "bytes": 884
+  },
+  "curve-0-pyodide-prepared-weighted-300.jsonl.gz": {
+    "sha256": "6d3b70d975dec2d1878a774cdc20f0bd7942f0ae68edde09cfc8d5f1fad040ab",
+    "bytes": 815
+  },
+  "curve-0-pysolate-fresh-weighted-300.jsonl.gz": {
+    "sha256": "30c6855f9698e06e97c0f5676d4790fb6749d583956020e61aedc7a7e046c7f3",
+    "bytes": 577
+  },
+  "curve-0-pysolate-cow-weighted-300.jsonl.gz": {
+    "sha256": "365d9bba6a34dafe6b83a4d80533583a1d39d26a2e6971aeab3337d6db34ba9f",
+    "bytes": 550
+  },
+  "curve-0-native-weighted-1000-cold.jsonl.gz": {
+    "sha256": "8b309b2739cea426f708438cbb7e75bc2116a523212198ef3f775e21d0c9b99d",
+    "bytes": 1069
+  },
+  "curve-0-interpreter-weighted-1000-cold.jsonl.gz": {
+    "sha256": "1ae418e1afa6032b8a216b61ac73ad890df02d95bec67708cbdb5189ceee19d9",
+    "bytes": 962
+  },
+  "curve-0-monty-weighted-1000-cold.jsonl.gz": {
+    "sha256": "467097b54fd56b4d7905a96f6c62020ba5408c591b70624fe118f7fb941d3522",
+    "bytes": 1175
+  },
+  "curve-0-reference-weighted-1000-cold.jsonl.gz": {
+    "sha256": "96316b0b83e9a70990a7cfd9b683977cdf36aa5a68abe023971d68e4281295bf",
+    "bytes": 751
+  },
+  "curve-0-native-weighted-1000-warm.jsonl.gz": {
+    "sha256": "bd5dca864584ff590c04d6ff193193a7d4873cc07831c0c2cd12071391ec0a4c",
+    "bytes": 699
+  },
+  "curve-0-interpreter-weighted-1000-warm.jsonl.gz": {
+    "sha256": "9e293d8a293abf0345abe76129343cc9fff09685ac1889a926059e20e00502e6",
+    "bytes": 734
+  },
+  "curve-0-monty-weighted-1000-warm.jsonl.gz": {
+    "sha256": "aaba3f80f17a726edcf0aeceae80c4ec4cef760323928bce86600149b7149b71",
+    "bytes": 1006
+  },
+  "curve-0-reference-weighted-1000-warm.jsonl.gz": {
+    "sha256": "a63daf393f6a170f2637bb6018b21f727a3588ef19938ec21a470e5e94a4dc31",
+    "bytes": 692
+  },
+  "curve-0-cpython-resident-weighted-1000.jsonl.gz": {
+    "sha256": "f6223f445accc4fabac5170851cc2768bebd7709479884291f7f9c27978cbb4f",
+    "bytes": 1639
+  },
+  "curve-0-cpython-prepared-weighted-1000.jsonl.gz": {
+    "sha256": "6bdeab98227887bc261469ee5ab533f1b8b73d98f650f1418b0f44988a557c67",
+    "bytes": 1492
+  },
+  "curve-0-cpython-spawn-weighted-1000.jsonl.gz": {
+    "sha256": "9ab588b95ac8a8f016e35aef348ebfbdd7600d8a8ef49671fa597a32d73c85b4",
+    "bytes": 1745
+  },
+  "curve-0-cpython-fork-weighted-1000.jsonl.gz": {
+    "sha256": "41d504d5f5dd928808e62512534ac41174d299e4c3f3e36168308a13f039b825",
+    "bytes": 1715
+  },
+  "curve-0-pypy-resident-weighted-1000.jsonl.gz": {
+    "sha256": "9c78471b7ba8126b0841cd92870a498dce4e437fc1e0ebaa7384534517d973b8",
+    "bytes": 7857
+  },
+  "curve-0-pypy-prepared-weighted-1000.jsonl.gz": {
+    "sha256": "6f014379eae157f4a6f4ea51b8cd5c334a8dff1e927b5daab511861ef425874f",
+    "bytes": 6538
+  },
+  "curve-0-pyodide-resident-weighted-1000.jsonl.gz": {
+    "sha256": "eb1e5db151aa9f7b3dcb02b98bc2b01fb27a0732e0fe90a47bcf1559ff89c518",
+    "bytes": 907
+  },
+  "curve-0-pyodide-prepared-weighted-1000.jsonl.gz": {
+    "sha256": "238c4c1e972344a52d77f2ef8358432a329f6c70586d52c6f5d1b9c5dee6bc21",
+    "bytes": 841
+  },
+  "curve-0-pysolate-fresh-weighted-1000.jsonl.gz": {
+    "sha256": "f732e8a089207364be0dbeae6fb853d08d51c8dff3cb9e9439a2c61e9ea1abba",
+    "bytes": 572
+  },
+  "curve-0-pysolate-cow-weighted-1000.jsonl.gz": {
+    "sha256": "c03842ce1c10da8cbc327e6639fde11b64aba311a20707772c00479459a57613",
+    "bytes": 546
+  },
+  "curve-0-native-weighted-3000-cold.jsonl.gz": {
+    "sha256": "07598b58fd25a6eebdd85f2e9d8eff2473d2d80d26dec4ff42700e22ee931555",
+    "bytes": 1087
+  },
+  "curve-0-interpreter-weighted-3000-cold.jsonl.gz": {
+    "sha256": "34ed392b4def334efa5beb9c7aa8d626097e742f7862cc802e0dc3c5b91e0f81",
+    "bytes": 926
+  },
+  "curve-0-monty-weighted-3000-cold.jsonl.gz": {
+    "sha256": "93d9cf2b0a8f3e287e4476802ff1f6bd617975acb0559c7ce16e49578d8c9293",
+    "bytes": 1216
+  },
+  "curve-0-reference-weighted-3000-cold.jsonl.gz": {
+    "sha256": "55579e4bec1c9ad6bae871f5a7e81b18ff4154a335fbbf49dd841bd726e6d232",
+    "bytes": 741
+  },
+  "curve-0-native-weighted-3000-warm.jsonl.gz": {
+    "sha256": "36eea5a0b2c8e6e6c477af513fefc5112f1dd4cbc779bfba20dbdf0d422c2343",
+    "bytes": 644
+  },
+  "curve-0-interpreter-weighted-3000-warm.jsonl.gz": {
+    "sha256": "2d5d50715cb08b6f434523fe55ecd428a8466088c3d739fb4bc71ebe0efbf8cc",
+    "bytes": 743
+  },
+  "curve-0-monty-weighted-3000-warm.jsonl.gz": {
+    "sha256": "6a3a749df872aa324fc052558f7bee1b9e174b78551740a7854f49b0c45de9ce",
+    "bytes": 1037
+  },
+  "curve-0-reference-weighted-3000-warm.jsonl.gz": {
+    "sha256": "7d79e3ab603b1872de8a676e9e9f48028ea605915973f5b74c911bb91ec98812",
+    "bytes": 726
+  },
+  "curve-0-cpython-resident-weighted-3000.jsonl.gz": {
+    "sha256": "1059544b270fb066b8d8c39dfe4bfbb622f482fe5722a36774d4cee170da9245",
+    "bytes": 1707
+  },
+  "curve-0-cpython-prepared-weighted-3000.jsonl.gz": {
+    "sha256": "fa0df3e603fcd6e4fc6a883f081e04176b995a0acab6aaa4dda327cd2b897763",
+    "bytes": 1537
+  },
+  "curve-0-cpython-spawn-weighted-3000.jsonl.gz": {
+    "sha256": "cb7295c3feaecfd580745cd759e8f2c14d1f8ce69a759fddc600c414f202ec29",
+    "bytes": 1764
+  },
+  "curve-0-cpython-fork-weighted-3000.jsonl.gz": {
+    "sha256": "7f44d9724287880b360e10b9ed7d31cb7ca9d2bddb1154d1bbac9c859eb6c8fa",
+    "bytes": 1736
+  },
+  "curve-0-pypy-resident-weighted-3000.jsonl.gz": {
+    "sha256": "a5ee9d3595efca306b2bfd5632a7e48c5b7d781cf791e6b0cdc3b1814062e5d7",
+    "bytes": 8296
+  },
+  "curve-0-pypy-prepared-weighted-3000.jsonl.gz": {
+    "sha256": "56537cbb8d4c9c97103ce94ebfaa877ec09ca69dd51299aa87839c53544bac30",
+    "bytes": 6966
+  },
+  "curve-0-pyodide-resident-weighted-3000.jsonl.gz": {
+    "sha256": "0445c5f29ad0c3c0e985391aa0edbe65525e3b1de91f39834f647fb1584002fb",
+    "bytes": 921
+  },
+  "curve-0-pyodide-prepared-weighted-3000.jsonl.gz": {
+    "sha256": "dff85b3b414cee946ea96dddda6d49d38c875328c57d3ae5219d75646bf06a59",
+    "bytes": 840
+  },
+  "curve-0-pysolate-fresh-weighted-3000.jsonl.gz": {
+    "sha256": "460572484553a05a1acf3695a9436ebac02af6e62c7c1669a9ccb4b96645c63a",
+    "bytes": 579
+  },
+  "curve-0-pysolate-cow-weighted-3000.jsonl.gz": {
+    "sha256": "6905edca93e0992d2c5671a66f34a1a3b6aa2dcdaba70b0d509cd032a3efd82b",
+    "bytes": 553
+  },
+  "curve-0-native-weighted-30000-cold.jsonl.gz": {
+    "sha256": "b1eb507bb71ec113a53f162c5e9155b40a2fcfcccbb897ba89c9b5d94fc7ea5a",
+    "bytes": 1134
+  },
+  "curve-0-interpreter-weighted-30000-cold.jsonl.gz": {
+    "sha256": "1212aa6dc9063d0f2c178fa7034e53c605f7c8b08b31abdb502ea8c385456ea5",
+    "bytes": 1127
+  },
+  "curve-0-monty-weighted-30000-cold.jsonl.gz": {
+    "sha256": "e0c0a60b04946cee7fd0107429915b971b5365f956e8bf2f648dc4cbdccc2dff",
+    "bytes": 1252
+  },
+  "curve-0-reference-weighted-30000-cold.jsonl.gz": {
+    "sha256": "8678f1565e19698f6a6631b92660bbe741c86c8bcb57214003846feda50736a8",
+    "bytes": 855
+  },
+  "curve-0-native-weighted-30000-warm.jsonl.gz": {
+    "sha256": "c44d7cf35bec30583eafbb4ac9862639b59235427f5fc2cb4b42cd8155e46771",
+    "bytes": 778
+  },
+  "curve-0-interpreter-weighted-30000-warm.jsonl.gz": {
+    "sha256": "58b92e681231ed14890eae680abb5386fe47a65d9c27680ccf9df16b9dfd6645",
+    "bytes": 961
+  },
+  "curve-0-monty-weighted-30000-warm.jsonl.gz": {
+    "sha256": "965cf9c36779b95c007c251627b0e8f9605cc161f026fcf5d8a57e6152a7596a",
+    "bytes": 1127
+  },
+  "curve-0-reference-weighted-30000-warm.jsonl.gz": {
+    "sha256": "c789c047a7609f785c1fb49bf09a7f650fc77652047edd208396573f439e3c6b",
+    "bytes": 827
+  },
+  "curve-0-cpython-resident-weighted-30000.jsonl.gz": {
+    "sha256": "956c81fd023284d5f7dccbb54b179659e0d00c021146eec4325e9afde20a0e8b",
+    "bytes": 1799
+  },
+  "curve-0-cpython-prepared-weighted-30000.jsonl.gz": {
+    "sha256": "5a1b610b7d512d1e007fcbf9da530e57d81e29b2dbb59f77e398d5409d37793c",
+    "bytes": 1628
+  },
+  "curve-0-cpython-spawn-weighted-30000.jsonl.gz": {
+    "sha256": "46712cfe9f2e5752a5d5d3520f403dc2ea5ac9608929e6349ebc2db92f6c4f8e",
+    "bytes": 1821
+  },
+  "curve-0-cpython-fork-weighted-30000.jsonl.gz": {
+    "sha256": "fd72b97cac7eacfb8fb4eae9faec52aa3e191e0923471a60b937f80f7b2f109c",
+    "bytes": 1803
+  },
+  "curve-0-pypy-resident-weighted-30000.jsonl.gz": {
+    "sha256": "b6db3cd8c09f19529cf8b5be3664c23ce32ad45576bc6a4c12703872068d7537",
+    "bytes": 8599
+  },
+  "curve-0-pypy-prepared-weighted-30000.jsonl.gz": {
+    "sha256": "8247c89d2c5234648ee5ac0e2f8fa664b3f130bf9fa354a60d8a23809bf8f28b",
+    "bytes": 7871
+  },
+  "curve-0-pyodide-resident-weighted-30000.jsonl.gz": {
+    "sha256": "6a0cd1e0065dc3a180d81afc769478248357c9ab4004343f1b0d72fe020a9425",
+    "bytes": 955
+  },
+  "curve-0-pyodide-prepared-weighted-30000.jsonl.gz": {
+    "sha256": "b59045ba8238688673752ea34970a31a547e108c8f87bed523329b7ef0cc2e6f",
+    "bytes": 871
+  },
+  "curve-0-native-weighted-100000-cold.jsonl.gz": {
+    "sha256": "bd87cd4845f3670395f7534267f62a645970ad70866f38a5af6b592d97000b75",
+    "bytes": 1177
+  },
+  "curve-0-interpreter-weighted-100000-cold.jsonl.gz": {
+    "sha256": "5d41f422e5f00489c137f8570e0ae25a5db2b2c04191c767ea5c3878a2639417",
+    "bytes": 1202
+  },
+  "curve-0-monty-weighted-100000-cold.jsonl.gz": {
+    "sha256": "fd886b02e6b8d4db32bd9a9645e4874ba5b70f30ccc2cbdd6aab81dff395b89d",
+    "bytes": 1278
+  },
+  "curve-0-reference-weighted-100000-cold.jsonl.gz": {
+    "sha256": "b9bec7a8c3aa51ff2b34134b949a8454b390fb85692cc3e6f5c0dd2a94188a76",
+    "bytes": 916
+  },
+  "curve-0-native-weighted-100000-warm.jsonl.gz": {
+    "sha256": "8ac60c92065001a93006b98c5a8f569d381081ee48db7f3f26405d374c694e7f",
+    "bytes": 877
+  },
+  "curve-0-interpreter-weighted-100000-warm.jsonl.gz": {
+    "sha256": "0052280ffa4d8eea1ca051cb68d03ad7f1bfb0410180660e4442c83a54ac4c8d",
+    "bytes": 984
+  },
+  "curve-0-monty-weighted-100000-warm.jsonl.gz": {
+    "sha256": "bd5b4a69eba6893e9b7a9024030749f55305e7adbe7916a4d98b79f08926edbf",
+    "bytes": 1134
+  },
+  "curve-0-reference-weighted-100000-warm.jsonl.gz": {
+    "sha256": "167d06d5d7b80a57939516d72db643950ec5a50839f1d05633c671bf5809e2f8",
+    "bytes": 839
+  },
+  "curve-0-cpython-resident-weighted-100000.jsonl.gz": {
+    "sha256": "acd5be469ffc85782b3c8d51739f037940bb5a2c53c3a4084ebd7e14514dbdb6",
+    "bytes": 1846
+  },
+  "curve-0-cpython-prepared-weighted-100000.jsonl.gz": {
+    "sha256": "708f579da2410ce4316cfd3e4cb560366380aa0319625d65f38ea9bf343d3425",
+    "bytes": 1694
+  },
+  "curve-0-cpython-spawn-weighted-100000.jsonl.gz": {
+    "sha256": "a7fe16c92d31b60570a651c4cc7a8cb5819ad50ca62d67a65bf6980d7d0b2ba5",
+    "bytes": 1826
+  },
+  "curve-0-cpython-fork-weighted-100000.jsonl.gz": {
+    "sha256": "f825b79f37136a63fec0106225f9b5d98071216bdc2a19147dc894dd170542f2",
+    "bytes": 1832
+  },
+  "curve-0-pypy-resident-weighted-100000.jsonl.gz": {
+    "sha256": "0bf62df213c6770bf236ea5dbd477bf3177bebc900a9b3ce988496737c646ade",
+    "bytes": 8943
+  },
+  "curve-0-pypy-prepared-weighted-100000.jsonl.gz": {
+    "sha256": "4e0d3b1b1d0f0c56203f49aa586b63d4115cf4b8ebd5dde45f1091785fca3736",
+    "bytes": 7727
+  },
+  "curve-0-pyodide-resident-weighted-100000.jsonl.gz": {
+    "sha256": "b5f377bb114e6f249eef90f72b2863ba0388123e1dd139c8410a3ff7395567ac",
+    "bytes": 967
+  },
+  "curve-0-pyodide-prepared-weighted-100000.jsonl.gz": {
+    "sha256": "cfbf723c3f14fba090de11a8616e9dab5d03a3b90b4b1b57559a4633f9562e99",
+    "bytes": 905
+  },
+  "curve-0-native-stateful-300-cold.jsonl.gz": {
+    "sha256": "68d276f9f8709e1dc2513d01daea3788e46b971b784e3921c990e42f9a7e73b6",
+    "bytes": 1104
+  },
+  "curve-0-interpreter-stateful-300-cold.jsonl.gz": {
+    "sha256": "293c9bf2d56d52e4d09e2eb0b35df2de24b877445f9c9c7fc259a5df5a33d477",
+    "bytes": 981
+  },
+  "curve-0-monty-stateful-300-cold.jsonl.gz": {
+    "sha256": "f0faf5b5b772418ed3b9844ed46003c0c74b577a3bbaf5a9a9b92fb79825e120",
+    "bytes": 1132
+  },
+  "curve-0-reference-stateful-300-cold.jsonl.gz": {
+    "sha256": "8a8536b6a205add38fec0e4c51175c66c6d89c0b70f77fff8aff5c457e18a53d",
+    "bytes": 688
+  },
+  "curve-0-native-stateful-300-warm.jsonl.gz": {
+    "sha256": "6ad1b1ce75c6561eb8b1bf15092e380cd3635dc3188a584caf4e2734e5d31a5b",
+    "bytes": 704
+  },
+  "curve-0-interpreter-stateful-300-warm.jsonl.gz": {
+    "sha256": "b4f70d00dc1ce0f001fbd0baa498ceefaaba5db63fc3456ef6787aeb57197e52",
+    "bytes": 672
+  },
+  "curve-0-monty-stateful-300-warm.jsonl.gz": {
+    "sha256": "ffb54b3ec57336085c0599a812f8d3d659704b864ef6f99bd65528ca98866b21",
+    "bytes": 983
+  },
+  "curve-0-reference-stateful-300-warm.jsonl.gz": {
+    "sha256": "9745163b511460f097861289b5f3eb7e992c1b1b4b9b0c69acdef4fe7dc19a49",
+    "bytes": 702
+  },
+  "curve-0-cpython-resident-stateful-300.jsonl.gz": {
+    "sha256": "2435f4bbb1e49981e1965e253d2f0c7258876df7c9304801bd68cbed121040a1",
+    "bytes": 1596
+  },
+  "curve-0-cpython-prepared-stateful-300.jsonl.gz": {
+    "sha256": "558a5601c174b48247d106457604410f14dc5c26dce7b81a19f4d598b6865274",
+    "bytes": 1332
+  },
+  "curve-0-cpython-spawn-stateful-300.jsonl.gz": {
+    "sha256": "1b34f3648128ea47e8272fbd1db487cf043fdb43624fffa58a629d79eaa3d54c",
+    "bytes": 1719
+  },
+  "curve-0-cpython-fork-stateful-300.jsonl.gz": {
+    "sha256": "4f5c3668e74571d161e7d0a710d0444217b6124c970595cc1837f7f841a1794e",
+    "bytes": 1707
+  },
+  "curve-0-pypy-resident-stateful-300.jsonl.gz": {
+    "sha256": "c75d55f4e5074ce02e095092070e5bf1bdef3debb7d07e2c8eea52d85f9dee3a",
+    "bytes": 7684
+  },
+  "curve-0-pypy-prepared-stateful-300.jsonl.gz": {
+    "sha256": "5c19948741d25aa01ed0f94a09c60504de41993f31de6085be28074ed3c6a9c2",
+    "bytes": 6334
+  },
+  "curve-0-pyodide-resident-stateful-300.jsonl.gz": {
+    "sha256": "0ee906829df0997b1d40dd640e368de690c7bfb5891e681eee678d08b772747d",
+    "bytes": 897
+  },
+  "curve-0-pyodide-prepared-stateful-300.jsonl.gz": {
+    "sha256": "80a21cea8ab75747a9e0f78ab2df1cb145bc2e8ce5b9f9cd9a452991c4b50449",
+    "bytes": 822
+  },
+  "curve-0-pysolate-fresh-stateful-300.jsonl.gz": {
+    "sha256": "9282e1615d4282fcf23eeb01fec3eb87cfcf5b2bed2a5bd0475df7938192f1cc",
+    "bytes": 575
+  },
+  "curve-0-pysolate-cow-stateful-300.jsonl.gz": {
+    "sha256": "9d6a2e944ebdf0a5990928eed64e02afce566f905f9f8678912a6517797de93e",
+    "bytes": 552
+  },
+  "curve-0-native-stateful-1000-cold.jsonl.gz": {
+    "sha256": "b1162483f8033324355df0823f0186261a045b7db367bfa9d02fc3fb2130bcb2",
+    "bytes": 1116
+  },
+  "curve-0-interpreter-stateful-1000-cold.jsonl.gz": {
+    "sha256": "811c1cdf2e178deb67fc3af29f0c108a115067e544cf9e60d14f41f4a66ca91b",
+    "bytes": 953
+  },
+  "curve-0-monty-stateful-1000-cold.jsonl.gz": {
+    "sha256": "0ad6cadd56cd25b4f3d6968a24593d06373b53b23fb33fe097cc53a8751eebcb",
+    "bytes": 1166
+  },
+  "curve-0-reference-stateful-1000-cold.jsonl.gz": {
+    "sha256": "a4e79db140ac4eb9bc5027919426a8941e860b31a48e802f42ca8deb001f4d0b",
+    "bytes": 725
+  },
+  "curve-0-native-stateful-1000-warm.jsonl.gz": {
+    "sha256": "92725575b7a163f5c061b8495b5cbee702ac2ca0eaa5ce735b66a1d034b1c0bd",
+    "bytes": 666
+  },
+  "curve-0-interpreter-stateful-1000-warm.jsonl.gz": {
+    "sha256": "146c7665afaf3d125b136aebd0f18e2cf63fd8154422ac8446defb904e72c084",
+    "bytes": 713
+  },
+  "curve-0-monty-stateful-1000-warm.jsonl.gz": {
+    "sha256": "4339189ee69630f34337ea7c8ece732df2e55566785bce9afa9965fb98720afc",
+    "bytes": 997
+  },
+  "curve-0-reference-stateful-1000-warm.jsonl.gz": {
+    "sha256": "58d3147a8d13521aeb22cff3534ac0ccc9c462dacf10e450d3f564e1ee885df6",
+    "bytes": 721
+  },
+  "curve-0-cpython-resident-stateful-1000.jsonl.gz": {
+    "sha256": "b912be9f33d9d25e5c86017fc7f4f11ecbf22b1d8b669e08871747ee2caa7317",
+    "bytes": 1667
+  },
+  "curve-0-cpython-prepared-stateful-1000.jsonl.gz": {
+    "sha256": "e41afdffccad64fa164987da6b9539c72fad987374f19c9c796156de6c2cf504",
+    "bytes": 1456
+  },
+  "curve-0-cpython-spawn-stateful-1000.jsonl.gz": {
+    "sha256": "b9ff76f0cac5086f09b64c648bdf7b21edc47fb869541f548c03c1899997bf36",
+    "bytes": 1726
+  },
+  "curve-0-cpython-fork-stateful-1000.jsonl.gz": {
+    "sha256": "e8ef07cb09eacdeffb2a681c912387d37e307add2587d94b4f08ba871597af6c",
+    "bytes": 1723
+  },
+  "curve-0-pypy-resident-stateful-1000.jsonl.gz": {
+    "sha256": "89a28cfd9f099de18a82d68cbda2960240b162936ae31a396d25a5061ac97579",
+    "bytes": 7624
+  },
+  "curve-0-pypy-prepared-stateful-1000.jsonl.gz": {
+    "sha256": "86bb0860e21ea8947c3f6183c85f0d206b3d82ecea521b02d0dc0f7e4ad28f5e",
+    "bytes": 6344
+  },
+  "curve-0-pyodide-resident-stateful-1000.jsonl.gz": {
+    "sha256": "1a8a8af6d780aefe1865599b411c61ddbdcc9bf6c76bc4a2f702b7303e0ab19d",
+    "bytes": 911
+  },
+  "curve-0-pyodide-prepared-stateful-1000.jsonl.gz": {
+    "sha256": "e0d83afa2ce99ae7aca5f54267b45431740b816848d1fe9fae0004fdd6ea6bd4",
+    "bytes": 839
+  },
+  "curve-0-pysolate-fresh-stateful-1000.jsonl.gz": {
+    "sha256": "bea6861cd6a7e93abf109c028348913a7bcb78f7c13cd9ed5edcebda8baf8819",
+    "bytes": 567
+  },
+  "curve-0-pysolate-cow-stateful-1000.jsonl.gz": {
+    "sha256": "2e996cf6679cea993b46c508d5c60545e21daacf7160c7e79a08ceec8a005c13",
+    "bytes": 547
+  },
+  "curve-0-native-stateful-3000-cold.jsonl.gz": {
+    "sha256": "f3386f40f6aea4076a9f7b6bd0f4da9e9246f7eaa27a1d666b5723e5e6e3f347",
+    "bytes": 1101
+  },
+  "curve-0-interpreter-stateful-3000-cold.jsonl.gz": {
+    "sha256": "afe5e9728d4e67bf1e7d8f75b1da28b69eefba61da38997012e0596ec1333709",
+    "bytes": 980
+  },
+  "curve-0-monty-stateful-3000-cold.jsonl.gz": {
+    "sha256": "bdf38b7d382917e7772a44f68df83621b44a52b13504555ded4c56c2743d1f9d",
+    "bytes": 1194
+  },
+  "curve-0-reference-stateful-3000-cold.jsonl.gz": {
+    "sha256": "0bf9569992c21cd07305799ec7d766d588c0dbe755c37fd134603476302ee4cc",
+    "bytes": 655
+  },
+  "curve-0-native-stateful-3000-warm.jsonl.gz": {
+    "sha256": "3648fe3141a6c70579e884dea74e9d107da8572e4f9530e9f2fb472d2b18fd4c",
+    "bytes": 686
+  },
+  "curve-0-interpreter-stateful-3000-warm.jsonl.gz": {
+    "sha256": "7eadaa736366877c78853254aa21e4d6e7136f0dfb0c52ce20b844f52a718cc7",
+    "bytes": 826
+  },
+  "curve-0-monty-stateful-3000-warm.jsonl.gz": {
+    "sha256": "e6c590e25edf12981c6c433b2d75aa3bfa9b7b51b473cc6c835598a08ad1a6bf",
+    "bytes": 1022
+  },
+  "curve-0-reference-stateful-3000-warm.jsonl.gz": {
+    "sha256": "c0ebb130ae077856fba4d7938e74e1ac9e352a9a7558ccc46d051baf14109745",
+    "bytes": 672
+  },
+  "curve-0-cpython-resident-stateful-3000.jsonl.gz": {
+    "sha256": "265e8867b5655be8e551c9ad0b7002e740dfa9453392cdedfd71b0df7920dc55",
+    "bytes": 1640
+  },
+  "curve-0-cpython-prepared-stateful-3000.jsonl.gz": {
+    "sha256": "9d9ad3e1331ff566337a532dcb5abbb5c2d7c4797c08352a00acf6107f1008c4",
+    "bytes": 1519
+  },
+  "curve-0-cpython-spawn-stateful-3000.jsonl.gz": {
+    "sha256": "56a2ef60757e1a7d0bd62a881eb8254b3009aeca3facb5c8d95c4d967c74d11a",
+    "bytes": 1750
+  },
+  "curve-0-cpython-fork-stateful-3000.jsonl.gz": {
+    "sha256": "dfdb3299a10d71e991f4c1d3568bcda6158e5ee886b5d36baef35033a44c8a91",
+    "bytes": 1751
+  },
+  "curve-0-pypy-resident-stateful-3000.jsonl.gz": {
+    "sha256": "f6051c48144188663b11c4fe1cad55a4fe185fc93754bcd6f7a185585a47c440",
+    "bytes": 8256
+  },
+  "curve-0-pypy-prepared-stateful-3000.jsonl.gz": {
+    "sha256": "2b02126fe687ed62f243576c50318bef5ef3cf58a0624395a5f1fff8647a47ce",
+    "bytes": 6992
+  },
+  "curve-0-pyodide-resident-stateful-3000.jsonl.gz": {
+    "sha256": "313d106bbe210acbba1cd0601cf6981494c72778bf1a8124d0ea35ba91036adf",
+    "bytes": 900
+  },
+  "curve-0-pyodide-prepared-stateful-3000.jsonl.gz": {
+    "sha256": "6c4d01befcd12ab20b316889043bb13d2ee535b31e693eda389d878c953ffb99",
+    "bytes": 843
+  },
+  "curve-0-pysolate-fresh-stateful-3000.jsonl.gz": {
+    "sha256": "4419e955b2e8d29d96c19f57371c357d2fa94109f79ee1e79715940bbfaa62bb",
+    "bytes": 572
+  },
+  "curve-0-pysolate-cow-stateful-3000.jsonl.gz": {
+    "sha256": "befc81f722c3045bfde5a7e3523bf4f9779d8df91186d2a7a545b7cccf252a9f",
+    "bytes": 555
+  },
+  "curve-0-native-stateful-10000-cold.jsonl.gz": {
+    "sha256": "ceb4a26d8e1882b72b1205a1e4560f084fcf2c8303707924a28a448931d95545",
+    "bytes": 1118
+  },
+  "curve-0-interpreter-stateful-10000-cold.jsonl.gz": {
+    "sha256": "60e7bd9c00210015dc1756ec72eac61d1a845677b728bca3a302ca8a2cbac7c8",
+    "bytes": 1037
+  },
+  "curve-0-monty-stateful-10000-cold.jsonl.gz": {
+    "sha256": "d2a7e629ef97401843d46e08e64c86c1f2dd4c539a2286fb2320dc3855dd0166",
+    "bytes": 1216
+  },
+  "curve-0-reference-stateful-10000-cold.jsonl.gz": {
+    "sha256": "17ea0ac425c8e08d0f93e48a69077c33be101aee028380d375f8d31ffd906cf5",
+    "bytes": 757
+  },
+  "curve-0-native-stateful-10000-warm.jsonl.gz": {
+    "sha256": "d546dcb5097ac83af2262f7e81fd4aef1853a6a4fedd0804950230e31039d85e",
+    "bytes": 712
+  },
+  "curve-0-interpreter-stateful-10000-warm.jsonl.gz": {
+    "sha256": "eefacb74cc10ec6f04e432e8c014dd7f2a447b52e27db4e9adcf177fc78b6731",
+    "bytes": 889
+  },
+  "curve-0-monty-stateful-10000-warm.jsonl.gz": {
+    "sha256": "ba1a5bd65d3b94fe4036b1bd850c7ae707b027a578073b822a9ba3fd077ce4c0",
+    "bytes": 1089
+  },
+  "curve-0-reference-stateful-10000-warm.jsonl.gz": {
+    "sha256": "9fc3ad96f9219abf314c95b2bebb6245634e9afe127fa13c682216ce3f56d5dc",
+    "bytes": 736
+  },
+  "curve-0-cpython-resident-stateful-10000.jsonl.gz": {
+    "sha256": "ac0908148dacca05ae13b523fc33b85f57974995e1e98cee28d243c34de19b1e",
+    "bytes": 1696
+  },
+  "curve-0-cpython-prepared-stateful-10000.jsonl.gz": {
+    "sha256": "b69290a1be6243f9ea227b17c10cbf320ae08485350e7bc0150cf106baa2fc3f",
+    "bytes": 1528
+  },
+  "curve-0-cpython-spawn-stateful-10000.jsonl.gz": {
+    "sha256": "dcfaf87b67c5b231d27f4f044c9182a02f31441506cbb3765e14601fe97d8c90",
+    "bytes": 1744
+  },
+  "curve-0-cpython-fork-stateful-10000.jsonl.gz": {
+    "sha256": "e0208d3433b95cc30ecac384ad455e7fff7f042cb4ecae0ca5576b299a980137",
+    "bytes": 1765
+  },
+  "curve-0-pypy-resident-stateful-10000.jsonl.gz": {
+    "sha256": "c7fc219d3a44a0bdb229a6577ff6255b4a1156a8f662362a0e64b8eb780555da",
+    "bytes": 8524
+  },
+  "curve-0-pypy-prepared-stateful-10000.jsonl.gz": {
+    "sha256": "a92a11c323c1bddf03f241d4cbb2280721ff29cfdc35a218cdbfad768f15c10b",
+    "bytes": 7387
+  },
+  "curve-0-pyodide-resident-stateful-10000.jsonl.gz": {
+    "sha256": "58caf926bd52f3c60e508d4e416a6f29539398e6361d286e6770976cd0b26e39",
+    "bytes": 912
+  },
+  "curve-0-pyodide-prepared-stateful-10000.jsonl.gz": {
+    "sha256": "4854a8a2e2996160e2eab00bc51ff0465903d2cc48cbbde412106e3f0bddd3e8",
+    "bytes": 853
+  },
+  "curve-0-pysolate-fresh-stateful-10000.jsonl.gz": {
+    "sha256": "51e147dfd7384f111fa2313aad793c7a921c047e2d188aa67c65a01aef911dd8",
+    "bytes": 578
+  },
+  "curve-0-pysolate-cow-stateful-10000.jsonl.gz": {
+    "sha256": "3ebb2200910ff95c53fb0c4add391b98c10c4956009803274ae82664eb165069",
+    "bytes": 562
+  },
+  "curve-0-native-stateful-30000-cold.jsonl.gz": {
+    "sha256": "33236866dcfd6403a145cd6fda00f6b01bff1fbfb7599a69cb8ef20cad5c4c78",
+    "bytes": 1160
+  },
+  "curve-0-interpreter-stateful-30000-cold.jsonl.gz": {
+    "sha256": "f55c07b95a8306efe2f52df55527ab9c27c734f36faa7fc7c0b825054efdea6b",
+    "bytes": 1156
+  },
+  "curve-0-monty-stateful-30000-cold.jsonl.gz": {
+    "sha256": "fead4cbd614a4656603ce7f2cdeae53fb5054ef2fcc8fa671ddf63cb1bd3fbc5",
+    "bytes": 1276
+  },
+  "curve-0-reference-stateful-30000-cold.jsonl.gz": {
+    "sha256": "7fa5257d334b746b6e33508dbc2d3bdd2f027d340102861c558de83a4daee57e",
+    "bytes": 855
+  },
+  "curve-0-native-stateful-30000-warm.jsonl.gz": {
+    "sha256": "43709028b5dbef3ec9704e7763c73bac0b47ffbb2f738c323482ed5b9744f3a5",
+    "bytes": 832
+  },
+  "curve-0-interpreter-stateful-30000-warm.jsonl.gz": {
+    "sha256": "e3f3a99b69c397631dd5c7de65e9f76d2d96469ade355068121e8438fd25a5b1",
+    "bytes": 949
+  },
+  "curve-0-monty-stateful-30000-warm.jsonl.gz": {
+    "sha256": "97083fca3306919d63a5e2369d242674311cc89bca7418398db7e7bf06050e0d",
+    "bytes": 1136
+  },
+  "curve-0-reference-stateful-30000-warm.jsonl.gz": {
+    "sha256": "7eabf14a1e0d2131b73bf4760f8936a44d5488f1cfb1819c37886e9629e0e09c",
+    "bytes": 782
+  },
+  "curve-0-cpython-resident-stateful-30000.jsonl.gz": {
+    "sha256": "c33597c378f6b5b5b6bcb60856697f3fcae6843065ff6b5f7c4529ab9b62a3be",
+    "bytes": 1799
+  },
+  "curve-0-cpython-prepared-stateful-30000.jsonl.gz": {
+    "sha256": "baa3fa7359423d48372ffebbb8f14c0f38a617585abaa84c899b2122ab9b6317",
+    "bytes": 1648
+  },
+  "curve-0-cpython-spawn-stateful-30000.jsonl.gz": {
+    "sha256": "5e12f2022ea1be67603e0271d2b61a10ad583fea7480198f2938d9f99b4fc011",
+    "bytes": 1783
+  },
+  "curve-0-cpython-fork-stateful-30000.jsonl.gz": {
+    "sha256": "f8f9c9a7094270d66d1d7b71d2cfa4eaa374f5c1cc86d1e2a75cdd2d85409e81",
+    "bytes": 1802
+  },
+  "curve-0-pypy-resident-stateful-30000.jsonl.gz": {
+    "sha256": "40c70d1f02148fdeb0525fff273b2cc708919257bf8356a63d6569f0ae93dd9a",
+    "bytes": 8651
+  },
+  "curve-0-pypy-prepared-stateful-30000.jsonl.gz": {
+    "sha256": "c9c16de635187e6d297f4e3236d2a73a2874c37fc8bfda04edeefcb8de065700",
+    "bytes": 7716
+  },
+  "curve-0-pyodide-resident-stateful-30000.jsonl.gz": {
+    "sha256": "c90744a672cecb72488187555c26d2a26b417f024561719c2bb7430a2602db7e",
+    "bytes": 933
+  },
+  "curve-0-pyodide-prepared-stateful-30000.jsonl.gz": {
+    "sha256": "0e05e91a1a8dca0d783db1cc0b7eb9a291d6c168a88041bb735a1dfe3487e1f0",
+    "bytes": 870
+  },
+  "curve-1-native-weighted-300-cold.jsonl.gz": {
+    "sha256": "919cc990a3e77994ba249a6d9df960594b43b4cae8e92b321b40d123cfd78817",
+    "bytes": 1119
+  },
+  "curve-1-reference-weighted-300-cold.jsonl.gz": {
+    "sha256": "839ca085f807439a5d3403f05eabbf69df4483551544fb3fddfb413867d3f41f",
+    "bytes": 673
+  },
+  "curve-1-monty-weighted-300-cold.jsonl.gz": {
+    "sha256": "c7f0393277d27e8b66bf4ea688e8339d38d9d95e575a3fe6805a5079a7484d4c",
+    "bytes": 1124
+  },
+  "curve-1-interpreter-weighted-300-cold.jsonl.gz": {
+    "sha256": "f59625cc152902c9c9cefec28e6b7425a1ab2d77b6cd8823275885924efb26e6",
+    "bytes": 895
+  },
+  "curve-1-native-weighted-300-warm.jsonl.gz": {
+    "sha256": "d77eb6ae3c0b469fcf439eed885bd32f024447c5f4a9b2ee1324f23f4d951edd",
+    "bytes": 665
+  },
+  "curve-1-reference-weighted-300-warm.jsonl.gz": {
+    "sha256": "ba8b38d7b3135f154f496588692bba56b675a8ab0f4fa5c8d9ef3da0e271e451",
+    "bytes": 686
+  },
+  "curve-1-monty-weighted-300-warm.jsonl.gz": {
+    "sha256": "0440dd2308d0c68086c6a524a6d9d0de8b2bfc39dbddb166bc42209afe30e4ca",
+    "bytes": 962
+  },
+  "curve-1-interpreter-weighted-300-warm.jsonl.gz": {
+    "sha256": "9fd03d9c9daf2860cf1e68e7b55906fbc71827f66b5f06c9cf3fe8ec388a7a07",
+    "bytes": 727
+  },
+  "curve-1-cpython-resident-weighted-300.jsonl.gz": {
+    "sha256": "721170772c5bc1557cb1f88b356f0b1a8131648c9513863bcd3947cea9585801",
+    "bytes": 1588
+  },
+  "curve-1-pypy-prepared-weighted-300.jsonl.gz": {
+    "sha256": "9568014e899e946924d3dc6cce0f3471fbf6759eee626b5d5b5fdecb16cedd95",
+    "bytes": 6323
+  },
+  "curve-1-pypy-resident-weighted-300.jsonl.gz": {
+    "sha256": "014a477f5e2e7407a280138eed67e2ef44d74fde532709f005b4f03fc5a68328",
+    "bytes": 7593
+  },
+  "curve-1-cpython-fork-weighted-300.jsonl.gz": {
+    "sha256": "a85559202fcd617fe47918116b9afd097285b9d19436c3ad2a50694c2fd356fd",
+    "bytes": 1710
+  },
+  "curve-1-cpython-spawn-weighted-300.jsonl.gz": {
+    "sha256": "52ce6927c31e89cfc8263919cd49e40f848cc1781ad6fe63c19915e04f631f21",
+    "bytes": 1722
+  },
+  "curve-1-cpython-prepared-weighted-300.jsonl.gz": {
+    "sha256": "ca4e36cd294a8b07870580ea76ff80bfa22b658ea20fdb574f118413b434505d",
+    "bytes": 1409
+  },
+  "curve-1-pyodide-prepared-weighted-300.jsonl.gz": {
+    "sha256": "463f1cd9994855ca65d6760292a9ad7059736f44740a14ad644416961b8ba3cb",
+    "bytes": 812
+  },
+  "curve-1-pyodide-resident-weighted-300.jsonl.gz": {
+    "sha256": "c9b67af8136af359ee94181efeae0752b0e7790cc990739ccbf539edf0e66f83",
+    "bytes": 887
+  },
+  "curve-1-pysolate-cow-weighted-300.jsonl.gz": {
+    "sha256": "3f826157b81afb5a8db052514f5d2ca9c3fc0cbde0a88d6c4879ca77a7d1c6fc",
+    "bytes": 547
+  },
+  "curve-1-pysolate-fresh-weighted-300.jsonl.gz": {
+    "sha256": "cb096ea5dd686385f920634da6c31208e742bfc9dd195f43a1ea9d8769337194",
+    "bytes": 568
+  },
+  "curve-1-native-weighted-1000-cold.jsonl.gz": {
+    "sha256": "c08b5e1956e845546f90669556f6e645670a9fc55da33d3eb7f571f35699c5bb",
+    "bytes": 1077
+  },
+  "curve-1-reference-weighted-1000-cold.jsonl.gz": {
+    "sha256": "88e80b52cb9cb1c7090f3cccb42ad2978e904104d40f118fa5b7ab42ed3234af",
+    "bytes": 704
+  },
+  "curve-1-monty-weighted-1000-cold.jsonl.gz": {
+    "sha256": "07fbdf71e83af2f4bbd0bacbffb7a341a3c176400711861028a5733d68ba989e",
+    "bytes": 1148
+  },
+  "curve-1-interpreter-weighted-1000-cold.jsonl.gz": {
+    "sha256": "23d712100f928e6cd63cf22d09be0e4155e6c6875870e449aa1fabf951a5909a",
+    "bytes": 912
+  },
+  "curve-1-native-weighted-1000-warm.jsonl.gz": {
+    "sha256": "2da20e11468498d0060d3d5831eba233e71c44c3913cae88cb2541a04c4da1b1",
+    "bytes": 679
+  },
+  "curve-1-reference-weighted-1000-warm.jsonl.gz": {
+    "sha256": "464ff143e4ae7bd6d7970807880ab518051bbaefa2c83167a4c0b65d75f6c224",
+    "bytes": 686
+  },
+  "curve-1-monty-weighted-1000-warm.jsonl.gz": {
+    "sha256": "41d3456fbe8b3827bde55817bce6182aeac1dc71132a2a0e7c7c2ffe78f49fbb",
+    "bytes": 1002
+  },
+  "curve-1-interpreter-weighted-1000-warm.jsonl.gz": {
+    "sha256": "c47542dd51edd9c0a9e614766f188e8f40257525a37bcc5093db03bfc7a24ead",
+    "bytes": 729
+  },
+  "curve-1-cpython-resident-weighted-1000.jsonl.gz": {
+    "sha256": "53c1a30cf14cca17053f80087475721dde93ca82b200889e92338e6f36522930",
+    "bytes": 1626
+  },
+  "curve-1-pypy-prepared-weighted-1000.jsonl.gz": {
+    "sha256": "d303a64d1ccc136677c586b0f92e279fd2b2e674dcf69d8ce456fc6a53f6578e",
+    "bytes": 6537
+  },
+  "curve-1-pypy-resident-weighted-1000.jsonl.gz": {
+    "sha256": "7dc29f2f2f2865ea4b50f843c7d1235eb1af3bce3008d2c25a3e3c8603f34372",
+    "bytes": 7867
+  },
+  "curve-1-cpython-fork-weighted-1000.jsonl.gz": {
+    "sha256": "ab4cca3de94f132a93edd2124f386fb390161de3177408e71b1d56c8baa85ea9",
+    "bytes": 1723
+  },
+  "curve-1-cpython-spawn-weighted-1000.jsonl.gz": {
+    "sha256": "b08bef694691f2da16e1e9eb95065b32495ba5eecb3b2b5fe8953122a7c4d5ed",
+    "bytes": 1752
+  },
+  "curve-1-cpython-prepared-weighted-1000.jsonl.gz": {
+    "sha256": "804027cc2740955424cdb5a76415caef4877ad71565551ecf9e237e969ac8da9",
+    "bytes": 1468
+  },
+  "curve-1-pyodide-prepared-weighted-1000.jsonl.gz": {
+    "sha256": "939be46650137883468cd31dd78fe4b9da9ea7ca0d8c9363ecb95593210f5fae",
+    "bytes": 830
+  },
+  "curve-1-pyodide-resident-weighted-1000.jsonl.gz": {
+    "sha256": "ef19c79db0029a38b1132fc9c92656ab0882c0b0b83dd637bf2e3bfd2d2f5dd0",
+    "bytes": 907
+  },
+  "curve-1-pysolate-cow-weighted-1000.jsonl.gz": {
+    "sha256": "d1be25a82f38583e9730ba6befe7baa11126066e523d7c0fff03f51f8ad72561",
+    "bytes": 548
+  },
+  "curve-1-pysolate-fresh-weighted-1000.jsonl.gz": {
+    "sha256": "1daefd0b39a8d21e94a65b88a2eed4ba3876650d337f3933e161ba44eb964266",
+    "bytes": 570
+  },
+  "curve-1-native-weighted-3000-cold.jsonl.gz": {
+    "sha256": "1f9bbd338e619c91b8ea55622cc9a5fd6e3ce10b17690e611190130c4195e36c",
+    "bytes": 1115
+  },
+  "curve-1-reference-weighted-3000-cold.jsonl.gz": {
+    "sha256": "0e08e0781dfb7226d55a175c563c6c474f38287f840cecdf808debd61a71b604",
+    "bytes": 635
+  },
+  "curve-1-monty-weighted-3000-cold.jsonl.gz": {
+    "sha256": "02ee2dfa5c884a1309b81fe7a2a4fb268b2eafe5b3001146365d05a58b0bf8b1",
+    "bytes": 1201
+  },
+  "curve-1-interpreter-weighted-3000-cold.jsonl.gz": {
+    "sha256": "470a29bcb8cc03d585edbce325d122f3a4ab3e97fe12c1162d568b6297da7fa8",
+    "bytes": 964
+  },
+  "curve-1-native-weighted-3000-warm.jsonl.gz": {
+    "sha256": "b495d4fa3dd49231a478a816edf7219adca895a8bb6b292bb920ad16692dc053",
+    "bytes": 643
+  },
+  "curve-1-reference-weighted-3000-warm.jsonl.gz": {
+    "sha256": "eed67cec0fa4b69f08a567c91e5c29a93f5487ae0d5cd0c1642132d4e74e3df1",
+    "bytes": 739
+  },
+  "curve-1-monty-weighted-3000-warm.jsonl.gz": {
+    "sha256": "b12d7b3cc1247cfc5875ead427889f4daf15d3397c3fcd40d57bd78961c0c21c",
+    "bytes": 1059
+  },
+  "curve-1-interpreter-weighted-3000-warm.jsonl.gz": {
+    "sha256": "0f9f5d065b8fe9e3cdfdf925cc490722df66263fdc42ad203b0333514e86d793",
+    "bytes": 790
+  },
+  "curve-1-cpython-resident-weighted-3000.jsonl.gz": {
+    "sha256": "7962d8997d182194b36c22965db23e5044f0697587ba18c6eaa0c9fb3c35e4c7",
+    "bytes": 1707
+  },
+  "curve-1-pypy-prepared-weighted-3000.jsonl.gz": {
+    "sha256": "5cbcae36cf53d1c5e8cdb76cccfa54b4876fe3311f266c10341de37d55465060",
+    "bytes": 6986
+  },
+  "curve-1-pypy-resident-weighted-3000.jsonl.gz": {
+    "sha256": "d7bdf4e08f065e6925f2d3061d30290f5202c87cd72a8512c3ffdec27ec6a3e6",
+    "bytes": 8229
+  },
+  "curve-1-cpython-fork-weighted-3000.jsonl.gz": {
+    "sha256": "4830718dcfaf2fbd166567eccc0610220a4835fc928333009653782fbae2d883",
+    "bytes": 1755
+  },
+  "curve-1-cpython-spawn-weighted-3000.jsonl.gz": {
+    "sha256": "41ea8020c14e741f98fe7bc642f95bb8638d563aef1f0f9781682a6e950d5537",
+    "bytes": 1678
+  },
+  "curve-1-cpython-prepared-weighted-3000.jsonl.gz": {
+    "sha256": "50cc820229f2fe99c0db8dcbeddc1a4f54078d0e5bb6432d8d017dcf5481dd15",
+    "bytes": 1453
+  },
+  "curve-1-pyodide-prepared-weighted-3000.jsonl.gz": {
+    "sha256": "c373d0bdd5724e87fb6371c52e1ab20b1f2cfc020327415c11ddf4124b80f406",
+    "bytes": 837
+  },
+  "curve-1-pyodide-resident-weighted-3000.jsonl.gz": {
+    "sha256": "23812d650593490abdc969409949519d5b0330998de890ba339bf714c4533ee7",
+    "bytes": 906
+  },
+  "curve-1-pysolate-cow-weighted-3000.jsonl.gz": {
+    "sha256": "269211e11e187d8f57053fede762e1ae003e2a6f9f0842914faed889e2dc72dd",
+    "bytes": 552
+  },
+  "curve-1-pysolate-fresh-weighted-3000.jsonl.gz": {
+    "sha256": "fe9095e15a2dfcf472a113c0896cd311799ad74dc942ef1713bb2c776c1db827",
+    "bytes": 576
+  },
+  "curve-1-native-weighted-30000-cold.jsonl.gz": {
+    "sha256": "0bd34efd3a70ded511d9182bec6c47367e5a8519de507ad24ddb21f44b1180c0",
+    "bytes": 1147
+  },
+  "curve-1-reference-weighted-30000-cold.jsonl.gz": {
+    "sha256": "19fdc4c632fe01415ba8d51587d12d3a8d7d82dc760b957fcd2289e76d690262",
+    "bytes": 851
+  },
+  "curve-1-monty-weighted-30000-cold.jsonl.gz": {
+    "sha256": "2ef5ea4b3adec92c05c195ffc2e81a06138aa6b427a9548eeb31dedbe6f322ee",
+    "bytes": 1275
+  },
+  "curve-1-interpreter-weighted-30000-cold.jsonl.gz": {
+    "sha256": "8c89e53d54cc956e4320845269096c850b5887c3b0adade11979ce48112e1faa",
+    "bytes": 1129
+  },
+  "curve-1-native-weighted-30000-warm.jsonl.gz": {
+    "sha256": "c4a174072415e80162666b19954e6117786fcf619fd9cf046a48f27393eb1c2c",
+    "bytes": 851
+  },
+  "curve-1-reference-weighted-30000-warm.jsonl.gz": {
+    "sha256": "48bcdc9d88614e7dc78bfdeeb1fcd9971c5de68e7124348f7b8e10d5567bf04d",
+    "bytes": 802
+  },
+  "curve-1-monty-weighted-30000-warm.jsonl.gz": {
+    "sha256": "cb996a37f63e909e8973f8c370b607f821f42c681fba30eef79ed76c612d1b77",
+    "bytes": 1094
+  },
+  "curve-1-interpreter-weighted-30000-warm.jsonl.gz": {
+    "sha256": "4f210891d73af44902fc29f749207abda78d67b3e7d3446be0070ae40eb6a76f",
+    "bytes": 947
+  },
+  "curve-1-cpython-resident-weighted-30000.jsonl.gz": {
+    "sha256": "9730d395877b10ac624a41a8afe4e825532d0fed4d4e672b5fe3a55040128722",
+    "bytes": 1766
+  },
+  "curve-1-pypy-prepared-weighted-30000.jsonl.gz": {
+    "sha256": "04de2f7ba5c9653320f4fd5ce61a4e70b2dcb52821aec7569a02e4e387834dea",
+    "bytes": 7727
+  },
+  "curve-1-pypy-resident-weighted-30000.jsonl.gz": {
+    "sha256": "7124de6f27b57b0721cca10e50c4056b2561ed26a6de33cd597ec95741700e12",
+    "bytes": 8579
+  },
+  "curve-1-cpython-fork-weighted-30000.jsonl.gz": {
+    "sha256": "93794faf9f5879e44be18b564b8e4911067781bd28d006c1f6c1652b2cb6a241",
+    "bytes": 1805
+  },
+  "curve-1-cpython-spawn-weighted-30000.jsonl.gz": {
+    "sha256": "06e78523857305b06ed8f945419d191a77443f484a0b1ebd99bdbffdcbb115ee",
+    "bytes": 1782
+  },
+  "curve-1-cpython-prepared-weighted-30000.jsonl.gz": {
+    "sha256": "96615503f9f7ed262bbd4333e099c82a4ff131fff04c9534f2b21e284225741d",
+    "bytes": 1630
+  },
+  "curve-1-pyodide-prepared-weighted-30000.jsonl.gz": {
+    "sha256": "bb7a71b2cd2285677ac2e6fe9b579510d06d033f75afb3122429954725efd81b",
+    "bytes": 881
+  },
+  "curve-1-pyodide-resident-weighted-30000.jsonl.gz": {
+    "sha256": "99b6cf5909a7de91c3809d0103b2b2562131d1bdc4284e9c07def94c7933606d",
+    "bytes": 939
+  },
+  "curve-1-native-weighted-100000-cold.jsonl.gz": {
+    "sha256": "83e95cb7f69600cdd761041339b0d75870fe0824121b9eee95c798ee1ba605cd",
+    "bytes": 1145
+  },
+  "curve-1-reference-weighted-100000-cold.jsonl.gz": {
+    "sha256": "929aa0b44bd7d438ce4028c39c7aef4d2469405a73b81f76dc0a725760964428",
+    "bytes": 980
+  },
+  "curve-1-monty-weighted-100000-cold.jsonl.gz": {
+    "sha256": "7e9336bbdd786832a65c3cb0e6248bdb7843a124c6dfb93df3bfb578d105bc83",
+    "bytes": 1364
+  },
+  "curve-1-interpreter-weighted-100000-cold.jsonl.gz": {
+    "sha256": "437f6cd0c795bd2d2ff52b11766ec636012191fe7c13395b9384aff08f4098a9",
+    "bytes": 1168
+  },
+  "curve-1-native-weighted-100000-warm.jsonl.gz": {
+    "sha256": "45b1673cee0a580d0f48f9bda054fc3c5b7b53a47e55b43f48e0c4198aad2b5e",
+    "bytes": 905
+  },
+  "curve-1-reference-weighted-100000-warm.jsonl.gz": {
+    "sha256": "63dbbf5f04291d0304d236acfc88224cad45778cd7f69c9e0e73f34ffcfa0803",
+    "bytes": 947
+  },
+  "curve-1-monty-weighted-100000-warm.jsonl.gz": {
+    "sha256": "6847439b2d1319651ab390074f1ea3dcb3791a923815a382423172e5ea97154a",
+    "bytes": 1153
+  },
+  "curve-1-interpreter-weighted-100000-warm.jsonl.gz": {
+    "sha256": "0f2126a55039418666dc5ac2ec8fff8dd2f0c69032dc4e4dd945c18b03683b8d",
+    "bytes": 1019
+  },
+  "curve-1-cpython-resident-weighted-100000.jsonl.gz": {
+    "sha256": "637f6e6f4ba2b84696fcb6568d02d03732640d900b50306e16142941761b8c00",
+    "bytes": 1799
+  },
+  "curve-1-pypy-prepared-weighted-100000.jsonl.gz": {
+    "sha256": "f89dc17340f14d17a986343f0edc8511281b8acd07f1c093446f4a54d639fda3",
+    "bytes": 7805
+  },
+  "curve-1-pypy-resident-weighted-100000.jsonl.gz": {
+    "sha256": "71b37599ee790973c315c43e374eb96990a0889a6be28a2d3f186687e8ab9894",
+    "bytes": 8877
+  },
+  "curve-1-cpython-fork-weighted-100000.jsonl.gz": {
+    "sha256": "b63099daa1d8bb6e35588adc13e79a0bd0a5bd2338a2962744b4885d860eda75",
+    "bytes": 1830
+  },
+  "curve-1-cpython-spawn-weighted-100000.jsonl.gz": {
+    "sha256": "0f24c961395a6154459d18712503f9914f89cd71b874539cb017a7b80f875a67",
+    "bytes": 1790
+  },
+  "curve-1-cpython-prepared-weighted-100000.jsonl.gz": {
+    "sha256": "bb7c668965532f07afcdc6ef38a5436927c0beba4cd5d3e7bd0d7cbc60be685b",
+    "bytes": 1675
+  },
+  "curve-1-pyodide-prepared-weighted-100000.jsonl.gz": {
+    "sha256": "3a00c07aa162248f75725bcca10300e8ba4f80c7b6604f10c33a1baa315c045a",
+    "bytes": 894
+  },
+  "curve-1-pyodide-resident-weighted-100000.jsonl.gz": {
+    "sha256": "0111ba2780835dd3188bfd95c7c2aa4299435e56831ecae0daf2b017960282d2",
+    "bytes": 981
+  },
+  "curve-1-native-stateful-300-cold.jsonl.gz": {
+    "sha256": "c5d2374b7a4eadd640606bdbec5a8decffe25c718d5cbec8447c7ea763c1d06c",
+    "bytes": 1114
+  },
+  "curve-1-reference-stateful-300-cold.jsonl.gz": {
+    "sha256": "fce8e9d7079f9388ff238cbe4ace4f44521f28992378f3ffefc2afbc28153964",
+    "bytes": 698
+  },
+  "curve-1-monty-stateful-300-cold.jsonl.gz": {
+    "sha256": "4b36f1bbdcc6fa79d11b54f4163c21441485177991c78519d429e367d609cb7e",
+    "bytes": 1138
+  },
+  "curve-1-interpreter-stateful-300-cold.jsonl.gz": {
+    "sha256": "fd8862e01f3a6e28f14863812b64100c126e111610bc8f79460bf3c49fd9e442",
+    "bytes": 965
+  },
+  "curve-1-native-stateful-300-warm.jsonl.gz": {
+    "sha256": "6e15f1d36a8fd4dea0e25d14e6ea2b36d26ac067c8119e200b21c914f9018131",
+    "bytes": 693
+  },
+  "curve-1-reference-stateful-300-warm.jsonl.gz": {
+    "sha256": "6a92c3a1c1a3a3c81013132b3af5d0ca5e5906367eb9f17c286ec427e6f23214",
+    "bytes": 685
+  },
+  "curve-1-monty-stateful-300-warm.jsonl.gz": {
+    "sha256": "a779ddf31a54840f75649045b70149d646db1c5b4abda1599d6dc42271890279",
+    "bytes": 955
+  },
+  "curve-1-interpreter-stateful-300-warm.jsonl.gz": {
+    "sha256": "e326bf460b6621ca2ccc2c36f76913528fab413613a52aa13ca70c91936639b9",
+    "bytes": 702
+  },
+  "curve-1-cpython-resident-stateful-300.jsonl.gz": {
+    "sha256": "047b19de96fc98cd58f3139406f1332b28bc324e9015d12b63c4ee7de2df33d7",
+    "bytes": 1602
+  },
+  "curve-1-pypy-prepared-stateful-300.jsonl.gz": {
+    "sha256": "e9e06f04930d44999aa427df7189e1bdb7977861d2320eaaabebe0560a38fd96",
+    "bytes": 6432
+  },
+  "curve-1-pypy-resident-stateful-300.jsonl.gz": {
+    "sha256": "5e98bc176409833f413a7f225590206a407bc3e14d30cb43b74609828125a165",
+    "bytes": 7584
+  },
+  "curve-1-cpython-fork-stateful-300.jsonl.gz": {
+    "sha256": "73553cdd011238e092f649c89baf36319ba6bad2a38309f5927bef3d6c5dcc1f",
+    "bytes": 1695
+  },
+  "curve-1-cpython-spawn-stateful-300.jsonl.gz": {
+    "sha256": "8b68f93ddde6e1c1229e061aadb425248e6252b169529e130a039777f1de34af",
+    "bytes": 1725
+  },
+  "curve-1-cpython-prepared-stateful-300.jsonl.gz": {
+    "sha256": "537006f721527e3a1fd50e60bab23391def361587a81ec49f17738b1ca1044a7",
+    "bytes": 1428
+  },
+  "curve-1-pyodide-prepared-stateful-300.jsonl.gz": {
+    "sha256": "bc8588e016263c0d162e5e43f5d0535d95e4f3bb907a7dfb385679268621c532",
+    "bytes": 827
+  },
+  "curve-1-pyodide-resident-stateful-300.jsonl.gz": {
+    "sha256": "0237df5f36b73d7615b0225b06c9a9a50237be860a686f443e518a42c4158fda",
+    "bytes": 893
+  },
+  "curve-1-pysolate-cow-stateful-300.jsonl.gz": {
+    "sha256": "447f037808b34c1b734a060d201d1ba4af23fe8155023c3dc4cc625f773b64f0",
+    "bytes": 547
+  },
+  "curve-1-pysolate-fresh-stateful-300.jsonl.gz": {
+    "sha256": "bc87fa9b3695f411357cc018fa126ce64c2fb36634ff97079f59bde2a93a1676",
+    "bytes": 567
+  },
+  "curve-1-native-stateful-1000-cold.jsonl.gz": {
+    "sha256": "6113f3c8e6c03a09ddff46c02b80c21b4d52e6f381346ec79eb0ccab6cae2002",
+    "bytes": 1119
+  },
+  "curve-1-reference-stateful-1000-cold.jsonl.gz": {
+    "sha256": "84953f1654cfed6bd3780d1d24fec3c883af29a17d05829da5e9b6f55622f25f",
+    "bytes": 707
+  },
+  "curve-1-monty-stateful-1000-cold.jsonl.gz": {
+    "sha256": "6e946df798c67e7dfcee9622e4b62185040239872e609548e5bb6cd243a1155d",
+    "bytes": 1157
+  },
+  "curve-1-interpreter-stateful-1000-cold.jsonl.gz": {
+    "sha256": "f254b439cfe22602c7459c5d985d32a2358a7d9fe0459e81de7b57b6124dcefa",
+    "bytes": 982
+  },
+  "curve-1-native-stateful-1000-warm.jsonl.gz": {
+    "sha256": "357b6d1f67184211e2210fe207b6b0f123d42bf90f9288f9752b64edf8a06acc",
+    "bytes": 610
+  },
+  "curve-1-reference-stateful-1000-warm.jsonl.gz": {
+    "sha256": "52e2b92142c4b10afedce4a3fcf9e457df3af234e1ff0f0578314134d84d9513",
+    "bytes": 732
+  },
+  "curve-1-monty-stateful-1000-warm.jsonl.gz": {
+    "sha256": "962d3188eca2d52ffface2d514011d1a79e614f757f3671581f5392a54a6158e",
+    "bytes": 1027
+  },
+  "curve-1-interpreter-stateful-1000-warm.jsonl.gz": {
+    "sha256": "297fc2f087f7fbc14bcc2d5bd53ce4cc3993a515d563f93a53dfcaa8539b1d08",
+    "bytes": 707
+  },
+  "curve-1-cpython-resident-stateful-1000.jsonl.gz": {
+    "sha256": "fe75d3d13f6da05c6809098fbc4b6eeb5c9df324a7749e183cf25556343d955a",
+    "bytes": 1650
+  },
+  "curve-1-pypy-prepared-stateful-1000.jsonl.gz": {
+    "sha256": "2c9923d8b3fd74efbd8f250fc9bb276790aeeda0d03c4d8d4df0ee89421a115b",
+    "bytes": 6749
+  },
+  "curve-1-pypy-resident-stateful-1000.jsonl.gz": {
+    "sha256": "268b105dbbbce3ffc3bc095ff509b44b7511718a419040a2093334e754a05ab8",
+    "bytes": 7976
+  },
+  "curve-1-cpython-fork-stateful-1000.jsonl.gz": {
+    "sha256": "27e6e93be111d290504133289ed2fe0ad9b553b46ad0e879739ca05c64641bcf",
+    "bytes": 1734
+  },
+  "curve-1-cpython-spawn-stateful-1000.jsonl.gz": {
+    "sha256": "7126831d204fbce4b22fcc3267df662539a3576f95f7b08d6291d89bce5c313d",
+    "bytes": 1749
+  },
+  "curve-1-cpython-prepared-stateful-1000.jsonl.gz": {
+    "sha256": "42beda5e5a76388bdfb5cac0c6b9264a32c32c54c8ae797b3e46e69f83814bc4",
+    "bytes": 1481
+  },
+  "curve-1-pyodide-prepared-stateful-1000.jsonl.gz": {
+    "sha256": "dd20b1253fa2957e85411e36b3844e2fe955103e98941dd689ae63dbad4c6051",
+    "bytes": 831
+  },
+  "curve-1-pyodide-resident-stateful-1000.jsonl.gz": {
+    "sha256": "32cccc52a6f11168687d61e8f303be899756c9e6ef5def9eab8b7f514e31f65a",
+    "bytes": 908
+  },
+  "curve-1-pysolate-cow-stateful-1000.jsonl.gz": {
+    "sha256": "3e46691a69fc683c2a0acacf1547f7230d0699d8f55f530be2cc133b75cdc9f2",
+    "bytes": 544
+  },
+  "curve-1-pysolate-fresh-stateful-1000.jsonl.gz": {
+    "sha256": "a3b534ab1b3d60e4b84c0d6c6bf5e77b6ea6d655d9d1f8d801db7663ed9a3b93",
+    "bytes": 575
+  },
+  "curve-1-native-stateful-3000-cold.jsonl.gz": {
+    "sha256": "af25ed220f278d57289e52a256cf30c6692c83d5bf04cecf5a13f8fe849e3186",
+    "bytes": 1109
+  },
+  "curve-1-reference-stateful-3000-cold.jsonl.gz": {
+    "sha256": "68a60d2a88cdc2945cb23610a92375bdcdbf819c8893295b188fdb3a26855a7f",
+    "bytes": 691
+  },
+  "curve-1-monty-stateful-3000-cold.jsonl.gz": {
+    "sha256": "3905d66a4d4ad9bb4a8e78617703b67dc323b4aefbf310c6ff197e960ae7acc9",
+    "bytes": 1218
+  },
+  "curve-1-interpreter-stateful-3000-cold.jsonl.gz": {
+    "sha256": "65626532ae84f5f720917c9cc226a63d41c7cf6af77b99942b22411910ee721f",
+    "bytes": 1035
+  },
+  "curve-1-native-stateful-3000-warm.jsonl.gz": {
+    "sha256": "61b60af918ffcaa5ab07f5b44128d74dad1f91b7655a76c3dd88a6d1b58760bd",
+    "bytes": 688
+  },
+  "curve-1-reference-stateful-3000-warm.jsonl.gz": {
+    "sha256": "879c9cd87ecd7e996f70d8e122325dba0c297500d90ab4f553a11b898bf84d6f",
+    "bytes": 736
+  },
+  "curve-1-monty-stateful-3000-warm.jsonl.gz": {
+    "sha256": "1072495362729d314fb6b6851a5e4c446ce58ded0fc0df422de40012d39a0b99",
+    "bytes": 1050
+  },
+  "curve-1-interpreter-stateful-3000-warm.jsonl.gz": {
+    "sha256": "9398f727e78343e8c784fbfc398c7a0a3d3e9ed6e6c38b7af7ec648416670255",
+    "bytes": 744
+  },
+  "curve-1-cpython-resident-stateful-3000.jsonl.gz": {
+    "sha256": "c673b6e738f76af55e90eddc8174cc3d45cf1127f9b2a357d757b358905a9427",
+    "bytes": 1688
+  },
+  "curve-1-pypy-prepared-stateful-3000.jsonl.gz": {
+    "sha256": "b5846cf7fbc6f0ffca3388c2137c8d8358a5b838718d0e802b920e8fa0169761",
+    "bytes": 6935
+  },
+  "curve-1-pypy-resident-stateful-3000.jsonl.gz": {
+    "sha256": "b05aef4643b17e820e3998edfb6b06bf63f40db8cca5df9b3f791dcd966c0da5",
+    "bytes": 8267
+  },
+  "curve-1-cpython-fork-stateful-3000.jsonl.gz": {
+    "sha256": "e311f973edc4525f5dc74244e59032b572231181feea9c24a3a1a07d33f46d0e",
+    "bytes": 1733
+  },
+  "curve-1-cpython-spawn-stateful-3000.jsonl.gz": {
+    "sha256": "d1adff25c8861bf811ca94370ee787edbcc81bfd28ec09e80f1ee8538b5d2c3e",
+    "bytes": 1767
+  },
+  "curve-1-cpython-prepared-stateful-3000.jsonl.gz": {
+    "sha256": "7a855b00221bd54fac22ad9ff983be099a9725cf6c472028c141b7f2dcee0e8d",
+    "bytes": 1551
+  },
+  "curve-1-pyodide-prepared-stateful-3000.jsonl.gz": {
+    "sha256": "c053ed5570395c1a98012f61dc930c665c36610f1b6d5e07e9b8f23efe56f688",
+    "bytes": 844
+  },
+  "curve-1-pyodide-resident-stateful-3000.jsonl.gz": {
+    "sha256": "c541ef55c53ce60cce4bb2e8a498fd0318ff13094a002ca7be8d5bcad6920922",
+    "bytes": 916
+  },
+  "curve-1-pysolate-cow-stateful-3000.jsonl.gz": {
+    "sha256": "6bd64628c613b99f9d775136bfde61644f9cad623d3e1b1d5c751d14950b9b9f",
+    "bytes": 547
+  },
+  "curve-1-pysolate-fresh-stateful-3000.jsonl.gz": {
+    "sha256": "b92ec2885820479769910e5d223bd785564f7593599368b00a1f84afcf03e7fc",
+    "bytes": 575
+  },
+  "curve-1-native-stateful-10000-cold.jsonl.gz": {
+    "sha256": "40c00bbb6b6a936ffb4d544d6e0d17827e71fa1c37d6cf259a7f77b531c88fbf",
+    "bytes": 1109
+  },
+  "curve-1-reference-stateful-10000-cold.jsonl.gz": {
+    "sha256": "ecf3a668f88fae248b0ccbecedc8aa66ecac831f6e395e18f15fcde09a8087e8",
+    "bytes": 689
+  },
+  "curve-1-monty-stateful-10000-cold.jsonl.gz": {
+    "sha256": "a20a87fdc8cd893122eb7f62ff08a69a57be989e5d8857c93e4b76a46a58e517",
+    "bytes": 1189
+  },
+  "curve-1-interpreter-stateful-10000-cold.jsonl.gz": {
+    "sha256": "02ebc6de8dbd63b5161feb776df02d8131ef4f5d77e302e750575bc55576c294",
+    "bytes": 1019
+  },
+  "curve-1-native-stateful-10000-warm.jsonl.gz": {
+    "sha256": "c4087f1bfd40cb01654f90305c9f07521e809b159966befc7bfd5db3ef2a6998",
+    "bytes": 732
+  },
+  "curve-1-reference-stateful-10000-warm.jsonl.gz": {
+    "sha256": "938780b138a733f418390d97ee59ea60779264913258d8f97c410bb1ceb5d461",
+    "bytes": 701
+  },
+  "curve-1-monty-stateful-10000-warm.jsonl.gz": {
+    "sha256": "2483e4ae022cd92c970cff527ee54e18d4c9629de99fe66bf3a95ddf643531d0",
+    "bytes": 1066
+  },
+  "curve-1-interpreter-stateful-10000-warm.jsonl.gz": {
+    "sha256": "1770b91fa5d76d927d703b6b597e3d4a1f024d9098bf22a439fe8119a855ee11",
+    "bytes": 884
+  },
+  "curve-1-cpython-resident-stateful-10000.jsonl.gz": {
+    "sha256": "e9621960e7ab8e3e93bb8470207cfd78d794d589f39e48f7ff961665e091e663",
+    "bytes": 1713
+  },
+  "curve-1-pypy-prepared-stateful-10000.jsonl.gz": {
+    "sha256": "ea55c0b3ff5c2166b69aea09b011db86d3a9dea6297d86a3e0c43a2f8c51f69b",
+    "bytes": 7433
+  },
+  "curve-1-pypy-resident-stateful-10000.jsonl.gz": {
+    "sha256": "284c8469eba0e7a126418ee240a7c4b084b08c95710632e9cd12c14a0a6b4b06",
+    "bytes": 8548
+  },
+  "curve-1-cpython-fork-stateful-10000.jsonl.gz": {
+    "sha256": "5fe4a8330ffd67d1c27dc4cc2ca5e63ca4d1a5f9e005097529283b67d655b1d7",
+    "bytes": 1768
+  },
+  "curve-1-cpython-spawn-stateful-10000.jsonl.gz": {
+    "sha256": "71eaf66c295c27b0f5fb99accf30a4ad08d97b0ca02afba96e391fe1bcf31e24",
+    "bytes": 1766
+  },
+  "curve-1-cpython-prepared-stateful-10000.jsonl.gz": {
+    "sha256": "25a6939d18304facc2d095fd8cc13757b4521d415576466a2bdcf6a67fad9280",
+    "bytes": 1590
+  },
+  "curve-1-pyodide-prepared-stateful-10000.jsonl.gz": {
+    "sha256": "1b0e2cef45c4fa1a1f293704bb0169ed1ae0a885ca9df5dc17ef8a3a2524962d",
+    "bytes": 859
+  },
+  "curve-1-pyodide-resident-stateful-10000.jsonl.gz": {
+    "sha256": "21bc631740afd041818726d15c0081fba4b2702e5316fc4ec65138cd1ee48745",
+    "bytes": 923
+  },
+  "curve-1-pysolate-cow-stateful-10000.jsonl.gz": {
+    "sha256": "838c19d6c284b4400bdddd26e59db96dbb1f9d17e93dd8326a6ae4b287fe1f61",
+    "bytes": 563
+  },
+  "curve-1-pysolate-fresh-stateful-10000.jsonl.gz": {
+    "sha256": "dca46f25d4c2ff6822c6f600754220a7eb371c6b5c733aec052de395fbdc1fcc",
+    "bytes": 577
+  },
+  "curve-1-native-stateful-30000-cold.jsonl.gz": {
+    "sha256": "08c64a63a0dc79927adbf43eb08d6a90b15f939f47ba762dba0226cee1f3f5b6",
+    "bytes": 1057
+  },
+  "curve-1-reference-stateful-30000-cold.jsonl.gz": {
+    "sha256": "300af1a65d8a23be1af2f83f382548acef0a57b4f2be9e5e8d7a355f9ad98030",
+    "bytes": 765
+  },
+  "curve-1-monty-stateful-30000-cold.jsonl.gz": {
+    "sha256": "d467ccb7b8f399745e07ecc3aa08e14aebe9e50e4e049b645111c2bd21958c57",
+    "bytes": 1264
+  },
+  "curve-1-interpreter-stateful-30000-cold.jsonl.gz": {
+    "sha256": "f0e77ed9ff7b884f52e63fa9e9f7f8b07bfb3f0a3f27d9f65370da4f9762f1fa",
+    "bytes": 1153
+  },
+  "curve-1-native-stateful-30000-warm.jsonl.gz": {
+    "sha256": "c2024422f0ca72014351d0d95db7cff2c97e32553c260f683491d661063d8fa2",
+    "bytes": 794
+  },
+  "curve-1-reference-stateful-30000-warm.jsonl.gz": {
+    "sha256": "cea7513f1b973a38fe4ca83d013aff967c6bdba999029560bbe1033cfd925ad0",
+    "bytes": 847
+  },
+  "curve-1-monty-stateful-30000-warm.jsonl.gz": {
+    "sha256": "2a40b5c98e9b1a3134651ddd03100bedb2b3ea9a84217bda6aabc56be90e18ae",
+    "bytes": 1124
+  },
+  "curve-1-interpreter-stateful-30000-warm.jsonl.gz": {
+    "sha256": "0b7419db3705bd98e38aa00d7cb0cc71d3e6b2a43f6f4990b24ae120f5f8a329",
+    "bytes": 965
+  },
+  "curve-1-cpython-resident-stateful-30000.jsonl.gz": {
+    "sha256": "e24c9ec53ccdf599523dc78162a628a7a70ca2659dc351f1dd46532c085dff13",
+    "bytes": 1814
+  },
+  "curve-1-pypy-prepared-stateful-30000.jsonl.gz": {
+    "sha256": "35be019d095df459e299b80f77c8ebf1769949374811e151cb5f679c894b281a",
+    "bytes": 7677
+  },
+  "curve-1-pypy-resident-stateful-30000.jsonl.gz": {
+    "sha256": "caaf14ee4bac982c7882636a2b5adc10569548e8e19013e11c6c5b1a7aa5b6a1",
+    "bytes": 8649
+  },
+  "curve-1-cpython-fork-stateful-30000.jsonl.gz": {
+    "sha256": "100c061b0d218f42c489bfe74a4e22d3e494505db7715cc20507f82cd609c198",
+    "bytes": 1794
+  },
+  "curve-1-cpython-spawn-stateful-30000.jsonl.gz": {
+    "sha256": "b444a8d5301529974a8e602b3d3b89903cfa7e730567448f0db46da1fc1339f4",
+    "bytes": 1772
+  },
+  "curve-1-cpython-prepared-stateful-30000.jsonl.gz": {
+    "sha256": "bced54defe9e0ea9abc585541aa625d8a8747f21965a54309ab7f1746d26ddf6",
+    "bytes": 1624
+  },
+  "curve-1-pyodide-prepared-stateful-30000.jsonl.gz": {
+    "sha256": "0673e65516d922b46f4a5184cca5e914ac95c07bf69ada1016d7be27ba933236",
+    "bytes": 877
+  },
+  "curve-1-pyodide-resident-stateful-30000.jsonl.gz": {
+    "sha256": "3fa436da70c53ea04a7d3fc30824f440d11a99870eb2735699d6a07dbed4a96e",
+    "bytes": 938
+  },
+  "curve-2-monty-weighted-300-cold.jsonl.gz": {
+    "sha256": "0fa927dbc0b669336b9b4d7aaec90bf66427c0c12b99281933233caf16a3ef94",
+    "bytes": 1138
+  },
+  "curve-2-reference-weighted-300-cold.jsonl.gz": {
+    "sha256": "13e9a7e3cf6494fbad6f08d3d8963685f126ba2986f723bb4e7b9bff70670437",
+    "bytes": 723
+  },
+  "curve-2-native-weighted-300-cold.jsonl.gz": {
+    "sha256": "76152a12ed8a26bb5ca4c0c6c551eb313decec62a33bd11cebbb8f6678fe9661",
+    "bytes": 1075
+  },
+  "curve-2-interpreter-weighted-300-cold.jsonl.gz": {
+    "sha256": "0117cb2715c477fa38b8eec1203108dea58e339c8e739997b295de82e4e6f245",
+    "bytes": 936
+  },
+  "curve-2-monty-weighted-300-warm.jsonl.gz": {
+    "sha256": "3927e8f09617afc7a253424173882da9bc2ea37122d7a24c5cfc29771b5818b9",
+    "bytes": 952
+  },
+  "curve-2-reference-weighted-300-warm.jsonl.gz": {
+    "sha256": "2bcfe2636c9ee949d52c05fd8ecffe3362554578fd10c444ca6b8bd5fc895644",
+    "bytes": 680
+  },
+  "curve-2-native-weighted-300-warm.jsonl.gz": {
+    "sha256": "07f31595a9b288baf31a38e74cd0f282129aebb515899e0946b3901067d3c514",
+    "bytes": 738
+  },
+  "curve-2-interpreter-weighted-300-warm.jsonl.gz": {
+    "sha256": "75563c22cb663c5e250754a38e25a0aa4aade37794981bd95c873b7f30a7cef7",
+    "bytes": 710
+  },
+  "curve-2-cpython-spawn-weighted-300.jsonl.gz": {
+    "sha256": "8bc46b176a47d79ca7ec316411276bf7ee92aa504726d2676d01f20711ea370d",
+    "bytes": 1721
+  },
+  "curve-2-cpython-fork-weighted-300.jsonl.gz": {
+    "sha256": "e2f3f4e728e6270c50db3850d8a2a83295e04ed0387fc1178f3a1f2cb9ecd0a6",
+    "bytes": 1710
+  },
+  "curve-2-pypy-resident-weighted-300.jsonl.gz": {
+    "sha256": "871410570c63015ec0ca3c7c17ee3041c38d9a3af59be8f7a2894785ef4d6f7b",
+    "bytes": 7696
+  },
+  "curve-2-pypy-prepared-weighted-300.jsonl.gz": {
+    "sha256": "a424c52330d869bbf47fb23316e85655e5e488d7891933dbd63c9f12d7a2c7bc",
+    "bytes": 6436
+  },
+  "curve-2-cpython-resident-weighted-300.jsonl.gz": {
+    "sha256": "bc9e13f9f5b556f3b20da5f27172f7cd7d108103bb84a2792cf76421f3f476e3",
+    "bytes": 1587
+  },
+  "curve-2-cpython-prepared-weighted-300.jsonl.gz": {
+    "sha256": "940accd78b545cdbf34975b38221867c7bbf23410a626c9668242e0037cc823c",
+    "bytes": 1390
+  },
+  "curve-2-pyodide-resident-weighted-300.jsonl.gz": {
+    "sha256": "d87864110a1d769b27e34a26a77cd3c50476492765880e2b4fabb106a109ef72",
+    "bytes": 892
+  },
+  "curve-2-pyodide-prepared-weighted-300.jsonl.gz": {
+    "sha256": "1d6cf56acf4edbbe595b30688732dde9ea5e639df2242506283a0914d7548095",
+    "bytes": 815
+  },
+  "curve-2-pysolate-fresh-weighted-300.jsonl.gz": {
+    "sha256": "dcac0357d19ca2fa89452b1cb9bcd2603a9d5f1d20e3ce81aa73c7b23ac2bfa9",
+    "bytes": 567
+  },
+  "curve-2-pysolate-cow-weighted-300.jsonl.gz": {
+    "sha256": "f922ebf6c12ccc7601a31c92ee3198eeba9f3fe6a99706d1d645c7fbb7bcdc0e",
+    "bytes": 555
+  },
+  "curve-2-monty-weighted-1000-cold.jsonl.gz": {
+    "sha256": "2239a24c2b3b5f1c3c5baa832c5186227703368766191a1d95d5dfaf412592c0",
+    "bytes": 1167
+  },
+  "curve-2-reference-weighted-1000-cold.jsonl.gz": {
+    "sha256": "0d9f6e866156da3ad4c8da8374b5c81430b9588eccf5e27e7aa12c7163dcd9ee",
+    "bytes": 692
+  },
+  "curve-2-native-weighted-1000-cold.jsonl.gz": {
+    "sha256": "7465138af6c671f8d1faa5e909b3317e243242d968d3cc53c9dddcbd269de755",
+    "bytes": 1098
+  },
+  "curve-2-interpreter-weighted-1000-cold.jsonl.gz": {
+    "sha256": "0b6c65b7a746866660e13aa80e6b5177f60316061a38f7ad696c89acf3a13ce8",
+    "bytes": 942
+  },
+  "curve-2-monty-weighted-1000-warm.jsonl.gz": {
+    "sha256": "17170b36425f8fc9a81fdf27c5c4c118ca297ba1ab748f44db371deafcb52a45",
+    "bytes": 1022
+  },
+  "curve-2-reference-weighted-1000-warm.jsonl.gz": {
+    "sha256": "0e8eff80197dba07ece6561ea5e6d8b9dc70cad6f60ef8b2263f43ef2837f5f3",
+    "bytes": 735
+  },
+  "curve-2-native-weighted-1000-warm.jsonl.gz": {
+    "sha256": "9d7bcc3be276dd38ed44e74b686ac3149fadf12f01d430a092eb459a15e4f106",
+    "bytes": 686
+  },
+  "curve-2-interpreter-weighted-1000-warm.jsonl.gz": {
+    "sha256": "2c76210fd4fa4a70904ca46914f3cfdec8c29e17d91de5ceb48339cf374b0a42",
+    "bytes": 775
+  },
+  "curve-2-cpython-spawn-weighted-1000.jsonl.gz": {
+    "sha256": "e8e1885d925dd748f4b133807b1b7bd54b337f3b62cb90825f3bd518f50f0443",
+    "bytes": 1740
+  },
+  "curve-2-cpython-fork-weighted-1000.jsonl.gz": {
+    "sha256": "56d3fbae6b2be650ed5f87d2eb8e135765e332bc2bbdcb5d6cc810026f3f8ebc",
+    "bytes": 1721
+  },
+  "curve-2-pypy-resident-weighted-1000.jsonl.gz": {
+    "sha256": "17bb77047ec84a84380c83498b16c522bcc9988a8340b40c8125e7e7f1a4b643",
+    "bytes": 7912
+  },
+  "curve-2-pypy-prepared-weighted-1000.jsonl.gz": {
+    "sha256": "86fe8a213234cd9bef5ada0101201615429ecab83b223dc83ca2273af5f29ba8",
+    "bytes": 6605
+  },
+  "curve-2-cpython-resident-weighted-1000.jsonl.gz": {
+    "sha256": "f69609db64a94d1c789e130ff1cbcc145b1eb0fdf17441a8787bba0fcd29802c",
+    "bytes": 1626
+  },
+  "curve-2-cpython-prepared-weighted-1000.jsonl.gz": {
+    "sha256": "249ff19e3cab6f419615e63f40fb0e10e1c26eac09cd5cd2dc16ae02a14105a5",
+    "bytes": 1482
+  },
+  "curve-2-pyodide-resident-weighted-1000.jsonl.gz": {
+    "sha256": "ae75b1f0e5dbb22487ce4e69d2fa5d8b93dc361ff0ba4e4fee0c6cbb46c3c294",
+    "bytes": 902
+  },
+  "curve-2-pyodide-prepared-weighted-1000.jsonl.gz": {
+    "sha256": "65a3c69d873c64c6b6ba73575b6b1e6ece6e05c100a010c18912b879ab1c96c6",
+    "bytes": 844
+  },
+  "curve-2-pysolate-fresh-weighted-1000.jsonl.gz": {
+    "sha256": "0cf6a2bd54b3f18b600813c46b33222326dbce941713d9726b70e831ef90d9f4",
+    "bytes": 577
+  },
+  "curve-2-pysolate-cow-weighted-1000.jsonl.gz": {
+    "sha256": "3bed364195a463171097907535a8160f4ce74860a080a24c7b5794b9023465e6",
+    "bytes": 546
+  },
+  "curve-2-monty-weighted-3000-cold.jsonl.gz": {
+    "sha256": "058f1652ceac2edc34c6625996f32cba9099aa7433b36b458b86b6fa1165a01f",
+    "bytes": 1195
+  },
+  "curve-2-reference-weighted-3000-cold.jsonl.gz": {
+    "sha256": "459e18a9d136d3e302014d842ac882a7cddeefc610b88e913614b562ed4d2664",
+    "bytes": 697
+  },
+  "curve-2-native-weighted-3000-cold.jsonl.gz": {
+    "sha256": "7fc52158b94b4fc7a5747b63af326cd659f2f8cdecefb452b03d143dc2d96e89",
+    "bytes": 1099
+  },
+  "curve-2-interpreter-weighted-3000-cold.jsonl.gz": {
+    "sha256": "bb19ca8b4d37c01665dff814b6ec1d134daff287e7542886ebc39621414567a0",
+    "bytes": 980
+  },
+  "curve-2-monty-weighted-3000-warm.jsonl.gz": {
+    "sha256": "95751a6d041dc24986f433fa84f1ce47eeb7df6204a3e9e8ed8919e41e43506f",
+    "bytes": 1041
+  },
+  "curve-2-reference-weighted-3000-warm.jsonl.gz": {
+    "sha256": "f8d559898a48e5c29886f8e69f85125685940211d9e41d47a249240a24f4eb53",
+    "bytes": 732
+  },
+  "curve-2-native-weighted-3000-warm.jsonl.gz": {
+    "sha256": "7fbf1763e318177fd00f4d3723f3468bf186e696c4c6617e74f020ccf8fc5902",
+    "bytes": 661
+  },
+  "curve-2-interpreter-weighted-3000-warm.jsonl.gz": {
+    "sha256": "e8bcfeca87215b74051eb5f7a5d04b35e0c7297eb3c65f16d485ab27e652c812",
+    "bytes": 779
+  },
+  "curve-2-cpython-spawn-weighted-3000.jsonl.gz": {
+    "sha256": "91ef324074037b6e702c6c1cde478697931dbce222b82e611b1564cac13da9de",
+    "bytes": 1750
+  },
+  "curve-2-cpython-fork-weighted-3000.jsonl.gz": {
+    "sha256": "b3d4540810d684a0aeae4c8f055e5f5edfec7518907c8e98f36f6a8f054db0d5",
+    "bytes": 1736
+  },
+  "curve-2-pypy-resident-weighted-3000.jsonl.gz": {
+    "sha256": "f74b3460ed648123f76eafc1769a7571162287bcf92ba074b50d37d3427ebc11",
+    "bytes": 8261
+  },
+  "curve-2-pypy-prepared-weighted-3000.jsonl.gz": {
+    "sha256": "35495dc89f598b4d2ec5c2cdd51e0bb095c33b7415b75f77782ba233a9060c78",
+    "bytes": 6967
+  },
+  "curve-2-cpython-resident-weighted-3000.jsonl.gz": {
+    "sha256": "351427c8f0ccddcf8a2549f6ba2019fd28b0537be741531168e1b42bbbe941ba",
+    "bytes": 1708
+  },
+  "curve-2-cpython-prepared-weighted-3000.jsonl.gz": {
+    "sha256": "6af683f56a51ec3a9f48027917298758e038a85fa68f646a462d35dee0922a0b",
+    "bytes": 1534
+  },
+  "curve-2-pyodide-resident-weighted-3000.jsonl.gz": {
+    "sha256": "a6f58d52239e0794656219e7ceca3389093dead52372691de1c0b30d03808921",
+    "bytes": 918
+  },
+  "curve-2-pyodide-prepared-weighted-3000.jsonl.gz": {
+    "sha256": "f8c2f2a4aee468b1d58f3991bde048e2758a0e746df2684c40ecc38e32b097e1",
+    "bytes": 836
+  },
+  "curve-2-pysolate-fresh-weighted-3000.jsonl.gz": {
+    "sha256": "92fcf937c62fa4c8ca5494c3735ddee2fdb146cfc4430694a703a1664c556cd5",
+    "bytes": 580
+  },
+  "curve-2-pysolate-cow-weighted-3000.jsonl.gz": {
+    "sha256": "ca9240f99a4ef7929fc36ea4e6ffd851edb4308b225f5efcbca96f8977173372",
+    "bytes": 555
+  },
+  "curve-2-monty-weighted-30000-cold.jsonl.gz": {
+    "sha256": "9c3fd82b8ed38906fafd9f1e4d00dff7b4a8f6517f7965c040e851f39f47e081",
+    "bytes": 1266
+  },
+  "curve-2-reference-weighted-30000-cold.jsonl.gz": {
+    "sha256": "d746336a9d6edff1192dbf74c1cb473b01a230ccb387f237e3b8dbb7e4819ce5",
+    "bytes": 827
+  },
+  "curve-2-native-weighted-30000-cold.jsonl.gz": {
+    "sha256": "a1eeb2e4902001f3aaea59ecdc23252ae08e376c7e4fdff9813aa4e41e1f74ec",
+    "bytes": 1112
+  },
+  "curve-2-interpreter-weighted-30000-cold.jsonl.gz": {
+    "sha256": "c0bdc19f1869f7f07c5431fea43cb7a3734093655703288d91a3c6e0ccb74813",
+    "bytes": 1126
+  },
+  "curve-2-monty-weighted-30000-warm.jsonl.gz": {
+    "sha256": "f53db25f525c5f77f8b5fc925d13dcd48e4d109fa1f4cbd41bc651dbda0109df",
+    "bytes": 1109
+  },
+  "curve-2-reference-weighted-30000-warm.jsonl.gz": {
+    "sha256": "0ad925caf8c71d2ae1a5f988c8a36f7a1793d40266417620ed1fe0dc0122043c",
+    "bytes": 843
+  },
+  "curve-2-native-weighted-30000-warm.jsonl.gz": {
+    "sha256": "c70944bc898dfa29f7a397201f04bf74d8d305c826fb77380ed55fc46bdfb498",
+    "bytes": 819
+  },
+  "curve-2-interpreter-weighted-30000-warm.jsonl.gz": {
+    "sha256": "9f4838ff112bf221f8071b15ff0192307ccc704fa4b3ec388999cd15da485fbe",
+    "bytes": 983
+  },
+  "curve-2-cpython-spawn-weighted-30000.jsonl.gz": {
+    "sha256": "666c24ef163bd1b7f2043c9df5cfed23fc04b0e275e5d1c5f377a04d84a52065",
+    "bytes": 1805
+  },
+  "curve-2-cpython-fork-weighted-30000.jsonl.gz": {
+    "sha256": "d90b2a5e3a264c2c65907d191d66701e99ab84b1b2a74f51d818ce1e5bd4bf4c",
+    "bytes": 1777
+  },
+  "curve-2-pypy-resident-weighted-30000.jsonl.gz": {
+    "sha256": "ae88630f7217b7944c36ee04c24ddb20f3d8b60f058b4c981dc75e4898487950",
+    "bytes": 8524
+  },
+  "curve-2-pypy-prepared-weighted-30000.jsonl.gz": {
+    "sha256": "265627ae9a451a232c3d58ac46eab0fe287a413a3c6dce58e0a3ceae13ffe418",
+    "bytes": 7730
+  },
+  "curve-2-cpython-resident-weighted-30000.jsonl.gz": {
+    "sha256": "7d85feaf499402ce65a5b8906fdbded7c30758f43aa29d5aabfa212cc7fb66d1",
+    "bytes": 1800
+  },
+  "curve-2-cpython-prepared-weighted-30000.jsonl.gz": {
+    "sha256": "cd6e67070f3faaa60620027eb2f40b48ce41acbb27bab248a1e4dfa9a046ea04",
+    "bytes": 1616
+  },
+  "curve-2-pyodide-resident-weighted-30000.jsonl.gz": {
+    "sha256": "7e93a36eda53be938810dc61b8bb11707b3b8e9d97dfed2aec34b4a7aeca60eb",
+    "bytes": 955
+  },
+  "curve-2-pyodide-prepared-weighted-30000.jsonl.gz": {
+    "sha256": "d568ef7fd1c7f3cdf761b311144823a976f526dc86d1033a1e7ee1fcd672bc6d",
+    "bytes": 860
+  },
+  "curve-2-monty-weighted-100000-cold.jsonl.gz": {
+    "sha256": "5ac11a19a9955298202815a670e7e0ad0f9b5bca2d9dae424aabf3ebde84ecc8",
+    "bytes": 1327
+  },
+  "curve-2-reference-weighted-100000-cold.jsonl.gz": {
+    "sha256": "5cadbaa0c7cb6d48d5c8db32c5c096ea8ca832db626e6bbc4f35222a6769a7ba",
+    "bytes": 966
+  },
+  "curve-2-native-weighted-100000-cold.jsonl.gz": {
+    "sha256": "e5c68afc6a7804f9e9b56c113bd9ce79d5be841fa6dfeb0964413090d361aa8b",
+    "bytes": 1170
+  },
+  "curve-2-interpreter-weighted-100000-cold.jsonl.gz": {
+    "sha256": "97a6a270e6e0841683c2e0a06c670a222879157de8737e50379beb2d4235737e",
+    "bytes": 1174
+  },
+  "curve-2-monty-weighted-100000-warm.jsonl.gz": {
+    "sha256": "b2cb284ae31c7012a7410ffbb52faed946f05d452acb693c6b82e389d05663f3",
+    "bytes": 1166
+  },
+  "curve-2-reference-weighted-100000-warm.jsonl.gz": {
+    "sha256": "a9d7a27aef4d1b475c524c3bad3087859f4c9270aa79927ed4fdfd7d9a7358e9",
+    "bytes": 973
+  },
+  "curve-2-native-weighted-100000-warm.jsonl.gz": {
+    "sha256": "059a385ae569bcc2a8f50325b60090874e44198b4792c87c4ec265e5965d9d03",
+    "bytes": 959
+  },
+  "curve-2-interpreter-weighted-100000-warm.jsonl.gz": {
+    "sha256": "12ae203cee2ccab38ef270bc4a970102a401f905a3fe1efcac86500c5949d2d8",
+    "bytes": 1021
+  },
+  "curve-2-cpython-spawn-weighted-100000.jsonl.gz": {
+    "sha256": "64cc443f1e4fc878443ae9ab3645e7d35aff8ed53e1356ba3e191fcd7c03de95",
+    "bytes": 1830
+  },
+  "curve-2-cpython-fork-weighted-100000.jsonl.gz": {
+    "sha256": "2d4ffe0bcf6c9d2ae94dcd801489877d6c2f2912653e3b3ccfce2e5821f1b056",
+    "bytes": 1836
+  },
+  "curve-2-pypy-resident-weighted-100000.jsonl.gz": {
+    "sha256": "226c497aedb27c6a48eda927ff266945687abb834d3c42423030a99a6ab25726",
+    "bytes": 8906
+  },
+  "curve-2-pypy-prepared-weighted-100000.jsonl.gz": {
+    "sha256": "e5799070211deecc48ebdc1b0747ad3f4737dff9c25f760094e3e766c6a67a7a",
+    "bytes": 7747
+  },
+  "curve-2-cpython-resident-weighted-100000.jsonl.gz": {
+    "sha256": "753b9b401d47b3e29c89d3eadab6320bc870919e9cef55a9486ed9c8628d9a81",
+    "bytes": 1852
+  },
+  "curve-2-cpython-prepared-weighted-100000.jsonl.gz": {
+    "sha256": "efb895a8bb85c5c4d553296ee282384a5ad5cb8620f741a26ff81d913411522f",
+    "bytes": 1694
+  },
+  "curve-2-pyodide-resident-weighted-100000.jsonl.gz": {
+    "sha256": "80a8dabc201da2c44c72b3a5c5175b924813d2ee4485287656d6a276866f7124",
+    "bytes": 957
+  },
+  "curve-2-pyodide-prepared-weighted-100000.jsonl.gz": {
+    "sha256": "5bd9d504a653043bc82c5835107ae5c77560ecf41e90e993a01342695e98f432",
+    "bytes": 910
+  },
+  "curve-2-monty-stateful-300-cold.jsonl.gz": {
+    "sha256": "6db41819e9ae9d85f2697b25b44db113c620f5cdc70712036b42b4fb664ee06e",
+    "bytes": 1151
+  },
+  "curve-2-reference-stateful-300-cold.jsonl.gz": {
+    "sha256": "635d8ef3c5de888370454313a4bfbe13ec49529f8128834c57dbaffab934a431",
+    "bytes": 751
+  },
+  "curve-2-native-stateful-300-cold.jsonl.gz": {
+    "sha256": "b8fda2fa352ebad478e64c08bd0a344394126d90ef0a49b541e480e881bd1d0d",
+    "bytes": 1095
+  },
+  "curve-2-interpreter-stateful-300-cold.jsonl.gz": {
+    "sha256": "0be54a14391ead4eeb037a342d94007dd996abdde512c13d5bdbd3305b6d220c",
+    "bytes": 955
+  },
+  "curve-2-monty-stateful-300-warm.jsonl.gz": {
+    "sha256": "59f917225e1b1b9f1f98efa9cd0d39738499d71d70816c1fee919503e9fa23f1",
+    "bytes": 976
+  },
+  "curve-2-reference-stateful-300-warm.jsonl.gz": {
+    "sha256": "fc0d929b4e67bae5c5629414bf5e0d2db1c5da090874a90bb867a479c5a2e67c",
+    "bytes": 706
+  },
+  "curve-2-native-stateful-300-warm.jsonl.gz": {
+    "sha256": "370b647fbc0c375b85dd5c8d02e86adf4ae022a17a43e44ebc2a60e0e7152010",
+    "bytes": 726
+  },
+  "curve-2-interpreter-stateful-300-warm.jsonl.gz": {
+    "sha256": "8ee500c1e958c6c545ef8d9e621f8181a7c5203ccd7adde50d4d99b7b285c0a4",
+    "bytes": 715
+  },
+  "curve-2-cpython-spawn-stateful-300.jsonl.gz": {
+    "sha256": "00c67bd15bbf240b2b8c8d7735374326225bfbfa74645c23d148fde49d0aeab2",
+    "bytes": 1714
+  },
+  "curve-2-cpython-fork-stateful-300.jsonl.gz": {
+    "sha256": "39aabc24d62c264bf5efb339a23eb0b8cff28015425906cc6a0ea5d7ece70eb6",
+    "bytes": 1709
+  },
+  "curve-2-pypy-resident-stateful-300.jsonl.gz": {
+    "sha256": "2af4083be2c617cbee6b218fedccfe42bb2bf10c3c8c707aa96950bc7212b732",
+    "bytes": 7651
+  },
+  "curve-2-pypy-prepared-stateful-300.jsonl.gz": {
+    "sha256": "b2b871e57527ea24e0d6f8dab1437da8a9cd5242c40ed8ffddf8a540525da300",
+    "bytes": 6321
+  },
+  "curve-2-cpython-resident-stateful-300.jsonl.gz": {
+    "sha256": "2fcb6e54d2e9fb3d371655ac408d559b89e2ff4afc1367ea26e2a20ce3eac4c3",
+    "bytes": 1568
+  },
+  "curve-2-cpython-prepared-stateful-300.jsonl.gz": {
+    "sha256": "0546c494088d505edbc309c653115ac74dcea0ef030bcdd3be0a02ec9ca3d71f",
+    "bytes": 1382
+  },
+  "curve-2-pyodide-resident-stateful-300.jsonl.gz": {
+    "sha256": "b8e6a6bcfcbb515bf465a8bec209ee8a18c44eedb0e75b7b252e3bc43dd07e34",
+    "bytes": 887
+  },
+  "curve-2-pyodide-prepared-stateful-300.jsonl.gz": {
+    "sha256": "1a0463e21326511a95895347637963031006c36797d6032f49cce43e98c66772",
+    "bytes": 823
+  },
+  "curve-2-pysolate-fresh-stateful-300.jsonl.gz": {
+    "sha256": "87aacd59c635e1e3752bc3afd92832bfea6c1fad6df402e0d6dfc9caaaac4fe1",
+    "bytes": 571
+  },
+  "curve-2-pysolate-cow-stateful-300.jsonl.gz": {
+    "sha256": "13e44d1cda69c18708e6dde0fb626c2db0f7a834bf5f89ed1128e5a56752607e",
+    "bytes": 551
+  },
+  "curve-2-monty-stateful-1000-cold.jsonl.gz": {
+    "sha256": "9253b2690f95752f0990a6dedeb3b574657a0ef1b0bd8ae459483e70f02634f3",
+    "bytes": 1170
+  },
+  "curve-2-reference-stateful-1000-cold.jsonl.gz": {
+    "sha256": "54082e0f6f4c488541fdbe50e905cb0565d67dff2f87bc60b8bca494bf63f8fe",
+    "bytes": 737
+  },
+  "curve-2-native-stateful-1000-cold.jsonl.gz": {
+    "sha256": "2b62f630680f667140be6947132b61798751e7ff0da590e32a31214a54c9e71c",
+    "bytes": 1082
+  },
+  "curve-2-interpreter-stateful-1000-cold.jsonl.gz": {
+    "sha256": "78495f6ecf4a1b98b3d69cc9e95cc79c608dc00ac48c9421c2667cafe3f43e7a",
+    "bytes": 964
+  },
+  "curve-2-monty-stateful-1000-warm.jsonl.gz": {
+    "sha256": "5b3da64095b067ac1cd7d2a7c0abfafd35d2e47ea6dc3ee5426e48b310f41180",
+    "bytes": 1020
+  },
+  "curve-2-reference-stateful-1000-warm.jsonl.gz": {
+    "sha256": "5c011e235ebe487bb04d302d3cb99430a19ac6c9e55bb095498bde2e468e2679",
+    "bytes": 746
+  },
+  "curve-2-native-stateful-1000-warm.jsonl.gz": {
+    "sha256": "bab0a25e4a5ff21e5dcb612783752a263fde79c207dfa966a38940a95ee093dd",
+    "bytes": 684
+  },
+  "curve-2-interpreter-stateful-1000-warm.jsonl.gz": {
+    "sha256": "bf970c9ec7004cd9c50a34f746974cc8f691caf8992160449fe34b0aa3a32c5a",
+    "bytes": 710
+  },
+  "curve-2-cpython-spawn-stateful-1000.jsonl.gz": {
+    "sha256": "e2348acae40b7bbc13f47c67fac04d9e5d4f50dcf71c347a1bb99a86bd116c28",
+    "bytes": 1728
+  },
+  "curve-2-cpython-fork-stateful-1000.jsonl.gz": {
+    "sha256": "09f20da16cb5a5abe857df6329fcd9598fe2d22bb93e44671bfb05410ba094dc",
+    "bytes": 1727
+  },
+  "curve-2-pypy-resident-stateful-1000.jsonl.gz": {
+    "sha256": "17404d261b855cbe11e38aaaae67fabbefa6f9a1fac26cd44ccdbd2c1fc238c0",
+    "bytes": 7957
+  },
+  "curve-2-pypy-prepared-stateful-1000.jsonl.gz": {
+    "sha256": "07e35f39a41012729f83bd9ac5babdb094439889ccb14b82ab446f5cc872ce2c",
+    "bytes": 6704
+  },
+  "curve-2-cpython-resident-stateful-1000.jsonl.gz": {
+    "sha256": "aa593757fc9bab0bb1f639934b50ec789d5834d66073c582db06a2596c888e47",
+    "bytes": 1658
+  },
+  "curve-2-cpython-prepared-stateful-1000.jsonl.gz": {
+    "sha256": "79828fbba712ae04145daf92b26567cd2ac9c78e0a4d1262700df91cac30d11f",
+    "bytes": 1496
+  },
+  "curve-2-pyodide-resident-stateful-1000.jsonl.gz": {
+    "sha256": "1b1c02cb2cf49fe78bb3b1e956fe103aeae6828cbdb3a5e5bcdf66ec76adb1cc",
+    "bytes": 926
+  },
+  "curve-2-pyodide-prepared-stateful-1000.jsonl.gz": {
+    "sha256": "c4283c564cd72db5e4ce0569b98cdac802b454ba7315d509f96cfc55d0d787f3",
+    "bytes": 856
+  },
+  "curve-2-pysolate-fresh-stateful-1000.jsonl.gz": {
+    "sha256": "cbe35643121745a28d85d9431fd41baa45782855bcead50d952a567f82f3e4c6",
+    "bytes": 574
+  },
+  "curve-2-pysolate-cow-stateful-1000.jsonl.gz": {
+    "sha256": "19371d622f4380d74e82aa3a756b1d01cb2a251e9da34cfcca82e0e3d3dd240c",
+    "bytes": 553
+  },
+  "curve-2-monty-stateful-3000-cold.jsonl.gz": {
+    "sha256": "28f939e1da3d0b3d8037420dffc75f3454f18a7d4b56d16a15794aea2a8dd3fe",
+    "bytes": 1195
+  },
+  "curve-2-reference-stateful-3000-cold.jsonl.gz": {
+    "sha256": "4777499b3dc74e999bd6f547e4cd6ab1760c711ce0237b18623b7911e6bca51e",
+    "bytes": 724
+  },
+  "curve-2-native-stateful-3000-cold.jsonl.gz": {
+    "sha256": "9cb661d02a0a2dd827f7011fb26e55e999404e5cad8369905213540fcf402d29",
+    "bytes": 1137
+  },
+  "curve-2-interpreter-stateful-3000-cold.jsonl.gz": {
+    "sha256": "8307b96c92982ce777de87f8741ef9b3ce78468a4a5dda2799859e81a239d84a",
+    "bytes": 1008
+  },
+  "curve-2-monty-stateful-3000-warm.jsonl.gz": {
+    "sha256": "36b350b73dff44b27d85cc01c9163b2b2203e07088833891433d2e3ab1585816",
+    "bytes": 1044
+  },
+  "curve-2-reference-stateful-3000-warm.jsonl.gz": {
+    "sha256": "389e6353a08155e3177da469c3cd63d0b5c2e08f4aca7692afcf8271126ac92f",
+    "bytes": 741
+  },
+  "curve-2-native-stateful-3000-warm.jsonl.gz": {
+    "sha256": "78a22cf41818a4b8a672007e67fc7295618d788b9baceb71f890c2c6262bee5d",
+    "bytes": 702
+  },
+  "curve-2-interpreter-stateful-3000-warm.jsonl.gz": {
+    "sha256": "b2c14e681fd4fff3bfb0707c70ca052cfa0b87a09a6766ab8eb056477ac5ef3b",
+    "bytes": 767
+  },
+  "curve-2-cpython-spawn-stateful-3000.jsonl.gz": {
+    "sha256": "37f2f6ae4a6e641a687e8ae70330c064a8f37515e76777310baaff0a61c3668b",
+    "bytes": 1755
+  },
+  "curve-2-cpython-fork-stateful-3000.jsonl.gz": {
+    "sha256": "5e2ec235e46d818665fa6fdc83a3a64cb48f6d6e102f57092deb16d30703f75e",
+    "bytes": 1772
+  },
+  "curve-2-pypy-resident-stateful-3000.jsonl.gz": {
+    "sha256": "1042024d906e7ae6249fe52454053819eed00ae8f13fcf8f03225b34ade25717",
+    "bytes": 8307
+  },
+  "curve-2-pypy-prepared-stateful-3000.jsonl.gz": {
+    "sha256": "acd9a0ee5cc1ac417b51c6c673fc9a2022b22f761ebcd561778ec91d520826e4",
+    "bytes": 6992
+  },
+  "curve-2-cpython-resident-stateful-3000.jsonl.gz": {
+    "sha256": "14333d5c50bea2996e12264bc3cb3184f7f67e19851914e57800471a41fdd2cf",
+    "bytes": 1717
+  },
+  "curve-2-cpython-prepared-stateful-3000.jsonl.gz": {
+    "sha256": "b6a6ba2b961be6bd34176718bce33eba2bfb33c0b7bb3af7db1bdb0d75addafd",
+    "bytes": 1526
+  },
+  "curve-2-pyodide-resident-stateful-3000.jsonl.gz": {
+    "sha256": "1a4a52b71552394f986c9df3831a6eb3bdd7b2b344093abeadfc0caa711910b3",
+    "bytes": 912
+  },
+  "curve-2-pyodide-prepared-stateful-3000.jsonl.gz": {
+    "sha256": "7d2a3fec27614daa9fb097e23c626a4546877a41e014e31cd53a9866efd43be3",
+    "bytes": 856
+  },
+  "curve-2-pysolate-fresh-stateful-3000.jsonl.gz": {
+    "sha256": "630341c0c782fc908a749e0d3e2a14fa8344d40d6cb5cef645e80b1de6cbe434",
+    "bytes": 575
+  },
+  "curve-2-pysolate-cow-stateful-3000.jsonl.gz": {
+    "sha256": "439faebb6dd78def9a4eb81f203bb6dd3a4ce78d832b45ae3b8c1675ba35c226",
+    "bytes": 554
+  },
+  "curve-2-monty-stateful-10000-cold.jsonl.gz": {
+    "sha256": "905dbdf9a52698a9b4caf92e945630f6109f99ec2efaa5b2325e5b46bf7f2262",
+    "bytes": 1229
+  },
+  "curve-2-reference-stateful-10000-cold.jsonl.gz": {
+    "sha256": "cf6e9fd5a50e294eb4a66e0d468ee3a866b99fcc9bb635ba231beae9e9da047e",
+    "bytes": 723
+  },
+  "curve-2-native-stateful-10000-cold.jsonl.gz": {
+    "sha256": "74a351a1dcb98e5b9550e98c042a5a86192214d9035b7af447f590f48f2eb8e6",
+    "bytes": 1108
+  },
+  "curve-2-interpreter-stateful-10000-cold.jsonl.gz": {
+    "sha256": "b179951a8de17151774966ec0185034e55b227eae4eb0cd60b0ca2056c6240c8",
+    "bytes": 1018
+  },
+  "curve-2-monty-stateful-10000-warm.jsonl.gz": {
+    "sha256": "8df0e0c0e083f0c95c244eb72c3e814341e8e739f6f3cf2d5c405e1ec4a7791b",
+    "bytes": 1032
+  },
+  "curve-2-reference-stateful-10000-warm.jsonl.gz": {
+    "sha256": "1d9b576f29623e3dbb034dc0e32ac829103376a4f46f48df5e9432cca5d26593",
+    "bytes": 765
+  },
+  "curve-2-native-stateful-10000-warm.jsonl.gz": {
+    "sha256": "45d1f9dff58ecdc212a2c40be4313dcd5d64f9cafb42961ff0987e0e68f95a69",
+    "bytes": 705
+  },
+  "curve-2-interpreter-stateful-10000-warm.jsonl.gz": {
+    "sha256": "f77012069ebb41b8ee1dad58492808ae90f61ea00bd0fccb97237fee67ceff38",
+    "bytes": 895
+  },
+  "curve-2-cpython-spawn-stateful-10000.jsonl.gz": {
+    "sha256": "b26e9721b123cc967b628d8f6d262c43fae63ede69b977c87cbc97462ecddf71",
+    "bytes": 1769
+  },
+  "curve-2-cpython-fork-stateful-10000.jsonl.gz": {
+    "sha256": "7e07c9020070097c6fa911d0efa0d65fc4a0f1cd273873779f3f3c8d5e9423a8",
+    "bytes": 1788
+  },
+  "curve-2-pypy-resident-stateful-10000.jsonl.gz": {
+    "sha256": "ab028bf010da02bfe0205993d84b493ae29c6e7607ea98158ec33430abb1b652",
+    "bytes": 8474
+  },
+  "curve-2-pypy-prepared-stateful-10000.jsonl.gz": {
+    "sha256": "3d245d7ff07600cacbabd2f52e415e839b205a4fd7bc40cff5240d8149cf56e6",
+    "bytes": 7319
+  },
+  "curve-2-cpython-resident-stateful-10000.jsonl.gz": {
+    "sha256": "f2ecfa546330b0a77e671dc7db6651cbfc76dbea0d66b9bf062bc8b95fc4a4cf",
+    "bytes": 1718
+  },
+  "curve-2-cpython-prepared-stateful-10000.jsonl.gz": {
+    "sha256": "f5cde850e7396f2417b076b768f43dc8178af4c2824bf5c27dee07f7301e327c",
+    "bytes": 1586
+  },
+  "curve-2-pyodide-resident-stateful-10000.jsonl.gz": {
+    "sha256": "e2e20a6846a47fdea9ba0d8b52fc78fc5d8aecb84389ba831575335cfd44585e",
+    "bytes": 929
+  },
+  "curve-2-pyodide-prepared-stateful-10000.jsonl.gz": {
+    "sha256": "ce830654ae95830a7493ea289e930b8627787fefb67a3c0f49d64d615e4300c0",
+    "bytes": 857
+  },
+  "curve-2-pysolate-fresh-stateful-10000.jsonl.gz": {
+    "sha256": "d8a7ef1afb75f38a066f5f9e9a4f941bdf8d45a0c219e84cf3b51da992317aa3",
+    "bytes": 574
+  },
+  "curve-2-pysolate-cow-stateful-10000.jsonl.gz": {
+    "sha256": "c1f13b34b8d2d80aa251b7516a8489967eb6a479072c9e7e34dfc6354e4e0467",
+    "bytes": 565
+  },
+  "curve-2-monty-stateful-30000-cold.jsonl.gz": {
+    "sha256": "0a22b8e9732530e2ec9c6f1c83d39be72c85cb9f5a800e375bb6afd11a798178",
+    "bytes": 1308
+  },
+  "curve-2-reference-stateful-30000-cold.jsonl.gz": {
+    "sha256": "296d67880b5c5ddca8aef98b2d2aaaddfc135b95854673250b16034ce6b91bc3",
+    "bytes": 762
+  },
+  "curve-2-native-stateful-30000-cold.jsonl.gz": {
+    "sha256": "ab2fa36679da0fa7fb2d5868c10c28ee0b25f436e82e635409da836dbf866f51",
+    "bytes": 1094
+  },
+  "curve-2-interpreter-stateful-30000-cold.jsonl.gz": {
+    "sha256": "af3644b9aa8965a5b876e4454fc09fad1d06f5f8e21caba74ac86123d69a0582",
+    "bytes": 1072
+  },
+  "curve-2-monty-stateful-30000-warm.jsonl.gz": {
+    "sha256": "83bee03961595335e6a16f477f5c299135677cb4150d540ec956f528aa47d26b",
+    "bytes": 1113
+  },
+  "curve-2-reference-stateful-30000-warm.jsonl.gz": {
+    "sha256": "bde0e6a4ef2e7a02a6ff89f0a972a274f1f36c65b7383a1aa04e1e9643d7eeb5",
+    "bytes": 838
+  },
+  "curve-2-native-stateful-30000-warm.jsonl.gz": {
+    "sha256": "4d709ae7a452736d317d31bf0b0a466102057a032c25b378a41ccc2f6b2f89bc",
+    "bytes": 834
+  },
+  "curve-2-interpreter-stateful-30000-warm.jsonl.gz": {
+    "sha256": "8f6c6cd8398b4bb027a03abde8eae4f7cce01601e9fbb8fb5b1af89be0632e8e",
+    "bytes": 950
+  },
+  "curve-2-cpython-spawn-stateful-30000.jsonl.gz": {
+    "sha256": "27d7e022f3d538f922d4d58cfc3ff8efb628b49f53fe5ccb59201d3806ea35f8",
+    "bytes": 1796
+  },
+  "curve-2-cpython-fork-stateful-30000.jsonl.gz": {
+    "sha256": "0c27cea419aa1201151e57d2b52ad36880d13fcda9aefa0aafe241e887e909b7",
+    "bytes": 1795
+  },
+  "curve-2-pypy-resident-stateful-30000.jsonl.gz": {
+    "sha256": "b236451d25a8108b9ccfddd2921f8e738f0529c6c5239b97240e2d9e5fe367cc",
+    "bytes": 8527
+  },
+  "curve-2-pypy-prepared-stateful-30000.jsonl.gz": {
+    "sha256": "727c91f97c877c86c9e5eef5f24615cb769bf4d1542672ca101a0051bd58d465",
+    "bytes": 7616
+  },
+  "curve-2-cpython-resident-stateful-30000.jsonl.gz": {
+    "sha256": "d026ee8158af994fff1c7dc1ad19ca926d8b6b607854aedbea292d9e55ece339",
+    "bytes": 1734
+  },
+  "curve-2-cpython-prepared-stateful-30000.jsonl.gz": {
+    "sha256": "f95a7b99292c52637982e6de0327b0b01a18d644d771e4ef8c9c126cc83d6ba1",
+    "bytes": 1600
+  },
+  "curve-2-pyodide-resident-stateful-30000.jsonl.gz": {
+    "sha256": "dfa9b46d8b16084c8516efd6be0dd540a8b5b2fd9a5815c4cf27fbe4c9e0655c",
+    "bytes": 958
+  },
+  "curve-2-pyodide-prepared-stateful-30000.jsonl.gz": {
+    "sha256": "c2cbfa0085ac3fd01a81295e631a70055752f81eb6e6bd3040aaae779bf878d5",
+    "bytes": 858
+  }
+}

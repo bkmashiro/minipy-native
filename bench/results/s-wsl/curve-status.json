@@ -1,0 +1,2774 @@
+[
+  {
+    "key": "curve-0-native-weighted-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-weighted-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-weighted-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-weighted-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-native-weighted-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-weighted-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-weighted-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-weighted-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-resident-weighted-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-prepared-weighted-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-spawn-weighted-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-fork-weighted-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-pypy-resident-weighted-300",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pypy-prepared-weighted-300",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pyodide-resident-weighted-300",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pyodide-prepared-weighted-300",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pysolate-fresh-weighted-300",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-0-pysolate-cow-weighted-300",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-0-native-weighted-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-weighted-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-weighted-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-weighted-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-native-weighted-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-weighted-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-weighted-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-weighted-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-resident-weighted-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-prepared-weighted-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-spawn-weighted-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-fork-weighted-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-pypy-resident-weighted-1000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pypy-prepared-weighted-1000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pyodide-resident-weighted-1000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pyodide-prepared-weighted-1000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pysolate-fresh-weighted-1000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-0-pysolate-cow-weighted-1000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-0-native-weighted-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-weighted-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-weighted-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-weighted-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-native-weighted-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-weighted-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-weighted-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-weighted-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-resident-weighted-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-prepared-weighted-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-spawn-weighted-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-fork-weighted-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-pypy-resident-weighted-3000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pypy-prepared-weighted-3000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pyodide-resident-weighted-3000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pyodide-prepared-weighted-3000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pysolate-fresh-weighted-3000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-0-pysolate-cow-weighted-3000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-0-native-weighted-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-weighted-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-weighted-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-weighted-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-native-weighted-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-weighted-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-weighted-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-weighted-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-resident-weighted-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-prepared-weighted-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-spawn-weighted-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-fork-weighted-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-pypy-resident-weighted-30000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pypy-prepared-weighted-30000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pyodide-resident-weighted-30000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pyodide-prepared-weighted-30000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pysolate-fresh-weighted-30000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 1143369,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-0-pysolate-cow-weighted-30000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 1143369,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-0-native-weighted-100000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-weighted-100000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-weighted-100000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-weighted-100000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-native-weighted-100000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-weighted-100000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-weighted-100000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-weighted-100000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-resident-weighted-100000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-prepared-weighted-100000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-spawn-weighted-100000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-fork-weighted-100000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-pypy-resident-weighted-100000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pypy-prepared-weighted-100000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pyodide-resident-weighted-100000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pyodide-prepared-weighted-100000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pysolate-fresh-weighted-100000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 3811224,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-0-pysolate-cow-weighted-100000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 3811224,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-0-native-stateful-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-stateful-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-stateful-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-stateful-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-native-stateful-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-stateful-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-stateful-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-stateful-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-resident-stateful-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-prepared-stateful-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-spawn-stateful-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-fork-stateful-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-pypy-resident-stateful-300",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pypy-prepared-stateful-300",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pyodide-resident-stateful-300",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pyodide-prepared-stateful-300",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pysolate-fresh-stateful-300",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-0-pysolate-cow-stateful-300",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-0-native-stateful-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-stateful-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-stateful-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-stateful-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-native-stateful-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-stateful-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-stateful-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-stateful-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-resident-stateful-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-prepared-stateful-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-spawn-stateful-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-fork-stateful-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-pypy-resident-stateful-1000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pypy-prepared-stateful-1000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pyodide-resident-stateful-1000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pyodide-prepared-stateful-1000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pysolate-fresh-stateful-1000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-0-pysolate-cow-stateful-1000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-0-native-stateful-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-stateful-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-stateful-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-stateful-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-native-stateful-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-stateful-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-stateful-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-stateful-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-resident-stateful-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-prepared-stateful-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-spawn-stateful-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-fork-stateful-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-pypy-resident-stateful-3000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pypy-prepared-stateful-3000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pyodide-resident-stateful-3000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pyodide-prepared-stateful-3000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pysolate-fresh-stateful-3000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-0-pysolate-cow-stateful-3000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-0-native-stateful-10000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-stateful-10000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-stateful-10000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-stateful-10000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-native-stateful-10000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-stateful-10000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-stateful-10000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-stateful-10000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-resident-stateful-10000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-prepared-stateful-10000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-spawn-stateful-10000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-fork-stateful-10000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-pypy-resident-stateful-10000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pypy-prepared-stateful-10000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pyodide-resident-stateful-10000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pyodide-prepared-stateful-10000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pysolate-fresh-stateful-10000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-0-pysolate-cow-stateful-10000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-0-native-stateful-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-stateful-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-stateful-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-stateful-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-native-stateful-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-interpreter-stateful-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-monty-stateful-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-reference-stateful-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-resident-stateful-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-prepared-stateful-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-spawn-stateful-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-cpython-fork-stateful-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-0-pypy-resident-stateful-30000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pypy-prepared-stateful-30000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-0-pyodide-resident-stateful-30000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pyodide-prepared-stateful-30000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-0-pysolate-fresh-stateful-30000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 1143369,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-0-pysolate-cow-stateful-30000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 1143369,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-1-native-weighted-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-weighted-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-weighted-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-weighted-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-native-weighted-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-weighted-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-weighted-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-weighted-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-resident-weighted-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pypy-prepared-weighted-300",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-pypy-resident-weighted-300",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-cpython-fork-weighted-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-spawn-weighted-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-prepared-weighted-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pyodide-prepared-weighted-300",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pyodide-resident-weighted-300",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pysolate-cow-weighted-300",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-1-pysolate-fresh-weighted-300",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-1-native-weighted-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-weighted-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-weighted-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-weighted-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-native-weighted-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-weighted-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-weighted-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-weighted-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-resident-weighted-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pypy-prepared-weighted-1000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-pypy-resident-weighted-1000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-cpython-fork-weighted-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-spawn-weighted-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-prepared-weighted-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pyodide-prepared-weighted-1000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pyodide-resident-weighted-1000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pysolate-cow-weighted-1000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-1-pysolate-fresh-weighted-1000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-1-native-weighted-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-weighted-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-weighted-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-weighted-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-native-weighted-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-weighted-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-weighted-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-weighted-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-resident-weighted-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pypy-prepared-weighted-3000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-pypy-resident-weighted-3000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-cpython-fork-weighted-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-spawn-weighted-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-prepared-weighted-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pyodide-prepared-weighted-3000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pyodide-resident-weighted-3000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pysolate-cow-weighted-3000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-1-pysolate-fresh-weighted-3000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-1-native-weighted-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-weighted-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-weighted-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-weighted-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-native-weighted-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-weighted-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-weighted-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-weighted-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-resident-weighted-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pypy-prepared-weighted-30000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-pypy-resident-weighted-30000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-cpython-fork-weighted-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-spawn-weighted-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-prepared-weighted-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pyodide-prepared-weighted-30000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pyodide-resident-weighted-30000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pysolate-cow-weighted-30000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 1143369,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-1-pysolate-fresh-weighted-30000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 1143369,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-1-native-weighted-100000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-weighted-100000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-weighted-100000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-weighted-100000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-native-weighted-100000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-weighted-100000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-weighted-100000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-weighted-100000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-resident-weighted-100000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pypy-prepared-weighted-100000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-pypy-resident-weighted-100000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-cpython-fork-weighted-100000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-spawn-weighted-100000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-prepared-weighted-100000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pyodide-prepared-weighted-100000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pyodide-resident-weighted-100000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pysolate-cow-weighted-100000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 3811224,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-1-pysolate-fresh-weighted-100000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 3811224,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-1-native-stateful-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-stateful-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-stateful-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-stateful-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-native-stateful-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-stateful-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-stateful-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-stateful-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-resident-stateful-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pypy-prepared-stateful-300",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-pypy-resident-stateful-300",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-cpython-fork-stateful-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-spawn-stateful-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-prepared-stateful-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pyodide-prepared-stateful-300",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pyodide-resident-stateful-300",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pysolate-cow-stateful-300",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-1-pysolate-fresh-stateful-300",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-1-native-stateful-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-stateful-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-stateful-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-stateful-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-native-stateful-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-stateful-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-stateful-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-stateful-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-resident-stateful-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pypy-prepared-stateful-1000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-pypy-resident-stateful-1000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-cpython-fork-stateful-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-spawn-stateful-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-prepared-stateful-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pyodide-prepared-stateful-1000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pyodide-resident-stateful-1000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pysolate-cow-stateful-1000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-1-pysolate-fresh-stateful-1000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-1-native-stateful-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-stateful-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-stateful-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-stateful-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-native-stateful-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-stateful-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-stateful-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-stateful-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-resident-stateful-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pypy-prepared-stateful-3000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-pypy-resident-stateful-3000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-cpython-fork-stateful-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-spawn-stateful-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-prepared-stateful-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pyodide-prepared-stateful-3000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pyodide-resident-stateful-3000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pysolate-cow-stateful-3000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-1-pysolate-fresh-stateful-3000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-1-native-stateful-10000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-stateful-10000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-stateful-10000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-stateful-10000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-native-stateful-10000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-stateful-10000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-stateful-10000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-stateful-10000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-resident-stateful-10000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pypy-prepared-stateful-10000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-pypy-resident-stateful-10000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-cpython-fork-stateful-10000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-spawn-stateful-10000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-prepared-stateful-10000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pyodide-prepared-stateful-10000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pyodide-resident-stateful-10000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pysolate-cow-stateful-10000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-1-pysolate-fresh-stateful-10000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-1-native-stateful-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-stateful-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-stateful-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-stateful-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-native-stateful-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-reference-stateful-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-monty-stateful-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-interpreter-stateful-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-resident-stateful-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pypy-prepared-stateful-30000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-pypy-resident-stateful-30000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-1-cpython-fork-stateful-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-spawn-stateful-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-cpython-prepared-stateful-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-1-pyodide-prepared-stateful-30000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pyodide-resident-stateful-30000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-1-pysolate-cow-stateful-30000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 1143369,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-1-pysolate-fresh-stateful-30000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 1143369,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-2-monty-weighted-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-weighted-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-weighted-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-weighted-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-monty-weighted-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-weighted-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-weighted-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-weighted-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-spawn-weighted-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-fork-weighted-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pypy-resident-weighted-300",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-pypy-prepared-weighted-300",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-cpython-resident-weighted-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-prepared-weighted-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pyodide-resident-weighted-300",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pyodide-prepared-weighted-300",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pysolate-fresh-weighted-300",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-2-pysolate-cow-weighted-300",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-2-monty-weighted-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-weighted-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-weighted-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-weighted-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-monty-weighted-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-weighted-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-weighted-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-weighted-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-spawn-weighted-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-fork-weighted-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pypy-resident-weighted-1000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-pypy-prepared-weighted-1000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-cpython-resident-weighted-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-prepared-weighted-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pyodide-resident-weighted-1000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pyodide-prepared-weighted-1000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pysolate-fresh-weighted-1000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-2-pysolate-cow-weighted-1000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-2-monty-weighted-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-weighted-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-weighted-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-weighted-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-monty-weighted-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-weighted-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-weighted-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-weighted-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-spawn-weighted-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-fork-weighted-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pypy-resident-weighted-3000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-pypy-prepared-weighted-3000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-cpython-resident-weighted-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-prepared-weighted-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pyodide-resident-weighted-3000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pyodide-prepared-weighted-3000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pysolate-fresh-weighted-3000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-2-pysolate-cow-weighted-3000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-2-monty-weighted-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-weighted-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-weighted-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-weighted-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-monty-weighted-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-weighted-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-weighted-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-weighted-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-spawn-weighted-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-fork-weighted-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pypy-resident-weighted-30000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-pypy-prepared-weighted-30000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-cpython-resident-weighted-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-prepared-weighted-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pyodide-resident-weighted-30000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pyodide-prepared-weighted-30000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pysolate-fresh-weighted-30000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 1143369,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-2-pysolate-cow-weighted-30000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 1143369,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-2-monty-weighted-100000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-weighted-100000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-weighted-100000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-weighted-100000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-monty-weighted-100000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-weighted-100000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-weighted-100000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-weighted-100000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-spawn-weighted-100000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-fork-weighted-100000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pypy-resident-weighted-100000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-pypy-prepared-weighted-100000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-cpython-resident-weighted-100000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-prepared-weighted-100000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pyodide-resident-weighted-100000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pyodide-prepared-weighted-100000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pysolate-fresh-weighted-100000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 3811224,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-2-pysolate-cow-weighted-100000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 3811224,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-2-monty-stateful-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-stateful-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-stateful-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-stateful-300-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-monty-stateful-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-stateful-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-stateful-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-stateful-300-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-spawn-stateful-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-fork-stateful-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pypy-resident-stateful-300",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-pypy-prepared-stateful-300",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-cpython-resident-stateful-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-prepared-stateful-300",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pyodide-resident-stateful-300",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pyodide-prepared-stateful-300",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pysolate-fresh-stateful-300",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-2-pysolate-cow-stateful-300",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-2-monty-stateful-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-stateful-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-stateful-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-stateful-1000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-monty-stateful-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-stateful-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-stateful-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-stateful-1000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-spawn-stateful-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-fork-stateful-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pypy-resident-stateful-1000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-pypy-prepared-stateful-1000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-cpython-resident-stateful-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-prepared-stateful-1000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pyodide-resident-stateful-1000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pyodide-prepared-stateful-1000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pysolate-fresh-stateful-1000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-2-pysolate-cow-stateful-1000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-2-monty-stateful-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-stateful-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-stateful-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-stateful-3000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-monty-stateful-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-stateful-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-stateful-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-stateful-3000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-spawn-stateful-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-fork-stateful-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pypy-resident-stateful-3000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-pypy-prepared-stateful-3000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-cpython-resident-stateful-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-prepared-stateful-3000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pyodide-resident-stateful-3000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pyodide-prepared-stateful-3000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pysolate-fresh-stateful-3000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-2-pysolate-cow-stateful-3000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-2-monty-stateful-10000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-stateful-10000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-stateful-10000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-stateful-10000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-monty-stateful-10000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-stateful-10000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-stateful-10000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-stateful-10000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-spawn-stateful-10000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-fork-stateful-10000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pypy-resident-stateful-10000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-pypy-prepared-stateful-10000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-cpython-resident-stateful-10000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-prepared-stateful-10000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pyodide-resident-stateful-10000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pyodide-prepared-stateful-10000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pysolate-fresh-stateful-10000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-2-pysolate-cow-stateful-10000",
+    "state": "completed",
+    "rows": 11
+  },
+  {
+    "key": "curve-2-monty-stateful-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-stateful-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-stateful-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-stateful-30000-cold",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-monty-stateful-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-reference-stateful-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-native-stateful-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-interpreter-stateful-30000-warm",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-spawn-stateful-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-fork-stateful-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pypy-resident-stateful-30000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-pypy-prepared-stateful-30000",
+    "state": "completed",
+    "rows": 241
+  },
+  {
+    "key": "curve-2-cpython-resident-stateful-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-cpython-prepared-stateful-30000",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "curve-2-pyodide-resident-stateful-30000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pyodide-prepared-stateful-30000",
+    "state": "completed",
+    "rows": 21
+  },
+  {
+    "key": "curve-2-pysolate-fresh-stateful-30000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 1143369,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  },
+  {
+    "key": "curve-2-pysolate-cow-stateful-30000",
+    "state": "unsupported",
+    "scheduled_rows": 11,
+    "reason": "old Guest MAX_MESSAGE=1048576; generated compact response exceeds bound",
+    "response_bytes": 1143369,
+    "source": "guest/runtime.c:12,31",
+    "observed": false
+  }
+]

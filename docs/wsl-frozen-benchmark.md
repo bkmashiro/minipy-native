@@ -12,6 +12,8 @@
 
 本轮不估计 N compact 改动本身的收益，不拼接旧 ARM64/macOS 数据，也不改默认 backend、调度、Provider admission 或预算语义。
 
+审查后补充的[七点规模曲线、真实 x86_64 手写汇编参考与同运行首请求分段](wsl-frozen-extension.md)已完成。以下首轮表格/raw 不变；补充报告复用其成功点，只追加缺失形状。首轮 benchmark harness 的确切原版现存于 `bench/results/s-wsl/frozen-interpreter_ab.rs`，新增 first-request 入口不属于生产 runtime 变更。
+
 ![冻结版本的请求成本与等待 PSS](../bench/results/s-wsl/overview.svg)
 
 ## 环境与比较契约
@@ -156,7 +158,7 @@ WSL task root `/home/na/benchmarks/minipy-s`：raw JSONL(gz)、targets、PyPy/Py
 
 源与命令：
 
-1. 在 WSL 建 task-local `source`，runtime source 对齐 `969e679`，保留本次 `tools/s_wsl_*`、`bench/src/bin/s_prepared.rs` 和 `bench/results/s-wsl/{plan,frozen-source,abi-limit}.json`。有 Git checkout 的复现可使用本 evidence commit，因为 runtime/原 harness/fixtures 与 frozen hashes 一致。
+1. 在 WSL 建 task-local `source`，runtime source 对齐 `969e679`，保留本次 `tools/s_wsl_*`、`bench/src/bin/s_prepared.rs` 和 `bench/results/s-wsl/{plan,frozen-source,abi-limit}.json`。当前 evidence source 的 runtime/fixtures 与 frozen hashes 一致；原 harness 归档 `frozen-interpreter_ab.rs` 也保留确切原 SHA。构建首轮 binary 前暂存当前 `interpreter_ab.rs` 并将归档 copy 回其原路径，完成后恢复新增 first-request 入口，详见补充报告复现步骤。
 2. `cargo +1.96.0 build --release --locked --manifest-path bench/Cargo.toml --bin interpreter_ab`，copy 为 task root `speed`。再用 `--features allocation-diagnostics --bin interpreter_ab --bin s_prepared` 构建，分别 copy 为 `memory` / `prepared`。实际本轮依赖曾遇到网络停滞，复用了已缓存的 exact Monty Git bundle 和 lock 对应 crate，缺失 crate 在 WSL 下载；之后带 `--offline` 构建。没有在 Mac 构建执行目标。
 3. task-local PyPy 官方 `pypy3.11-v7.3.20-linux64.tar.bz2` SHA-256 为 `1410db3a7ae47603e2b7cbfd7ff6390b891b2e041c9eb4f1599f333677bccb3e`。Pyodide `npm install --no-audit --no-fund pyodide@0.29.3` 在 task-local runtime。Node path、PyPy path、Guest path 与所有动态库/stdlib hashes 见 identity；不要修改原 Pysolate repo。
 4. old harness 在 task-local `old-harness`：copy `s_wsl_pysolate.go` 为 `main.go`；`go mod init example.com/minipy-s`，`go mod edit -require=github.com/bkmashiro/agent-python-runtime@v0.0.0 -replace=github.com/bkmashiro/agent-python-runtime=/home/na/projects/agent-python-runtime`，copy 既有 `go.sum`，`GOPROXY=off go mod tidy` / `go build -o ../pysolate-bench .`。既有 Guest/依赖是前提，不把 artifact 缺失视为可跑。

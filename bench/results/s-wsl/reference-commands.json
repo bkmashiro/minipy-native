@@ -1,0 +1,4202 @@
+[
+  {
+    "key": "reference-0-assembly-weighted-100-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-rust-weighted-100-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-assembly-weighted-100-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-rust-weighted-100-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-assembly-weighted-300-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 300,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-rust-weighted-300-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 300,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-assembly-weighted-300-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 300,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-rust-weighted-300-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 300,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-assembly-weighted-1000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 1000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-rust-weighted-1000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 1000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-assembly-weighted-1000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 1000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-rust-weighted-1000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 1000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-assembly-weighted-3000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 3000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-rust-weighted-3000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 3000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-assembly-weighted-3000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 3000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-rust-weighted-3000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 3000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-assembly-weighted-10000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-rust-weighted-10000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-assembly-weighted-10000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-rust-weighted-10000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-assembly-weighted-30000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 30000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-rust-weighted-30000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 30000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-assembly-weighted-30000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 30000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-rust-weighted-30000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 30000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-assembly-weighted-100000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 100000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-rust-weighted-100000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 100000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-assembly-weighted-100000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 100000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-rust-weighted-100000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 100000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-assembly-stateful-100-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-rust-stateful-100-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-assembly-stateful-100-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-rust-stateful-100-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-assembly-stateful-300-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 300,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-rust-stateful-300-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 300,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-assembly-stateful-300-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 300,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-rust-stateful-300-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 300,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-assembly-stateful-1000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 1000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-rust-stateful-1000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 1000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-assembly-stateful-1000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 1000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-rust-stateful-1000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 1000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-assembly-stateful-3000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 3000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-rust-stateful-3000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 3000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-assembly-stateful-3000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 3000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-rust-stateful-3000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 3000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-assembly-stateful-10000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-rust-stateful-10000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-assembly-stateful-10000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-rust-stateful-10000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-assembly-stateful-30000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 30000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-rust-stateful-30000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 30000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-assembly-stateful-30000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 30000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-rust-stateful-30000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 30000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-assembly-stateful-100000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 100000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-rust-stateful-100000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 100000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-0-assembly-stateful-100000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 100000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-0-rust-stateful-100000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 0,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 100000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-rust-weighted-100-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-assembly-weighted-100-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-rust-weighted-100-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-assembly-weighted-100-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-rust-weighted-300-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 300,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-assembly-weighted-300-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 300,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-rust-weighted-300-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 300,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-assembly-weighted-300-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 300,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-rust-weighted-1000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 1000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-assembly-weighted-1000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 1000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-rust-weighted-1000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 1000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-assembly-weighted-1000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 1000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-rust-weighted-3000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 3000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-assembly-weighted-3000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 3000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-rust-weighted-3000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 3000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-assembly-weighted-3000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 3000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-rust-weighted-10000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-assembly-weighted-10000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-rust-weighted-10000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-assembly-weighted-10000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-rust-weighted-30000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 30000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-assembly-weighted-30000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 30000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-rust-weighted-30000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 30000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-assembly-weighted-30000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 30000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-rust-weighted-100000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 100000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-assembly-weighted-100000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 100000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-rust-weighted-100000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 100000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-assembly-weighted-100000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 100000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-rust-stateful-100-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-assembly-stateful-100-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-rust-stateful-100-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-assembly-stateful-100-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-rust-stateful-300-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 300,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-assembly-stateful-300-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 300,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-rust-stateful-300-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 300,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-assembly-stateful-300-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 300,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-rust-stateful-1000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 1000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-assembly-stateful-1000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 1000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-rust-stateful-1000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 1000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-assembly-stateful-1000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 1000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-rust-stateful-3000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 3000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-assembly-stateful-3000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 3000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-rust-stateful-3000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 3000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-assembly-stateful-3000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 3000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-rust-stateful-10000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-assembly-stateful-10000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-rust-stateful-10000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-assembly-stateful-10000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-rust-stateful-30000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 30000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-assembly-stateful-30000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 30000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-rust-stateful-30000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 30000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-assembly-stateful-30000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 30000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-rust-stateful-100000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 100000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-assembly-stateful-100000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 100000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-1-rust-stateful-100000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 100000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-1-assembly-stateful-100000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 1,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 100000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-assembly-weighted-100-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-rust-weighted-100-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-assembly-weighted-100-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-rust-weighted-100-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 100,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-assembly-weighted-300-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 300,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-rust-weighted-300-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 300,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-assembly-weighted-300-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 300,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-rust-weighted-300-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 300,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-assembly-weighted-1000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 1000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-rust-weighted-1000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 1000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-assembly-weighted-1000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 1000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-rust-weighted-1000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 1000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-assembly-weighted-3000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 3000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-rust-weighted-3000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 3000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-assembly-weighted-3000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 3000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-rust-weighted-3000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 3000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-assembly-weighted-10000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-rust-weighted-10000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-assembly-weighted-10000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-rust-weighted-10000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 10000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-assembly-weighted-30000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 30000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-rust-weighted-30000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 30000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-assembly-weighted-30000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 30000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-rust-weighted-30000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 30000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-assembly-weighted-100000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "weighted",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 100000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-rust-weighted-100000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "weighted",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 100000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-assembly-weighted-100000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "weighted",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "weighted",
+      "rows": 100000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-rust-weighted-100000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "weighted",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "weighted",
+      "rows": 100000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-assembly-stateful-100-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-rust-stateful-100-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-assembly-stateful-100-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-rust-stateful-100-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "100",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 100,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-assembly-stateful-300-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 300,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-rust-stateful-300-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 300,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-assembly-stateful-300-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 300,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-rust-stateful-300-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "300",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 300,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-assembly-stateful-1000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 1000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-rust-stateful-1000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 1000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-assembly-stateful-1000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 1000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-rust-stateful-1000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "1000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 1000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-assembly-stateful-3000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 3000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-rust-stateful-3000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 3000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-assembly-stateful-3000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 3000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-rust-stateful-3000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "3000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 3000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-assembly-stateful-10000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-rust-stateful-10000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-assembly-stateful-10000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-rust-stateful-10000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "10000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 10000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-assembly-stateful-30000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 30000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-rust-stateful-30000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 30000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-assembly-stateful-30000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 30000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-rust-stateful-30000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "30000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 30000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-assembly-stateful-100000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "kernel",
+      "stateful",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 100000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-rust-stateful-100000-kernel",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "kernel",
+      "stateful",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 100000,
+      "mode": "kernel"
+    }
+  },
+  {
+    "key": "reference-2-assembly-stateful-100000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "assembly",
+      "full",
+      "stateful",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "assembly",
+      "case": "stateful",
+      "rows": 100000,
+      "mode": "full"
+    }
+  },
+  {
+    "key": "reference-2-rust-stateful-100000-full",
+    "argv": [
+      "taskset",
+      "-c",
+      "2",
+      "/home/na/benchmarks/minipy-s/assembly-extension",
+      "rust",
+      "full",
+      "stateful",
+      "100000",
+      "41",
+      "0"
+    ],
+    "kind": "assembly-speed",
+    "expected": 41,
+    "discard": 11,
+    "tags": {
+      "round": 2,
+      "engine": "rust",
+      "case": "stateful",
+      "rows": 100000,
+      "mode": "full"
+    }
+  }
+]

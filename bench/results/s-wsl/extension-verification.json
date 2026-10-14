@@ -1,0 +1,52 @@
+{
+  "utc": "2026-10-14T08:28:34.156318+00:00",
+  "original_summary_unchanged_sha256": "aa67b4961f584a33cea57f082b89d1c2039db131cd51bf8bee4481e9a2883715",
+  "original_raw_files_verified": 534,
+  "extension_raw_files_verified": 762,
+  "original_binaries_unchanged": [
+    "speed",
+    "pysolate-bench"
+  ],
+  "stage_identities_postflight_verified": [
+    "curve",
+    "first",
+    "reference"
+  ],
+  "fixture_binding_validation": {
+    "admission": "compile-time exact byte equality for two fixed success sources; measured source separately archived",
+    "measured_harness": "bench/results/s-wsl/measured-assembly_ab.rs",
+    "measured_harness_sha256": "d34c2feb99e89f283fe1a564db923ef3cd3da3a5753047b63786f986d9b10ad2",
+    "guarded_harness_sha256": "dd9ab3867947469bb5535a98dc92b8a5107c963408364fcf57cecf840135c7f2",
+    "measured_elf_sha256": "69feecc017077d544a8cb4f1a370dbcf2773e46c9db181deff46c7e2c42c29c6",
+    "guarded_elf_sha256": "2abe33e314739e9f8d25edf9eaa00f0917fea1d9138af0cb21d349490a53be9c",
+    "text_sections_byte_identical": true,
+    "both_text_sha256": "24911366c36aaac77580341ef2bf678c67fa722cab22ba35df82010befdf2697",
+    "commands": [
+      "cargo +1.96.0 build --offline --locked --release --manifest-path bench/Cargo.toml --bin assembly_ab",
+      "objcopy --dump-section .text=../extension/measured.text ../assembly-extension ../extension/measured-copy.elf",
+      "objcopy --dump-section .text=../extension/guarded.text bench/target/release/assembly_ab ../extension/guarded-copy.elf",
+      "cmp ../extension/measured.text ../extension/guarded.text",
+      "cargo +1.96.0 test --offline --locked --manifest-path bench/Cargo.toml --bin assembly_ab"
+    ],
+    "positive_probe": "same appended const assertion compiled against copies of exact fixtures",
+    "negative_probe": "comment-appended weighted fixture copy rejected with rustc E0080; production fixtures untouched",
+    "new_tests_passed": 5,
+    "artifact_recovery": "Initial objcopy dump without an output ELF rewrote its input metadata, which the strict reducer rejected. Rebuilt the exact archived measured source: original complete ELF SHA reproduced exactly, then restored guarded source. Corrected dump commands use separate output ELFs, preserve both inputs and compare byte-identical .text. All 762 raw retained; strict full reduction passed and extension-summary SHA remains 7cf4324f0b1f0340659b4f52c59bed912ee0cf310a2402e023c7b7ffe6fc1497.",
+    "note": "Full ELF hash differs after compile-only guard. Do not equate it with measured ELF; complete executable .text remains byte-identical. All original measurements retained. Stage postflight identities above were checked before this separately recorded admission addition; final reduction validates the exact measured source archive and restored binary."
+  },
+  "tests": {
+    "assembly": 5,
+    "extension_cpython": 4,
+    "extension_pypy": 4,
+    "original_harness_cpython": 6
+  },
+  "disassembly": "115-byte minipy_l_scan: x86_64 checked signed imul/add with jo, no calls",
+  "plot_render_check": "Four SVGs fully rendered and inspected in Chrome on Mac; labels and observed round ranges visible",
+  "toolchains": {
+    "rust": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+    "cargo": "cargo 1.96.0 (30a34c682 2026-05-25)",
+    "go": "go version go1.27.1 linux/amd64",
+    "cc": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+  },
+  "postflight": "Linux DESKTOP-UISID0V 6.18.54.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux\n 16:28:34 up  2:57,  2 users,  load average: 0.19, 0.60, 0.87\n               total        used        free      shared  buff/cache   available\nMem:            23Gi       1.1Gi        21Gi        18Mi       727Mi        22Gi\nSwap:          6.0Gi          0B       6.0Gi\nFilesystem      Size  Used Avail Use% Mounted on\n/dev/sdd       1007G   33G  924G   4% /\n5.0M\t/home/na/benchmarks/minipy-s/extension\n    PID COMMAND         %CPU %MEM\n  57966 python3         54.2  0.1\n  57786 sshd             0.5  0.0\n    200 tailscaled       0.3  0.4\n  57819 fish             0.2  0.0\n    184 redis-server     0.2  0.1\n    409 mariadbd         0.0  0.4\n      1 systemd          0.0  0.0\n     61 systemd-journal  0.0  0.0\n    436 postgres         0.0  0.1\n    174 dbus-daemon      0.0  0.0\n    198 systemd-logind   0.0  0.0\n    216 rsyslogd         0.0  0.0\n    165 systemd-timesyn  0.0  0.0\n    113 systemd-udevd    0.0  0.0\n    451 postgres         0.0  0.0\n    448 postgres         0.0  0.0\n    450 postgres         0.0  0.0\n    254 unattended-upgr  0.0  0.0\n    224 sshd             0.0  0.0\n    726 systemd          0.0  0.0\n    691 systemd-resolve  0.0  0.0\n    751 fish             0.0  0.0\n    673 fish             0.0  0.0\n    173 cron             0.0  0.0\n      2 init-systemd(Ub  0.0  0.0\n      3 init-watcher     0.0  0.0\n     10 init             0.0  0.0\n    245 agetty           0.0  0.0\n    447 postgres         0.0  0.0\n    452 postgres         0.0  0.0\n    670 SessionLeader    0.0  0.0\n    672 Relay(673)       0.0  0.0\n    675 login            0.0  0.0\n    727 (sd-pam)         0.0  0.0\n  57818 sshd             0.0  0.0\n  58145 sh               0.0  0.0\n  58151 ps               0.0  0.0\n"
+}

@@ -16,6 +16,7 @@ import (
 	"sync/atomic"
 	"syscall"
 	"time"
+    "unsafe"
 )
 
 func emit(v any) {
@@ -80,7 +81,14 @@ func source(dir, c string) string {
 	s = strings.ReplaceAll(s, "await tools.record_total(batch_id, total)", "tools.record_total(batch_id=batch_id, total=total)")
 	return "from types import SimpleNamespace\nbatch_id = inputs['batch_id']\nprice_limit = inputs['price_limit']\n" + s
 }
+func monotonic() int64 {
+    var ts syscall.Timespec
+    _, _, err := syscall.Syscall(syscall.SYS_CLOCK_GETTIME, 1, uintptr(unsafe.Pointer(&ts)), 0)
+    if err != 0 { panic(err) }
+    return ts.Sec*1e9 + ts.Nsec
+}
 func main() {
+    initBegin := monotonic()
 	if len(os.Args) != 9 {
 		panic("args")
 	}
@@ -167,6 +175,20 @@ func main() {
 	defer r.Close(context.Background())
 	engine := "pysolate-" + arm
 	emit(map[string]any{"kind": "initialization", "engine": engine, "wall_ns": time.Since(t).Nanoseconds(), "cpu_ns": cpu() - cp, "physical": physical(), "includes": "Guest artifact read, Wasm compile, optional prepared COW image capture; imports and process startup excluded"})
+    if mode == "first-request" {
+        ready := monotonic()
+        s := source(dir, c)
+        prepared := monotonic()
+        out, err := r.Run(ctx, s, map[string]any{"batch_id":17,"price_limit":700})
+        executed := monotonic()
+        if err != nil { panic(err) }
+        if out.Stdout != oracle(c,n) { panic("stdout") }
+        emit(map[string]any{"kind":"first-request","engine":engine,"case":c,"rows":n,
+            "init_begin_ns":initBegin,"ready_ns":ready,"prepared_ns":prepared,"executed_ns":executed,
+            "stdout":out.Stdout,"completed":true,"prepare_boundary":"host source adaptation only",
+            "execute_boundary":"Runner.Run includes Guest Python compilation, instance/data image use, generated JSON input, tools and output"})
+        return
+    }
 	run := func(c string, n int, batch int) {
 		out, e := r.Run(ctx, source(dir, c), map[string]any{"batch_id": batch, "price_limit": 700})
 		if e != nil {

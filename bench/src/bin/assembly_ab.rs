@@ -1,4 +1,4 @@
-//! L assembly versus Rust fixed-reference addition, never source compilation.
+//! Fixed assembly versus Rust reference, never source compilation.
 #[path = "../assembly_reference.rs"]
 mod assembly;
 #[path = "../v2_common.rs"]
@@ -45,6 +45,9 @@ async fn execute(arm: &str, stateful: bool, p: Arc<common::RequestProvider>) -> 
     out.stdout
 }
 fn main() {
+    // Bound to these two fixed success programs, not arbitrary source.
+    let _bodies = [include_str!("../../../fixtures/common_weighted.py"),
+        include_str!("../../../fixtures/common_stateful.py")];
     let args: Vec<_> = std::env::args().collect();
     assert_eq!(
         args.len(),
@@ -133,11 +136,43 @@ fn main() {
     }
 }
 
-#[cfg(all(test, target_arch = "aarch64", target_os = "linux"))]
+#[cfg(all(test, any(target_arch = "aarch64", target_arch = "x86_64"), target_os = "linux"))]
 mod tests {
     use super::*;
     use minipy_native::error::TaskError;
     use std::sync::atomic::Ordering;
+    #[tokio::test]
+    async fn errors_and_owner_release_before_record() {
+        use minipy_native::provider::{TestProvider, Delays};
+        for which in 0..6 {
+            let mut options = ScriptLimits::default();
+            match which {
+                0 => options.limits.allow_load = false,
+                1 => options.tool_calls = 1,
+                2 => options.limits.buffer_bytes = 0,
+                3 => options.allow_print = false,
+                4 => options.stdout_bytes = 0,
+                _ => options.limits.chunk = 0,
+            }
+            let p = Arc::new(TestProvider::new(common::rows(1), Delays::default()));
+            let out = assembly::execute(false, p.clone(), &[17,700], options, assembly::Cancellation::default()).await;
+            assert_eq!(out.status, Err(if which == 0 || which == 3 { TaskError::Permission } else { TaskError::Budget }));
+            assert!(out.stdout.is_empty());
+            if which < 3 || which == 5 { assert_eq!(p.record_count(), 0); }
+        }
+        for (load, record) in [(true,false),(false,true)] {
+            let p = Arc::new(TestProvider::new(common::rows(1), Delays::default()).with_failures(load,record));
+            let out = assembly::execute(false,p,&[17,700],ScriptLimits::default(),assembly::Cancellation::default()).await;
+            assert!(matches!(out.status,Err(TaskError::Provider(_))));
+            assert!(out.stdout.is_empty());
+        }
+        let p = Arc::new(TestProvider::new(common::rows(1), Delays { load:Duration::ZERO, record:Duration::from_millis(30) }));
+        let pp = p.clone();
+        let job = tokio::spawn(async move { assembly::execute(false,pp,&[17,700],ScriptLimits::default(),assembly::Cancellation::default()).await });
+        tokio::time::timeout(Duration::from_secs(1), async { while p.record_count()==0 { tokio::task::yield_now().await; } }).await.unwrap();
+        assert!(p.last_rows().unwrap().upgrade().is_none());
+        job.await.unwrap().status.unwrap();
+    }
     #[tokio::test]
     async fn full_contract_budget_permission_cancel_and_late_completion() {
         for stateful in [false, true] {
@@ -216,3 +251,19 @@ mod tests {
         assert_eq!(stats.records.load(Ordering::Acquire), 0);
     }
 }
+
+// Compile-time admission for the two precompiled business kernels. Keep it
+// outside executable functions: no runtime work or changed timer boundary.
+const _: () = {
+    const fn same_bytes(a: &[u8], b: &[u8]) -> bool {
+        if a.len() != b.len() { return false; }
+        let mut i = 0;
+        while i < a.len() {
+            if a[i] != b[i] { return false; }
+            i += 1;
+        }
+        true
+    }
+    assert!(same_bytes(include_bytes!("../../../fixtures/common_weighted.py"), b"quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"));
+    assert!(same_bytes(include_bytes!("../../../fixtures/common_stateful.py"), b"quotes = await tools.load_quotes(batch_id)\ntotal = 0\nprevious = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\n        previous = quote.unit_price_cents\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n"));
+};

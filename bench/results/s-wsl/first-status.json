@@ -1,0 +1,362 @@
+[
+  {
+    "key": "first-0-native-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-interpreter-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-monty-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-cpython-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-pypy-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-pyodide-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-pysolate-fresh-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-pysolate-cow-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-native-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-interpreter-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-monty-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-cpython-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-pypy-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-pyodide-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-pysolate-fresh-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-pysolate-cow-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-native-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-interpreter-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-monty-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-cpython-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-pypy-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-pyodide-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-pysolate-fresh-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-0-pysolate-cow-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-native-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-monty-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-interpreter-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-cpython-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-pypy-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-pyodide-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-pysolate-cow-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-pysolate-fresh-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-native-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-monty-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-interpreter-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-cpython-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-pypy-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-pyodide-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-pysolate-cow-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-pysolate-fresh-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-native-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-monty-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-interpreter-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-cpython-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-pypy-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-pyodide-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-pysolate-cow-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-1-pysolate-fresh-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-monty-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-native-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-interpreter-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-cpython-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-pypy-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-pyodide-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-pysolate-fresh-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-pysolate-cow-scalar-0",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-monty-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-native-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-interpreter-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-cpython-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-pypy-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-pyodide-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-pysolate-fresh-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-pysolate-cow-weighted-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-monty-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-native-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-interpreter-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-cpython-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-pypy-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-pyodide-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-pysolate-fresh-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  },
+  {
+    "key": "first-2-pysolate-cow-stateful-10000",
+    "state": "completed",
+    "rows": 1
+  }
+]

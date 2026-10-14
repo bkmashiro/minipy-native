@@ -1,0 +1,842 @@
+[
+  {
+    "key": "reference-0-assembly-weighted-100-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-weighted-100-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-weighted-100-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-weighted-100-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-weighted-300-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-weighted-300-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-weighted-300-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-weighted-300-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-weighted-1000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-weighted-1000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-weighted-1000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-weighted-1000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-weighted-3000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-weighted-3000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-weighted-3000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-weighted-3000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-weighted-10000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-weighted-10000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-weighted-10000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-weighted-10000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-weighted-30000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-weighted-30000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-weighted-30000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-weighted-30000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-weighted-100000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-weighted-100000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-weighted-100000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-weighted-100000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-stateful-100-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-stateful-100-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-stateful-100-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-stateful-100-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-stateful-300-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-stateful-300-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-stateful-300-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-stateful-300-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-stateful-1000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-stateful-1000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-stateful-1000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-stateful-1000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-stateful-3000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-stateful-3000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-stateful-3000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-stateful-3000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-stateful-10000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-stateful-10000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-stateful-10000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-stateful-10000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-stateful-30000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-stateful-30000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-stateful-30000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-stateful-30000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-stateful-100000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-stateful-100000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-assembly-stateful-100000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-0-rust-stateful-100000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-weighted-100-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-weighted-100-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-weighted-100-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-weighted-100-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-weighted-300-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-weighted-300-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-weighted-300-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-weighted-300-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-weighted-1000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-weighted-1000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-weighted-1000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-weighted-1000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-weighted-3000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-weighted-3000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-weighted-3000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-weighted-3000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-weighted-10000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-weighted-10000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-weighted-10000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-weighted-10000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-weighted-30000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-weighted-30000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-weighted-30000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-weighted-30000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-weighted-100000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-weighted-100000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-weighted-100000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-weighted-100000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-stateful-100-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-stateful-100-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-stateful-100-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-stateful-100-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-stateful-300-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-stateful-300-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-stateful-300-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-stateful-300-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-stateful-1000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-stateful-1000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-stateful-1000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-stateful-1000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-stateful-3000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-stateful-3000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-stateful-3000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-stateful-3000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-stateful-10000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-stateful-10000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-stateful-10000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-stateful-10000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-stateful-30000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-stateful-30000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-stateful-30000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-stateful-30000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-stateful-100000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-stateful-100000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-rust-stateful-100000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-1-assembly-stateful-100000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-weighted-100-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-weighted-100-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-weighted-100-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-weighted-100-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-weighted-300-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-weighted-300-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-weighted-300-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-weighted-300-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-weighted-1000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-weighted-1000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-weighted-1000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-weighted-1000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-weighted-3000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-weighted-3000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-weighted-3000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-weighted-3000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-weighted-10000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-weighted-10000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-weighted-10000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-weighted-10000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-weighted-30000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-weighted-30000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-weighted-30000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-weighted-30000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-weighted-100000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-weighted-100000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-weighted-100000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-weighted-100000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-stateful-100-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-stateful-100-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-stateful-100-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-stateful-100-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-stateful-300-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-stateful-300-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-stateful-300-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-stateful-300-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-stateful-1000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-stateful-1000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-stateful-1000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-stateful-1000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-stateful-3000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-stateful-3000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-stateful-3000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-stateful-3000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-stateful-10000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-stateful-10000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-stateful-10000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-stateful-10000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-stateful-30000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-stateful-30000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-stateful-30000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-stateful-30000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-stateful-100000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-stateful-100000-kernel",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-assembly-stateful-100000-full",
+    "state": "completed",
+    "rows": 41
+  },
+  {
+    "key": "reference-2-rust-stateful-100000-full",
+    "state": "completed",
+    "rows": 41
+  }
+]

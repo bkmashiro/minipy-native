@@ -1,0 +1,10 @@
+error[E0080]: evaluation panicked: assertion failed: same_bytes(include_bytes!("../../../fixtures/common_weighted.py"),
+                  b"quotes = await tools.load_quotes(batch_id)\ntotal = 0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit:\n        amount = quote.unit_price_cents * quote.quantity\n        total += amount\nreceipt = await tools.record_total(batch_id, total)\nprint(receipt)\n")
+  --> bench/src/bin/check.rs:14:5
+   |
+14 |     assert!(same_bytes(include_bytes!("../../../f...d_total(batch_id, total)\nprint(receipt)\n"));
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^...^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ evaluation of `_` failed here
+
+error: aborting due to 1 previous error
+
+For more information about this error, try `rustc --explain E0080`.
