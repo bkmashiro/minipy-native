@@ -54,4 +54,15 @@ python3 af-capacity/af_reduce.py /home/na/benchmarks/minipy-s/af-capacity /home/
 python3 -m unittest discover -s tools -p test_af_capacity.py
 ```
 
+## Verification and publication
+
+The single completed independent read-only review targeted signed commit
+`7b8b967dd4f1c7202adec222548a6b9ebdc0e7ed` through native Hermes delegation,
+with actual returned model `gpt-6-luna` / `openai-codex`. No confirmed actionable
+bug or evidence-claim mismatch. Reviewer reran all five focused Python tests.
+An earlier Codex CLI request for that exact model returned HTTP400 unsupported
+and performed no review; no model was silently substituted. Parent separately
+verified raw on WSL, all identities, signed commit and remote publication SHA.
+The review did not repeat a performance campaign.
+
 Web handoff: import this new cohort separately; show engine representation labels and all loss/early-stop information. Preserve prior latency/memory data and the landing cards. The load curve has three measured x positions per engine, not an interpolated precision capacity estimate. Website changes and deployment belong to AG, not this experiment.
