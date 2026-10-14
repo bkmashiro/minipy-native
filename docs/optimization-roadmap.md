@@ -1,6 +1,24 @@
 # Current optimization pointer
 
-## H: integrated explicit backends, stop point
+## I: execution reference and bounded strategy qualification
+
+[stage-strategy-experiment.md](stage-strategy-experiment.md) records 145,200 actual
+Linux observations, the fixed Rust reference, opt-in IR event inventory and one
+auxiliary macOS sample. 100k stateful prepared CPU is reference 504.09 us, native
+581.67 us, IR 2542.49 us and Monty 35301.68 us. Reference omits source compilation
+and does not constitute an unknown-source engine. The fixed host path is already
+a substantial floor for native large scans; tiny cold native cost remains compile
+dominated, and explicit IR/native choice remains the useful strategy boundary.
+
+Leaf operand inlining improves mixed CPU but fails the noisy small-task/tail
+gate. One-resume native dispatch elimination shrinks code without stable mixed
+net benefit. Both are reverted, preserving patches/raw rather than retained
+alternatives. No further campaign, automatic JIT/cache or scheduler is scheduled.
+61 correctness tests pass on macOS and actual Linux. Final review/publication
+belongs in the card. This is the current stop point; prior pointers below are
+historical evidence.
+
+## H: historical integrated explicit backends
 
 Signed merge `b3a12fd` combines reviewed G (`9b28716`) with F (`8cb905b`),
 preserving native predicate lowering. Library callers explicitly select native or

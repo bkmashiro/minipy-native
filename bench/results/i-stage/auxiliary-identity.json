@@ -1,0 +1,33 @@
+{
+  "macos": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
+  "core_rust": "rustc 1.93.1 (01f6ddf75 2026-02-11)",
+  "bench_rust": "rustc 1.96.0 (ac68faa20 2026-05-25)",
+  "macos_speed_binary": {
+    "sha256": "0c6e00eb1217f6359135f9b2ef6127c7e07af25fbfa46f131000436d9b745ce3",
+    "bytes": 15567456
+  },
+  "commands": [
+    "target/i-base-speed-macos interpreter stateful warm 100000 4000",
+    "sample PID 3 1 -file bench/results/i-stage/macos-sample.txt",
+    "otool -tvV target/i-base-speed-macos (extract State::eval)",
+    "cargo run --release --locked --features compiler-profile --example stage_inventory",
+    "cargo +1.96.0 zigbuild --release --locked --features interpreter-profile --example interpreter_counts --target aarch64-unknown-linux-musl",
+    "/root/minipy-native-i-stage/counts {weighted,stateful} {1,256,4096}",
+    "/root/minipy-native-i-stage/candidate-counts {weighted,stateful} 256"
+  ],
+  "diagnostic_guest_binaries": "11b59d4b0f2d692c3c01b5826c75fc4a80bc8cc124eed3ab528fbaddabf4ed94  /root/minipy-native-i-stage/counts\nf8eecc58cb131c8fd82db1c33a97b39d908e135f00de46672efc316021d325f2  /root/minipy-native-i-stage/candidate-counts",
+  "linux_disassembly": "nm on speed ELF reports no symbols; retained Mac State::eval assembly instead",
+  "sampled_raw_count": 4000,
+  "source_note": "Mac speed uses baseline production code plus cfg-disabled diagnostic hooks; auxiliary timings never enter Linux summary",
+  "source_sha256": {
+    "src/interpreter.rs": "d7f9106d36f85646e2c219a646dd37941c3758ddec593cedf02f92ee9ae6ee39",
+    "src/interpreter_profile.rs": "1589ad11e5c1cfa4356f7c76e03a0a8d3f808e71c03ea6d7b2e061b8869615d3",
+    "examples/interpreter_counts.rs": "22102fd9978ecda992f9e8cdcfb1565b3d54c9b78038e11e8190876c899d3c81",
+    "examples/stage_inventory.rs": "51c8a526501f92f7841d6b2cef7af43e5d9eb6948cfa929ba45551da6f453e78",
+    "src/fixture_reference.rs": "d3c67f1003a5816832fbd15c6d377edbb4d422c6db9be1b3cab7c40ae58aff53"
+  },
+  "candidate_patch_sha256": {
+    "native-candidate.patch": "a00737c72b651230031f882a95682c75fb5ae843e898b9dd46fd168b125b9e5e",
+    "interpreter-candidate.patch": "95abbdacc6a7ef7213dc3fc8bdb6e25855d1b294794be5c69d37c18f2c1d0919"
+  }
+}

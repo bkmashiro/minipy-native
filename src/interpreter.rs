@@ -142,6 +142,17 @@ struct State {
 }
 impl State {
     fn eval(&self, e: &Expr) -> Result<i64, TaskError> {
+        #[cfg(feature = "interpreter-profile")]
+        crate::interpreter_profile::update(|c| {
+            c.expr[match e {
+                Expr::Int(_) => 0,
+                Expr::Bool(_) => 1,
+                Expr::Local(_) => 2,
+                Expr::Field(_) => 3,
+                Expr::Not(_) => 4,
+                Expr::Binary(..) => 5,
+            }] += 1
+        });
         Ok(match e {
             Expr::Int(v) => *v,
             Expr::Bool(v) => i64::from(*v),
@@ -160,9 +171,13 @@ impl State {
             Expr::Binary(op, a, b) => {
                 let a = self.eval(a)?;
                 if matches!(op, BinOp::And) && a == 0 {
+                    #[cfg(feature = "interpreter-profile")]
+                    crate::interpreter_profile::update(|c| c.expr[6] += 1);
                     return Ok(0);
                 }
                 if matches!(op, BinOp::Or) && a != 0 {
+                    #[cfg(feature = "interpreter-profile")]
+                    crate::interpreter_profile::update(|c| c.expr[6] += 1);
                     return Ok(1);
                 }
                 let b = self.eval(b)?;
@@ -248,6 +263,21 @@ async fn run<P: Provider>(
     // and chunk yield. Scalar dispatch remains bounded by frontend admission.
     while state.pc < unit.ops.len() {
         let op = &unit.ops[state.pc];
+        #[cfg(feature = "interpreter-profile")]
+        crate::interpreter_profile::update(|c| {
+            c.ops[match op {
+                Op::Set(..) => 0,
+                Op::Eval(..) => 1,
+                Op::Return(..) => 2,
+                Op::Print(..) => 3,
+                Op::Branch(..) => 4,
+                Op::Jump(..) => 5,
+                Op::Start => 6,
+                Op::Scan { .. } => 7,
+                Op::Next(..) => 8,
+                Op::Load(..) | Op::Record(..) => 9,
+            }] += 1
+        });
         state.pc += 1;
         match op {
             Op::Set(i, e) => state.locals[*i] = state.eval(e)?,
@@ -280,6 +310,8 @@ async fn run<P: Provider>(
                     continue;
                 }
                 if state.chunk_left == 0 {
+                    #[cfg(feature = "interpreter-profile")]
+                    crate::interpreter_profile::update(|c| c.fuel_reservations += 1);
                     if state.remaining == 0 {
                         return Err(TaskError::Budget);
                     }
@@ -302,6 +334,8 @@ async fn run<P: Provider>(
                     && state.index < owners[buffer].as_ref().unwrap().rows().len()
                 {
                     let held = release(&mut owners, unit.live[state.pc]);
+                    #[cfg(feature = "interpreter-profile")]
+                    crate::interpreter_profile::update(|c| c.yields += 1);
                     runtime::event(
                         &trace,
                         "yield",

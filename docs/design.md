@@ -57,5 +57,11 @@ Start with correct budget/cancellation checks, then compare bounded chunks again
 Compiler frontend emits restricted accesses, not arbitrary loads/stores. Centralize safe lowering and backend memory flags. Explicit overflow/bounds/resource failures follow cleanup and return a task error; do not use native faults as normal errors. RX/RW does not isolate tenants by itself. Side-channel resistance is out of scope; unauthorized memory access is not.
 
 ## Deferred ideas
+The explicit IR/native choices remain appropriate under the bounded
+[I strategy experiment](stage-strategy-experiment.md). A feature-gated handwritten
+reference qualifies fixed-fixture execution costs only, not unknown-source
+compilation. Two local runtime candidates were reverted after end-to-end
+qualification; neither automatic tiering nor a new backend is justified.
+
 
 A useful experiment may justify adopting them later: canonical component reuse, pipeline syntax, SIMD/batching, view-connected workflows, bounded handoff, sharing scans of an explicitly authorized immutable version. Do not implement these to rescue a negative first benchmark. No world-change journal, automatic result repair, distributed scheduler or general fusion engine here.

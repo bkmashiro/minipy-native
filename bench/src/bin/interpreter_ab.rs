@@ -4,6 +4,7 @@ mod common;
 use common::{BATCH, LIMIT, RequestProvider};
 use minipy_native::{
     codegen::CodeUnit,
+    fixture_reference::{self, Fixture},
     interpreter::{self, InterpreterUnit},
     ir::Type,
     provider::Provider,
@@ -163,12 +164,35 @@ async fn interpreted_run(code: Rc<InterpreterUnit>, p: Arc<RequestProvider>) -> 
     out.stdout
 }
 enum Prepared {
+    Reference(Fixture),
     Native(Rc<CodeUnit>),
     Interpreted(Rc<InterpreterUnit>),
     Monty(MontyRun),
 }
-fn prepare(engine: &str, source: &str) -> Prepared {
+fn reference(case: &str) -> Fixture {
+    match case {
+        "scalar" => Fixture::Scalar,
+        "weighted" => Fixture::Weighted,
+        "stateful" => Fixture::Stateful,
+        _ => panic!("fixed reference fixture"),
+    }
+}
+async fn reference_run(fixture: Fixture, p: Arc<RequestProvider>) -> String {
+    let out = fixture_reference::execute(
+        fixture,
+        p,
+        &[BATCH, LIMIT],
+        ScriptLimits::default(),
+        Cancellation::default(),
+        None,
+    )
+    .await;
+    out.status.unwrap();
+    out.stdout
+}
+fn prepare(engine: &str, source: &str, case: &str) -> Prepared {
     match engine {
+        "reference" => Prepared::Reference(reference(case)),
         "native" => Prepared::Native(Rc::new(CodeUnit::compile_script(source, INPUTS).unwrap())),
         "interpreter" => Prepared::Interpreted(Rc::new(
             InterpreterUnit::prepare_script(source, INPUTS).unwrap(),
@@ -181,6 +205,7 @@ fn prepare(engine: &str, source: &str) -> Prepared {
 impl Prepared {
     fn duplicate(&self) -> Self {
         match self {
+            Self::Reference(c) => Self::Reference(*c),
             Self::Native(c) => Self::Native(c.clone()),
             Self::Interpreted(c) => Self::Interpreted(c.clone()),
             Self::Monty(c) => Self::Monty(c.clone()),
@@ -188,6 +213,7 @@ impl Prepared {
     }
     async fn run(self, p: Arc<RequestProvider>) -> String {
         match self {
+            Self::Reference(c) => reference_run(c, p).await,
             Self::Native(c) => native_run(c, p).await,
             Self::Interpreted(c) => interpreted_run(c, p).await,
             Self::Monty(c) => monty_run(c, p).await,
@@ -212,7 +238,10 @@ async fn hold(engine: &str, case: &str, source: &str, n: usize, count: usize) {
         let p = Arc::new(p);
         let expected = expected(case, n);
         // Distinct concrete task futures; no inactive Monty union retained by other engines.
-        match prepare(engine, source) {
+        match prepare(engine, source, case) {
+            Prepared::Reference(c) => jobs.push(tokio::task::spawn_local(async move {
+                assert_eq!(reference_run(c, p).await, expected)
+            })),
             Prepared::Native(c) => jobs.push(tokio::task::spawn_local(async move {
                 assert_eq!(native_run(c, p).await, expected)
             })),
@@ -275,7 +304,11 @@ async fn mixed(engine: &str, mix: &str, mode: &str, reps: usize) {
         "input_payload_bytes":if phase == "load_wait" {shapes.iter().map(|(_, n, c)| n*c*16).sum::<usize>()} else {0}}))
     };
     let warm: Vec<_> = if mode == "mixed-warm" {
-        sources.iter().map(|s| prepare(engine, s)).collect()
+        sources
+            .iter()
+            .zip(shapes)
+            .map(|(s, (case, _, _))| prepare(engine, s, case))
+            .collect()
     } else {
         Vec::new()
     };
@@ -339,6 +372,7 @@ async fn mixed(engine: &str, mix: &str, mode: &str, reps: usize) {
                 }};
             }
             match engine.as_str() {
+                "reference" => launch!(Reference, |_s: &str| reference(case), reference_run),
                 "native" => launch!(
                     Native,
                     |s: &str| Rc::new(CodeUnit::compile_script(s, INPUTS).unwrap()),
@@ -425,7 +459,7 @@ fn main() {
         None
     };
     let warm = if mode == "warm" {
-        Some(prepare(engine, &source))
+        Some(prepare(engine, &source, case))
     } else {
         None
     };
@@ -436,7 +470,7 @@ fn main() {
         let producer_setup_ns = common::now_ns(start);
         let prep_start = Instant::now();
         let cold = if warm.is_none() {
-            Some(prepare(engine, &source))
+            Some(prepare(engine, &source, case))
         } else {
             None
         };

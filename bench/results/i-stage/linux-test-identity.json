@@ -1,0 +1,47 @@
+{
+  "rust": "rustc 1.93.1 (01f6ddf75 2026-02-11)",
+  "target": "aarch64-unknown-linux-musl",
+  "features": "fixture-reference",
+  "binaries": [
+    {
+      "name": "minipy-9ff5f94ff3659b08",
+      "sha256": "8efb5702a2ffb28da93407b38d7e2c950361281c6a1c67ed345afa789586d1f1",
+      "bytes": 8007160
+    },
+    {
+      "name": "minipy_native-91d1dc66c316c141",
+      "sha256": "a0e4fd6ae1c8cda5d4b8a8722732394f8d23762764d0ca2f6fc53641aa11533d",
+      "bytes": 18431632
+    },
+    {
+      "name": "fixture_lifecycle-455880ecd6079e1e",
+      "sha256": "0355e31a6dc816b6556ab36e07baa1a6dd1366659f46a6c826f4ea0bbbb85879",
+      "bytes": 36690976
+    },
+    {
+      "name": "acceptance-5ef461038c3af983",
+      "sha256": "f271b998305db9eb48f8174b1851d6479ab4033e79cacb09bbc2c237976f0ec8",
+      "bytes": 37054528
+    },
+    {
+      "name": "boundaries-b0aa50ee450e9660",
+      "sha256": "568beda3c189d1d2a261949aa11b949c8c87589752d6b906016a8d4387a90112",
+      "bytes": 37241056
+    },
+    {
+      "name": "fixture_reference-45d5c6c4d22a6050",
+      "sha256": "5aa2818c5a152d712c5bc978d623647e14f90f00eaa4120e4470a7aa7bc11e09",
+      "bytes": 36850336
+    },
+    {
+      "name": "scripts-1aaeb8c4ffdc91b8",
+      "sha256": "fdf368da9fd03cb06429b2d9d6dc515f97716a49577a6ee8ecdd007570aa3056",
+      "bytes": 37044728
+    },
+    {
+      "name": "interpreter-1a1ada0160b640ca",
+      "sha256": "8832f2632308662fb0f8e75e2a262b7d100f40f83d663446ebcee8db0dda6f99",
+      "bytes": 37850800
+    }
+  ]
+}

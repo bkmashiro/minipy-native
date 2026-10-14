@@ -8,7 +8,7 @@ publish = false
 allocation-diagnostics = []
 
 [dependencies]
-minipy-native = { path = ".." }
+minipy-native = { path = "..", features = ["fixture-reference"] }
 monty = { git = "https://github.com/pydantic/monty", rev = "56949a4c45f51cedc7a96450782f58a8017e114d" }
 monty-types = { git = "https://github.com/pydantic/monty", rev = "56949a4c45f51cedc7a96450782f58a8017e114d" }
 tokio = { version = "=1.48.0", features = ["rt", "sync", "macros", "time"] }

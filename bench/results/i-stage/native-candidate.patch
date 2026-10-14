@@ -1,0 +1,29 @@
+diff --git a/src/codegen.rs b/src/codegen.rs
+index 98d32e1..55603c4 100644
+--- a/src/codegen.rs
++++ b/src/codegen.rs
+@@ -215,12 +215,19 @@ impl CodeUnit {
+             #[cfg(feature = "compiler-profile")]
+             crate::compiler_profile::update(|p| p.resume_states = resumes.len());
+             b.switch_to_block(dispatch);
+-            let pc = b.ins().load(types::I64, MemFlags::trusted(), frame, 264);
+-            let mut switch = Switch::new();
+-            for (i, block) in resumes.into_iter().enumerate() {
+-                switch.set_entry(i as u128, block);
++            // Only the initial entry exists: lowering emitted no Tool/scan
++            // suspension. The private dispatcher calls this frame exactly once.
++            // Use the actual resume inventory, not a second AST eligibility pass.
++            if resumes.len() == 1 {
++                b.ins().jump(start, &[]);
++            } else {
++                let pc = b.ins().load(types::I64, MemFlags::trusted(), frame, 264);
++                let mut switch = Switch::new();
++                for (i, block) in resumes.into_iter().enumerate() {
++                    switch.set_entry(i as u128, block);
++                }
++                switch.emit(&mut b, pc, budget);
+             }
+-            switch.emit(&mut b, pc, budget);
+             b.switch_to_block(overflow);
+             let one = b.ins().iconst(types::I64, 1);
+             b.ins().return_(&[one]);

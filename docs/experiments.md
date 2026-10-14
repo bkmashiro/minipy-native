@@ -476,3 +476,47 @@ The initially off VM was restored off after execution. Full boundaries,
 commands, identities and limitations: [average-cost-experiment.md](average-cost-experiment.md)
 and `bench/results/h-average/`. One final focused fixed-commit review remains.
 
+## I execution reference and bounded strategy qualification (2026-10-14)
+
+Added a feature-gated Rust reference for scalar/weighted/cross-row stateful fixed
+fixtures, using the same Provider, detached Tool protocol, bounded Output,
+authorization, cumulative rows/chunk yield and cancellation machinery. It is
+execution-only and does not claim source compilation. Added three-way semantics
+and gated owner/receiver-drop/late-completion tests. No source-string fast path.
+
+Existing ARM64 Linux VM, exclusively started from off (2 CPU / 2048 MiB), was
+actually used. H shapes/weights/planned arrivals/windows remain unchanged. Same
+round four-engine baseline has 72,600 raw requests; two independently qualified
+candidates each have 36,300. Speed has no diagnostic counters/allocator. Baseline
+overload 199 windows is retained; both candidate campaigns have zero. Small
+standalone cells contain substantial scheduling/frequency variability, so their
+nominal ranking is not generalized. At 100k stateful prepared CPU: fixed reference
+504.09 us, native 581.67 us, IR 2542.49 us, Monty 35301.68 us. Native large execution
+is close to the reference's host/protocol floor; cold tiny native remains compile
+dominated. IR event counts and auxiliary macOS sampling locate recursive eval
+work without pretending to provide Linux per-subphase cycle shares.
+
+Candidate A bypasses recursive eval for leaf operands, removing 520172/427064
+eval crossings for 100k weighted/stateful diagnostic inputs. Mixed CPU improves
+4--14%, but independent tiny cells and short tails regress/noise: ready short p99
+2561.5 -> 2990.8 us light and 3468.0 -> 4095.9 us scan. Revert under the net-cost
+gate, preserve positive and negative evidence. Candidate B eliminates PC load/
+Switch for exactly one actual resume state, scalar code 264 -> 236 B in auxiliary
+Mac CLIF inventory. Mixed CPU is not consistently better and prepared/delayed
+cells regress. Revert. No third attempt, hidden alternative or new optimizer.
+
+Reference record-wait requested increments 53686/69608 B (light/scan) compare
+with IR 86134/124264 B and native 181436/301874 B. Ordinary and list-cleared Monty
+remain measured; RSS/PSS/high-water complement allocations. No maximum service
+task count or hard process-memory quota is inferred.
+
+Final core macOS all-feature and actual Linux fixture-reference each pass 61
+tests; core strict all-target/all-feature clippy and formatting pass. Benchmark
+clippy passes with only the two existing intentional large-enum/cfg-assert lints
+allowed. Rejected patches apply cleanly to the final tree. Linux test binaries
+were SHA256 read back and executed serially, not merely cross-built. Guest was
+restored off after validation. Full cost/architecture recommendation, limits,
+commands and identities: [stage-strategy-experiment.md](stage-strategy-experiment.md)
+and `bench/results/i-stage/`. Finish with one fixed-commit independent review and
+signed publication, without further optimization.
+

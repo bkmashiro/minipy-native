@@ -1,0 +1,6 @@
+weighted rows=100000 chunk=1 stdout="57270790\n" Counts { expr: [100002, 0, 160090, 260086, 0, 360086, 33334], ops: [93421, 0, 1, 1, 100000, 46710, 1, 100001, 100000, 2], fuel_reservations: 100000, yields: 99999 }
+weighted rows=100000 chunk=256 stdout="57270790\n" Counts { expr: [100002, 0, 160090, 260086, 0, 360086, 33334], ops: [93421, 0, 1, 1, 100000, 46710, 1, 100001, 100000, 2], fuel_reservations: 391, yields: 390 }
+weighted rows=100000 chunk=4096 stdout="57270790\n" Counts { expr: [100002, 0, 160090, 260086, 0, 360086, 33334], ops: [93421, 0, 1, 1, 100000, 46710, 1, 100001, 100000, 2], fuel_reservations: 25, yields: 24 }
+stateful rows=100000 chunk=1 stdout="178552\n" Counts { expr: [100003, 0, 113536, 213610, 0, 413532, 86624], ops: [236, 0, 1, 1, 100000, 78, 1, 100001, 100000, 2], fuel_reservations: 100000, yields: 99999 }
+stateful rows=100000 chunk=256 stdout="178552\n" Counts { expr: [100003, 0, 113536, 213610, 0, 413532, 86624], ops: [236, 0, 1, 1, 100000, 78, 1, 100001, 100000, 2], fuel_reservations: 391, yields: 390 }
+stateful rows=100000 chunk=4096 stdout="178552\n" Counts { expr: [100003, 0, 113536, 213610, 0, 413532, 86624], ops: [236, 0, 1, 1, 100000, 78, 1, 100001, 100000, 2], fuel_reservations: 25, yields: 24 }

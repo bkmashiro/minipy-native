@@ -60,3 +60,16 @@ and API migration details are in [experiments.md](experiments.md). Current work
 stops at evidence convergence; [optimization-roadmap.md](optimization-roadmap.md)
 is the sole current pointer. The final fixed-snapshot independent review and
 publication read-back are recorded there and in the card, not a new review graph.
+
+## I execution strategy qualification
+
+The executable source path still uses the existing shared typed IR and explicit
+native or interpreted execution. The feature-gated fixed-fixture Rust reference
+shares Tool/owner/cancellation/fuel/stdout contracts without claiming compilation.
+Optional interpreter-profile event counts are absent from ordinary builds.
+Two candidate replacements (leaf operand calls and single native resume entry)
+were tested and reverted; no production optimizer or runtime policy is added.
+See [stage-strategy-experiment.md](stage-strategy-experiment.md) for same-round
+reference/native/IR/Monty costs, tails, density and limits. Final macOS all-feature
+and actual Linux fixture-reference correctness each pass 61 tests. The final
+fixed-commit review and signed publication are recorded in the task handoff.

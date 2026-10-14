@@ -3,8 +3,12 @@ pub mod codegen;
 #[cfg(feature = "compiler-profile")]
 pub mod compiler_profile;
 pub mod error;
+#[cfg(feature = "fixture-reference")]
+pub mod fixture_reference;
 pub mod frontend;
 pub mod interpreter;
+#[cfg(feature = "interpreter-profile")]
+pub mod interpreter_profile;
 pub mod ir;
 pub mod provider;
 pub mod runtime;
