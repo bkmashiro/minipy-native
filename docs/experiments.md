@@ -2054,3 +2054,8 @@ owns the distinct large-root/small-leaf async retention experiment.
 Commands, raw, layout/allocation limits and compatible API prototype:
 [BY Ready evidence](../evidence/by-ready/README.md).
 
+Receipt-verified `gpt-6-luna` independently reviewed fixed snapshot `3afda8f`,
+confirmed the prototype stays archived and final production matches the base,
+recomputed timing/layout evidence and found no blockers. See
+[BY review record](../evidence/by-ready/review.md).
+
