@@ -1,0 +1,20 @@
+{
+  "reviewed_commit": "e8384ae96a4e6e7694f3084fc39cfc3e6219df5a",
+  "requested_model": "gpt-6-luna",
+  "actual_model": "gpt-6-luna",
+  "provider": "openai-codex",
+  "status": "completed",
+  "verdict": "No blocking findings",
+  "checks": [
+    "17 AF/AP selector, accounting and public projection tests passed",
+    "Public projection with recorded interruption exclusion reproduced committed public-summary.json exactly",
+    "Independent run and point counts, unknown interrupted requests, sample-supported plot subsets and public host-path exclusion checked",
+    "Unresolved, inconsistent and nonmonotone finite-window observations remain qualified"
+  ],
+  "limits": [
+    "Read-only review at the fixed integrated commit",
+    "No new performance campaign",
+    "Reviewer did not copy or individually revalidate canonical WSL raw; the parent performed that reduction during collection",
+    "No files modified by reviewer"
+  ]
+}

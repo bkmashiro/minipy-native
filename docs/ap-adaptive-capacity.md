@@ -162,3 +162,8 @@ oracle、id、status、账本、producer/Tool总数及sidecar百分位，158份�
       bench/results/ap-capacity/public-summary.json
 
 停止原因是预先声明的时间预算，未达到所有曲线收敛目标，不自动追加下一轮。
+
+固定签名集成提交 `e8384ae96a4e6e7694f3084fc39cfc3e6219df5a` 完成一次独立
+只读focused review，工具回报实际模型 `gpt-6-luna` / `openai-codex`，无阻断
+发现。reviewer运行17项测试，并回算public投影与提交数据逐项相同；没有
+重新跑性能或声称逐份复验canonical raw。记录见 `focused-review.json`。
