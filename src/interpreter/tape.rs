@@ -56,6 +56,8 @@ pub(super) enum Op {
     Print(Operand, Type),
     #[cfg(feature = "tool-json")]
     PrintJsonString(usize, usize),
+    #[cfg(feature = "tool-json")]
+    PrintString(usize),
     Return,
 }
 impl Op {
@@ -279,6 +281,8 @@ impl Lower<'_> {
                 Stmt::PrintJsonString { slot, root } => {
                     self.ops.push(Op::PrintJsonString(slot, root));
                 }
+                #[cfg(feature = "tool-json")]
+                Stmt::PrintString { plan, .. } => self.ops.push(Op::PrintString(plan)),
                 Stmt::Load(i, e) => {
                     let e = self.value(e);
                     self.ops.push(Op::Load(i, e));
@@ -351,10 +355,13 @@ pub(super) fn json_liveness(ops: &[Op], plan: &crate::tool::Plan) -> Vec<u32> {
                 Op::JsonRead(_, _, root, _) => next | (1 << root),
                 Op::JsonString(_, _, root, _) => next | (1 << root),
                 Op::PrintJsonString(_, root) => next | (1 << root),
-                Op::Tool(call, _, _) => match &plan.calls[*call].string {
-                    Some(crate::tool::StringSource::Json { root, .. }) => next | (1 << root),
-                    _ => next,
-                },
+                Op::PrintString(index) => next | plan.prints[*index].roots(),
+                Op::Tool(call, _, _) => {
+                    next | plan.calls[*call]
+                        .string
+                        .as_ref()
+                        .map_or(0, crate::tool::StringSource::roots)
+                }
                 Op::Return => 0,
                 _ => next,
             };
@@ -512,6 +519,9 @@ pub(super) fn run<const STEP: bool>(
             Op::Print(a, t) => output.append(read(*a, state, temps), *t == Type::Bool)?,
             #[cfg(feature = "tool-json")]
             Op::PrintJsonString(slot, _) => output.append_json_string(*slot)?,
+            #[cfg(feature = "tool-json")]
+            Op::PrintString(plan) => output
+                .append_string_source(&unit.json.as_ref().unwrap().prints[*plan], &state.locals)?,
             Op::Return => return Ok(Boundary::Done),
             Op::Load(i, a) => return Ok(Boundary::Load(*i, read(*a, state, temps))),
             Op::Record(i, a, b) => {

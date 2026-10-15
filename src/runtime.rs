@@ -190,6 +190,11 @@ pub(crate) struct Output {
     pub(crate) json: Option<Box<crate::json_view::State>>,
 }
 impl Output {
+    #[cfg(all(feature = "tool-json", not(target_arch = "wasm32")))]
+    pub(crate) fn append_plan(&mut self, index: usize, locals: &[i64]) -> Result<(), TaskError> {
+        let plan = self.json.as_ref().expect("string plan").plan();
+        self.append_string_source(&plan.prints[index], locals)
+    }
     pub(crate) fn new(max: usize, allowed: bool) -> Self {
         Self {
             stdout: String::new(),
@@ -216,7 +221,109 @@ pub(crate) unsafe extern "C" fn native_print(output: *mut Output, value: i64, bo
         }
     }
 }
+#[cfg(all(feature = "tool-json", not(target_arch = "wasm32")))]
+pub(crate) unsafe extern "C" fn native_print_plan(
+    output: *mut Output,
+    frame: *const Frame,
+    index: i64,
+) -> i64 {
+    let output = unsafe { &mut *output };
+    let frame = unsafe { &*frame };
+    match output.append_plan(index as usize, &frame.locals) {
+        Ok(()) => 0,
+        Err(e) => {
+            output.error = Some(e);
+            1
+        }
+    }
+}
 impl Output {
+    #[cfg(feature = "tool-json")]
+    pub(crate) fn string_value(
+        &mut self,
+        source: &crate::tool::StringSource,
+        locals: &[i64],
+    ) -> Result<crate::tool::StringValue, TaskError> {
+        use crate::tool::{StringSource as S, StringValue as V};
+        match source {
+            S::Literal(s) => Ok(V::Literal(s.clone())),
+            S::Json { slot, .. } => self.json.as_mut().expect("JSON plan").string_value(*slot),
+            S::Scalar { slot, boolean } => Ok(V::Joined(if *boolean {
+                if locals[*slot] == 0 {
+                    "False".to_owned()
+                } else {
+                    "True".to_owned()
+                }
+            } else {
+                locals[*slot].to_string()
+            })),
+            S::Joined(parts) => {
+                let mut values: [Option<V>; 32] = std::array::from_fn(|_| None);
+                let mut len = 0usize;
+                for (i, part) in parts.iter().enumerate() {
+                    values[i] = Some(self.string_value(part, locals)?);
+                    len = len
+                        .checked_add(values[i].as_ref().unwrap().as_str().len())
+                        .ok_or(TaskError::Budget)?;
+                    if len > 64 * 1024 {
+                        return Err(TaskError::Budget);
+                    }
+                }
+                if len > self.json.as_ref().map_or(usize::MAX, |j| j.available()) {
+                    return Err(TaskError::Budget);
+                }
+                let mut text = String::new();
+                text.try_reserve_exact(len).map_err(|_| TaskError::Budget)?;
+                for value in values.iter().take(parts.len()).flatten() {
+                    text.push_str(value.as_str());
+                }
+                Ok(V::Joined(text))
+            }
+        }
+    }
+    #[cfg(feature = "tool-json")]
+    pub(crate) fn append_string_source(
+        &mut self,
+        source: &crate::tool::StringSource,
+        locals: &[i64],
+    ) -> Result<(), TaskError> {
+        let parts = match source {
+            crate::tool::StringSource::Joined(parts) => parts.as_slice(),
+            other => std::slice::from_ref(other),
+        };
+        let mut values: [Option<crate::tool::StringValue>; 32] = std::array::from_fn(|_| None);
+        let mut len = 1usize;
+        for (i, part) in parts.iter().enumerate() {
+            values[i] = Some(self.string_value(part, locals)?);
+            len = len
+                .checked_add(values[i].as_ref().unwrap().as_str().len())
+                .ok_or(TaskError::Budget)?;
+            if len > 64 * 1024 + 1 {
+                return Err(TaskError::Budget);
+            }
+        }
+        if !self.allowed {
+            return Err(TaskError::Permission);
+        }
+        if len > self.max.saturating_sub(self.stdout.len()) {
+            return Err(TaskError::Budget);
+        }
+        let required = self.stdout.len() + len;
+        if required > self.stdout.capacity() {
+            let capacity = required
+                .checked_next_power_of_two()
+                .unwrap_or(self.max)
+                .min(self.max);
+            self.stdout
+                .try_reserve_exact(capacity - self.stdout.len())
+                .map_err(|_| TaskError::Budget)?;
+        }
+        for value in values.iter().take(parts.len()).flatten() {
+            self.stdout.push_str(value.as_str());
+        }
+        self.stdout.push('\n');
+        Ok(())
+    }
     pub(crate) fn append(&mut self, value: i64, boolean: bool) -> Result<(), TaskError> {
         let mut bytes = [0u8; 21];
         bytes[20] = b'\n';
@@ -327,7 +434,7 @@ async fn run<P: Provider>(
     }
     #[cfg(feature = "tool-json")]
     if let Some(plan) = &code.json
-        && plan.roots > 0
+        && (plan.roots > 0 || !plan.prints.is_empty())
     {
         output.json = Some(Box::new(crate::json_view::State::new(
             plan.clone(),
@@ -477,10 +584,13 @@ async fn run<P: Provider>(
                                 .string_value(*slot)?,
                         )
                     }
+                    Some(source) => crate::tool::ToolArguments::String(
+                        output.string_value(source, &frame.locals)?,
+                    ),
                     None => crate::tool::ToolArguments::Numeric([frame.batch, frame.total], count),
                 };
                 authorize_tool(&cancel, provider.allows_tool(call.id), &mut calls)?;
-                if matches!(call.string, Some(crate::tool::StringSource::Json { .. })) {
+                if call.string.as_ref().is_some_and(|s| s.roots() != 0) {
                     output
                         .json
                         .as_mut()

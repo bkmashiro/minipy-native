@@ -20,6 +20,9 @@ enum StringCache {
     Shared(std::sync::Arc<String>),
 }
 impl State {
+    pub(crate) fn plan(&self) -> std::rc::Rc<Plan> {
+        self.plan.clone()
+    }
     pub(crate) fn new(plan: std::rc::Rc<Plan>, max: usize, scan_bytes: usize) -> Self {
         Self {
             roots: vec![None; plan.roots],
@@ -50,6 +53,10 @@ impl State {
                     })
                     .sum()
             })
+    }
+    pub(crate) fn available(&self) -> usize {
+        self.max
+            .saturating_sub(self.external.saturating_add(self.held()))
     }
     pub(crate) fn install(
         &mut self,

@@ -60,7 +60,16 @@ impl Provider for Host {
             (10, "report.txt") => Ok(Reply::Json(Bytes::from_static(
                 "{\"content\":\"hello 🌍\"}".as_bytes(),
             ))),
+            (10, "report.42") => Ok(Reply::Json(Bytes::from_static(b"{\"content\":\"hello\"}"))),
+            (10, "escaped") => Ok(Reply::Json(Bytes::from_static(
+                br#"{"content":"report\u002etxt"}"#,
+            ))),
+            (10, "long") => Ok(Reply::Json(Bytes::from(format!(
+                "{{\"content\":\"{}\"}}",
+                "x".repeat(40_000)
+            )))),
             (11, "report.txt") => Ok(Reply::Json(Bytes::from_static(br#"{"content":"second"}"#))),
+            (11, "hello 🌍") => Ok(Reply::Json(Bytes::from_static(br#"{"content":"second"}"#))),
             (10, "missing") => Err(TaskError::Provider("missing".into())),
             (10, "bad") => Ok(Reply::Json(Bytes::from_static(br#"{"content":null}"#))),
             _ => Err(TaskError::Permission),
@@ -84,10 +93,10 @@ fn tools() -> Vec<ToolDeclaration> {
         })
         .collect()
 }
-async fn run(
+async fn run<P: Provider>(
     native: bool,
     source: &str,
-    host: Arc<Host>,
+    host: Arc<P>,
     limits: ScriptLimits,
     cancel: Cancellation,
 ) -> ScriptOutcome {
@@ -336,6 +345,143 @@ async fn json_alias_escaped_utf8_and_detached_owner_survive_cancellation() {
         }
     }
 }
+#[tokio::test]
+async fn sink_join_print_and_tool_preserve_order_and_bounds() {
+    for native in [false, true] {
+        for (source, expected, calls) in [
+            ("print(\"é\" + \"🌍\")", "é🌍\n", 0),
+            (
+                "data = tools.read_file(\"report\" + \".txt\")\nname = data[\"content\"]\nprint(\"[\" + name + \"/\" + name + \"]\")",
+                "[hello 🌍/hello 🌍]\n",
+                1,
+            ),
+            (
+                "data = tools.read_file(\"report.txt\")\nname = data[\"content\"]\nnext = tools.read_other(name)\nprint(next[\"content\"])",
+                "second\n",
+                2,
+            ),
+            (
+                "n = 42\nb = True\nprint(f\"value={n}, ok={b}, literal={False}\")\nnext = tools.read_file(f\"report.{n}\")\nprint(next[\"content\"])",
+                "value=42, ok=True, literal=False\nhello\n",
+                1,
+            ),
+            (
+                "data = tools.read_file(\"escaped\")\nname = data[\"content\"]\nprint(f\"path={name}\")\nnext = tools.read_other(name)\nprint(next[\"content\"])",
+                "path=report.txt\nsecond\n",
+                2,
+            ),
+            (
+                "n = 42\ndata = tools.read_file(\"report.txt\")\nname = data[\"content\"]\nnext = tools.read_other(\"report.txt\")\nprint(f\"{n}:{name}/{next['content']}\")",
+                "42:hello 🌍/second\n",
+                2,
+            ),
+            (
+                "data = tools.read_file(\"report.txt\")\nname = data[\"content\"]\nignored = tools.read_other(\"report.txt\")\nnext = tools.read_other(name)\nprint(next[\"content\"])",
+                "second\n",
+                3,
+            ),
+        ] {
+            let host = Arc::new(Host::new(false));
+            let outcome = run(
+                native,
+                source,
+                host.clone(),
+                ScriptLimits::default(),
+                Cancellation::default(),
+            )
+            .await;
+            assert_eq!(outcome.status, Ok(()), "{source}");
+            assert_eq!(outcome.stdout, expected);
+            assert_eq!(host.calls.lock().unwrap().len(), calls);
+        }
+        let host = Arc::new(Host::new(false));
+        let outcome = run(
+            native,
+            "print(1)\nprint(\"é\" + \"🌍\")",
+            host,
+            ScriptLimits {
+                stdout_bytes: 6,
+                ..ScriptLimits::default()
+            },
+            Cancellation::default(),
+        )
+        .await;
+        assert_eq!(outcome.status, Err(TaskError::Budget));
+        assert_eq!(outcome.stdout, "1\n");
+        let host = Arc::new(Host::new(false));
+        let source = "print(1)\nlong = tools.read_file(\"long\")\ntext = long[\"content\"]\nnext = tools.read_other(text + text)";
+        let outcome = run(
+            native,
+            source,
+            host.clone(),
+            ScriptLimits::default(),
+            Cancellation::default(),
+        )
+        .await;
+        assert_eq!(outcome.status, Err(TaskError::Budget));
+        assert_eq!(outcome.stdout, "1\n");
+        assert_eq!(host.calls.lock().unwrap().len(), 1);
+    }
+}
+#[tokio::test]
+async fn joined_argument_remains_owned_after_cancellation() {
+    struct Chain {
+        gate: Arc<Host>,
+    }
+    impl Provider for Chain {
+        fn allows_tool(&self, _: u32) -> bool {
+            true
+        }
+        async fn call_bound_tool(&self, id: u32, args: ToolArguments) -> Result<Reply, TaskError> {
+            if id == 10 {
+                return Ok(Reply::Json(Bytes::from_static(
+                    "{\"content\":\"hello 🌍\"}".as_bytes(),
+                )));
+            }
+            let ToolArguments::String(arg) = args else {
+                panic!("wrong binding")
+            };
+            self.gate.pending.fetch_add(1, Ordering::SeqCst);
+            self.gate.entered.notify_one();
+            self.gate.finish.notified().await;
+            assert_eq!(arg.as_str(), "hello 🌍");
+            self.gate.pending.fetch_sub(1, Ordering::SeqCst);
+            Ok(Reply::Json(Bytes::from_static(br#"{"content":"second"}"#)))
+        }
+        async fn load_quotes(&self, _: i64) -> Result<QuoteBuffer, TaskError> {
+            Err(TaskError::Permission)
+        }
+        async fn record_total(&self, _: i64, _: i64) -> Result<i64, TaskError> {
+            Err(TaskError::Permission)
+        }
+    }
+    for native in [false, true] {
+        let gate = Arc::new(Host::new(true));
+        let host = Arc::new(Chain { gate: gate.clone() });
+        let source = "data = tools.read_file(\"report.txt\")\nname = data[\"content\"]\nnext = tools.read_other(name + \"\")";
+        let cancel = Cancellation::default();
+        let task = run(
+            native,
+            source,
+            host,
+            ScriptLimits::default(),
+            cancel.clone(),
+        );
+        tokio::pin!(task);
+        tokio::select! { _ = gate.entered.notified() => {}, outcome = &mut task => panic!("unexpected: {:?}", outcome.status) }
+        cancel.cancel();
+        assert_eq!(task.await.status, Err(TaskError::Cancelled));
+        assert_eq!(gate.pending.load(Ordering::SeqCst), 1);
+        gate.finish.notify_one();
+        for _ in 0..10 {
+            if gate.pending.load(Ordering::SeqCst) == 0 {
+                break;
+            }
+            tokio::task::yield_now().await;
+        }
+        assert_eq!(gate.pending.load(Ordering::SeqCst), 0);
+    }
+}
 #[test]
 fn admission_location_and_legacy_numeric_api() {
     let schema = tools();
@@ -344,6 +490,10 @@ fn admission_location_and_legacy_numeric_api() {
         "data = tools.read_file(2)",
         "data = tools.read_file(path=\"a\", path=\"b\")",
         "data = tools.read_file(**kw)",
+        "print(f\"{1:04d}\")",
+        "print(f\"{1!r}\")",
+        "print(\"x\" + 1)",
+        "x = \"a\" + \"b\"",
     ] {
         let err = frontend::parse_with_declarations(source, &[], &schema).unwrap_err();
         assert!(err.location.is_some(), "{source}: {err:?}");
@@ -485,6 +635,80 @@ async fn resident_request_cost() {
                 times.len(),
                 times[times.len() / 2],
                 times[times.len() * 9 / 10]
+            );
+        }
+    }
+}
+/// Synthetic source-cold cost of the new sink, using a resident Host reply.
+#[tokio::test]
+#[ignore]
+async fn resident_sink_cost() {
+    struct Perf;
+    impl Provider for Perf {
+        fn allows_tool(&self, _: u32) -> bool {
+            true
+        }
+        async fn call_bound_tool(&self, _: u32, args: ToolArguments) -> Result<Reply, TaskError> {
+            if matches!(args, ToolArguments::String(s) if s.as_str() == "report.txt") {
+                Ok(Reply::Json(Bytes::from_static(br#"{"content":"ok"}"#)))
+            } else {
+                Err(TaskError::Permission)
+            }
+        }
+        async fn load_quotes(&self, _: i64) -> Result<QuoteBuffer, TaskError> {
+            Err(TaskError::Permission)
+        }
+        async fn record_total(&self, _: i64, _: i64) -> Result<i64, TaskError> {
+            Err(TaskError::Permission)
+        }
+    }
+    let declarations = [ToolDeclaration {
+        id: 14,
+        name: "read_file".into(),
+        arguments: vec![ArgumentSchema::String("path".into())],
+        result: ResultSchema::JsonTyped(vec![(vec!["content".into()], JsonLeaf::String)]),
+    }];
+    let host = Arc::new(Perf);
+    for native in [false, true] {
+        for n in 0..26 {
+            let source = format!(
+                "data = tools.read_file(\"report\" + \".txt\")\ntext = data[\"content\"]\nprint(f\"[{{text}}]\")\n# request {n}"
+            );
+            let start = std::time::Instant::now();
+            let result = if native {
+                let unit =
+                    CodeUnit::compile_with_declarations(&source, &[], &declarations).unwrap();
+                runtime::execute_script(
+                    Rc::new(unit),
+                    host.clone(),
+                    &[],
+                    ScriptLimits::default(),
+                    Cancellation::default(),
+                    None,
+                )
+                .await
+            } else {
+                let unit = InterpreterUnit::prepare_with_declarations(&source, &[], &declarations)
+                    .unwrap();
+                interpreter::execute_script(
+                    Rc::new(unit),
+                    host.clone(),
+                    &[],
+                    ScriptLimits::default(),
+                    Cancellation::default(),
+                    None,
+                )
+                .await
+            };
+            let elapsed = start.elapsed().as_nanos();
+            assert_eq!(result.status, Ok(()));
+            assert_eq!(result.stdout, "[ok]\n");
+            println!(
+                "EVIDENCE {{\"backend\":\"{}\",\"arg\":\"joined-sink\",\"request\":{},\"warmup\":{},\"elapsed_ns\":{}}}",
+                if native { "native" } else { "tape" },
+                n,
+                n < 2,
+                elapsed
             );
         }
     }

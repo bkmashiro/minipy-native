@@ -176,6 +176,13 @@ impl CodeUnit {
         let mut builder = JITBuilder::with_isa(isa, cranelift_module::default_libcall_names());
         builder.symbol("minipy_print", crate::runtime::native_print as *const u8);
         #[cfg(feature = "tool-json")]
+        if !program.json.prints.is_empty() {
+            builder.symbol(
+                "minipy_print_plan",
+                crate::runtime::native_print_plan as *const u8,
+            );
+        }
+        #[cfg(feature = "tool-json")]
         if program.json.roots > 0 {
             builder.symbol(
                 "minipy_json_read",
@@ -207,6 +214,15 @@ impl CodeUnit {
             .declare_function("minipy_print", Linkage::Import, &print_sig)
             .map_err(error)?;
         let print = module.declare_func_in_func(print, &mut ctx.func);
+        #[cfg(feature = "tool-json")]
+        let print_plan = if !program.json.prints.is_empty() {
+            let id = module
+                .declare_function("minipy_print_plan", Linkage::Import, &print_sig)
+                .map_err(error)?;
+            Some(module.declare_func_in_func(id, &mut ctx.func))
+        } else {
+            None
+        };
         #[cfg(feature = "tool-json")]
         let json_read = if program.json.roots > 0 {
             let id = module
@@ -298,6 +314,8 @@ impl CodeUnit {
                 output,
                 print,
                 #[cfg(feature = "tool-json")]
+                print_plan,
+                #[cfg(feature = "tool-json")]
                 json_read,
                 #[cfg(feature = "tool-json")]
                 json_string,
@@ -312,16 +330,6 @@ impl CodeUnit {
                 resumes: vec![start],
                 row: None,
                 inputs: program.inputs,
-                #[cfg(feature = "tool-json")]
-                string_roots: program
-                    .json
-                    .calls
-                    .iter()
-                    .map(|c| match c.string {
-                        Some(crate::tool::StringSource::Json { root, .. }) => Some(root),
-                        _ => None,
-                    })
-                    .collect(),
             };
             flow.stmts(&program.statements, Live::default());
             let resumes = flow.resumes;
@@ -388,7 +396,8 @@ impl CodeUnit {
             buffers: program.buffers,
             legacy: program.legacy,
             #[cfg(feature = "tool-json")]
-            json: (!program.json.calls.is_empty()).then(|| std::rc::Rc::new(program.json)),
+            json: (!program.json.calls.is_empty() || !program.json.prints.is_empty())
+                .then(|| std::rc::Rc::new(program.json)),
         })
     }
     pub(crate) fn resume(
@@ -416,7 +425,7 @@ struct Flow<'a, 'b> {
     output: Value,
     print: cranelift_codegen::ir::FuncRef,
     #[cfg(feature = "tool-json")]
-    string_roots: Vec<Option<usize>>,
+    print_plan: Option<cranelift_codegen::ir::FuncRef>,
     #[cfg(feature = "tool-json")]
     json_read: Option<cranelift_codegen::ir::FuncRef>,
     #[cfg(feature = "tool-json")]
@@ -510,7 +519,7 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
         Stmt::If(_, _, _) => {}
         Stmt::Return(_) | Stmt::For(_, _) => {}
         #[cfg(feature = "tool-json")]
-        Stmt::PrintJsonString { .. } => {}
+        Stmt::PrintJsonString { .. } | Stmt::PrintString { .. } => {}
     }
     #[cfg(feature = "tool-json")]
     {
@@ -520,6 +529,7 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
             }
             Stmt::Record(_, a, b) => live.json |= json_used(a) | json_used(b),
             Stmt::PrintJsonString { root, .. } => live.json |= 1 << root,
+            Stmt::PrintString { roots, .. } => live.json |= roots,
 
             _ => {}
         }
@@ -536,6 +546,8 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
         Stmt::Print(e, _) | Stmt::Eval(e) => live.scalars |= used(e),
         #[cfg(feature = "tool-json")]
         Stmt::PrintJsonString { .. } => {}
+        #[cfg(feature = "tool-json")]
+        Stmt::PrintString { scalars, .. } => live.scalars |= scalars,
         Stmt::Return(e) => {
             return Live {
                 scalars: used(e),
@@ -556,7 +568,12 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
         Stmt::For(i, body) => live = live_loop(*i, body, live),
         #[cfg(feature = "tool-json")]
         Stmt::Tool {
-            target, json, args, ..
+            target,
+            json,
+            args,
+            string_scalars,
+            string_roots,
+            ..
         } => {
             if *json {
                 live.json &= !(1 << target);
@@ -567,6 +584,8 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
                 live.scalars |= used(e);
                 live.json |= json_used(e);
             }
+            live.scalars |= string_scalars;
+            live.json |= string_roots;
         }
     }
     live
@@ -679,6 +698,9 @@ impl Flow<'_, '_> {
                     target,
                     json,
                     args,
+                    string_roots,
+                    string_scalars,
+                    ..
                 } => {
                     let a = args
                         .first()
@@ -695,12 +717,13 @@ impl Flow<'_, '_> {
                         live.scalars &= !(1 << target);
                     }
                     let after_json = live.json;
-                    if let Some(root) = self.string_roots[*call] {
-                        live.json |= 1 << root;
+                    if *string_roots != 0 {
+                        live.json |= string_roots;
                         // String calls have no numeric arguments: reuse the
                         // otherwise dead batch slot for post-capture liveness.
                         self.constant(280, after_json as i64);
                     }
+                    live.scalars |= string_scalars;
                     let (pc, next) = self.continuation();
                     self.suspend(8 + *call as i64, pc, live);
                     self.b.switch_to_block(next);
@@ -744,6 +767,25 @@ impl Flow<'_, '_> {
                     let call = self.b.ins().call(
                         self.json_print_string.expect("string print helper"),
                         &[self.output, slot],
+                    );
+                    let failed = self.b.inst_results(call)[0];
+                    let next = self.b.create_block();
+                    self.b.ins().brif(failed, self.output_error, &[], next, &[]);
+                    self.b.switch_to_block(next);
+                }
+                #[cfg(feature = "tool-json")]
+                Stmt::PrintString { plan, scalars, .. } => {
+                    let mask = *scalars;
+                    for (i, var) in self.vars.iter().enumerate() {
+                        if mask & (1 << i) != 0 {
+                            let value = self.b.use_var(*var);
+                            self.store((i * 8) as i32, value);
+                        }
+                    }
+                    let index = self.b.ins().iconst(types::I64, *plan as i64);
+                    let call = self.b.ins().call(
+                        self.print_plan.expect("string plan print"),
+                        &[self.output, self.frame, index],
                     );
                     let failed = self.b.inst_results(call)[0];
                     let next = self.b.create_block();

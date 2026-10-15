@@ -654,6 +654,21 @@ impl<'a> Compiler<'a> {
                         out.push(Stmt::PrintJsonString { slot, root });
                         return Ok(());
                     }
+                    #[cfg(feature = "tool-json")]
+                    if !self.tools.is_empty()
+                        && (Self::string_expression(arg)
+                            || matches!(arg, ast::Expr::BinOp(b) if b.op == ast::Operator::Add && (self.is_json_string(&b.left)? || self.is_json_string(&b.right)?)))
+                    {
+                        let source = self.string_source(arg, true)?;
+                        let plan = self.json.prints.len();
+                        out.push(Stmt::PrintString {
+                            plan,
+                            roots: source.roots(),
+                            scalars: source.scalars(),
+                        });
+                        self.json.prints.push(source);
+                        return Ok(());
+                    }
                     let (value, ty) = self.expr(arg, depth + 2, in_loop)?;
                     if !matches!(ty, Type::I64 | Type::Bool) {
                         return Err(err("print accepts one i64 or bool argument"));
@@ -752,6 +767,136 @@ impl<'a> Compiler<'a> {
         Ok(())
     }
     #[cfg(feature = "tool-json")]
+    fn is_json_string(&self, e: &ast::Expr) -> Result<bool> {
+        Ok(self.json_path(e)?.is_some_and(|(root, path)| {
+            self.json_leaves[root]
+                .iter()
+                .any(|(p, t)| p == &path && *t == crate::tool::JsonLeaf::String)
+        }))
+    }
+    #[cfg(feature = "tool-json")]
+    fn string_expression(e: &ast::Expr) -> bool {
+        matches!(
+            e,
+            ast::Expr::JoinedStr(_)
+                | ast::Expr::Constant(ast::ExprConstant {
+                    value: ast::Constant::Str(_),
+                    ..
+                })
+        ) || matches!(e, ast::Expr::BinOp(b) if b.op == ast::Operator::Add && (Self::string_expression(&b.left) || Self::string_expression(&b.right)))
+    }
+    #[cfg(feature = "tool-json")]
+    fn string_source(&mut self, e: &ast::Expr, format: bool) -> Result<crate::tool::StringSource> {
+        use crate::tool::StringSource as S;
+        let mut parts = Vec::new();
+        self.string_parts(e, format, &mut parts)?;
+        if parts.len() == 1 {
+            Ok(parts.pop().unwrap())
+        } else {
+            Ok(S::Joined(parts))
+        }
+    }
+    #[cfg(feature = "tool-json")]
+    fn string_parts(
+        &mut self,
+        e: &ast::Expr,
+        format: bool,
+        parts: &mut Vec<crate::tool::StringSource>,
+    ) -> Result<()> {
+        use crate::tool::{JsonLeaf, StringSource as S};
+        match e {
+            ast::Expr::Constant(c) if matches!(c.value, ast::Constant::Str(_)) => {
+                let ast::Constant::Str(s) = &c.value else {
+                    unreachable!()
+                };
+                if s.len() > 4096 {
+                    return Err(err("string literal exceeds 4096 bytes"));
+                }
+                parts.push(S::Literal(std::sync::Arc::from(s.as_str())));
+            }
+            ast::Expr::BinOp(b) if b.op == ast::Operator::Add => {
+                self.string_parts(&b.left, false, parts)?;
+                self.string_parts(&b.right, false, parts)?;
+            }
+            ast::Expr::JoinedStr(s) => {
+                for value in &s.values {
+                    if let ast::Expr::FormattedValue(f) = value {
+                        if f.format_spec.is_some() || f.conversion != ast::ConversionFlag::None {
+                            return Err(err(
+                                "f-string conversions and format specs are unsupported",
+                            ));
+                        }
+                        self.string_parts(&f.value, true, parts)?;
+                    } else {
+                        self.string_parts(value, false, parts)?;
+                    }
+                }
+            }
+            _ => {
+                if let Some((root, path)) = self.json_path(e)? {
+                    if !self.json_leaves[root]
+                        .iter()
+                        .any(|(p, t)| p == &path && *t == JsonLeaf::String)
+                    {
+                        return Err(type_err("string part requires declared JSON string leaf"));
+                    }
+                    let slot = self.json.path(root, &path)?;
+                    self.json.string_paths = true;
+                    parts.push(S::Json { slot, root });
+                } else if format {
+                    match e {
+                        ast::Expr::Name(n) => {
+                            let slot = self.lookup(n.id.as_str())?;
+                            if self.initialized & (1 << slot) == 0 {
+                                return Err(err("uninitialized f-string field"));
+                            }
+                            parts.push(S::Scalar {
+                                slot,
+                                boolean: self.locals[slot] == Type::Bool,
+                            });
+                        }
+                        ast::Expr::Constant(c) => {
+                            let text = match &c.value {
+                                ast::Constant::Bool(v) => {
+                                    if *v {
+                                        "True".to_owned()
+                                    } else {
+                                        "False".to_owned()
+                                    }
+                                }
+                                ast::Constant::Int(v) => v.to_string(),
+                                _ => {
+                                    return Err(type_err(
+                                        "f-string fields require scalar locals or JSON strings",
+                                    ));
+                                }
+                            };
+                            if text.parse::<i64>().is_err()
+                                && !matches!(c.value, ast::Constant::Bool(_))
+                            {
+                                return Err(type_err("f-string integer exceeds i64"));
+                            }
+                            parts.push(S::Literal(std::sync::Arc::from(text)));
+                        }
+                        _ => {
+                            return Err(type_err(
+                                "f-string fields require scalar locals or JSON strings",
+                            ));
+                        }
+                    }
+                } else {
+                    return Err(type_err(
+                        "string part requires literal or declared JSON string leaf",
+                    ));
+                }
+            }
+        }
+        if parts.len() > 32 {
+            return Err(err("string expression exceeds 32 parts"));
+        }
+        Ok(())
+    }
+    #[cfg(feature = "tool-json")]
     fn compile_tool(
         &mut self,
         name: &str,
@@ -801,7 +946,11 @@ impl<'a> Compiler<'a> {
             } else {
                 &c.keywords[0].value
             };
-            let source = if let ast::Expr::Constant(v) = value {
+            let source = if Self::string_expression(value)
+                || matches!(value, ast::Expr::BinOp(b) if b.op == ast::Operator::Add)
+            {
+                self.string_source(value, false)?
+            } else if let ast::Expr::Constant(v) = value {
                 if let ast::Constant::Str(s) = &v.value {
                     if s.len() > 4096 {
                         return Err(err("string Tool literal exceeds 4096 bytes"));
@@ -915,6 +1064,14 @@ impl<'a> Compiler<'a> {
             target,
             json,
             args,
+            string_scalars: self.json.calls[call]
+                .string
+                .as_ref()
+                .map_or(0, crate::tool::StringSource::scalars),
+            string_roots: self.json.calls[call]
+                .string
+                .as_ref()
+                .map_or(0, crate::tool::StringSource::roots),
         });
         Ok(true)
     }

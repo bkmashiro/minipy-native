@@ -86,7 +86,8 @@ impl InterpreterUnit {
         };
         Ok(Self {
             #[cfg(feature = "tool-json")]
-            json: (!program.json.calls.is_empty()).then(|| Rc::new(program.json)),
+            json: (!program.json.calls.is_empty() || !program.json.prints.is_empty())
+                .then(|| Rc::new(program.json)),
             #[cfg(feature = "tool-json")]
             json_live,
             ops,
@@ -169,7 +170,7 @@ async fn run<P: Provider>(
     }
     #[cfg(feature = "tool-json")]
     if let Some(plan) = &unit.json
-        && plan.roots > 0
+        && (plan.roots > 0 || !plan.prints.is_empty())
     {
         output.json = Some(Box::new(crate::json_view::State::new(
             plan.clone(),
@@ -267,6 +268,9 @@ async fn run<P: Provider>(
                                 .string_value(*slot)?,
                         )
                     }
+                    Some(source) => crate::tool::ToolArguments::String(
+                        output.string_value(source, &state.locals)?,
+                    ),
                     None => crate::tool::ToolArguments::Numeric(args, count),
                 };
                 runtime::authorize_tool(&cancel, provider.allows_tool(call.id), &mut calls)?;

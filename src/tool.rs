@@ -172,12 +172,14 @@ pub enum StringValue {
         range: Range<usize>,
     },
     Decoded(Arc<String>),
+    Joined(String),
 }
 impl StringValue {
     pub fn as_str(&self) -> &str {
         match self {
             Self::Literal(s) => s,
             Self::Decoded(s) => s,
+            Self::Joined(s) => s,
             Self::Json { owner, range } => {
                 // The runtime constructs this span only after validation. Keep
                 // public values memory-safe even if a Host constructs one itself.
@@ -194,6 +196,34 @@ pub enum ToolArguments {
 pub enum StringSource {
     Literal(Arc<str>),
     Json { slot: usize, root: usize },
+    Scalar { slot: usize, boolean: bool },
+    Joined(Vec<StringSource>),
+}
+impl StringSource {
+    pub(crate) fn roots(&self) -> u32 {
+        match self {
+            Self::Json { root, .. } => 1 << root,
+            Self::Joined(parts) => parts.iter().fold(0, |mask, p| mask | p.roots()),
+            _ => 0,
+        }
+    }
+    pub(crate) fn scalars(&self) -> u32 {
+        match self {
+            Self::Scalar { slot, .. } => 1 << slot,
+            Self::Joined(parts) => parts.iter().fold(0, |mask, p| mask | p.scalars()),
+            _ => 0,
+        }
+    }
+    pub(crate) fn owned_bytes(&self) -> usize {
+        match self {
+            Self::Literal(s) => s.len(),
+            Self::Joined(parts) => {
+                parts.capacity() * std::mem::size_of::<Self>()
+                    + parts.iter().map(Self::owned_bytes).sum::<usize>()
+            }
+            _ => 0,
+        }
+    }
 }
 #[derive(Clone, Debug)]
 pub struct BoundCall {
@@ -215,6 +245,7 @@ pub struct Plan {
     pub calls: Vec<BoundCall>,
     pub needles: Vec<String>,
     pub string_paths: bool,
+    pub prints: Vec<StringSource>,
 }
 impl Plan {
     pub(crate) fn owned_bytes(&self) -> usize {
@@ -223,10 +254,13 @@ impl Plan {
             + self
                 .calls
                 .iter()
-                .map(|c| match &c.string {
-                    Some(StringSource::Literal(s)) => s.len(),
-                    _ => 0,
-                })
+                .map(|c| c.string.as_ref().map_or(0, StringSource::owned_bytes))
+                .sum::<usize>()
+            + self.prints.capacity() * std::mem::size_of::<StringSource>()
+            + self
+                .prints
+                .iter()
+                .map(StringSource::owned_bytes)
                 .sum::<usize>()
             + self.paths.capacity() * std::mem::size_of::<PathSlot>()
             + self.paths.iter().map(|p| p.key.capacity()).sum::<usize>()

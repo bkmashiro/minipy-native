@@ -74,12 +74,20 @@ pub enum Stmt {
         target: usize,
         json: bool,
         args: Vec<Expr>,
+        string_scalars: u32,
+        string_roots: u32,
     },
     Print(Expr, Type),
     #[cfg(feature = "tool-json")]
     PrintJsonString {
         slot: usize,
         root: usize,
+    },
+    #[cfg(feature = "tool-json")]
+    PrintString {
+        plan: usize,
+        roots: u32,
+        scalars: u32,
     },
     Eval(Expr),
     Return(Expr),

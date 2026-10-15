@@ -1707,3 +1707,59 @@ An earlier same-command run varied materially in absolute medians (tape
 No Monty baseline, unchanged private script, Linux/Wasm or production Host
 validation is claimed by this bounded campaign.
 
+## BR: bounded source-string sink on BQ (2026-10-15)
+
+Cherry-picked BQ `6b48ebc` onto BP `bbca816` before extending the optional
+`tool-json` lane. The sealed `StringSource` plan now holds up to 32 literal,
+declared JSON leaf, or formatted scalar parts. Explicit `+` admits only string
+literal/declared JSON parts; `f"...{n}..."` admits i64/bool locals/constants and
+declared string leaves without conversions or format specs. The ordinary
+scalar/numeric Tool path is unchanged. Original `read_file(...)` spelling,
+string-valued local assignment, dynamic iteration, and a real filesystem Host
+remain out of scope. This does not admit BN's unchanged private scripts.
+
+Print validates all accessed parts before writing, checks the aggregate UTF-8
+bytes plus newline once, and appends all parts atomically under stdout budget.
+There is no joined print buffer. A joined Tool argument is materialized once,
+bounded to 64 KiB and the remaining aggregate JSON buffer budget before
+authorization/spawn; the detached future owns it through completion. Literal
+pieces are individually limited to 4,096 bytes, source to 16 KiB, and the
+existing 64 KiB per JSON string token, scan budget and Provider authority
+remain. Native spills only referenced scalar locals and retains referenced
+JSON roots across waits; tape tracks the same roots. Both share value selection,
+error and output code. The static `StringSource::Joined` plan is not a general
+Python string value or concatenation operator outside these consumers.
+
+`tests/string_tool.rs` exercises literal and JSON composition, escaped Unicode,
+two-root and scalar liveness across Tool waits, output prefix preservation,
+aggregate join over-budget (no second Provider call), joined-argument lifetime
+through cancellation, format admission errors, and both native/tape outputs.
+Local macOS arm64 Rust 1.96.0 checks: offline locked
+default and `tool-json` full test suites, both all-target clippy `-D warnings`,
+and rustfmt. The installed `wasm32-wasip1` target is not available to the pinned
+1.96 toolchain; cross-check failed at missing `std`, not project compilation.
+Linux/Wasm execution and real Host integration remain unverified.
+
+Synthetic source-cold resident-process evidence, with preparation, real ready
+Provider dispatch, output and cleanup included; fixture setup and build excluded:
+`cargo +1.96.0 test --release --offline --locked --features tool-json --test
+string_tool resident_request_cost -- --ignored --nocapture`, plus the same for
+`resident_sink_cost`. Raw `evidence/br-string-sink/request-cost.jsonl` (104 rows,
+SHA256 `71ba9dcbc244c383632175901dbb207f24488dbccbe8f02256db4c0f274875b5`)
+and `sink-cost.jsonl` (52 rows, SHA256
+`d3753a6abb4476f49978ee2ab3259baf202546dc7cdaded78404445079bb3b76`).
+The final harness `tests/string_tool.rs` SHA256 is
+`99255c588ed7120702089b2c27ad7bb2a12dc8c579a5bdcf6c493f8403195b20`;
+the benchmark measurements preceded test-only cancellation coverage/formatting,
+not changes to the timed fixture or implementation.
+Each backend/shape has 26 requests with first two warmups excluded. Current
+numeric/string medians: tape 37.688/33.042 µs, native 179.188/174.855 µs;
+joined sink (`"report" + ".txt"`, JSON alias, f-string print) tape 14.313 µs,
+native 73.833 µs. Different source lengths/operations and process-order drift
+make these shape costs, not an isolated sink overhead. A preceding run on this
+candidate measured joined sink at tape 57.105/native 241.188 µs while its
+numeric control was 33.917/175.958 µs. Therefore neither the apparent sink
+speed nor old-path regression/improvement is established. BQ's earlier numeric
+medians 28.750/172.416 µs were in another process/run. No Monty comparison for this synthetic Host-specific
+call: this is not an unchanged private script or production workload.
+
