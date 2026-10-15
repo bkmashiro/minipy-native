@@ -1660,5 +1660,49 @@ could be smaller than generic Python containers/filesystem objects; it must
 retain original call spelling and result shape to count as original coverage.
 Measure new-source full requests only after actual fixture execution. If the
 finite slice cannot preserve that contract, keep the Host fallback rather
-than adding a generic filesystem/shell adapter or inventing numeric types.
+rather than adding a generic filesystem/shell adapter or inventing numeric types.
+
+### BN follow-up design gate (not implemented)
+
+The smallest useful *next* vertical path is one statically declared, read-only
+Host callback taking a **literal UTF-8 path**, returning a bounded JSON reply,
+then selecting a declared string leaf and printing it under the existing
+task-private stdout limit. This does not yet admit the path-list loop above:
+borrowed string *variables* as arguments and iteration over literal string
+values are separate extensions. The single-call path tests the real authority
+and output boundary before adding those language features; its synthetic
+source is not counted as unchanged private-script coverage.
+
+- Frontend/IR: add a bounded string-literal operand only at a declared Host
+  call site, with static call-name binding (including a Host-declared global
+  alias if original `read_file(...)` spelling is required). Do not treat every
+  Python string as a scalar i64 or enable arbitrary imports. A later borrowed
+  string-local argument must carry its immutable owner across suspension and
+  have explicit lifetime/size rules; it cannot be passed through `[i64; 2]`.
+- Provider: an opt-in Host-owned callback accepts the UTF-8 argument and
+  returns the existing `Reply::Json`/`TaskError` shape. Keep current numeric
+  `call_tool` and existing implementers unchanged via a default-deny separate
+  entry point; an existing numeric Tool ID/schema is never repurposed. Only
+  actually referenced capabilities are bound. The Host still resolves task
+  paths, enforces protected-path and read permissions, redacts, paginates and
+  applies its error/dedup policy. `ToolSchema` alone grants no access. Detached
+  calls must retain their argument owner until completion after cancellation.
+- JSON/output: reuse `ResultSchema::JsonTyped` and the existing validated or
+  decoded string-leaf view, preserving the root owner until consumption. Add
+  one bounded print sink for that leaf, with valid UTF-8 and whole-line append
+  or `TaskError::Budget` without a partial line; include newline and any
+  formatting in the `ScriptLimits.stdout_bytes` charge. Current JSON strings
+  may be up to 64 KiB raw while default stdout is 16 KiB, so a successful
+  read need not be printable. Existing scalar print remains untouched and
+  earlier output survives a later error. Error, authorization, cancellation
+  and evaluation order must agree between native and tape backends.
+
+First fixture gate: one literal path with a Host-owned *read-only* callback,
+success/error/permission/oversize/cancellation cases on both backends; no
+external write. Only then consider borrowed dynamic path arguments and a
+literal-list loop, and test an unchanged complete source with the actual
+Host response bounds. This changes the public Provider/type boundary and
+requires a separate scope decision; this BN branch contains no such code or
+new benchmark. **Keep** the current runtime and Host fallback; **defer** the
+string callback until its authority and bounded reply can be exercised.
 
