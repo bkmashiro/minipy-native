@@ -2262,3 +2262,8 @@ worktree/target/dependency/download/CI 或 Linux/Wasm/Monty 性能结论。
 不自动继续零碎优化。小 raw、归约、边界、清理和复现：
 [CF stage evidence](../evidence/cf-stage/README.md)。
 
+独立 `gpt-6-luna` 对固定 `eea1a46` 聚焦审阅，主控回读 receipt 确认
+精确 model/provider 和四次主推理调用。Reviewer 重放完整归约、确认 summary
+不变并检查固定范围 diff，无阻塞项，不追加构建或计时。
+见 [CF review](../evidence/cf-stage/review.md)。
+

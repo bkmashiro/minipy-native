@@ -85,3 +85,7 @@ python3 tools/perf_workbench.py run --baseline /Users/yuzhe/.hermes/cache/scratc
 ```
 
 `summary.json` 由 reducer 重建，含逐进程 medians/min/max、全源身份验证、旧 CC census 与旧 BT phase 归约。两臂来源标签有前述 explicit overlays；复现采集 HEAD 不必相同，但需相应调整固定 manifest HEAD 断言，不能静默跳过源码 hash。临时固定二进制在审阅后删除，原始 manifest 保留完整 binary/source 身份。
+
+固定 `eea1a46` 的独立 `gpt-6-luna` 审阅无阻塞项，精确模型经主控回读
+receipt 验证。Reviewer 重放 reducer 和固定范围 diff check，确认 summary
+与提交一致，没有重跑测试或计时。详见 [review](review.md)。
