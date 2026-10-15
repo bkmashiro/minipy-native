@@ -1,0 +1,82 @@
+$ cargo test --offline --locked --all-features --test kernel_admission --test tool_json --test http_tool -- --nocapture
+   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native/.worktrees/t_5f704b33)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.27s
+     Running tests/http_tool.rs (/Users/yuzhe/projects/minipy-native/target/debug/deps/http_tool-b579702eeeec11c3)
+
+running 4 tests
+test cancelled_receiver_keeps_http_admission_until_real_completion ... ok
+test real_http_pool_roundtrip_runs_both_backends_without_json_materialization ... ok
+test multi_chunk_merge_is_one_copy_and_body_status_limits_are_errors ... ok
+test http_timeout_returns_permit_without_reviving_task ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/kernel_admission.rs (/Users/yuzhe/projects/minipy-native/target/debug/deps/kernel_admission-f88546e6fa9e3cd5)
+
+running 1 test
+multi_i64: admitted=true (tape and native)
+raw_subview_alias: admitted=true (tape and native)
+raw_subview_output: admitted=false (tape and native)
+json_encode: admitted=false (tape and native)
+contains: admitted=false (tape and native)
+startswith: admitted=false (tape and native)
+split: admitted=false (tape and native)
+join: admitted=false (tape and native)
+filter_project: admitted=false (tape and native)
+any: admitted=false (tape and native)
+all: admitted=false (tape and native)
+find: admitted=false (tape and native)
+count: admitted=false (tape and native)
+sum: admitted=false (tape and native)
+test kernel_candidates_need_new_value_or_iteration_contracts ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/tool_json.rs (/Users/yuzhe/projects/minipy-native/target/debug/deps/tool_json-77322b093a5974c7)
+
+running 14 tests
+test schema_and_binding_reject_unsupported_without_runtime ... ok
+test direct_tool_print_rejects_json_nested_calls_and_loop_effects ... ok
+test direct_tool_print_suspends_and_cancellation_preserves_prefix ... ok
+test cancellation_with_live_subview_drops_task_owner_not_operation ... ok
+test source_binding_and_real_backends_share_results ... ok
+test subview_keeps_root_across_actual_wait_then_releases ... ok
+test task_tool_permissions_counts_and_buffer_cap ... ok
+test standalone_scalar_tool_call_executes_and_discards_result ... ok
+test malformed_accessed_content_is_task_error_not_partial_success ... ok
+test duplicate_escaped_keys_extremes_and_unvisited_suffix_contract ... ok
+test branch_last_use_alias_error_and_multiple_owner_budget ... ok
+test direct_scalar_tool_print_matches_explicit_binding_and_bounds ... ok
+test accessed_errors_short_circuit_and_left_to_right_are_preserved ... ok
+test cancellation_detached_late_json_response_drops_owner ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+
+exit=0
+$ cargo clippy --offline --locked --all-features --test kernel_admission -- -D warnings
+    Checking minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native/.worktrees/t_5f704b33)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.97s
+
+exit=0
+$ cargo fmt --check
+
+exit=0
+
+$ python3.14 -m unittest discover -s tools -p test_ao_kernel_survey.py -v
+test_comprehensions_and_reductions_remain_untyped (test_ao_kernel_survey.OperationsTest.test_comprehensions_and_reductions_remain_untyped) ... ok
+test_json_call_spelling_is_not_type_inference (test_ao_kernel_survey.OperationsTest.test_json_call_spelling_is_not_type_inference) ... ok
+test_loop_add_is_not_checked_integer_proof (test_ao_kernel_survey.OperationsTest.test_loop_add_is_not_checked_integer_proof) ... ok
+test_overlapping_syntax_is_not_dynamic_work (test_ao_kernel_survey.OperationsTest.test_overlapping_syntax_is_not_dynamic_work) ... ok
+test_static_paths_and_siblings (test_ao_kernel_survey.OperationsTest.test_static_paths_and_siblings) ... ok
+test_string_membership_direction_and_chains (test_ao_kernel_survey.OperationsTest.test_string_membership_direction_and_chains) ... ok
+test_unknown_calls_not_reported_as_supported_kernels (test_ao_kernel_survey.OperationsTest.test_unknown_calls_not_reported_as_supported_kernels) ... ok
+test_values_and_identifiers_never_exported_or_executed (test_ao_kernel_survey.OperationsTest.test_values_and_identifiers_never_exported_or_executed) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.001s
+
+OK
+exit=0
+
+Final analyzer aggregate rerun: byte-identical operations.json; all private sampling/original aggregate assertions passed.

@@ -928,3 +928,30 @@ BA, then returns to AB. They satisfy the bounded three-process ordering; cell
 grouping and small samples still leave substantial warm-up/noise limits. No
 timing-based optimization or runtime change is made; Linux remains unrun.
 
+## AO: concrete-operation kernel selection and admission gate
+
+Based on accepted AN 79bfcf88, without merging main. Reused the private Z
+extractor with exact original sampling/replay/input and aggregate reconciliation:
+632 distinct main scripts (Hermes577/AppWorld55). New devalued AST aggregates
+distinguish JSON decode/encode, literal sibling/path syntax, string methods,
+filtered/projected comprehensions and unresolved reductions. Frequency is not
+type proof, execution CPU or compatibility. No corpus source or identifiers
+are exported. See [AO selection](ao-kernel-selection.md) and
+`evidence/ao-kernels/operations.json` for definitions and six ranked work ledgers.
+
+No performance candidate passed the value-contract/net-work gate. Existing
+JSON i64 paths already cache prefixes/leaves; eager multi-field extraction
+would violate demanded-error/short-circuit boundaries. Higher-value string,
+collection and output candidates need explicit value/ABI decisions. Quote
+reduction is technically possible but no sample-to-Quote/i64 demand or net
+benefit is established. No kernel, production-code change or timing result is
+claimed; the permitted design-only exit is used rather than an unmatched spike.
+
+Mac verification: eight synthetic analyzer tests, byte-identical repeated
+aggregates, 14 concrete admission cases on each real compiler (one test), and
+18 existing Tool/JSON/actual HTTP execution tests. Scoped strict Clippy and fmt
+pass. Reused the existing target offline with one job; no new target, dependency,
+WSL/VM work or benchmark campaign. Proposed next experiment is one bounded
+read-only JSON string predicate after Host schema/ownership/byte-work decisions,
+not a generic Value system or automatic follow-up development card.
+

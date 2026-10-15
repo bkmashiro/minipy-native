@@ -1,0 +1,31 @@
+{
+  "base_commit": "79bfcf88bc7826473195d6bb4c21fb7342e9a39d",
+  "production_diff_from_base": "",
+  "python": "3.14.7",
+  "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
+  "rustc": "rustc 1.93.1 (01f6ddf75 2026-02-11)",
+  "cargo": "cargo 1.93.1 (083ac5135 2025-12-15)",
+  "target": "/Users/yuzhe/projects/minipy-native/target",
+  "build_jobs": 1,
+  "offline_locked": true,
+  "disk_free_start_df_gib_approx": 12,
+  "disk_free_end_bytes": 12427276288,
+  "source_sha256": {
+    "tools/ao_kernel_survey.py": "3b5a2624aab2884ee1a304a39374f3154714b052993a58dec832739a309a6e39",
+    "tools/test_ao_kernel_survey.py": "03e16cb8c1c43ff2ebf4c5e631fdb68318ec049ca7342fbb75d89d31767dbcba",
+    "tests/kernel_admission.rs": "3e70b6175458980bb6e84c7d5509e6fb01efd18fb42928ab69ba1ac0c20b1a0c",
+    "docs/ao-kernel-selection.md": "ef859a1180bf4178c0e4d83797beabe7a7da6b4d8c9e31cee819a390f2870151",
+    "docs/experiments.md": "6a1485f4ebf08996c761d0e7b4bdca0655f94a153a457cf4048fa949224c2e60",
+    "Cargo.lock": "15a236e43daf854bedbd6a83a6a667d1e7a173e9100008be03d82efbc3efe97e",
+    "evidence/ao-kernels/operations.json": "dd724c76c7c5d664b18402d6e69917aacc9f2f05384d0b9a8c5f6f4adf1562f3",
+    "evidence/ao-kernels/validation.txt": "57880a8844c61f16b36d668745ea4b0eb738b89c2a3176bd606a4fca0981f86d"
+  },
+  "performance_spike_run": false,
+  "new_kernel": false,
+  "new_rust_tests": 1,
+  "new_admission_cases_per_backend": 14,
+  "existing_execution_tests_rerun": 18,
+  "python_synthetic_tests": 8,
+  "repeated_aggregate_byte_identical": true,
+  "raw_corpus_exported": false
+}
