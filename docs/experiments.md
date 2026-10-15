@@ -1404,3 +1404,54 @@ BI. Do not hide that work in an unbounded benchmark or claim BJ percentages
 compose into a new integrated speedup. The existing finite typed helper remains
 the strong simple alternative for expressible aggregate workloads.
 
+### BK private complete-source obstacle inventory
+
+`python3.14 -W ignore::SyntaxWarning tools/bk_private_ast.py` reuses BI's
+reconciled CLI sample selection (the lowest 64 SHA256 digests of 520 exact-
+unique complete `execute_code` sources). It parses all 64 with CPython's AST
+and `symtable`, traverses *whole scripts*, and prints only fixed labels and
+aggregate counts. It neither executes source nor persists source, digests,
+call identifiers or per-script outcomes. This is a **static shape inventory**,
+not a second admission run or a claim of runnable programs. The prior real
+prepare result remains 0/64.
+
+Overlapping buckets in this sample (denominator 64): 6 explicitly import the
+known Host helper modules, 45 reference a recognized preimported Host helper,
+and 60 reference at least one other global whose binding needs verification
+(which is **not** proof that all 60 are Host APIs). Twelve have imports; three
+import known stdlib OS/I/O-capable modules and four import a non-stdlib module
+(possibly local, not automatically a third-party dependency). These dependency
+categories overlap. All 64 contain at least one call shape beyond BI's four
+scalar builtin forms; this includes legitimate potential Host calls, so it
+cannot alone rank missing Python builtins. Fifty-eight contain at least one
+AST language/data feature outside the finite typed slice: 46 f-string,
+28 subscript, 19 list literal, 13 dict literal, 15 generator expression,
+9 dict comprehension, 11 assert, 2 function definitions (overlap allowed).
+Only 6 have none of those flagged AST nodes, but all 6 still have an unresolved
+global and a non-BI call shape. Among the 58 with a flagged node, 20 have
+*only* f-string from this finite feature list; those 20 also have unresolved
+globals (12 recognizable Host references). In the three coarse axes
+(recognized Host, module dependency, missing language/data feature), the
+64 split into (0,0,0):6, (0,0,1):12, (0,1,1):1, (1,0,1):40,
+(1,1,1):5. This table does not infer Python syntax coverage from AST
+presence alone: unsupported expressions/calls may coexist in every bucket.
+
+The smallest **next candidate scenario** is a *single declared Host operation
+with scalar arguments/result and bounded formatted output*, for example
+`value = tools.read_metric(1); print(f"value={value}")` as an explicitly
+**synthetic** shape. It combines one finite Host declaration/binding with
+restricted f-string scalar interpolation and bounded stdout; it does not need
+dynamic list/dict objects or a generic iterable protocol. First obtain and
+validate the actual target operation's signature, authorization and failure
+contract, then test one *complete* private script unmodified at prepare and
+execution. The 20 f-string-only AST shapes make this a plausible narrow
+investigation, **not** 20 predicted admissions: their other calls/globals may
+require adapters or different types, and the present Tool schema cannot be
+invented to increase a score. If no actual target has this contract, stop
+rather than implement formatting in isolation. Supporting f-strings as Python
+strings also costs typed string values, lifetime/owner or bounded copy rules,
+UTF-8/error/size accounting and both tape/native lowering; a simpler
+scalar-only `print(value)` control already exists. Avoid promoting a generic
+container/module/OS capability stack from frequency counts. This candidate
+remains a separate decision, not authorized implementation in BK.
+
