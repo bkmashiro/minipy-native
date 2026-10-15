@@ -1,0 +1,51 @@
+diff --git a/src/codegen.rs b/src/codegen.rs
+index 0579ee5..44c2c4a 100644
+--- a/src/codegen.rs
++++ b/src/codegen.rs
+@@ -1112,6 +1112,19 @@ impl Emit<'_, '_> {
+ mod tests {
+     use super::*;
+     #[test]
++    #[ignore = "explicit separate CI actual CLIF and VCode diagnostic"]
++    #[cfg(feature = "tool-json")]
++    fn ci_native() {
++        let environment = crate::interpreter::ci_probe::environment();
++        for (name, source, inputs) in crate::interpreter::ci_probe::cases() {
++            println!("CI_CODE {name}");
++            let program =
++                crate::frontend::parse_with_environment(source, &inputs, &environment).unwrap();
++            let code = CodeUnit::lower(program, "speed", true).unwrap();
++            println!("CI_BYTES {}\nCI_CLIF\n{}", code.code_bytes, code.clif);
++        }
++    }
++    #[test]
+     #[ignore = "explicit serial CE code diagnostic, not formal timing"]
+     fn ce_arithmetic_code() {
+         for (name, source) in [
+diff --git a/src/interpreter.rs b/src/interpreter.rs
+index 3d8e3a2..bf2bfcf 100644
+--- a/src/interpreter.rs
++++ b/src/interpreter.rs
+@@ -16,6 +16,12 @@ use std::rc::Rc;
+ use std::sync::Arc;
+ #[cfg(not(target_arch = "wasm32"))]
+ use tokio::sync::oneshot;
++#[cfg(all(test, feature = "tool-json", feature = "interpreter-profile"))]
++#[path = "../evidence/ci-layout/loop-probe.rs"]
++mod ci_loop_probe;
++#[cfg(all(test, feature = "tool-json"))]
++#[path = "../evidence/ci-layout/probe.rs"]
++pub(crate) mod ci_probe;
+ #[cfg(feature = "debug-runtime")]
+ pub mod debug;
+ #[cfg(test)]
+diff --git a/src/lib.rs b/src/lib.rs
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -1,3 +1,6 @@
++#[cfg(all(test, feature = "tool-json"))]
++#[path = "../evidence/cj-zero-buffer/allocation.rs"]
++mod cj_alloc;
+ pub mod buffer;
+ #[cfg(not(target_arch = "wasm32"))]
+ pub mod codegen;

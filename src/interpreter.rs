@@ -72,42 +72,49 @@ impl InterpreterUnit {
         flatten(program.statements, &mut ops);
         // Buffer liveness at each PC, including loop backedges. No extra scalar
         // analysis is needed: slots already reside in the task's fixed local array.
-        let mut live = vec![0; ops.len() + 1];
-        // Forward successors are final when visited in reverse order. Discover
-        // backward/self edges in that same pass; only those need convergence.
-        let mut backward = false;
-        loop {
-            let mut changed = false;
-            for pc in (0..ops.len()).rev() {
-                #[cfg(test)]
-                liveness_tests::visit(false);
-                let next = live[pc + 1];
-                let before = match &ops[pc] {
-                    op if op.branch_target().is_some() => {
-                        let target = op.branch_target().unwrap();
-                        backward |= target <= pc;
-                        next | live[target]
-                    }
-                    Op::Jump(target) | Op::Next(target) => {
-                        backward |= *target <= pc;
-                        live[*target]
-                    }
-                    Op::Scan { buffer, end } => {
-                        backward |= *end <= pc;
-                        next | live[*end] | (1 << buffer)
-                    }
-                    Op::BufferLen(_, buffer) => next | (1 << buffer),
-                    Op::Load(target, _) => next & !(1 << target),
-                    Op::Return => 0,
-                    _ => next,
-                };
-                changed |= before != live[pc];
-                live[pc] = before;
+        // Admission assigns every Quote buffer a slot. With no slots all masks
+        // are zero, so neither backing storage nor a transfer pass is needed.
+        let live = if program.buffers == 0 {
+            Vec::new()
+        } else {
+            let mut live = vec![0; ops.len() + 1];
+            // Forward successors are final when visited in reverse order. Discover
+            // backward/self edges in that same pass; only those need convergence.
+            let mut backward = false;
+            loop {
+                let mut changed = false;
+                for pc in (0..ops.len()).rev() {
+                    #[cfg(test)]
+                    liveness_tests::visit(false);
+                    let next = live[pc + 1];
+                    let before = match &ops[pc] {
+                        op if op.branch_target().is_some() => {
+                            let target = op.branch_target().unwrap();
+                            backward |= target <= pc;
+                            next | live[target]
+                        }
+                        Op::Jump(target) | Op::Next(target) => {
+                            backward |= *target <= pc;
+                            live[*target]
+                        }
+                        Op::Scan { buffer, end } => {
+                            backward |= *end <= pc;
+                            next | live[*end] | (1 << buffer)
+                        }
+                        Op::BufferLen(_, buffer) => next | (1 << buffer),
+                        Op::Load(target, _) => next & !(1 << target),
+                        Op::Return => 0,
+                        _ => next,
+                    };
+                    changed |= before != live[pc];
+                    live[pc] = before;
+                }
+                if !changed || !backward {
+                    break;
+                }
             }
-            if !changed || !backward {
-                break;
-            }
-        }
+            live
+        };
         #[cfg(feature = "tool-json")]
         let json_live = if program.json.roots > 0 {
             tape::json_liveness(&ops, &program.json)
@@ -125,6 +132,10 @@ impl InterpreterUnit {
             inputs: program.locals[..program.inputs].to_vec(),
             buffers: program.buffers,
         })
+    }
+    /// Zero-buffer units omit storage; nonzero units keep checked PC indexing.
+    fn buffer_mask(&self, pc: usize) -> u64 {
+        if self.buffers == 0 { 0 } else { self.live[pc] }
     }
     /// Logical owned preparation bytes, excluding allocator rounding and Rc header.
     pub fn prepared_bytes(&self) -> usize {
@@ -247,7 +258,7 @@ async fn run<P: Provider>(
             Boundary::Step => unreachable!("production specialization never stops per instruction"),
             Boundary::Done => break,
             Boundary::Yield => {
-                let held = release(&mut owners, unit.live[state.pc]);
+                let held = release(&mut owners, unit.buffer_mask(state.pc));
                 #[cfg(feature = "interpreter-profile")]
                 crate::interpreter_profile::update(|c| c.yields += 1);
                 runtime::event(
@@ -262,7 +273,7 @@ async fn run<P: Provider>(
                 runtime::check(&cancel)?;
             }
             Boundary::Load(target, batch) => {
-                let held = release(&mut owners, unit.live[state.pc]);
+                let held = release(&mut owners, unit.buffer_mask(state.pc));
                 runtime::authorize_tool(&cancel, limits.allow_load, &mut calls)?;
                 runtime::event(
                     &trace,
@@ -283,13 +294,13 @@ async fn run<P: Provider>(
                 if quotes.bytes() > limits.buffer_bytes.saturating_sub(held) {
                     return Err(TaskError::Budget);
                 }
-                if unit.live[state.pc] & (1 << target) != 0 {
+                if unit.buffer_mask(state.pc) & (1 << target) != 0 {
                     owners[target] = Some(quotes);
                 }
             }
             #[cfg(feature = "tool-json")]
             Boundary::Tool(call, target, args) => {
-                let held = release(&mut owners, unit.live[state.pc]);
+                let held = release(&mut owners, unit.buffer_mask(state.pc));
                 let call = &unit.json.as_ref().expect("sealed Tool plan").calls[call];
                 let (id, count, is_json) = (call.id, call.arguments, call.json);
                 let argument = match &call.string {
@@ -335,7 +346,7 @@ async fn run<P: Provider>(
                 }
             }
             Boundary::Record(target, batch, total) => {
-                let held = release(&mut owners, unit.live[state.pc]);
+                let held = release(&mut owners, unit.buffer_mask(state.pc));
                 runtime::authorize_tool(&cancel, limits.allow_record, &mut calls)?;
                 runtime::event(
                     &trace,

@@ -71,8 +71,17 @@ fn reference_json(ops: &[Op], plan: &crate::tool::Plan) -> (Vec<u32>, usize) {
 }
 fn check(case: &str, unit: InterpreterUnit) {
     let (buffers, old_buffers) = reference_buffers(&unit.ops);
-    assert_eq!(unit.live, buffers, "{case}: every buffer PC mask");
+    for (pc, mask) in buffers.iter().enumerate() {
+        assert_eq!(unit.buffer_mask(pc), *mask, "{case}: buffer PC {pc}");
+    }
     let (buffer_visits, json_visits) = VISITS.with(|v| v.replace((0, 0)));
+    if unit.buffers == 0 {
+        assert_eq!(unit.live.capacity(), 0, "{case}: no buffer backing");
+        assert_eq!(buffer_visits, 0, "{case}: no buffer traversal");
+    } else {
+        assert_eq!(unit.live.len(), unit.ops.len() + 1);
+        assert!(buffer_visits > 0);
+    }
     #[cfg(feature = "tool-json")]
     let old_json = if unit.json_live.is_empty() {
         0
@@ -95,6 +104,11 @@ fn cd_buffer_masks() {
     for (case, source) in [
         ("scalar", "print(7)"),
         (
+            "branch",
+            "x=7\nif x>2:\n    print(x+1)\nelse:\n    print(x-1)",
+        ),
+        ("record", "print(tools.record_total(1,7))"),
+        (
             "straight_buffer",
             "a=tools.load_quotes(1)\nb=tools.load_quotes(2)\nprint(len(a)+len(b))",
         ),
@@ -114,6 +128,13 @@ fn cd_buffer_masks() {
         VISITS.with(|v| v.set((0, 0)));
         check(case, InterpreterUnit::prepare_script(source, &[]).unwrap());
     }
+}
+#[test]
+#[should_panic(expected = "index out of bounds")]
+fn nonzero_buffer_mask_keeps_pc_bounds() {
+    let unit =
+        InterpreterUnit::prepare_script("a=tools.load_quotes(1)\nprint(len(a))", &[]).unwrap();
+    unit.buffer_mask(unit.ops.len() + 1);
 }
 #[cfg(feature = "tool-json")]
 #[test]

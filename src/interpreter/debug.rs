@@ -213,11 +213,11 @@ impl Engine {
                     ("done", Value::Null)
                 }
                 Ok(Boundary::Yield) => {
-                    release(&mut t.owners, t.unit.live[t.frame.state.pc]);
+                    release(&mut t.owners, t.unit.buffer_mask(t.frame.state.pc));
                     ("yield", Value::Null)
                 }
                 Ok(Boundary::Load(target, batch)) => {
-                    let held = release(&mut t.owners, t.unit.live[t.frame.state.pc]);
+                    let held = release(&mut t.owners, t.unit.buffer_mask(t.frame.state.pc));
                     match runtime::authorize_tool(
                         &t.cancel,
                         t.options.limits.allow_load,
@@ -239,7 +239,7 @@ impl Engine {
                     }
                 }
                 Ok(Boundary::Record(target, batch, total)) => {
-                    release(&mut t.owners, t.unit.live[t.frame.state.pc]);
+                    release(&mut t.owners, t.unit.buffer_mask(t.frame.state.pc));
                     match runtime::authorize_tool(
                         &t.cancel,
                         t.options.limits.allow_record,
@@ -339,7 +339,7 @@ impl Engine {
                         Err(TaskError::Budget)
                     } else {
                         let b = QuoteBuffer::from_quotes(rows).map_err(|e| e.to_string())?;
-                        if t.unit.live[t.frame.state.pc] & (1 << target) != 0 {
+                        if t.unit.buffer_mask(t.frame.state.pc) & (1 << target) != 0 {
                             t.owners[target] = Some(b);
                         }
                         Ok(())

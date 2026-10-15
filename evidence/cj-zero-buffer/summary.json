@@ -1,0 +1,3373 @@
+{
+  "base": "e1ee1af7cb7e016504d4dac56e1e05199799b7c2",
+  "timing": {
+    "ab": {
+      "complete": true,
+      "diagnostic": false,
+      "aa": false,
+      "expected_processes": 112,
+      "observed_processes": 112,
+      "expected_measured_samples": 2688,
+      "measured_samples": 2688,
+      "failures": [],
+      "missing_processes": [],
+      "end_record": true,
+      "startup_median_ns": 73000.0,
+      "cells": [
+        {
+          "backend": "native",
+          "case": "branch",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 63062.5,
+                "min_ns": 61208,
+                "max_ns": 110166
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 66604.0,
+                "min_ns": 63459,
+                "max_ns": 114375
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 66646.0,
+                "min_ns": 63667,
+                "max_ns": 118000
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 67812.5,
+                "min_ns": 63750,
+                "max_ns": 116959
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 62437.0,
+                "min_ns": 60459,
+                "max_ns": 109875
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 63792.0,
+                "min_ns": 61958,
+                "max_ns": 108334
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 64312.5,
+                "min_ns": 61750,
+                "max_ns": 112916
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 64687.5,
+                "min_ns": 62333,
+                "max_ns": 110666
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 66625.0,
+            "B": 64052.25
+          },
+          "b_over_a": 0.9613846153846154
+        },
+        {
+          "backend": "native",
+          "case": "detach_wait",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 154354.0,
+                "min_ns": 149542,
+                "max_ns": 263166
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 150521.0,
+                "min_ns": 147167,
+                "max_ns": 227833
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 158396.0,
+                "min_ns": 151708,
+                "max_ns": 240709
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 153812.5,
+                "min_ns": 150083,
+                "max_ns": 228959
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 153083.0,
+                "min_ns": 150292,
+                "max_ns": 221041
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 155812.5,
+                "min_ns": 148916,
+                "max_ns": 227167
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 152187.5,
+                "min_ns": 149333,
+                "max_ns": 228583
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 155625.0,
+                "min_ns": 151959,
+                "max_ns": 222750
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 154083.25,
+            "B": 154354.0
+          },
+          "b_over_a": 1.0017571669860286
+        },
+        {
+          "backend": "native",
+          "case": "escaped_join",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 77437.5,
+                "min_ns": 73833,
+                "max_ns": 137208
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 77000.0,
+                "min_ns": 74209,
+                "max_ns": 141833
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 76187.5,
+                "min_ns": 73750,
+                "max_ns": 130917
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 77104.0,
+                "min_ns": 74208,
+                "max_ns": 139750
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 74417.0,
+                "min_ns": 72792,
+                "max_ns": 128750
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 76041.5,
+                "min_ns": 74417,
+                "max_ns": 140125
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 76771.0,
+                "min_ns": 74459,
+                "max_ns": 151916
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 75188.0,
+                "min_ns": 73583,
+                "max_ns": 132500
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 77052.0,
+            "B": 75614.75
+          },
+          "b_over_a": 0.9813470124072056
+        },
+        {
+          "backend": "native",
+          "case": "madd_loop",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 116292.0,
+                "min_ns": 111083,
+                "max_ns": 197334
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 115979.0,
+                "min_ns": 112167,
+                "max_ns": 195875
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 114042.0,
+                "min_ns": 110792,
+                "max_ns": 200458
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 119395.5,
+                "min_ns": 111291,
+                "max_ns": 201417
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 113895.5,
+                "min_ns": 110833,
+                "max_ns": 208292
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 114374.5,
+                "min_ns": 112000,
+                "max_ns": 214916
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 116395.5,
+                "min_ns": 112166,
+                "max_ns": 195125
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 114812.5,
+                "min_ns": 111583,
+                "max_ns": 199042
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 116135.5,
+            "B": 114593.5
+          },
+          "b_over_a": 0.9867224061548794
+        },
+        {
+          "backend": "native",
+          "case": "quote",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 105812.5,
+                "min_ns": 102459,
+                "max_ns": 189292
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 105854.0,
+                "min_ns": 103250,
+                "max_ns": 188208
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 106479.5,
+                "min_ns": 102875,
+                "max_ns": 184791
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 106937.0,
+                "min_ns": 103333,
+                "max_ns": 200166
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 104499.5,
+                "min_ns": 102875,
+                "max_ns": 182458
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 105958.0,
+                "min_ns": 103334,
+                "max_ns": 184625
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 108563.0,
+                "min_ns": 104583,
+                "max_ns": 183625
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 106041.5,
+                "min_ns": 103125,
+                "max_ns": 202125
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 106166.75,
+            "B": 105999.75
+          },
+          "b_over_a": 0.9984270028045504
+        },
+        {
+          "backend": "native",
+          "case": "ready",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 79146.0,
+                "min_ns": 78000,
+                "max_ns": 146667
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 82521.0,
+                "min_ns": 80083,
+                "max_ns": 158542
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 81312.5,
+                "min_ns": 78750,
+                "max_ns": 145917
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 81833.5,
+                "min_ns": 78291,
+                "max_ns": 144000
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 81208.5,
+                "min_ns": 78250,
+                "max_ns": 144375
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 81021.0,
+                "min_ns": 79083,
+                "max_ns": 146250
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 80979.0,
+                "min_ns": 79000,
+                "max_ns": 145416
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 81854.5,
+                "min_ns": 79458,
+                "max_ns": 149292
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 81573.0,
+            "B": 81114.75
+          },
+          "b_over_a": 0.9943823323893936
+        },
+        {
+          "backend": "native",
+          "case": "scalar",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 44354.0,
+                "min_ns": 42417,
+                "max_ns": 88250
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 40604.5,
+                "min_ns": 38833,
+                "max_ns": 78125
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 43063.0,
+                "min_ns": 39542,
+                "max_ns": 79166
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 43666.5,
+                "min_ns": 39875,
+                "max_ns": 76667
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 45875.0,
+                "min_ns": 43000,
+                "max_ns": 86166
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 41708.5,
+                "min_ns": 39083,
+                "max_ns": 76417
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 45125.0,
+                "min_ns": 39292,
+                "max_ns": 81208
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 43687.0,
+                "min_ns": 39959,
+                "max_ns": 80417
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 43364.75,
+            "B": 44406.0
+          },
+          "b_over_a": 1.0240114378613967
+        },
+        {
+          "backend": "tape",
+          "case": "branch",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 18250.5,
+                "min_ns": 16209,
+                "max_ns": 29250
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 7271.5,
+                "min_ns": 6500,
+                "max_ns": 12958
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 6916.0,
+                "min_ns": 6500,
+                "max_ns": 14125
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 6958.0,
+                "min_ns": 6541,
+                "max_ns": 12833
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 17771.0,
+                "min_ns": 15708,
+                "max_ns": 33625
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 7583.0,
+                "min_ns": 6417,
+                "max_ns": 13500
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 7687.5,
+                "min_ns": 6500,
+                "max_ns": 12625
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 7354.5,
+                "min_ns": 6375,
+                "max_ns": 13250
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 7114.75,
+            "B": 7635.25
+          },
+          "b_over_a": 1.0731578762430163
+        },
+        {
+          "backend": "tape",
+          "case": "detach_wait",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 88479.0,
+                "min_ns": 82208,
+                "max_ns": 108250
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 75875.0,
+                "min_ns": 74375,
+                "max_ns": 87625
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 77334.0,
+                "min_ns": 75250,
+                "max_ns": 89000
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 76041.5,
+                "min_ns": 74083,
+                "max_ns": 87917
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 89666.5,
+                "min_ns": 86208,
+                "max_ns": 101167
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 76396.0,
+                "min_ns": 74167,
+                "max_ns": 86209
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 72749.5,
+                "min_ns": 69084,
+                "max_ns": 93250
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 77313.0,
+                "min_ns": 74292,
+                "max_ns": 88667
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 76687.75,
+            "B": 76854.5
+          },
+          "b_over_a": 1.0021744020394392
+        },
+        {
+          "backend": "tape",
+          "case": "escaped_join",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 20833.5,
+                "min_ns": 18708,
+                "max_ns": 35125
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 12562.0,
+                "min_ns": 10459,
+                "max_ns": 22375
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 12396.0,
+                "min_ns": 10541,
+                "max_ns": 22500
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 12000.0,
+                "min_ns": 10417,
+                "max_ns": 20625
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 19271.0,
+                "min_ns": 16000,
+                "max_ns": 33875
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 12271.0,
+                "min_ns": 10333,
+                "max_ns": 22167
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 12125.0,
+                "min_ns": 10209,
+                "max_ns": 20416
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 11978.5,
+                "min_ns": 10292,
+                "max_ns": 19583
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 12479.0,
+            "B": 12198.0
+          },
+          "b_over_a": 0.9774821700456767
+        },
+        {
+          "backend": "tape",
+          "case": "madd_loop",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 17270.5,
+                "min_ns": 15542,
+                "max_ns": 28583
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 15312.5,
+                "min_ns": 13500,
+                "max_ns": 29459
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 14541.5,
+                "min_ns": 13208,
+                "max_ns": 27250
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 15187.0,
+                "min_ns": 13459,
+                "max_ns": 25459
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 16625.0,
+                "min_ns": 15167,
+                "max_ns": 29250
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 14624.5,
+                "min_ns": 13375,
+                "max_ns": 24416
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 14353.5,
+                "min_ns": 13000,
+                "max_ns": 23167
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 14520.5,
+                "min_ns": 13083,
+                "max_ns": 24792
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 15249.75,
+            "B": 14572.5
+          },
+          "b_over_a": 0.9555894358923916
+        },
+        {
+          "backend": "tape",
+          "case": "quote",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 15666.0,
+                "min_ns": 13916,
+                "max_ns": 27375
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 12250.0,
+                "min_ns": 11042,
+                "max_ns": 22083
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 12458.0,
+                "min_ns": 11209,
+                "max_ns": 22667
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 11916.5,
+                "min_ns": 10958,
+                "max_ns": 21875
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 15645.5,
+                "min_ns": 14083,
+                "max_ns": 27708
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 12708.5,
+                "min_ns": 11250,
+                "max_ns": 26292
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 12500.5,
+                "min_ns": 11084,
+                "max_ns": 21625
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 13000.5,
+                "min_ns": 11084,
+                "max_ns": 22250
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 12354.0,
+            "B": 12854.5
+          },
+          "b_over_a": 1.0405131941071717
+        },
+        {
+          "backend": "tape",
+          "case": "ready",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 25854.5,
+                "min_ns": 22667,
+                "max_ns": 43375
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 12000.0,
+                "min_ns": 10292,
+                "max_ns": 20959
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 11562.5,
+                "min_ns": 10125,
+                "max_ns": 22834
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 11979.0,
+                "min_ns": 10208,
+                "max_ns": 19834
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 22146.0,
+                "min_ns": 19167,
+                "max_ns": 39958
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 12292.0,
+                "min_ns": 10125,
+                "max_ns": 20917
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 11874.5,
+                "min_ns": 10041,
+                "max_ns": 19833
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 11208.5,
+                "min_ns": 9875,
+                "max_ns": 22667
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 11989.5,
+            "B": 12083.25
+          },
+          "b_over_a": 1.0078193419241837
+        },
+        {
+          "backend": "tape",
+          "case": "scalar",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 12729.0,
+                "min_ns": 9708,
+                "max_ns": 22667
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 3021.0,
+                "min_ns": 2083,
+                "max_ns": 5250
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 3021.0,
+                "min_ns": 2166,
+                "max_ns": 4542
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 2958.5,
+                "min_ns": 2083,
+                "max_ns": 4833
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 9625.0,
+                "min_ns": 8000,
+                "max_ns": 44375
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 2937.5,
+                "min_ns": 2125,
+                "max_ns": 4458
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 2833.5,
+                "min_ns": 2083,
+                "max_ns": 4917
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 2750.0,
+                "min_ns": 2083,
+                "max_ns": 6125
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 3021.0,
+            "B": 2885.5
+          },
+          "b_over_a": 0.9551473022178086
+        }
+      ]
+    },
+    "aa": {
+      "complete": true,
+      "diagnostic": false,
+      "aa": true,
+      "expected_processes": 112,
+      "observed_processes": 112,
+      "expected_measured_samples": 2688,
+      "measured_samples": 2688,
+      "failures": [],
+      "missing_processes": [],
+      "end_record": true,
+      "startup_median_ns": 72646.0,
+      "cells": [
+        {
+          "backend": "native",
+          "case": "branch",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 65208.0,
+                "min_ns": 61750,
+                "max_ns": 113375
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 64208.0,
+                "min_ns": 62083,
+                "max_ns": 111875
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 64187.0,
+                "min_ns": 61959,
+                "max_ns": 114542
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 63875.5,
+                "min_ns": 61958,
+                "max_ns": 117750
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 63792.0,
+                "min_ns": 61583,
+                "max_ns": 117834
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 66271.0,
+                "min_ns": 62666,
+                "max_ns": 112666
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 65583.5,
+                "min_ns": 62167,
+                "max_ns": 112542
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 63895.5,
+                "min_ns": 60542,
+                "max_ns": 116250
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 64197.5,
+            "B": 64739.5
+          },
+          "b_over_a": 1.008442696366681
+        },
+        {
+          "backend": "native",
+          "case": "detach_wait",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 155083.0,
+                "min_ns": 151792,
+                "max_ns": 225375
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 153146.0,
+                "min_ns": 149917,
+                "max_ns": 225958
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 153979.0,
+                "min_ns": 151208,
+                "max_ns": 228875
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 152375.0,
+                "min_ns": 149167,
+                "max_ns": 235583
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 153271.0,
+                "min_ns": 151208,
+                "max_ns": 221708
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 152958.5,
+                "min_ns": 148584,
+                "max_ns": 223958
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 154834.0,
+                "min_ns": 150334,
+                "max_ns": 226666
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 155083.5,
+                "min_ns": 150417,
+                "max_ns": 227125
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 153562.5,
+            "B": 154052.5
+          },
+          "b_over_a": 1.0031908831908831
+        },
+        {
+          "backend": "native",
+          "case": "escaped_join",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 77208.5,
+                "min_ns": 75541,
+                "max_ns": 132958
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 77167.0,
+                "min_ns": 73708,
+                "max_ns": 144375
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 74770.5,
+                "min_ns": 73334,
+                "max_ns": 139166
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 77416.5,
+                "min_ns": 74541,
+                "max_ns": 139459
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 76854.5,
+                "min_ns": 73959,
+                "max_ns": 144000
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 76146.0,
+                "min_ns": 74292,
+                "max_ns": 135708
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 74458.5,
+                "min_ns": 72958,
+                "max_ns": 135667
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 76458.5,
+                "min_ns": 74167,
+                "max_ns": 139875
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 77187.75,
+            "B": 76302.25
+          },
+          "b_over_a": 0.9885279723790368
+        },
+        {
+          "backend": "native",
+          "case": "madd_loop",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 118479.0,
+                "min_ns": 111625,
+                "max_ns": 203792
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 118354.5,
+                "min_ns": 111791,
+                "max_ns": 190791
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 116146.0,
+                "min_ns": 111958,
+                "max_ns": 204584
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 117437.0,
+                "min_ns": 111667,
+                "max_ns": 199916
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 115479.0,
+                "min_ns": 111334,
+                "max_ns": 203833
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 115687.5,
+                "min_ns": 113792,
+                "max_ns": 199542
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 116333.0,
+                "min_ns": 112792,
+                "max_ns": 216250
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 114583.0,
+                "min_ns": 112208,
+                "max_ns": 211792
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 117895.75,
+            "B": 115583.25
+          },
+          "b_over_a": 0.9803852132074311
+        },
+        {
+          "backend": "native",
+          "case": "quote",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 108125.0,
+                "min_ns": 104833,
+                "max_ns": 192666
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 106729.0,
+                "min_ns": 104208,
+                "max_ns": 182000
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 106291.5,
+                "min_ns": 103916,
+                "max_ns": 179416
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 105958.5,
+                "min_ns": 103375,
+                "max_ns": 185041
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 109729.0,
+                "min_ns": 104375,
+                "max_ns": 189625
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 108854.0,
+                "min_ns": 105458,
+                "max_ns": 187541
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 108104.5,
+                "min_ns": 102667,
+                "max_ns": 184084
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 105187.5,
+                "min_ns": 102750,
+                "max_ns": 186000
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 106510.25,
+            "B": 108479.25
+          },
+          "b_over_a": 1.0184864836952312
+        },
+        {
+          "backend": "native",
+          "case": "ready",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 82438.0,
+                "min_ns": 80375,
+                "max_ns": 148667
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 81854.5,
+                "min_ns": 78750,
+                "max_ns": 144667
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 81353.5,
+                "min_ns": 79250,
+                "max_ns": 155375
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 82083.5,
+                "min_ns": 79375,
+                "max_ns": 149750
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 80667.0,
+                "min_ns": 79417,
+                "max_ns": 145375
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 81875.0,
+                "min_ns": 79667,
+                "max_ns": 144709
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 81562.5,
+                "min_ns": 78959,
+                "max_ns": 147250
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 81125.0,
+                "min_ns": 78666,
+                "max_ns": 143167
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 81969.0,
+            "B": 81343.75
+          },
+          "b_over_a": 0.9923721162878649
+        },
+        {
+          "backend": "native",
+          "case": "scalar",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 42083.5,
+                "min_ns": 39834,
+                "max_ns": 80667
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 42687.0,
+                "min_ns": 40125,
+                "max_ns": 81042
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 41146.0,
+                "min_ns": 38917,
+                "max_ns": 77958
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 42687.5,
+                "min_ns": 39125,
+                "max_ns": 80375
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 43167.0,
+                "min_ns": 39709,
+                "max_ns": 79750
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 41812.0,
+                "min_ns": 38625,
+                "max_ns": 79500
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 43271.0,
+                "min_ns": 39083,
+                "max_ns": 78583
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 41146.0,
+                "min_ns": 38875,
+                "max_ns": 79667
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 42385.25,
+            "B": 42489.5
+          },
+          "b_over_a": 1.0024595820480002
+        },
+        {
+          "backend": "tape",
+          "case": "branch",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 7000.0,
+                "min_ns": 6625,
+                "max_ns": 14917
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 7041.5,
+                "min_ns": 6666,
+                "max_ns": 14083
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 7125.0,
+                "min_ns": 6500,
+                "max_ns": 13500
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 6791.5,
+                "min_ns": 6375,
+                "max_ns": 15583
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 7333.5,
+                "min_ns": 6666,
+                "max_ns": 13791
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 6916.5,
+                "min_ns": 6417,
+                "max_ns": 13000
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 6896.0,
+                "min_ns": 6542,
+                "max_ns": 14250
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 7354.0,
+                "min_ns": 6583,
+                "max_ns": 13917
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 7020.75,
+            "B": 7125.0
+          },
+          "b_over_a": 1.0148488409357974
+        },
+        {
+          "backend": "tape",
+          "case": "detach_wait",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 77083.5,
+                "min_ns": 74500,
+                "max_ns": 90334
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 77062.5,
+                "min_ns": 74416,
+                "max_ns": 88250
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 78062.5,
+                "min_ns": 74375,
+                "max_ns": 97333
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 77833.5,
+                "min_ns": 70791,
+                "max_ns": 89167
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 77791.5,
+                "min_ns": 75667,
+                "max_ns": 86500
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 72812.0,
+                "min_ns": 70250,
+                "max_ns": 89334
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 76291.5,
+                "min_ns": 74375,
+                "max_ns": 90208
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 75875.5,
+                "min_ns": 67834,
+                "max_ns": 87042
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 77458.5,
+            "B": 76083.5
+          },
+          "b_over_a": 0.9822485589057366
+        },
+        {
+          "backend": "tape",
+          "case": "escaped_join",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 12062.5,
+                "min_ns": 10500,
+                "max_ns": 21375
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 12771.0,
+                "min_ns": 10583,
+                "max_ns": 24042
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 12187.5,
+                "min_ns": 10417,
+                "max_ns": 24708
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 11645.5,
+                "min_ns": 10166,
+                "max_ns": 20208
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 12562.0,
+                "min_ns": 10333,
+                "max_ns": 20500
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 12042.0,
+                "min_ns": 10625,
+                "max_ns": 21667
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 11583.5,
+                "min_ns": 10250,
+                "max_ns": 20750
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 11833.0,
+                "min_ns": 10416,
+                "max_ns": 21833
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 12125.0,
+            "B": 11937.5
+          },
+          "b_over_a": 0.9845360824742269
+        },
+        {
+          "backend": "tape",
+          "case": "madd_loop",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 15000.0,
+                "min_ns": 13416,
+                "max_ns": 35084
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 14166.5,
+                "min_ns": 12791,
+                "max_ns": 24792
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 15041.5,
+                "min_ns": 13417,
+                "max_ns": 27375
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 14354.5,
+                "min_ns": 13291,
+                "max_ns": 25667
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 14396.0,
+                "min_ns": 12958,
+                "max_ns": 26209
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 14812.5,
+                "min_ns": 13625,
+                "max_ns": 27833
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 14479.5,
+                "min_ns": 13041,
+                "max_ns": 23709
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 14271.0,
+                "min_ns": 12750,
+                "max_ns": 24667
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 14677.25,
+            "B": 14437.75
+          },
+          "b_over_a": 0.983682229300448
+        },
+        {
+          "backend": "tape",
+          "case": "quote",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 12167.0,
+                "min_ns": 11041,
+                "max_ns": 23166
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 12395.5,
+                "min_ns": 11292,
+                "max_ns": 22542
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 13145.5,
+                "min_ns": 10917,
+                "max_ns": 25416
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 12312.5,
+                "min_ns": 10833,
+                "max_ns": 21292
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 12125.0,
+                "min_ns": 11000,
+                "max_ns": 21916
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 12229.0,
+                "min_ns": 10958,
+                "max_ns": 22375
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 12208.0,
+                "min_ns": 10958,
+                "max_ns": 22917
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 12187.5,
+                "min_ns": 10958,
+                "max_ns": 23750
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 12354.0,
+            "B": 12197.75
+          },
+          "b_over_a": 0.9873522745669419
+        },
+        {
+          "backend": "tape",
+          "case": "ready",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 11666.5,
+                "min_ns": 10208,
+                "max_ns": 21792
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 11604.0,
+                "min_ns": 10042,
+                "max_ns": 20500
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 12146.0,
+                "min_ns": 10041,
+                "max_ns": 19250
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 11770.5,
+                "min_ns": 10208,
+                "max_ns": 27875
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 12021.0,
+                "min_ns": 10250,
+                "max_ns": 19750
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 11666.5,
+                "min_ns": 10166,
+                "max_ns": 20584
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 11521.0,
+                "min_ns": 10125,
+                "max_ns": 19750
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 11750.0,
+                "min_ns": 10042,
+                "max_ns": 26125
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 11718.5,
+            "B": 11708.25
+          },
+          "b_over_a": 0.9991253146733797
+        },
+        {
+          "backend": "tape",
+          "case": "scalar",
+          "processes": {
+            "A": [
+              {
+                "round": 0,
+                "slot": 0,
+                "median_ns": 3042.0,
+                "min_ns": 2250,
+                "max_ns": 5000
+              },
+              {
+                "round": 0,
+                "slot": 3,
+                "median_ns": 3020.5,
+                "min_ns": 2208,
+                "max_ns": 5458
+              },
+              {
+                "round": 1,
+                "slot": 0,
+                "median_ns": 3000.0,
+                "min_ns": 2083,
+                "max_ns": 5000
+              },
+              {
+                "round": 1,
+                "slot": 3,
+                "median_ns": 3020.5,
+                "min_ns": 2125,
+                "max_ns": 4959
+              }
+            ],
+            "B": [
+              {
+                "round": 0,
+                "slot": 1,
+                "median_ns": 3062.5,
+                "min_ns": 2167,
+                "max_ns": 5208
+              },
+              {
+                "round": 0,
+                "slot": 2,
+                "median_ns": 3104.0,
+                "min_ns": 2250,
+                "max_ns": 5000
+              },
+              {
+                "round": 1,
+                "slot": 1,
+                "median_ns": 3062.5,
+                "min_ns": 2209,
+                "max_ns": 5083
+              },
+              {
+                "round": 1,
+                "slot": 2,
+                "median_ns": 2958.5,
+                "min_ns": 2209,
+                "max_ns": 5666
+              }
+            ]
+          },
+          "medians_ns": {
+            "A": 3020.5,
+            "B": 3062.5
+          },
+          "b_over_a": 1.0139049826187718
+        }
+      ]
+    }
+  },
+  "diagnosis": {
+    "A": {
+      "layout": {
+        "dest": 16,
+        "json_state": 128,
+        "max_locals": 32,
+        "max_nodes": 512,
+        "native_frame": 320,
+        "op": 56,
+        "op_align": 8,
+        "operand": 16,
+        "output": 72,
+        "scratch": 4096,
+        "small_dest": 4,
+        "small_dest_op": 48,
+        "state": 312,
+        "unit": 112,
+        "view": 16
+      },
+      "cases": {
+        "scalar": {
+          "buffers": 0,
+          "capacity": 4,
+          "json_live_capacity": 0,
+          "json_live_len": 0,
+          "live_capacity": 4,
+          "live_len": 4,
+          "name": "scalar",
+          "ops": 3,
+          "prepared_bytes": 368,
+          "source": "print(7+1)",
+          "native_code_bytes": 164,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "bound_tree": {
+          "buffers": 0,
+          "capacity": 8,
+          "json_live_capacity": 0,
+          "json_live_len": 0,
+          "live_capacity": 7,
+          "live_len": 7,
+          "name": "bound_tree",
+          "ops": 6,
+          "prepared_bytes": 618,
+          "source": "print((a+1)*(b-1)+a)",
+          "native_code_bytes": 212,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "madd_short": {
+          "buffers": 0,
+          "capacity": 8,
+          "json_live_capacity": 0,
+          "json_live_len": 0,
+          "live_capacity": 6,
+          "live_len": 6,
+          "name": "madd_short",
+          "ops": 5,
+          "prepared_bytes": 608,
+          "source": "x=7\nx=x*3+x\nprint(x)",
+          "native_code_bytes": 188,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "quote": {
+          "buffers": 1,
+          "capacity": 16,
+          "json_live_capacity": 0,
+          "json_live_len": 0,
+          "live_capacity": 10,
+          "live_len": 10,
+          "name": "quote",
+          "ops": 9,
+          "prepared_bytes": 1088,
+          "source": "rows=tools.load_quotes(1)\ntotal=0\nfor row in rows:\n    total=total+row.unit_price_cents*row.quantity\nprint(total)",
+          "native_code_bytes": 464,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "madd_loop": {
+          "buffers": 1,
+          "capacity": 16,
+          "json_live_capacity": 0,
+          "json_live_len": 0,
+          "live_capacity": 12,
+          "live_len": 12,
+          "name": "madd_loop",
+          "ops": 11,
+          "prepared_bytes": 1104,
+          "source": "rows=tools.load_quotes(1)\ntotal=0\nfor row in rows:\n    total=total+(row.unit_price_cents+1)*(row.quantity+1)\nprint(total)",
+          "native_code_bytes": 540,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "ready": {
+          "buffers": 0,
+          "capacity": 8,
+          "json_live_capacity": 8,
+          "json_live_len": 8,
+          "live_capacity": 8,
+          "live_len": 8,
+          "name": "ready",
+          "ops": 7,
+          "prepared_bytes": 1228,
+          "source": "data=tools.fetch(7)\nalias=data\ntext=alias['message']\nprint('error' in text)\nprint(text)",
+          "native_code_bytes": 400,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "branch": {
+          "buffers": 0,
+          "capacity": 8,
+          "json_live_capacity": 0,
+          "json_live_len": 0,
+          "live_capacity": 9,
+          "live_len": 9,
+          "name": "branch",
+          "ops": 8,
+          "prepared_bytes": 632,
+          "source": "x=7\nif x>2:\n    print(x+1)\nelse:\n    print(x-1)",
+          "native_code_bytes": 236,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "joined_sink": {
+          "buffers": 0,
+          "capacity": 8,
+          "json_live_capacity": 7,
+          "json_live_len": 7,
+          "live_capacity": 7,
+          "live_len": 7,
+          "name": "joined_sink",
+          "ops": 6,
+          "prepared_bytes": 1406,
+          "source": "n=7\ndata=tools.fetch(n)\ntext=data['message']\nprint('['+text+'/'+text+']')",
+          "native_code_bytes": 352,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "async_string": {
+          "buffers": 0,
+          "capacity": 8,
+          "json_live_capacity": 7,
+          "json_live_len": 7,
+          "live_capacity": 7,
+          "live_len": 7,
+          "name": "async_string",
+          "ops": 6,
+          "prepared_bytes": 1115,
+          "source": "data=tools.fetch(7)\ntext=data['message']\nr=tools.unused1(text)\nprint(r)",
+          "native_code_bytes": 444,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        }
+      },
+      "allocations": [
+        {
+          "allocations": 32,
+          "case": "scalar",
+          "native": false,
+          "prepared_bytes": 368,
+          "requested_bytes": 4962,
+          "sample": 0
+        },
+        {
+          "allocations": 32,
+          "case": "scalar",
+          "native": false,
+          "prepared_bytes": 368,
+          "requested_bytes": 4962,
+          "sample": 1
+        },
+        {
+          "allocations": 32,
+          "case": "scalar",
+          "native": false,
+          "prepared_bytes": 368,
+          "requested_bytes": 4962,
+          "sample": 2
+        },
+        {
+          "allocations": 405,
+          "case": "scalar",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 132088,
+          "sample": 0
+        },
+        {
+          "allocations": 405,
+          "case": "scalar",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 132088,
+          "sample": 1
+        },
+        {
+          "allocations": 405,
+          "case": "scalar",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 132088,
+          "sample": 2
+        },
+        {
+          "allocations": 58,
+          "case": "bound_tree",
+          "native": false,
+          "prepared_bytes": 618,
+          "requested_bytes": 9332,
+          "sample": 0
+        },
+        {
+          "allocations": 58,
+          "case": "bound_tree",
+          "native": false,
+          "prepared_bytes": 618,
+          "requested_bytes": 9332,
+          "sample": 1
+        },
+        {
+          "allocations": 58,
+          "case": "bound_tree",
+          "native": false,
+          "prepared_bytes": 618,
+          "requested_bytes": 9332,
+          "sample": 2
+        },
+        {
+          "allocations": 443,
+          "case": "bound_tree",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 138586,
+          "sample": 0
+        },
+        {
+          "allocations": 443,
+          "case": "bound_tree",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 138586,
+          "sample": 1
+        },
+        {
+          "allocations": 443,
+          "case": "bound_tree",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 138586,
+          "sample": 2
+        },
+        {
+          "allocations": 57,
+          "case": "madd_short",
+          "native": false,
+          "prepared_bytes": 608,
+          "requested_bytes": 6515,
+          "sample": 0
+        },
+        {
+          "allocations": 57,
+          "case": "madd_short",
+          "native": false,
+          "prepared_bytes": 608,
+          "requested_bytes": 6515,
+          "sample": 1
+        },
+        {
+          "allocations": 57,
+          "case": "madd_short",
+          "native": false,
+          "prepared_bytes": 608,
+          "requested_bytes": 6515,
+          "sample": 2
+        },
+        {
+          "allocations": 434,
+          "case": "madd_short",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 124873,
+          "sample": 0
+        },
+        {
+          "allocations": 434,
+          "case": "madd_short",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 124873,
+          "sample": 1
+        },
+        {
+          "allocations": 434,
+          "case": "madd_short",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 124873,
+          "sample": 2
+        },
+        {
+          "allocations": 99,
+          "case": "quote",
+          "native": false,
+          "prepared_bytes": 1088,
+          "requested_bytes": 20102,
+          "sample": 0
+        },
+        {
+          "allocations": 99,
+          "case": "quote",
+          "native": false,
+          "prepared_bytes": 1088,
+          "requested_bytes": 20102,
+          "sample": 1
+        },
+        {
+          "allocations": 99,
+          "case": "quote",
+          "native": false,
+          "prepared_bytes": 1088,
+          "requested_bytes": 20102,
+          "sample": 2
+        },
+        {
+          "allocations": 685,
+          "case": "quote",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 252478,
+          "sample": 0
+        },
+        {
+          "allocations": 685,
+          "case": "quote",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 252478,
+          "sample": 1
+        },
+        {
+          "allocations": 685,
+          "case": "quote",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 252478,
+          "sample": 2
+        },
+        {
+          "allocations": 119,
+          "case": "madd_loop",
+          "native": false,
+          "prepared_bytes": 1104,
+          "requested_bytes": 20730,
+          "sample": 0
+        },
+        {
+          "allocations": 119,
+          "case": "madd_loop",
+          "native": false,
+          "prepared_bytes": 1104,
+          "requested_bytes": 20730,
+          "sample": 1
+        },
+        {
+          "allocations": 119,
+          "case": "madd_loop",
+          "native": false,
+          "prepared_bytes": 1104,
+          "requested_bytes": 20730,
+          "sample": 2
+        },
+        {
+          "allocations": 709,
+          "case": "madd_loop",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 258980,
+          "sample": 0
+        },
+        {
+          "allocations": 709,
+          "case": "madd_loop",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 258980,
+          "sample": 1
+        },
+        {
+          "allocations": 709,
+          "case": "madd_loop",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 258980,
+          "sample": 2
+        },
+        {
+          "allocations": 116,
+          "case": "ready",
+          "native": false,
+          "prepared_bytes": 1228,
+          "requested_bytes": 12814,
+          "sample": 0
+        },
+        {
+          "allocations": 116,
+          "case": "ready",
+          "native": false,
+          "prepared_bytes": 1228,
+          "requested_bytes": 12814,
+          "sample": 1
+        },
+        {
+          "allocations": 116,
+          "case": "ready",
+          "native": false,
+          "prepared_bytes": 1228,
+          "requested_bytes": 12814,
+          "sample": 2
+        },
+        {
+          "allocations": 662,
+          "case": "ready",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 211748,
+          "sample": 0
+        },
+        {
+          "allocations": 662,
+          "case": "ready",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 211748,
+          "sample": 1
+        },
+        {
+          "allocations": 662,
+          "case": "ready",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 211748,
+          "sample": 2
+        },
+        {
+          "allocations": 84,
+          "case": "branch",
+          "native": false,
+          "prepared_bytes": 632,
+          "requested_bytes": 12723,
+          "sample": 0
+        },
+        {
+          "allocations": 84,
+          "case": "branch",
+          "native": false,
+          "prepared_bytes": 632,
+          "requested_bytes": 12723,
+          "sample": 1
+        },
+        {
+          "allocations": 84,
+          "case": "branch",
+          "native": false,
+          "prepared_bytes": 632,
+          "requested_bytes": 12723,
+          "sample": 2
+        },
+        {
+          "allocations": 580,
+          "case": "branch",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 192215,
+          "sample": 0
+        },
+        {
+          "allocations": 580,
+          "case": "branch",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 192215,
+          "sample": 1
+        },
+        {
+          "allocations": 580,
+          "case": "branch",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 192215,
+          "sample": 2
+        },
+        {
+          "allocations": 127,
+          "case": "joined_sink",
+          "native": false,
+          "prepared_bytes": 1406,
+          "requested_bytes": 11461,
+          "sample": 0
+        },
+        {
+          "allocations": 127,
+          "case": "joined_sink",
+          "native": false,
+          "prepared_bytes": 1406,
+          "requested_bytes": 11461,
+          "sample": 1
+        },
+        {
+          "allocations": 127,
+          "case": "joined_sink",
+          "native": false,
+          "prepared_bytes": 1406,
+          "requested_bytes": 11461,
+          "sample": 2
+        },
+        {
+          "allocations": 621,
+          "case": "joined_sink",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 181885,
+          "sample": 0
+        },
+        {
+          "allocations": 621,
+          "case": "joined_sink",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 181885,
+          "sample": 1
+        },
+        {
+          "allocations": 621,
+          "case": "joined_sink",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 181885,
+          "sample": 2
+        },
+        {
+          "allocations": 102,
+          "case": "async_string",
+          "native": false,
+          "prepared_bytes": 1115,
+          "requested_bytes": 10739,
+          "sample": 0
+        },
+        {
+          "allocations": 102,
+          "case": "async_string",
+          "native": false,
+          "prepared_bytes": 1115,
+          "requested_bytes": 10739,
+          "sample": 1
+        },
+        {
+          "allocations": 102,
+          "case": "async_string",
+          "native": false,
+          "prepared_bytes": 1115,
+          "requested_bytes": 10739,
+          "sample": 2
+        },
+        {
+          "allocations": 623,
+          "case": "async_string",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 205913,
+          "sample": 0
+        },
+        {
+          "allocations": 623,
+          "case": "async_string",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 205913,
+          "sample": 1
+        },
+        {
+          "allocations": 623,
+          "case": "async_string",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 205913,
+          "sample": 2
+        }
+      ],
+      "dispatcher_instructions": 1826
+    },
+    "B": {
+      "layout": {
+        "dest": 16,
+        "json_state": 128,
+        "max_locals": 32,
+        "max_nodes": 512,
+        "native_frame": 320,
+        "op": 56,
+        "op_align": 8,
+        "operand": 16,
+        "output": 72,
+        "scratch": 4096,
+        "small_dest": 4,
+        "small_dest_op": 48,
+        "state": 312,
+        "unit": 112,
+        "view": 16
+      },
+      "cases": {
+        "scalar": {
+          "buffers": 0,
+          "capacity": 4,
+          "json_live_capacity": 0,
+          "json_live_len": 0,
+          "live_capacity": 0,
+          "live_len": 0,
+          "name": "scalar",
+          "ops": 3,
+          "prepared_bytes": 336,
+          "source": "print(7+1)",
+          "native_code_bytes": 164,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "bound_tree": {
+          "buffers": 0,
+          "capacity": 8,
+          "json_live_capacity": 0,
+          "json_live_len": 0,
+          "live_capacity": 0,
+          "live_len": 0,
+          "name": "bound_tree",
+          "ops": 6,
+          "prepared_bytes": 562,
+          "source": "print((a+1)*(b-1)+a)",
+          "native_code_bytes": 212,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "madd_short": {
+          "buffers": 0,
+          "capacity": 8,
+          "json_live_capacity": 0,
+          "json_live_len": 0,
+          "live_capacity": 0,
+          "live_len": 0,
+          "name": "madd_short",
+          "ops": 5,
+          "prepared_bytes": 560,
+          "source": "x=7\nx=x*3+x\nprint(x)",
+          "native_code_bytes": 188,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "quote": {
+          "buffers": 1,
+          "capacity": 16,
+          "json_live_capacity": 0,
+          "json_live_len": 0,
+          "live_capacity": 10,
+          "live_len": 10,
+          "name": "quote",
+          "ops": 9,
+          "prepared_bytes": 1088,
+          "source": "rows=tools.load_quotes(1)\ntotal=0\nfor row in rows:\n    total=total+row.unit_price_cents*row.quantity\nprint(total)",
+          "native_code_bytes": 464,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "madd_loop": {
+          "buffers": 1,
+          "capacity": 16,
+          "json_live_capacity": 0,
+          "json_live_len": 0,
+          "live_capacity": 12,
+          "live_len": 12,
+          "name": "madd_loop",
+          "ops": 11,
+          "prepared_bytes": 1104,
+          "source": "rows=tools.load_quotes(1)\ntotal=0\nfor row in rows:\n    total=total+(row.unit_price_cents+1)*(row.quantity+1)\nprint(total)",
+          "native_code_bytes": 540,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "ready": {
+          "buffers": 0,
+          "capacity": 8,
+          "json_live_capacity": 8,
+          "json_live_len": 8,
+          "live_capacity": 0,
+          "live_len": 0,
+          "name": "ready",
+          "ops": 7,
+          "prepared_bytes": 1164,
+          "source": "data=tools.fetch(7)\nalias=data\ntext=alias['message']\nprint('error' in text)\nprint(text)",
+          "native_code_bytes": 400,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "branch": {
+          "buffers": 0,
+          "capacity": 8,
+          "json_live_capacity": 0,
+          "json_live_len": 0,
+          "live_capacity": 0,
+          "live_len": 0,
+          "name": "branch",
+          "ops": 8,
+          "prepared_bytes": 560,
+          "source": "x=7\nif x>2:\n    print(x+1)\nelse:\n    print(x-1)",
+          "native_code_bytes": 236,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "joined_sink": {
+          "buffers": 0,
+          "capacity": 8,
+          "json_live_capacity": 7,
+          "json_live_len": 7,
+          "live_capacity": 0,
+          "live_len": 0,
+          "name": "joined_sink",
+          "ops": 6,
+          "prepared_bytes": 1350,
+          "source": "n=7\ndata=tools.fetch(n)\ntext=data['message']\nprint('['+text+'/'+text+']')",
+          "native_code_bytes": 352,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        },
+        "async_string": {
+          "buffers": 0,
+          "capacity": 8,
+          "json_live_capacity": 7,
+          "json_live_len": 7,
+          "live_capacity": 0,
+          "live_len": 0,
+          "name": "async_string",
+          "ops": 6,
+          "prepared_bytes": 1059,
+          "source": "data=tools.fetch(7)\ntext=data['message']\nr=tools.unused1(text)\nprint(r)",
+          "native_code_bytes": 444,
+          "future_bytes": {
+            "tape": 928,
+            "native": 664
+          }
+        }
+      },
+      "allocations": [
+        {
+          "allocations": 31,
+          "case": "scalar",
+          "native": false,
+          "prepared_bytes": 336,
+          "requested_bytes": 4930,
+          "sample": 0
+        },
+        {
+          "allocations": 31,
+          "case": "scalar",
+          "native": false,
+          "prepared_bytes": 336,
+          "requested_bytes": 4930,
+          "sample": 1
+        },
+        {
+          "allocations": 31,
+          "case": "scalar",
+          "native": false,
+          "prepared_bytes": 336,
+          "requested_bytes": 4930,
+          "sample": 2
+        },
+        {
+          "allocations": 405,
+          "case": "scalar",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 132088,
+          "sample": 0
+        },
+        {
+          "allocations": 405,
+          "case": "scalar",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 132088,
+          "sample": 1
+        },
+        {
+          "allocations": 405,
+          "case": "scalar",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 132088,
+          "sample": 2
+        },
+        {
+          "allocations": 57,
+          "case": "bound_tree",
+          "native": false,
+          "prepared_bytes": 562,
+          "requested_bytes": 9276,
+          "sample": 0
+        },
+        {
+          "allocations": 57,
+          "case": "bound_tree",
+          "native": false,
+          "prepared_bytes": 562,
+          "requested_bytes": 9276,
+          "sample": 1
+        },
+        {
+          "allocations": 57,
+          "case": "bound_tree",
+          "native": false,
+          "prepared_bytes": 562,
+          "requested_bytes": 9276,
+          "sample": 2
+        },
+        {
+          "allocations": 443,
+          "case": "bound_tree",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 138586,
+          "sample": 0
+        },
+        {
+          "allocations": 443,
+          "case": "bound_tree",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 138586,
+          "sample": 1
+        },
+        {
+          "allocations": 443,
+          "case": "bound_tree",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 138586,
+          "sample": 2
+        },
+        {
+          "allocations": 56,
+          "case": "madd_short",
+          "native": false,
+          "prepared_bytes": 560,
+          "requested_bytes": 6467,
+          "sample": 0
+        },
+        {
+          "allocations": 56,
+          "case": "madd_short",
+          "native": false,
+          "prepared_bytes": 560,
+          "requested_bytes": 6467,
+          "sample": 1
+        },
+        {
+          "allocations": 56,
+          "case": "madd_short",
+          "native": false,
+          "prepared_bytes": 560,
+          "requested_bytes": 6467,
+          "sample": 2
+        },
+        {
+          "allocations": 434,
+          "case": "madd_short",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 124873,
+          "sample": 0
+        },
+        {
+          "allocations": 434,
+          "case": "madd_short",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 124873,
+          "sample": 1
+        },
+        {
+          "allocations": 434,
+          "case": "madd_short",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 124873,
+          "sample": 2
+        },
+        {
+          "allocations": 99,
+          "case": "quote",
+          "native": false,
+          "prepared_bytes": 1088,
+          "requested_bytes": 20102,
+          "sample": 0
+        },
+        {
+          "allocations": 99,
+          "case": "quote",
+          "native": false,
+          "prepared_bytes": 1088,
+          "requested_bytes": 20102,
+          "sample": 1
+        },
+        {
+          "allocations": 99,
+          "case": "quote",
+          "native": false,
+          "prepared_bytes": 1088,
+          "requested_bytes": 20102,
+          "sample": 2
+        },
+        {
+          "allocations": 685,
+          "case": "quote",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 252478,
+          "sample": 0
+        },
+        {
+          "allocations": 685,
+          "case": "quote",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 252478,
+          "sample": 1
+        },
+        {
+          "allocations": 685,
+          "case": "quote",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 252478,
+          "sample": 2
+        },
+        {
+          "allocations": 119,
+          "case": "madd_loop",
+          "native": false,
+          "prepared_bytes": 1104,
+          "requested_bytes": 20730,
+          "sample": 0
+        },
+        {
+          "allocations": 119,
+          "case": "madd_loop",
+          "native": false,
+          "prepared_bytes": 1104,
+          "requested_bytes": 20730,
+          "sample": 1
+        },
+        {
+          "allocations": 119,
+          "case": "madd_loop",
+          "native": false,
+          "prepared_bytes": 1104,
+          "requested_bytes": 20730,
+          "sample": 2
+        },
+        {
+          "allocations": 709,
+          "case": "madd_loop",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 258980,
+          "sample": 0
+        },
+        {
+          "allocations": 709,
+          "case": "madd_loop",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 258980,
+          "sample": 1
+        },
+        {
+          "allocations": 709,
+          "case": "madd_loop",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 258980,
+          "sample": 2
+        },
+        {
+          "allocations": 115,
+          "case": "ready",
+          "native": false,
+          "prepared_bytes": 1164,
+          "requested_bytes": 12750,
+          "sample": 0
+        },
+        {
+          "allocations": 115,
+          "case": "ready",
+          "native": false,
+          "prepared_bytes": 1164,
+          "requested_bytes": 12750,
+          "sample": 1
+        },
+        {
+          "allocations": 115,
+          "case": "ready",
+          "native": false,
+          "prepared_bytes": 1164,
+          "requested_bytes": 12750,
+          "sample": 2
+        },
+        {
+          "allocations": 662,
+          "case": "ready",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 211748,
+          "sample": 0
+        },
+        {
+          "allocations": 662,
+          "case": "ready",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 211748,
+          "sample": 1
+        },
+        {
+          "allocations": 662,
+          "case": "ready",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 211748,
+          "sample": 2
+        },
+        {
+          "allocations": 83,
+          "case": "branch",
+          "native": false,
+          "prepared_bytes": 560,
+          "requested_bytes": 12651,
+          "sample": 0
+        },
+        {
+          "allocations": 83,
+          "case": "branch",
+          "native": false,
+          "prepared_bytes": 560,
+          "requested_bytes": 12651,
+          "sample": 1
+        },
+        {
+          "allocations": 83,
+          "case": "branch",
+          "native": false,
+          "prepared_bytes": 560,
+          "requested_bytes": 12651,
+          "sample": 2
+        },
+        {
+          "allocations": 580,
+          "case": "branch",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 192215,
+          "sample": 0
+        },
+        {
+          "allocations": 580,
+          "case": "branch",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 192215,
+          "sample": 1
+        },
+        {
+          "allocations": 580,
+          "case": "branch",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 192215,
+          "sample": 2
+        },
+        {
+          "allocations": 126,
+          "case": "joined_sink",
+          "native": false,
+          "prepared_bytes": 1350,
+          "requested_bytes": 11405,
+          "sample": 0
+        },
+        {
+          "allocations": 126,
+          "case": "joined_sink",
+          "native": false,
+          "prepared_bytes": 1350,
+          "requested_bytes": 11405,
+          "sample": 1
+        },
+        {
+          "allocations": 126,
+          "case": "joined_sink",
+          "native": false,
+          "prepared_bytes": 1350,
+          "requested_bytes": 11405,
+          "sample": 2
+        },
+        {
+          "allocations": 621,
+          "case": "joined_sink",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 181885,
+          "sample": 0
+        },
+        {
+          "allocations": 621,
+          "case": "joined_sink",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 181885,
+          "sample": 1
+        },
+        {
+          "allocations": 621,
+          "case": "joined_sink",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 181885,
+          "sample": 2
+        },
+        {
+          "allocations": 101,
+          "case": "async_string",
+          "native": false,
+          "prepared_bytes": 1059,
+          "requested_bytes": 10683,
+          "sample": 0
+        },
+        {
+          "allocations": 101,
+          "case": "async_string",
+          "native": false,
+          "prepared_bytes": 1059,
+          "requested_bytes": 10683,
+          "sample": 1
+        },
+        {
+          "allocations": 101,
+          "case": "async_string",
+          "native": false,
+          "prepared_bytes": 1059,
+          "requested_bytes": 10683,
+          "sample": 2
+        },
+        {
+          "allocations": 623,
+          "case": "async_string",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 205913,
+          "sample": 0
+        },
+        {
+          "allocations": 623,
+          "case": "async_string",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 205913,
+          "sample": 1
+        },
+        {
+          "allocations": 623,
+          "case": "async_string",
+          "native": true,
+          "prepared_bytes": null,
+          "requested_bytes": 205913,
+          "sample": 2
+        }
+      ],
+      "dispatcher_instructions": 1835
+    }
+  },
+  "allocation_changes": [
+    {
+      "case": "async_string",
+      "native": false,
+      "allocations_A": 102,
+      "allocations_B": 101,
+      "removed_requested_bytes": 56
+    },
+    {
+      "case": "async_string",
+      "native": true,
+      "allocations_A": 623,
+      "allocations_B": 623,
+      "removed_requested_bytes": 0
+    },
+    {
+      "case": "bound_tree",
+      "native": false,
+      "allocations_A": 58,
+      "allocations_B": 57,
+      "removed_requested_bytes": 56
+    },
+    {
+      "case": "bound_tree",
+      "native": true,
+      "allocations_A": 443,
+      "allocations_B": 443,
+      "removed_requested_bytes": 0
+    },
+    {
+      "case": "branch",
+      "native": false,
+      "allocations_A": 84,
+      "allocations_B": 83,
+      "removed_requested_bytes": 72
+    },
+    {
+      "case": "branch",
+      "native": true,
+      "allocations_A": 580,
+      "allocations_B": 580,
+      "removed_requested_bytes": 0
+    },
+    {
+      "case": "joined_sink",
+      "native": false,
+      "allocations_A": 127,
+      "allocations_B": 126,
+      "removed_requested_bytes": 56
+    },
+    {
+      "case": "joined_sink",
+      "native": true,
+      "allocations_A": 621,
+      "allocations_B": 621,
+      "removed_requested_bytes": 0
+    },
+    {
+      "case": "madd_loop",
+      "native": false,
+      "allocations_A": 119,
+      "allocations_B": 119,
+      "removed_requested_bytes": 0
+    },
+    {
+      "case": "madd_loop",
+      "native": true,
+      "allocations_A": 709,
+      "allocations_B": 709,
+      "removed_requested_bytes": 0
+    },
+    {
+      "case": "madd_short",
+      "native": false,
+      "allocations_A": 57,
+      "allocations_B": 56,
+      "removed_requested_bytes": 48
+    },
+    {
+      "case": "madd_short",
+      "native": true,
+      "allocations_A": 434,
+      "allocations_B": 434,
+      "removed_requested_bytes": 0
+    },
+    {
+      "case": "quote",
+      "native": false,
+      "allocations_A": 99,
+      "allocations_B": 99,
+      "removed_requested_bytes": 0
+    },
+    {
+      "case": "quote",
+      "native": true,
+      "allocations_A": 685,
+      "allocations_B": 685,
+      "removed_requested_bytes": 0
+    },
+    {
+      "case": "ready",
+      "native": false,
+      "allocations_A": 116,
+      "allocations_B": 115,
+      "removed_requested_bytes": 64
+    },
+    {
+      "case": "ready",
+      "native": true,
+      "allocations_A": 662,
+      "allocations_B": 662,
+      "removed_requested_bytes": 0
+    },
+    {
+      "case": "scalar",
+      "native": false,
+      "allocations_A": 32,
+      "allocations_B": 31,
+      "removed_requested_bytes": 32
+    },
+    {
+      "case": "scalar",
+      "native": true,
+      "allocations_A": 405,
+      "allocations_B": 405,
+      "removed_requested_bytes": 0
+    }
+  ],
+  "hardware_misses_measured": false,
+  "rss_measured": false
+}

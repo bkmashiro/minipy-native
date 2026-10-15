@@ -2325,3 +2325,29 @@ prepare 少一个 allocation 和一次 traversal，尚未实测候选净收益�
 真实 workload 适配 stop 结论不变。固定 raw、源码重建、反汇编、排名、
 CJ 单轮 A/B+A/A 契约和复现见 [CI evidence](../evidence/ci-layout/README.md)。
 
+## CJ：省略 zero-buffer liveness
+
+保留最小候选，结束本轮。Admission 的 `buffers==0` 直接跳过 buffer-only
+Vec allocation/transfer pass，独立 JSON liveness 不变。统一 production/
+debug mask 读点；非零 buffer 仍用 checked PC 索引，新增越界回归和逐 PC
+oracle，zero case 明确断言零 backing/零 visits。
+
+Apple M4 / Rust 1.96.0、既有外置共享 target 和 fcntl lock。预设七类双后端
+A/B 与 exact-A A/A 各两轮 ABBA：224 进程、5,376 measured requests 全成功。
+独立三次 prepare allocation census 确认七类各少一次 allocation、32–72 B
+requested/backing bytes，两个非零 buffer 对照及九类 native prepare 不变。
+Unit/State/future 和 Op 布局不变，实际 async dispatcher 多九指令/36 B，
+新增 admitted-buffer 分支在 effect/yield boundary，不在逐 row dispatch。
+
+延迟混合：tape branch +7.3%、quote +4.1%、madd_loop -4.4%；未变 native
+也有约 -3.9% 至 +2.4% 差异，最早 scalar 进程明显漂移。没有追加样本，
+不宣称通用提速或无回归界。保留依据仅是确定删除的 prepare work/backing，
+报告新增边界判断成本，不把静态 bytes 改称 cache/RSS 收益。完整 default/
+tool-json-debug-runtime release suites、严格 all-target Clippy、fmt、九个
+Python workbench tests 通过。正式 source hashes 逐 Git blob+patch 重建。
+
+没有新 worktree/target/dependency/download/CI 或 Linux/Wasm/Monty 结论。
+第二布局候选不启用，BT/BX/BY/CB 负结果与 CG workload-fit stop 保持。
+raw、源码身份、独立诊断、工程失败说明、复现及审阅见
+[CJ evidence](../evidence/cj-zero-buffer/README.md)。
+
