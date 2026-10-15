@@ -1,0 +1,2 @@
+    Checking minipy-native v0.1.0 (/Users/yuzhe/.hermes/kanban/boards/minipy-native/workspaces/t_f789c127/repo)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.51s

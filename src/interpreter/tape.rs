@@ -17,6 +17,12 @@ pub(super) enum Dest {
 #[derive(Debug)]
 pub(super) enum Op {
     Copy(Dest, Operand),
+    #[cfg(feature = "tool-json")]
+    JsonRead(Dest, usize, usize, bool),
+    #[cfg(feature = "tool-json")]
+    JsonString(Dest, usize, usize, Option<usize>),
+    #[cfg(feature = "tool-json")]
+    Tool(usize, usize, [u8; 2]),
     Add(Dest, Operand, Operand),
     Sub(Dest, Operand, Operand),
     Mul(Dest, Operand, Operand),
@@ -36,7 +42,10 @@ pub(super) enum Op {
     Branch(Operand, bool, usize),
     Jump(usize),
     Start,
-    Scan { buffer: usize, end: usize },
+    Scan {
+        buffer: usize,
+        end: usize,
+    },
     Next(usize),
     Load(usize, Operand),
     Record(usize, Operand, Operand),
@@ -47,6 +56,10 @@ impl Op {
     #[cfg(feature = "debug-runtime")]
     pub(super) fn destination(&self) -> Option<Dest> {
         match self {
+            #[cfg(feature = "tool-json")]
+            Self::JsonRead(d, ..) => Some(*d),
+            #[cfg(feature = "tool-json")]
+            Self::JsonString(d, ..) => Some(*d),
             Self::Copy(d, _)
             | Self::Add(d, _, _)
             | Self::Sub(d, _, _)
@@ -114,6 +127,19 @@ impl Lower<'_> {
     }
     fn assign(&mut self, e: Expr, dest: Dest) {
         match e {
+            #[cfg(feature = "tool-json")]
+            Expr::JsonI64 { slot, root } | Expr::JsonView { slot, root } => self.ops.push(
+                Op::JsonRead(dest, slot, root, matches!(e, Expr::JsonView { .. })),
+            ),
+            #[cfg(feature = "tool-json")]
+            Expr::JsonString { slot, root } => {
+                self.ops.push(Op::JsonString(dest, slot, root, None))
+            }
+            #[cfg(feature = "tool-json")]
+            Expr::Contains { slot, root, needle } => {
+                self.ops
+                    .push(Op::JsonString(dest, slot, root, Some(needle)))
+            }
             Expr::Binary(op, a, b) if !matches!(op, BinOp::And | BinOp::Or) => {
                 let a = self.value(*a);
                 let b = self.value(*b);
@@ -228,6 +254,19 @@ impl Lower<'_> {
                     let e = self.value(e);
                     self.ops.push(Op::Load(i, e));
                 }
+                #[cfg(feature = "tool-json")]
+                Stmt::Tool {
+                    call, target, args, ..
+                } => {
+                    let mut slots = [MAX_LOCALS as u8; 2];
+                    for (i, e) in args.into_iter().enumerate() {
+                        let Expr::Local(slot) = e else {
+                            unreachable!("frontend binds arguments after source-order evaluation")
+                        };
+                        slots[i] = slot as u8;
+                    }
+                    self.ops.push(Op::Tool(call, target, slots));
+                }
                 Stmt::Record(i, a, b) => {
                     let a = self.value(a);
                     let b = self.value(b);
@@ -262,10 +301,37 @@ pub(super) fn flatten(statements: Vec<Stmt>, ops: &mut Vec<Op>) {
 pub(super) enum Boundary {
     Load(usize, i64),
     Record(usize, i64, i64),
+    #[cfg(feature = "tool-json")]
+    Tool(usize, usize, [i64; 2]),
     Yield,
     Done,
     #[cfg(feature = "debug-runtime")]
     Step,
+}
+#[cfg(feature = "tool-json")]
+pub(super) fn json_liveness(ops: &[Op]) -> Vec<u32> {
+    let mut live = vec![0; ops.len() + 1];
+    loop {
+        let mut changed = false;
+        for pc in (0..ops.len()).rev() {
+            let next = live[pc + 1];
+            let before = match &ops[pc] {
+                op if op.branch_target().is_some() => next | live[op.branch_target().unwrap()],
+                Op::Jump(t) | Op::Next(t) => live[*t],
+                Op::Scan { end, .. } => next | live[*end],
+                Op::JsonRead(_, _, root, _) => next | (1 << root),
+                Op::JsonString(_, _, root, _) => next | (1 << root),
+                Op::Return => 0,
+                _ => next,
+            };
+            changed |= before != live[pc];
+            live[pc] = before;
+        }
+        if !changed {
+            break;
+        }
+    }
+    live
 }
 #[inline]
 fn read(a: Operand, state: &State, temps: &[i64; MAX_NODES]) -> i64 {
@@ -326,6 +392,40 @@ pub(super) fn run<const STEP: bool>(
         macro_rules! cmp { ($d:expr,$a:expr,$b:expr,$operator:tt) => {{ let v=i64::from(read(*$a,state,temps) $operator read(*$b,state,temps)); write(*$d,v,state,temps); }} }
         macro_rules! jump { ($a:expr,$b:expr,$target:expr,$operator:tt) => { if read(*$a,state,temps) $operator read(*$b,state,temps) {state.pc=*$target;} } }
         match op {
+            #[cfg(feature = "tool-json")]
+            Op::JsonRead(d, slot, _, view) => {
+                let json = output.json.as_mut().expect("sealed JSON plan");
+                let v = if *view {
+                    json.view(*slot)?
+                } else {
+                    json.integer(*slot)?
+                };
+                write(*d, v, state, temps);
+            }
+            #[cfg(feature = "tool-json")]
+            Op::JsonString(d, slot, _, needle) => {
+                let json = output.json.as_mut().expect("sealed JSON plan");
+                let v = if let Some(needle) = needle {
+                    json.contains(*slot, *needle)?
+                } else {
+                    json.validate_string(*slot)?
+                };
+                write(*d, v, state, temps);
+            }
+            #[cfg(feature = "tool-json")]
+            Op::Tool(call, target, args) => {
+                return Ok(Boundary::Tool(
+                    *call,
+                    *target,
+                    args.map(|i| {
+                        if (i as usize) < MAX_LOCALS {
+                            state.locals[i as usize]
+                        } else {
+                            0
+                        }
+                    }),
+                ));
+            }
             Op::Copy(d, a) => {
                 let v = read(*a, state, temps);
                 write(*d, v, state, temps);

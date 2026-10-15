@@ -203,6 +203,10 @@ impl Engine {
                 "instruction":if trace && pc<t.unit.ops.len() {Some(json!({"offset":t.unit.ops.as_ptr() as usize+pc*std::mem::size_of::<Op>(),"bytes":std::mem::size_of::<Op>()}))} else {None},
                 "stdout":&t.output.stdout[out_len..]});
             let (kind, extra) = match result {
+                #[cfg(feature = "tool-json")]
+                Ok(Boundary::Tool(..)) => {
+                    unreachable!("debug Engine only prepares legacy Tool schemas")
+                }
                 Ok(Boundary::Step) => ("instruction", Value::Null),
                 Ok(Boundary::Done) => {
                     t.stop("done", None);

@@ -32,6 +32,27 @@ pub enum Expr {
     Int(i64),
     Bool(bool),
     Local(usize),
+    #[cfg(feature = "tool-json")]
+    JsonI64 {
+        slot: usize,
+        root: usize,
+    },
+    #[cfg(feature = "tool-json")]
+    JsonView {
+        slot: usize,
+        root: usize,
+    },
+    #[cfg(feature = "tool-json")]
+    JsonString {
+        slot: usize,
+        root: usize,
+    },
+    #[cfg(feature = "tool-json")]
+    Contains {
+        slot: usize,
+        root: usize,
+        needle: usize,
+    },
     Field(Field),
     Binary(BinOp, Box<Expr>, Box<Expr>),
     Not(Box<Expr>),
@@ -43,6 +64,13 @@ pub enum Stmt {
     For(usize, Vec<Stmt>),
     Load(usize, Expr),
     Record(usize, Expr, Expr),
+    #[cfg(feature = "tool-json")]
+    Tool {
+        call: usize,
+        target: usize,
+        json: bool,
+        args: Vec<Expr>,
+    },
     Print(Expr, Type),
     Eval(Expr),
     Return(Expr),
@@ -56,6 +84,8 @@ pub struct Program {
     pub buffers: usize,
     pub statements: Vec<Stmt>,
     pub legacy: bool,
+    #[cfg(feature = "tool-json")]
+    pub json: crate::tool::Plan,
 }
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct CompileError(pub String);

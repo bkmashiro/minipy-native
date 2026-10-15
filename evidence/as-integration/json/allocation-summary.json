@@ -1,0 +1,332 @@
+[
+  {
+    "workload": "array_1000",
+    "arm": "serde_dom",
+    "lifecycle": "parse_run_cleanup",
+    "independent_processes": 1,
+    "allocation_calls": "3009",
+    "allocated_bytes": "710408",
+    "prepared_bytes": null,
+    "code_bytes": null
+  },
+  {
+    "workload": "array_1000",
+    "arm": "serde_typed",
+    "lifecycle": "parse_run_cleanup",
+    "independent_processes": 1,
+    "allocation_calls": "9",
+    "allocated_bytes": "32704",
+    "prepared_bytes": null,
+    "code_bytes": null
+  },
+  {
+    "workload": "array_1000",
+    "arm": "sonic_lazy",
+    "lifecycle": "parse_run_cleanup",
+    "independent_processes": 1,
+    "allocation_calls": "2000",
+    "allocated_bytes": "256000",
+    "prepared_bytes": null,
+    "code_bytes": null
+  },
+  {
+    "workload": "array_1000",
+    "arm": "sonic_row_slots",
+    "lifecycle": "parse_run_cleanup",
+    "independent_processes": 1,
+    "allocation_calls": "3000",
+    "allocated_bytes": "141000",
+    "prepared_bytes": null,
+    "code_bytes": null
+  },
+  {
+    "workload": "array_1000",
+    "arm": "sonic_typed",
+    "lifecycle": "parse_run_cleanup",
+    "independent_processes": 1,
+    "allocation_calls": "9",
+    "allocated_bytes": "32704",
+    "prepared_bytes": null,
+    "code_bytes": null
+  },
+  {
+    "workload": "few_fields",
+    "arm": "serde_dom",
+    "lifecycle": "parse_run_cleanup",
+    "independent_processes": 1,
+    "allocation_calls": "7",
+    "allocated_bytes": "9469",
+    "prepared_bytes": null,
+    "code_bytes": null
+  },
+  {
+    "workload": "few_fields",
+    "arm": "serde_typed",
+    "lifecycle": "parse_run_cleanup",
+    "independent_processes": 1,
+    "allocation_calls": "0",
+    "allocated_bytes": "0",
+    "prepared_bytes": null,
+    "code_bytes": null
+  },
+  {
+    "workload": "few_fields",
+    "arm": "sonic_lazy",
+    "lifecycle": "parse_run_cleanup",
+    "independent_processes": 1,
+    "allocation_calls": "2",
+    "allocated_bytes": "256",
+    "prepared_bytes": null,
+    "code_bytes": null
+  },
+  {
+    "workload": "few_fields",
+    "arm": "sonic_typed",
+    "lifecycle": "parse_run_cleanup",
+    "independent_processes": 1,
+    "allocation_calls": "0",
+    "allocated_bytes": "0",
+    "prepared_bytes": null,
+    "code_bytes": null
+  },
+  {
+    "workload": "json_few",
+    "arm": "minipy_native",
+    "lifecycle": "prepared",
+    "independent_processes": 1,
+    "allocation_calls": "13",
+    "allocated_bytes": "1468",
+    "prepared_bytes": null,
+    "code_bytes": "424"
+  },
+  {
+    "workload": "json_few",
+    "arm": "minipy_native",
+    "lifecycle": "source_cold",
+    "independent_processes": 1,
+    "allocation_calls": "683",
+    "allocated_bytes": "210709",
+    "prepared_bytes": null,
+    "code_bytes": "424"
+  },
+  {
+    "workload": "json_few",
+    "arm": "minipy_tape",
+    "lifecycle": "prepared",
+    "independent_processes": 1,
+    "allocation_calls": "13",
+    "allocated_bytes": "1212",
+    "prepared_bytes": "1008",
+    "code_bytes": null
+  },
+  {
+    "workload": "json_few",
+    "arm": "minipy_tape",
+    "lifecycle": "source_cold",
+    "independent_processes": 1,
+    "allocation_calls": "142",
+    "allocated_bytes": "14548",
+    "prepared_bytes": "1008",
+    "code_bytes": null
+  },
+  {
+    "workload": "json_repeated",
+    "arm": "minipy_native",
+    "lifecycle": "prepared",
+    "independent_processes": 1,
+    "allocation_calls": "13",
+    "allocated_bytes": "1468",
+    "prepared_bytes": null,
+    "code_bytes": "2196"
+  },
+  {
+    "workload": "json_repeated",
+    "arm": "minipy_native",
+    "lifecycle": "source_cold",
+    "independent_processes": 1,
+    "allocation_calls": "2955",
+    "allocated_bytes": "1178293",
+    "prepared_bytes": null,
+    "code_bytes": "2196"
+  },
+  {
+    "workload": "json_repeated",
+    "arm": "minipy_tape",
+    "lifecycle": "prepared",
+    "independent_processes": 1,
+    "allocation_calls": "12",
+    "allocated_bytes": "1148",
+    "prepared_bytes": "8472",
+    "code_bytes": null
+  },
+  {
+    "workload": "json_repeated",
+    "arm": "minipy_tape",
+    "lifecycle": "source_cold",
+    "independent_processes": 1,
+    "allocation_calls": "983",
+    "allocated_bytes": "77963",
+    "prepared_bytes": "8472",
+    "code_bytes": null
+  },
+  {
+    "workload": "repeated_16",
+    "arm": "serde_dom",
+    "lifecycle": "parse_run_cleanup",
+    "independent_processes": 1,
+    "allocation_calls": "7",
+    "allocated_bytes": "9469",
+    "prepared_bytes": null,
+    "code_bytes": null
+  },
+  {
+    "workload": "repeated_16",
+    "arm": "serde_typed",
+    "lifecycle": "parse_run_cleanup",
+    "independent_processes": 1,
+    "allocation_calls": "0",
+    "allocated_bytes": "0",
+    "prepared_bytes": null,
+    "code_bytes": null
+  },
+  {
+    "workload": "repeated_16",
+    "arm": "sonic_lazy",
+    "lifecycle": "parse_run_cleanup",
+    "independent_processes": 1,
+    "allocation_calls": "32",
+    "allocated_bytes": "4096",
+    "prepared_bytes": null,
+    "code_bytes": null
+  },
+  {
+    "workload": "repeated_16",
+    "arm": "sonic_typed",
+    "lifecycle": "parse_run_cleanup",
+    "independent_processes": 1,
+    "allocation_calls": "0",
+    "allocated_bytes": "0",
+    "prepared_bytes": null,
+    "code_bytes": null
+  },
+  {
+    "workload": "scalar",
+    "arm": "minipy_native",
+    "lifecycle": "prepared",
+    "independent_processes": 1,
+    "allocation_calls": "4",
+    "allocated_bytes": "404",
+    "prepared_bytes": null,
+    "code_bytes": "264"
+  },
+  {
+    "workload": "scalar",
+    "arm": "minipy_native",
+    "lifecycle": "source_cold",
+    "independent_processes": 1,
+    "allocation_calls": "539",
+    "allocated_bytes": "202228",
+    "prepared_bytes": null,
+    "code_bytes": "264"
+  },
+  {
+    "workload": "scalar",
+    "arm": "minipy_tape",
+    "lifecycle": "prepared",
+    "independent_processes": 1,
+    "allocation_calls": "3",
+    "allocated_bytes": "84",
+    "prepared_bytes": "626",
+    "code_bytes": null
+  },
+  {
+    "workload": "scalar",
+    "arm": "minipy_tape",
+    "lifecycle": "source_cold",
+    "independent_processes": 1,
+    "allocation_calls": "90",
+    "allocated_bytes": "9420",
+    "prepared_bytes": "626",
+    "code_bytes": null
+  },
+  {
+    "workload": "stateful",
+    "arm": "minipy_native",
+    "lifecycle": "prepared",
+    "independent_processes": 1,
+    "allocation_calls": "11",
+    "allocated_bytes": "1216",
+    "prepared_bytes": null,
+    "code_bytes": "576"
+  },
+  {
+    "workload": "stateful",
+    "arm": "minipy_native",
+    "lifecycle": "source_cold",
+    "independent_processes": 1,
+    "allocation_calls": "951",
+    "allocated_bytes": "366397",
+    "prepared_bytes": null,
+    "code_bytes": "576"
+  },
+  {
+    "workload": "stateful",
+    "arm": "minipy_tape",
+    "lifecycle": "prepared",
+    "independent_processes": 1,
+    "allocation_calls": "9",
+    "allocated_bytes": "880",
+    "prepared_bytes": "1146",
+    "code_bytes": null
+  },
+  {
+    "workload": "stateful",
+    "arm": "minipy_tape",
+    "lifecycle": "source_cold",
+    "independent_processes": 1,
+    "allocation_calls": "218",
+    "allocated_bytes": "28414",
+    "prepared_bytes": "1146",
+    "code_bytes": null
+  },
+  {
+    "workload": "weighted",
+    "arm": "minipy_native",
+    "lifecycle": "prepared",
+    "independent_processes": 1,
+    "allocation_calls": "11",
+    "allocated_bytes": "1216",
+    "prepared_bytes": null,
+    "code_bytes": "552"
+  },
+  {
+    "workload": "weighted",
+    "arm": "minipy_native",
+    "lifecycle": "source_cold",
+    "independent_processes": 1,
+    "allocation_calls": "873",
+    "allocated_bytes": "339994",
+    "prepared_bytes": null,
+    "code_bytes": "552"
+  },
+  {
+    "workload": "weighted",
+    "arm": "minipy_tape",
+    "lifecycle": "prepared",
+    "independent_processes": 1,
+    "allocation_calls": "9",
+    "allocated_bytes": "880",
+    "prepared_bytes": "1122",
+    "code_bytes": null
+  },
+  {
+    "workload": "weighted",
+    "arm": "minipy_tape",
+    "lifecycle": "source_cold",
+    "independent_processes": 1,
+    "allocation_calls": "175",
+    "allocated_bytes": "26636",
+    "prepared_bytes": "1122",
+    "code_bytes": null
+  }
+]
