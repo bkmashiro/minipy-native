@@ -3,6 +3,9 @@ use crate::ir::{self, AdmissionKind, BinOp, CompileError, Expr, Field, Program, 
 use rustpython_parser::{Parse, ast, ast::Ranged};
 use std::collections::{HashMap, HashSet};
 
+#[cfg(all(test, feature = "tool-json", not(target_arch = "wasm32")))]
+mod schema_probe;
+
 const MAX_DEPTH: usize = 32;
 type Result<T> = std::result::Result<T, CompileError>;
 fn err(message: impl Into<String>) -> CompileError {

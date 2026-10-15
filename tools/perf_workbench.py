@@ -17,7 +17,8 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 SCRATCH = Path.home() / '.hermes/cache/scratch'
 LOCK = SCRATCH / 'minipy-perf-build.lock'
-CASES = ('scalar', 'quote', 'ready', 'loopback')
+DEFAULT_CASES = ('scalar', 'quote', 'ready', 'loopback')
+CASES = DEFAULT_CASES + ('scalar_inputs', 'ready_inputs')
 BACKENDS = ('tape', 'native')
 
 
@@ -250,7 +251,7 @@ def main():
     r.add_argument('--baseline-entry', choices=('legacy', 'registered'), default='registered')
     r.add_argument('--candidate-entry', choices=('legacy', 'registered'), default='registered')
     r.add_argument('--diagnostic', action='store_true')
-    r.add_argument('--cases', choices=CASES, nargs='+', default=list(CASES))
+    r.add_argument('--cases', choices=CASES, nargs='+', default=list(DEFAULT_CASES))
     r.add_argument('--backends', choices=BACKENDS, nargs='+', default=list(BACKENDS))
     r.add_argument('--rounds', type=int, choices=range(1, 5), default=1)
     r.add_argument('--reps', type=int, choices=range(1, 1001), default=24)

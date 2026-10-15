@@ -28,6 +28,10 @@ def campaign():
 
 
 class Reduction(unittest.TestCase):
+    def test_input_cases_are_opt_in(self):
+        self.assertEqual(pw.DEFAULT_CASES, ('scalar', 'quote', 'ready', 'loopback'))
+        self.assertEqual(pw.CASES, pw.DEFAULT_CASES + ('scalar_inputs', 'ready_inputs'))
+
     def reduce(self, records):
         with tempfile.TemporaryDirectory(dir=pw.SCRATCH) as directory:
             path = Path(directory) / 'raw.jsonl.gz'

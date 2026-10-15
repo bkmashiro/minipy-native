@@ -1941,3 +1941,27 @@ Default/tool-json suites and strict Clippy pass. Retain the opt-in API; no new
 runtime dispatch or task state is added. See
 [raw, reducer and boundaries](../evidence/tool-environment/README.md).
 
+## BV: bounded input validation diagnosis gate (2026-10-16)
+
+Base `7f1da48`. Keep production paths unchanged and defer BU's three mechanisms.
+A private test-only diagnostic measures existing input validation, registered
+frontend and full tape prepare/release in independent batch intervals. Across
+two processes (32 batch rows), two-input validation averages have median
+84.60 ns, range 54.17–207.38 ns; frontend 3.407 µs and complete tape preparation
+3.567 µs. The intervals are not additive and do not prove an E2E saving.
+
+The fixed formal binary A/A uses 0/2 inputs, scalar/ready cases and both
+backends: 64 processes, 2,048 measured fresh-source requests, no failures.
+Two-input tape scalar A/A B/A is 1.029, ready 0.994. Cold/process drift remains
+substantial (zero-input tape scalar A/A 0.892). The isolated work is too small
+and request-level value too uncertain to justify a new public schema API here.
+No A/B implementation is claimed. The operation/guest single-job topology and
+single-PC native entry remain deferred; no second candidate is manufactured.
+
+Retain the opt-in two-input workbench cases, private diagnostic and compressed
+raw. Existing validation, error ordering, effect detachment, owner/cancellation,
+permissions, budgets, fairness and future layout remain identical. No allocation,
+density, Monty, Linux or Wasm improvement is claimed. Commands, per-process raw,
+timing boundaries, diagnostic limitations and decision ledger:
+[BV input gate](../evidence/bv-input-gate/README.md).
+

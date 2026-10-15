@@ -15,7 +15,7 @@ latency distribution. No Linux or Wasm execution is claimed.
 - Existing opt-in `compiler-profile` supplies native lowering/backend attribution.
   No new production instrumentation or allocator is added.
 
-The new `tests/perf_workbench.rs` executable admits just four cases:
+The `tests/perf_workbench.rs` executable defaults to four cases:
 
 | Case | Work inside each request |
 | --- | --- |
@@ -23,6 +23,12 @@ The new `tests/perf_workbench.rs` executable admits just four cases:
 | quote | construct/import 256 typed Quotes, checked weighted scan, print 65280 |
 | ready | ready Tool, JSON alias, string contains and string output |
 | loopback | same JSON source over real pooled HTTP/1.1 on 127.0.0.1 |
+
+BV additionally provides opt-in `scalar_inputs` and `ready_inputs` with two
+injected i64 values (7, 9), both consumed by the source. Default case selection
+is unchanged. The private schema/frontend preparation diagnostic and bounded
+A/A decision are in [BV evidence](../evidence/bv-input-gate/README.md); they add
+no production optimization or public schema API.
 
 Both tape and actual native code execute and assert exact stdout/status. Every
 iteration changes a source literal and reparses/prepares it; there is no prepared

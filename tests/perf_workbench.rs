@@ -6,6 +6,7 @@ use minipy_native::{
     error::TaskError,
     http_provider::{Endpoint, HttpProvider, HttpService},
     interpreter::{self, InterpreterUnit},
+    ir::Type,
     provider::Provider,
     runtime::{self, Cancellation, ScriptLimits},
     tool::{
@@ -120,6 +121,17 @@ fn resident_request() {
         .unwrap(),
     );
     let ready = Arc::new(Host);
+    let schema = [("input_0", Type::I64), ("input_1", Type::I64)];
+    let inputs = if case.ends_with("_inputs") {
+        &schema[..]
+    } else {
+        &[]
+    };
+    let values = if inputs.is_empty() {
+        &[][..]
+    } else {
+        &[7, 9][..]
+    };
     let setup_ns = setup.elapsed().as_nanos();
     let diagnostic = cfg!(feature = "compiler-profile");
     println!(
@@ -134,6 +146,10 @@ fn resident_request() {
         let n = sample + 1;
         let (source, expected) = match case.as_str() {
             "scalar" => (format!("print({n} + 1)"), format!("{}\n", n + 1)),
+            "scalar_inputs" => (
+                format!("print(input_0 + input_1 + {n})"),
+                format!("{}\n", n + 16),
+            ),
             "quote" => (
                 format!(
                     "rows = tools.load_quotes({n})\ntotal = 0\nfor row in rows:\n    total = total + row.unit_price_cents * row.quantity\nprint(total)"
@@ -143,6 +159,12 @@ fn resident_request() {
             "ready" | "loopback" => (
                 format!(
                     "data = tools.fetch({n})\nalias = data\ntext = alias['message']\nprint('error' in text)\nprint(text)"
+                ),
+                "True\nhello error\n".into(),
+            ),
+            "ready_inputs" => (
+                format!(
+                    "data = tools.fetch(input_0 + input_1 + {n})\nalias = data\ntext = alias['message']\nprint('error' in text)\nprint(text)"
                 ),
                 "True\nhello error\n".into(),
             ),
@@ -157,9 +179,9 @@ fn resident_request() {
         let outcome = if backend == "native" {
             let code = Rc::new(
                 if entry == "registered" {
-                    CodeUnit::compile_with_environment(&source, &[], &environment)
+                    CodeUnit::compile_with_environment(&source, inputs, &environment)
                 } else {
-                    CodeUnit::compile_with_declarations(&source, &[], &tools)
+                    CodeUnit::compile_with_declarations(&source, inputs, &tools)
                 }
                 .unwrap(),
             );
@@ -171,7 +193,7 @@ fn resident_request() {
                 rt.block_on(runtime::execute_script(
                     code,
                     http.clone(),
-                    &[],
+                    values,
                     ScriptLimits::default(),
                     Cancellation::default(),
                     None,
@@ -180,7 +202,7 @@ fn resident_request() {
                 rt.block_on(runtime::execute_script(
                     code,
                     ready.clone(),
-                    &[],
+                    values,
                     ScriptLimits::default(),
                     Cancellation::default(),
                     None,
@@ -189,9 +211,9 @@ fn resident_request() {
         } else {
             let code = Rc::new(
                 if entry == "registered" {
-                    InterpreterUnit::prepare_with_environment(&source, &[], &environment)
+                    InterpreterUnit::prepare_with_environment(&source, inputs, &environment)
                 } else {
-                    InterpreterUnit::prepare_with_declarations(&source, &[], &tools)
+                    InterpreterUnit::prepare_with_declarations(&source, inputs, &tools)
                 }
                 .unwrap(),
             );
@@ -203,7 +225,7 @@ fn resident_request() {
                 rt.block_on(interpreter::execute_script(
                     code,
                     http.clone(),
-                    &[],
+                    values,
                     ScriptLimits::default(),
                     Cancellation::default(),
                     None,
@@ -212,7 +234,7 @@ fn resident_request() {
                 rt.block_on(interpreter::execute_script(
                     code,
                     ready.clone(),
-                    &[],
+                    values,
                     ScriptLimits::default(),
                     Cancellation::default(),
                     None,
