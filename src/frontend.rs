@@ -575,6 +575,18 @@ impl Compiler {
                     out.push(Stmt::Print(value, ty));
                     return Ok(());
                 }
+                #[cfg(feature = "tool-json")]
+                if !self.tools.is_empty() && Self::call_parts(&e.value).is_some() {
+                    // Preserve the declared Tool effect while keeping its scalar
+                    // result in a compiler-only slot that source cannot name.
+                    let name = format!("\0discard{}", self.locals.len());
+                    if self.compile_tool(&name, &e.value, depth + 1, in_loop, out)? {
+                        if self.json.calls.last().expect("bound Tool").json {
+                            return Err(err("discarded Tool results must be scalar"));
+                        }
+                        return Ok(());
+                    }
+                }
                 let (value, _) = self.expr(&e.value, depth + 1, in_loop)?;
                 out.push(Stmt::Eval(value));
                 Ok(())

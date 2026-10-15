@@ -147,6 +147,10 @@ async fn direct_tool_print_suspends_and_cancellation_preserves_prefix() {
 #[test]
 fn direct_tool_print_rejects_json_nested_calls_and_loop_effects() {
     for source in [
+        "tools.fetch(batch_id)",
+        "tools.publish(**kwargs)",
+        "tools.unknown(batch_id)",
+        "q = tools.load_quotes(batch_id)\nfor row in q:\n    tools.publish(batch_id, 2)",
         "print(tools.fetch(batch_id))",
         "print(tools.publish(batch_id, 2) + 1)",
         "print(tools.publish(batch_id, tools.publish(batch_id, 2)))",
@@ -161,6 +165,112 @@ fn direct_tool_print_rejects_json_nested_calls_and_loop_effects() {
             frontend::parse_with_tools(source, &[("batch_id", Type::I64)], &schema()).is_err(),
             "{source}"
         );
+    }
+}
+
+#[tokio::test]
+async fn standalone_scalar_tool_call_executes_and_discards_result() {
+    for native in [false, true] {
+        for source in [
+            "tools.publish(batch_id, total=3)\nprint(7)",
+            "await tools.publish(total=3, batch_id=batch_id)\nprint(7)",
+        ] {
+            let p = Arc::new(P::new(b"{}"));
+            let r = run(
+                native,
+                source,
+                p.clone(),
+                ScriptLimits::default(),
+                Cancellation::default(),
+            )
+            .await;
+            assert_eq!(r.status, Ok(()));
+            assert_eq!(r.stdout, "7\n");
+            let calls = p.calls.lock().unwrap();
+            assert_eq!(calls.len(), 1);
+            assert_eq!(calls[0].0, 102);
+            assert_eq!(calls[0].1, [7, 3]);
+        }
+
+        let denied = Arc::new({
+            let mut p = P::new(b"{}");
+            p.denied = true;
+            p
+        });
+        let r = run(
+            native,
+            "print(1)\ntools.publish(batch_id, 3)\nprint(2)",
+            denied.clone(),
+            ScriptLimits::default(),
+            Cancellation::default(),
+        )
+        .await;
+        assert_eq!(r.status, Err(TaskError::Permission));
+        assert_eq!(r.stdout, "1\n");
+        assert!(denied.calls.lock().unwrap().is_empty());
+
+        let limited = Arc::new(P::new(b"{}"));
+        let r = run(
+            native,
+            "tools.publish(batch_id, 3)",
+            limited.clone(),
+            ScriptLimits {
+                tool_calls: 0,
+                ..ScriptLimits::default()
+            },
+            Cancellation::default(),
+        )
+        .await;
+        assert_eq!(r.status, Err(TaskError::Budget));
+        assert!(limited.calls.lock().unwrap().is_empty());
+
+        let overflow = Arc::new(P::new(b"{}"));
+        let r = run(
+            native,
+            "tools.publish(batch_id, 9223372036854775807 + 1)",
+            overflow.clone(),
+            ScriptLimits::default(),
+            Cancellation::default(),
+        )
+        .await;
+        assert_eq!(r.status, Err(TaskError::Overflow));
+        assert!(overflow.calls.lock().unwrap().is_empty());
+
+        let failure = Arc::new(P::new(b"{}"));
+        let r = run(
+            native,
+            "print(1)\ntools.publish(batch_id, 9223372036854775807)",
+            failure.clone(),
+            ScriptLimits::default(),
+            Cancellation::default(),
+        )
+        .await;
+        assert_eq!(r.status, Err(TaskError::Overflow));
+        assert_eq!(r.stdout, "1\n");
+        assert_eq!(failure.calls.lock().unwrap().len(), 1);
+
+        let mut pending_provider = P::new(b"{}");
+        pending_provider.hold_publish = true;
+        let pending_provider = Arc::new(pending_provider);
+        let cancel = Cancellation::default();
+        let task = run(
+            native,
+            "print(1)\ntools.publish(batch_id, 3)\nprint(2)",
+            pending_provider.clone(),
+            ScriptLimits::default(),
+            cancel.clone(),
+        );
+        tokio::pin!(task);
+        tokio::select! {
+            r = &mut task => panic!("unexpected completion: {:?}", r.status),
+            _ = pending_provider.loaded.notified() => {}
+        }
+        cancel.cancel();
+        let r = task.await;
+        assert_eq!(r.status, Err(TaskError::Cancelled));
+        assert_eq!(r.stdout, "1\n");
+        pending_provider.proceed.notify_one();
+        tokio::task::yield_now().await;
     }
 }
 

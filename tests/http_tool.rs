@@ -135,7 +135,7 @@ async fn real_http_pool_roundtrip_runs_both_backends_without_json_materializatio
             result: ResultSchema::I64,
         },
     ];
-    let source = "p = tools.fetch(batch_id)\nn = p[\"data\"][\"count\"] * 2\nr = tools.publish(total=n, batch_id=batch_id)\nprint(r)\n";
+    let source = "p = tools.fetch(batch_id)\nn = p[\"data\"][\"count\"] * 2\ntools.publish(total=n, batch_id=batch_id)\nprint(7)\n";
     for native in [false, true] {
         let r = if native {
             runtime::execute_script(
@@ -169,7 +169,7 @@ async fn real_http_pool_roundtrip_runs_both_backends_without_json_materializatio
             .await
         };
         assert_eq!(r.status, Ok(()));
-        assert_eq!(r.stdout, "27\n");
+        assert_eq!(r.stdout, "7\n");
     }
     assert_eq!(service.responses(), 4);
     assert_eq!(service.available_permits(), 2);

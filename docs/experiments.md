@@ -867,3 +867,25 @@ Focused review launch at integrated 2617a94 failed because Codex CLI's ChatGPT
 account rejects gpt-6-luna. No substituted model or review approval claimed.
 Route one independent pinned-model review through the Hermes Kanban lane.
 
+## AN: standalone declared scalar Tool expression statement
+
+The existing private, read-only survey input path and cutoff were reused; no
+source text, arguments, session identifiers or raw code were exported. Its 632
+unique main scripts were scanned by AST for bare `Expr(Call)` / `Expr(Await(Call))`
+statements (print excluded). 79 call-shaped statements were found: one direct
+`apis` Host-namespace call, 59 attribute calls with an unverified root, and 19
+unclassified name calls. This establishes one clear Host-effect example, not a
+frequency or runnable-rate estimate; top-level-await coverage is limited by the
+survey parser's ordinary `ast.parse` mode. Source categories were aggregated only.
+
+Added only the opt-in frontend lowering: reuse declared-tool binding and existing
+`Stmt::Tool` with an unnameable NUL-prefixed result slot; i64 result is discarded.
+JSON result discard, unknown Tools, `**kwargs` and Tool-in-loop remain rejected.
+No runtime, IR, opcode, backend or permission/budget contract changed. Dual-backend
+tests cover positional/reordered keyword calls, explicit top-level await, output,
+authorization denial, call budget, argument overflow before dispatch, provider
+error, cancellation/late completion and rejection boundaries. The local HTTP
+fixture/pool also executes standalone publish on both backends before print.
+This feature is an
+incremental Host-tool syntax slice, not general Python support.
+
