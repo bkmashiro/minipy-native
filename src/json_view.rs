@@ -283,6 +283,20 @@ pub(crate) unsafe extern "C" fn native_string(
     }
 }
 #[cfg(not(target_arch = "wasm32"))]
+pub(crate) unsafe extern "C" fn native_print_string(
+    output: *mut crate::runtime::Output,
+    slot: i64,
+) -> i64 {
+    let output = unsafe { &mut *output };
+    match output.append_json_string(slot as usize) {
+        Ok(()) => 0,
+        Err(e) => {
+            output.error = Some(e);
+            1
+        }
+    }
+}
+#[cfg(not(target_arch = "wasm32"))]
 pub(crate) unsafe extern "C" fn native_release(output: *mut crate::runtime::Output, live: i64) {
     let output = unsafe { &mut *output };
     if let Some(json) = &mut output.json {

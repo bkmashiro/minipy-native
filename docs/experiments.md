@@ -1582,3 +1582,52 @@ ANNA × two cases × 100 request runner specifies; the earlier 400-row count was
 a documentation error, not a change to the retained raw file or its digest.
 macOS validation and remaining Linux/Wasm limits are recorded in the BM card.
 
+## BO: bounded print of an existing declared JSON string leaf (2026-10-15)
+
+BO adds `print(data["message"])` and `print(text)` when `text` is an existing
+unconditional alias of a `JsonTyped` string leaf. Static path binding, the
+existing borrowed/decoded UTF-8 cache, and task-private `stdout` are reused.
+No new Tool argument type, Provider method, string value type, generic literal
+print, filesystem capability, or public output shape is introduced. The fixed
+Rust helper validates the accessed leaf, checks the remaining stdout *bytes*
+including newline, reserves within the task limit, and appends the whole line
+or leaves the earlier output intact. Escaped content uses the existing decoded
+scratch and its aggregate owner budget. A source string containing a newline
+is appended as content followed by the print newline; the whole append is
+atomic for the budget. The native and tape liveness passes retain the JSON
+root across a later Tool wait when the print still needs it; cancellation
+drops it. An accessed missing/wrong-type/invalid string remains a task error.
+The 64 KiB JSON token bound and 16 KiB default stdout bound remain distinct.
+
+Targeted macOS tests covered ordinary, escaped, UTF-8/multibyte, empty,
+duplicate-key-first, missing/null/invalid UTF-8, exact/over stdout, prior
+output preservation, denied print, alias across a Tool wait and cancellation,
+on both backends. Existing `string_contains`, `tool_json`, `http_tool`, and
+default `scripts`/`interpreter` suites passed. This does not admit any of BN's
+unchanged private `read_file` scripts: their original Host call spelling,
+string argument and dictionary contract remain outside the current ABI.
+
+Bounded resident-process source-cold full-request control:
+`python3 tools/bo_request_pair.py`, raw
+`evidence/bo-json-print/request-cost.jsonl` (1240 JSONL rows, SHA256
+`44f7d89d5a484b7faabca736baa11f2f4503f4da9bb78670e09e5d1103c50fad`).
+One fixture setup per process is reported separately, with 256 frozen Quotes
+and an already resident JSON Bytes reply; each measured request includes
+fresh source preparation, real ready Provider dispatch, print and task
+cleanup. The old B binary is built from `0b6c826` with the *same* harness
+overlay; A is the BO working tree. The script builds under the shared target
+lock, checks every output, runs B/A/A/B in four independent processes, and
+excludes the first request in each case/backend/process as warmup.
+Toolchain: rustc 1.96.0 (`ac68faa20`), aarch64-apple-darwin; per-arm
+release binary SHA256 is included in every raw row. The harness was overlaid
+only onto B for a matching measurement, not committed into the B revision.
+The invocation is limited to this two-pair campaign. A's new
+natural string case median: tape 14.083 µs (160 requests), native 102.812 µs
+(80). Old scalar A/B medians: tape 11.521/13.375 µs, native
+98.980/106.334 µs; Quote A/B: tape 11.979/10.500 µs, native
+106.626/95.791 µs. Process medians drift substantially across the run
+(for scalar tape A 15.209→4.917 µs and B 20.917→3.646 µs), so these
+aggregate deltas do **not** establish either a stable old-path regression
+or a speed gain. The case is synthetic: no real filesystem Host adapter,
+network latency, unchanged private script, Linux or Wasm claim.
+

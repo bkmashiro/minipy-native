@@ -76,6 +76,11 @@ pub enum Stmt {
         args: Vec<Expr>,
     },
     Print(Expr, Type),
+    #[cfg(feature = "tool-json")]
+    PrintJsonString {
+        slot: usize,
+        root: usize,
+    },
     Eval(Expr),
     Return(Expr),
 }

@@ -54,6 +54,8 @@ pub(super) enum Op {
     Load(usize, Operand),
     Record(usize, Operand, Operand),
     Print(Operand, Type),
+    #[cfg(feature = "tool-json")]
+    PrintJsonString(usize, usize),
     Return,
 }
 impl Op {
@@ -273,6 +275,10 @@ impl Lower<'_> {
                     let e = self.value(e);
                     self.ops.push(Op::Print(e, t));
                 }
+                #[cfg(feature = "tool-json")]
+                Stmt::PrintJsonString { slot, root } => {
+                    self.ops.push(Op::PrintJsonString(slot, root));
+                }
                 Stmt::Load(i, e) => {
                     let e = self.value(e);
                     self.ops.push(Op::Load(i, e));
@@ -344,6 +350,7 @@ pub(super) fn json_liveness(ops: &[Op]) -> Vec<u32> {
                 Op::Scan { end, .. } => next | live[*end],
                 Op::JsonRead(_, _, root, _) => next | (1 << root),
                 Op::JsonString(_, _, root, _) => next | (1 << root),
+                Op::PrintJsonString(_, root) => next | (1 << root),
                 Op::Return => 0,
                 _ => next,
             };
@@ -499,6 +506,8 @@ pub(super) fn run<const STEP: bool>(
             }
             Op::Jump(t) => state.pc = *t,
             Op::Print(a, t) => output.append(read(*a, state, temps), *t == Type::Bool)?,
+            #[cfg(feature = "tool-json")]
+            Op::PrintJsonString(slot, _) => output.append_json_string(*slot)?,
             Op::Return => return Ok(Boundary::Done),
             Op::Load(i, a) => return Ok(Boundary::Load(*i, read(*a, state, temps))),
             Op::Record(i, a, b) => {

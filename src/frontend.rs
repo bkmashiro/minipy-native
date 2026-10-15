@@ -631,6 +631,17 @@ impl<'a> Compiler<'a> {
                         ]);
                         return Ok(());
                     }
+                    #[cfg(feature = "tool-json")]
+                    if let Some((root, path)) = self.json_path(arg)?
+                        && self.json_leaves[root]
+                            .iter()
+                            .any(|(p, t)| p == &path && *t == crate::tool::JsonLeaf::String)
+                    {
+                        let slot = self.json.path(root, &path)?;
+                        self.json.string_paths = true;
+                        out.push(Stmt::PrintJsonString { slot, root });
+                        return Ok(());
+                    }
                     let (value, ty) = self.expr(arg, depth + 2, in_loop)?;
                     if !matches!(ty, Type::I64 | Type::Bool) {
                         return Err(err("print accepts one i64 or bool argument"));

@@ -178,6 +178,10 @@ impl CodeUnit {
                     "minipy_json_string",
                     crate::json_view::native_string as *const u8,
                 );
+                builder.symbol(
+                    "minipy_json_print_string",
+                    crate::json_view::native_print_string as *const u8,
+                );
             }
         }
         let mut module = JITModule::new(builder);
@@ -207,6 +211,18 @@ impl CodeUnit {
             sig.returns.push(AbiParam::new(types::I64));
             let id = module
                 .declare_function("minipy_json_string", Linkage::Import, &sig)
+                .map_err(error)?;
+            Some(module.declare_func_in_func(id, &mut ctx.func))
+        } else {
+            None
+        };
+        #[cfg(feature = "tool-json")]
+        let json_print_string = if program.json.string_paths {
+            let mut sig = module.make_signature();
+            sig.params = vec![AbiParam::new(types::I64); 2];
+            sig.returns.push(AbiParam::new(types::I64));
+            let id = module
+                .declare_function("minipy_json_print_string", Linkage::Import, &sig)
                 .map_err(error)?;
             Some(module.declare_func_in_func(id, &mut ctx.func))
         } else {
@@ -273,6 +289,8 @@ impl CodeUnit {
                 json_read,
                 #[cfg(feature = "tool-json")]
                 json_string,
+                #[cfg(feature = "tool-json")]
+                json_print_string,
                 #[cfg(feature = "tool-json")]
                 json_release,
 
@@ -380,6 +398,8 @@ struct Flow<'a, 'b> {
     #[cfg(feature = "tool-json")]
     json_string: Option<cranelift_codegen::ir::FuncRef>,
     #[cfg(feature = "tool-json")]
+    json_print_string: Option<cranelift_codegen::ir::FuncRef>,
+    #[cfg(feature = "tool-json")]
     json_release: Option<cranelift_codegen::ir::FuncRef>,
     overflow: cranelift_codegen::ir::Block,
     budget: cranelift_codegen::ir::Block,
@@ -465,6 +485,8 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
         }
         Stmt::If(_, _, _) => {}
         Stmt::Return(_) | Stmt::For(_, _) => {}
+        #[cfg(feature = "tool-json")]
+        Stmt::PrintJsonString { .. } => {}
     }
     #[cfg(feature = "tool-json")]
     {
@@ -473,6 +495,7 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
                 live.json |= json_used(e)
             }
             Stmt::Record(_, a, b) => live.json |= json_used(a) | json_used(b),
+            Stmt::PrintJsonString { root, .. } => live.json |= 1 << root,
 
             _ => {}
         }
@@ -487,6 +510,8 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
             live.scalars |= used(batch);
         }
         Stmt::Print(e, _) | Stmt::Eval(e) => live.scalars |= used(e),
+        #[cfg(feature = "tool-json")]
+        Stmt::PrintJsonString { .. } => {}
         Stmt::Return(e) => {
             return Live {
                 scalars: used(e),
@@ -677,6 +702,18 @@ impl Flow<'_, '_> {
                         .ins()
                         .iconst(types::I64, i64::from(*ty == ir::Type::Bool));
                     let call = self.b.ins().call(self.print, &[self.output, value, kind]);
+                    let failed = self.b.inst_results(call)[0];
+                    let next = self.b.create_block();
+                    self.b.ins().brif(failed, self.output_error, &[], next, &[]);
+                    self.b.switch_to_block(next);
+                }
+                #[cfg(feature = "tool-json")]
+                Stmt::PrintJsonString { slot, .. } => {
+                    let slot = self.b.ins().iconst(types::I64, *slot as i64);
+                    let call = self.b.ins().call(
+                        self.json_print_string.expect("string print helper"),
+                        &[self.output, slot],
+                    );
                     let failed = self.b.inst_results(call)[0];
                     let next = self.b.create_block();
                     self.b.ins().brif(failed, self.output_error, &[], next, &[]);
