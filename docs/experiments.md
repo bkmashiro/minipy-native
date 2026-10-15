@@ -1845,3 +1845,18 @@ clippy `-D warnings` in both feature modes, rustfmt and diff check passed on
 macOS. Linux, pinned-toolchain Wasm and unchanged private-script execution
 remain unverified; no cross-platform pass is asserted.
 
+Post-integration review correction: an independent read-only Codex CLI pass
+on signed `73130f6` identified a tape-only gap missed by the earlier BR review.
+Before BQ, tape released dead JSON owners at every boundary. BQ deferred
+release so a string Tool could capture its source, but restored early release
+only for Tool, not `load_quotes`/`record_total`/yield. A dead 3,900-byte JSON
+response plus a 4,096-byte Quote owner therefore falsely exceeded a 5,000-byte
+aggregate budget on tape while native succeeded. The follow-up restores
+pre-boundary release everywhere except Tool; Tool still captures before
+releasing, and post-reply release remains. The regression
+`dead_json_owner_released_before_quote_load_budget` executes both backends
+with that tight real-file/Quote fixture. The independent CLI pass timed out
+before its full report; this specific finding was traced and tested locally.
+The previously published BAAB/diagnostic data belongs to `73130f6`, not the
+follow-up; no performance delta is claimed for this correctness repair.
+

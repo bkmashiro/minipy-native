@@ -203,6 +203,15 @@ async fn run<P: Provider>(
             json.set_external(owners.iter().flatten().map(QuoteBuffer::bytes).sum());
         }
         let boundary = tape::run_until_boundary(unit, &mut state, &owners, &limits, output)?;
+        // A string Tool may still need a JSON root to capture its argument.
+        // Every other boundary has finished reading JSON before this point;
+        // release dead roots before waits and aggregate reply-budget checks.
+        #[cfg(feature = "tool-json")]
+        if !matches!(boundary, Boundary::Tool(..))
+            && let (Some(json), Some(&mask)) = (&mut output.json, unit.json_live.get(state.pc))
+        {
+            json.release(mask);
+        }
         match boundary {
             #[cfg(feature = "debug-runtime")]
             Boundary::Step => unreachable!("production specialization never stops per instruction"),
@@ -274,8 +283,9 @@ async fn run<P: Provider>(
                     None => crate::tool::ToolArguments::Numeric(args, count),
                 };
                 runtime::authorize_tool(&cancel, provider.allows_tool(call.id), &mut calls)?;
-                if let Some(json) = &mut output.json {
-                    json.release(unit.json_live[state.pc]);
+                if let (Some(json), Some(&mask)) = (&mut output.json, unit.json_live.get(state.pc))
+                {
+                    json.release(mask);
                 }
                 let p = provider.clone();
                 let (tx, rx) = oneshot::channel();
@@ -286,7 +296,9 @@ async fn run<P: Provider>(
                     (true, crate::tool::Reply::Json(bytes)) => {
                         let json = output.json.as_mut().expect("sealed JSON plan");
                         json.install(target, bytes, limits.buffer_bytes.saturating_sub(held))?;
-                        json.release(unit.json_live[state.pc]);
+                        if let Some(&mask) = unit.json_live.get(state.pc) {
+                            json.release(mask);
+                        }
                     }
                     (false, crate::tool::Reply::I64(v)) => state.locals[target] = v,
                     _ => return Err(TaskError::Json("Tool reply does not match declaration")),
@@ -312,8 +324,8 @@ async fn run<P: Provider>(
             }
         }
         #[cfg(feature = "tool-json")]
-        if let Some(json) = &mut output.json {
-            json.release(unit.json_live[state.pc]);
+        if let (Some(json), Some(&mask)) = (&mut output.json, unit.json_live.get(state.pc)) {
+            json.release(mask);
         }
     }
     runtime::event(&trace, "done", 0, 0, state.remaining, state.index as u64);

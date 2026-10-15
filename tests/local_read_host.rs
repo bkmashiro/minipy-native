@@ -3,7 +3,7 @@
 //! This is not the Hermes read_file implementation or its permission model.
 use bytes::Bytes;
 use minipy_native::{
-    buffer::QuoteBuffer,
+    buffer::{Quote, QuoteBuffer},
     codegen::CodeUnit,
     error::TaskError,
     interpreter::{self, InterpreterUnit},
@@ -276,5 +276,71 @@ async fn dead_json_owner_released_before_next_literal_tool_reply() {
         };
         assert_eq!(outcome.status, Ok(()), "native={native}");
         assert_eq!(outcome.stdout, "1\n");
+    }
+}
+
+struct MixedHost(LocalReadHost);
+impl Provider for MixedHost {
+    fn allows_tool(&self, id: u32) -> bool {
+        self.0.allows_tool(id)
+    }
+    async fn call_bound_tool(&self, id: u32, args: ToolArguments) -> Result<Reply, TaskError> {
+        self.0.call_bound_tool(id, args).await
+    }
+    async fn load_quotes(&self, _: i64) -> Result<QuoteBuffer, TaskError> {
+        Ok(QuoteBuffer::from_quotes(vec![
+            Quote {
+                unit_price_cents: 1,
+                quantity: 1
+            };
+            256
+        ])
+        .unwrap())
+    }
+    async fn record_total(&self, _: i64, _: i64) -> Result<i64, TaskError> {
+        Err(TaskError::Permission)
+    }
+}
+
+#[tokio::test]
+async fn dead_json_owner_released_before_quote_load_budget() {
+    let fixture = Fixture::new();
+    let host = Arc::new(MixedHost(LocalReadHost::new(&fixture.0)));
+    let source =
+        "ignored = tools.read_file(\"full.txt\")\nrows = tools.load_quotes(1)\nprint(len(rows))";
+    let limits = ScriptLimits {
+        limits: runtime::Limits {
+            buffer_bytes: 5000,
+            ..runtime::Limits::default()
+        },
+        ..ScriptLimits::default()
+    };
+    for native in [false, true] {
+        let outcome = if native {
+            runtime::execute_script(
+                Rc::new(CodeUnit::compile_with_declarations(source, &[], &declaration()).unwrap()),
+                host.clone(),
+                &[],
+                limits,
+                Cancellation::default(),
+                None,
+            )
+            .await
+        } else {
+            interpreter::execute_script(
+                Rc::new(
+                    InterpreterUnit::prepare_with_declarations(source, &[], &declaration())
+                        .unwrap(),
+                ),
+                host.clone(),
+                &[],
+                limits,
+                Cancellation::default(),
+                None,
+            )
+            .await
+        };
+        assert_eq!(outcome.status, Ok(()), "native={native}");
+        assert_eq!(outcome.stdout, "256\n");
     }
 }
