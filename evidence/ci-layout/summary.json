@@ -1,0 +1,277 @@
+{
+  "base": "ebee3c1dfd87b4835f8bc16a00c2734f3dd53d69",
+  "kind": "separate layout, code and dynamic-count diagnosis, no timing",
+  "layout": {
+    "dest": 16,
+    "json_state": 128,
+    "max_locals": 32,
+    "max_nodes": 512,
+    "native_frame": 320,
+    "op": 56,
+    "op_align": 8,
+    "operand": 16,
+    "output": 72,
+    "scratch": 4096,
+    "small_dest": 4,
+    "small_dest_op": 48,
+    "state": 312,
+    "unit": 112,
+    "view": 16
+  },
+  "cases": [
+    {
+      "buffers": 0,
+      "capacity": 4,
+      "json_live_capacity": 0,
+      "json_live_len": 0,
+      "live_capacity": 4,
+      "live_len": 4,
+      "name": "scalar",
+      "ops": 3,
+      "prepared_bytes": 368,
+      "source": "print(7+1)",
+      "code_bytes": 164,
+      "clif_brif_sites": 3,
+      "tape_used_bytes": 168,
+      "tape_capacity_bytes": 224,
+      "future_bytes": {
+        "tape": 928,
+        "native": 664
+      },
+      "source_derived_no_buffer_live_bytes_removable": 32,
+      "modeled_small_dest_tape_capacity_saving": 32
+    },
+    {
+      "buffers": 0,
+      "capacity": 8,
+      "json_live_capacity": 0,
+      "json_live_len": 0,
+      "live_capacity": 7,
+      "live_len": 7,
+      "name": "bound_tree",
+      "ops": 6,
+      "prepared_bytes": 618,
+      "source": "print((a+1)*(b-1)+a)",
+      "code_bytes": 212,
+      "clif_brif_sites": 3,
+      "tape_used_bytes": 336,
+      "tape_capacity_bytes": 448,
+      "future_bytes": {
+        "tape": 928,
+        "native": 664
+      },
+      "source_derived_no_buffer_live_bytes_removable": 56,
+      "modeled_small_dest_tape_capacity_saving": 64
+    },
+    {
+      "buffers": 0,
+      "capacity": 8,
+      "json_live_capacity": 0,
+      "json_live_len": 0,
+      "live_capacity": 6,
+      "live_len": 6,
+      "name": "madd_short",
+      "ops": 5,
+      "prepared_bytes": 608,
+      "source": "x=7\nx=x*3+x\nprint(x)",
+      "code_bytes": 188,
+      "clif_brif_sites": 3,
+      "tape_used_bytes": 280,
+      "tape_capacity_bytes": 448,
+      "future_bytes": {
+        "tape": 928,
+        "native": 664
+      },
+      "source_derived_no_buffer_live_bytes_removable": 48,
+      "modeled_small_dest_tape_capacity_saving": 64
+    },
+    {
+      "buffers": 1,
+      "capacity": 16,
+      "json_live_capacity": 0,
+      "json_live_len": 0,
+      "live_capacity": 10,
+      "live_len": 10,
+      "name": "quote",
+      "ops": 9,
+      "prepared_bytes": 1088,
+      "source": "rows=tools.load_quotes(1)\ntotal=0\nfor row in rows:\n    total=total+row.unit_price_cents*row.quantity\nprint(total)",
+      "code_bytes": 464,
+      "clif_brif_sites": 6,
+      "tape_used_bytes": 504,
+      "tape_capacity_bytes": 896,
+      "future_bytes": {
+        "tape": 928,
+        "native": 664
+      },
+      "source_derived_no_buffer_live_bytes_removable": 0,
+      "modeled_small_dest_tape_capacity_saving": 128
+    },
+    {
+      "buffers": 1,
+      "capacity": 16,
+      "json_live_capacity": 0,
+      "json_live_len": 0,
+      "live_capacity": 12,
+      "live_len": 12,
+      "name": "madd_loop",
+      "ops": 11,
+      "prepared_bytes": 1104,
+      "source": "rows=tools.load_quotes(1)\ntotal=0\nfor row in rows:\n    total=total+(row.unit_price_cents+1)*(row.quantity+1)\nprint(total)",
+      "code_bytes": 540,
+      "clif_brif_sites": 6,
+      "tape_used_bytes": 616,
+      "tape_capacity_bytes": 896,
+      "future_bytes": {
+        "tape": 928,
+        "native": 664
+      },
+      "source_derived_no_buffer_live_bytes_removable": 0,
+      "modeled_small_dest_tape_capacity_saving": 128
+    },
+    {
+      "buffers": 0,
+      "capacity": 8,
+      "json_live_capacity": 8,
+      "json_live_len": 8,
+      "live_capacity": 8,
+      "live_len": 8,
+      "name": "ready",
+      "ops": 7,
+      "prepared_bytes": 1228,
+      "source": "data=tools.fetch(7)\nalias=data\ntext=alias['message']\nprint('error' in text)\nprint(text)",
+      "code_bytes": 400,
+      "clif_brif_sites": 5,
+      "tape_used_bytes": 392,
+      "tape_capacity_bytes": 448,
+      "future_bytes": {
+        "tape": 928,
+        "native": 664
+      },
+      "source_derived_no_buffer_live_bytes_removable": 64,
+      "modeled_small_dest_tape_capacity_saving": 64
+    },
+    {
+      "buffers": 0,
+      "capacity": 8,
+      "json_live_capacity": 0,
+      "json_live_len": 0,
+      "live_capacity": 9,
+      "live_len": 9,
+      "name": "branch",
+      "ops": 8,
+      "prepared_bytes": 632,
+      "source": "x=7\nif x>2:\n    print(x+1)\nelse:\n    print(x-1)",
+      "code_bytes": 236,
+      "clif_brif_sites": 6,
+      "tape_used_bytes": 448,
+      "tape_capacity_bytes": 448,
+      "future_bytes": {
+        "tape": 928,
+        "native": 664
+      },
+      "source_derived_no_buffer_live_bytes_removable": 72,
+      "modeled_small_dest_tape_capacity_saving": 64
+    },
+    {
+      "buffers": 0,
+      "capacity": 8,
+      "json_live_capacity": 7,
+      "json_live_len": 7,
+      "live_capacity": 7,
+      "live_len": 7,
+      "name": "joined_sink",
+      "ops": 6,
+      "prepared_bytes": 1406,
+      "source": "n=7\ndata=tools.fetch(n)\ntext=data['message']\nprint('['+text+'/'+text+']')",
+      "code_bytes": 352,
+      "clif_brif_sites": 3,
+      "tape_used_bytes": 336,
+      "tape_capacity_bytes": 448,
+      "future_bytes": {
+        "tape": 928,
+        "native": 664
+      },
+      "source_derived_no_buffer_live_bytes_removable": 56,
+      "modeled_small_dest_tape_capacity_saving": 64
+    },
+    {
+      "buffers": 0,
+      "capacity": 8,
+      "json_live_capacity": 7,
+      "json_live_len": 7,
+      "live_capacity": 7,
+      "live_len": 7,
+      "name": "async_string",
+      "ops": 6,
+      "prepared_bytes": 1115,
+      "source": "data=tools.fetch(7)\ntext=data['message']\nr=tools.unused1(text)\nprint(r)",
+      "code_bytes": 444,
+      "clif_brif_sites": 3,
+      "tape_used_bytes": 336,
+      "tape_capacity_bytes": 448,
+      "future_bytes": {
+        "tape": 928,
+        "native": 664
+      },
+      "source_derived_no_buffer_live_bytes_removable": 56,
+      "modeled_small_dest_tape_capacity_saving": 64
+    }
+  ],
+  "loop_counts": [
+    {
+      "case": "quote",
+      "dispatches": 1030,
+      "fuel_reservations": 1,
+      "row_payload_bytes": 4096,
+      "rows": 256,
+      "yields": 0
+    },
+    {
+      "case": "madd_loop",
+      "dispatches": 1542,
+      "fuel_reservations": 1,
+      "row_payload_bytes": 4096,
+      "rows": 256,
+      "yields": 0
+    },
+    {
+      "case": "quote",
+      "dispatches": 16390,
+      "fuel_reservations": 16,
+      "row_payload_bytes": 65536,
+      "rows": 4096,
+      "yields": 15
+    },
+    {
+      "case": "madd_loop",
+      "dispatches": 24582,
+      "fuel_reservations": 16,
+      "row_payload_bytes": 65536,
+      "rows": 4096,
+      "yields": 15
+    },
+    {
+      "case": "quote",
+      "dispatches": 262150,
+      "fuel_reservations": 256,
+      "row_payload_bytes": 1048576,
+      "rows": 65536,
+      "yields": 255
+    },
+    {
+      "case": "madd_loop",
+      "dispatches": 393222,
+      "fuel_reservations": 256,
+      "row_payload_bytes": 1048576,
+      "rows": 65536,
+      "yields": 255
+    }
+  ],
+  "tape_function_instruction_count": 1907,
+  "tape_function_instruction_bytes": 7628,
+  "hardware_misses_measured": false,
+  "production_equal_base": true,
+  "chosen_candidate": "omit buffer-only liveness allocation and traversal when admitted buffer count is zero",
+  "secondary_deferred_candidate": "narrow Dest only, no operand pool, modeled Op 56 -> 48"
+}

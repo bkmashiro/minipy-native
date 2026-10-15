@@ -2300,3 +2300,28 @@ fixture，无需重新建设。源码核对其 4096 B/固定可信 root/UTF-8/�
 [CG workload fit](../evidence/cg-workload-fit/README.md)。私有探针/语料不进仓库，
 无新增依赖、下载、worktree、target、CI、平台执行或生产性能结论。
 
+## CI：实际指令、布局与局部性诊断
+
+以 `ebee3c1` 为基线，仅临时接入 test-only probe，最终生产源码逐字节
+保持基线。Apple M4 / rustc 1.96.0、已挂载外置共享 target，全程持有
+perf build lock。九类 bounded source 在 tape/native 两后端实际执行并
+核对完整输出；另以 256/4096/65536 rows 分开验证循环 dispatch、fuel
+reservation 和 yield 计数。没有新请求计时、PMU misses、RSS、Linux/
+Wasm/Monty 或真实 Code Mode 支持结论。
+
+实测 Op/Operand/Dest 为 56/16/16 B，Unit/State 为 112/312 B，同步
+scratch 4096 B，native Frame 320 B，本卡 Provider 的完整 execute
+future 为 tape/native 928/664 B。实际 release tape 反汇编保留 PC 写回、
+opcode/operand 解码、间接 dispatch、bounds 和 checked-overflow 路径；
+native Quote loop 的累加器保持在寄存器，CE 的共享错误出口仍在。
+不能由布局大小推断 cache miss、RSS 或端到端加速。
+
+CJ 唯一推荐候选：admission 已证明 `buffers==0` 时跳过 buffer-only
+liveness allocation/逆序扫描，保留独立 JSON liveness 和非零 buffer
+检查。七类 zero-buffer fixture 仍有 32–72 B live backing；预期每次
+prepare 少一个 allocation 和一次 traversal，尚未实测候选净收益。
+这比改编码更直接。只窄化 Dest 的完整镜像 Op 可实测为 48 B，但只列
+第二候选，暂缓实现，不与 primary 捆绑。BT/BX/BY/CB 负结果及 CG 的
+真实 workload 适配 stop 结论不变。固定 raw、源码重建、反汇编、排名、
+CJ 单轮 A/B+A/A 契约和复现见 [CI evidence](../evidence/ci-layout/README.md)。
+

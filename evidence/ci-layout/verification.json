@@ -1,0 +1,78 @@
+{
+  "production_base": "ebee3c1dfd87b4835f8bc16a00c2734f3dd53d69",
+  "resolved_environment_failure": "1.96.0 has no cargo-fmt installed. No component installed; formatting passed with already-installed stable rustfmt. Rust compilation used 1.96.0.",
+  "records": [
+    {
+      "command": "git diff --check",
+      "output": "",
+      "exit_code": 0,
+      "error": null
+    },
+    {
+      "command": "git diff --exit-code ebee3c1 -- src Cargo.toml Cargo.lock",
+      "output": "",
+      "exit_code": 0,
+      "error": null
+    },
+    {
+      "command": "git apply --check evidence/ci-layout/diagnostic.patch",
+      "output": "",
+      "exit_code": 0,
+      "error": null
+    },
+    {
+      "command": "python3 -m py_compile tools/ci_layout_probe.py tools/ci_layout_reduce.py",
+      "output": "",
+      "exit_code": 0,
+      "error": null
+    },
+    {
+      "command": "python3 -m unittest discover -s tools -p test_perf_workbench.py",
+      "output": ".........\n----------------------------------------------------------------------\nRan 9 tests in 0.004s\n\nOK",
+      "exit_code": 0,
+      "error": null
+    },
+    {
+      "command": "python3 tools/ci_layout_reduce.py",
+      "output": "{\n  \"base\": \"ebee3c1dfd87b4835f8bc16a00c2734f3dd53d69\",\n  \"kind\": \"separate layout, code and dynamic-count diagnosis, no timing\",\n  \"layout\": {\n    \"dest\": 16,\n    \"json_state\": 128,\n    \"max_locals\": 32,\n    \"max_nodes\": 512,\n    \"native_frame\": 320,\n    \"op\": 56,\n    \"op_align\": 8,\n    \"operand\": 16,\n    \"output\": 72,\n    \"scratch\": 4096,\n    \"small_dest\": 4,\n    \"small_dest_op\": 48,\n    \"state\": 312,\n    \"unit\": 112,\n    \"view\": 16\n  },\n  \"cases\": [\n    {\n      \"buffers\": 0,\n      \"capacity\": 4,\n      \"json_live_capacity\": 0,\n      \"json_live_len\": 0,\n      \"live_capacity\": 4,\n      \"live_len\": 4,\n      \"name\": \"scalar\",\n      \"ops\": 3,\n      \"prepared_bytes\": 368,\n      \"source\": \"print(7+1)\",\n      \"code_bytes\": 164,\n      \"clif_brif_sites\": 3,\n      \"tape_used_bytes\": 168,\n      \"tape_capacity_bytes\": 224,\n      \"future_bytes\": {\n        \"tape\": 928,\n        \"native\": 664\n      },\n      \"source_derived_no_buffer_live_bytes_removable\": 32,\n      \"modeled_small_dest_tape_capacity_saving\": 32\n    },\n    {\n      \"buffers\": 0,\n      \"capacity\": 8,\n      \"json_live_capacity\": 0,\n      \"json_live_len\": 0,\n      \"live_capacity\": 7,\n      \"live_len\": 7,\n      \"name\": \"bound_tree\",\n      \"ops\": 6,\n      \"prepared_bytes\": 618,\n      \"source\": \"print((a+1)*(b-1)+a)\",\n      \"code_bytes\": 212,\n      \"clif_brif_sites\": 3,\n      \"tape_used_bytes\": 336,\n      \"tape_capacity_bytes\": 448,\n      \"future_bytes\": {\n        \"tape\": 928,\n        \"native\": 664\n      },\n      \"source_derived_no_buffer_live_bytes_removable\": 56,\n      \"modeled_small_dest_tape_capacity_saving\": 64\n    },\n    {\n      \"buffers\": 0,\n      \"capacity\": 8,\n      \"json_live_capacity\": 0,\n      \"json_live_len\": 0,\n      \"live_capacity\": 6,\n      \"live_len\": 6,\n      \"name\": \"madd_short\",\n      \"ops\": 5,\n      \"prepared_bytes\": 608,\n      \"source\": \"x=7\\nx=x*3+x\\nprint(x)\",\n      \"code_bytes\": 188,\n      \"clif_brif_sites\": 3,\n      \"tape_used_bytes\": 280,\n      \"tape_capacity_bytes\": 448,\n      \"future_bytes\": {\n        \"tape\": 928,\n        \"native\": 664\n      },\n      \"source_derived_no_buffer_live_bytes_removable\": 48,\n      \"modeled_small_dest_tape_capacity_saving\": 64\n    },\n    {\n      \"buffers\": 1,\n      \"capacity\": 16,\n      \"json_live_capacity\": 0,\n      \"json_live_len\": 0,\n      \"live_capacity\": 10,\n      \"live_len\": 10,\n      \"name\": \"quote\",\n      \"ops\": 9,\n      \"prepared_bytes\": 1088,\n      \"source\": \"rows=tools.load_quotes(1)\\ntotal=0\\nfor row in rows:\\n    total=total+row.unit_price_cents*row.quantity\\nprint(total)\",\n      \"code_bytes\": 464,\n      \"clif_brif_sites\": 6,\n      \"tape_used_bytes\": 504,\n      \"tape_capacity_bytes\": 896,\n      \"future_bytes\": {\n        \"tape\": 928,\n        \"native\": 664\n      },\n      \"source_derived_no_buffer_live_bytes_removable\": 0,\n      \"modeled_small_dest_tape_capacity_saving\": 128\n    },\n    {\n      \"buffers\": 1,\n      \"capacity\": 16,\n      \"json_live_capacity\": 0,\n      \"json_live_len\": 0,\n      \"live_capacity\": 12,\n      \"live_len\": 12,\n      \"name\": \"madd_loop\",\n      \"ops\": 11,\n      \"prepared_bytes\": 1104,\n      \"source\": \"rows=tools.load_quotes(1)\\ntotal=0\\nfor row in rows:\\n    total=total+(row.unit_price_cents+1)*(row.quantity+1)\\nprint(total)\",\n      \"code_bytes\": 540,\n      \"clif_brif_sites\": 6,\n      \"tape_used_bytes\": 616,\n      \"tape_capacity_bytes\": 896,\n      \"future_bytes\": {\n        \"tape\": 928,\n        \"native\": 664\n      },\n      \"source_derived_no_buffer_live_bytes_removable\": 0,\n      \"modeled_small_dest_tape_capacity_saving\": 128\n    },\n    {\n      \"buffers\": 0,\n      \"capacity\": 8,\n      \"json_live_capacity\": 8,\n      \"json_live_len\": 8,\n      \"live_capacity\": 8,\n      \"live_len\": 8,\n      \"name\": \"ready\",\n      \"ops\": 7,\n      \"prepared_bytes\": 1228,\n      \"source\": \"data=tools.fetch(7)\\nalias=data\\ntext=alias['message']\\nprint('error' in text)\\nprint(text)\",\n      \"code_bytes\": 400,\n      \"clif_brif_sites\": 5,\n      \"tape_used_bytes\": 392,\n      \"tape_capacity_bytes\": 448,\n      \"future_bytes\": {\n        \"tape\": 928,\n        \"native\": 664\n      },\n      \"source_derived_no_buffer_live_bytes_removable\": 64,\n      \"modeled_small_dest_tape_capacity_saving\": 64\n    },\n    {\n      \"buffers\": 0,\n      \"capacity\": 8,\n      \"json_live_capacity\": 0,\n      \"json_live_len\": 0,\n      \"live_capacity\": 9,\n      \"live_len\": 9,\n      \"name\": \"branch\",\n      \"ops\": 8,\n      \"prepared_bytes\": 632,\n      \"source\": \"x=7\\nif x>2:\\n    print(x+1)\\nelse:\\n    print(x-1)\",\n      \"code_bytes\": 236,\n      \"clif_brif_sites\": 6,\n      \"tape_used_bytes\": 448,\n      \"tape_capacity_bytes\": 448,\n      \"future_bytes\": {\n        \"tape\": 928,\n        \"native\": 664\n      },\n      \"source_derived_no_buffer_live_bytes_removable\": 72,\n      \"modeled_small_dest_tape_capacity_saving\": 64\n    },\n    {\n      \"buffers\": 0,\n      \"capacity\": 8,\n      \"json_live_capacity\": 7,\n      \"json_live_len\": 7,\n      \"live_capacity\": 7,\n      \"live_len\": 7,\n      \"name\": \"joined_sink\",\n      \"ops\": 6,\n      \"prepared_bytes\": 1406,\n      \"source\": \"n=7\\ndata=tools.fetch(n)\\ntext=data['message']\\nprint('['+text+'/'+text+']')\",\n      \"code_bytes\": 352,\n      \"clif_brif_sites\": 3,\n      \"tape_used_bytes\": 336,\n      \"tape_capacity_bytes\": 448,\n      \"future_bytes\": {\n        \"tape\": 928,\n        \"native\": 664\n      },\n      \"source_derived_no_buffer_live_bytes_removable\": 56,\n      \"modeled_small_dest_tape_capacity_saving\": 64\n    },\n    {\n      \"buffers\": 0,\n      \"capacity\": 8,\n      \"json_live_capacity\": 7,\n      \"json_live_len\": 7,\n      \"live_capacity\": 7,\n      \"live_len\": 7,\n      \"name\": \"async_string\",\n      \"ops\": 6,\n      \"prepared_bytes\": 1115,\n      \"source\": \"data=tools.fetch(7)\\ntext=data['message']\\nr=tools.unused1(text)\\nprint(r)\",\n      \"code_bytes\": 444,\n      \"clif_brif_sites\": 3,\n      \"tape_used_bytes\": 336,\n      \"tape_capacity_bytes\": 448,\n      \"future_bytes\": {\n        \"tape\": 928,\n        \"native\": 664\n      },\n      \"source_derived_no_buffer_live_bytes_removable\": 56,\n      \"modeled_small_dest_tape_capacity_saving\": 64\n    }\n  ],\n  \"loop_counts\": [\n    {\n      \"case\": \"quote\",\n      \"dispatches\": 1030,\n      \"fuel_reservations\": 1,\n      \"row_payload_bytes\": 4096,\n      \"rows\": 256,\n      \"yields\": 0\n    },\n    {\n      \"case\": \"madd_loop\",\n      \"dispatches\": 1542,\n      \"fuel_reservations\": 1,\n      \"row_payload_bytes\": 4096,\n      \"rows\": 256,\n      \"yields\": 0\n    },\n    {\n      \"case\": \"quote\",\n      \"dispatches\": 16390,\n      \"fuel_reservations\": 16,\n      \"row_payload_bytes\": 65536,\n      \"rows\": 4096,\n      \"yields\": 15\n    },\n    {\n      \"case\": \"madd_loop\",\n      \"dispatches\": 24582,\n      \"fuel_reservations\": 16,\n      \"row_payload_bytes\": 65536,\n      \"rows\": 4096,\n      \"yields\": 15\n    },\n    {\n      \"case\": \"quote\",\n      \"dispatches\": 262150,\n      \"fuel_reservations\": 256,\n      \"row_payload_bytes\": 1048576,\n      \"rows\": 65536,\n      \"yields\": 255\n    },\n    {\n      \"case\": \"madd_loop\",\n      \"dispatches\": 393222,\n      \"fuel_reservations\": 256,\n      \"row_payload_bytes\": 1048576,\n      \"rows\": 65536,\n      \"yields\": 255\n    }\n  ],\n  \"tape_function_instruction_count\": 1907,\n  \"tape_function_instruction_bytes\": 7628,\n  \"hardware_misses_measured\": false,\n  \"production_equal_base\": true,\n  \"chosen_candidate\": \"omit buffer-only liveness allocation and traversal when admitted buffer count is zero\",\n  \"secondary_deferred_candidate\": \"narrow Dest only, no operand pool, modeled Op 56 -> 48\"\n}",
+      "exit_code": 0,
+      "error": null
+    },
+    {
+      "command": "python3 -c 'import os,fcntl,subprocess;f=open(\"/Users/yuzhe/.hermes/cache/scratch/minipy-perf-build.lock\",\"a+\");fcntl.flock(f,fcntl.LOCK_EX);e=dict(os.environ,RUSTUP_AUTO_INSTALL=\"0\");subprocess.run([\"cargo\",\"+1.96.0\",\"fmt\",\"--all\",\"--\",\"--check\"],env=e,check=True);subprocess.run([\"rustfmt\",\"+stable\",\"--edition\",\"2024\",\"--check\",\"evidence/ci-layout/probe.rs\",\"evidence/ci-layout/loop-probe.rs\"],env=e,check=True)'",
+      "output": "error: 'cargo-fmt' is not installed for the toolchain '1.96.0-aarch64-apple-darwin'.\nhelp: run `rustup component add --toolchain 1.96.0-aarch64-apple-darwin rustfmt` to install it\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py\", line 528, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['cargo', '+1.96.0', 'fmt', '--all', '--', '--check']' returned non-zero exit status 1.",
+      "exit_code": 1,
+      "error": null
+    },
+    {
+      "command": "sysctl -n machdep.cpu.brand_string hw.cachelinesize hw.l1icachesize hw.l1dcachesize hw.l2cachesize",
+      "output": "Apple M4\n128\n131072\n65536\n4194304",
+      "exit_code": 0,
+      "error": null
+    },
+    {
+      "command": "xctrace list templates",
+      "output": "== Standard Templates ==\nActivity Monitor\nAllocations\nAnimation Hitches\nApp Launch\nAudio System Trace\nCPU Counters\nCPU Profiler\nCore ML\nData Persistence\nFile Activity\nGame Memory\nGame Performance\nGame Performance Overview\nLeaks\nLogging\nMetal System Trace\nNetwork\nPower Profiler\nProcessor Trace\nRealityKit Trace\nSwift Concurrency\nSwiftUI\nSystem Trace\nTailspin\nTime Profiler",
+      "exit_code": 0,
+      "error": null
+    },
+    {
+      "command": "rustup toolchain list",
+      "output": "stable-aarch64-apple-darwin (active, default)\n1.92.0-aarch64-apple-darwin\n1.96.0-aarch64-apple-darwin",
+      "exit_code": 0,
+      "error": null
+    },
+    {
+      "command": "git status --short",
+      "output": "M docs/experiments.md\n?? evidence/ci-layout/\n?? tools/ci_layout_probe.py\n?? tools/ci_layout_reduce.py",
+      "exit_code": 0,
+      "error": null
+    },
+    {
+      "command": "python3 -c 'import os,fcntl,subprocess;f=open(\"/Users/yuzhe/.hermes/cache/scratch/minipy-perf-build.lock\",\"a+\");fcntl.flock(f,fcntl.LOCK_EX);e=dict(os.environ,RUSTUP_AUTO_INSTALL=\"0\");subprocess.run([\"cargo\",\"+stable\",\"fmt\",\"--all\",\"--\",\"--check\"],env=e,check=True);subprocess.run([\"rustfmt\",\"+stable\",\"--edition\",\"2024\",\"--check\",\"evidence/ci-layout/probe.rs\",\"evidence/ci-layout/loop-probe.rs\"],env=e,check=True)'",
+      "output": "",
+      "exit_code": 0,
+      "error": null
+    }
+  ]
+}
