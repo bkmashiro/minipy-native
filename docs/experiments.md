@@ -2096,3 +2096,7 @@ installation/cleanup counted and current unfused tape as the control. No C&P
 result is claimed here. Full commands, corrected tests, raw, synthesis and
 reducer: [BZ evidence](../evidence/bz-detach/README.md).
 
+Receipt-verified `gpt-6-luna` independently reviewed fixed snapshot `24518d5`,
+confirmed production restoration and backing/cancellation reasoning, reproduced
+the reduction and found no blockers. See [BZ review](../evidence/bz-detach/review.md).
+
