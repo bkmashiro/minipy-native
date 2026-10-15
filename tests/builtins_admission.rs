@@ -154,3 +154,39 @@ fn preparation_rejects_before_effects_with_typed_locations() {
     assert_eq!(error.kind, AdmissionKind::Schema);
     assert_eq!(error.location, None); // Host schema has no source position.
 }
+
+#[test]
+fn top_level_admission_reports_source_locations_on_both_backends() {
+    for (source, location, reason) in [
+        ("print(1)\nreturn 2", (2, 1), "return is only supported"),
+        (
+            "async def main(x: i64) -> i64:\n    return 1",
+            (1, 1),
+            "parameters must match",
+        ),
+        (
+            "async def main() -> bool:\n    return 1",
+            (1, 21),
+            "must return int/i64",
+        ),
+        (
+            "async def other() -> i64:\n    return 1",
+            (1, 1),
+            "only undecorated",
+        ),
+        (
+            "async def main() -> i64:\n    return",
+            (2, 5),
+            "return requires",
+        ),
+    ] {
+        for error in [
+            InterpreterUnit::prepare_script(source, &[]).err().unwrap(),
+            CodeUnit::compile_script(source, &[]).err().unwrap(),
+        ] {
+            assert_eq!(error.kind, AdmissionKind::Unsupported, "{source}: {error}");
+            assert_eq!(error.location, Some(location), "{source}: {error}");
+            assert!(error.reason.contains(reason), "{source}: {error}");
+        }
+    }
+}

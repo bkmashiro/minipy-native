@@ -210,12 +210,19 @@ impl<'a> Compiler<'a> {
                     || !fun.type_params.is_empty()
                     || fun.type_comment.is_some()
                 {
-                    return Err(err("only undecorated async def main is supported"));
+                    return Err(err("only undecorated async def main is supported")
+                        .at(self.source, fun.start().to_usize()));
                 }
-                self.check_legacy_signature(&fun.args)?;
+                self.check_legacy_signature(&fun.args)
+                    .map_err(|e| e.at(self.source, fun.start().to_usize()))?;
                 if !matches!(fun.returns.as_deref(), Some(ast::Expr::Name(n)) if ["i64", "int"].contains(&n.id.as_str()))
                 {
-                    return Err(err("legacy main must return int/i64"));
+                    return Err(err("legacy main must return int/i64").at(
+                        self.source,
+                        fun.returns
+                            .as_deref()
+                            .map_or_else(|| fun.start().to_usize(), |e| e.start().to_usize()),
+                    ));
                 }
                 (&fun.body[..], true)
             } else {
@@ -235,13 +242,14 @@ impl<'a> Compiler<'a> {
                 if !self.legacy || !terminal {
                     return Err(err(
                         "return is only supported as the final statement of async main",
-                    ));
+                    )
+                    .at(self.source, r.start().to_usize()));
                 }
-                let value = r
-                    .value
-                    .as_deref()
-                    .ok_or_else(|| err("return requires an expression"))?;
-                self.compile_legacy_return(value, 0, &mut statements)?;
+                let value = r.value.as_deref().ok_or_else(|| {
+                    err("return requires an expression").at(self.source, r.start().to_usize())
+                })?;
+                self.compile_legacy_return(value, 0, &mut statements)
+                    .map_err(|e| e.at(self.source, value.start().to_usize()))?;
                 continue;
             }
             self.compile_stmt(statement, 0, false, false, &mut statements)?;

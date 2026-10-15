@@ -1297,3 +1297,31 @@ and types once, task input installation checks declared scalar types, and
 execution retains existing per-task authorization/resource bounds. New
 builtins incur no per-row dispatch or dynamic registration probe on old code.
 
+BI review follow-up: top-level admission (`return` placement/value and legacy
+`async main` name, signature and result annotation) now attaches a source
+location before returning a typed error. Both preparation backends have a
+focused regression; Host schema/backend errors remain unlocated.
+
+Private complete-source admission check (read-only, no source export):
+`python3.14 tools/bi_private_probe.py` reuses Z's cutoff, CLI time-quantile
+session selection, call replay and exact-source dedup; it verifies the CLI
+session hashes/replay counters and the complete CLI aggregate against Z's
+private saved summary. It picks the lexicographically lowest 64 SHA256 digests
+of 520 exact-unique `hermes/cli` `execute_code` strings, sends each complete
+source over stdin to `InterpreterUnit::prepare_script(source, &[])` with
+`tool-json`, and prints only fixed-category counts. Result: **0/64 admitted**;
+32 unsupported calls (`builtin_other` in the probe's conservative fixed-label
+mapping; no sampled `sum/all/any/range/enumerate` as first error), 12 unsupported
+statements, 8 unsupported expressions, 1 unresolved name and 11 other
+unsupported admission failures. These are first-error buckets, not all errors
+per program. No task was executed and no Tool effect occurred. The lack of a
+declared Host input/Tool schema is part of this specific probe, so this is not
+a production-script compatibility estimate; programs can fail for different
+reasons when given their actual schema. Nor does 0/64 establish 0/520 or
+anything about unseen workloads. The original corpus remains private; no
+source, per-script digest, identifier or raw error reason enters the repo.
+During this rerun, newly inserted pre-cutoff subagent sessions changed Z's
+subagent time-quantile sample, so only the independently reconciled CLI stratum
+is reported; the old 632-source cross-stratum aggregate is not reused as a
+fresh full-source admission denominator.
+
