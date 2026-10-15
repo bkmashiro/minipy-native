@@ -4,6 +4,8 @@
 
 ## 后续决策（BH，2026-10-15）
 
+[BH 短阶段结论](../bh-stage-conclusion.md) 给出每项 keep/revert/defer、实测及边界；下列链接保留原审阅与独立实验的固定版本身份。
+
 - 原审阅全文另存于本机材料；仓库读者可依据下列固定提交、实验段与原始数据核查。BD `cae9087` 的 rows 借用/字段局部性修复仍留在 [实验分支](https://github.com/bkmashiro/minipy-native/tree/cae9087823fe34d3c05c8df966639c1c61a13c83)，不整包纳入 main；其约 17% Quote warm 差距未归因。
 - [BF `ba94af5`](https://github.com/bkmashiro/minipy-native/tree/ba94af54c4087336c1c2cb08de75d80334f2f6c6) C1 按需 owner 数组节省了 39.5 requested bytes/task，却没有稳定端到端收益；C2 两轮 Quote 计时同向改善，但机制未隔离且增大二进制，两者都撤回。见 BF `docs/experiments.md` 与 `bench/patches/bf-*`。这不是批准 AY/BD 合并。
 - [BG `f17cf8e`](https://github.com/bkmashiro/minipy-native/tree/f17cf8ec680560c68c1e6d6e199236a83212649a) 的独立 JSON 字符串成功验证复用经定向审查；BH 仅将该改动连同验证材料集成进 main，不包含 AY/BD。原始 alias+单次 contains 的三对小规模完整请求显示长普通串 tape cold 同向改善，短串和 escaped 没有稳定收益；旧 scalar/Quote 对照无稳定损失。见本仓库 `evidence/bh-string-integration/summary.json`、BG 原始数据及 `docs/experiments.md` 的 BH 段。等待期 RSS 没有测量，不将 State 布局等同于物理内存。
