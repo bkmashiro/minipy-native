@@ -1238,7 +1238,62 @@ real localhost HTTP tests), and strict all-target Clippy for that feature
 passed under `minipy-perf-build.lock`. `--features debug-runtime --test
 debug_runtime` passed. The `wasm32-unknown-unknown` target is listed for the
 default toolchain but not installed under Rust 1.96.0; an attempted offline
-check fails at missing `core`, so no Wasm validation is claimed. No numerical
-throughput gain or complete natural-source admission gain is claimed; no
-matched cold/warm performance run or Linux run was done in this slice.
+check fails at missing `core`, so no Wasm validation is claimed. No complete
+natural-source admission gain or Linux run is claimed.
+
+Small old-source control: `git worktree add --detach baseline 89b898b`, then
+under the shared `minipy-perf-build.lock`, for each arm in B/A/A/B run
+`cargo +1.96.0 clean --release --manifest-path ARM/bench/Cargo.toml -p
+minipy-native -p minipy-native-bench`, `cargo +1.96.0 build --offline --locked
+--release --manifest-path ARM/bench/Cargo.toml --bin interpreter_ab`, and
+`python3 tools/bi_measure.py {base|candidate}
+evidence/bi-builtins/source-cold.jsonl`; `ARM` is `baseline` for B and `.`
+for A. Cleaning the two packages on the *shared* target between arms is
+necessary: Cargo otherwise reuses the executable from the other checkout.
+The runner checks completed output and records the exact binary SHA, source
+commit and dirty status per request; 100 requests per scalar/weighted ×
+native/tape × process, 1600 raw rows in `source-cold.jsonl.gz` (SHA256 of
+uncompressed JSONL `cfde32ad3074bba3ceebc243e8c0f2e54d04b92f72994b0a30e66c484d185594`).
+Rust 1.96.0 macOS ARM64, uninstrumented release, same ready provider and
+source in both arms; scalar has 0 rows, weighted 256. Wall nanosecond medians
+per independent process in B/A/A/B order:
+
+| engine/case | B1 | A1 | A2 | B2 |
+|---|---:|---:|---:|---:|
+| tape scalar | 23,667 | 30,396 | 27,625 | 28,375 |
+| tape weighted | 34,354 | 34,791 | 34,916 | 34,333 |
+| native scalar | 148,708 | 148,145 | 146,209 | 140,083 |
+| native weighted | 191,458 | 182,333 | 184,687 | 184,000 |
+
+Both arms' prepared tape bytes were identical for the old sources (scalar
+594, weighted 1090); no builtin-specific runtime state is allocated on old
+sources. Scalar tape variance in this short four-process check is too high to
+infer a reliable win or loss (A1/B1 +28%, A2/B2 -3%); weighted tape pairs are
+within ~2%, native pairs mixed. This does not establish universal performance
+neutrality or a new performance claim. It does exercise source-cold preparation
+plus execution and cleanup; prepared execution was not separately measured.
+The baseline worktree was removed after measurement. No new target or toolchain
+was created.
+
+Support matrix and next gaps (source binding, not runtime fallback):
+
+| Shape | Admission | Reason or boundary |
+|---|---|---|
+| `len(q)` after `q=tools.load_quotes(...)` | yes | Quote/v1 owner/view count; 0-row budget succeeds |
+| `abs(x)`, `min(x,y)`, `max(x,y)` with i64 operands | yes | scalar IR, checked `abs` |
+| `len(string_or_json)`, iterable min/max | no | no string/JSON length-value or iterable semantic IR |
+| `sum/any/all` generators; `range/enumerate` | no | no generator/iteration contract in the finite slice |
+| unsupported call/arity/type/syntax | rejection at prepare | typed reason plus innermost AST location, before effects |
+
+Next highest-value *candidate* is typed sequence iteration for genuine
+generator reductions, but it introduces iteration and ownership semantics;
+AO's syntactic counts alone do not justify it. UTF-8 string length is a
+separate bounded scanning design with character-count and error/budget rules;
+it was explicitly not implemented as byte length. No generic `in` kernel:
+string membership already has a literal-needle substring implementation,
+while future sequence membership would need typed element comparisons.
+Registration is static at compiler/AOT build, source preparation binds names
+and types once, task input installation checks declared scalar types, and
+execution retains existing per-task authorization/resource bounds. New
+builtins incur no per-row dispatch or dynamic registration probe on old code.
 
