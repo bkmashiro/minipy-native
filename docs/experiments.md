@@ -1108,3 +1108,56 @@ and per-reply schema copy are included; these numbers neither isolate scan
 instruction cost nor imply an advantage over Monty. The API is retained for
 genuine typed datasets, not as a faster substitute for already-typed Quote/v1.
 
+### AY legacy-path parent/current A/B (macOS ARM64, synthetic)
+
+`4aaae37` (before record scans) vs `fd914bd` (record scans), same existing
+`bench/src/bin/interpreter_ab.rs` harness and fixture bodies, Rust/Cargo 1.96.0,
+offline release builds. Built each revision's binary separately and ran both
+from the same worktree. The opt-in `minipy-native/tool-json` build is the relevant
+production feature configuration; a default-feature build is a negative control.
+Each cell has 28 timed calls per revision (four processes × seven calls), in two
+rounds of ABBA/BAAB process order. `scalar` has zero rows and `weighted`
+has 4096 Quote rows; both use `RequestProvider::ready` with zero delay and the
+same `ScriptLimits`/source/output assertion. Cold wall time includes provider
+setup, compilation/preparation, async load, execution, output and reclamation;
+warm wall time includes provider setup and execution/reclamation, with preparation
+outside the interval. Process startup is excluded. Raw per-call measurements,
+source hashes, and exact binary argv are in
+`bench/results/ay-legacy-path-ab-macos.jsonl` (opt-in) and
+`bench/results/ay-legacy-path-default-ab-macos.jsonl` (control). Reproduce by
+building `--bin interpreter_ab` under each revision with `--features
+minipy-native/tool-json` (or no feature) and invoking
+`interpreter_ab {native,interpreter} {scalar,weighted} {cold,warm} {0,4096} 7`
+in the stated paired order. Timings are nanoseconds, medians of 28, current
+relative to parent:
+
+| feature | case | mode | engine | parent ns | current ns | change |
+|---|---|---|---|---:|---:|---:|
+| tool-json | scalar | cold | native | 130458 | 149020 | +14.2% |
+| tool-json | scalar | cold | tape | 15500 | 16125 | +4.0% |
+| tool-json | scalar | warm | native | 812 | 854 | +5.2% |
+| tool-json | scalar | warm | tape | 667 | 771 | +15.6% |
+| tool-json | weighted | cold | native | 185334 | 190229 | +2.6% |
+| tool-json | weighted | cold | tape | 55458 | 70521 | +27.2% |
+| tool-json | weighted | warm | native | 11208 | 11062 | -1.3% |
+| tool-json | weighted | warm | tape | 34812 | 49958 | +43.5% |
+| default | scalar | cold | native | 96979 | 97812 | +0.9% |
+| default | scalar | cold | tape | 15584 | 15250 | -2.1% |
+| default | scalar | warm | native | 958 | 834 | -13.0% |
+| default | scalar | warm | tape | 792 | 833 | +5.2% |
+| default | weighted | cold | native | 195084 | 209520 | +7.4% |
+| default | weighted | cold | tape | 70354 | 72271 | +2.7% |
+| default | weighted | warm | native | 12521 | 12666 | +1.2% |
+| default | weighted | warm | tape | 44104 | 44625 | +1.2% |
+
+There is a measurable opt-in tape legacy Quote-scan regression at 4096 rows;
+the default-feature control and opt-in native prepared scan do not show the same
+increase. The opt-in tape loop now probes the record owner at `Scan`/`Next` and
+dispatches on record vs Quote even for a Quote-only program; that is a plausible
+cause from source inspection, not an isolated causal measurement. Very short
+scalar warm runs and cold native compilation have substantial timing spread;
+their small percentage changes are not a reliable regression claim. This local
+synthetic A/B does not establish behavior under real provider/network delays or
+Linux, and it is not a Monty comparison. Keep the tape cost as a performance
+follow-up; do not claim legacy opt-in performance neutrality.
+
