@@ -1798,16 +1798,49 @@ SHA256 `ddcde8f340d0f65be9ccb36d94736bcb32fd6650ccf331a1a4239f21432f5618`.
 BQ/BS binaries and harness digests are in each row. Four process arms B/A/A/B,
 24 requests plus one warmup per case/backend/process; fixture setup and build
 separate, each timed request includes source preparation, dispatch of a ready
-already-resident JSON reply, output and cleanup. Pooled median BS/BQ old
-scalar tape **21.250/6.917 µs (+207%)**, native **103.167/79.688 µs (+29%)**;
-Quote tape **13.042/9.563 µs (+36%)**, native **107.271/86.021 µs (+25%)**.
-These pooled figures are *not stable regressions*: scalar tape process medians
-B0/A1/A2/B3 = **8.58/28.58/5.50/4.96 µs**, native
-**85.21/162.00/54.75/52.12 µs**, drifting far more than the paired design
-can attribute to code. The same natural plain-string case BS/BQ pooled tape
-**13.834/12.083 µs (+14%)**, native **89.146/76.292 µs (+17%)**; A2/B3
-plain native **63.29/65.96 µs** even reverses sign. This bounded evidence
-does not prove either a meaningful benefit or a stable major old-path loss.
+already-resident JSON reply, output and cleanup. Excluding setup (`index=0`)
+and the first request warmup (`index=1`), pooled median BS/BQ old scalar tape
+**14.917/6.875 µs (+117.0%)**, native **101.709/79.292 µs (+28.3%)**;
+Quote tape **12.209/9.480 µs (+28.8%)**, native **106.771/85.667 µs (+24.6%)**.
+These pooled differences are substantial but process drift prevents attributing
+them as stable code regressions: scalar tape process medians B0/A1/A2/B3 =
+**8.48/27.08/5.42/4.94 µs**, native **85.08/158.13/54.42/51.50 µs**.
+The natural plain-string case BS/BQ pooled tape **13.333/11.958 µs (+11.5%)**,
+native **88.833/76.041 µs (+16.8%)**; A2/B3 plain native
+**63.08/65.58 µs** reverses sign. The pooled old-path slowdown is an observed
+signal, not proof of its stable magnitude or absence: this bounded campaign
+does not resolve a stable major old-path loss or a meaningful benefit.
+Reproduce all BAAB aggregates from the immutable raw file (µs); each group
+contains 48 measured requests, with 24 per process/case/backend:
+
+```sh
+python3 - <<'PY'
+import collections, json, statistics
+from pathlib import Path
+r = [json.loads(line) for line in Path('evidence/bs-string-integration/request-cost.jsonl').open()]
+assert len(r) == 936
+groups = collections.defaultdict(list)
+processes = collections.defaultdict(list)
+for row in r:
+    if row['kind'] != 'request' or row['index'] <= 1:
+        continue
+    us = row['ns'] / 1000
+    groups[row['arm'], row['case'], row['backend']].append(us)
+    processes[row['process'], row['case'], row['backend']].append(us)
+assert len(groups) == 18 and all(len(v) == 48 for v in groups.values())
+assert len(processes) == 36 and all(len(v) == 24 for v in processes.values())
+for case in ('scalar', 'quote', 'plain', 'string'):
+    for backend in ('tape', 'native'):
+        a, b = (statistics.median(groups[arm, case, backend]) for arm in 'AB')
+        print(case, backend, 'BS/BQ µs:', a, b, 'delta %:', 100 * (a / b - 1))
+for case in ('scalar', 'plain'):
+    for backend in ('tape', 'native'):
+        print(case, backend, 'B0/A1/A2/B3 µs:',
+              [statistics.median(processes[i, case, backend]) for i in range(4)])
+PY
+```
+The sink diagnostic and consecutive-concatenation reference below use their
+own `warmup` field, not request indices; their stated medians exclude it.
 The synthetic string fixture is not actual filesystem I/O or a Monty
 comparison; different semantics prevent claiming scalar/Quote speed ratios as
 string speedup.
