@@ -1078,3 +1078,66 @@ latencies (µs) were respectively 269/2437 interpreter, 879/1525 native,
 486/274904 Monty, 65235/157892 spawn, 4548/98822 prefork. No production
 runtime, website, frozen S/AD raw or global system setting changed.
 
+## BE: detached completion notification candidate (2026-10-15)
+
+Starting from `20e454a` (the reviewed AL experiment already on main), one bounded
+candidate removed the separate Tokio oneshot completion channel in native and
+tape. `tokio::spawn` returned a `JoinHandle<Result<_, TaskError>>`; the receiver
+selected it against cancellation, dropping the handle on cancellation without
+aborting the detached operation. The operation still owns its provider and
+arguments until actual completion. `fixture_reference` retained its old channel.
+The candidate patch is preserved at `evidence/be-http-cost/join-candidate.patch`
+but **withdrawn** from production source. All 96 all-feature tests, including
+cancel/late completion, real localhost HTTP and string tests, and strict all-target
+Clippy passed on the candidate; `cargo fmt --check` passed after reversion.
+
+The test asks whether avoiding a separate channel improves total task cost when
+I/O-enabled scheduling and HTTP work are both retained. No compiler, chunk,
+fairness yield, body copy, permission or provider semantic change was made. The
+simple alternative is the current oneshot protocol. Using AL's already tracked
+`al_io_probe` (same source SHA for both arms), the baseline and candidate were
+built in release with `--offline --locked --features tool-json`, one job and the
+existing shared target. Four AB/BA/BA/AB independent process pairs ran serially
+on the M4/macOS 26.4.1, each process with three measured batches per cell.
+I/O-enabled current-thread Tokio is active in both arms. Ready weighted scans
+use 1000 rows and chunk 256. Mixed requests join that scan, a short scalar
+sibling and a real pooled localhost fetch→JSON leaf→publish→print chain with two
+HTTP operations, including output checks and cleanup. Prepared excludes code
+preparation; source-cold compiles each request inside the clock. Fixture and
+runtime are warmed, so these are not process-start or remote TLS costs.
+
+`evidence/be-http-cost/{0..3}-{A,B}.csv` holds all 360 batch rows, including
+warm-up-excluded 20 cold or 100 prepared mixed iterations/batch. `run.py`
+validates counts, receipts, and output checksum consistency; `identity.json`
+records executable/source/lock hashes and toolchain; `summary.json` retains
+all per-pair differences. Numbers below are median of the four paired process
+means in µs/request; pairs, not individual requests, are replication units.
+
+| Workload/backend | Boundary | oneshot | JoinHandle | Paired directions |
+|---|---|---:|---:|---|
+| weighted/native | prepared | 14.736 | 14.816 | -1.5/+12.6/+0.3/+0.8% |
+| weighted/tape | prepared | 20.781 | 21.139 | +2.3/+2.6/-0.5/+0.6% |
+| mixed/native | prepared | 93.590 | 93.643 | +0.0/+0.3/-0.1/-0.4% |
+| mixed/tape | prepared | 102.603 | 108.820 | -0.5/+13.5/+0.2/-1.8% |
+| mixed/native | source-cold | 415.401 | 414.971 | +1.1/-3.7/+2.3/-0.5% |
+| mixed/tape | source-cold | 142.673 | 140.406 | -1.7/-1.1/-3.1/-0.3% |
+
+The small cold tape advantage does not repay absent/negative prepared value
+and the extra duplicated receiver path. The same-binary detached/yield control
+stays ~13.43 µs in both arms, as expected because it still uses oneshot; it is
+not evidence the new path reduces kernel wakes. No syscall trace, density/RSS,
+per-task CPU, throughput or real remote API measurement was made. The process
+wall clock includes its server and client work but is not a CPU attribution.
+Decision: revert the sole
+candidate and stop. No second optimization, Linux performance inference, VM,
+Pysolate, website, default feature, or production file change.
+
+Reproduction: `cargo build --offline --locked --release --features tool-json
+--example al_io_probe` at baseline; copy executable to `base`, apply preserved
+candidate via Hermes patch tool, `cargo test --offline --locked --all-features`,
+`cargo clippy --offline --locked --all-features --all-targets -- -D warnings`,
+rebuild release, copy as `join`; then `python3 evidence/be-http-cost/run.py
+<base> <join>`. The runner writes canonical CSV and summaries in its directory.
+The baseline/JoinHandle SHA256 are in `identity.json`. Local disk was 21 GiB
+free at start, 19 GiB after debug/release builds; no build tree was committed.
+

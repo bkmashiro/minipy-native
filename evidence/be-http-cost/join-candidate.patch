@@ -1,0 +1,82 @@
+*** Begin Patch
+*** Update File: src/runtime.rs
+@@
+ pub(crate) async fn receive<T>(
+@@
+     result
+ }
++#[cfg(not(target_arch = "wasm32"))]
++pub(crate) async fn receive_join<T: Send + 'static>(
++    task: tokio::task::JoinHandle<Result<T, TaskError>>,
++    cancel: &Cancellation,
++) -> Result<T, TaskError> {
++    // Dropping JoinHandle detaches the operation; its result is discarded on completion.
++    let result = tokio::select! {
++        biased;
++        _ = cancel.cancelled() => return Err(TaskError::Cancelled),
++        result = task => result.map_err(|_| TaskError::Provider("operation lost".into()))?,
++    };
++    check(cancel)?;
++    result
++}
+@@
+-                    let (tx, rx) = oneshot::channel();
+-                    tokio::spawn(async move {
+-                        let _ = tx.send(provider.record_total(batch, total).await);
+-                    });
+-                    let receipt = receive(rx, &cancel).await?;
++                    let task = tokio::spawn(async move { provider.record_total(batch, total).await });
++                    let receipt = receive_join(task, &cancel).await?;
+@@
+-                    let (tx, rx) = oneshot::channel();
+-                    tokio::spawn(async move {
+-                        let _ = tx.send(p.load_quotes(batch).await);
+-                    });
+-                    let quotes = receive(rx, &cancel).await?;
++                    let task = tokio::spawn(async move { p.load_quotes(batch).await });
++                    let quotes = receive_join(task, &cancel).await?;
+@@
+-                    let (tx, rx) = oneshot::channel();
+-                    tokio::spawn(async move {
+-                        let _ = tx.send(p.record_total(batch, total).await);
+-                    });
+-                    frame.locals[target] = receive(rx, &cancel).await?;
++                    let task = tokio::spawn(async move { p.record_total(batch, total).await });
++                    frame.locals[target] = receive_join(task, &cancel).await?;
+@@
+-                let (tx, rx) = oneshot::channel();
+-                tokio::spawn(async move {
+-                    let _ = tx.send(p.call_tool(id, args, count).await);
+-                });
+-                match (json, receive(rx, &cancel).await?) {
++                let task = tokio::spawn(async move { p.call_tool(id, args, count).await });
++                match (json, receive_join(task, &cancel).await?) {
+*** Update File: src/interpreter.rs
+@@
+-#[cfg(not(target_arch = "wasm32"))]
+-use tokio::sync::oneshot;
+@@
+-                let (tx, rx) = oneshot::channel();
+-                tokio::spawn(async move {
+-                    let _ = tx.send(p.load_quotes(batch).await);
+-                });
+-                let quotes = runtime::receive(rx, &cancel).await?;
++                let task = tokio::spawn(async move { p.load_quotes(batch).await });
++                let quotes = runtime::receive_join(task, &cancel).await?;
+@@
+-                let (tx, rx) = oneshot::channel();
+-                tokio::spawn(async move {
+-                    let _ = tx.send(p.call_tool(id, args, count).await);
+-                });
+-                match (is_json, runtime::receive(rx, &cancel).await?) {
++                let task = tokio::spawn(async move { p.call_tool(id, args, count).await });
++                match (is_json, runtime::receive_join(task, &cancel).await?) {
+@@
+-                let (tx, rx) = oneshot::channel();
+-                tokio::spawn(async move {
+-                    let _ = tx.send(p.record_total(batch, total).await);
+-                });
+-                state.locals[target] = runtime::receive(rx, &cancel).await?;
++                let task = tokio::spawn(async move { p.record_total(batch, total).await });
++                state.locals[target] = runtime::receive_join(task, &cancel).await?;
+*** End Patch
