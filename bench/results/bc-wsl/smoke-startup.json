@@ -1,0 +1,22 @@
+[
+  {
+    "round": 0,
+    "arm": "interpreter",
+    "startup_ns": 1598504
+  },
+  {
+    "round": 0,
+    "arm": "native",
+    "startup_ns": 1383578
+  },
+  {
+    "round": 0,
+    "arm": "monty",
+    "startup_ns": 1305042
+  },
+  {
+    "round": 0,
+    "arm": "prefork",
+    "startup_ns": 53939769
+  }
+]
