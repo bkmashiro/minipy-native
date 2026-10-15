@@ -1,0 +1,21 @@
+[
+  {
+    "test": [
+      "--test",
+      "tool_validation_cost",
+      "synchronous_join"
+    ],
+    "exit": 0,
+    "stdout": "\nrunning 1 test\ndecoded print allocations native=false: plain=15, joined=15\ndecoded print allocations native=true: plain=15, joined=15\ntest synchronous_join_does_not_promote_decoded_text_to_arc ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.01s\n\n",
+    "stderr": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 8.68s\n     Running tests/tool_validation_cost.rs (target/release/deps/tool_validation_cost-33cbc9157ab612be)\n"
+  },
+  {
+    "test": [
+      "--lib",
+      "borrowed_sink"
+    ],
+    "exit": 0,
+    "stdout": "\nrunning 1 test\nsink_layout output=72 part=56 scalar_slots=1792\ntest runtime::output_tests::borrowed_sink_prepares_before_authority_and_commits_atomically ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 25 filtered out; finished in 0.00s\n\n",
+    "stderr": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 4.23s\n     Running unittests src/lib.rs (target/release/deps/minipy_native-5c76f542d8e0b57a)\n"
+  }
+]

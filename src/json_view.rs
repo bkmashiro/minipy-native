@@ -212,13 +212,20 @@ impl State {
             };
             self.strings.as_mut().unwrap()[slot] = state;
         }
-        match &self.strings.as_ref().unwrap()[slot] {
-            StringCache::Decoded(value) => Ok(value),
-            StringCache::Shared(value) => Ok(value),
+        Ok(self.prepared_string(slot))
+    }
+    /// Reborrow after string/validate_string succeeded, with no intervening
+    /// install or release. The synchronous sink prepares every part first.
+    pub(crate) fn prepared_string(&self, slot: usize) -> &str {
+        match &self.strings.as_ref().expect("string plan")[slot] {
+            StringCache::Decoded(value) => value,
+            StringCache::Shared(value) => value,
             StringCache::Validated => {
+                let root = self.plan.paths[slot].root;
+                let range = self.ranges[slot].as_ref().expect("validated path").clone();
                 let owner = self.roots[root].as_ref().expect("validated owner");
                 // install/release invalidate the marker before changing the owner.
-                Ok(unsafe { validated_span(owner, range) })
+                unsafe { validated_span(owner, range) }
             }
             StringCache::Unchecked => unreachable!(),
         }

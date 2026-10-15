@@ -341,6 +341,7 @@ impl Output {
         source: &crate::tool::StringSource,
         locals: &[i64],
     ) -> Result<(), TaskError> {
+        use crate::tool::StringSource as S;
         let parts = match source {
             crate::tool::StringSource::Joined(parts) => parts.as_slice(),
             other => std::slice::from_ref(other),
@@ -348,10 +349,24 @@ impl Output {
         let mut values: [Option<SinkPart>; 32] = std::array::from_fn(|_| None);
         let mut len = 1usize;
         for (i, part) in parts.iter().enumerate() {
-            values[i] = Some(self.sink_part(part, locals)?);
-            len = len
-                .checked_add(values[i].as_ref().unwrap().len())
-                .ok_or(TaskError::Budget)?;
+            // Preserve left-to-right validation, scan charging and size failures.
+            // Only scalars need temporary storage. Text stays in its current owner.
+            let size = match part {
+                S::Literal(s) => s.len(),
+                S::Json { slot, .. } => {
+                    let json = self.json.as_mut().expect("JSON plan");
+                    json.validate_string(*slot)?;
+                    json.prepared_string(*slot).len()
+                }
+                S::Scalar { slot, boolean } => {
+                    let value = SinkPart::scalar(locals[*slot], *boolean);
+                    let size = value.len();
+                    values[i] = Some(value);
+                    size
+                }
+                S::Joined(_) => unreachable!("flattened sink plan"),
+            };
+            len = len.checked_add(size).ok_or(TaskError::Budget)?;
             if len > 64 * 1024 + 1 {
                 return Err(TaskError::Budget);
             }
@@ -372,8 +387,14 @@ impl Output {
                 .try_reserve_exact(capacity - self.stdout.len())
                 .map_err(|_| TaskError::Budget)?;
         }
-        for value in values.iter().take(parts.len()).flatten() {
-            self.stdout.push_str(value.as_str());
+        for (i, part) in parts.iter().enumerate() {
+            let text = match part {
+                S::Literal(s) => s.as_ref(),
+                S::Json { slot, .. } => self.json.as_ref().unwrap().prepared_string(*slot),
+                S::Scalar { .. } => values[i].as_ref().unwrap().as_str(),
+                S::Joined(_) => unreachable!("flattened sink plan"),
+            };
+            self.stdout.push_str(text);
         }
         self.stdout.push('\n');
         Ok(())
@@ -674,6 +695,65 @@ async fn run<P: Provider>(
 #[cfg(test)]
 mod output_tests {
     use super::*;
+    #[cfg(feature = "tool-json")]
+    #[test]
+    fn borrowed_sink_prepares_before_authority_and_commits_atomically() {
+        use crate::tool::{PathSlot, Plan, StringSource as S};
+        for (allowed, max, scan, invalid, expected) in [
+            (
+                false,
+                100,
+                100,
+                true,
+                TaskError::Json("expected UTF-8 string"),
+            ),
+            (false, 100, 0, false, TaskError::Budget),
+            (false, 100, 100, false, TaskError::Permission),
+            (true, 2, 100, false, TaskError::Budget),
+        ] {
+            let plan = Rc::new(Plan {
+                roots: 1,
+                paths: ["a", "b"]
+                    .into_iter()
+                    .map(|key| PathSlot {
+                        root: 0,
+                        parent: None,
+                        key: key.into(),
+                    })
+                    .collect(),
+                string_paths: true,
+                ..Plan::default()
+            });
+            let mut out = Output::new(max, allowed);
+            out.stdout.push_str("1\n");
+            let mut state = crate::json_view::State::new(plan, 1024, scan);
+            state
+                .install(
+                    0,
+                    bytes::Bytes::from_static(br#"{"a":"h\u00e9\n","b":4}"#),
+                    1024,
+                )
+                .unwrap();
+            out.json = Some(Box::new(state));
+            let source = S::Joined(vec![
+                S::Literal(Arc::from("[")),
+                S::Json { slot: 0, root: 0 },
+                S::Json {
+                    slot: usize::from(invalid),
+                    root: 0,
+                },
+                S::Literal(Arc::from("]")),
+            ]);
+            assert_eq!(out.append_string_source(&source, &[]), Err(expected));
+            assert_eq!(out.stdout, "1\n");
+        }
+        println!(
+            "sink_layout output={} part={} scalar_slots={}",
+            std::mem::size_of::<Output>(),
+            std::mem::size_of::<SinkPart>(),
+            std::mem::size_of::<[Option<SinkPart>; 32]>()
+        );
+    }
     #[test]
     fn growth_never_exceeds_the_task_cap_and_rejected_lines_are_atomic() {
         for max in [0, 1, 2, 3, 7, 17, 31, 64] {

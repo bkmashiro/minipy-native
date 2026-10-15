@@ -130,6 +130,116 @@ fn unused_registered_tools_do_not_add_preparation_allocations() {
 }
 
 #[test]
+fn synchronous_join_does_not_promote_decoded_text_to_arc() {
+    use minipy_native::{
+        buffer::QuoteBuffer,
+        codegen::CodeUnit,
+        error::TaskError,
+        interpreter::{self, InterpreterUnit},
+        provider::Provider,
+        runtime::{self, Cancellation, ScriptLimits},
+        tool::{JsonLeaf, Reply, ToolArguments},
+    };
+    use std::{rc::Rc, sync::Arc};
+    struct Host;
+    impl Provider for Host {
+        fn allows_tool(&self, _: u32) -> bool {
+            true
+        }
+        async fn load_quotes(&self, _: i64) -> Result<QuoteBuffer, TaskError> {
+            Err(TaskError::Permission)
+        }
+        async fn record_total(&self, _: i64, _: i64) -> Result<i64, TaskError> {
+            Err(TaskError::Permission)
+        }
+        async fn call_bound_tool(&self, _: u32, _: ToolArguments) -> Result<Reply, TaskError> {
+            Ok(Reply::Json(bytes::Bytes::from_static(
+                br#"{"text":"hello\nworld"}"#,
+            )))
+        }
+    }
+    let tools = [ToolDeclaration {
+        id: 2,
+        name: "fetch".into(),
+        arguments: vec![],
+        result: ResultSchema::JsonTyped(vec![(vec!["text".into()], JsonLeaf::String)]),
+    }];
+    let rt = tokio::runtime::Builder::new_current_thread()
+        .build()
+        .unwrap();
+    let mut borrowing = true;
+    for native in [false, true] {
+        let mut counts = Vec::new();
+        for print in ["print(text)", "print(text + '')"] {
+            let source = format!("data=tools.fetch()\ntext=data['text']\n{print}");
+            let host = Arc::new(Host);
+            if native {
+                let code =
+                    Rc::new(CodeUnit::compile_with_declarations(&source, &[], &tools).unwrap());
+                assert_eq!(
+                    rt.block_on(runtime::execute_script(
+                        code.clone(),
+                        host.clone(),
+                        &[],
+                        ScriptLimits::default(),
+                        Cancellation::default(),
+                        None
+                    ))
+                    .status,
+                    Ok(())
+                );
+                counts.push(allocations(|| {
+                    let out = rt.block_on(runtime::execute_script(
+                        code,
+                        host,
+                        &[],
+                        ScriptLimits::default(),
+                        Cancellation::default(),
+                        None,
+                    ));
+                    assert_eq!(out.status, Ok(()));
+                    assert_eq!(out.stdout, "hello\nworld\n");
+                }));
+            } else {
+                let code = Rc::new(
+                    InterpreterUnit::prepare_with_declarations(&source, &[], &tools).unwrap(),
+                );
+                assert_eq!(
+                    rt.block_on(interpreter::execute_script(
+                        code.clone(),
+                        host.clone(),
+                        &[],
+                        ScriptLimits::default(),
+                        Cancellation::default(),
+                        None
+                    ))
+                    .status,
+                    Ok(())
+                );
+                counts.push(allocations(|| {
+                    let out = rt.block_on(interpreter::execute_script(
+                        code,
+                        host,
+                        &[],
+                        ScriptLimits::default(),
+                        Cancellation::default(),
+                        None,
+                    ));
+                    assert_eq!(out.status, Ok(()));
+                    assert_eq!(out.stdout, "hello\nworld\n");
+                }));
+            }
+        }
+        println!(
+            "decoded print allocations native={native}: plain={}, joined={}",
+            counts[0], counts[1]
+        );
+        borrowing &= counts[0] == counts[1];
+    }
+    assert!(borrowing, "synchronous join must borrow the decoded String");
+}
+
+#[test]
 fn declaration_validation_preserves_errors_and_order() {
     let make = |name: &str, args| ToolDeclaration {
         id: 2,

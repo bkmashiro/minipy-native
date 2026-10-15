@@ -43,8 +43,13 @@ impl Provider for Host {
     fn allows_tool(&self, id: u32) -> bool {
         id == 101
     }
-    async fn call_bound_tool(&self, id: u32, _: ToolArguments) -> Result<Reply, TaskError> {
+    async fn call_bound_tool(&self, id: u32, args: ToolArguments) -> Result<Reply, TaskError> {
         assert_eq!(id, 101);
+        if matches!(args, ToolArguments::Numeric(values, _) if values[0] == -1) {
+            return Ok(Reply::Json(bytes::Bytes::from_static(
+                br#"{"message":"hello\nerror"}"#,
+            )));
+        }
         Ok(Reply::Json(bytes::Bytes::from_static(
             br#"{"message":"hello error"}"#,
         )))
@@ -156,6 +161,31 @@ fn resident_request() {
                 ),
                 "65280\n".into(),
             ),
+            "plain_sink" | "escaped_sink" | "joined_sink" | "fstring_sink" | "escaped_join" => {
+                let print = match case.as_str() {
+                    "plain_sink" | "escaped_sink" => "print(text)",
+                    "joined_sink" | "escaped_join" => "print('[' + text + '/' + text + ']')",
+                    _ => "print(f'[{text}/{n}/{True}]')",
+                };
+                let escaped = matches!(case.as_str(), "escaped_sink" | "escaped_join");
+                let text = if escaped {
+                    "hello\nerror"
+                } else {
+                    "hello error"
+                };
+                let expected = match case.as_str() {
+                    "joined_sink" | "escaped_join" => format!("[{text}/{text}]\n"),
+                    "fstring_sink" => format!("[{text}/{n}/True]\n"),
+                    _ => format!("{text}\n"),
+                };
+                (
+                    format!(
+                        "n={n}\ndata=tools.fetch({})\ntext=data['message']\n{print}",
+                        if escaped { -1 } else { n as i64 }
+                    ),
+                    expected,
+                )
+            }
             "ready" | "loopback" => (
                 format!(
                     "data = tools.fetch({n})\nalias = data\ntext = alias['message']\nprint('error' in text)\nprint(text)"

@@ -30,7 +30,9 @@ def campaign():
 class Reduction(unittest.TestCase):
     def test_input_cases_are_opt_in(self):
         self.assertEqual(pw.DEFAULT_CASES, ('scalar', 'quote', 'ready', 'loopback'))
-        self.assertEqual(pw.CASES, pw.DEFAULT_CASES + ('scalar_inputs', 'ready_inputs'))
+        self.assertEqual(pw.CASES, pw.DEFAULT_CASES + (
+            'scalar_inputs', 'ready_inputs', 'plain_sink', 'escaped_sink',
+            'joined_sink', 'fstring_sink', 'escaped_join'))
 
     def reduce(self, records):
         with tempfile.TemporaryDirectory(dir=pw.SCRATCH) as directory:

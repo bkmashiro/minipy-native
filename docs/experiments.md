@@ -1965,3 +1965,23 @@ density, Monty, Linux or Wasm improvement is claimed. Commands, per-process raw,
 timing boundaries, diagnostic limitations and decision ledger:
 [BV input gate](../evidence/bv-input-gate/README.md).
 
+## BW: synchronous joined string print borrowing
+
+Base `c8d28f0`. Retain a private two-pass synchronous sink: validate/size in
+original piece order, check authority/output budget and reserve, then borrow
+prepared text directly into stdout. Literal/JSON owner clones and escaped-String
+Arc promotion are eliminated here; asynchronous Tool captures remain owned.
+The escaped same-output execution diagnostic removes one allocation on both
+backends (joined 16→15, plain control stays 15). Output/SinkPart sizes remain
+72/56 bytes and temporary slot storage remains 1,792 bytes; no density gain claimed.
+
+Two-round fixed-binary ABBA and A/A each complete 112 processes / 5,376 measured
+fresh-source requests with no failures. Full-request ratios are small and mixed,
+with large early process drift even in untouched controls. No stable E2E speedup
+is claimed. Keep the demonstrated work removal, stop timing here. Default and
+tool-json release suites, strict tool-json all-target Clippy, atomic error-order
+and detached cancellation regressions pass. No Linux/Wasm/Monty performance run.
+Raw, candidate patch, diagnostic outputs, reducer and commands:
+[BW sink evidence](../evidence/bw-sink/README.md). The pre-created BX card owns the
+next bounded generic checked multiply-add tape experiment.
+
