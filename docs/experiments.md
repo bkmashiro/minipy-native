@@ -774,3 +774,271 @@ the Codex ChatGPT account with 400 unsupported. No substitute model or independe
 verdict is claimed; the parent performed scoped self-review and actual gates.
 The exact failed lane is retained in `bench/results/u-playground/focused-review.json`.
 
+## AH: static Tools, borrowed JSON and pooled HTTP (2026-10-15)
+
+Opt-in `tool-json` adds Host-declared numeric Tool IDs and at most two i64
+arguments, borrowed Bytes roots/static field paths, repeated-path cells and a
+shared bounded HTTP pool through the existing frontend/native/tape pipeline.
+No general object/array language, new backend, automatic strategy or website
+claim. Source argument order, permissions, error order, short circuit, owner
+last use and detached-operation cancellation remain explicit contracts.
+
+The bounded macOS M4 experiment retains 297 timing rows over 33 cells, 33
+separate allocation diagnostics and 72 paired old-fastpath rows over 12 cells.
+Few-field lazy parsing wins on the resident valid fixture; full-array typed
+serde/sonic decoding (~33 us) beats lazy/row-slots (~128–158 us), so array
+expansion stopped. Repeated lazy accesses need caching. Prepared JSON native
+and tape are close; native cold preparation costs much more. Native leaves
+still pay shared JSON helper parsing/cache/type/error work and crossings, not
+zero-cost compiled JSON access. See [tool-json-results.md](tool-json-results.md)
+and [bounded contract](tool-json-view.md) for exact boundaries and raw paths.
+
+Adding Tokio networking changed `enable_all` reactor behavior in the initial
+comparison. Preserve that observation separately; final ready-provider pairs
+explicitly enable only time in both arms. HTTP still enables I/O and pays its
+scheduling costs. No yield, permission, fuel or error check was removed.
+Scalar/weighted optional-feature regressions remain visible; no universal
+zero-overhead or native superiority claim.
+
+Close-out reran all 86 all-feature tests and all 63 default tests on macOS,
+including 10 new Tool/JSON and four real localhost HTTP tests. An earlier
+card comment's 96-test count was a transcription error, not a separate result.
+Strict all-target clippy, fmt and the existing Wasm/debug library check are
+verification gates. Measurements were not repeated in this close-out. Reuse
+`CARGO_TARGET_DIR=/Users/yuzhe/projects/minipy-native/target` with one build job;
+the close-out initially missed that variable and created a redundant 1.3 GiB
+workspace debug target, then removed only that redundant target. Frozen `bench/`
+sources and AF/WSL artifacts are untouched. Submit a signed branch snapshot for
+one focused review before any main merge.
+
+## AJ: bounded source preparation candidate and direct Tool output (2026-10-15)
+
+Based on approved opt-in AH f7167add, not merged main. The single candidate
+removed transient ToolSchema clones during binding; four AB/BA/BA/AB pairs
+showed JSON cold changes of +1.5–2.6%, with repeated cold slower in every
+pair. Reverted it and stopped optimization, retaining the patch/raw evidence.
+Added only ordinary Python `print(tools.name(...))` for declared i64 replies:
+frontend expansion reuses Tool suspension and bounded Print, without new
+runtime instructions, owner state, helper ABI or strategy. JSON print,
+nested effect expressions and Tool-in-loop remain rejected.
+
+Small pre-AH/default/opt-in controls did not reproduce the prior 20–33%
+scalar-cold regression; they do not erase AH's negative result or prove
+zero overhead. Same opt-in executable with I/O enabled still adds about
+14 us to prepared 1000-row ready-provider scans at default chunk=256.
+No fairness/cancellation/budget check was changed to reduce that cost.
+Three actual localhost HTTP processes validated both syntaxes with real
+fetch/publish waits, output, argument, pool/permit and response-count checks.
+Direct/assigned tape logical bytes (990) and native code bytes (492) match;
+these are not RSS/PSS or measured peak memory.
+
+Final macOS verification: 89 all-feature and 63 default tests, strict clippy,
+fmt, Wasm/debug lib check. See [aj-bounded-results.md](aj-bounded-results.md)
+for source identity, costs, boundaries, commands and all 2217 small batch/
+diagnostic rows; `python3 tools/aj_verify.py` recomputes summaries exactly.
+No frozen benchmark, AF/WSL workload, main, website or dependency change.
+Signed independent branch is submitted for focused review, not auto-merge.
+
+## AL: I/O scheduler attribution and bounded negative result
+
+Built on accepted AJ a780931 (AH f7167ad ancestry verified), not main.
+Production src and Cargo files remain identical to AJ. One Host-only candidate,
+Tokio current-thread event_interval 61 -> 256, had no stable net gain and is
+not adopted. Both arms kept I/O enabled, default chunk/fuel, yields and owners.
+Final mixed/native prepared 80.415 -> 80.325 us, cold 390.423 -> 385.118 us;
+old native weighted cold 153.397 -> 157.905 us. Short sibling means, all paired
+directions, and the earlier discovery noise are retained, not screened out.
+
+Isolated source-path investigation refines the previous ~14 us attribution:
+three bare yields cost IO/time 1.272/0.262 us, two detached oneshot handoffs
+0.981/0.366 us, and their combination 14.734/0.623 us. Deferred wake -> root
+unpark -> Mio kqueue and idle park_timeout paths are documented, but there is
+no syscall trace or claim that individual syscall timings were isolated.
+
+Real loopback mixed scan/scalar/fetch->publish->print runs validate response
+counts, output, arguments, permits and connection reuse. 984 canonical batch
+rows across discovery/final/isolated probes exactly recompute. macOS 89 tests,
+strict all-target/all-feature Clippy and fmt passed. Existing shared target,
+offline/locked single job, free disk ~12 -> 11 GiB and shared target ~12 -> 13
+GiB after debug verification, ~100 KB raw/summary/log evidence.
+See [al-io-results.md](al-io-results.md) for commands and measurement boundaries.
+No second candidate, new scheduler, frozen bench, website or main merge.
+Focused review launch at integrated 2617a94 failed because Codex CLI's ChatGPT
+account rejects gpt-6-luna. No substituted model or review approval claimed.
+Route one independent pinned-model review through the Hermes Kanban lane.
+
+## AN: standalone declared scalar Tool expression statement
+
+The existing private, read-only survey input path and cutoff were reused; no
+source text, arguments, session identifiers or raw code were exported. Its 632
+unique main scripts were scanned by AST for bare `Expr(Call)` / `Expr(Await(Call))`
+statements (print excluded). 79 call-shaped statements were found: one direct
+`apis` Host-namespace call, 59 attribute calls with an unverified root, and 19
+unclassified name calls. This establishes one clear Host-effect example, not a
+frequency or runnable-rate estimate; top-level-await coverage is limited by the
+survey parser's ordinary `ast.parse` mode. Source categories were aggregated only.
+
+Added only the opt-in frontend lowering: reuse declared-tool binding and existing
+`Stmt::Tool` with an unnameable NUL-prefixed result slot; i64 result is discarded.
+JSON result discard, unknown Tools, `**kwargs` and Tool-in-loop remain rejected.
+No runtime, IR, opcode, backend or permission/budget contract changed. Dual-backend
+tests cover positional/reordered keyword calls, explicit top-level await, output,
+authorization denial, call budget, argument overflow before dispatch, provider
+error, cancellation/late completion and rejection boundaries. The local HTTP
+fixture/pool also executes standalone publish on both backends before print.
+This feature is an
+incremental Host-tool syntax slice, not general Python support.
+
+### Bounded standalone-vs-assigned-discard probe
+
+Ran the existing `examples/aj_http_probe.rs` three times as independent
+processes against its loopback HTTP fixture and shared connection pool. The
+first three fixed-order runs (`run1`–`run3`) are retained as historical but
+superseded data. The corrected runs use AB/BA/AB process ordering, selected by
+`AN_ORDER` (default AB; BA only for process two). Both
+arms use the same binary, source-derived fetch→scalar-publish program, actual
+HTTP requests, and stdout consumption; each timing batch checks response count,
+`27\n` output, one reused connection, zero copied bytes and full permit return.
+The standalone arm discards publish's i64; the control assigns then prints it.
+`source_cold` includes prepare/compile, execute, stdout consumption and unit
+cleanup; `prepared` explicitly excludes preparation. Each cell has three
+sub-batches per process (20 cold or 100 prepared invocations; nine batch means
+per arm overall). Corrected raw CSVs are
+`bench/results/an-probe-run{4,5,6}.csv`.
+
+Reproduce: `CARGO_TARGET_DIR=/Users/yuzhe/projects/minipy-native/target
+CARGO_BUILD_JOBS=1 cargo run --offline --locked --features tool-json --example
+aj_http_probe`, then run the binary with `AN_ORDER=AB`, `AN_ORDER=BA`,
+`AN_ORDER=AB`, saving stdout to the three raw files. Source hash
+`e7b590bfed570a01bce2ab0aeb04aab54b4d4a18d443bfdb1eddb3f29c8b2848`;
+rustc/cargo 1.93.1; binary SHA-256
+`095555fd53cc0d475802537e23d21ecc08c8e2e51e43a97e634eb8d0b33c80d5`.
+On this macOS M4 probe, median-of-nine-batch per-call ns:
+
+| Backend / lifecycle | Assigned | Discard |
+| --- | ---: | ---: |
+| tape / source_cold | 300,241 | 271,825 |
+| native / source_cold | 1,778,262 | 1,743,506 |
+| tape / prepared | 147,294 | 147,449 |
+| native / prepared | 146,313 | 145,841 |
+
+These are small-fixture observations, not a performance claim. Each process
+runs every assigned cell then every discard cell in AB, reverses the groups in
+BA, then returns to AB. They satisfy the bounded three-process ordering; cell
+grouping and small samples still leave substantial warm-up/noise limits. No
+timing-based optimization or runtime change is made; Linux remains unrun.
+
+## AO: concrete-operation kernel selection and admission gate
+
+Based on accepted AN 79bfcf88, without merging main. Reused the private Z
+extractor with exact original sampling/replay/input and aggregate reconciliation:
+632 distinct main scripts (Hermes577/AppWorld55). New devalued AST aggregates
+distinguish JSON decode/encode, literal sibling/path syntax, string methods,
+filtered/projected comprehensions and unresolved reductions. Frequency is not
+type proof, execution CPU or compatibility. No corpus source or identifiers
+are exported. See [AO selection](ao-kernel-selection.md) and
+`evidence/ao-kernels/operations.json` for definitions and six ranked work ledgers.
+
+No performance candidate passed the value-contract/net-work gate. Existing
+JSON i64 paths already cache prefixes/leaves; eager multi-field extraction
+would violate demanded-error/short-circuit boundaries. Higher-value string,
+collection and output candidates need explicit value/ABI decisions. Quote
+reduction is technically possible but no sample-to-Quote/i64 demand or net
+benefit is established. No kernel, production-code change or timing result is
+claimed; the permitted design-only exit is used rather than an unmatched spike.
+
+Mac verification: eight synthetic analyzer tests, byte-identical repeated
+aggregates, 14 concrete admission cases on each real compiler (one test), and
+18 existing Tool/JSON/actual HTTP execution tests. Scoped strict Clippy and fmt
+pass. Reused the existing target offline with one job; no new target, dependency,
+WSL/VM work or benchmark campaign. Proposed next experiment is one bounded
+read-only JSON string predicate after Host schema/ownership/byte-work decisions,
+not a generic Value system or automatic follow-up development card.
+
+## AR: declared JSON string leaf + literal `in` bounded experiment (2026-10-15)
+
+Starting at AO `3b6b800`, added exactly one natural string predicate:
+`data = tools.fetch(batch_id); text = data["message"]; print("error" in text)`.
+`ResultSchema::JsonTyped` identifies individual `I64`/`String` leaves; old
+`Json` remains i64-only. String values are neither printable nor Tool arguments
+nor general locals; only a literal UTF-8 needle (<=256 bytes) with an explicitly
+declared string leaf/alias is admitted. Dynamic/tuple needles, methods, raw
+JSON output, arbitrary string expressions and arrays remain unsupported. The
+compiler stores bounded literal needles in the sealed plan; native JIT and
+interpreter both use the same borrowed JSON implementation. Literal direct
+access and an alias through an async Tool wait run with real source and result.
+
+The immutable `Bytes` owner holds the selected JSON range; unescaped strings
+borrow, escaped strings decode once into a per-task cache. Selected missing,
+null/nonstring, malformed escape and invalid UTF-8 become task errors at the
+access point. First duplicate key follows the existing sonic path semantics;
+unvisited fields are not eagerly parsed. The string leaf cap is 64 KiB encoded
+bytes, default cumulative per-task validation/decode/search budget is 1 MiB
+(engineering admission choices, not Python or JSON limits),
+configured via `ScriptLimits::string_scan_bytes`. Decoded *capacity* joins
+existing root/quote aggregate buffer accounting, and releases with the owner;
+temporary decode allocation is bounded by the 64 KiB leaf cap before the
+postallocation capacity check. Unescaped tasks do not allocate decoded
+payloads; non-string JSON tasks do not allocate a decoded vector but their
+boxed state grows from 80 to 128 bytes (+48 on 64-bit). No per-row scanning or
+branch eager read.
+Errors retain earlier stdout, and cancellation/late Tool completion drops the
+root. No output/Tool byte ABI, generic `Value`, or extra dependency in the
+production crate.
+
+Verification: both real backends against literal UTF-8/escaped/empty/duplicate
+cases and a `serde_json` content oracle where duplicate semantics agree;
+negative admission, mixed i64/string schema, missing/null/wrong type, malformed
+escape, short-circuit error order, stdout prefix, 64 KiB/scan/buffer caps,
+actual wait with observed owner drop on cancellation, plus a real loopback
+HTTP JSON response. Full `--all-features` and no-feature Rust suites, strict
+all-target Clippy, fmt and diff-check passed on macOS; Linux/WSL not run.
+`wasm32-wasip1` `--lib --no-default-features` check passed (existing unused-code
+warnings); feature `tool-json` cannot cross-build on this target because its
+pre-existing Cargo feature enables `tokio/net`, rejected by Tokio on wasm.
+No wasm guest execution or string-path validation is claimed.
+
+Bounded operation probe (two processes, 30 AB/reverse-order repetitions each,
+60 per case/engine/mode) at `evidence/ar-contains/{run1,run2}.jsonl`; validated
+40 groups/2,400 raw result rows and summary at `summary.json`. Runner and
+source: `bench/src/bin/ar_contains.rs`; bench feature `string-probe` uses the
+already pinned Monty rev 56949a4 and rustc 1.96.0 (required by Monty, installed
+locally; default project rustc 1.93.1). Run command:
+
+    CARGO_TARGET_DIR=/Users/yuzhe/projects/minipy-native/target CARGO_BUILD_JOBS=1 \
+      cargo +1.96.0 run --offline --locked --release --manifest-path bench/Cargo.toml \
+      --features string-probe --bin ar-contains -- 30
+
+Each timed invocation includes source compilation in cold mode (prepared
+runner cloned in warm), async Tool hop, JSON handling, guest execution, output
+consumption and cleanup. Provider starts with immutable JSON `Bytes`; there is
+no HTTP wait in this probe. Monty `await fetch` creates a dict/string by parsing
+the same JSON *inside* the timed Host callback; `await contains_message` is the
+strong simpler Host-bool baseline (also parses the JSON inside the callback).
+The latter moves the predicate into the trusted Host and has a different Tool
+return contract, so it is a decision comparison, not an implementation of the
+same guest interface. Separate loopback test checks the HTTP integration.
+
+Median wall ns (small hit / 16 KiB tail hit / 16 KiB miss / escaped hit / 64 KiB miss):
+
+| mode | native | interpreter | Monty dict | Monty Host bool |
+|---|---|---|---|---|
+| cold | 181917 / 152104 / 124583 / 102666 / 120479 | 21999 / 28124 / 23854 / 21792 / 38375 | 21812 / 21979 / 16625 / 16729 / 22646 | 15895 / 15833 / 13354 / 13312 / 18687 |
+| prepared | 1624 / 8146 / 8041 / 11875 / 28687 | 1687 / 9125 / 8937 / 11792 / 29520 | 5625 / 8020 / 8770 / 10250 / 15125 | 5208 / 6792 / 7250 / 9666 / 13354 |
+
+These are local synthetic payloads, not observed application latency or
+network-inclusive measurements. Native prepared small-hit beats Monty dict
+~3.46x, but cold native is ~8.34x slower and long/escaped prepared results do
+not consistently beat the strong simple baseline. Thus there is no blanket
+kernel speedup: this branch is a narrow correctness/performance candidate for
+review, not a default deployment or justification for more string operations.
+If the target workload is cold or large/escaped strings, prefer Host-bool or
+the existing interpreter rather than expanding this slice. The 64 KiB prepared
+whole-task native path reached a 33 µs maximum over 60 runs on this host;
+this is an observation, not a cancellation-latency guarantee or proof for
+arbitrary payloads beyond the admission cap. No CI/VM, new
+machine, global changes, or production dependencies were used.
+The dependent AS integration card owns paired old scalar/scan regression and
+candidate keep/drop against the combined branch; this AR probe alone is not
+evidence of zero regression for the other workloads.
+

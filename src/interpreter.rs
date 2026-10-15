@@ -26,10 +26,25 @@ pub struct InterpreterUnit {
     live: Vec<u64>,
     inputs: Vec<Type>,
     buffers: usize,
+    #[cfg(feature = "tool-json")]
+    json: Option<Rc<crate::tool::Plan>>,
+    #[cfg(feature = "tool-json")]
+    json_live: Vec<u32>,
 }
 impl InterpreterUnit {
     pub fn prepare_script(source: &str, inputs: &[(&str, Type)]) -> Result<Self, CompileError> {
         let program = frontend::parse_with_inputs(source, inputs)?;
+        Self::from_program(program)
+    }
+    #[cfg(feature = "tool-json")]
+    pub fn prepare_with_tools(
+        source: &str,
+        inputs: &[(&str, Type)],
+        tools: &[crate::tool::ToolSchema],
+    ) -> Result<Self, CompileError> {
+        Self::from_program(frontend::parse_with_tools(source, inputs, tools)?)
+    }
+    fn from_program(program: crate::ir::Program) -> Result<Self, CompileError> {
         let mut ops = Vec::new();
         flatten(program.statements, &mut ops);
         // Buffer liveness at each PC, including loop backedges. No extra scalar
@@ -54,7 +69,17 @@ impl InterpreterUnit {
                 break;
             }
         }
+        #[cfg(feature = "tool-json")]
+        let json_live = if program.json.roots > 0 {
+            tape::json_liveness(&ops)
+        } else {
+            Vec::new()
+        };
         Ok(Self {
+            #[cfg(feature = "tool-json")]
+            json: (!program.json.calls.is_empty()).then(|| Rc::new(program.json)),
+            #[cfg(feature = "tool-json")]
+            json_live,
             ops,
             live,
             inputs: program.locals[..program.inputs].to_vec(),
@@ -63,7 +88,13 @@ impl InterpreterUnit {
     }
     /// Logical owned preparation bytes, excluding allocator rounding and Rc header.
     pub fn prepared_bytes(&self) -> usize {
-        std::mem::size_of::<Self>()
+        #[cfg(feature = "tool-json")]
+        let json_bytes =
+            self.json.as_ref().map_or(0, |p| p.owned_bytes()) + self.json_live.capacity() * 4;
+        #[cfg(not(feature = "tool-json"))]
+        let json_bytes = 0;
+        json_bytes
+            + std::mem::size_of::<Self>()
             + self.ops.capacity() * std::mem::size_of::<Op>()
             + self.live.capacity() * 8
             + self.inputs.capacity() * std::mem::size_of::<Type>()
@@ -127,6 +158,16 @@ async fn run<P: Provider>(
     {
         return Err(TaskError::Input);
     }
+    #[cfg(feature = "tool-json")]
+    if let Some(plan) = &unit.json
+        && plan.roots > 0
+    {
+        output.json = Some(Box::new(crate::json_view::State::new(
+            plan.clone(),
+            options.limits.buffer_bytes,
+            options.string_scan_bytes,
+        )));
+    }
     let limits = options.limits;
     if limits.chunk == 0 || limits.chunk > 4096 {
         return Err(TaskError::Budget);
@@ -145,7 +186,18 @@ async fn run<P: Provider>(
     // Cancellation is checked at the same bounded turns as native: entry, Tool,
     // and chunk yield. Scalar dispatch remains bounded by frontend admission.
     loop {
-        match tape::run_until_boundary(unit, &mut state, &owners, &limits, output)? {
+        #[cfg(feature = "tool-json")]
+        if unit.json.as_ref().is_some_and(|p| p.string_paths)
+            && let Some(json) = &mut output.json
+        {
+            json.set_external(owners.iter().flatten().map(QuoteBuffer::bytes).sum());
+        }
+        let boundary = tape::run_until_boundary(unit, &mut state, &owners, &limits, output)?;
+        #[cfg(feature = "tool-json")]
+        if let Some(json) = &mut output.json {
+            json.release(unit.json_live[state.pc]);
+        }
+        match boundary {
             #[cfg(feature = "debug-runtime")]
             Boundary::Step => unreachable!("production specialization never stops per instruction"),
             Boundary::Done => break,
@@ -181,11 +233,34 @@ async fn run<P: Provider>(
                     let _ = tx.send(p.load_quotes(batch).await);
                 });
                 let quotes = runtime::receive(rx, &cancel).await?;
+                #[cfg(feature = "tool-json")]
+                let held = held + output.json.as_ref().map_or(0, |j| j.held());
                 if quotes.bytes() > limits.buffer_bytes.saturating_sub(held) {
                     return Err(TaskError::Budget);
                 }
                 if unit.live[state.pc] & (1 << target) != 0 {
                     owners[target] = Some(quotes);
+                }
+            }
+            #[cfg(feature = "tool-json")]
+            Boundary::Tool(call, target, args) => {
+                let held = release(&mut owners, unit.live[state.pc]);
+                let call = &unit.json.as_ref().expect("sealed Tool plan").calls[call];
+                runtime::authorize_tool(&cancel, provider.allows_tool(call.id), &mut calls)?;
+                let (id, count, is_json) = (call.id, call.arguments, call.json);
+                let p = provider.clone();
+                let (tx, rx) = oneshot::channel();
+                tokio::spawn(async move {
+                    let _ = tx.send(p.call_tool(id, args, count).await);
+                });
+                match (is_json, runtime::receive(rx, &cancel).await?) {
+                    (true, crate::tool::Reply::Json(bytes)) => {
+                        let json = output.json.as_mut().expect("sealed JSON plan");
+                        json.install(target, bytes, limits.buffer_bytes.saturating_sub(held))?;
+                        json.release(unit.json_live[state.pc]);
+                    }
+                    (false, crate::tool::Reply::I64(v)) => state.locals[target] = v,
+                    _ => return Err(TaskError::Json("Tool reply does not match declaration")),
                 }
             }
             Boundary::Record(target, batch, total) => {

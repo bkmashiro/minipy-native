@@ -1,0 +1,62 @@
+{
+  "identity": {
+    "base_commit": "3b6b800bc9f73955c6a8b8f576544ad8d53aa2bd",
+    "monty_rev": "56949a4c45f51cedc7a96450782f58a8017e114d",
+    "order": "alternating forward/reverse engine order, two invocations",
+    "python": "3.9.6",
+    "run_files": [
+      "evidence/ar-contains/run1.jsonl",
+      "evidence/ar-contains/run2.jsonl"
+    ],
+    "runs_per_group": 60,
+    "sha256": {
+      "bench/Cargo.lock": "f7a11229389aa5b3189e623915ffb0ae0f6df86969d0a07b8b15283bbdcfa49c",
+      "bench/src/bin/ar_contains.rs": "9507cee9b1350b0420b62503d79bd2cad1226dd46fdedf87876a157408d4ba49",
+      "evidence/ar-contains/run1.jsonl": "d78f2143c6968a2fdb091e28394d0b85d51e5ac8cefe199db0c468535d6d8168",
+      "evidence/ar-contains/run2.jsonl": "f1668606b72113f35bc9287fad6a615f81fb18559c80be67f86b4cf7cfd0b8bb"
+    },
+    "toolchain": "rustc 1.96.0 aarch64-apple-darwin"
+  },
+  "median_ns": {
+    "cold/escaped-hit/host-bool": 13312,
+    "cold/escaped-hit/monty": 16729,
+    "cold/escaped-hit/native": 102666,
+    "cold/escaped-hit/tape": 21792,
+    "cold/long-hit/host-bool": 15833,
+    "cold/long-hit/monty": 21979,
+    "cold/long-hit/native": 152104,
+    "cold/long-hit/tape": 28124,
+    "cold/long-miss/host-bool": 13354,
+    "cold/long-miss/monty": 16625,
+    "cold/long-miss/native": 124583,
+    "cold/long-miss/tape": 23854,
+    "cold/max-miss/host-bool": 18687,
+    "cold/max-miss/monty": 22646,
+    "cold/max-miss/native": 120479,
+    "cold/max-miss/tape": 38375,
+    "cold/short-hit/host-bool": 15895,
+    "cold/short-hit/monty": 21812,
+    "cold/short-hit/native": 181917,
+    "cold/short-hit/tape": 21999,
+    "warm/escaped-hit/host-bool": 9666,
+    "warm/escaped-hit/monty": 10250,
+    "warm/escaped-hit/native": 11875,
+    "warm/escaped-hit/tape": 11792,
+    "warm/long-hit/host-bool": 6792,
+    "warm/long-hit/monty": 8020,
+    "warm/long-hit/native": 8146,
+    "warm/long-hit/tape": 9125,
+    "warm/long-miss/host-bool": 7250,
+    "warm/long-miss/monty": 8770,
+    "warm/long-miss/native": 8041,
+    "warm/long-miss/tape": 8937,
+    "warm/max-miss/host-bool": 13354,
+    "warm/max-miss/monty": 15125,
+    "warm/max-miss/native": 28687,
+    "warm/max-miss/tape": 29520,
+    "warm/short-hit/host-bool": 5208,
+    "warm/short-hit/monty": 5625,
+    "warm/short-hit/native": 1624,
+    "warm/short-hit/tape": 1687
+  }
+}

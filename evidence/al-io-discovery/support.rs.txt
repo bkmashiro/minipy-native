@@ -1,0 +1,173 @@
+use minipy_native::{
+    buffer::{Quote, QuoteBuffer},
+    codegen::CodeUnit,
+    error::TaskError,
+    http_provider::{Endpoint, HttpProvider, HttpService},
+    interpreter::{self, InterpreterUnit},
+    ir::Type,
+    provider::Provider,
+    runtime::{self, Cancellation, ScriptLimits},
+    tool::{ResultSchema, ToolSchema},
+};
+use std::{
+    rc::Rc,
+    sync::{
+        Arc,
+        atomic::{AtomicUsize, Ordering},
+    },
+    time::{Duration, Instant},
+};
+use tokio::{
+    io::{AsyncReadExt, AsyncWriteExt},
+    net::TcpListener,
+};
+struct Ready(QuoteBuffer);
+impl Provider for Ready {
+    async fn load_quotes(&self, _: i64) -> Result<QuoteBuffer, TaskError> {
+        Ok(self.0.clone())
+    }
+    async fn record_total(&self, batch: i64, total: i64) -> Result<i64, TaskError> {
+        total.checked_add(batch).ok_or(TaskError::Overflow)
+    }
+}
+const INPUTS: &[(&str, Type)] = &[("batch_id", Type::I64), ("price_limit", Type::I64)];
+struct Unit {
+    native: Option<Rc<CodeUnit>>,
+    tape: Option<Rc<InterpreterUnit>>,
+}
+impl Unit {
+    fn new(source: &str, native: bool) -> Self {
+        Self {
+            native: native.then(|| Rc::new(CodeUnit::compile_script(source, INPUTS).unwrap())),
+            tape: (!native)
+                .then(|| Rc::new(InterpreterUnit::prepare_script(source, INPUTS).unwrap())),
+        }
+    }
+    async fn execute(&self, p: Arc<Ready>) -> String {
+        let result = if let Some(u) = &self.native {
+            runtime::execute_script(
+                u.clone(),
+                p,
+                &[7, 700],
+                ScriptLimits::default(),
+                Cancellation::default(),
+                None,
+            )
+            .await
+        } else {
+            interpreter::execute_script(
+                self.tape.as_ref().unwrap().clone(),
+                p,
+                &[7, 700],
+                ScriptLimits::default(),
+                Cancellation::default(),
+                None,
+            )
+            .await
+        };
+        assert_eq!(result.status, Ok(()));
+        result.stdout
+    }
+}
+pub fn run() {
+    let candidate = std::env::args().any(|a| a == "--candidate");
+    let io = !std::env::args().any(|a| a == "--time-only");
+    let mut b = tokio::runtime::Builder::new_current_thread();
+    if io {
+        b.enable_all();
+    } else {
+        b.enable_time();
+    }
+    if candidate {
+        b.event_interval(256);
+    }
+    let rt = b.build().unwrap();
+    println!("workload,engine,lifecycle,rep,iterations,total_ns,short_total_ns,checksum,responses");
+    // Diagnostic only: three existing fairness yields with no MiniPy/provider work.
+    for rep in 0..3 {
+        let start = Instant::now();
+        for _ in 0..1000 {
+            rt.block_on(async {
+                for _ in 0..3 {
+                    tokio::task::yield_now().await;
+                }
+            });
+        }
+        println!(
+            "yield3,none,prepared,{rep},1000,{},0,0,0",
+            start.elapsed().as_nanos()
+        );
+    }
+    rt.block_on(async {
+        let p = Arc::new(Ready(QuoteBuffer::from_quotes((0..1000).map(|i| Quote { unit_price_cents:i%97, quantity:i%5 }).collect()).unwrap()));
+        for (name, source) in [("scalar", include_str!("../../fixtures/scalar_script.py")), ("weighted", include_str!("../../fixtures/weighted_script.py"))] {
+            for native in [false,true] {
+                let prepared = Unit::new(source,native);
+                let expected = prepared.execute(p.clone()).await;
+                for cold in [false,true] { for rep in 0..3 {
+                    let n = if cold {20} else {200}; let mut sum=0;
+                    let start=Instant::now();
+                    for _ in 0..n {
+                        let fresh; let u=if cold { fresh=Unit::new(source,native); &fresh } else {&prepared};
+                        let out=u.execute(p.clone()).await; assert_eq!(out,expected);
+                        sum+=out.bytes().map(u64::from).sum::<u64>();
+                    }
+                    println!("{name},{},{},{rep},{n},{},0,{sum},0",if native {"native"} else {"tape"},if cold {"source_cold"} else {"prepared"},start.elapsed().as_nanos());
+                }}
+            }
+        }
+        if !io {return;}
+        let listener=TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let base=format!("http://{}",listener.local_addr().unwrap());
+        let connections=Arc::new(AtomicUsize::new(0)); let c=connections.clone();
+        let server=tokio::spawn(async move {
+            while let Ok((mut stream,_))=listener.accept().await {
+                c.fetch_add(1,Ordering::Relaxed); stream.set_nodelay(true).unwrap();
+                tokio::spawn(async move {loop {
+                    let mut header=Vec::new();
+                    while !header.ends_with(b"\r\n\r\n") {let mut byte=[0]; if stream.read_exact(&mut byte).await.is_err(){return;} header.push(byte[0]); assert!(header.len()<8192);}
+                    let text=std::str::from_utf8(&header).unwrap();
+                    let body=if text.starts_with("GET /json ") { br#"{"data":{"count":10}}"#.as_slice() } else {
+                        assert!(text.starts_with("GET /scalar ")); assert!(text.contains("x-minipy-arg-0: 7")); assert!(text.contains("x-minipy-arg-1: 20")); b"27".as_slice()
+                    };
+                    let mut reply=format!("HTTP/1.1 200 OK\r\nContent-Length: {}\r\n\r\n",body.len()).into_bytes(); reply.extend_from_slice(body);
+                    if stream.write_all(&reply).await.is_err(){return;}
+                }});
+            }
+        });
+        let service=HttpService::new(2,1024,Duration::from_secs(2)).unwrap();
+        let http=Arc::new(HttpProvider::new(service.clone(),vec![Endpoint{id:101,uri:format!("{base}/json").parse().unwrap(),arguments:1,json:true},Endpoint{id:102,uri:format!("{base}/scalar").parse().unwrap(),arguments:2,json:false}]).unwrap());
+        let schemas=vec![ToolSchema{id:101,name:"fetch".into(),arguments:vec!["batch_id".into()],result:ResultSchema::Json(vec![vec!["data".into(),"count".into()]])},ToolSchema{id:102,name:"publish".into(),arguments:vec!["batch_id".into(),"total".into()],result:ResultSchema::I64}];
+        let source="p = tools.fetch(batch_id)\nprint(tools.publish(total=p[\"data\"][\"count\"] * 2, batch_id=batch_id))\n";
+        for native in [false,true] {
+            let scan=Unit::new(include_str!("../../fixtures/weighted_script.py"),native);
+            let scalar_source=include_str!("../../fixtures/scalar_script.py");
+            let short=Unit::new(scalar_source,native);
+            let expected_scan=scan.execute(p.clone()).await; let expected_short=short.execute(p.clone()).await;
+            let nu=native.then(||Rc::new(CodeUnit::compile_with_tools(source,&[("batch_id",Type::I64)],&schemas).unwrap()));
+            let tu=(!native).then(||Rc::new(InterpreterUnit::prepare_with_tools(source,&[("batch_id",Type::I64)],&schemas).unwrap()));
+            for cold in [false,true] { for rep in 0..3 {
+                let n=if cold {20} else {100}; let mut sum=0; let mut short_ns=0;
+                // One warm mixed request outside timing, pool creation excluded.
+                let mut start=Instant::now(); let before=service.responses();
+                for i in 0..=n {
+                    if i==1 {start=Instant::now();}
+                    let request_start=Instant::now();
+                    let scans=async {let fresh; let u=if cold {fresh=Unit::new(include_str!("../../fixtures/weighted_script.py"),native); &fresh} else {&scan}; u.execute(p.clone()).await};
+                    let shorts=async {let fresh; let u=if cold {fresh=Unit::new(scalar_source,native); &fresh} else {&short}; let out=u.execute(p.clone()).await; (out,request_start.elapsed().as_nanos())};
+                    let network=async {
+                        let r=if native {let u=if cold {Rc::new(CodeUnit::compile_with_tools(source,&[("batch_id",Type::I64)],&schemas).unwrap())} else {nu.as_ref().unwrap().clone()}; runtime::execute_script(u,http.clone(),&[7],ScriptLimits::default(),Cancellation::default(),None).await}
+                        else {let u=if cold {Rc::new(InterpreterUnit::prepare_with_tools(source,&[("batch_id",Type::I64)],&schemas).unwrap())} else {tu.as_ref().unwrap().clone()}; interpreter::execute_script(u,http.clone(),&[7],ScriptLimits::default(),Cancellation::default(),None).await};
+                        assert_eq!(r.status,Ok(())); assert_eq!(r.stdout,"27\n"); r.stdout
+                    };
+                    let (s,(q,latency),h)=tokio::join!(scans,shorts,network);
+                    assert_eq!(s,expected_scan); assert_eq!(q,expected_short);
+                    if i>0 {sum+=s.bytes().chain(q.bytes()).chain(h.bytes()).map(u64::from).sum::<u64>(); short_ns+=latency;}
+                }
+                let elapsed=start.elapsed().as_nanos(); assert_eq!(service.responses()-before,2*(n+1)); assert_eq!(service.available_permits(),2);
+                println!("mixed,{},{},{rep},{n},{elapsed},{short_ns},{sum},{}",if native {"native"} else {"tape"},if cold {"source_cold"} else {"prepared"},service.responses()-before);
+            }}
+        }
+        assert_eq!(connections.load(Ordering::Relaxed),1); server.abort();
+    });
+}

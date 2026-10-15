@@ -1,0 +1,67 @@
+diff --git a/src/frontend.rs b/src/frontend.rs
+index bfda6d3..47625e3 100644
+--- a/src/frontend.rs
++++ b/src/frontend.rs
+@@ -653,22 +653,19 @@ impl Compiler {
+         if !matches!(a.value.as_ref(), ast::Expr::Name(n) if n.id.as_str() == "tools") {
+             return Ok(false);
+         }
+-        let Some(tool) = self
+-            .tools
+-            .iter()
+-            .find(|t| t.name == a.attr.as_str())
+-            .cloned()
+-        else {
++        let Some(tool_index) = self.tools.iter().position(|t| t.name == a.attr.as_str()) else {
+             return Ok(false);
+         };
+         if in_loop {
+             return Err(err("tool calls are unsupported inside loops"));
+         }
+         self.node(depth)?;
+-        if c.args.len() > tool.arguments.len() {
++        let arguments = self.tools[tool_index].arguments.len();
++        let id = self.tools[tool_index].id;
++        if c.args.len() > arguments {
+             return Err(err("too many Tool arguments"));
+         }
+-        let mut args: Vec<Option<Expr>> = vec![None; tool.arguments.len()];
++        let mut args: Vec<Option<Expr>> = vec![None; arguments];
+         // Evaluate in Python source order into scalar slots BEFORE canonical binding.
+         for (position, arg) in c.args.iter().enumerate() {
+             let (e, t) = self.expr(arg, depth + 1, false)?;
+@@ -684,7 +681,7 @@ impl Compiler {
+                 .arg
+                 .as_ref()
+                 .ok_or_else(|| err("Tool **kwargs is unsupported"))?;
+-            let position = tool
++            let position = self.tools[tool_index]
+                 .arguments
+                 .iter()
+                 .position(|a| a == key.as_str())
+@@ -704,8 +701,14 @@ impl Compiler {
+             .into_iter()
+             .map(|a| a.ok_or_else(|| err("missing Tool argument")))
+             .collect::<Result<Vec<_>>>()?;
+-        let json = matches!(tool.result, crate::tool::ResultSchema::Json(_));
+-        let target = if let crate::tool::ResultSchema::Json(leaves) = tool.result {
++        let json = matches!(
++            self.tools[tool_index].result,
++            crate::tool::ResultSchema::Json(_)
++        );
++        let target = if let crate::tool::ResultSchema::Json(leaves) = &self.tools[tool_index].result
++        {
++            // Only the JSON schema retained for this root needs an owned copy.
++            let leaves = leaves.clone();
+             if self.json.roots >= 32 {
+                 return Err(err("too many JSON owners"));
+             }
+@@ -721,7 +724,7 @@ impl Compiler {
+         };
+         let call = self.json.calls.len();
+         self.json.calls.push(crate::tool::BoundCall {
+-            id: tool.id,
++            id,
+             arguments: args.len(),
+             json,
+         });

@@ -1,0 +1,482 @@
+[
+  {
+    "workload": "scalar",
+    "engine": "native",
+    "lifecycle": "prepared",
+    "median_us": {
+      "pre-ah": 0.18633349999999999,
+      "default": 0.168896,
+      "final": 0.17133299999999999
+    },
+    "process_means_us": {
+      "pre-ah": [
+        0.439542,
+        0.189333,
+        0.183334,
+        0.169792
+      ],
+      "default": [
+        0.45591699999999996,
+        0.166334,
+        0.166792,
+        0.171
+      ],
+      "final": [
+        0.196208,
+        0.17208299999999999,
+        0.17058299999999998,
+        0.168709
+      ]
+    },
+    "tape_bytes": {
+      "pre-ah": 0,
+      "default": 0,
+      "final": 0
+    },
+    "native_bytes": {
+      "pre-ah": 264,
+      "default": 264,
+      "final": 264
+    }
+  },
+  {
+    "workload": "scalar",
+    "engine": "native",
+    "lifecycle": "source_cold",
+    "median_us": {
+      "pre-ah": 71.14685,
+      "default": 65.54374999999999,
+      "final": 66.58647500000001
+    },
+    "process_means_us": {
+      "pre-ah": [
+        246.6729,
+        68.4104,
+        73.8833,
+        65.3167
+      ],
+      "default": [
+        177.68955,
+        65.70415,
+        64.9125,
+        65.38335
+      ],
+      "final": [
+        80.9833,
+        67.31045,
+        65.8625,
+        65.14375
+      ]
+    },
+    "tape_bytes": {
+      "pre-ah": 0,
+      "default": 0,
+      "final": 0
+    },
+    "native_bytes": {
+      "pre-ah": 264,
+      "default": 264,
+      "final": 264
+    }
+  },
+  {
+    "workload": "scalar",
+    "engine": "tape",
+    "lifecycle": "prepared",
+    "median_us": {
+      "pre-ah": 0.19516650000000002,
+      "default": 0.179479,
+      "final": 0.1863335
+    },
+    "process_means_us": {
+      "pre-ah": [
+        0.6127079999999999,
+        0.199583,
+        0.19075,
+        0.178708
+      ],
+      "default": [
+        0.593291,
+        0.176375,
+        0.175,
+        0.182583
+      ],
+      "final": [
+        0.220333,
+        0.185625,
+        0.187042,
+        0.183084
+      ]
+    },
+    "tape_bytes": {
+      "pre-ah": 594,
+      "default": 594,
+      "final": 626
+    },
+    "native_bytes": {
+      "pre-ah": 0,
+      "default": 0,
+      "final": 0
+    }
+  },
+  {
+    "workload": "scalar",
+    "engine": "tape",
+    "lifecycle": "source_cold",
+    "median_us": {
+      "pre-ah": 9.3656,
+      "default": 9.105225,
+      "final": 9.1479
+    },
+    "process_means_us": {
+      "pre-ah": [
+        29.42915,
+        9.45415,
+        9.0229,
+        9.27705
+      ],
+      "default": [
+        32.00415,
+        9.1042,
+        9.104149999999999,
+        9.10625
+      ],
+      "final": [
+        10.92705,
+        8.775,
+        9.1479,
+        9.1479
+      ]
+    },
+    "tape_bytes": {
+      "pre-ah": 594,
+      "default": 594,
+      "final": 626
+    },
+    "native_bytes": {
+      "pre-ah": 0,
+      "default": 0,
+      "final": 0
+    }
+  },
+  {
+    "workload": "stateful",
+    "engine": "native",
+    "lifecycle": "prepared",
+    "median_us": {
+      "pre-ah": 2.0353545,
+      "default": 2.1198335,
+      "final": 2.065104
+    },
+    "process_means_us": {
+      "pre-ah": [
+        2.6383330000000003,
+        2.038542,
+        2.032167,
+        2.018208
+      ],
+      "default": [
+        2.700375,
+        2.086292,
+        2.052167,
+        2.153375
+      ],
+      "final": [
+        2.0922080000000003,
+        1.97825,
+        2.039958,
+        2.09025
+      ]
+    },
+    "tape_bytes": {
+      "pre-ah": 0,
+      "default": 0,
+      "final": 0
+    },
+    "native_bytes": {
+      "pre-ah": 576,
+      "default": 576,
+      "final": 576
+    }
+  },
+  {
+    "workload": "stateful",
+    "engine": "native",
+    "lifecycle": "source_cold",
+    "median_us": {
+      "pre-ah": 166.567725,
+      "default": 166.26355,
+      "final": 164.145825
+    },
+    "process_means_us": {
+      "pre-ah": [
+        208.06875,
+        166.5771,
+        166.55835000000002,
+        164.89375
+      ],
+      "default": [
+        209.7271,
+        166.8,
+        162.975,
+        165.7271
+      ],
+      "final": [
+        164.85420000000002,
+        164.29375,
+        163.025,
+        163.9979
+      ]
+    },
+    "tape_bytes": {
+      "pre-ah": 0,
+      "default": 0,
+      "final": 0
+    },
+    "native_bytes": {
+      "pre-ah": 576,
+      "default": 576,
+      "final": 576
+    }
+  },
+  {
+    "workload": "stateful",
+    "engine": "tape",
+    "lifecycle": "prepared",
+    "median_us": {
+      "pre-ah": 7.2743955,
+      "default": 7.531458,
+      "final": 7.3051665
+    },
+    "process_means_us": {
+      "pre-ah": [
+        10.118542,
+        7.274291,
+        7.2745,
+        7.213709
+      ],
+      "default": [
+        10.138292,
+        7.486375,
+        7.576541,
+        7.378417000000001
+      ],
+      "final": [
+        7.54475,
+        7.316833,
+        6.987958,
+        7.2935
+      ]
+    },
+    "tape_bytes": {
+      "pre-ah": 1114,
+      "default": 1114,
+      "final": 1146
+    },
+    "native_bytes": {
+      "pre-ah": 0,
+      "default": 0,
+      "final": 0
+    }
+  },
+  {
+    "workload": "stateful",
+    "engine": "tape",
+    "lifecycle": "source_cold",
+    "median_us": {
+      "pre-ah": 30.461475,
+      "default": 31.0302,
+      "final": 28.420825
+    },
+    "process_means_us": {
+      "pre-ah": [
+        43.9417,
+        30.5375,
+        30.385450000000002,
+        29.33545
+      ],
+      "default": [
+        47.585449999999994,
+        31.579150000000002,
+        30.3104,
+        30.48125
+      ],
+      "final": [
+        30.19585,
+        28.3208,
+        26.90415,
+        28.52085
+      ]
+    },
+    "tape_bytes": {
+      "pre-ah": 1114,
+      "default": 1114,
+      "final": 1146
+    },
+    "native_bytes": {
+      "pre-ah": 0,
+      "default": 0,
+      "final": 0
+    }
+  },
+  {
+    "workload": "weighted",
+    "engine": "native",
+    "lifecycle": "prepared",
+    "median_us": {
+      "pre-ah": 1.9585625,
+      "default": 2.0665835,
+      "final": 1.9063124999999999
+    },
+    "process_means_us": {
+      "pre-ah": [
+        2.964542,
+        1.9789169999999998,
+        1.9382080000000002,
+        1.9285
+      ],
+      "default": [
+        3.179125,
+        2.098208,
+        1.954709,
+        2.034959
+      ],
+      "final": [
+        2.042167,
+        1.903875,
+        1.827333,
+        1.90875
+      ]
+    },
+    "tape_bytes": {
+      "pre-ah": 0,
+      "default": 0,
+      "final": 0
+    },
+    "native_bytes": {
+      "pre-ah": 552,
+      "default": 552,
+      "final": 552
+    }
+  },
+  {
+    "workload": "weighted",
+    "engine": "native",
+    "lifecycle": "source_cold",
+    "median_us": {
+      "pre-ah": 153.1927,
+      "default": 151.452075,
+      "final": 150.82187499999998
+    },
+    "process_means_us": {
+      "pre-ah": [
+        250.59165,
+        155.5021,
+        150.8833,
+        150.16665
+      ],
+      "default": [
+        256.1833,
+        152.62085000000002,
+        149.14585,
+        150.2833
+      ],
+      "final": [
+        159.09585,
+        148.3729,
+        153.27085,
+        147.71875
+      ]
+    },
+    "tape_bytes": {
+      "pre-ah": 0,
+      "default": 0,
+      "final": 0
+    },
+    "native_bytes": {
+      "pre-ah": 552,
+      "default": 552,
+      "final": 552
+    }
+  },
+  {
+    "workload": "weighted",
+    "engine": "tape",
+    "lifecycle": "prepared",
+    "median_us": {
+      "pre-ah": 8.5119585,
+      "default": 8.472416500000001,
+      "final": 7.8716665
+    },
+    "process_means_us": {
+      "pre-ah": [
+        17.698792,
+        8.4845,
+        8.357792,
+        8.539417
+      ],
+      "default": [
+        18.155667,
+        8.608458,
+        8.144957999999999,
+        8.336375
+      ],
+      "final": [
+        8.635665999999999,
+        7.761667,
+        7.964,
+        7.779332999999999
+      ]
+    },
+    "tape_bytes": {
+      "pre-ah": 1090,
+      "default": 1090,
+      "final": 1122
+    },
+    "native_bytes": {
+      "pre-ah": 0,
+      "default": 0,
+      "final": 0
+    }
+  },
+  {
+    "workload": "weighted",
+    "engine": "tape",
+    "lifecycle": "source_cold",
+    "median_us": {
+      "pre-ah": 26.922925,
+      "default": 26.1073,
+      "final": 24.51145
+    },
+    "process_means_us": {
+      "pre-ah": [
+        86.47914999999999,
+        27.38125,
+        26.464599999999997,
+        25.589599999999997
+      ],
+      "default": [
+        70.4125,
+        25.71665,
+        26.0021,
+        26.2125
+      ],
+      "final": [
+        29.3979,
+        24.5,
+        24.5229,
+        24.01875
+      ]
+    },
+    "tape_bytes": {
+      "pre-ah": 1090,
+      "default": 1090,
+      "final": 1122
+    },
+    "native_bytes": {
+      "pre-ah": 0,
+      "default": 0,
+      "final": 0
+    }
+  }
+]

@@ -38,6 +38,26 @@ pub fn parse_with_inputs(source: &str, inputs: &[(&str, Type)]) -> Result<Progra
     result
 }
 
+/// Same parser/typechecker with a Host-declared finite Tool table.
+#[cfg(feature = "tool-json")]
+pub fn parse_with_tools(
+    source: &str,
+    inputs: &[(&str, Type)],
+    tools: &[crate::tool::ToolSchema],
+) -> Result<Program> {
+    crate::tool::ToolSchema::validate_all(tools)?;
+    if source.len() > ir::MAX_SOURCE_BYTES {
+        return Err(err("source exceeds MAX_SOURCE_BYTES"));
+    }
+    check_delimiter_depth(source)?;
+    validate_inputs(inputs)?;
+    let module = ast::Suite::parse(source, "<minipy>")
+        .map_err(|e| err(format!("Python syntax error: {e}")))?;
+    let mut compiler = Compiler::new(inputs)?;
+    compiler.tools = tools.to_vec();
+    compiler.program(module)
+}
+
 fn validate_inputs(inputs: &[(&str, Type)]) -> Result<()> {
     if inputs.len() > ir::MAX_LOCALS {
         return Err(err("program exceeds MAX_LOCALS"));
@@ -114,6 +134,14 @@ struct Compiler {
     next_buffer: usize,
     inputs: usize,
     legacy: bool,
+    #[cfg(feature = "tool-json")]
+    tools: Vec<crate::tool::ToolSchema>,
+    #[cfg(feature = "tool-json")]
+    json: crate::tool::Plan,
+    #[cfg(feature = "tool-json")]
+    json_names: HashMap<String, (usize, Vec<String>)>,
+    #[cfg(feature = "tool-json")]
+    json_leaves: Vec<Vec<(Vec<String>, crate::tool::JsonLeaf)>>,
 }
 impl Compiler {
     fn new(inputs: &[(&str, Type)]) -> Result<Self> {
@@ -130,6 +158,14 @@ impl Compiler {
             next_buffer: 0,
             inputs: inputs.len(),
             legacy: false,
+            #[cfg(feature = "tool-json")]
+            tools: Vec::new(),
+            #[cfg(feature = "tool-json")]
+            json: crate::tool::Plan::default(),
+            #[cfg(feature = "tool-json")]
+            json_names: HashMap::new(),
+            #[cfg(feature = "tool-json")]
+            json_leaves: Vec::new(),
         })
     }
     fn node(&mut self, depth: usize) -> Result<()> {
@@ -203,6 +239,8 @@ impl Compiler {
             buffers: self.next_buffer,
             statements,
             legacy: self.legacy,
+            #[cfg(feature = "tool-json")]
+            json: self.json,
         })
     }
     fn check_legacy_signature(&self, args: &ast::Arguments) -> Result<()> {
@@ -243,6 +281,10 @@ impl Compiler {
             .ok_or_else(|| err(format!("unknown local '{name}'")))
     }
     fn declare(&mut self, name: &str, ty: Type, allow_existing: bool) -> Result<usize> {
+        #[cfg(feature = "tool-json")]
+        if self.json_names.contains_key(name) {
+            return Err(err("JSON view names cannot be rebound"));
+        }
         if ["tools", "print", "True", "False"].contains(&name)
             || self.buffers.contains_key(name)
             || self.rows.contains(name)
@@ -281,6 +323,40 @@ impl Compiler {
         match s {
             ast::Stmt::Assign(a) if a.targets.len() == 1 && a.type_comment.is_none() => {
                 let name = Self::target_name(&a.targets[0])?;
+                #[cfg(feature = "tool-json")]
+                {
+                    if self.compile_tool(&name, &a.value, depth + 1, in_loop, out)? {
+                        return Ok(());
+                    }
+                    if let Some((root, path)) = self.json_path(&a.value)?
+                        && (path.is_empty()
+                            || !self.json_leaves[root].iter().any(|(p, _)| p == &path))
+                    {
+                        if in_loop {
+                            return Err(err("JSON view aliases are unsupported inside loops"));
+                        }
+                        if !path.is_empty() {
+                            let slot = self.json.path(root, &path)?;
+                            out.push(Stmt::Eval(Expr::JsonView { slot, root }));
+                        }
+                        self.bind_json(&name, root, path)?;
+                        return Ok(());
+                    }
+                    if let Some((root, path)) = self.json_path(&a.value)?
+                        && self.json_leaves[root]
+                            .iter()
+                            .any(|(p, t)| p == &path && *t == crate::tool::JsonLeaf::String)
+                    {
+                        if in_loop {
+                            return Err(err("JSON string aliases are unsupported inside loops"));
+                        }
+                        let slot = self.json.path(root, &path)?;
+                        self.json.string_paths = true;
+                        out.push(Stmt::Eval(Expr::JsonString { slot, root }));
+                        self.bind_json(&name, root, path)?;
+                        return Ok(());
+                    }
+                }
                 if Self::is_tool(&a.value, "record_total") {
                     let (batch, total) = self
                         .tool_call(&a.value, "record_total", depth + 1, in_loop)?
@@ -314,6 +390,10 @@ impl Compiler {
                         || ["tools", "print"].contains(&name.as_str())
                     {
                         return Err(err("buffer name conflicts with a reserved or scalar name"));
+                    }
+                    #[cfg(feature = "tool-json")]
+                    if self.json_names.contains_key(&name) {
+                        return Err(err("buffer name conflicts with JSON view"));
                     }
                     let slot = self.next_buffer;
                     self.next_buffer += 1;
@@ -384,14 +464,24 @@ impl Compiler {
                     return Err(err("if condition must be bool"));
                 }
                 let buffers_before = self.next_buffer;
+                #[cfg(feature = "tool-json")]
+                let json_before = self.json_names.len();
                 let incoming = self.initialized;
                 let then_body = self.compile_block(&a.body, depth + 1, in_loop, in_loop_body)?;
+                #[cfg(feature = "tool-json")]
+                if self.json_names.len() != json_before {
+                    return Err(err("JSON owner/view bindings must be unconditional"));
+                }
                 if self.next_buffer != buffers_before {
                     return Err(err("buffer loads must be unconditional"));
                 }
                 let then_set = self.initialized;
                 self.initialized = incoming;
                 let else_body = self.compile_block(&a.orelse, depth + 1, in_loop, in_loop_body)?;
+                #[cfg(feature = "tool-json")]
+                if self.json_names.len() != json_before {
+                    return Err(err("JSON owner/view bindings must be unconditional"));
+                }
                 if self.next_buffer != buffers_before {
                     return Err(err("buffer loads must be unconditional"));
                 }
@@ -421,6 +511,10 @@ impl Compiler {
                     return Err(err(
                         "row name conflicts with a scalar, buffer, or reserved name",
                     ));
+                }
+                #[cfg(feature = "tool-json")]
+                if self.json_names.contains_key(&row) {
+                    return Err(err("row name conflicts with JSON view"));
                 }
                 self.rows.insert(row.clone());
                 let before = self.initialized;
@@ -461,6 +555,20 @@ impl Compiler {
                 }
                 if let Some(arg) = Self::print_arg(&e.value)? {
                     self.node(depth + 1)?;
+                    #[cfg(feature = "tool-json")]
+                    if !self.tools.is_empty() && Self::call_parts(arg).is_some() {
+                        // Reuse ordinary Tool binding/suspension, then the bounded
+                        // scalar printer. NUL names cannot collide with source names.
+                        let name = format!("\0print{}", self.locals.len());
+                        if self.compile_tool(&name, arg, depth + 2, in_loop, out)? {
+                            if self.json.calls.last().expect("bound Tool").json {
+                                return Err(err("print accepts only scalar Tool results"));
+                            }
+                            let slot = self.lookup(&name)?;
+                            out.push(Stmt::Print(Expr::Local(slot), Type::I64));
+                            return Ok(());
+                        }
+                    }
                     if let Some((batch, total)) =
                         self.tool_call(arg, "record_total", depth + 2, in_loop)?
                     {
@@ -481,6 +589,18 @@ impl Compiler {
                     }
                     out.push(Stmt::Print(value, ty));
                     return Ok(());
+                }
+                #[cfg(feature = "tool-json")]
+                if !self.tools.is_empty() && Self::call_parts(&e.value).is_some() {
+                    // Preserve the declared Tool effect while keeping its scalar
+                    // result in a compiler-only slot that source cannot name.
+                    let name = format!("\0discard{}", self.locals.len());
+                    if self.compile_tool(&name, &e.value, depth + 1, in_loop, out)? {
+                        if self.json.calls.last().expect("bound Tool").json {
+                            return Err(err("discarded Tool results must be scalar"));
+                        }
+                        return Ok(());
+                    }
                 }
                 let (value, _) = self.expr(&e.value, depth + 1, in_loop)?;
                 out.push(Stmt::Eval(value));
@@ -511,6 +631,160 @@ impl Compiler {
         self.names.push(name);
         self.locals.push(ty);
         Ok(i)
+    }
+    #[cfg(feature = "tool-json")]
+    fn json_path(&self, e: &ast::Expr) -> Result<Option<(usize, Vec<String>)>> {
+        match e {
+            ast::Expr::Name(n) => Ok(self.json_names.get(n.id.as_str()).cloned()),
+            ast::Expr::Subscript(s) => {
+                let Some((root, mut keys)) = self.json_path(&s.value)? else {
+                    return Ok(None);
+                };
+                let ast::Expr::Constant(c) = s.slice.as_ref() else {
+                    return Err(err("JSON indices must be literal field keys"));
+                };
+                let ast::Constant::Str(key) = &c.value else {
+                    return Err(err("JSON indices must be literal field keys"));
+                };
+                keys.push(key.clone());
+                if keys.len() > 32
+                    || !self.json_leaves[root]
+                        .iter()
+                        .any(|(p, _)| p.starts_with(&keys))
+                {
+                    return Err(err("JSON field path is absent from the declared schema"));
+                }
+                Ok(Some((root, keys)))
+            }
+            _ => Ok(None),
+        }
+    }
+    #[cfg(feature = "tool-json")]
+    fn bind_json(&mut self, name: &str, root: usize, path: Vec<String>) -> Result<()> {
+        if self.names.iter().any(|n| n == name)
+            || self.buffers.contains_key(name)
+            || self.rows.contains(name)
+            || self.json_names.contains_key(name)
+            || ["tools", "print", "True", "False"].contains(&name)
+        {
+            return Err(err(
+                "JSON view name conflicts with an existing/reserved binding",
+            ));
+        }
+        if self.json_names.len() >= 128 {
+            return Err(err("too many JSON view bindings"));
+        }
+        self.json_names.insert(name.to_owned(), (root, path));
+        Ok(())
+    }
+    #[cfg(feature = "tool-json")]
+    fn compile_tool(
+        &mut self,
+        name: &str,
+        e: &ast::Expr,
+        depth: usize,
+        in_loop: bool,
+        out: &mut Vec<Stmt>,
+    ) -> Result<bool> {
+        let Some((call, _)) = Self::call_parts(e) else {
+            return Ok(false);
+        };
+        let ast::Expr::Call(c) = call else {
+            unreachable!()
+        };
+        let ast::Expr::Attribute(a) = c.func.as_ref() else {
+            return Ok(false);
+        };
+        if !matches!(a.value.as_ref(), ast::Expr::Name(n) if n.id.as_str() == "tools") {
+            return Ok(false);
+        }
+        let Some(tool) = self
+            .tools
+            .iter()
+            .find(|t| t.name == a.attr.as_str())
+            .cloned()
+        else {
+            return Ok(false);
+        };
+        if in_loop {
+            return Err(err("tool calls are unsupported inside loops"));
+        }
+        self.node(depth)?;
+        if c.args.len() > tool.arguments.len() {
+            return Err(err("too many Tool arguments"));
+        }
+        let mut args: Vec<Option<Expr>> = vec![None; tool.arguments.len()];
+        // Evaluate in Python source order into scalar slots BEFORE canonical binding.
+        for (position, arg) in c.args.iter().enumerate() {
+            let (e, t) = self.expr(arg, depth + 1, false)?;
+            if t != Type::I64 {
+                return Err(err("Tool argument must be i64"));
+            }
+            let slot = self.hidden_scalar(t)?;
+            out.push(Stmt::Set(slot, e));
+            args[position] = Some(Expr::Local(slot));
+        }
+        for kw in &c.keywords {
+            let key = kw
+                .arg
+                .as_ref()
+                .ok_or_else(|| err("Tool **kwargs is unsupported"))?;
+            let position = tool
+                .arguments
+                .iter()
+                .position(|a| a == key.as_str())
+                .ok_or_else(|| err("unknown Tool argument name"))?;
+            if args[position].is_some() {
+                return Err(err("duplicate Tool argument"));
+            }
+            let (e, t) = self.expr(&kw.value, depth + 1, false)?;
+            if t != Type::I64 {
+                return Err(err("Tool argument must be i64"));
+            }
+            let slot = self.hidden_scalar(t)?;
+            out.push(Stmt::Set(slot, e));
+            args[position] = Some(Expr::Local(slot));
+        }
+        let args = args
+            .into_iter()
+            .map(|a| a.ok_or_else(|| err("missing Tool argument")))
+            .collect::<Result<Vec<_>>>()?;
+        let json = !matches!(tool.result, crate::tool::ResultSchema::I64);
+        let target = if json {
+            if self.json.roots >= 32 {
+                return Err(err("too many JSON owners"));
+            }
+            let root = self.json.roots;
+            self.bind_json(name, root, Vec::new())?;
+            self.json.roots += 1;
+            let leaves = match tool.result {
+                crate::tool::ResultSchema::Json(paths) => paths
+                    .into_iter()
+                    .map(|p| (p, crate::tool::JsonLeaf::I64))
+                    .collect(),
+                crate::tool::ResultSchema::JsonTyped(paths) => paths,
+                crate::tool::ResultSchema::I64 => unreachable!(),
+            };
+            self.json_leaves.push(leaves);
+            root
+        } else {
+            let slot = self.declare(name, Type::I64, true)?;
+            self.initialized |= 1 << slot;
+            slot
+        };
+        let call = self.json.calls.len();
+        self.json.calls.push(crate::tool::BoundCall {
+            id: tool.id,
+            arguments: args.len(),
+            json,
+        });
+        out.push(Stmt::Tool {
+            call,
+            target,
+            json,
+            args,
+        });
+        Ok(true)
     }
     fn annotation(e: &ast::Expr) -> Result<Type> {
         match e {
@@ -631,6 +905,21 @@ impl Compiler {
     }
     fn expr(&mut self, e: &ast::Expr, depth: usize, in_loop: bool) -> Result<(Expr, Type)> {
         self.node(depth)?;
+        #[cfg(feature = "tool-json")]
+        if let Some((root, path)) = self.json_path(e)? {
+            let leaf = self.json_leaves[root]
+                .iter()
+                .find(|(p, _)| p == &path)
+                .map(|(_, t)| *t)
+                .ok_or_else(|| err("JSON expression must name a declared leaf"))?;
+            if leaf != crate::tool::JsonLeaf::I64 {
+                return Err(err(
+                    "string leaf is only supported as the right operand of literal `in`",
+                ));
+            }
+            let slot = self.json.path(root, &path)?;
+            return Ok((Expr::JsonI64 { slot, root }, Type::I64));
+        }
         match e {
             ast::Expr::Constant(c) => match &c.value {
                 ast::Constant::Bool(b) => Ok((Expr::Bool(*b), Type::Bool)),
@@ -747,6 +1036,39 @@ impl Compiler {
             ast::Expr::Compare(c) => {
                 if c.ops.len() != 1 || c.comparators.len() != 1 {
                     return Err(err("chained comparisons are unsupported"));
+                }
+                #[cfg(feature = "tool-json")]
+                if matches!(c.ops[0], ast::CmpOp::In) {
+                    let ast::Expr::Constant(literal) = c.left.as_ref() else {
+                        return Err(err("contains needle must be a string literal"));
+                    };
+                    let ast::Constant::Str(needle) = &literal.value else {
+                        return Err(err("contains needle must be a string literal"));
+                    };
+                    if needle.len() > 256 {
+                        return Err(err("contains needle exceeds 256 UTF-8 bytes"));
+                    }
+                    let (root, path) = self.json_path(&c.comparators[0])?.ok_or_else(|| {
+                        err("contains haystack must be a declared JSON string leaf")
+                    })?;
+                    if !self.json_leaves[root]
+                        .iter()
+                        .any(|(p, t)| p == &path && *t == crate::tool::JsonLeaf::String)
+                    {
+                        return Err(err("contains haystack must be a declared JSON string leaf"));
+                    }
+                    let slot = self.json.path(root, &path)?;
+                    let needle_slot = self.json.needles.len();
+                    self.json.needles.push(needle.clone());
+                    self.json.string_paths = true;
+                    return Ok((
+                        Expr::Contains {
+                            slot,
+                            root,
+                            needle: needle_slot,
+                        },
+                        Type::Bool,
+                    ));
                 }
                 let (l, lt) = self.expr(&c.left, depth + 1, in_loop)?;
                 let (r, rt) = self.expr(&c.comparators[0], depth + 1, in_loop)?;

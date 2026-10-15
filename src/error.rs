@@ -7,6 +7,8 @@ pub enum TaskError {
     Buffer,
     Input,
     Provider(String),
+    #[cfg(feature = "tool-json")]
+    Json(&'static str),
 }
 impl std::fmt::Display for TaskError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
