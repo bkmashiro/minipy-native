@@ -136,6 +136,19 @@ impl CodeUnit {
             false,
         )
     }
+    /// Compile new source using declarations already validated by the Host.
+    #[cfg(feature = "tool-json")]
+    pub fn compile_with_environment(
+        source: &str,
+        inputs: &[(&str, ir::Type)],
+        environment: &crate::tool::ToolEnvironment,
+    ) -> Result<Self, CompileError> {
+        Self::lower(
+            crate::frontend::parse_with_environment(source, inputs, environment)?,
+            "speed",
+            false,
+        )
+    }
     fn lower(program: ir::Program, opt: &str, retain_ir: bool) -> Result<Self, CompileError> {
         let (mut ctx, mut fc) = SCRATCH.with(|s| s.borrow_mut().take()).unwrap_or_else(|| {
             (

@@ -128,6 +128,21 @@ pub struct ToolDeclaration {
     pub arguments: Vec<ArgumentSchema>,
     pub result: ResultSchema,
 }
+/// Immutable Tool declarations validated once at Host registration.
+/// This describes types, not permission to invoke a Tool.
+#[derive(Debug)]
+pub struct ToolEnvironment {
+    declarations: Vec<ToolDeclaration>,
+}
+impl ToolEnvironment {
+    pub fn new(declarations: Vec<ToolDeclaration>) -> Result<Self, CompileError> {
+        ToolDeclaration::validate_all(&declarations)?;
+        Ok(Self { declarations })
+    }
+    pub(crate) fn declarations(&self) -> &[ToolDeclaration] {
+        &self.declarations
+    }
+}
 impl From<&ToolSchema> for ToolDeclaration {
     fn from(value: &ToolSchema) -> Self {
         Self {

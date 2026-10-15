@@ -107,6 +107,29 @@ fn scalar_sink_does_not_allocate_per_piece() {
 }
 
 #[test]
+fn unused_registered_tools_do_not_add_preparation_allocations() {
+    use minipy_native::{interpreter::InterpreterUnit, tool::ToolEnvironment};
+    let mut counts = Vec::new();
+    for count in [1, 16] {
+        let declarations = (0..count)
+            .map(|i| ToolDeclaration {
+                id: 2 + i,
+                name: format!("metric{i}"),
+                arguments: vec![ArgumentSchema::I64("value".into())],
+                result: ResultSchema::I64,
+            })
+            .collect();
+        let environment = ToolEnvironment::new(declarations).unwrap();
+        // Initialize parser thread-local state before allocation accounting.
+        InterpreterUnit::prepare_with_environment("print(1)", &[], &environment).unwrap();
+        counts.push(allocations(|| {
+            InterpreterUnit::prepare_with_environment("print(2)", &[], &environment).unwrap();
+        }));
+    }
+    assert_eq!(counts[0], counts[1]);
+}
+
+#[test]
 fn declaration_validation_preserves_errors_and_order() {
     let make = |name: &str, args| ToolDeclaration {
         id: 2,

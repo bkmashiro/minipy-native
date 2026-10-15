@@ -63,6 +63,22 @@ pub fn parse_with_declarations(
     tools: &[crate::tool::ToolDeclaration],
 ) -> Result<Program> {
     crate::tool::ToolDeclaration::validate_all(tools)?;
+    parse_validated_tools(source, inputs, tools)
+}
+#[cfg(feature = "tool-json")]
+pub(crate) fn parse_with_environment(
+    source: &str,
+    inputs: &[(&str, Type)],
+    environment: &crate::tool::ToolEnvironment,
+) -> Result<Program> {
+    parse_validated_tools(source, inputs, environment.declarations())
+}
+#[cfg(feature = "tool-json")]
+fn parse_validated_tools(
+    source: &str,
+    inputs: &[(&str, Type)],
+    tools: &[crate::tool::ToolDeclaration],
+) -> Result<Program> {
     if source.len() > ir::MAX_SOURCE_BYTES {
         return Err(err("source exceeds MAX_SOURCE_BYTES"));
     }
@@ -73,7 +89,7 @@ pub fn parse_with_declarations(
             .at(source, e.offset.to_usize())
     })?;
     let mut compiler = Compiler::new(inputs, source)?;
-    compiler.tools = tools.to_vec();
+    compiler.tools = tools;
     compiler.program(module)
 }
 
@@ -168,7 +184,7 @@ struct Compiler<'a> {
     inputs: usize,
     legacy: bool,
     #[cfg(feature = "tool-json")]
-    tools: Vec<crate::tool::ToolDeclaration>,
+    tools: &'a [crate::tool::ToolDeclaration],
     #[cfg(feature = "tool-json")]
     json: crate::tool::Plan,
     #[cfg(feature = "tool-json")]
@@ -193,7 +209,7 @@ impl<'a> Compiler<'a> {
             inputs: inputs.len(),
             legacy: false,
             #[cfg(feature = "tool-json")]
-            tools: Vec::new(),
+            tools: &[],
             #[cfg(feature = "tool-json")]
             json: crate::tool::Plan::default(),
             #[cfg(feature = "tool-json")]

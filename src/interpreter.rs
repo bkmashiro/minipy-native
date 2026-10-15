@@ -52,6 +52,19 @@ impl InterpreterUnit {
     ) -> Result<Self, CompileError> {
         Self::from_program(frontend::parse_with_declarations(source, inputs, tools)?)
     }
+    /// Prepare new source using declarations already validated by the Host.
+    #[cfg(feature = "tool-json")]
+    pub fn prepare_with_environment(
+        source: &str,
+        inputs: &[(&str, Type)],
+        environment: &crate::tool::ToolEnvironment,
+    ) -> Result<Self, CompileError> {
+        Self::from_program(frontend::parse_with_environment(
+            source,
+            inputs,
+            environment,
+        )?)
+    }
     fn from_program(program: crate::ir::Program) -> Result<Self, CompileError> {
         let mut ops = Vec::new();
         flatten(program.statements, &mut ops);

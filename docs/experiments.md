@@ -1915,3 +1915,21 @@ raw, per-process reduction, timing boundaries and reproduction commands:
 [evidence/string-consumer-fix](../evidence/string-consumer-fix/README.md).
 No full benchmark or Linux/Wasm performance campaign was run.
 
+## Reusable registered Tool environment
+
+Add `ToolEnvironment::new(Vec<ToolDeclaration>)` and dual-backend
+`prepare_with_environment` / `compile_with_environment` entries. Registration
+validates and owns immutable declarations; each new source borrows that table.
+Existing APIs keep their validation behavior and now also avoid copying the
+whole table. Program-specific bindings still own their data, and Provider
+permissions are checked at execution. Input schema validation remains per source.
+
+A same-process, alternating-order probe records 2,624 rows over four paired
+rounds. With 16 registered Tools and one ready call, tape preparation plus
+execution improves **33.3–34.5%**, native **3.1–3.4%**, compared with passing raw
+declarations on each request in the same build. One-Tool native cells remain
+mixed. This does not isolate the additional old-to-new table-clone removal.
+Default/tool-json suites and strict Clippy pass. Retain the opt-in API; no new
+runtime dispatch or task state is added. See
+[raw, reducer and boundaries](../evidence/tool-environment/README.md).
+
