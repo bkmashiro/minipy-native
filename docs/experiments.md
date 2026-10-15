@@ -2367,7 +2367,10 @@ CFG definite-write oracle覆盖effect/可能yield的清空、短路/分支/循�
 预设A/B、exact-A A/A各一轮ABBA，五类双后端，共80进程/1920正式完整请求
 全通过。tape scalar/branch/madd_short/loop/wait B:A为
 .97750/.99697/.96751/1.00873/1.00050，scalar A/A为.92598；native未变
-也有漂移。净收益不一致，建议撤回候选、结束路线，待固定提交独立审阅确认。
+也有漂移。独立gpt-6-luna审阅固定 `6e229fd` 后建议撤回，无正确性阻塞；
+主控验证receipt为6次精确model/provider主推理调用，已撤回并逐字节恢复
+基线生产源码/测试。Oracle未建模普通statement切换的清空，不能当作完整
+语句间读前写证明；此限制已缩窄记录，候选内存安全不依赖它，不修补已撤回方案。
 完整default和tool-json/debug-runtime release suites、严格Clippy/fmt、
 九Python tests通过；新真实执行回归覆盖小/大scratch、深表达式、600行
 chunk7以及Tool挂起。无新target/worktree/dependency/download/CI或平台结论。

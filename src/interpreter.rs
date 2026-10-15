@@ -20,8 +20,6 @@ use tokio::sync::oneshot;
 pub mod debug;
 #[cfg(test)]
 mod liveness_tests;
-#[cfg(test)]
-mod scratch_tests;
 mod tape;
 use tape::{Boundary, Op, flatten};
 /// Only the existing bounded frontend can construct this sealed executable.
@@ -30,7 +28,6 @@ pub struct InterpreterUnit {
     live: Vec<u64>,
     inputs: Vec<Type>,
     buffers: usize,
-    temp_slots: usize,
     #[cfg(feature = "tool-json")]
     json: Option<Rc<crate::tool::Plan>>,
     #[cfg(feature = "tool-json")]
@@ -72,7 +69,7 @@ impl InterpreterUnit {
     }
     fn from_program(program: crate::ir::Program) -> Result<Self, CompileError> {
         let mut ops = Vec::new();
-        let temp_slots = flatten(program.statements, &mut ops);
+        flatten(program.statements, &mut ops);
         // Buffer liveness at each PC, including loop backedges. No extra scalar
         // analysis is needed: slots already reside in the task's fixed local array.
         // Admission assigns every Quote buffer a slot. With no slots all masks
@@ -134,7 +131,6 @@ impl InterpreterUnit {
             live,
             inputs: program.locals[..program.inputs].to_vec(),
             buffers: program.buffers,
-            temp_slots,
         })
     }
     /// Zero-buffer units omit storage; nonzero units keep checked PC indexing.

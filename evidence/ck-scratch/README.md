@@ -1,6 +1,6 @@
 # CK：tape 临时槽的有界实验
 
-建议撤回唯一候选，保留当前实现并结束此路线；等待固定提交独立审阅。
+经固定提交独立审阅，撤回唯一候选，生产源码和测试逐字节恢复基线，结束此路线。
 确实删掉了小程序的初始化写入，但没有建立完整请求净收益，同步栈保留量反而增加。
 
 ## 不变量与单一候选
@@ -21,9 +21,11 @@ Debug `Step` 可以停在表达式中，必须保留 Frame scratch，不能照�
 无需依赖读前写证明来使内存读取安全，两条路径的整个可访问数组都初始化。
 
 测试 oracle 沿 CFG 传播 definite-write intersection，在 effect 和每个可能 yield 的 Next 清空集合，
-逐个断言所有 Temp 读已写，且所有引用落在 lowering 高水位内。literal、alias、短路、分支、循环和JSON
+逐个断言测试图上所有 Temp 读已写，且所有引用落在 lowering 高水位内。它不在普通statement切换处
+清空集合，可能接受沿用前一语句写入的读，不能独立证明所有语句的读前写；这一限制由review指出。
+源码的statement生命周期分析仍成立，候选的内存安全也不依赖该oracle。literal、alias、短路、分支、循环和JSON
 覆盖实测 0/1/2/3/7/15/31/127 槽。新执行回归用原前端和双后端跑直线、分支、深平衡表达式，
-以及600 rows/chunk7（85次yield）和真实 `yield_now` Tool 挂起；同时验证明确期望输出。
+以及600 rows/chunk7（按执行规则推导85次yield，非独立计数）和真实 `yield_now` Tool 挂起；同时验证明确期望输出。
 原 suites 继续覆盖 overflow、错误顺序、取消、fuel、authority、owner、JSON/string和debug逐步恢复。
 
 ## 实际代码与完整请求
@@ -71,3 +73,6 @@ hunk不能复用旧apply helper，改为显式新增文件重建后通过。失�
 `run --cases scalar branch madd_short madd_loop detach_wait --rounds 1 --reps 24` 分别跑A/B和`--aa`。
 `ck_scratch_machine.py`读取固定scratch中的ck-a/ck-b，`ck_scratch_layout.py`只在候选状态应用/恢复原CI overlay。
 所有raw拒绝覆盖，重跑应改新输出路径；不可把新binary或raw冒充本轮。审阅记录另见 `review.md`。
+
+最终撤回还移除了仅服务候选的oracle/执行回归，完整实现和测试仍在固定候选commit及压缩patch内。
+回退后的完整release suites、严格Clippy/fmt和原Python tests另记录于 `final-verification.json`。
