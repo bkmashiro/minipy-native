@@ -284,7 +284,7 @@ async fn budgets_and_wait_lifetime() {
             Err(TaskError::Budget),
             "decoded scratch shares the root cap"
         );
-        let source = "d = tools.fetch(batch_id)\ns = d[\"message\"]\nr = tools.publish(batch_id)\nprint(\"error\" in s)";
+        let source = "d = tools.fetch(batch_id)\ns = d[\"message\"]\nprint(\"error\" in s)\nr = tools.publish(batch_id)\nprint(\"error\" in s)";
         let done = run(
             native,
             source,
@@ -294,7 +294,7 @@ async fn budgets_and_wait_lifetime() {
         )
         .await;
         assert_eq!(done.status, Ok(()));
-        assert_eq!(done.stdout, "True\n");
+        assert_eq!(done.stdout, "True\nTrue\n");
         let live = Arc::new(AtomicUsize::new(1));
         let owner = Owner {
             data: data.to_vec().into_boxed_slice(),

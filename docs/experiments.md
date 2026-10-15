@@ -1078,3 +1078,73 @@ latencies (µs) were respectively 269/2437 interpreter, 879/1525 native,
 486/274904 Monty, 65235/157892 spawn, 4548/98822 prefork. No production
 runtime, website, frozen S/AD raw or global system setting changed.
 
+## BG: cached validation for borrowed JSON string spans (2026-10-15)
+
+The opt-in `tool-json` path previously reparsed a plain JSON string token with
+`sonic_rs::from_slice::<&str>` on every `contains` after locating the field.
+`src/json_view.rs` now records `Unchecked` / `Validated` / `Decoded(String)` per
+path. The first plain-string access still uses sonic to validate UTF-8, controls
+and JSON syntax; subsequent reads borrow only the checked token's interior from
+the immutable `Bytes` owner. Escaped strings keep the previous single decode.
+Replacing or releasing an owner clears the marker and all associated range/
+integer/decoded state. A failed replacement preserves the old owner. The same
+64-KiB token, task buffer and cumulative scan charges remain; no new syntax,
+public ABI, dependency or non-JSON allocation. `State` remains 128 B on 64-bit.
+The opt-in string-path vector still uses 24 B per path on macOS ARM64:
+`StringCache` fits its two marker variants into the niches previously used
+by `Option<String>`. This is a Rust layout test, not an observed waiting RSS
+delta; no gated task-memory campaign was run.
+
+Bounded paired macOS M4 probe: exact HEAD `4e54261` versus this change, Rust
+1.96.0 aarch64-apple-darwin, release, pinned Monty revision unchanged. The
+existing `ar-contains` harness was temporarily patched to compute a threefold
+short-circuit hit over the same string; both binaries used identical probe
+source and Tool JSON bytes. Misses evaluate one predicate. Monty and Host-bool
+rows still run their original one-predicate sources and are sanity checks only,
+not matched threefold comparators. Four adjacent AB/BA/BA/AB process pairs,
+60 timed requests per shape/engine/mode/process, 19,200 result rows and eight
+identity rows. All results matched the expected stdout. Compilation, Tool hop,
+JSON access, execution and cleanup are inside cold timing; prepared units are
+outside warm timing. The immutable producer bytes are precreated per shape.
+Both compilation and timing held the shared `minipy-perf-build.lock`, with
+`CARGO_BUILD_JOBS=1` and the existing shared target. An earlier unlocked pilot
+was discarded, not pooled. Median pair changes for native / tape respectively:
+prepared 16-KiB tail-hit native -59.75/-52.89/-58.25/-53.28%, tape
+-55.16/-51.81/-54.91/-55.09%; prepared 16-KiB miss native
+-37.38/-32.27/-38.64/-38.34%, tape -25.99/-30.77/-33.42/-30.38%;
+prepared 64-KiB miss native -32.94/-33.05/-33.48/-32.90%, tape
+-32.54/-32.97/-34.58/-32.83%. The 16-KiB tail-hit source-cold native
+improves 3.56--6.09% in all pairs; cold short-hit varies
+-0.51/+0.17/-0.84/-2.02%, and escaped-hit is neutral/noisy. These are local synthetic cells, not a representative mix
+or a Linux/WSL run. Retain this local optimization for repeated plain-string
+access without asserting a general short-task or service win.
+
+Old non-JSON path control, same shared lock/target, ordinary `script-bench`
+without `string-probe` or allocator diagnostics: 4 AB/BA/BA/AB process pairs,
+220 cold requests per process/shape, first 20 excluded, scalar (zero rows)
+and weighted Quote scan (100 rows). Paired scalar median changes
+-5.10/-3.68/+2.69/-0.34%; weighted -1.29/+0.38/-0.74/-1.52%.
+An earlier 80-request control had large initial frequency drift and was
+discarded. The longer result does not establish an old-path speedup, but
+shows no stable repeated net loss in these cells. Full raw and reduction are
+`old-final-*.jsonl.gz` and `old-path-summary.json`. The common baseline and
+candidate script binary SHA-256 are
+`3d8ddb8c65593bd25e9dae7b72da484c3fc8c9eeacaf642a14522f2d39e12c1c` /
+`136335e783e5198da6e621aadf6349888bea19c2d3aca4c20c39743e7001894c`.
+The non-string plan still allocates no string-state vector; its inline State
+size is unchanged. No gated task-memory campaign was run.
+
+Raw gzip, per-pair reduction and probe-only source patch are in
+`evidence/bg-string-validation/`. Baseline/candidate repeat binary SHA-256:
+`91de87d921abc0a62dc4901522da16defda781d0192c6eb9f1150703fac4d3dd` /
+`12512ef4b3d22c2183bb73e888773a5d42f8d6ed715e80f8b4c65003ba23d98c`.
+Reproduction: apply `repeat-source.patch` to each of an exact-HEAD worktree
+and this tree, build with `CARGO_TARGET_DIR=<shared-target> cargo +1.96.0 build
+--offline --locked --release --manifest-path bench/Cargo.toml --features
+string-probe --bin ar-contains`, save distinct binaries and run each with `60`
+in the recorded order. Unit replacement/invalid-token/owner tests and full
+macOS `cargo test --locked --features tool-json` plus
+`cargo test --locked --no-default-features` passed; strict all-feature Clippy,
+`cargo fmt --all -- --check` and `git diff --check` passed. No Linux run, CI,
+VM or new machine was used.
+

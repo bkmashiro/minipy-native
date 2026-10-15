@@ -8,10 +8,15 @@ pub(crate) struct State {
     roots: Vec<Option<Bytes>>,
     ranges: Vec<Option<Range<usize>>>,
     integers: Vec<Option<i64>>,
-    decoded: Option<Vec<Option<String>>>,
+    strings: Option<Vec<StringCache>>,
     max: usize,
     external: usize,
     scan_left: usize,
+}
+enum StringCache {
+    Unchecked,
+    Validated,
+    Decoded(String),
 }
 impl State {
     pub(crate) fn new(plan: std::rc::Rc<Plan>, max: usize, scan_bytes: usize) -> Self {
@@ -19,7 +24,11 @@ impl State {
             roots: vec![None; plan.roots],
             ranges: vec![None; plan.paths.len()],
             integers: vec![None; plan.paths.len()],
-            decoded: plan.string_paths.then(|| vec![None; plan.paths.len()]),
+            strings: plan.string_paths.then(|| {
+                (0..plan.paths.len())
+                    .map(|_| StringCache::Unchecked)
+                    .collect()
+            }),
             max,
             external: 0,
             scan_left: scan_bytes,
@@ -31,10 +40,14 @@ impl State {
     }
     pub(crate) fn held(&self) -> usize {
         self.roots.iter().flatten().map(Bytes::len).sum::<usize>()
-            + self
-                .decoded
-                .as_ref()
-                .map_or(0, |d| d.iter().flatten().map(String::capacity).sum())
+            + self.strings.as_ref().map_or(0, |d| {
+                d.iter()
+                    .map(|s| match s {
+                        StringCache::Decoded(value) => value.capacity(),
+                        _ => 0,
+                    })
+                    .sum()
+            })
     }
     pub(crate) fn install(
         &mut self,
@@ -42,11 +55,40 @@ impl State {
         bytes: Bytes,
         max: usize,
     ) -> Result<(), TaskError> {
-        if bytes.len() > max.saturating_sub(self.held()) {
+        let old = self.roots[root].as_ref().map_or(0, Bytes::len);
+        let old_decoded: usize = if old == 0 {
+            0
+        } else {
+            self.plan
+                .paths
+                .iter()
+                .enumerate()
+                .filter(|(_, path)| path.root == root)
+                .map(|(i, _)| match self.strings.as_ref().map(|s| &s[i]) {
+                    Some(StringCache::Decoded(value)) => value.capacity(),
+                    _ => 0,
+                })
+                .sum()
+        };
+        if bytes.len() > max.saturating_sub(self.held() - old - old_decoded) {
             return Err(TaskError::Budget);
+        }
+        if self.roots[root].is_some() {
+            self.clear_root(root);
         }
         self.roots[root] = Some(bytes);
         Ok(())
+    }
+    fn clear_root(&mut self, root: usize) {
+        for (i, path) in self.plan.paths.iter().enumerate() {
+            if path.root == root {
+                self.ranges[i] = None;
+                self.integers[i] = None;
+                if let Some(strings) = &mut self.strings {
+                    strings[i] = StringCache::Unchecked;
+                }
+            }
+        }
     }
     pub(crate) fn release(&mut self, live: u32) {
         for (root, bytes) in self.roots.iter_mut().enumerate() {
@@ -58,8 +100,8 @@ impl State {
             if live & (1 << p.root) == 0 {
                 self.ranges[i] = None;
                 self.integers[i] = None;
-                if let Some(decoded) = &mut self.decoded {
-                    decoded[i] = None;
+                if let Some(strings) = &mut self.strings {
+                    strings[i] = StringCache::Unchecked;
                 }
             }
         }
@@ -126,19 +168,22 @@ impl State {
     pub(crate) fn string(&mut self, slot: usize) -> Result<&str, TaskError> {
         let range = self.locate(slot)?;
         let root = self.plan.paths[slot].root;
-        let raw = &self.roots[root]
-            .as_ref()
-            .ok_or(TaskError::Json("released owner"))?[range.clone()];
-        if raw.len() > 64 * 1024 {
-            return Err(TaskError::Budget);
-        }
-        if raw.first() != Some(&b'"') || raw.last() != Some(&b'"') || raw.len() < 2 {
-            return Err(TaskError::Json("expected UTF-8 string"));
-        }
-        if raw.contains(&b'\\') {
-            if self.decoded.as_ref().expect("string plan")[slot].is_none() {
+        if matches!(
+            self.strings.as_ref().expect("string plan")[slot],
+            StringCache::Unchecked
+        ) {
+            let raw = &self.roots[root]
+                .as_ref()
+                .ok_or(TaskError::Json("released owner"))?[range.clone()];
+            if raw.len() > 64 * 1024 {
+                return Err(TaskError::Budget);
+            }
+            if raw.first() != Some(&b'"') || raw.last() != Some(&b'"') || raw.len() < 2 {
+                return Err(TaskError::Json("expected UTF-8 string"));
+            }
+            let state = if raw.contains(&b'\\') {
                 self.charge(raw.len())?;
-                let raw = &self.roots[root].as_ref().unwrap()[range];
+                let raw = &self.roots[root].as_ref().unwrap()[range.clone()];
                 let decoded = sonic_rs::from_slice::<String>(raw)
                     .map_err(|_| TaskError::Json("expected UTF-8 string"))?;
                 if decoded.capacity()
@@ -148,14 +193,23 @@ impl State {
                 {
                     return Err(TaskError::Budget);
                 }
-                self.decoded.as_mut().unwrap()[slot] = Some(decoded);
+                StringCache::Decoded(decoded)
+            } else {
+                // Deserialization validates UTF-8 and JSON controls without a copy.
+                sonic_rs::from_slice::<&str>(raw)
+                    .map_err(|_| TaskError::Json("expected UTF-8 string"))?;
+                StringCache::Validated
+            };
+            self.strings.as_mut().unwrap()[slot] = state;
+        }
+        match &self.strings.as_ref().unwrap()[slot] {
+            StringCache::Decoded(value) => Ok(value),
+            StringCache::Validated => {
+                let owner = self.roots[root].as_ref().expect("validated owner");
+                // install/release invalidate the marker before changing the owner.
+                Ok(unsafe { validated_span(owner, range) })
             }
-            Ok(self.decoded.as_ref().unwrap()[slot].as_deref().unwrap())
-        } else {
-            let owner = self.roots[root].as_ref().unwrap();
-            // Deserialization validates UTF-8 and JSON controls without a copy.
-            sonic_rs::from_slice::<&str>(&owner[range])
-                .map_err(|_| TaskError::Json("expected UTF-8 string"))
+            StringCache::Unchecked => unreachable!(),
         }
     }
     fn charge(&mut self, bytes: usize) -> Result<(), TaskError> {
@@ -173,6 +227,11 @@ impl State {
         let value = self.string(slot)?;
         Ok(i64::from(value.contains(plan.needles[needle].as_str())))
     }
+}
+/// Reborrow the interior of a validated immutable JSON string token. The range
+/// was bounds-checked by locate and checked as an unescaped string by sonic.
+unsafe fn validated_span(owner: &Bytes, range: Range<usize>) -> &str {
+    unsafe { std::str::from_utf8_unchecked(&owner[range.start + 1..range.end - 1]) }
 }
 #[cfg(not(target_arch = "wasm32"))]
 pub(crate) unsafe extern "C" fn native_read(
@@ -233,11 +292,111 @@ pub(crate) unsafe extern "C" fn native_release(output: *mut crate::runtime::Outp
 
 #[cfg(all(test, target_pointer_width = "64"))]
 mod tests {
+    use super::{State, StringCache};
+    use crate::tool::{PathSlot, Plan};
+    use bytes::Bytes;
+    use std::rc::Rc;
+
+    fn state() -> State {
+        State::new(
+            Rc::new(Plan {
+                roots: 1,
+                paths: vec![PathSlot {
+                    root: 0,
+                    parent: None,
+                    key: "s".into(),
+                }],
+                needles: vec!["é".into()],
+                string_paths: true,
+                ..Plan::default()
+            }),
+            1024,
+            1024,
+        )
+    }
+
+    #[test]
+    fn validated_span_is_reused_and_invalidated_with_its_owner() {
+        let mut state = state();
+        state
+            .install(0, Bytes::from_static("{\"s\":\"hé\"}".as_bytes()), 1024)
+            .unwrap();
+        assert_eq!(state.contains(0, 0), Ok(1));
+        assert!(matches!(
+            state.strings.as_ref().unwrap()[0],
+            StringCache::Validated
+        ));
+        assert_eq!(state.contains(0, 0), Ok(1));
+        assert_eq!(state.held(), "{\"s\":\"hé\"}".len());
+
+        // A failed replacement must retain the old validated owner and range.
+        assert_eq!(
+            state.install(0, Bytes::from_static(b"{}"), 1),
+            Err(crate::error::TaskError::Budget)
+        );
+        assert_eq!(state.string(0), Ok("hé"));
+        state
+            .install(0, Bytes::from_static(br#"{"s":"new"}"#), 1024)
+            .unwrap();
+        assert!(matches!(
+            state.strings.as_ref().unwrap()[0],
+            StringCache::Unchecked
+        ));
+        assert_eq!(state.string(0), Ok("new"));
+        state.release(0);
+        assert!(matches!(
+            state.strings.as_ref().unwrap()[0],
+            StringCache::Unchecked
+        ));
+        state
+            .install(0, Bytes::from_static(br#"{"s":"\u0065"}"#), 1024)
+            .unwrap();
+        assert_eq!(state.string(0), Ok("e"));
+        assert!(matches!(
+            state.strings.as_ref().unwrap()[0],
+            StringCache::Decoded(_)
+        ));
+        state
+            .install(0, Bytes::from_static(br#"{"s":""}"#), 1024)
+            .unwrap();
+        assert_eq!(state.string(0), Ok(""));
+    }
+
+    #[test]
+    fn rejected_plain_token_never_sets_validation_marker() {
+        let mut state = state();
+        state
+            .install(0, Bytes::from_static(b"{\"s\":\"bad\x01\"}"), 1024)
+            .unwrap();
+        assert!(matches!(
+            state.string(0),
+            Err(crate::error::TaskError::Json(_))
+        ));
+        assert!(matches!(
+            state.strings.as_ref().unwrap()[0],
+            StringCache::Unchecked
+        ));
+        state
+            .install(0, Bytes::from_static(b"{\"s\":\"\xff\"}"), 1024)
+            .unwrap();
+        assert!(matches!(
+            state.string(0),
+            Err(crate::error::TaskError::Json(_))
+        ));
+        assert!(matches!(
+            state.strings.as_ref().unwrap()[0],
+            StringCache::Unchecked
+        ));
+    }
+
     #[test]
     fn static_json_task_state_size() {
         // The pre-string state was Rc<Plan> plus three Vecs (80 bytes).
         // Non-string JSON tasks do not allocate a decoded vector, but retain
         // the additional inline Option<Vec> and budget counters.
         assert_eq!(std::mem::size_of::<super::State>(), 128);
+        // The two marker states fit in String's niche on this target;
+        // previous Option<String> also used 24 bytes per path.
+        assert_eq!(std::mem::size_of::<super::StringCache>(), 24);
     }
 }
