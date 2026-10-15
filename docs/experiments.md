@@ -1985,3 +1985,9 @@ Raw, candidate patch, diagnostic outputs, reducer and commands:
 [BW sink evidence](../evidence/bw-sink/README.md). The pre-created BX card owns the
 next bounded generic checked multiply-add tape experiment.
 
+The focused independent `gpt-6-luna` review of fixed integration commit
+`b3de3e8` found no blockers and independently reproduced the evidence reduction.
+The delegation receipt verified the requested model. An earlier standalone
+Codex attempt failed before review because that account did not support the
+model; no substitute was used. See [review record](../evidence/bw-sink/review.md).
+
