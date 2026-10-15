@@ -1148,3 +1148,59 @@ macOS `cargo test --locked --features tool-json` plus
 `cargo fmt --all -- --check` and `git diff --check` passed. No Linux run, CI,
 VM or new machine was used.
 
+## BH: selective integration decision (2026-10-15)
+
+BF's two record-isolation candidates remain reverted on its reviewed branch:
+C1 saves 632 allocator-requested bytes across 16 Quote waiters without a stable
+request improvement; C2 improves both local paired Quote runs, but the cause
+is not isolated and emits an additional execution body. BD's rows borrow and
+field-locality work is not imported with BG; the old Quote warm gap remains
+unresolved. BE's JoinHandle substitution also remains reverted. No HTTP
+single-job prototype was justified: the observed I/O-driver interaction is
+not an isolated task/channel deletion opportunity, and the proposed Host
+entry, handle-drop and permit semantics have not been implemented or measured.
+Typed scan kernels and local JIT lack a representative admitted workload.
+
+Keep only BG's independent opt-in string validation cache. To test the
+natural alias + **single** contains (rather than BG's triple-hit source),
+`tools/bh_compare.py` built `ar-contains` from main `4e54261` and BG
+`f17cf8e`, both with the original unmodified `bench/src/bin/ar_contains.rs`.
+Build and all six process runs held `minipy-perf-build.lock`, shared target,
+jobs=1; Rust 1.96.0 release on macOS M4. Three adjacent pairs, order
+AB/BA/AB (40 measured requests per case/engine/mode/process), returned the
+expected stdout for every call. The probe includes fresh source compilation,
+Tool handoff, JSON access, guest execution and cleanup in cold timing; its
+producer holds already-encoded immutable Bytes, with no real network wait.
+Both arms execute identical script and payload; Monty and Host-bool controls
+are present but not paired comparisons for the integration decision. Raw files
+`evidence/bh-string-integration/{0-base,1-candidate,2-candidate,3-base,4-base,5-candidate}.jsonl.gz`,
+summary, SHA256 binaries and exact source assertion are retained with the
+runner. To rerun after integration, create isolated worktrees at the two
+recorded commits and set `BH_BASE_TREE` and `BH_BG_TREE`; the runner rejects
+other revisions. This is an additional small paired check, not a full campaign.
+
+Per-pair relative changes (candidate vs main) for source-cold tape:
+16-KiB hit -15.48/-12.81/-12.93%, miss -24.32/-12.29/-9.53%, 64-KiB miss
+-25.96/-25.41/-19.05%. Cold native 64-KiB miss is
+-4.87/-11.17/-6.88%, but 16-KiB hit and both engines' short hit are not
+stable; the first process pair also has much higher cold levels than the
+subsequent two, so its changes alone are not a general speed estimate.
+Prepared 16-KiB hit improves 22--31% on tape and ~30--31% native in all
+three pairs, consistent with removal of repeated validation after the alias.
+Escaped strings are neutral/noisy; short warm native slightly regresses in
+these three pairs (3.21--5.86%, about 40--80 ns) and has no demonstrated
+source-once gain. These local medians neither describe service load nor prove
+that every short case benefits. BG's earlier four-pair old scalar/Quote control
+has no consistently directed loss. State remains 128 B and per-string-path
+storage 24 B versus BG's parent; no gated RSS comparison was run, and the
+entire root can still be held by a small live string across an I/O wait.
+
+Decision: integrate only BG's independently reviewed cache and its error/
+owner regression tests; do not infer a generic long-string workload or
+broader feature expansion. Mac all-feature and no-default suites, strict
+all-target/all-feature Clippy pass offline under the same lock, plus default
+toolchain fmt check. No new dependencies, VM/WSL, CI, website, paid resources
+or release automation. HTTP operation ownership, cancellation and budgeting
+remain unchanged. Future HTTP work needs a measured real handoff cost and a
+bounded service entry design; no new optimization task is opened here.
+

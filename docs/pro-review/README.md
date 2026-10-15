@@ -1,6 +1,15 @@
 # MiniPy 性能与下一阶段设计审阅入口
 
-本材料固定生产源码 `20e454ab36a55283f9c475c186f520a948d81571`。只新增审阅材料，不修改运行时。schema 修复 BD 仍在进行，本文不预判其结果。仓库早期 README/design/roadmap 含历史阶段叙述；当前支持范围以源码、测试及 AS 集成记录为准。
+本材料的原始审阅固定生产源码 `20e454ab36a55283f9c475c186f520a948d81571`；下列更新单独标记后续实验，不将旧报告的判断倒填为当时已知事实。仓库早期 README/design/roadmap 含历史阶段叙述；当前支持范围以源码、测试及 AS 集成记录为准。
+
+## 后续决策（BH，2026-10-15）
+
+- 原审阅全文另存于本机材料；仓库读者可依据下列固定提交、实验段与原始数据核查。BD `cae9087` 的 rows 借用/字段局部性修复仍留在 [实验分支](https://github.com/bkmashiro/minipy-native/tree/cae9087823fe34d3c05c8df966639c1c61a13c83)，不整包纳入 main；其约 17% Quote warm 差距未归因。
+- [BF `ba94af5`](https://github.com/bkmashiro/minipy-native/tree/ba94af54c4087336c1c2cb08de75d80334f2f6c6) C1 按需 owner 数组节省了 39.5 requested bytes/task，却没有稳定端到端收益；C2 两轮 Quote 计时同向改善，但机制未隔离且增大二进制，两者都撤回。见 BF `docs/experiments.md` 与 `bench/patches/bf-*`。这不是批准 AY/BD 合并。
+- [BG `f17cf8e`](https://github.com/bkmashiro/minipy-native/tree/f17cf8ec680560c68c1e6d6e199236a83212649a) 的独立 JSON 字符串成功验证复用经定向审查；BH 仅将该改动连同验证材料集成进 main，不包含 AY/BD。原始 alias+单次 contains 的三对小规模完整请求显示长普通串 tape cold 同向改善，短串和 escaped 没有稳定收益；旧 scalar/Quote 对照无稳定损失。见本仓库 `evidence/bh-string-integration/summary.json`、BG 原始数据及 `docs/experiments.md` 的 BH 段。等待期 RSS 没有测量，不将 State 布局等同于物理内存。
+- [BE `faef68f`](https://github.com/bkmashiro/minipy-native/tree/faef68fecebc940ee02cf1d8bdf146c837285d1e) 的 JoinHandle 负结果仍有效；detached+yields 约 13.43 µs 不是已归因的 task/channel 可删除份额。因此本轮不实现单-job 可剥离 continuation；需有真实交接成本及服务负载证据再立项。scan kernel/局部 JIT 也缺代表性的 typed 需求，暂缓。
+
+下文“当前代码与实验边界”仍是原审阅时点快照，不代表上述更新后的 main。
 
 ## 当前代码与实验边界
 

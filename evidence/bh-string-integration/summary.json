@@ -1,0 +1,324 @@
+{
+  "reps": 40,
+  "order": [
+    "base",
+    "candidate",
+    "candidate",
+    "base",
+    "base",
+    "candidate"
+  ],
+  "sha256": {
+    "base": "a9fa97bd114948e683df72106a80630838ef4562ded626fd8e81f869019becba",
+    "candidate": "0baef130d2e39f9019b3aebf0d575ce2d1e8370c4128c01c2509a9a1042685a3"
+  },
+  "source": "bench/src/bin/ar_contains.rs unchanged; natural alias + one contains; all four engines",
+  "pairs": [
+    {
+      "native/cold/short-hit": {
+        "base_ns": 228500.5,
+        "candidate_ns": 194874.5,
+        "change_pct": -14.72
+      },
+      "native/cold/long-hit": {
+        "base_ns": 195667.0,
+        "candidate_ns": 189146.0,
+        "change_pct": -3.33
+      },
+      "native/cold/long-miss": {
+        "base_ns": 167896.0,
+        "candidate_ns": 145104.0,
+        "change_pct": -13.58
+      },
+      "native/cold/escaped-hit": {
+        "base_ns": 139542.0,
+        "candidate_ns": 138729.0,
+        "change_pct": -0.58
+      },
+      "native/cold/max-miss": {
+        "base_ns": 141270.5,
+        "candidate_ns": 134396.0,
+        "change_pct": -4.87
+      },
+      "tape/cold/short-hit": {
+        "base_ns": 27375.0,
+        "candidate_ns": 22583.5,
+        "change_pct": -17.5
+      },
+      "tape/cold/long-hit": {
+        "base_ns": 35270.5,
+        "candidate_ns": 29812.0,
+        "change_pct": -15.48
+      },
+      "tape/cold/long-miss": {
+        "base_ns": 30416.5,
+        "candidate_ns": 23020.5,
+        "change_pct": -24.32
+      },
+      "tape/cold/escaped-hit": {
+        "base_ns": 29250.0,
+        "candidate_ns": 28937.0,
+        "change_pct": -1.07
+      },
+      "tape/cold/max-miss": {
+        "base_ns": 45896.0,
+        "candidate_ns": 33979.5,
+        "change_pct": -25.96
+      },
+      "native/warm/short-hit": {
+        "base_ns": 1417.0,
+        "candidate_ns": 1500.0,
+        "change_pct": 5.86
+      },
+      "native/warm/long-hit": {
+        "base_ns": 8645.5,
+        "candidate_ns": 5958.5,
+        "change_pct": -31.08
+      },
+      "native/warm/long-miss": {
+        "base_ns": 8584.0,
+        "candidate_ns": 5875.5,
+        "change_pct": -31.55
+      },
+      "native/warm/escaped-hit": {
+        "base_ns": 12000.0,
+        "candidate_ns": 12521.0,
+        "change_pct": 4.34
+      },
+      "native/warm/max-miss": {
+        "base_ns": 27146.0,
+        "candidate_ns": 18250.0,
+        "change_pct": -32.77
+      },
+      "tape/warm/short-hit": {
+        "base_ns": 1584.0,
+        "candidate_ns": 1584.0,
+        "change_pct": 0.0
+      },
+      "tape/warm/long-hit": {
+        "base_ns": 8729.0,
+        "candidate_ns": 6000.0,
+        "change_pct": -31.26
+      },
+      "tape/warm/long-miss": {
+        "base_ns": 8666.5,
+        "candidate_ns": 5979.0,
+        "change_pct": -31.01
+      },
+      "tape/warm/escaped-hit": {
+        "base_ns": 12084.0,
+        "candidate_ns": 12729.5,
+        "change_pct": 5.34
+      },
+      "tape/warm/max-miss": {
+        "base_ns": 27291.5,
+        "candidate_ns": 18292.0,
+        "change_pct": -32.98
+      }
+    },
+    {
+      "native/cold/short-hit": {
+        "base_ns": 81104.0,
+        "candidate_ns": 87521.5,
+        "change_pct": 7.91
+      },
+      "native/cold/long-hit": {
+        "base_ns": 86833.5,
+        "candidate_ns": 83063.0,
+        "change_pct": -4.34
+      },
+      "native/cold/long-miss": {
+        "base_ns": 86770.5,
+        "candidate_ns": 82333.5,
+        "change_pct": -5.11
+      },
+      "native/cold/escaped-hit": {
+        "base_ns": 90813.0,
+        "candidate_ns": 87333.5,
+        "change_pct": -3.83
+      },
+      "native/cold/max-miss": {
+        "base_ns": 104625.0,
+        "candidate_ns": 92937.5,
+        "change_pct": -11.17
+      },
+      "tape/cold/short-hit": {
+        "base_ns": 11479.0,
+        "candidate_ns": 12187.5,
+        "change_pct": 6.17
+      },
+      "tape/cold/long-hit": {
+        "base_ns": 17395.5,
+        "candidate_ns": 15166.5,
+        "change_pct": -12.81
+      },
+      "tape/cold/long-miss": {
+        "base_ns": 17125.0,
+        "candidate_ns": 15020.5,
+        "change_pct": -12.29
+      },
+      "tape/cold/escaped-hit": {
+        "base_ns": 21354.0,
+        "candidate_ns": 21125.0,
+        "change_pct": -1.07
+      },
+      "tape/cold/max-miss": {
+        "base_ns": 36396.0,
+        "candidate_ns": 27146.0,
+        "change_pct": -25.41
+      },
+      "native/warm/short-hit": {
+        "base_ns": 1292.0,
+        "candidate_ns": 1333.5,
+        "change_pct": 3.21
+      },
+      "native/warm/long-hit": {
+        "base_ns": 7750.0,
+        "candidate_ns": 5416.0,
+        "change_pct": -30.12
+      },
+      "native/warm/long-miss": {
+        "base_ns": 7709.0,
+        "candidate_ns": 5417.0,
+        "change_pct": -29.73
+      },
+      "native/warm/escaped-hit": {
+        "base_ns": 11583.0,
+        "candidate_ns": 11416.0,
+        "change_pct": -1.44
+      },
+      "native/warm/max-miss": {
+        "base_ns": 26958.0,
+        "candidate_ns": 17666.0,
+        "change_pct": -34.47
+      },
+      "tape/warm/short-hit": {
+        "base_ns": 1417.0,
+        "candidate_ns": 1458.0,
+        "change_pct": 2.89
+      },
+      "tape/warm/long-hit": {
+        "base_ns": 7750.0,
+        "candidate_ns": 5417.0,
+        "change_pct": -30.1
+      },
+      "tape/warm/long-miss": {
+        "base_ns": 6833.0,
+        "candidate_ns": 5437.5,
+        "change_pct": -20.42
+      },
+      "tape/warm/escaped-hit": {
+        "base_ns": 11583.0,
+        "candidate_ns": 11437.5,
+        "change_pct": -1.26
+      },
+      "tape/warm/max-miss": {
+        "base_ns": 26917.0,
+        "candidate_ns": 17625.0,
+        "change_pct": -34.52
+      }
+    },
+    {
+      "native/cold/short-hit": {
+        "base_ns": 81854.0,
+        "candidate_ns": 83646.5,
+        "change_pct": 2.19
+      },
+      "native/cold/long-hit": {
+        "base_ns": 85354.0,
+        "candidate_ns": 88770.5,
+        "change_pct": 4.0
+      },
+      "native/cold/long-miss": {
+        "base_ns": 87229.0,
+        "candidate_ns": 89187.5,
+        "change_pct": 2.25
+      },
+      "native/cold/escaped-hit": {
+        "base_ns": 92312.5,
+        "candidate_ns": 93229.0,
+        "change_pct": 0.99
+      },
+      "native/cold/max-miss": {
+        "base_ns": 105646.0,
+        "candidate_ns": 98375.0,
+        "change_pct": -6.88
+      },
+      "tape/cold/short-hit": {
+        "base_ns": 11812.5,
+        "candidate_ns": 12062.0,
+        "change_pct": 2.11
+      },
+      "tape/cold/long-hit": {
+        "base_ns": 17562.5,
+        "candidate_ns": 15291.5,
+        "change_pct": -12.93
+      },
+      "tape/cold/long-miss": {
+        "base_ns": 17500.0,
+        "candidate_ns": 15833.0,
+        "change_pct": -9.53
+      },
+      "tape/cold/escaped-hit": {
+        "base_ns": 21979.0,
+        "candidate_ns": 22645.5,
+        "change_pct": 3.03
+      },
+      "tape/cold/max-miss": {
+        "base_ns": 35104.0,
+        "candidate_ns": 28417.0,
+        "change_pct": -19.05
+      },
+      "native/warm/short-hit": {
+        "base_ns": 1270.5,
+        "candidate_ns": 1312.5,
+        "change_pct": 3.31
+      },
+      "native/warm/long-hit": {
+        "base_ns": 7875.0,
+        "candidate_ns": 5437.5,
+        "change_pct": -30.95
+      },
+      "native/warm/long-miss": {
+        "base_ns": 7104.5,
+        "candidate_ns": 5354.5,
+        "change_pct": -24.63
+      },
+      "native/warm/escaped-hit": {
+        "base_ns": 11708.0,
+        "candidate_ns": 11812.5,
+        "change_pct": 0.89
+      },
+      "native/warm/max-miss": {
+        "base_ns": 27250.5,
+        "candidate_ns": 19146.0,
+        "change_pct": -29.74
+      },
+      "tape/warm/short-hit": {
+        "base_ns": 1458.0,
+        "candidate_ns": 1458.0,
+        "change_pct": 0.0
+      },
+      "tape/warm/long-hit": {
+        "base_ns": 7583.0,
+        "candidate_ns": 5875.0,
+        "change_pct": -22.52
+      },
+      "tape/warm/long-miss": {
+        "base_ns": 7833.0,
+        "candidate_ns": 5521.0,
+        "change_pct": -29.52
+      },
+      "tape/warm/escaped-hit": {
+        "base_ns": 11916.5,
+        "candidate_ns": 11854.5,
+        "change_pct": -0.52
+      },
+      "tape/warm/max-miss": {
+        "base_ns": 27020.5,
+        "candidate_ns": 19416.5,
+        "change_pct": -28.14
+      }
+    }
+  ]
+}
