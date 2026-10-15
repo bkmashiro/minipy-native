@@ -82,7 +82,14 @@ mod probe {
             ];
             let inputs = &[("batch_id", Type::I64)];
             println!("syntax,engine,lifecycle,rep,iterations,total_ns,prepared_bytes,code_bytes,responses,connections,merge_copied_bytes,checksum");
-            for direct in [false, true] {
+            // Run three independent processes as AB/BA/AB by setting AN_ORDER=BA
+            // only for the middle process. Keep each arm's backend/lifecycle order fixed.
+            let direct_order = if std::env::var("AN_ORDER").as_deref() == Ok("BA") {
+                [true, false]
+            } else {
+                [false, true]
+            };
+            for direct in direct_order {
                 let source = if direct {
                     "p = tools.fetch(batch_id)\nprint(tools.publish(total=p[\"data\"][\"count\"] * 2, batch_id=batch_id))\n"
                 } else {

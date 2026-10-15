@@ -892,7 +892,10 @@ incremental Host-tool syntax slice, not general Python support.
 ### Bounded standalone-vs-assigned-discard probe
 
 Ran the existing `examples/aj_http_probe.rs` three times as independent
-processes against its loopback HTTP fixture and shared connection pool. Both
+processes against its loopback HTTP fixture and shared connection pool. The
+first three fixed-order runs (`run1`–`run3`) are retained as historical but
+superseded data. The corrected runs use AB/BA/AB process ordering, selected by
+`AN_ORDER` (default AB; BA only for process two). Both
 arms use the same binary, source-derived fetch→scalar-publish program, actual
 HTTP requests, and stdout consumption; each timing batch checks response count,
 `27\n` output, one reused connection, zero copied bytes and full permit return.
@@ -900,29 +903,28 @@ The standalone arm discards publish's i64; the control assigns then prints it.
 `source_cold` includes prepare/compile, execute, stdout consumption and unit
 cleanup; `prepared` explicitly excludes preparation. Each cell has three
 sub-batches per process (20 cold or 100 prepared invocations; nine batch means
-per arm overall). Raw CSVs are
-`bench/results/an-probe-run{1,2,3}.csv`.
+per arm overall). Corrected raw CSVs are
+`bench/results/an-probe-run{4,5,6}.csv`.
 
 Reproduce: `CARGO_TARGET_DIR=/Users/yuzhe/projects/minipy-native/target
 CARGO_BUILD_JOBS=1 cargo run --offline --locked --features tool-json --example
-aj_http_probe`, then run the resulting
-`target/debug/examples/aj_http_probe` three times. Source commit
-`ee2fee72855482053c67da446dc6574f8e6060f0`; rustc/cargo 1.93.1;
-binary SHA-256 `0bef3e3c312c3e4c7495f0f3800b356d2bef00de66bad2a608e5b40586a9cc71`.
-On this macOS M4 probe, median-of-three-batch per-call ns (assigned → discard):
+aj_http_probe`, then run the binary with `AN_ORDER=AB`, `AN_ORDER=BA`,
+`AN_ORDER=AB`, saving stdout to the three raw files. Source hash
+`e7b590bfed570a01bce2ab0aeb04aab54b4d4a18d443bfdb1eddb3f29c8b2848`;
+rustc/cargo 1.93.1; binary SHA-256
+`095555fd53cc0d475802537e23d21ecc08c8e2e51e43a97e634eb8d0b33c80d5`.
+On this macOS M4 probe, median-of-nine-batch per-call ns:
 
-| Backend / lifecycle | Assigned | Discard | Discard/assigned |
-| --- | ---: | ---: | ---: |
-| tape / source_cold | 309,871 | 268,610 | 0.867 |
-| native / source_cold | 1,812,046 | 1,731,240 | 0.955 |
-| tape / prepared | 146,076 | 144,351 | 0.988 |
-| native / prepared | 145,151 | 144,170 | 0.993 |
+| Backend / lifecycle | Assigned | Discard |
+| --- | ---: | ---: |
+| tape / source_cold | 300,241 | 271,825 |
+| native / source_cold | 1,778,262 | 1,743,506 |
+| tape / prepared | 147,294 | 147,449 |
+| native / prepared | 146,313 | 145,841 |
 
-These are small-fixture observations, not a performance claim. The existing
-probe fixes arm order (assigned before discard) and groups cells in one process;
-therefore these runs do not satisfy the prescribed independent AB/BA/AB
-ordering. The observed differences cannot distinguish syntax cost from
-order/warm-up effects and are not a substitute for that order-balanced
-protocol. No timing-based optimization or runtime change is made; Linux remains
-unrun.
+These are small-fixture observations, not a performance claim. Each process
+runs every assigned cell then every discard cell in AB, reverses the groups in
+BA, then returns to AB. They satisfy the bounded three-process ordering; cell
+grouping and small samples still leave substantial warm-up/noise limits. No
+timing-based optimization or runtime change is made; Linux remains unrun.
 
