@@ -1078,3 +1078,146 @@ latencies (µs) were respectively 269/2437 interpreter, 879/1525 native,
 486/274904 Monty, 65235/157892 spawn, 4548/98822 prefork. No production
 runtime, website, frozen S/AD raw or global system setting changed.
 
+## AY: opt-in fixed-width Tool record scans (2026-10-15)
+
+Design/migration: [record-scan-design.md](record-scan-design.md). A Tool may now
+declare bounded `Records(RecordSchema)` with named i64/bool fields at distinct
+8-byte offsets and stride 8–256 (multiple of 8). Import validates whole rows,
+total 16 MiB/1M-row bounds and bool encodings once. Fields and stride are bound
+at preparation; native and tape scan contiguous aligned words without per-row
+objects or names. `Quote/v1` and its Host contract remain. This is an opt-in
+`tool-json` API, not a change to default Quote execution.
+
+macOS ARM64 tests exercised two distinct non-Quote schemas (24-byte with gap,
+bool and reordered fields; 16-byte with unrelated names), both actual native and
+tape execution, chunk=1, output, last-use release before a following effect,
+authority denial, schema mismatch, budget/fuel failure, prefix and malformed
+layout/bool rejection, plus cancellation during pending Tool reply and detached
+owner release. The default and `tool-json debug-runtime` full suites,
+strict Clippy in both feature configurations, fmt and diff check pass. Default
+WASI library check passes with existing unused-code warnings. The pre-existing
+`tool-json` feature still enables unsupported `tokio/net` for WASI, so no
+Tool-record WASI runtime/cross-build claim. Linux native execution not run.
+
+Bounded local synthetic A/B: `bench/src/bin/record_probe.rs`, raw 200 timed
+invocations plus identity in `bench/results/ay-record-probe-macos.jsonl`. Command:
+
+    cargo +1.96.0 run --offline --release --manifest-path bench/Cargo.toml \
+      --features record-probe --bin record-probe -- 25 4096 \
+      > bench/results/ay-record-probe-macos.jsonl
+
+Toolchain: project rustc 1.93.1; bench cargo/rustc 1.96.0 (pinned Monty needs
+1.96); source parent 4aaae37, macOS ARM64. One current-thread process, 25
+AB/reverse-order repetitions per engine/mode; one warmup per cell not reported.
+Each reported cold invocation includes preparation plus async provider load,
+execution/output and release; warm reuses a prepared unit. Both read the same
+4096 pairs and compute the same filtered weighted sum. Quote provider clones a
+typed Vec<Quote>; record provider imports little-endian wire bytes into aligned
+words and validates its declared layout. This is intentionally an end-to-end
+representation comparison, not equal-cost provider adaptation or a Monty
+cross-runtime comparison. No simulated network wait.
+
+Median wall ns (25 measurements each):
+
+| mode | Quote native | Record native | Quote tape | Record tape |
+|---|---:|---:|---:|---:|
+| preparation + execution | 167417 | 175541 | 76458 | 86416 |
+| prepared execution | 26666 | 35166 | 61750 | 71333 |
+
+The record path costs +8.1 µs cold native, +10.0 µs cold tape, +8.5 µs
+prepared native, +9.6 µs prepared tape in this workload. The extra wire decode
+and per-reply schema copy are included; these numbers neither isolate scan
+instruction cost nor imply an advantage over Monty. The API is retained for
+genuine typed datasets, not as a faster substitute for already-typed Quote/v1.
+
+### AY legacy-path parent/current A/B (macOS ARM64, synthetic)
+
+`4aaae37` (before record scans) vs `fd914bd` (record scans), same existing
+`bench/src/bin/interpreter_ab.rs` harness and fixture bodies, Rust/Cargo 1.96.0,
+offline release builds. Built each revision's binary separately and ran both
+from the same worktree. The opt-in `minipy-native/tool-json` build is the relevant
+production feature configuration; a default-feature build is a negative control.
+Each cell has 28 timed calls per revision (four processes × seven calls), in two
+rounds of ABBA/BAAB process order. `scalar` has zero rows and `weighted`
+has 4096 Quote rows; both use `RequestProvider::ready` with zero delay and the
+same `ScriptLimits`/source/output assertion. Cold wall time includes provider
+setup, compilation/preparation, async load, execution, output and reclamation;
+warm wall time includes provider setup and execution/reclamation, with preparation
+outside the interval. Process startup is excluded. Raw per-call measurements,
+source hashes, and exact binary argv are in
+`bench/results/ay-legacy-path-ab-macos.jsonl` (opt-in) and
+`bench/results/ay-legacy-path-default-ab-macos.jsonl` (control). Reproduce by
+building `--bin interpreter_ab` under each revision with `--features
+minipy-native/tool-json` (or no feature) and invoking
+`interpreter_ab {native,interpreter} {scalar,weighted} {cold,warm} {0,4096} 7`
+in the stated paired order. Timings are nanoseconds, medians of 28, current
+relative to parent:
+
+| feature | case | mode | engine | parent ns | current ns | change |
+|---|---|---|---|---:|---:|---:|
+| tool-json | scalar | cold | native | 130458 | 149020 | +14.2% |
+| tool-json | scalar | cold | tape | 15500 | 16125 | +4.0% |
+| tool-json | scalar | warm | native | 812 | 854 | +5.2% |
+| tool-json | scalar | warm | tape | 667 | 771 | +15.6% |
+| tool-json | weighted | cold | native | 185334 | 190229 | +2.6% |
+| tool-json | weighted | cold | tape | 55458 | 70521 | +27.2% |
+| tool-json | weighted | warm | native | 11208 | 11062 | -1.3% |
+| tool-json | weighted | warm | tape | 34812 | 49958 | +43.5% |
+| default | scalar | cold | native | 96979 | 97812 | +0.9% |
+| default | scalar | cold | tape | 15584 | 15250 | -2.1% |
+| default | scalar | warm | native | 958 | 834 | -13.0% |
+| default | scalar | warm | tape | 792 | 833 | +5.2% |
+| default | weighted | cold | native | 195084 | 209520 | +7.4% |
+| default | weighted | cold | tape | 70354 | 72271 | +2.7% |
+| default | weighted | warm | native | 12521 | 12666 | +1.2% |
+| default | weighted | warm | tape | 44104 | 44625 | +1.2% |
+
+There is a measurable opt-in tape legacy Quote-scan regression at 4096 rows;
+the default-feature control and opt-in native prepared scan do not show the same
+increase. The opt-in tape loop now probes the record owner at `Scan`/`Next` and
+dispatches on record vs Quote even for a Quote-only program; that is a plausible
+cause from source inspection, not an isolated causal measurement. Very short
+scalar warm runs and cold native compilation have substantial timing spread;
+their small percentage changes are not a reliable regression claim. This local
+synthetic A/B does not establish behavior under real provider/network delays or
+Linux, and it is not a Monty comparison. Keep the tape cost as a performance
+follow-up; do not claim legacy opt-in performance neutrality.
+
+### AY bounded Quote tape specialization follow-up (macOS ARM64)
+
+In `src/interpreter.rs` preparation, record-producing Tool targets are bound to
+distinct `RecordScan`/`RecordNext` tape ops. `Scan`/`Next` now access only Quote
+owners; record ops access only validated record owners. No runtime record-owner
+probe remains in the Quote row loop. The layout, row fuel/chunk and yield logic
+is unchanged. This is a targeted mechanism test, not an accepted performance fix.
+
+Built opt-in `interpreter_ab` from `4aaae37` (pre-record), `83470f6` (before
+specialization), and the specialized working tree (source diff SHA256
+`9a9feb30c370f046032b0cbbac7fb1aa9f3c61f173aa2a690bdbf2180111de44`)
+with `CARGO_TARGET_DIR=$PWD/bench/target cargo +1.96.0 build --offline
+--release --manifest-path <revision>/bench/Cargo.toml --features
+minipy-native/tool-json --bin interpreter_ab`. Copied the binaries to
+`.ab/bin/{parent,base,fixed}-interpreter-ab`, then invoked each with
+`interpreter weighted {cold,warm} 4096 7`, two rounds of ABBA/BAAB process
+order, 28 timed calls per revision/mode. Same current-thread Tokio fixture,
+`RequestProvider::ready`, source and output assertions; cold includes
+preparation and invocation, warm includes invocation with prepared unit.
+Process startup excluded. Raw calls and binary hashes:
+`bench/results/ay-quote-scan-fix-ab-macos.jsonl` (base vs fixed) and
+`bench/results/ay-quote-scan-parent-ab-macos.jsonl` (parent vs fixed).
+
+| paired run | mode | baseline median ns | fixed median ns | delta |
+|---|---|---:|---:|---:|
+| 83470f6 vs fixed | cold | 82542 | 78980 | -4.3% |
+| 83470f6 vs fixed | warm | 52855 | 52625 | -0.4% |
+| 4aaae37 vs fixed | cold | 68771 | 83146 | +20.9% |
+| 4aaae37 vs fixed | warm | 39688 | 59813 | +50.7% |
+
+The owner-kind probe was eliminated by source inspection, but the paired warm
+execution does not show an end-to-end recovery relative to the unspecialized
+record build; the pre-record baseline still wins substantially. The two paired
+runs also show different absolute medians (e.g. fixed warm 52.6 vs 59.8 µs),
+so small cold/warm differences are not robust. This synthetic zero-delay
+macOS result neither isolates the remaining cause nor predicts Linux or real
+provider delays. Do not merge the feature on a performance-neutrality claim.
+

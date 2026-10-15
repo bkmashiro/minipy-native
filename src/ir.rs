@@ -12,6 +12,11 @@ pub enum Type {
 pub enum Field {
     Price,
     Quantity,
+    #[cfg(feature = "tool-json")]
+    Bound {
+        offset: u16,
+        ty: Type,
+    },
 }
 #[derive(Clone, Copy, Debug)]
 pub enum BinOp {
@@ -69,6 +74,7 @@ pub enum Stmt {
         call: usize,
         target: usize,
         json: bool,
+        record: bool,
         args: Vec<Expr>,
     },
     Print(Expr, Type),
@@ -82,6 +88,8 @@ pub struct Program {
     pub inputs: usize,
     /// Quote owners occupy a separate, statically numbered namespace.
     pub buffers: usize,
+    /// Fixed row strides in buffer slot order (Quote/v1 is 16).
+    pub strides: Vec<usize>,
     pub statements: Vec<Stmt>,
     pub legacy: bool,
     #[cfg(feature = "tool-json")]

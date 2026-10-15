@@ -262,6 +262,7 @@ impl CodeUnit {
             let mut flow = Flow {
                 b: &mut b,
                 vars: &vars,
+                strides: &program.strides,
                 frame,
                 views,
                 output,
@@ -368,6 +369,7 @@ fn error(e: impl std::fmt::Display) -> CompileError {
 struct Flow<'a, 'b> {
     b: &'a mut FunctionBuilder<'b>,
     vars: &'a [Variable],
+    strides: &'a [usize],
     frame: Value,
     views: Value,
     output: Value,
@@ -459,6 +461,7 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
             live.buffers &= !(1u64 << i);
             live.scalars |= used(batch);
         }
+
         Stmt::Print(e, _) | Stmt::Eval(e) => live.scalars |= used(e),
         Stmt::Return(e) => {
             return Live {
@@ -479,10 +482,16 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
         Stmt::For(i, body) => live = live_loop(*i, body, live),
         #[cfg(feature = "tool-json")]
         Stmt::Tool {
-            target, json, args, ..
+            target,
+            json,
+            record,
+            args,
+            ..
         } => {
             if *json {
                 live.json &= !(1 << target);
+            } else if *record {
+                live.buffers &= !(1u64 << target);
             } else {
                 live.scalars &= !(1 << target);
             }
@@ -599,6 +608,7 @@ impl Flow<'_, '_> {
                     call,
                     target,
                     json,
+                    record,
                     args,
                 } => {
                     let a = args
@@ -612,7 +622,7 @@ impl Flow<'_, '_> {
                     self.store(280, a);
                     self.store(272, b);
                     self.constant(288, *target as i64);
-                    if !*json {
+                    if !*json && !*record {
                         live.scalars &= !(1 << target);
                     }
                     let (pc, next) = self.continuation();
@@ -707,7 +717,8 @@ impl Flow<'_, '_> {
         let more = self.b.ins().icmp(IntCC::UnsignedLessThan, i, end);
         self.b.ins().brif(more, row_body, &[], finish, &[]);
         self.b.switch_to_block(row_body);
-        let offset = self.b.ins().ishl_imm(i, 4);
+        let stride = self.b.ins().iconst(types::I64, self.strides[buffer] as i64);
+        let offset = self.b.ins().imul(i, stride);
         self.row = Some(self.b.ins().iadd(rows, offset));
         self.stmts(body, live);
         self.row = None;
@@ -825,6 +836,8 @@ impl Emit<'_, '_> {
                 match f {
                     ir::Field::Price => 0,
                     ir::Field::Quantity => 8,
+                    #[cfg(feature = "tool-json")]
+                    ir::Field::Bound { offset, .. } => i32::from(*offset),
                 },
             ),
             Expr::Not(x) => {

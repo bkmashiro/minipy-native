@@ -20,6 +20,8 @@ struct Task {
     unit: Rc<InterpreterUnit>,
     frame: Box<Frame>,
     owners: Vec<Option<QuoteBuffer>>,
+    #[cfg(feature = "tool-json")]
+    records: Vec<Option<crate::buffer::RecordBuffer>>,
     output: Output,
     options: ScriptLimits,
     cancel: Cancellation,
@@ -107,11 +109,15 @@ impl Engine {
             chunk_left: 0,
             remaining: options.limits.rows,
             row: None,
+            #[cfg(feature = "tool-json")]
+            record_row: None,
         };
         state.locals[..inputs.len()].copy_from_slice(inputs);
         let owners = (0..unit.buffers).map(|_| None).collect();
         let task = self.tasks.len();
         self.tasks.push(Task {
+            #[cfg(feature = "tool-json")]
+            records: (0..unit.buffers).map(|_| None).collect(),
             unit,
             frame: Box::new(Frame {
                 state,
@@ -180,6 +186,8 @@ impl Engine {
                     &t.unit,
                     &mut f.state,
                     &t.owners,
+                    #[cfg(feature = "tool-json")]
+                    &t.records,
                     &t.options.limits,
                     &mut t.output,
                     &mut f.temps,
@@ -189,6 +197,8 @@ impl Engine {
                     &t.unit,
                     &mut f.state,
                     &t.owners,
+                    #[cfg(feature = "tool-json")]
+                    &t.records,
                     &t.options.limits,
                     &mut t.output,
                     &mut f.temps,
