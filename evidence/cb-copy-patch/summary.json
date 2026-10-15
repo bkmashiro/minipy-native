@@ -1,0 +1,45 @@
+{
+  "processes": 24,
+  "measured_requests": 1536,
+  "process_medians_ns": {
+    "tape": [
+      5666.0,
+      3542.0,
+      3542.0,
+      3542.0,
+      3583.0,
+      3500.0,
+      3625.0,
+      3542.0
+    ],
+    "install_floor": [
+      5000.0,
+      4417.0,
+      4270.5,
+      4417.0,
+      3708.0,
+      3708.0,
+      3708.0,
+      3687.5
+    ],
+    "native": [
+      53417.0,
+      48604.0,
+      42062.0,
+      42395.5,
+      42604.5,
+      42312.5,
+      42479.5,
+      42291.5
+    ]
+  },
+  "arm_medians_ns": {
+    "tape": 3542.0,
+    "install_floor": 3989.25,
+    "native": 42437.5
+  },
+  "floor_over_full_tape": 1.126270468661773,
+  "floor_over_full_native": 0.09400294550810015,
+
+  "note": "Optimistic raw install floor, not a source-to-source backend speedup. Sample 0 excluded."
+}

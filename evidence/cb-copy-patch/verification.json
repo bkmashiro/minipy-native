@@ -1,0 +1,56 @@
+{
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--test",
+        "cb_gate"
+      ],
+      "exit_code": 0,
+      "output": "\nrunning 3 tests\ntest cost_gate ... ignored, serial release feasibility gate under shared perf lock\ntest patch_rejects_invalid_metadata ... ok\ntest real_templates_arithmetic_and_error_exit ... ok\n\ntest result: ok. 2 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 1.56s\n     Running tests/cb_gate.rs (target/release/deps/cb_gate-a81f1793df4d04b9)\n"
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--offline",
+        "--locked",
+        "--test",
+        "cb_gate",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "output": "   Compiling rand_chacha v0.3.1\n   Compiling rand v0.8.8\n   Compiling phf_generator v0.11.3\n   Compiling phf_codegen v0.11.3\n    Checking smallvec v1.16.3\n    Checking regalloc2 v0.13.5\n   Compiling unicode_names2_generator v1.3.0\n    Checking cranelift-codegen v0.128.3\n   Compiling unicode_names2 v1.3.0\n   Compiling rustpython-parser v0.4.0\n    Checking cranelift-module v0.128.3\n    Checking cranelift-native v0.128.3\n    Checking tokio v1.48.0\n    Checking cranelift-jit v0.128.3\n    Checking cranelift-frontend v0.128.3\n    Checking minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 11.95s\n"
+    },
+    {
+      "command": [
+        "rustfmt",
+        "--check",
+        "--edition",
+        "2024",
+        "tests/cb_gate.rs"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "production_diff_empty": true,
+  "raw_reductions_match": true,
+  "malformed_object_identities_rejected": 2
+}

@@ -2100,3 +2100,31 @@ Receipt-verified `gpt-6-luna` independently reviewed fixed snapshot `24518d5`,
 confirmed production restoration and backing/cancellation reasoning, reproduced
 the reduction and found no blockers. See [BZ review](../evidence/bz-detach/review.md).
 
+## CB: real Copy-and-Patch installation stop gate (2026-10-16)
+
+On isolated `exp/cb-copy-patch` from `0a23fac`, existing Apple clang produced
+100 B of real checked add/sub/mul/return templates with only BR26 continuation
+relocations. Pinned JIT `define_function_bytes` installs their copied/patched
+bytes without invoking the function compiler, using existing cache/protection
+and lifetime facilities. Real machine-code boundary/error-exit tests pass.
+Production, dependencies, APIs and main remain unchanged; BX's current tape is
+unfused. This is a raw-region feasibility proof, not a completed source backend.
+
+Stop at the cheap installation gate: 24 processes / 1536 samples, two bounded
+interleaved rounds, median of process medians: full fresh-source tape 3.542 us,
+optimistic raw region stitch/install/call/free 3.98925 us, full Cranelift request
+42.4375 us. The raw arm omits parse/type/source matching/constants/output/task
+protocol, so the ratio to Cranelift is not a backend speedup. Floor warmup declines
+5.000→3.6875 us; separate exact-binary tape A/A is 8 processes / 512 samples,
+B/A 0.97918 with early drift. No causal 12.6% regression/noise-bound claim.
+
+Defer this per-request JIT-module design for very short glue: installation already
+consumes roughly the whole tiny tape request budget before adding source work.
+Do not build a third compiler or new allocator to rescue this bounded experiment.
+Full source lowering, short-circuit, loop-size and Tool/JSON matrix were not reached;
+larger-loop value remains untested. Generic function compilation is avoidable for
+these trusted regions, but a complete request win over tape is not demonstrated.
+Template payload 100 B; timed request code 36 B; four i64 state slots 32 B;
+one-page 16 KiB code allocation is source-derived, not RSS/density evidence.
+Raw, exact commands and limitations: [CB evidence](../evidence/cb-copy-patch/README.md).
+

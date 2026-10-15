@@ -1,0 +1,7 @@
+
+running 3 tests
+test cost_gate ... ignored, serial release feasibility gate under shared perf lock
+test patch_rejects_invalid_metadata ... ok
+test real_templates_arithmetic_and_error_exit ... ok
+
+test result: ok. 2 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
