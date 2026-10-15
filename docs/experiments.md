@@ -1421,7 +1421,100 @@ BI. Do not hide that work in an unbounded benchmark or claim BJ percentages
 compose into a new integrated speedup. The existing finite typed helper remains
 the strong simple alternative for expressible aggregate workloads.
 
-### BK private complete-source obstacle inventory
+## BL: resident new-source cost gate (2026-10-15)
+
+**Decision: keep the BI implementation for review/integration, defer any
+frontend speed fix.** The finite builtins and structured diagnostics already
+passed the BK correctness gate. A new paired resident-process control finds no
+repeatable material full-request regression on old source; the earlier BK tape
+prepare-only risk is not established as a stable end-to-end penalty. This does
+not establish a general admission improvement: BI's private complete-source
+sample still admits 0/64 with no Host schema. Main integration remains the
+owner's decision after review.
+
+Source audit against main `89b898b`: `Compiler::expr` and `compile_stmt` add
+`map_err` around typed lowering. On success `CompileError::at` does *not* run:
+its source-prefix scan is error-only, as are syntax-error formatting and
+position construction. The successful path does execute the `Result` branch
+and the new `ast::Expr::Call` branch (for other expression kinds this declines
+immediately); reserved-name comparisons are extended only when declaring or
+validating names. The literal builtin roster and typed IR constructors are
+compiled into Rust and need no per-request dynamic registration, while parsing
+and typed name binding of each *new* user source cannot be moved to startup.
+Backend lowering is required for native, and tape emits the same old-source
+prepared lengths as BK. No security/budget check was removed.
+
+Diagnostic-only, temporary source ablation: `tools/bl_ablate.py` removed the
+two success-path `map_err` wrappers from an A build and restored the source in
+`finally`; this diagnostic binary **breaks location semantics and is not a
+production candidate**. ANNA processes, 100 unique-source requests per
+case/process, tape scalar/weighted medians (total wall µs): A0 8.29/21.29,
+N1 24.04/20.77, N2 8.21/21.15, A3 8.21/21.62. The scalar N1 outlier and
+weighted differences (~2%) do not identify wrappers as the cause of BK's
+large per-process tape dispersion. In particular, source scanning cannot
+explain accepted requests. No optimization was implemented.
+
+`tools/bl_control.py` compared B `89b898b` and A `e436812` on macOS ARM64,
+Rust 1.96.0 release, offline/locked, shared Cargo target with an `fcntl.flock`
+held over each build and all subprocesses. The same harness source was copied
+into a detached baseline worktree; each arm cleaned both packages and rebuilt
+before copying the actual executable (binary SHA per row). Service setup
+(runtime/source selection, **no** user-code preparation) occurs once per
+process and is emitted separately. Then 80 requests per case/engine/process
+arrive as distinct source strings with a unique comment suffix. The timer
+covers provider construction, parse/typed prepare and native compile or tape
+assembly, execution and executable reclamation. Correct stdout is asserted
+outside the timer; there is no user-source cache. This is a resident executable
+with ready providers, not an HTTP server or production workload. The synthetic
+builtin cases run only on A because B rejects them; they are functionality
+examples, not cross-version speedups.
+
+Two bounded BAAB rounds were recorded: [round 1 raw](../evidence/bl-request-cost/service-cold-r1.jsonl.gz)
+(uncompressed SHA256 `fdb85cf3e7a7b29f446173797cd97eb763e62a865a91c718efa240d1d5a40ea0`)
+and [round 2 raw with setup](../evidence/bl-request-cost/service-cold.jsonl.gz)
+(SHA256 `a7a057945cb6ead49c5dd2d8d1912192de4004fe0c49240e72f7ac47a72c9e08`),
+1920 speed rows each. Round 1 preceded a harness-only setup-emission change;
+its execution boundary is otherwise the same. The [ablation raw](../evidence/bl-request-cost/ablation.jsonl.gz)
+(SHA256 `6f33a7f2381a145a91cc107cdee3f5e7cdc045bcc3ab13eb8d078ee41e328f58`)
+has 400 speed rows and predates that setup emission. Round 2 median full wall
+µs, in B0/A1/A2/B3 process order, with adjacent `(A/B−1)×100%`:
+
+| Engine / old source | B0 | A1 | A2 | B3 | A1/B0 | A2/B3 |
+|---|---:|---:|---:|---:|---:|---:|
+| tape scalar, 0 rows | 35.21 | 29.00 | 8.21 | 8.65 | −17.63% | −5.05% |
+| tape Quote scan, 256 rows | 22.29 | 22.65 | 23.73 | 23.12 | +1.59% | +2.61% |
+| native scalar, 0 rows | 63.90 | 66.81 | 62.54 | 70.65 | +4.56% | −11.47% |
+| native Quote scan, 256 rows | 151.25 | 157.06 | 151.83 | 151.94 | +3.84% | −0.07% |
+
+A-only builtin scalar tape 9.54/8.79 µs, native 74.77/72.65 µs;
+Quote-buffer `len` tape 6.00/6.29 µs, native 59.06/60.27 µs
+(A1/A2 respectively). Setup usually ~17–26 µs, except first tape scalar
+process setup at 559/410 µs in B0/A1; it is *excluded* from request cost.
+Round 1 showed similarly strong scalar-tape within-sequence drift (B0 35.13,
+A1 28.04, A2 8.21, B3 8.54 µs). In round 2 scalar tape B0 sample 0 was
+1,684 µs and its sample 70 ~35 µs, whereas A2 starts ~68 µs and settles
+near 8 µs; thus scalar pairs confound process order/warmup and cannot be read
+as BI speedups. Weighted tape has a small positive shift in this setting but
+not a convincing material full-cost regression. Native pairs change sign.
+BK's tape preparation observation is still a risk in other processes/shapes,
+not disproved by these four short processes. No third campaign or generic
+cache/prebinding machinery is justified. If a later real service workload
+shows a persistent full-request penalty, the next useful experiment is a
+phase-specific profile of the same source binding path under that workload,
+not another unguided B/A repetition.
+
+Reproduction: `git worktree add --detach bl-baseline 89b898b`, then
+`python3 tools/bl_control.py` (requires the output JSONL path absent); the
+script copies the identical harness into the baseline checkout. For the
+diagnostic source ablation use `python3 tools/bl_ablate.py` with the A binary
+from the control still present. Remove the temporary worktree afterward.
+`cargo +1.96.0 test --offline --locked --test builtins_admission` (4/4),
+`cargo +1.96.0 test --offline --locked --manifest-path bench/Cargo.toml
+--bin interpreter_ab` (2/2), and default `cargo fmt --all -- --check`
+passed under the same shared-target build lock for Cargo. No Linux/Wasm or
+service network measurement is claimed.
+
+## BK private complete-source obstacle inventory (supplement to BK)
 
 `python3.14 -W ignore::SyntaxWarning tools/bk_private_ast.py` reuses BI's
 reconciled CLI sample selection (the lowest 64 SHA256 digests of 520 exact-

@@ -39,11 +39,17 @@ fn source(case: &str) -> String {
         "scalar"=>include_str!("../../../fixtures/scalar_script.py").into(),
         "weighted"=>include_str!("../../../fixtures/weighted_script.py").into(),
         "stateful"=>"quotes=tools.load_quotes(batch_id)\ntotal=0\nprevious=0\nfor quote in quotes:\n    if quote.quantity > 0 and quote.unit_price_cents <= price_limit and quote.unit_price_cents >= previous:\n        amount=quote.unit_price_cents * quote.quantity\n        total += amount\n        previous=quote.unit_price_cents\nreceipt=tools.record_total(batch_id,total)\nprint(receipt)".into(),
+        "builtin-scalar" => "print(abs(batch_id - 18))\nprint(min(batch_id, price_limit))\nprint(max(batch_id, price_limit))".into(),
+        "builtin-quote" => "quotes = tools.load_quotes(batch_id)\nprint(len(quotes))".into(),
         _=>panic!("case"),
     }
 }
 fn expected(case: &str, n: usize) -> String {
-    if case == "scalar" {
+    if case == "builtin-scalar" {
+        "1\n17\n700\n".into()
+    } else if case == "builtin-quote" {
+        format!("{n}\n")
+    } else if case == "scalar" {
         "734\nTrue\n".into()
     } else {
         format!(
@@ -582,8 +588,8 @@ fn main() {
         !cfg!(feature = "allocation-diagnostics"),
         "speed binary must be uninstrumented"
     );
-    assert!(mode == "cold" || mode == "warm");
-    let prepared_bytes = if engine == "interpreter" {
+    assert!(mode == "cold" || mode == "warm" || mode == "service-cold");
+    let prepared_bytes = if engine == "interpreter" && mode != "service-cold" {
         Some(
             InterpreterUnit::prepare_script(&source, INPUTS)
                 .unwrap()
@@ -597,14 +603,24 @@ fn main() {
     } else {
         None
     };
+    if mode == "service-cold" {
+        common::emit(&serde_json::json!({"kind":"setup", "engine":engine,
+            "case":case,"setup_ns":monotonic_ns()-init_begin,"prepared_user_code":false}));
+    }
     for sample in 0..reps {
+        // Each request carries different source; no preparation cache or probe
+        // before its timed arrival. Constructing the incoming payload is outside
+        // the service boundary, as for an already-received HTTP request.
+        let request_source = (mode == "service-cold")
+            .then(|| format!("{source}\n# request {sample}\n"));
+        let request_source = request_source.as_deref().unwrap_or(&source);
         let cpu = common::cpu_ns();
         let start = Instant::now();
         let p = Arc::new(RequestProvider::ready(n, Duration::ZERO));
         let producer_setup_ns = common::now_ns(start);
         let prep_start = Instant::now();
         let cold = if warm.is_none() {
-            Some(prepare(engine, &source, case))
+            Some(prepare(engine, request_source, case))
         } else {
             None
         };
