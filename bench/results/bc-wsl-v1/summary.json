@@ -1,0 +1,602 @@
+[
+  {
+    "case": "scalar",
+    "rows": 0,
+    "arm": "interpreter",
+    "count": 30,
+    "mean_us": 201.08816666666667,
+    "median_us": 187.579,
+    "min_us": 145.126,
+    "max_us": 338.928,
+    "round_mean_us": [
+      206.3515,
+      189.2048,
+      207.7082
+    ]
+  },
+  {
+    "case": "scalar",
+    "rows": 0,
+    "arm": "native",
+    "count": 30,
+    "mean_us": 602.5448,
+    "median_us": 574.9365,
+    "min_us": 462.322,
+    "max_us": 980.002,
+    "round_mean_us": [
+      594.7814,
+      611.8833,
+      600.9697
+    ]
+  },
+  {
+    "case": "scalar",
+    "rows": 0,
+    "arm": "monty",
+    "count": 30,
+    "mean_us": 258.9349,
+    "median_us": 226.4215,
+    "min_us": 184.542,
+    "max_us": 541.546,
+    "round_mean_us": [
+      267.6141,
+      246.4386,
+      262.752
+    ]
+  },
+  {
+    "case": "scalar",
+    "rows": 0,
+    "arm": "spawn",
+    "count": 30,
+    "mean_us": 64945.83383333333,
+    "median_us": 64694.4765,
+    "min_us": 62278.531,
+    "max_us": 69149.661,
+    "round_mean_us": [
+      65562.77679999999,
+      64728.0171,
+      64546.7076
+    ]
+  },
+  {
+    "case": "scalar",
+    "rows": 0,
+    "arm": "prefork",
+    "count": 30,
+    "mean_us": 4040.5843,
+    "median_us": 4097.6875,
+    "min_us": 3407.844,
+    "max_us": 4622.128,
+    "round_mean_us": [
+      4115.1061,
+      4029.8965,
+      3976.7503
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 100,
+    "arm": "interpreter",
+    "count": 30,
+    "mean_us": 252.7226,
+    "median_us": 246.551,
+    "min_us": 209.675,
+    "max_us": 347.498,
+    "round_mean_us": [
+      264.2906,
+      237.3397,
+      256.5375
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 100,
+    "arm": "native",
+    "count": 30,
+    "mean_us": 901.2384,
+    "median_us": 904.2085,
+    "min_us": 779.93,
+    "max_us": 1164.879,
+    "round_mean_us": [
+      917.7035,
+      867.8477,
+      918.164
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 100,
+    "arm": "monty",
+    "count": 30,
+    "mean_us": 510.35026666666664,
+    "median_us": 503.808,
+    "min_us": 427.649,
+    "max_us": 611.115,
+    "round_mean_us": [
+      511.0107,
+      500.5132,
+      519.5269
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 100,
+    "arm": "spawn",
+    "count": 30,
+    "mean_us": 66071.4313,
+    "median_us": 65459.587,
+    "min_us": 62941.44,
+    "max_us": 70261.741,
+    "round_mean_us": [
+      67172.0017,
+      64552.0837,
+      66490.2085
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 100,
+    "arm": "prefork",
+    "count": 30,
+    "mean_us": 4653.141433333333,
+    "median_us": 4658.803,
+    "min_us": 4190.16,
+    "max_us": 5067.963,
+    "round_mean_us": [
+      4726.8276,
+      4655.1512,
+      4577.4455
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 300,
+    "arm": "interpreter",
+    "count": 30,
+    "mean_us": 257.24396666666667,
+    "median_us": 253.664,
+    "min_us": 191.156,
+    "max_us": 326.653,
+    "round_mean_us": [
+      270.74670000000003,
+      247.3331,
+      253.65210000000002
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 300,
+    "arm": "native",
+    "count": 30,
+    "mean_us": 910.6680666666666,
+    "median_us": 927.8605,
+    "min_us": 809.091,
+    "max_us": 1007.886,
+    "round_mean_us": [
+      927.6696,
+      910.6225000000001,
+      893.7121
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 300,
+    "arm": "monty",
+    "count": 30,
+    "mean_us": 852.0204,
+    "median_us": 850.505,
+    "min_us": 754.543,
+    "max_us": 991.927,
+    "round_mean_us": [
+      876.441,
+      842.0424,
+      837.5778
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 300,
+    "arm": "spawn",
+    "count": 30,
+    "mean_us": 67013.50136666666,
+    "median_us": 66401.407,
+    "min_us": 63522.554,
+    "max_us": 72557.63,
+    "round_mean_us": [
+      69835.7537,
+      65408.6327,
+      65796.1177
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 300,
+    "arm": "prefork",
+    "count": 30,
+    "mean_us": 4760.0425,
+    "median_us": 4797.707,
+    "min_us": 4246.303,
+    "max_us": 5157.923,
+    "round_mean_us": [
+      4905.1669,
+      4651.9398,
+      4723.0208
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 1000,
+    "arm": "interpreter",
+    "count": 30,
+    "mean_us": 274.51726666666667,
+    "median_us": 266.849,
+    "min_us": 226.556,
+    "max_us": 389.028,
+    "round_mean_us": [
+      282.7456,
+      262.6636,
+      278.1426
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 1000,
+    "arm": "native",
+    "count": 30,
+    "mean_us": 924.4122666666667,
+    "median_us": 912.2465,
+    "min_us": 812.581,
+    "max_us": 1113.09,
+    "round_mean_us": [
+      933.2039,
+      886.9322,
+      953.1007
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 1000,
+    "arm": "monty",
+    "count": 30,
+    "mean_us": 2128.9122333333335,
+    "median_us": 2036.289,
+    "min_us": 1803.467,
+    "max_us": 2990.739,
+    "round_mean_us": [
+      2160.0667,
+      2153.2404,
+      2073.4296
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 1000,
+    "arm": "spawn",
+    "count": 30,
+    "mean_us": 67810.32366666666,
+    "median_us": 67405.39050000001,
+    "min_us": 64723.146,
+    "max_us": 73456.101,
+    "round_mean_us": [
+      70164.9708,
+      66102.7175,
+      67163.2827
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 1000,
+    "arm": "prefork",
+    "count": 30,
+    "mean_us": 5459.854,
+    "median_us": 5423.7995,
+    "min_us": 4950.458,
+    "max_us": 6766.883,
+    "round_mean_us": [
+      5629.0421,
+      5419.0902,
+      5331.4297
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 3000,
+    "arm": "interpreter",
+    "count": 30,
+    "mean_us": 324.24016666666665,
+    "median_us": 318.741,
+    "min_us": 259.914,
+    "max_us": 391.123,
+    "round_mean_us": [
+      341.3262,
+      315.9592,
+      315.4351
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 3000,
+    "arm": "native",
+    "count": 30,
+    "mean_us": 938.4853,
+    "median_us": 938.102,
+    "min_us": 822.989,
+    "max_us": 1074.412,
+    "round_mean_us": [
+      964.7098,
+      903.814,
+      946.9321
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 3000,
+    "arm": "monty",
+    "count": 30,
+    "mean_us": 6224.704333333333,
+    "median_us": 6097.463,
+    "min_us": 5057.588,
+    "max_us": 7334.59,
+    "round_mean_us": [
+      6778.7745,
+      5822.7731,
+      6072.5653999999995
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 3000,
+    "arm": "spawn",
+    "count": 30,
+    "mean_us": 69607.8351,
+    "median_us": 68917.86499999999,
+    "min_us": 67408.146,
+    "max_us": 72475.119,
+    "round_mean_us": [
+      71991.2467,
+      68385.8744,
+      68446.3842
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 3000,
+    "arm": "prefork",
+    "count": 30,
+    "mean_us": 7208.794266666667,
+    "median_us": 7087.7185,
+    "min_us": 6794.775,
+    "max_us": 9133.897,
+    "round_mean_us": [
+      7531.4065,
+      7084.4302,
+      7010.5461
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 10000,
+    "arm": "interpreter",
+    "count": 30,
+    "mean_us": 497.9618,
+    "median_us": 491.094,
+    "min_us": 412.946,
+    "max_us": 632.261,
+    "round_mean_us": [
+      520.8531,
+      491.0462,
+      481.9861
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 10000,
+    "arm": "native",
+    "count": 30,
+    "mean_us": 1005.4344333333333,
+    "median_us": 998.4735000000001,
+    "min_us": 874.649,
+    "max_us": 1224.916,
+    "round_mean_us": [
+      1048.9604,
+      975.7728,
+      991.5701
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 10000,
+    "arm": "monty",
+    "count": 30,
+    "mean_us": 20824.2036,
+    "median_us": 19759.3975,
+    "min_us": 18266.225,
+    "max_us": 25963.015,
+    "round_mean_us": [
+      20982.237699999998,
+      21556.5061,
+      19933.867
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 10000,
+    "arm": "spawn",
+    "count": 30,
+    "mean_us": 76394.18203333333,
+    "median_us": 75689.3835,
+    "min_us": 73358.683,
+    "max_us": 82095.563,
+    "round_mean_us": [
+      78867.1433,
+      75240.8722,
+      75074.5306
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 10000,
+    "arm": "prefork",
+    "count": 30,
+    "mean_us": 14161.466433333333,
+    "median_us": 14042.799500000001,
+    "min_us": 13376.643,
+    "max_us": 15717.269,
+    "round_mean_us": [
+      14563.8533,
+      14191.4459,
+      13729.1001
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 30000,
+    "arm": "interpreter",
+    "count": 30,
+    "mean_us": 955.8299333333333,
+    "median_us": 938.7805,
+    "min_us": 789.036,
+    "max_us": 1221.572,
+    "round_mean_us": [
+      956.0146,
+      962.1673000000001,
+      949.3079
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 30000,
+    "arm": "native",
+    "count": 30,
+    "mean_us": 1113.9214333333334,
+    "median_us": 1090.1370000000002,
+    "min_us": 955.339,
+    "max_us": 1351.459,
+    "round_mean_us": [
+      1099.2484,
+      1119.6513,
+      1122.8646
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 30000,
+    "arm": "monty",
+    "count": 30,
+    "mean_us": 66669.54843333333,
+    "median_us": 64688.1065,
+    "min_us": 61664.675,
+    "max_us": 82071.476,
+    "round_mean_us": [
+      65669.9992,
+      66580.8202,
+      67757.8259
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 30000,
+    "arm": "spawn",
+    "count": 30,
+    "mean_us": 93467.827,
+    "median_us": 92857.51250000001,
+    "min_us": 89843.815,
+    "max_us": 98742.368,
+    "round_mean_us": [
+      94562.4543,
+      91645.995,
+      94195.0317
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 30000,
+    "arm": "prefork",
+    "count": 30,
+    "mean_us": 31098.3324,
+    "median_us": 30979.799,
+    "min_us": 30003.518,
+    "max_us": 32510.097,
+    "round_mean_us": [
+      31349.6755,
+      30847.849000000002,
+      31097.4727
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 100000,
+    "arm": "interpreter",
+    "count": 30,
+    "mean_us": 2584.657366666667,
+    "median_us": 2482.524,
+    "min_us": 2199.9,
+    "max_us": 3266.328,
+    "round_mean_us": [
+      2557.4128,
+      2624.9093,
+      2571.65
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 100000,
+    "arm": "native",
+    "count": 30,
+    "mean_us": 1586.5852,
+    "median_us": 1492.7295,
+    "min_us": 1318.304,
+    "max_us": 2176.049,
+    "round_mean_us": [
+      1609.006,
+      1592.5832,
+      1558.1664
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 100000,
+    "arm": "monty",
+    "count": 30,
+    "mean_us": 278763.75073333335,
+    "median_us": 281745.0915,
+    "min_us": 252383.272,
+    "max_us": 310963.594,
+    "round_mean_us": [
+      292934.2902,
+      271761.0992,
+      271595.8628
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 100000,
+    "arm": "spawn",
+    "count": 30,
+    "mean_us": 160133.12886666667,
+    "median_us": 159048.517,
+    "min_us": 154923.049,
+    "max_us": 169339.969,
+    "round_mean_us": [
+      161114.3033,
+      160592.2139,
+      158692.8694
+    ]
+  },
+  {
+    "case": "weighted",
+    "rows": 100000,
+    "arm": "prefork",
+    "count": 30,
+    "mean_us": 100639.92353333333,
+    "median_us": 100139.812,
+    "min_us": 97617.804,
+    "max_us": 104878.211,
+    "round_mean_us": [
+      101505.772,
+      101090.8979,
+      99323.1007
+    ]
+  }
+]

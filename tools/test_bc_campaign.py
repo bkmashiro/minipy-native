@@ -17,7 +17,14 @@ class CampaignTests(unittest.TestCase):
         rows = list(bc.schedule(False))
         self.assertEqual(len(rows), 3 * 8 * 10 * 5)
         self.assertEqual({r[5] for r in rows[:5]}, set(bc.ARMS))
-        self.assertEqual({r[4] for r in rows if r[1:3] == ('weighted', 100)}, set(range(12)))
+        for case, size in bc.SHAPES:
+            requests = [r for r in rows if r[1:3] == (case, size)]
+            self.assertEqual({r[4] for r in requests}, set(range(30)))
+            self.assertEqual(len({r[6] for r in requests}), 30)
+            for variant in range(30):
+                matched = [r for r in requests if r[4] == variant]
+                self.assertEqual({r[5] for r in matched}, set(bc.ARMS))
+                self.assertEqual(len({r[6] for r in matched}), 1)
 
     def test_missing_and_failed_cannot_summarize(self):
         with tempfile.TemporaryDirectory() as d:

@@ -2,21 +2,21 @@
   {
     "round": 0,
     "arm": "interpreter",
-    "startup_ns": 1598504
+    "startup_ns": 1600331
   },
   {
     "round": 0,
     "arm": "native",
-    "startup_ns": 1383578
+    "startup_ns": 1363678
   },
   {
     "round": 0,
     "arm": "monty",
-    "startup_ns": 1305042
+    "startup_ns": 1352390
   },
   {
     "round": 0,
     "arm": "prefork",
-    "startup_ns": 53939769
+    "startup_ns": 53923632
   }
 ]

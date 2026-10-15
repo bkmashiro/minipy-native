@@ -74,7 +74,7 @@ def schedule(smoke):
     for round_ in range(1 if smoke else 3):
         for case, rows in SHAPES if not smoke else [('scalar', 0), ('weighted', 100), ('weighted', 100000)]:
             for sample in range(1 if smoke else 10):
-                variant = (round_ * 10 + sample) % 12
+                variant = round_ * 10 + sample
                 req = dict(source=source(case, variant), rows=rows)
                 payload = (json.dumps(req, separators=(',', ':')) + '\n').encode()
                 order = ARMS[(sample + round_) % 5:] + ARMS[:(sample + round_) % 5]
@@ -143,6 +143,7 @@ def summarize(raw):
     assert all(r['stdout'] == oracle(r['case'], r['rows'], r['variant']) and
                (r['loads'], r['records']) == ((0, 0) if r['case'] == 'scalar' else (1, 1)) for r in rows)
     assert len({(r['round'], r['case'], r['rows'], r['sample'], r['arm']) for r in rows}) == len(rows)
+    assert all(r['variant'] == r['round'] * 10 + r['sample'] for r in rows)
     for rnd in range(3):
         for case, n in SHAPES:
             for sample in range(10):

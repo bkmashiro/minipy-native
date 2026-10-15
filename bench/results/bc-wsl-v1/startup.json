@@ -1,0 +1,62 @@
+[
+  {
+    "round": 0,
+    "arm": "interpreter",
+    "startup_ns": 1622176
+  },
+  {
+    "round": 0,
+    "arm": "native",
+    "startup_ns": 1476449
+  },
+  {
+    "round": 0,
+    "arm": "monty",
+    "startup_ns": 1323128
+  },
+  {
+    "round": 0,
+    "arm": "prefork",
+    "startup_ns": 55693998
+  },
+  {
+    "round": 1,
+    "arm": "interpreter",
+    "startup_ns": 1584229
+  },
+  {
+    "round": 1,
+    "arm": "native",
+    "startup_ns": 1346638
+  },
+  {
+    "round": 1,
+    "arm": "monty",
+    "startup_ns": 1254013
+  },
+  {
+    "round": 1,
+    "arm": "prefork",
+    "startup_ns": 52698459
+  },
+  {
+    "round": 2,
+    "arm": "interpreter",
+    "startup_ns": 1681445
+  },
+  {
+    "round": 2,
+    "arm": "native",
+    "startup_ns": 1361241
+  },
+  {
+    "round": 2,
+    "arm": "monty",
+    "startup_ns": 1209760
+  },
+  {
+    "round": 2,
+    "arm": "prefork",
+    "startup_ns": 52688777
+  }
+]

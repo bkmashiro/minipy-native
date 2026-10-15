@@ -2,61 +2,61 @@
   {
     "round": 0,
     "arm": "interpreter",
-    "startup_ns": 1622176
+    "startup_ns": 1634380
   },
   {
     "round": 0,
     "arm": "native",
-    "startup_ns": 1476449
+    "startup_ns": 1390302
   },
   {
     "round": 0,
     "arm": "monty",
-    "startup_ns": 1323128
+    "startup_ns": 1285245
   },
   {
     "round": 0,
     "arm": "prefork",
-    "startup_ns": 55693998
+    "startup_ns": 52836439
   },
   {
     "round": 1,
     "arm": "interpreter",
-    "startup_ns": 1584229
+    "startup_ns": 1861356
   },
   {
     "round": 1,
     "arm": "native",
-    "startup_ns": 1346638
+    "startup_ns": 1355236
   },
   {
     "round": 1,
     "arm": "monty",
-    "startup_ns": 1254013
+    "startup_ns": 1265502
   },
   {
     "round": 1,
     "arm": "prefork",
-    "startup_ns": 52698459
+    "startup_ns": 52644894
   },
   {
     "round": 2,
     "arm": "interpreter",
-    "startup_ns": 1681445
+    "startup_ns": 2021665
   },
   {
     "round": 2,
     "arm": "native",
-    "startup_ns": 1361241
+    "startup_ns": 1481737
   },
   {
     "round": 2,
     "arm": "monty",
-    "startup_ns": 1209760
+    "startup_ns": 1439540
   },
   {
     "round": 2,
     "arm": "prefork",
-    "startup_ns": 52688777
+    "startup_ns": 55418255
   }
 ]

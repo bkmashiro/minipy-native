@@ -1059,18 +1059,22 @@ evidence of zero regression for the other workloads.
 ## BC: fresh-source request, five arms (2026-10-15)
 
 WSL2 CPU2, serial under existing `compute.lock`: MiniPy interpreter/native,
-Monty, fresh CPython process and prewarmed CPython prefork all receive new
-semantically varied source on each request. Same controller timer spans source
-transmission, prepare/compile, data generation/conversion, real Tools, stdout
-delivery and child reap where applicable. Source generation/oracle are outside
-the request timer. Prefork parent initialization is separately measured, never
-amortized invisibly into per-request latency. The 15/15 real smoke and 1200/1200
-formal requests passed; 40 summary cells independently recalculate from raw.
+Monty, fresh CPython process and prewarmed CPython prefork receive 30 distinct
+semantic source variants per shape (one shared across arms for each request).
+The initial `%12` campaign only had 12 variants per shape; its unmodified raw,
+summary and startup are archived in `bench/results/bc-wsl-v1/`, not pooled.
+Same controller timer spans source transmission, prepare/compile, data
+generation/conversion, real Tools, stdout delivery and child reap where
+applicable. Source generation/oracle are outside the request timer. Prefork
+parent initialization is separately measured, never amortized invisibly into
+per-request latency. The corrected 15/15 real smoke and 1200/1200 formal
+requests passed; all eight shapes have 30 distinct source strings, and 40
+summary cells independently recalculate from raw.
 Seven weighted sizes and scalar only; old resident/COW/other curves were not
 mixed. See [BC full method and results](bc-fresh-source-benchmark.md),
 `bench/results/bc-wsl/{raw.jsonl,summary.json,startup.json}` and
 `tools/test_bc_campaign.py`. On weighted 100 / 100k the five mean request
-latencies (µs) were respectively 267/2526 interpreter, 895/1555 native,
-499/282010 Monty, 65923/159088 spawn, 4644/100231 prefork. No production
+latencies (µs) were respectively 269/2437 interpreter, 879/1525 native,
+486/274904 Monty, 65235/157892 spawn, 4548/98822 prefork. No production
 runtime, website, frozen S/AD raw or global system setting changed.
 
