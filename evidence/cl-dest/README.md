@@ -91,3 +91,5 @@ Reducer从固定Git base+精确candidate patch重建正式、诊断与验证每�
 CI建立实际布局/代码基线；CJ保留zero-buffer prepare的一次allocation、一次pass和32–72 B backing删除，并报告边界分支代价；CK已撤回：小初始化写入交换更大同步栈和元数据/call，没有完整请求净值；CL仅保留当前简单目的槽表示和确定密度。各卡基线/fixture/时间不同，不能把它们的描述性latency delta相加，也没有声称CI→CL累计提速。
 
 结束此阶段。当前tiny tape已远小于L1容量，CL仍可能改变局部访问，但没有PMU/RSS或实际业务收益证据支持进一步压缩。CG真实workload适配stop与BT/BX/BY/CB负结果不变，不自动重开已撤回候选，不增加缓存、后端或Tool适配。后续若有任务，应由新的实际Host source与端到端成本证据驱动，而非继续以布局字节为目标。
+
+固定提交独立gpt-6-luna审阅无阻塞项，建议保留并停止阶段；实际model/provider receipt、只读重放及临时binary清理见 [review.md](review.md)。
