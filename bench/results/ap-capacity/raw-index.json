@@ -1,0 +1,1447 @@
+{
+  "canonical": "/home/na/benchmarks/minipy-s/af-capacity",
+  "files": [
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-anchor-cow-cpu-6-0.jsonl.gz",
+      "sha256": "fce4ffd782e2acf854e533cb8c78f972b9d60297f95131890c9440a114c4facd",
+      "compressed_bytes": 6451,
+      "requests": 90,
+      "counts": {
+        "completed": 90
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-anchor-cow-mixed-10-0.jsonl.gz",
+      "sha256": "a7f609e9a9846150aaa5a97ccf180a1770904704d3dc20447da0b04f07c456d6",
+      "compressed_bytes": 10433,
+      "requests": 150,
+      "counts": {
+        "completed": 150
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-anchor-fork-cpu-30-0.jsonl.gz",
+      "sha256": "e7e08fed5e0b6a1c1e25cdbd48b3b2f37d1c0b32a6792effe8e709e84c2f3d11",
+      "compressed_bytes": 27479,
+      "requests": 450,
+      "counts": {
+        "completed": 450
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-anchor-interpreter-cpu-3800-0.jsonl.gz",
+      "sha256": "293b4ac705fe036f221f0f53aa2dddb0398448dc47b06c7dfa94d03881a98bf2",
+      "compressed_bytes": 2740061,
+      "requests": 57000,
+      "counts": {
+        "completed": 57000
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-anchor-monty-cpu-45-0.jsonl.gz",
+      "sha256": "59397ec020ddca4d89dcadc22eacd965cfe3c3eb6167845f95150e127c2619ae",
+      "compressed_bytes": 39983,
+      "requests": 675,
+      "counts": {
+        "completed": 675
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-anchor-native-cpu-1450-0.jsonl.gz",
+      "sha256": "4213dfbf3383d501fb9aa5857ff81848117d5fd4b22711c9f2d642da14c7be85",
+      "compressed_bytes": 1131997,
+      "requests": 21750,
+      "counts": {
+        "completed": 21750
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-anchor-fork-mixed-45-0.jsonl.gz",
+      "sha256": "45cb1b190bed91f04ab63824754de5f92bdd6de37242e4865a065dc7a92038e8",
+      "compressed_bytes": 42089,
+      "requests": 675,
+      "counts": {
+        "completed": 675
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-anchor-interpreter-mixed-5000-0.jsonl.gz",
+      "sha256": "198f8c79aaa95c1a53d7401d62fe96ab5f10cb4bbae37f9dc65556741d5736fb",
+      "compressed_bytes": 3688954,
+      "requests": 75000,
+      "counts": {
+        "completed": 75000
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-anchor-monty-mixed-40-0.jsonl.gz",
+      "sha256": "0945aac1a04a9c7f834c6e98c9b4e28b4816d096b4719f651b2af44d002b7db3",
+      "compressed_bytes": 36158,
+      "requests": 600,
+      "counts": {
+        "completed": 600
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-anchor-native-mixed-1900-0.jsonl.gz",
+      "sha256": "e23bb4474242826b55430a7e3c51f660a1146b1e9dcd02e3a7e6036385049d6c",
+      "compressed_bytes": 1502268,
+      "requests": 28500,
+      "counts": {
+        "completed": 28500
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-cpu-1.5-0.jsonl.gz",
+      "sha256": "728fbb3181ddf451efa8658bec67752530d169df56ffa9929627a32824f4852a",
+      "compressed_bytes": 3969,
+      "requests": 45,
+      "counts": {
+        "completed": 45
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-mixed-2.5-0.jsonl.gz",
+      "sha256": "c379eccc9fe1e905bd4f12cfa7fccb64c96076f2244c1202e90267ce315996b1",
+      "compressed_bytes": 5890,
+      "requests": 75,
+      "counts": {
+        "completed": 75
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-cpu-7.5-0.jsonl.gz",
+      "sha256": "7eab9f1a83b8f992720a2f3d7f2ca5af1f70b061dda8bc3437adfb14e4fad5e5",
+      "compressed_bytes": 8563,
+      "requests": 123,
+      "counts": {
+        "completed": 123
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-interpreter-cpu-950-0.jsonl.gz",
+      "sha256": "fa0b1cd9960aff59fe68d1618694a3ec4b9f7ac86cf108677a4b1ee1749770f5",
+      "compressed_bytes": 557917,
+      "requests": 10450,
+      "counts": {
+        "completed": 10450
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-cpu-11.25-0.jsonl.gz",
+      "sha256": "fd2b6d9d5001b67471c892402476a01fb64c4ff769a553d5286f3c69c25d574a",
+      "compressed_bytes": 9091,
+      "requests": 134,
+      "counts": {
+        "completed": 134
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-cpu-362.5-0.jsonl.gz",
+      "sha256": "0788171d5311dd4530f220b82302b28bb85c2892c42813e514857d097426c6be",
+      "compressed_bytes": 222570,
+      "requests": 3988,
+      "counts": {
+        "completed": 3988
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-mixed-11.25-0.jsonl.gz",
+      "sha256": "7b7aad65f3f44ba0218fc090ff8c491e6c41e95b3333cde9d306c0ed1bdd2094",
+      "compressed_bytes": 9326,
+      "requests": 134,
+      "counts": {
+        "completed": 134
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-interpreter-mixed-1250-0.jsonl.gz",
+      "sha256": "bb9cdae1f0006d35f06f24cac1b1439ecf0709e108ec77216cfc90b1e10b274e",
+      "compressed_bytes": 732350,
+      "requests": 13750,
+      "counts": {
+        "completed": 13750
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-mixed-20-0.jsonl.gz",
+      "sha256": "aa7a5d95dbca3bd9c690ab274dcf3c4e0c5da5338df262bd47fc4d617667bdff",
+      "compressed_bytes": 14090,
+      "requests": 220,
+      "counts": {
+        "completed": 220
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-mixed-475-0.jsonl.gz",
+      "sha256": "9a69768fa814aa1c8382620e9b0af1002ca13941f1a4ab65bb38c1572485465e",
+      "compressed_bytes": 296303,
+      "requests": 5225,
+      "counts": {
+        "completed": 5225
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-cpu-3-0.jsonl.gz",
+      "sha256": "1a386e3afd29a43dd18402049a3250b72feeae614474ec2ebb3e90d5f93e461b",
+      "compressed_bytes": 6656,
+      "requests": 90,
+      "counts": {
+        "completed": 90
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-mixed-5-0.jsonl.gz",
+      "sha256": "4c71200e9376ca8e5f140ccf352306385643b0975b67f9f68e84caf0109ba128",
+      "compressed_bytes": 8285,
+      "requests": 115,
+      "counts": {
+        "completed": 115
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-cpu-15-0.jsonl.gz",
+      "sha256": "e1dd55055b784b97a907564296a8a26a0ee56d9c574e4b47dfa5b27e640d772d",
+      "compressed_bytes": 10883,
+      "requests": 165,
+      "counts": {
+        "completed": 165
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-interpreter-cpu-1900-0.jsonl.gz",
+      "sha256": "5a342d65f858784de7ce85ea18ed51df29212a4ed8ed251f111d2f5a31d684a7",
+      "compressed_bytes": 1063040,
+      "requests": 20900,
+      "counts": {
+        "completed": 20900
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-cpu-22.5-0.jsonl.gz",
+      "sha256": "eab3bbd22acdff1fa63acb8387bbd8264762a50ef23661edb0f885c48145ec27",
+      "compressed_bytes": 15616,
+      "requests": 248,
+      "counts": {
+        "completed": 248
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-cpu-725-0.jsonl.gz",
+      "sha256": "b9dbff84d6d319aefe92489401a7fdc0925c4dddc2b3d84da42573ea9290d8b0",
+      "compressed_bytes": 433758,
+      "requests": 7975,
+      "counts": {
+        "completed": 7975
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-mixed-22.5-0.jsonl.gz",
+      "sha256": "345b4654412dd3cb61192c34b1894896336634eaef1b3d0371b1f52c72ab52d5",
+      "compressed_bytes": 16204,
+      "requests": 248,
+      "counts": {
+        "completed": 248
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-interpreter-mixed-2500-0.jsonl.gz",
+      "sha256": "78288f94b0cad799e2dd9ef968782104a5f252215e5ff914f33f826608f6ed7f",
+      "compressed_bytes": 1394312,
+      "requests": 27500,
+      "counts": {
+        "completed": 27500
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-mixed-30-0.jsonl.gz",
+      "sha256": "e909b19da83f09baf9a43eab9192a24ff5383adb1edda6ea5d16fb6dc8fb230e",
+      "compressed_bytes": 20514,
+      "requests": 330,
+      "counts": {
+        "completed": 330
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-mixed-950-0.jsonl.gz",
+      "sha256": "f66122122eca6bd5aff4445da692ef3ee6c9765c66c6d47fd092270de215acb7",
+      "compressed_bytes": 574960,
+      "requests": 10450,
+      "counts": {
+        "completed": 10450
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-cpu-4.5-0.jsonl.gz",
+      "sha256": "cf900c0667f0a169111a9dc29905ec00c69da2664750ead9574ffc1b4fc3b63f",
+      "compressed_bytes": 8134,
+      "requests": 114,
+      "counts": {
+        "completed": 114
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-mixed-7.5-0.jsonl.gz",
+      "sha256": "7c830efafe1577ec69f36129da8699c500ef0c07ee72387885eabe1802233bcd",
+      "compressed_bytes": 8888,
+      "requests": 123,
+      "counts": {
+        "completed": 123
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-cpu-22.5-0.jsonl.gz",
+      "sha256": "abc0b2edfced9364d78eaca352295b3de7cc16c8a59aba5bd3dae0cd5a45c3cb",
+      "compressed_bytes": 15764,
+      "requests": 248,
+      "counts": {
+        "completed": 248
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-interpreter-cpu-2850-0.jsonl.gz",
+      "sha256": "2af55007f2b65f7fdd4e4085837e28ad8e0daae419dba597c25ef54c0cc8bb78",
+      "compressed_bytes": 1574383,
+      "requests": 31350,
+      "counts": {
+        "completed": 31350
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-cpu-33.75-0.jsonl.gz",
+      "sha256": "1ae40a695f3bfc96862b96646406251b304533dd64830e2ae70e5865c5ed8e97",
+      "compressed_bytes": 22817,
+      "requests": 372,
+      "counts": {
+        "completed": 372
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-cpu-1087.5-0.jsonl.gz",
+      "sha256": "40e9c8bbdc9fed66cefd46dd4c1ffdfe94050d932c9cc713f3888578a0f1dfc7",
+      "compressed_bytes": 634947,
+      "requests": 11963,
+      "counts": {
+        "completed": 11963
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-mixed-33.75-0.jsonl.gz",
+      "sha256": "15e00e5573f0276ea18d8c831da31d4088dc7e81191e5cc11bf149ba54584c7f",
+      "compressed_bytes": 23940,
+      "requests": 372,
+      "counts": {
+        "completed": 372
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-interpreter-mixed-3750-0.jsonl.gz",
+      "sha256": "a25816c471a893a0bce13157469437a5a1a8432cb944a6823c6c524bdcb0ea20",
+      "compressed_bytes": 2061043,
+      "requests": 41250,
+      "counts": {
+        "completed": 41250
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-mixed-55-0.jsonl.gz",
+      "sha256": "69c449e79f299e741c82c0db22c89e5c908afdee19a2ce9c11a578938cc533f7",
+      "compressed_bytes": 36313,
+      "requests": 605,
+      "counts": {
+        "completed": 605
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-mixed-1425-0.jsonl.gz",
+      "sha256": "d6487a6a762bea9083801ccf7061deedff062664e1f9a31f8fedeacceb29a9d0",
+      "compressed_bytes": 842460,
+      "requests": 15675,
+      "counts": {
+        "completed": 15675
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-cpu-7.5-0.jsonl.gz",
+      "sha256": "2f4bd4c5b360859eee516620cccb03301db05746da8e0057db0a3e052fbbb1b5",
+      "compressed_bytes": 9147,
+      "requests": 123,
+      "counts": {
+        "completed": 123
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-mixed-13-0.jsonl.gz",
+      "sha256": "30a3bcb4053851a9df342af590df647e0c9934c3e3177f3e1b213d605d768c90",
+      "compressed_bytes": 10217,
+      "requests": 143,
+      "counts": {
+        "completed": 143
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-cpu-35-0.jsonl.gz",
+      "sha256": "034fc339687c8f24116f986e80c37e2ba4d9321818f4df55239a6fc5ef17eb4a",
+      "compressed_bytes": 24298,
+      "requests": 385,
+      "counts": {
+        "completed": 385
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-interpreter-cpu-4400-0.jsonl.gz",
+      "sha256": "eab96c8ff98d32466240a1b2c5089257e7ab0a5ccce7480b3a33c0f2e3fde6ab",
+      "compressed_bytes": 2277128,
+      "requests": 48400,
+      "counts": {
+        "completed": 48148,
+        "rejected": 252
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-cpu-55-0.jsonl.gz",
+      "sha256": "2f8cb5fa112efcf5c5eb3049b7af58102bb5949a78ee500fb48d8aa49f59043b",
+      "compressed_bytes": 18670,
+      "requests": 331,
+      "counts": {
+        "completed": 277,
+        "rejected": 54
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-cpu-1650-0.jsonl.gz",
+      "sha256": "ed633017df5bda474568a13e09872d7bd25428ec5ebb6f6f938c41c7403d5823",
+      "compressed_bytes": 912507,
+      "requests": 18150,
+      "counts": {
+        "completed": 18150
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-mixed-55-0.jsonl.gz",
+      "sha256": "aa6c6f414bc8ba6a7f79b497880f52594637a97b3d01575abc93444ef841cb6b",
+      "compressed_bytes": 37896,
+      "requests": 605,
+      "counts": {
+        "completed": 605
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-interpreter-mixed-6250-0.jsonl.gz",
+      "sha256": "3109b285fcf06116547f261493ba186ac15e743d4b9d8cc7d552a4f2f2a7cd26",
+      "compressed_bytes": 3450880,
+      "requests": 68750,
+      "counts": {
+        "completed": 68715,
+        "rejected": 35
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-mixed-62.5-0.jsonl.gz",
+      "sha256": "7ccb2b614137fe3ba28177744dbfe8d8d55d8bd16c30e26c7bea67e276b1e871",
+      "compressed_bytes": 41664,
+      "requests": 688,
+      "counts": {
+        "completed": 688
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-mixed-2250-0.jsonl.gz",
+      "sha256": "3bb99f712c455955da8b9b135771cc0327319c1bb5d965e314fe2901e2978959",
+      "compressed_bytes": 700523,
+      "requests": 13501,
+      "counts": {
+        "completed": 13100,
+        "rejected": 401
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-cpu-6.75-0.jsonl.gz",
+      "sha256": "1df90f6b02e47c74b859bbc329b75c77a6756b003b780443cd586bc66127c131",
+      "compressed_bytes": 8954,
+      "requests": 121,
+      "counts": {
+        "completed": 121
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-mixed-11.5-0.jsonl.gz",
+      "sha256": "bb36c40a95ee39c218b633c67b4ce37671b54305219a08b5519a95211607c56c",
+      "compressed_bytes": 9785,
+      "requests": 135,
+      "counts": {
+        "completed": 135
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-cpu-32.5-0.jsonl.gz",
+      "sha256": "b44912e96b989384366cd00a445454d48dfe61c79a22c64fa849ff3f2b564ea0",
+      "compressed_bytes": 22786,
+      "requests": 358,
+      "counts": {
+        "completed": 358
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-interpreter-cpu-4100-0.jsonl.gz",
+      "sha256": "ec903ce308c286dee83b90d262b896a0aa75251ae3f39b5fd7489ab57419b85b",
+      "compressed_bytes": 2165744,
+      "requests": 45100,
+      "counts": {
+        "completed": 45100
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-cpu-50-0.jsonl.gz",
+      "sha256": "e41dabe050a5fede59953b29096684c661eee7eec8f148b290abe5bb864e493e",
+      "compressed_bytes": 32638,
+      "requests": 550,
+      "counts": {
+        "completed": 550
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-cpu-1750-0.jsonl.gz",
+      "sha256": "0c3adbe941cf7c76ec3cfaddfaed0c8a0b9081b827ce26f4db734b35f6a20b07",
+      "compressed_bytes": 511935,
+      "requests": 10501,
+      "counts": {
+        "completed": 10125,
+        "rejected": 376
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-mixed-60-0.jsonl.gz",
+      "sha256": "dd6028224c34d5d01da9cc7b73221dd9dfbe096672b9768debdb924e43886d53",
+      "compressed_bytes": 40976,
+      "requests": 660,
+      "counts": {
+        "completed": 660
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-interpreter-mixed-5625-0.jsonl.gz",
+      "sha256": "f5c27c9df9d136438d0fc98d8946a0c62a8d79299a893d9cd0e1f3333104ccd4",
+      "compressed_bytes": 3095696,
+      "requests": 61875,
+      "counts": {
+        "completed": 61875
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-mixed-58.75-0.jsonl.gz",
+      "sha256": "6b9814794c334078dc299bb9f1cd491a81a465c0b733790de67579c033be1e7f",
+      "compressed_bytes": 39720,
+      "requests": 647,
+      "counts": {
+        "completed": 647
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-mixed-2075-0.jsonl.gz",
+      "sha256": "37df173579eed4cb8e558e3337c05e1bec3704925e9640282b22a00bb24d3a9a",
+      "compressed_bytes": 1200857,
+      "requests": 22825,
+      "counts": {
+        "completed": 22825
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-cpu-6.375-0.jsonl.gz",
+      "sha256": "855381cdfae72c1760ceae9f26b4682eed92d2efd93359813d950bcf1e717d79",
+      "compressed_bytes": 8668,
+      "requests": 120,
+      "counts": {
+        "completed": 120
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-mixed-12.25-0.jsonl.gz",
+      "sha256": "77611683634a1eac97bd7d4692ade7f914efe48450af9ed1df8511a8b5642282",
+      "compressed_bytes": 10038,
+      "requests": 137,
+      "counts": {
+        "completed": 137
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-cpu-33.75-0.jsonl.gz",
+      "sha256": "6712a5b5242aef807b49f7ac711e536b3267665a5b85bc4da05b906868178beb",
+      "compressed_bytes": 23765,
+      "requests": 372,
+      "counts": {
+        "completed": 372
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-interpreter-cpu-4250-0.jsonl.gz",
+      "sha256": "534b12e8f21b77c93b5368a6504beaf0080ec8b7e050c747a4594aa741215db8",
+      "compressed_bytes": 2203560,
+      "requests": 46750,
+      "counts": {
+        "completed": 46750
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-cpu-52.5-0.jsonl.gz",
+      "sha256": "34358dd30de8b5c946ba87952711ccf6d2dce8e3100d6af4b87c32f71a1fdcc0",
+      "compressed_bytes": 34506,
+      "requests": 578,
+      "counts": {
+        "completed": 578
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-cpu-1700-0.jsonl.gz",
+      "sha256": "295c4ca8ce10a7b448a0658ad5a231628cde0e5b24179d7a53c998ec3cfd7263",
+      "compressed_bytes": 509031,
+      "requests": 10201,
+      "counts": {
+        "completed": 10171,
+        "rejected": 30
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-mixed-57.5-0.jsonl.gz",
+      "sha256": "d918044d83653bc81fa946990c344358bdc00909fd4b08fc440a45123fec662c",
+      "compressed_bytes": 39977,
+      "requests": 633,
+      "counts": {
+        "completed": 633
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-interpreter-mixed-5937.5-0.jsonl.gz",
+      "sha256": "5d1acffa4e2b0c1305d5006f4acfaaf831376f9ef8f880ee3a625dbce3d786af",
+      "compressed_bytes": 3332822,
+      "requests": 65313,
+      "counts": {
+        "completed": 65311,
+        "rejected": 2
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-mixed-56.875-0.jsonl.gz",
+      "sha256": "14db5a0c12da34011ca63de378c17cd64f0eb2ae05bfe3dead29721b4e60b28e",
+      "compressed_bytes": 38121,
+      "requests": 626,
+      "counts": {
+        "completed": 626
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-mixed-2162.5-0.jsonl.gz",
+      "sha256": "f8269499336fea7900f59a11b499b3fcc2501e05edf609e943772700e8058008",
+      "compressed_bytes": 717495,
+      "requests": 12976,
+      "counts": {
+        "completed": 12959,
+        "rejected": 17
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-cpu-6.5625-0.jsonl.gz",
+      "sha256": "6c89a07c7826278fdc27b8fdab696fa5d3ec94fcb89dec00e7248d8de26991c9",
+      "compressed_bytes": 8622,
+      "requests": 120,
+      "counts": {
+        "completed": 120
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-mixed-12.625-0.jsonl.gz",
+      "sha256": "bfb55f6e5f0fd5a469371ad1d52bb65be5e40c1dee080295b022786e58992413",
+      "compressed_bytes": 10509,
+      "requests": 139,
+      "counts": {
+        "completed": 139
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-interpreter-cpu-3950-0.jsonl.gz",
+      "sha256": "e61ed025dd53392c44ab0c77f82d43312dc96b6af3a00c682dd72482ce85caf3",
+      "compressed_bytes": 2073986,
+      "requests": 43450,
+      "counts": {
+        "completed": 43406,
+        "rejected": 44
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-cpu-53.75-0.jsonl.gz",
+      "sha256": "7e8771271e3aa051fea0c71e853a33bceaaa7a9f39a4483e612f6ff761c4a17d",
+      "compressed_bytes": 35356,
+      "requests": 592,
+      "counts": {
+        "completed": 592
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-cpu-1550-0.jsonl.gz",
+      "sha256": "0eaefaf8716610f66ba531cc36a11db2374531b5dbbdbccef2d4c8dade81e64e",
+      "compressed_bytes": 879360,
+      "requests": 17050,
+      "counts": {
+        "completed": 17050
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-mixed-16.875-0.jsonl.gz",
+      "sha256": "202799edd7dd366ffa9b7f69300e045dcbae40d0066a9af1f929520cb3a6cf66",
+      "compressed_bytes": 12632,
+      "requests": 186,
+      "counts": {
+        "completed": 186
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-interpreter-mixed-5781.25-0.jsonl.gz",
+      "sha256": "892e0cda892ca64ebc625ab70d2794e9b1996354ce5c6929c1747c16cb65fa83",
+      "compressed_bytes": 3231795,
+      "requests": 63594,
+      "counts": {
+        "completed": 63594
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-cpu-8.25-0.jsonl.gz",
+      "sha256": "d33cc90978a09cb1ad7b915c7e381c2522ef2df5a363323915a6c36fbd41897f",
+      "compressed_bytes": 9511,
+      "requests": 125,
+      "counts": {
+        "completed": 125
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-mixed-14.5-0.jsonl.gz",
+      "sha256": "a527058e040a726b10f90217b0b8139bf59031a7828eeba61370efed895383d9",
+      "compressed_bytes": 11375,
+      "requests": 160,
+      "counts": {
+        "completed": 160
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-cpu-31.25-0.jsonl.gz",
+      "sha256": "8797d330c10068e758bcf0229c7db708879f99bfa0b21ee17372379c6b849077",
+      "compressed_bytes": 21981,
+      "requests": 344,
+      "counts": {
+        "completed": 344
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-cpu-1600-0.jsonl.gz",
+      "sha256": "a88aa7306e2fd42c3f74c922d35b443280cf8b56dce05c9a1cad193765321235",
+      "compressed_bytes": 898934,
+      "requests": 17600,
+      "counts": {
+        "completed": 17600
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-mixed-56.25-0.jsonl.gz",
+      "sha256": "2810e0f193ba2cf5505580e0b6a0f3dd405e79d8a4dd6c4266a5da95899b0093",
+      "compressed_bytes": 39068,
+      "requests": 619,
+      "counts": {
+        "completed": 619
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-mixed-25-0.jsonl.gz",
+      "sha256": "5434dcefdec855b1801da567f52565fa9baa642ac2a4fc150db725e9f2e07275",
+      "compressed_bytes": 17309,
+      "requests": 275,
+      "counts": {
+        "completed": 275
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-mixed-1987.5-0.jsonl.gz",
+      "sha256": "5be2605ce1f63461a555b11957e4356eccc4fd85dc24ea7fe7db9791b9226537",
+      "compressed_bytes": 1211723,
+      "requests": 21863,
+      "counts": {
+        "completed": 21863
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-cpu-7.125-0.jsonl.gz",
+      "sha256": "b3fe5675c074de6269ceb3699b81d29bc8855c3e8f3ba6db1cfb50dac581fd40",
+      "compressed_bytes": 9350,
+      "requests": 122,
+      "counts": {
+        "completed": 122
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-mixed-6.25-0.jsonl.gz",
+      "sha256": "bbfaddfee3aa1b59480a7177c7c96c8cc8b0b6e0672f479089927e1dd10dafcf",
+      "compressed_bytes": 8685,
+      "requests": 119,
+      "counts": {
+        "completed": 119
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-cpu-37.5-0.jsonl.gz",
+      "sha256": "486e7df29352a4bf943c7690c57d430af5c5ef629ff5d0b782129dd16f1d2557",
+      "compressed_bytes": 26084,
+      "requests": 413,
+      "counts": {
+        "completed": 413
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-native-cpu-1500-0.jsonl.gz",
+      "sha256": "ae506355b69e14dc3a3f8c08cd38de6c4c6ab69745783ebafb7bdbc448521533",
+      "compressed_bytes": 855602,
+      "requests": 16500,
+      "counts": {
+        "completed": 16500
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-mixed-66.25-0.jsonl.gz",
+      "sha256": "dba9082c0dc1b55d889277cbb2574d06f9382b43e3ea2d8159c026f1b4de9dce",
+      "compressed_bytes": 34713,
+      "requests": 597,
+      "counts": {
+        "completed": 551,
+        "rejected": 46
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-cpu-7.875-0.jsonl.gz",
+      "sha256": "31057e2b60b3b380d59a89510278e9431730ac43a961119278d687fd0c63a08b",
+      "compressed_bytes": 9575,
+      "requests": 124,
+      "counts": {
+        "completed": 124
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-mixed-10.75-0.jsonl.gz",
+      "sha256": "aa79c446917a100d43c06b0ef833cd0c2a6ac94770ee2cbac69045f54b93810a",
+      "compressed_bytes": 9748,
+      "requests": 133,
+      "counts": {
+        "completed": 133
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-fork-cpu-36.25-0.jsonl.gz",
+      "sha256": "3d973fa890b9d5efed2f5046a6becc0a042e95d6ee24f7604a19d9422101a1ee",
+      "compressed_bytes": 25401,
+      "requests": 399,
+      "counts": {
+        "completed": 399
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-mixed-27.5-0.jsonl.gz",
+      "sha256": "172dae52fc36eedeedbd862730b7821dab85c63e340d43bdab02da5849e95341",
+      "compressed_bytes": 19092,
+      "requests": 303,
+      "counts": {
+        "completed": 303
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-cow-cpu-6.9375-0.jsonl.gz",
+      "sha256": "5b212a59b1be2f8e82eff90b3e384d4283c2e45bfff3d7691768f1dde07cce5d",
+      "compressed_bytes": 9538,
+      "requests": 121,
+      "counts": {
+        "completed": 121
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-mixed-64.375-0.jsonl.gz",
+      "sha256": "49140bebe27c20241bbb0864bd5bd45d52f4f6691dc70840de06fd46577c9fa9",
+      "compressed_bytes": 45476,
+      "requests": 709,
+      "counts": {
+        "completed": 709
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-explore-monty-mixed-26.25-0.jsonl.gz",
+      "sha256": "e4d5ce27a039fddfeed4583639d1be136ba0f538268cbcba15b42188a2634491",
+      "compressed_bytes": 18444,
+      "requests": 289,
+      "counts": {
+        "completed": 289
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-cow-cpu-6.5625-0.jsonl.gz",
+      "sha256": "cdddbdcd0e654d766440278ee10a8fe28e5e8b108edcb8f3b37369d591261094",
+      "compressed_bytes": 65191,
+      "requests": 1020,
+      "counts": {
+        "completed": 1020
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-cow-cpu-6.75-0.jsonl.gz",
+      "sha256": "3512bade67e31821da2b2d0d9f3a9f847cab0e178b1e07d44c7a388a74c557ba",
+      "compressed_bytes": 67613,
+      "requests": 1021,
+      "counts": {
+        "completed": 1021
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-cow-mixed-12.625-0.jsonl.gz",
+      "sha256": "849286c3c847d16835b5de37b1c6ec002ba5ad7ff3f8ad8f09b8e7052d1670c4",
+      "compressed_bytes": 71679,
+      "requests": 1038,
+      "counts": {
+        "completed": 1038
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-cow-mixed-13-0.jsonl.gz",
+      "sha256": "5b0ca2c19d7549141db10446df2d8c24912d865849fc691bb52020ccd3c54555",
+      "compressed_bytes": 67361,
+      "requests": 1039,
+      "counts": {
+        "completed": 1039
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-fork-cpu-32.5-0.jsonl.gz",
+      "sha256": "42b16f1419fbdccfffea9350bd9e079c92766529598292306f160436d85e307e",
+      "compressed_bytes": 67593,
+      "requests": 1098,
+      "counts": {
+        "completed": 1098
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-fork-cpu-35-0.jsonl.gz",
+      "sha256": "8a6b5d2818d9cc29549f56e266bf4f8a79e6eaa4a723c6585dc2d431350e220d",
+      "compressed_bytes": 67370,
+      "requests": 1105,
+      "counts": {
+        "completed": 1105
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-interpreter-cpu-4250-0.jsonl.gz",
+      "sha256": "3044a9a1160ebb96198db3f76db6bbc68dfc090e02bcf5a133cc6ac84988ff16",
+      "compressed_bytes": 3046713,
+      "requests": 63750,
+      "counts": {
+        "completed": 63745,
+        "rejected": 5
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-interpreter-cpu-4400-0.jsonl.gz",
+      "sha256": "b61fb819ae86b27af2294b8cc75136b8e42581e98ca415f3fd6bcc260be571e5",
+      "compressed_bytes": 3112636,
+      "requests": 66000,
+      "counts": {
+        "completed": 66000
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-monty-cpu-53.75-0.jsonl.gz",
+      "sha256": "7749efd2c2b04b47d7b9d494ddac344dd822953a6a4a2f73f1ad3b088fb12f20",
+      "compressed_bytes": 37316,
+      "requests": 646,
+      "counts": {
+        "completed": 593,
+        "rejected": 53
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-monty-cpu-55-0.jsonl.gz",
+      "sha256": "7aa50b56b50b85e4e822683a92d436bfed3fbab4d3443812571e564362914dcf",
+      "compressed_bytes": 67556,
+      "requests": 1165,
+      "counts": {
+        "completed": 1165
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-native-cpu-1650-0.jsonl.gz",
+      "sha256": "61f9802db8bb1d594cde63dbcd0f8e4dd812745cb244e39c2862f0f37675b0da",
+      "compressed_bytes": 1251239,
+      "requests": 24750,
+      "counts": {
+        "completed": 24750
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-native-cpu-1700-0.jsonl.gz",
+      "sha256": "1b5282953d2c53c04ce4a02f752defc03335f4cf68a6d65d461646cfa36617e6",
+      "compressed_bytes": 1182793,
+      "requests": 23802,
+      "counts": {
+        "completed": 23793,
+        "rejected": 9
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-fork-mixed-55-0.jsonl.gz",
+      "sha256": "1ef91fbfd43030868e6f8c4d030738b1850c82c372f85e973024fae5ee2c6712",
+      "compressed_bytes": 71977,
+      "requests": 1165,
+      "counts": {
+        "completed": 1165
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-fork-mixed-56.25-0.jsonl.gz",
+      "sha256": "7c31829906dbcc09232278374a5ba1de50570147a82f23855e65f1ee3b2ab92d",
+      "compressed_bytes": 72752,
+      "requests": 1169,
+      "counts": {
+        "completed": 1169
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-interpreter-mixed-5781.25-0.jsonl.gz",
+      "sha256": "d3a71afae8df9d8a4572a18c58bf7c26b977a4da3ccd5d00ce400f253ef3c186",
+      "compressed_bytes": 4415770,
+      "requests": 86719,
+      "counts": {
+        "completed": 86719
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-interpreter-mixed-5937.5-0.jsonl.gz",
+      "sha256": "3a72b1125ace9c3f151089d3f6927a755837168e59129a60642288d149529c5a",
+      "compressed_bytes": 4532634,
+      "requests": 89063,
+      "counts": {
+        "completed": 89063
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-monty-mixed-56.875-0.jsonl.gz",
+      "sha256": "0124ff20f2095ef6903b4dd3363cc862491325c854ba9edeb21a74f8fe00b41f",
+      "compressed_bytes": 70873,
+      "requests": 1171,
+      "counts": {
+        "completed": 1171
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-monty-mixed-58.75-0.jsonl.gz",
+      "sha256": "0f6f06acff7e619df0d2b99f4516922d1ee7d9147c91b99e6da43135b6c814df",
+      "compressed_bytes": 70713,
+      "requests": 1177,
+      "counts": {
+        "completed": 1177
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-native-mixed-2075-0.jsonl.gz",
+      "sha256": "16773e79dedd3f1a4dbea6c8f81259096234db4a30784045afe6ded012ec3c02",
+      "compressed_bytes": 1635475,
+      "requests": 31125,
+      "counts": {
+        "completed": 31125
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-native-mixed-2162.5-0.jsonl.gz",
+      "sha256": "3593659c063221bb4b3527cc63d70d07668555a7b0449b84963da450a3ffed01",
+      "compressed_bytes": 716394,
+      "requests": 12976,
+      "counts": {
+        "completed": 12833,
+        "rejected": 143
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-cow-cpu-6.5625-1.jsonl.gz",
+      "sha256": "a2983b647e2f886ab1fc2b9c1b07513fdd9dddcf4804abc4245d58ad2904a426",
+      "compressed_bytes": 65251,
+      "requests": 1020,
+      "counts": {
+        "completed": 1020
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-cow-cpu-6.75-1.jsonl.gz",
+      "sha256": "be4296db99f0944a3ef758824e11befe95761b6b56eb7b92f6b5fd700c856a21",
+      "compressed_bytes": 67596,
+      "requests": 1021,
+      "counts": {
+        "completed": 1021
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-cow-mixed-12.625-1.jsonl.gz",
+      "sha256": "5e1894ad7bd7e639e55d10a6d26a96ae673e2222328dba164d4ad97c48299359",
+      "compressed_bytes": 71749,
+      "requests": 1038,
+      "counts": {
+        "completed": 1038
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-cow-mixed-13-1.jsonl.gz",
+      "sha256": "aed77057b534532015d6d4e464416f80e9efb8d8c59ea4cc41fb6966c5c55a6a",
+      "compressed_bytes": 67434,
+      "requests": 1039,
+      "counts": {
+        "completed": 1039
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-fork-cpu-32.5-1.jsonl.gz",
+      "sha256": "75bc8eca1978c737c2bc0810345669f52b89c2f02c2f56b1ed2931ab80b32864",
+      "compressed_bytes": 67829,
+      "requests": 1098,
+      "counts": {
+        "completed": 1098
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-fork-cpu-35-1.jsonl.gz",
+      "sha256": "8edcd252bef4c8a9ebcf2d07ca4fff340820a7c38f31caad13999733a53982d1",
+      "compressed_bytes": 67389,
+      "requests": 1105,
+      "counts": {
+        "completed": 1105
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-interpreter-cpu-4250-1.jsonl.gz",
+      "sha256": "98e78eb78ef678957493d746d60348216a8d6c945ca2132d7a2b067126b979ea",
+      "compressed_bytes": 3048108,
+      "requests": 63750,
+      "counts": {
+        "completed": 63734,
+        "rejected": 16
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-interpreter-cpu-4400-1.jsonl.gz",
+      "sha256": "517da854e6c544e490a5011025146980c7c1ec9ccf9da3151bac8377ff7cb466",
+      "compressed_bytes": 3073202,
+      "requests": 66000,
+      "counts": {
+        "completed": 66000
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-monty-cpu-53.75-1.jsonl.gz",
+      "sha256": "a96ab0bd0e1d474a10fc6f081f47c3e0698c495eb82cdc490813adab767a4ae5",
+      "compressed_bytes": 68327,
+      "requests": 1162,
+      "counts": {
+        "completed": 1162
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-monty-cpu-55-1.jsonl.gz",
+      "sha256": "dd8cb95b6f3e695ac7641f02d0957029c9335f049296ada1ca78a36094b9d708",
+      "compressed_bytes": 18582,
+      "requests": 331,
+      "counts": {
+        "completed": 274,
+        "rejected": 57
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-native-cpu-1650-1.jsonl.gz",
+      "sha256": "608c0f5e3d137b8d6e4b3d2b2e92f7ef72b96838b155f6bc2a877b58d774f1d8",
+      "compressed_bytes": 1267718,
+      "requests": 24750,
+      "counts": {
+        "completed": 24750
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-native-cpu-1700-1.jsonl.gz",
+      "sha256": "43a32b91f34598d284b4cce8afcaf989f8442ebd44d283cfa8e6b17a77ec7c75",
+      "compressed_bytes": 1271715,
+      "requests": 25500,
+      "counts": {
+        "completed": 25500
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-fork-mixed-55-1.jsonl.gz",
+      "sha256": "6d7f4b8ade41fd83bb8f0525b9b30bffad6fb726cf439a3ba612658243542165",
+      "compressed_bytes": 71846,
+      "requests": 1165,
+      "counts": {
+        "completed": 1165
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-fork-mixed-56.25-1.jsonl.gz",
+      "sha256": "5a22f644595a48a9f7a4206f9c64b9a9c6d3367478ab3c7f32aa4b22f6de633c",
+      "compressed_bytes": 72671,
+      "requests": 1169,
+      "counts": {
+        "completed": 1169
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-interpreter-mixed-5781.25-1.jsonl.gz",
+      "sha256": "ca7e141bbf248e3a993f62a164cdc27e54028527a25d3b35ec016a529dd9ade8",
+      "compressed_bytes": 4413750,
+      "requests": 86719,
+      "counts": {
+        "completed": 86719
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-interpreter-mixed-5937.5-1.jsonl.gz",
+      "sha256": "d991e79fa3cf7b9de14487a2ad4f20b823cc30b1e3606d649a89949014a0431d",
+      "compressed_bytes": 4486604,
+      "requests": 89063,
+      "counts": {
+        "completed": 89063
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-monty-mixed-56.875-1.jsonl.gz",
+      "sha256": "fbd8e69023ebb62d59cd5711c7b434621f44f2ed1701433c48d8440d9ca79f4c",
+      "compressed_bytes": 70666,
+      "requests": 1171,
+      "counts": {
+        "completed": 1171
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-monty-mixed-58.75-1.jsonl.gz",
+      "sha256": "2130a4356dd8333664f904e3c310585577903dd9a48d205cd477c7ca62452485",
+      "compressed_bytes": 70678,
+      "requests": 1177,
+      "counts": {
+        "completed": 1177
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-native-mixed-2075-1.jsonl.gz",
+      "sha256": "542c9e1899d9e45dd9c032fd48041aac896872b7cc5862c8c9ab24135a028f2d",
+      "compressed_bytes": 1634960,
+      "requests": 31125,
+      "counts": {
+        "completed": 31125
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-native-mixed-2162.5-1.jsonl.gz",
+      "sha256": "9a7c828cfbd0c5608b9a9b06dcdec436a95bc1fa8914f385d87a5cda7512924e",
+      "compressed_bytes": 1801916,
+      "requests": 32438,
+      "counts": {
+        "completed": 32438
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-cow-cpu-6.5625-2.jsonl.gz",
+      "sha256": "b238129a876d90690bc11b95a71677af7ecadf850157b6ea54ce51482f1d9865",
+      "compressed_bytes": 68411,
+      "requests": 1020,
+      "counts": {
+        "completed": 1020
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-cow-cpu-6.75-2.jsonl.gz",
+      "sha256": "b59acfc377a67c6be3140dc9b6d2810bfcd1d363145e1c7e99e1b5a60a7aaf1b",
+      "compressed_bytes": 67301,
+      "requests": 1021,
+      "counts": {
+        "completed": 1021
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-cow-mixed-12.625-2.jsonl.gz",
+      "sha256": "e8ac483fb1e525717d93df61a0e29ca4d57f6b0dd3506d33a2a5234998920677",
+      "compressed_bytes": 71569,
+      "requests": 1038,
+      "counts": {
+        "completed": 1038
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-cow-mixed-13-2.jsonl.gz",
+      "sha256": "56ef0a2280d9f9f25257bce3afd6d8d98ba53772f75d0970a45868434bcff833",
+      "compressed_bytes": 67645,
+      "requests": 1039,
+      "counts": {
+        "completed": 1039
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-fork-cpu-32.5-2.jsonl.gz",
+      "sha256": "a2db96faa2c8c705943fe0d16d9fdff346ed74cf0781f85d4451614b11824227",
+      "compressed_bytes": 67654,
+      "requests": 1098,
+      "counts": {
+        "completed": 1098
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-fork-cpu-35-2.jsonl.gz",
+      "sha256": "af6807eccf590950d34c469bac2d78510b0b83d4ef0e6fac33f1511c48859e2e",
+      "compressed_bytes": 67487,
+      "requests": 1105,
+      "counts": {
+        "completed": 1105
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-interpreter-cpu-4250-2.jsonl.gz",
+      "sha256": "f896e3d7775c12dd722fa30f57650b2e3e29cfc31d29aff4939eb2100ea7e9cc",
+      "compressed_bytes": 3052181,
+      "requests": 63750,
+      "counts": {
+        "completed": 63750
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-interpreter-cpu-4400-2.jsonl.gz",
+      "sha256": "da36fcf26e209f6875edc3cf5af49d16d02d94e96cf4b757185f18b811fc6e0d",
+      "compressed_bytes": 3098121,
+      "requests": 66000,
+      "counts": {
+        "completed": 66000
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-monty-cpu-53.75-2.jsonl.gz",
+      "sha256": "da1d2b0aade37a57834f216baa724ccf897bb58a2e9e5b6559ba4a48bc2390f1",
+      "compressed_bytes": 21605,
+      "requests": 377,
+      "counts": {
+        "completed": 320,
+        "rejected": 57
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-monty-cpu-55-2.jsonl.gz",
+      "sha256": "292068d4fe8ef80581543bdfab693af2526d161249b628529f19f20a52ea3fd5",
+      "compressed_bytes": 67889,
+      "requests": 1165,
+      "counts": {
+        "completed": 1165
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-native-cpu-1650-2.jsonl.gz",
+      "sha256": "9a2742826540ed05b80242522c719ad6ac9b24e194c4b8120c0bdbc0a9994977",
+      "compressed_bytes": 1269685,
+      "requests": 24750,
+      "counts": {
+        "completed": 24750
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-native-cpu-1700-2.jsonl.gz",
+      "sha256": "be9cf335b1149ae381f64484b41a90c31d8272f505f4513d72875583ef459df4",
+      "compressed_bytes": 1103612,
+      "requests": 22101,
+      "counts": {
+        "completed": 22095,
+        "rejected": 6
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-fork-mixed-55-2.jsonl.gz",
+      "sha256": "ade085b17e52cfcb985c20fef8bd3b72240cc026f6a1aa2fa12bd498810d0780",
+      "compressed_bytes": 71906,
+      "requests": 1165,
+      "counts": {
+        "completed": 1165
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-fork-mixed-56.25-2.jsonl.gz",
+      "sha256": "a9253960c679718032f8d23444bcc10dd336e357f7eccbf04b4dd6b0ad67fa4c",
+      "compressed_bytes": 72780,
+      "requests": 1169,
+      "counts": {
+        "completed": 1169
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-interpreter-mixed-5781.25-2.jsonl.gz",
+      "sha256": "53ee417e56aca8eb4353b03087a7e2983051061c97fb94d8d4bcffad6046a1fd",
+      "compressed_bytes": 4409243,
+      "requests": 86719,
+      "counts": {
+        "completed": 86719
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-interpreter-mixed-5937.5-2.jsonl.gz",
+      "sha256": "09a32560e176f257ba904797b8ff3dd168059c7e95add161b2df90b24d087012",
+      "compressed_bytes": 4522333,
+      "requests": 89063,
+      "counts": {
+        "completed": 89063
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-monty-mixed-56.875-2.jsonl.gz",
+      "sha256": "5f7917173f36369f437d194c251557c31eef2c24d9d63c8ad3c62eef5f94e4bc",
+      "compressed_bytes": 70157,
+      "requests": 1171,
+      "counts": {
+        "completed": 1171
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-monty-mixed-58.75-2.jsonl.gz",
+      "sha256": "3e6490abb36e9ccda01868cb3909c1ca2ad2dedd57dd59eb1c1a89a3669ecb0c",
+      "compressed_bytes": 70258,
+      "requests": 1177,
+      "counts": {
+        "completed": 1177
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-native-mixed-2075-2.jsonl.gz",
+      "sha256": "08aa5fbb7ca2542a659314cf2fe2786c071d7464b846958849b6d6f9747c18b4",
+      "compressed_bytes": 1630822,
+      "requests": 31125,
+      "counts": {
+        "completed": 31125
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-native-mixed-2162.5-2.jsonl.gz",
+      "sha256": "a617fbb7c4c8aec4f5fb5a4ab5ace047b425626c945ae76d2261aba42d8d3d29",
+      "compressed_bytes": 1797082,
+      "requests": 32438,
+      "counts": {
+        "completed": 32424,
+        "rejected": 14
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-cow-cpu-6.5625-4.jsonl.gz",
+      "sha256": "a04474f85c93c70eeee0bb53f374a84f43cd95da6afaa69d6388eb0267810daa",
+      "compressed_bytes": 67870,
+      "requests": 1020,
+      "counts": {
+        "completed": 1020
+      }
+    },
+    {
+      "path": "/home/na/benchmarks/minipy-s/af-capacity/ap-confirm-interpreter-cpu-4100-11.jsonl.gz",
+      "sha256": "55e38bcd6666126e154586cf8d08963bd7f3d889270a5ab69ea0b90aea414b56",
+      "compressed_bytes": 2934450,
+      "requests": 61500,
+      "counts": {
+        "completed": 61500
+      }
+    }
+  ],
+  "compressed_bytes": 118062432
+}

@@ -1,0 +1,10 @@
+{
+  "reason": "Selector encountered a previously sampled but ambiguous midpoint; stop cleanly via KeyboardInterrupt/finally before repairing selector. Completed canonical raw retained; current unpersisted run excluded, request counts unavailable.",
+  "time_unix": 1792029315.1305428,
+  "pids": [
+    143436
+  ],
+  "incomplete_stderr_keys": [
+    "ap-explore-monty-mixed-25-0"
+  ]
+}

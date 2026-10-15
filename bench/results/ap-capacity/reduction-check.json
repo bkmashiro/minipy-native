@@ -1,0 +1,10 @@
+{
+  "verified_new_runs": 158,
+  "all_raw_summaries_exact_match": true,
+  "all_outputs_oracle_match": true,
+  "all_tool_totals_match": true,
+  "counts": {
+    "completed": 2338861,
+    "rejected": 1617
+  }
+}

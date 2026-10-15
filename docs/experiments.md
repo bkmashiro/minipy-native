@@ -780,3 +780,25 @@ the Codex ChatGPT account with 400 unsupported. No substitute model or independe
 verdict is claimed; the parent performed scoped self-review and actual gates.
 The exact failed lane is retained in `bench/results/u-playground/focused-review.json`.
 
+## AP — bounded adaptive AF-frozen extension
+
+AF `5e04767` worker/driver and 41 identity files unchanged, CPU2 service / CPU4
+driver under both shared WSL locks. In 4159.796s of the declared 4200s budget,
+158 new complete runs (10 anchors, 86 exploration, 62 confirmation) extend the
+old 30 points to 116 measured points / 248 independent runs, 10–14 per curve.
+New raw accounts for 2338861 completions + 1617 rejects = 2340478 offered,
+66409 cancelled-unoffered. One controller-repair interruption has unknown
+unpersisted request counts and is explicitly excluded, never filled with zero.
+The repair and both controller identities are retained; no worker/timer change.
+
+The 158 new raw files passed full oracle/ID/status/tool/percentile reduction;
+all 90 old raw hashes and the frozen identities match before/after. New gzip
+raw is 118062432 bytes, canonical only on WSL, no raw copies on Mac/Git.
+17 AF/AP selector/accounting/public-projection tests pass. Commands, finite-
+window bounds and substantial tail/noise limitations: `docs/ap-adaptive-capacity.md`.
+All ten curves remain explicitly unresolved at the budget boundary, including
+inconsistent/nonmonotone observations; no exact routing threshold is claimed.
+Public import-ready projection: `bench/results/ap-capacity/public-summary.json`.
+Existing website importer needs variable-rate/round/phase support; no website
+code/deployment was changed and no new top-level comparison group is proposed.
+
