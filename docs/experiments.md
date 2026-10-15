@@ -1582,3 +1582,69 @@ ANNA × two cases × 100 request runner specifies; the earlier 400-row count was
 a documentation error, not a change to the retained raw file or its digest.
 macOS validation and remaining Linux/Wasm limits are recorded in the BM card.
 
+## BN: real Code Mode Host contract and complete-source gate (2026-10-15)
+
+**Decision: defer a runtime slice; keep the existing finite Tool ABI.** This
+stage found a real, useful read-only Host interface, but did not find a complete
+unchanged script in the reconciled 64-source CLI sample that the proposed
+single-Tool-plus-scalar-formatting slice could execute. No compatibility or
+speed improvement is claimed. Adding formatting by itself would not make a
+script useful, and pretending a string-returning file API is an i64 Tool would
+change its contract.
+
+The local installed Hermes source defines the `execute_code` `read_file` stub
+at `tools/code_execution_tool.py` (stub table and RPC generator):
+`read_file(path: str, offset: int = 1, limit: int = 2000)`. It sends a JSON RPC
+with string path and integer pagination and returns a **dictionary**, including
+`content` (text) and `total_lines`; failure responses can instead contain an
+error. The Host-side implementation in `tools/file_tools.py` resolves the path
+in the task context, rejects internal/special/binary paths, paginates and
+redacts content, and may return a deduplication stub on a repeated unchanged
+read. These checks and the selected task's read authority are Host behavior,
+not permissions granted by a user script or by a Tool name. A native Provider
+adapter would have to retain those checks and the failure/response contract;
+the present `ToolSchema` is not authority. This was a read-only source audit;
+no real Host API call was issued.
+
+Reusing `tools/bk_private_ast.py`'s exact-source collection and lowest-64
+digest rule, with the saved CLI hashes/replay/aggregate reconciled to the
+private survey, the static count is: 15/64 use this read helper; 13/15 also
+use subscripting, and 8/15 supply at least one literal string path. Only
+**2/64** of these read-helper scripts have neither an external shell adapter
+nor the generic terminal helper. One of those two additionally needs a
+path-existence method and conditional expression, while the other needs
+module execution/imports, comprehensions and generic object/file operations.
+These are overlapping syntactic properties, not admission outcomes. The
+prior **0/64** is still the only actual prepare result for these 64 complete
+sources, and it used no Host schema. No private source, identifier, path,
+per-script digest or raw failure is retained in this repo.
+
+Even the smaller read-helper shape has a string path, dictionary result and
+string output. Today's `src/tool.rs` permits at most two **i64** Tool arguments
+and an i64 or bounded JSON result; JSON string leaves are only consumed by a
+literal-needle containment operation, not printed as strings. `src/frontend.rs`
+only binds `tools.<declared>` calls, not the preimported helper's Python call
+name or its module imports. Thus adding just an i64 declaration plus a scalar
+f-string cannot admit the original source. A compile-time literal-path adapter
+could preserve the Host API's read behavior if backed by an explicitly
+authorized provider and a bounded UTF-8 output path, but its altered call
+spelling would count as **adapter coverage**, not original-source coverage.
+It would also require bounded response/owner rules and error handling; none
+was implemented here. There is no same-machine paired performance comparison
+because no executable replacement exists to compare. The documented BK/BL
+old-source measurements remain the only applicable cost evidence.
+
+Next executable gate: secure a Host-owned, read-only file capability with the
+actual path authorization, response bound and errors in a local fixture. Outside
+the lowest-64 sample, the same 520-source pool has a shorter complete shape
+consisting only of a literal list of paths, a `for` loop, `read_file(path)` and
+printing its `content` leaf; this is a **candidate**, not an admission result.
+First bound the source's printed content against `ScriptLimits` and the Host's
+pagination/dedup semantics, then attempt the unchanged complete source on
+both backends. A statically bound literal-path loop plus bounded string output
+could be smaller than generic Python containers/filesystem objects; it must
+retain original call spelling and result shape to count as original coverage.
+Measure new-source full requests only after actual fixture execution. If the
+finite slice cannot preserve that contract, keep the Host fallback rather
+than adding a generic filesystem/shell adapter or inventing numeric types.
+
