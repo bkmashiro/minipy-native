@@ -1384,6 +1384,23 @@ convenient. There is no evidence here to eliminate the tape risk. Prepared
 execution and service load were not measured in BK. No new target or toolchain
 was created; temporary detached baseline worktree was removed.
 
+The concrete cost locus is **tape preparation**, not old-source tape execution:
+for scalar, B0/A1 prepare medians are 22,041/27,062 ns while execution is
+1,792/2,084 ns; for weighted B0/A1 they are 32,792/36,708 ns while execution
+is 5,750/6,667 ns. Both old-source prepared tape lengths remain the same as
+BI's earlier control (594/1090 bytes). In the source diff the relevant new
+per-AST-node preparation work is `Compiler::expr` and `compile_stmt` wrapping
+every error in source-position attribution (`src/frontend.rs`), plus the
+builtin call admission branch. That is a **mechanism candidate**, not an
+isolated causal proof: Rust compiler layout, scheduling and B4's outlier can
+also affect the medians. The single bounded follow-up fix candidate, only if
+a targeted trace confirms this mechanism, is to attach source offsets at the
+actual rejecting AST leaf and eliminate the per-node `map_err` wrapper on
+successful traversal, retaining innermost-location behavior for every error.
+This is not a trivial deletion: the current `map_err` already runs `.at` only
+on errors, and removing it without another origin carrier breaks diagnostics.
+No candidate was applied or represented as verified in BK.
+
 Integration correctness checks under the same lock: `cargo +1.96.0 test
 --offline --locked` and `--features tool-json` (including localhost HTTP)
 passed; `--features debug-runtime --test debug_runtime` passed 6/6;
