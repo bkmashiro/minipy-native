@@ -1,0 +1,31 @@
+diff --git a/src/interpreter.rs b/src/interpreter.rs
+--- a/src/interpreter.rs
++++ b/src/interpreter.rs
+@@ -26,5 +26,7 @@ pub struct InterpreterUnit {
+     live: Vec<u64>,
+     inputs: Vec<Type>,
+     buffers: usize,
++    #[cfg(feature = "tool-json")]
++    record_buffers: bool,
+     #[cfg(feature = "tool-json")]
+     json: Option<Rc<crate::tool::Plan>>,
+@@ -116,5 +118,7 @@ impl InterpreterUnit {
+             Vec::new()
+         };
+         Ok(Self {
++            #[cfg(feature = "tool-json")]
++            record_buffers: ops.iter().any(|op| matches!(op, Op::RecordScan { .. })),
+             #[cfg(feature = "tool-json")]
+             json: (!program.json.calls.is_empty()).then(|| Rc::new(program.json)),
+@@ -240,6 +244,9 @@ async fn run<P: Provider>(
+     state.locals[..inputs.len()].copy_from_slice(inputs);
+     let mut owners: Vec<Option<QuoteBuffer>> = (0..unit.buffers).map(|_| None).collect();
+     #[cfg(feature = "tool-json")]
+-    let mut records: Vec<Option<crate::buffer::RecordBuffer>> =
+-        (0..unit.buffers).map(|_| None).collect();
++    let mut records: Vec<Option<crate::buffer::RecordBuffer>> = if unit.record_buffers {
++        (0..unit.buffers).map(|_| None).collect()
++    } else {
++        Vec::new()
++    };
+     let mut calls = options.tool_calls;

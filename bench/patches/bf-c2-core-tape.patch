@@ -1,0 +1,90 @@
+diff --git a/src/interpreter.rs b/src/interpreter.rs
+--- a/src/interpreter.rs
++++ b/src/interpreter.rs
+@@ -26,5 +26,7 @@ pub struct InterpreterUnit {
+     live: Vec<u64>,
+     inputs: Vec<Type>,
+     buffers: usize,
++    #[cfg(feature = "tool-json")]
++    record_buffers: bool,
+     #[cfg(feature = "tool-json")]
+     json: Option<Rc<crate::tool::Plan>>,
+@@ -116,5 +118,7 @@ impl InterpreterUnit {
+             Vec::new()
+         };
+         Ok(Self {
++            #[cfg(feature = "tool-json")]
++            record_buffers: ops.iter().any(|op| matches!(op, Op::RecordScan { .. })),
+             #[cfg(feature = "tool-json")]
+             json: (!program.json.calls.is_empty()).then(|| Rc::new(program.json)),
+diff --git a/src/interpreter/tape.rs b/src/interpreter/tape.rs
+--- a/src/interpreter/tape.rs
++++ b/src/interpreter/tape.rs
+@@ -361,7 +361,7 @@ pub(super) fn json_liveness(ops: &[Op]) -> Vec<u32> {
+     live
+ }
+ #[inline]
+-fn read(a: Operand, state: &State, temps: &[i64; MAX_NODES]) -> i64 {
++fn read<const RECORD: bool>(a: Operand, state: &State, temps: &[i64; MAX_NODES]) -> i64 {
+     match a {
+         Operand::Imm(v) => v,
+         Operand::Local(i) => state.locals[i],
+@@ -370,5 +370,6 @@ fn read(a: Operand, state: &State, temps: &[i64; MAX_NODES]) -> i64 {
+             match f {
+                 #[cfg(feature = "tool-json")]
+                 Field::Bound { offset, .. } => {
++                    assert!(RECORD, "record field in sealed core tape");
+                     let ptr = state.record_row.expect("sealed record row inside scan");
+                     // Immutable owner survives this turn; stride, offset and row are validated.
+@@ -407,15 +408,19 @@ pub(super) fn run_until_boundary(
+     let mut temps = [0; MAX_NODES];
+     #[cfg(feature = "tool-json")]
+     {
+-        run::<false>(unit, state, owners, records, limits, output, &mut temps)
++        if unit.record_buffers {
++            run::<false, true>(unit, state, owners, records, limits, output, &mut temps)
++        } else {
++            run::<false, false>(unit, state, owners, records, limits, output, &mut temps)
++        }
+     }
+     #[cfg(not(feature = "tool-json"))]
+     {
+-        run::<false>(unit, state, owners, limits, output, &mut temps)
++        run::<false, false>(unit, state, owners, limits, output, &mut temps)
+     }
+ }
+ // Constant specialization removes step accounting from production dispatch.
+-pub(super) fn run<const STEP: bool>(
++pub(super) fn run<const STEP: bool, const RECORD: bool>(
+     unit: &InterpreterUnit,
+     state: &mut State,
+     owners: &[Option<QuoteBuffer>],
+@@ -424,6 +429,7 @@ pub(super) fn run<const STEP: bool>(
+     output: &mut Output,
+     temps: &mut [i64; MAX_NODES],
+ ) -> Result<Boundary, TaskError> {
++    let read = read::<RECORD>;
+     while state.pc < unit.ops.len() {
+         let op = &unit.ops[state.pc];
+         state.pc += 1;
+diff --git a/src/interpreter/debug.rs b/src/interpreter/debug.rs
+--- a/src/interpreter/debug.rs
++++ b/src/interpreter/debug.rs
+@@ -182,7 +182,7 @@ impl Debugger {
+             };
+             let f = &mut *t.frame;
+             let result = if trace {
+-                tape::run::<true>(
++                tape::run::<true, true>(
+                     &t.unit,
+                     &mut f.state,
+                     &t.owners,
+@@ -193,7 +193,7 @@ impl Debugger {
+                     &mut f.temps,
+                 )
+             } else {
+-                tape::run::<false>(
++                tape::run::<false, true>(
+                     &t.unit,
+                     &mut f.state,
+                     &t.owners,

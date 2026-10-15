@@ -1416,17 +1416,44 @@ branches, and C2 emits *two* tape runs: the record-capable version has exactly
 adds a category test and call; binary size grew 16,480 bytes. These are whole
 function counts, not dynamic executed instructions or proof that hot blocks
 match. The paired timing improvement is real for these two local synthetic
-campaigns, but it does not demonstrate fewer hot instructions; code placement,
-branch layout or linker effects cannot be excluded. Without a demonstrated
-execution-work reduction, **reverted C2** rather than retain another large
-interpreter body. The ~17% BD warm gap to pre-record remains unisolated.
+campaigns; whole-function counts do not rule out a faster hot path. Its cause
+remains unisolated (including possible placement or linker effects), so the
+extra interpreter body and maintenance cost were not justified here.
+**Reverted C2.** The ~17% BD warm gap to pre-record remains unisolated.
 
-Reproduce the raw comparisons from BD and the two described temporary diffs
-using the existing shared target, `CARGO_BUILD_JOBS=1`,
+The two withdrawn source candidates are archived as independent patches against
+BD merge `6a2cdfa` (BD parent `cae9087823fe34d3c05c8df966639c1c61a13c83`):
+`bench/patches/bf-c1-record-state.patch` and
+`bench/patches/bf-c2-core-tape.patch`. Apply **either one**, not both, to that
+tree with `git apply bench/patches/<name>.patch`; the paths are relative to the
+repository root. C2 includes the prepared flag but retains the original record
+owner allocation; it is not C1 layered with C2. Neither patch is production
+code. An isolated checkout/archive of `6a2cdfa` needs the patch copied from
+this BF branch before applying it. Both legacy release candidates, the C1
+instrumented hold binary and the C2 record probe were rebuilt at the original
+worktree path with the flags below and matched their raw candidate SHA256
+exactly; building under a different source path changed the binary hash.
+
+Raw binary SHA256 (baseline / candidate):
+
+| Raw file | Baseline | Candidate |
+| --- | --- | --- |
+| `bf-c1-legacy-ab-macos.jsonl` | `0485524e58b4880e41a69da17d4a0895710d57da0f311f17aa1b532211ed2808` | `cd31d9c27fe10a5882c6d77bda675f77f2b87b5f5f74fb7ef0a7a6895bb429d0` |
+| `bf-c1-hold-macos.json` | `6b11f865732ef89602eb429c432f151465873de86a51b8d50e2f3f3e125581ef` | `903e495f91cb4190391bc1eda3682a21b58ad61b684f3ad8a3a7a53b403d6e72` |
+| `bf-c2-legacy-ab-macos.jsonl` and `bf-c2-legacy-repeat-ab-macos.jsonl` | `0485524e58b4880e41a69da17d4a0895710d57da0f311f17aa1b532211ed2808` | `231b8d195858f8fc818df87157d5544a9ab27ee7fb4b95e98b84ff68bbb8534d` |
+| `bf-c2-record-ab-macos.jsonl` | `955d08df5703e184329d55a981fed45d41181345240390ab56c5bfd8be87f6f4` | `b50e0842f606d41f43688b3d13ba29b9cc7734ad36a86c592d8cda61134f0c20` |
+
+Reproduce comparisons using the existing shared `CARGO_TARGET_DIR` at
+`/Users/yuzhe/projects/minipy-native/target`, `CARGO_BUILD_JOBS=1`,
 `cargo +1.96.0 build --offline --locked --release --manifest-path bench/Cargo.toml
 --features minipy-native/tool-json --bin interpreter_ab`, then
-`python3 tools/bd_measure.py legacy BASE CANDIDATE OUTPUT`. The record probe
-uses `--features record-probe --bin record-probe` and `bd_measure.py record`.
+`python3 tools/bd_measure.py legacy BASE CANDIDATE OUTPUT` (copy each binary
+before building the next revision). The record probe instead uses
+`--features record-probe --bin record-probe` and `bd_measure.py record`.
+For the C1 hold diagnostic build with
+`--features allocation-diagnostics,minipy-native/tool-json --bin interpreter_ab`,
+then run `MINIPY_HOLD_CODE=shared interpreter_ab interpreter weighted hold 4096 16`;
+this instrumented binary is distinct from the speed binaries.
 All builds and timed processes held the same exclusive `fcntl.flock` on
 `~/.hermes/cache/scratch/minipy-perf-build.lock` until child exit; baseline
 was archived from BD merge into scratch. Raw identity lines contain each
