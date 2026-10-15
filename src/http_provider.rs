@@ -131,6 +131,18 @@ impl HttpService {
         .map_err(|_| TaskError::Provider("HTTP timeout".into()))?
     }
 }
+#[cfg(test)]
+mod http_collect_cost_tests {
+    use super::*;
+
+    #[test]
+    fn report_fetch_future_size_for_collection_candidate() {
+        let service = HttpService::new(1, 1024, Duration::from_secs(1)).unwrap();
+        let uri: Uri = "http://127.0.0.1/".parse().unwrap();
+        let future = service.fetch(uri, [0, 0], 0);
+        println!("http_fetch_future_size={}", std::mem::size_of_val(&future));
+    }
+}
 #[derive(Clone)]
 pub struct Endpoint {
     pub id: u32,

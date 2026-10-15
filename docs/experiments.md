@@ -1915,6 +1915,14 @@ raw, per-process reduction, timing boundaries and reproduction commands:
 [evidence/string-consumer-fix](../evidence/string-consumer-fix/README.md).
 No full benchmark or Linux/Wasm performance campaign was run.
 
+## Bounded input-schema and HTTP collector experiments
+
+Both candidates were withdrawn. Input-name pairwise comparison removes a temporary HashSet, but repeated long-prefix comparisons and drifting request measurements do not justify replacing the existing algorithm. Eight BAABABBA processes produced 4,848 raw records; see [input-schema evidence](../evidence/input-schema/README.md).
+
+The HTTP singleton collector avoids one 128-byte container allocation but increases the concrete release fetch future by 40 bytes. A completed release ABBA loopback confirmation (2,000 calls) gives baseline/candidate medians-of-run-medians of 66,167/66,187.5 ns, with substantial variation. No speed gain established, and multi-chunk speed remains unmeasured. The initial incomplete pair is archived separately. See [HTTP evidence and reproduction](../evidence/http-single-chunk/README.md).
+
+Production behavior remains unchanged. Keep the regression tests, test-only size probe, candidate patches and compressed raw; no new dependencies or worktrees.
+
 ## Reusable registered Tool environment
 
 Add `ToolEnvironment::new(Vec<ToolDeclaration>)` and dual-backend

@@ -1,0 +1,15 @@
+diff --git a/src/frontend.rs b/src/frontend.rs
+--- a/src/frontend.rs
++++ b/src/frontend.rs
+@@ -100,9 +100,8 @@
+             "input schema exceeds MAX_LOCALS",
+         ));
+     }
+-    let mut names = HashSet::new();
+-    for (name, _) in inputs {
+-        if name.is_empty() || !names.insert(*name) {
++    for (index, (name, _)) in inputs.iter().enumerate() {
++        if name.is_empty() || inputs[..index].iter().any(|(prior, _)| prior == name) {
+             return Err(CompileError::new(
+                 AdmissionKind::Schema,
+                 "input names must be unique identifiers",
