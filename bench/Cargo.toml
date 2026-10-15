@@ -7,6 +7,7 @@ publish = false
 [features]
 allocation-diagnostics = []
 string-probe = ["minipy-native/tool-json"]
+record-probe = ["minipy-native/tool-json"]
 
 [dependencies]
 minipy-native = { path = "..", features = ["fixture-reference"] }
@@ -38,3 +39,8 @@ path = "src/scripts.rs"
 name = "ar-contains"
 path = "src/bin/ar_contains.rs"
 required-features = ["string-probe"]
+
+[[bin]]
+name = "record-probe"
+path = "src/bin/record_probe.rs"
+required-features = ["record-probe"]

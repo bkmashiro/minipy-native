@@ -45,8 +45,17 @@ pub(super) enum Op {
     Scan {
         buffer: usize,
         end: usize,
+        stride: usize,
+    },
+    #[cfg(feature = "tool-json")]
+    RecordScan {
+        buffer: usize,
+        end: usize,
+        stride: usize,
     },
     Next(usize),
+    #[cfg(feature = "tool-json")]
+    RecordNext(usize),
     Load(usize, Operand),
     Record(usize, Operand, Operand),
     Print(Operand, Type),
@@ -102,6 +111,7 @@ impl Op {
 struct Lower<'a> {
     ops: &'a mut Vec<Op>,
     next: usize,
+    strides: &'a [usize],
 }
 impl Lower<'_> {
     fn temp(&mut self) -> Dest {
@@ -284,18 +294,31 @@ impl Lower<'_> {
                 Stmt::For(buffer, body) => {
                     self.ops.push(Op::Start);
                     let header = self.ops.len();
-                    self.ops.push(Op::Scan { buffer, end: 0 });
+                    self.ops.push(Op::Scan {
+                        buffer,
+                        end: 0,
+                        stride: self.strides[buffer],
+                    });
                     self.statements(body);
                     self.ops.push(Op::Next(header));
                     let end = self.ops.len();
-                    self.ops[header] = Op::Scan { buffer, end };
+                    self.ops[header] = Op::Scan {
+                        buffer,
+                        end,
+                        stride: self.strides[buffer],
+                    };
                 }
             }
         }
     }
 }
-pub(super) fn flatten(statements: Vec<Stmt>, ops: &mut Vec<Op>) {
-    Lower { ops, next: 0 }.statements(statements);
+pub(super) fn flatten(statements: Vec<Stmt>, strides: &[usize], ops: &mut Vec<Op>) {
+    Lower {
+        ops,
+        next: 0,
+        strides,
+    }
+    .statements(statements);
 }
 
 pub(super) enum Boundary {
@@ -318,7 +341,11 @@ pub(super) fn json_liveness(ops: &[Op]) -> Vec<u32> {
             let before = match &ops[pc] {
                 op if op.branch_target().is_some() => next | live[op.branch_target().unwrap()],
                 Op::Jump(t) | Op::Next(t) => live[*t],
+                #[cfg(feature = "tool-json")]
+                Op::RecordNext(t) => live[*t],
                 Op::Scan { end, .. } => next | live[*end],
+                #[cfg(feature = "tool-json")]
+                Op::RecordScan { end, .. } => next | live[*end],
                 Op::JsonRead(_, _, root, _) => next | (1 << root),
                 Op::JsonString(_, _, root, _) => next | (1 << root),
                 Op::Return => 0,
@@ -340,10 +367,22 @@ fn read(a: Operand, state: &State, temps: &[i64; MAX_NODES]) -> i64 {
         Operand::Local(i) => state.locals[i],
         Operand::Temp(i) => temps[i],
         Operand::Field(f) => {
-            let row = state.row.as_ref().expect("sealed fields inside scans");
             match f {
-                Field::Price => row.unit_price_cents,
-                Field::Quantity => row.quantity,
+                #[cfg(feature = "tool-json")]
+                Field::Bound { offset, .. } => {
+                    let ptr = state.record_row.expect("sealed record row inside scan");
+                    // Immutable owner survives this turn; stride, offset and row are validated.
+                    unsafe { *ptr.add(offset as usize / 8) }
+                }
+                Field::Price | Field::Quantity => {
+                    let row = state.row.as_ref().expect("sealed Quote row");
+                    match f {
+                        Field::Price => row.unit_price_cents,
+                        Field::Quantity => row.quantity,
+                        #[cfg(feature = "tool-json")]
+                        Field::Bound { .. } => unreachable!(),
+                    }
+                }
             }
         }
     }
@@ -361,17 +400,26 @@ pub(super) fn run_until_boundary(
     unit: &InterpreterUnit,
     state: &mut State,
     owners: &[Option<QuoteBuffer>],
+    #[cfg(feature = "tool-json")] records: &[Option<crate::buffer::RecordBuffer>],
     limits: &runtime::Limits,
     output: &mut Output,
 ) -> Result<Boundary, TaskError> {
     let mut temps = [0; MAX_NODES];
-    run::<false>(unit, state, owners, limits, output, &mut temps)
+    #[cfg(feature = "tool-json")]
+    {
+        run::<false>(unit, state, owners, records, limits, output, &mut temps)
+    }
+    #[cfg(not(feature = "tool-json"))]
+    {
+        run::<false>(unit, state, owners, limits, output, &mut temps)
+    }
 }
 // Constant specialization removes step accounting from production dispatch.
 pub(super) fn run<const STEP: bool>(
     unit: &InterpreterUnit,
     state: &mut State,
     owners: &[Option<QuoteBuffer>],
+    #[cfg(feature = "tool-json")] records: &[Option<crate::buffer::RecordBuffer>],
     limits: &runtime::Limits,
     output: &mut Output,
     temps: &mut [i64; MAX_NODES],
@@ -465,7 +513,11 @@ pub(super) fn run<const STEP: bool>(
                 state.index = 0;
                 state.chunk_left = 0;
             }
-            Op::Scan { buffer, end } => {
+            Op::Scan {
+                buffer,
+                end,
+                stride,
+            } => {
                 let rows = owners[*buffer].as_ref().expect("sealed scan owner").rows();
                 if state.index == rows.len() {
                     state.row = None;
@@ -488,6 +540,7 @@ pub(super) fn run<const STEP: bool>(
                     state.remaining -= count as u64;
                     state.chunk_left = count;
                 }
+                let _ = stride;
                 state.row = Some(rows[state.index]);
             }
             Op::Next(header) => {
@@ -497,9 +550,53 @@ pub(super) fn run<const STEP: bool>(
                 let Op::Scan { buffer, .. } = unit.ops[*header] else {
                     unreachable!()
                 };
-                if state.chunk_left == 0
-                    && state.index < owners[buffer].as_ref().unwrap().rows().len()
-                {
+                let len = owners[buffer].as_ref().unwrap().rows().len();
+                if state.chunk_left == 0 && state.index < len {
+                    return Ok(Boundary::Yield);
+                }
+            }
+            #[cfg(feature = "tool-json")]
+            Op::RecordScan {
+                buffer,
+                end,
+                stride,
+            } => {
+                let record = records[*buffer].as_ref().expect("sealed record scan owner");
+                let len = record.len();
+                if state.index == len {
+                    state.record_row = None;
+                    state.pc = *end;
+                    #[cfg(feature = "debug-runtime")]
+                    if STEP {
+                        return Ok(Boundary::Step);
+                    }
+                    continue;
+                }
+                if state.chunk_left == 0 {
+                    #[cfg(feature = "interpreter-profile")]
+                    crate::interpreter_profile::update(|c| c.fuel_reservations += 1);
+                    if state.remaining == 0 {
+                        return Err(TaskError::Budget);
+                    }
+                    let count = (len - state.index)
+                        .min(limits.chunk)
+                        .min(state.remaining as usize);
+                    state.remaining -= count as u64;
+                    state.chunk_left = count;
+                }
+                state.record_row =
+                    Some(unsafe { record.words().as_ptr().add(state.index * stride / 8) });
+            }
+            #[cfg(feature = "tool-json")]
+            Op::RecordNext(header) => {
+                state.index += 1;
+                state.chunk_left -= 1;
+                state.pc = *header;
+                let Op::RecordScan { buffer, .. } = unit.ops[*header] else {
+                    unreachable!()
+                };
+                let len = records[buffer].as_ref().unwrap().len();
+                if state.chunk_left == 0 && state.index < len {
                     return Ok(Boundary::Yield);
                 }
             }
