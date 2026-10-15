@@ -140,3 +140,9 @@ failure; it was fixed without suppression. The reducer's initial newline
 reconstruction assertion failed before evidence generation and was corrected;
 all measured source hashes now verify. No timing reruns were used to replace
 failed or noisy observations. Temporary fixed binaries are removed after review.
+
+Focused independent `gpt-6-luna` review of fixed commit `7789bbe` recommends
+keep and found no blockers. Its fixed-range diff check caught trailing empty
+lines in four text logs missed by the earlier working-tree-only check. Those
+blank lines alone are removed in the review-record follow-up, with full-range
+diff verification. See [review receipt and scope](review.md).

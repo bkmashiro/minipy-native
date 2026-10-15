@@ -2219,3 +2219,9 @@ no suppression or weakened tests. Final CLIF/VCode equal the measured candidate.
 Commands, small raw, exact reconstructed source identities and verification:
 [CE evidence](../evidence/ce-overflow/README.md).
 
+Receipt-verified `gpt-6-luna` independently reviewed fixed commit `7789bbe`,
+replayed reductions and source hashes, and recommends keep without blockers.
+Its fixed-range diff check found four logs' trailing empty lines missed by the
+lead's working-tree-only check. Text-only follow-up removes them and verifies
+the whole base-to-result range. See [CE review](../evidence/ce-overflow/review.md).
+
