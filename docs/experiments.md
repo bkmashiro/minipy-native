@@ -2377,3 +2377,37 @@ chunk7以及Tool挂起。无新target/worktree/dependency/download/CI或平台�
 原始证据、逐source重建、失败说明和复现见
 [CK evidence](../evidence/ck-scratch/README.md)。
 
+## CL：紧凑目的槽，以及 CI–CL 阶段结束
+
+固定 `552faed`，只将私有 Dest Local/Temp 改为 u8/u16，lowering 以
+checked conversion 构造，读取无损转 usize，原 admission 上界、临时槽
+assertion、数组 bounds checks 和 debug destination tracing 保留。
+Operand/i64、dispatch、scratch、liveness、权限/预算/效果合同不变。
+
+Apple M4/Rust1.96.0 的真实 Dest16→4 B、Op56→48 B；九类 fixture
+Op数量/capacity不变，各少32–128 B backing（14.29%）。Unit112 B、
+State312 B、具体Provider future928/664 B、同步栈4256 B不变。正式
+binary的实际tape dispatcher1907→1875指令（7628→7500 B），ldrb/ldrh
+加载目的索引已做零扩展，未增加独立uxt指令，原bounds exits仍在。
+不把静态bytes称为动态指令、PMU/cache miss、RSS或吞吐收益。
+
+预设七类双后端A/B与exact-A A/A各一轮ABBA，112进程/2688正式完整
+新源请求全通过。tape scalar +7.9%、branch −5.1%，其余约−.9%至+.4%；
+首批短程序进程明显漂移，未变native也有−4.7%至+3.3%差异。全量保留，
+不事后筛除、不追加样本；没有一致请求净收益或可信归因的回退结论。
+按简单表示和确定backing密度保留，不宣称通用提速或无回归界。
+
+新增真实512-node admission边界程序，477临时槽/最高476，双后端和debug
+单步通过；32locals末槽、alias/branch、600rows/chunk7、unchanged-value
+local写trace、额外node/local/input错误合同通过。独立sealed诊断对全部
+512槽（含511）round-trip且验证非法索引仍panic，不冒充公开可达workload。
+完整default与tool-json/debug-runtime release suites、两套严格all-target
+Clippy、stable fmt、九Python tests通过。外盘共享target、fcntl锁、offline/
+locked单job；无新target/worktree/依赖/下载/CI/webpage或平台结论。
+
+结束CI–CL低层微调阶段：CJ保留确定prepare work/backing删除，CK撤回，
+CL保留此最小密度改动。不同campaign不能相加为阶段加速；CG真实workload
+适配stop及BT/BX/BY/CB负结果不变，不自动重开撤回方案或扩张缓存/编码/
+后端/Tool适配。原始证据、源码重建、反汇编与复现见
+[CL evidence](../evidence/cl-dest/README.md)。
+

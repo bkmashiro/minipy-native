@@ -1,0 +1,72 @@
+diff --git a/src/interpreter/debug.rs b/src/interpreter/debug.rs
+index 9f50c92..22ebddc 100644
+--- a/src/interpreter/debug.rs
++++ b/src/interpreter/debug.rs
+@@ -194,9 +194,9 @@ impl Engine {
+                     &mut f.temps,
+                 )
+             };
+-            let writes = f.state.locals.iter().zip(locals).enumerate().filter(|(slot, (a,b))|**a!=*b || (result.is_ok() && matches!(dest,Some(tape::Dest::Local(i)) if i==*slot)))
++            let writes = f.state.locals.iter().zip(locals).enumerate().filter(|(slot, (a,b))|**a!=*b || (result.is_ok() && matches!(dest,Some(tape::Dest::Local(i)) if usize::from(i)==*slot)))
+                 .map(|(slot,(v,_))|json!({"slot":slot,"value":v.to_string(),"offset":f.state.locals.as_ptr() as usize+slot*8,"bytes":8})).collect::<Vec<_>>();
+-            let scratch = f.temps.iter().zip(temps).enumerate().filter(|(slot, (a,b))|**a!=*b || (result.is_ok() && matches!(dest,Some(tape::Dest::Temp(i)) if i==*slot)))
++            let scratch = f.temps.iter().zip(temps).enumerate().filter(|(slot, (a,b))|**a!=*b || (result.is_ok() && matches!(dest,Some(tape::Dest::Temp(i)) if usize::from(i)==*slot)))
+                 .map(|(slot,(v,_))|json!({"slot":slot,"value":v.to_string(),"offset":f.temps.as_ptr() as usize+slot*8,"bytes":8})).collect::<Vec<_>>();
+             let detail = json!({"pc":pc,"next_pc":f.state.pc,"writes":writes,"scratch":scratch,"read":if trace {read} else {None},
+                 "granularity":if trace {"instruction"} else {"boundary"},
+diff --git a/src/interpreter/tape.rs b/src/interpreter/tape.rs
+index d310825..ea9864e 100644
+--- a/src/interpreter/tape.rs
++++ b/src/interpreter/tape.rs
+@@ -48,8 +48,8 @@ pub(super) enum Operand {
+ }
+ #[derive(Clone, Copy, Debug)]
+ pub(super) enum Dest {
+-    Local(usize),
+-    Temp(usize),
++    Local(u8),
++    Temp(u16),
+ }
+ #[derive(Debug)]
+ pub(super) enum Op {
+@@ -158,7 +158,7 @@ impl Lower<'_> {
+         self.next += 1;
+         // Each scratch slot originates at a bounded admitted expression node.
+         assert!(self.next <= MAX_NODES);
+-        Dest::Temp(i)
++        Dest::Temp(u16::try_from(i).expect("admitted temporary index fits u16"))
+     }
+     fn value(&mut self, e: Expr) -> Operand {
+         match e {
+@@ -170,7 +170,7 @@ impl Lower<'_> {
+                 let dest = self.temp();
+                 self.assign(e, dest);
+                 let Dest::Temp(i) = dest else { unreachable!() };
+-                Operand::Temp(i)
++                Operand::Temp(usize::from(i))
+             }
+         }
+     }
+@@ -302,7 +302,10 @@ impl Lower<'_> {
+         for stmt in statements {
+             self.next = 0;
+             match stmt {
+-                Stmt::Set(i, e) => self.assign(e, Dest::Local(i)),
++                Stmt::Set(i, e) => self.assign(
++                    e,
++                    Dest::Local(u8::try_from(i).expect("admitted local index fits u8")),
++                ),
+                 Stmt::Eval(e) => {
+                     self.value(e);
+                 }
+@@ -443,8 +446,8 @@ fn read(a: Operand, state: &State, temps: &[i64; MAX_NODES]) -> i64 {
+ #[inline]
+ fn write(dest: Dest, v: i64, state: &mut State, temps: &mut [i64; MAX_NODES]) {
+     match dest {
+-        Dest::Local(i) => state.locals[i] = v,
+-        Dest::Temp(i) => temps[i] = v,
++        Dest::Local(i) => state.locals[usize::from(i)] = v,
++        Dest::Temp(i) => temps[usize::from(i)] = v,
+     }
+ }
+ // This is deliberately synchronous: no scratch array is captured in a waiting future.

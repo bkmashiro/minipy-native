@@ -194,9 +194,9 @@ impl Engine {
                     &mut f.temps,
                 )
             };
-            let writes = f.state.locals.iter().zip(locals).enumerate().filter(|(slot, (a,b))|**a!=*b || (result.is_ok() && matches!(dest,Some(tape::Dest::Local(i)) if i==*slot)))
+            let writes = f.state.locals.iter().zip(locals).enumerate().filter(|(slot, (a,b))|**a!=*b || (result.is_ok() && matches!(dest,Some(tape::Dest::Local(i)) if usize::from(i)==*slot)))
                 .map(|(slot,(v,_))|json!({"slot":slot,"value":v.to_string(),"offset":f.state.locals.as_ptr() as usize+slot*8,"bytes":8})).collect::<Vec<_>>();
-            let scratch = f.temps.iter().zip(temps).enumerate().filter(|(slot, (a,b))|**a!=*b || (result.is_ok() && matches!(dest,Some(tape::Dest::Temp(i)) if i==*slot)))
+            let scratch = f.temps.iter().zip(temps).enumerate().filter(|(slot, (a,b))|**a!=*b || (result.is_ok() && matches!(dest,Some(tape::Dest::Temp(i)) if usize::from(i)==*slot)))
                 .map(|(slot,(v,_))|json!({"slot":slot,"value":v.to_string(),"offset":f.temps.as_ptr() as usize+slot*8,"bytes":8})).collect::<Vec<_>>();
             let detail = json!({"pc":pc,"next_pc":f.state.pc,"writes":writes,"scratch":scratch,"read":if trace {read} else {None},
                 "granularity":if trace {"instruction"} else {"boundary"},

@@ -1,0 +1,10 @@
+diff --git a/src/interpreter/tape.rs b/src/interpreter/tape.rs
+--- a/src/interpreter/tape.rs
++++ b/src/interpreter/tape.rs
+@@ -635,3 +635,6 @@
+     }
+     Ok(Boundary::Done)
+ }
++#[cfg(test)]
++#[path = "../../evidence/cl-dest/bounds.rs"]
++mod cl_bounds;

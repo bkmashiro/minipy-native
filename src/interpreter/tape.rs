@@ -48,8 +48,8 @@ pub(super) enum Operand {
 }
 #[derive(Clone, Copy, Debug)]
 pub(super) enum Dest {
-    Local(usize),
-    Temp(usize),
+    Local(u8),
+    Temp(u16),
 }
 #[derive(Debug)]
 pub(super) enum Op {
@@ -158,7 +158,7 @@ impl Lower<'_> {
         self.next += 1;
         // Each scratch slot originates at a bounded admitted expression node.
         assert!(self.next <= MAX_NODES);
-        Dest::Temp(i)
+        Dest::Temp(u16::try_from(i).expect("admitted temporary index fits u16"))
     }
     fn value(&mut self, e: Expr) -> Operand {
         match e {
@@ -170,7 +170,7 @@ impl Lower<'_> {
                 let dest = self.temp();
                 self.assign(e, dest);
                 let Dest::Temp(i) = dest else { unreachable!() };
-                Operand::Temp(i)
+                Operand::Temp(usize::from(i))
             }
         }
     }
@@ -302,7 +302,10 @@ impl Lower<'_> {
         for stmt in statements {
             self.next = 0;
             match stmt {
-                Stmt::Set(i, e) => self.assign(e, Dest::Local(i)),
+                Stmt::Set(i, e) => self.assign(
+                    e,
+                    Dest::Local(u8::try_from(i).expect("admitted local index fits u8")),
+                ),
                 Stmt::Eval(e) => {
                     self.value(e);
                 }
@@ -443,8 +446,8 @@ fn read(a: Operand, state: &State, temps: &[i64; MAX_NODES]) -> i64 {
 #[inline]
 fn write(dest: Dest, v: i64, state: &mut State, temps: &mut [i64; MAX_NODES]) {
     match dest {
-        Dest::Local(i) => state.locals[i] = v,
-        Dest::Temp(i) => temps[i] = v,
+        Dest::Local(i) => state.locals[usize::from(i)] = v,
+        Dest::Temp(i) => temps[usize::from(i)] = v,
     }
 }
 // This is deliberately synchronous: no scratch array is captured in a waiting future.
