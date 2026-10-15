@@ -2267,3 +2267,36 @@ worktree/target/dependency/download/CI 或 Linux/Wasm/Monty 性能结论。
 不变并检查固定范围 diff，无阻塞项，不追加构建或计时。
 见 [CF review](../evidence/cf-stage/review.md)。
 
+## CG：真实 Code Mode 适配与下一片段决策
+
+研究结论：暂缓新实现，不继续数值循环/dispatch 微优化，不创建重复下游卡。
+复用 BI/BK 原 64/520 CLI 完整源码与 Z cutoff/replay 规则，重新核对 CLI
+会话、replay 和完整 aggregate，两次纯 AST 分析输出完全一致。没有语料
+执行、真实 Tool 调用、Cargo 构建或新 prepare 实验，不重复旧无 schema 0/64。
+
+源码 UTF-8 min/median/p90/max 为 230/626/1163/2019 B，行数为 1/4/11/22。
+61/64 有 terminal 或既有外部 shell helper 名称调用，0/64 使用当前
+`tools.<declared>` 拼写；这是 Python Code Mode 内的通用命令编排形状，
+不是混入了终端 Python。11 个脚本有显式循环，20 有推导式/生成器，并集
+25；3 个脚本的循环 AST 内含已识别 Host/shell 调用。它们不证明数值热循环、
+实际 effect 次数、CPU 或 wait duration。原 520 个去 replay 的提交源码全部
+不同，本 64 个各出现一次；未观察到源码重提，不等于已测 production cache
+命中率、prepared object 复用或进程冷启动比例。
+
+当前 64 个完整源码均有有限 builtin/Tool 语法以外的 bare-name call；
+字符串 sink/静态 JSON 叶子并未解决这个绑定缺口。read helper 的 15 个中
+13 个还含 shell helper，余下两个还有路径存在性/条件表达式或 import/
+推导式/对象操作。新确认启用的原样完整脚本 0 个；本卡未改写执行脚本，
+适配后的实际通过也未建立。以上为静态阻碍和交付计数，不是新 admission run。
+
+唯一保留的设计场景是 BS 已存在的单只读文件 Tool→content→有界 print
+fixture，无需重新建设。源码核对其 4096 B/固定可信 root/UTF-8/错误契约，
+并重查本机真实 Hermes read_file 的分页、脱敏、任务路径与 dedup/error
+多形返回；fixture 不等价于真实 Host，不能把缺失 content 静默转为空字符串
+来制造兼容。现有通用执行器仍是简单替代；待一个真正有限 Host 完整契约和
+完整程序成立，再决定性能调查，不批准新语言/后端/cache 架构。
+
+脱敏报告、边界、聚合与重放身份见
+[CG workload fit](../evidence/cg-workload-fit/README.md)。私有探针/语料不进仓库，
+无新增依赖、下载、worktree、target、CI、平台执行或生产性能结论。
+

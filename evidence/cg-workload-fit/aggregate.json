@@ -1,0 +1,110 @@
+{
+  "all_call_site_roles": {
+    "other": 418,
+    "print": 208,
+    "recognized_host": 50,
+    "shell_helper": 122
+  },
+  "distributions": {
+    "all_call_sites": {
+      "max": 34,
+      "median": 9.0,
+      "min": 2,
+      "p90_nearest_rank": 26
+    },
+    "ast_nodes": {
+      "max": 421,
+      "median": 98.5,
+      "min": 17,
+      "p90_nearest_rank": 262
+    },
+    "recognized_host_or_shell_call_sites": {
+      "max": 8,
+      "median": 2.0,
+      "min": 1,
+      "p90_nearest_rank": 4
+    },
+    "splitlines": {
+      "max": 22,
+      "median": 4.0,
+      "min": 1,
+      "p90_nearest_rank": 11
+    },
+    "utf8_bytes": {
+      "max": 2019,
+      "median": 626.0,
+      "min": 230,
+      "p90_nearest_rank": 1163
+    }
+  },
+  "execution": "AST only, no source execution, no Tools, no Cargo, no timing inference",
+  "identity": {
+    "bk_extractor_sha256": "d739bd19e330d33005a4ae6c401a38f90887750c45e78610758e1db9b439dc1d",
+    "cg_probe_sha256": "58465975d6786e0691da79c129e200a72c7feebde6d6a60e248006335e6cb742",
+    "frontend_sha256": "dfb305b190595ee2a8315d23fa2d74eb02518a6e723d0729f5b97862f3946731",
+    "python": "3.14.7",
+    "repo_head": "6db925485e45cb21246c00804a53efc6e5b3eea8",
+    "survey_sha256": "b4273a70c06f8d6f9695e71eb29822a48d30a1f5cb950707a662e6872c864062"
+  },
+  "loop_sites": {
+    "other_inside_loop_sites": 14,
+    "print_inside_loop_sites": 3,
+    "recognized_host_inside_loop_sites": 2,
+    "shell_helper_inside_loop_sites": 1,
+    "total_loop_sites": 16
+  },
+  "per_script_presence": {
+    "assert": 11,
+    "async_function": 0,
+    "await": 0,
+    "comprehension_or_generator": 20,
+    "dynamic_format_spec_or_conversion": 5,
+    "explicit_loop": 11,
+    "external_shell_adapter_name": 55,
+    "function_definition": 2,
+    "host_or_shell_in_comprehension": 0,
+    "host_or_shell_in_explicit_loop": 3,
+    "if_expression": 3,
+    "import": 12,
+    "keyword_call": 49,
+    "list_or_dict_literal": 26,
+    "loop_or_comprehension": 25,
+    "other_present": 58,
+    "print_present": 64,
+    "read_helper": 15,
+    "recognized_host_present": 31,
+    "restricted_tools_namespace_call": 0,
+    "shell_helper_present": 61,
+    "shell_or_direct_process": 61,
+    "terminal_name": 28
+  },
+  "recognized_host_or_shell_sites_per_script": {
+    "1": 10,
+    "2-4": 50,
+    "5+": 4
+  },
+  "sample": {
+    "cli_session_replay_and_complete_aggregate_reconciled": true,
+    "n": 64,
+    "pool_observed_submissions": 520,
+    "pool_sources_repeated": 0,
+    "pool_unique": 520,
+    "rule": "BI/BK original CLI lowest 64 SHA256, Z cutoff and replay reconciliation unchanged",
+    "sample_observed_submissions": 64,
+    "sample_sources_repeated": 0
+  },
+  "schema": 1,
+  "static_rejection_witnesses": {
+    "read_no_shell_has_ifexp": 1,
+    "read_no_shell_has_import_or_comprehension": 1,
+    "read_without_shell_or_process": 2,
+    "unsupported_bare_call": 64
+  },
+  "verification": {
+    "aggregate_conservation_assertions": "passed",
+    "cargo_invoked": false,
+    "identical_independent_runs": 2,
+    "source_executed": false,
+    "tool_effects": 0
+  }
+}
