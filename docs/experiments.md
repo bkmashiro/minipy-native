@@ -859,7 +859,11 @@ Real loopback mixed scan/scalar/fetch->publish->print runs validate response
 counts, output, arguments, permits and connection reuse. 984 canonical batch
 rows across discovery/final/isolated probes exactly recompute. macOS 89 tests,
 strict all-target/all-feature Clippy and fmt passed. Existing shared target,
-offline/locked single job, ~12 GiB disk free, ~100 KB raw/summary/log evidence.
+offline/locked single job, free disk ~12 -> 11 GiB and shared target ~12 -> 13
+GiB after debug verification, ~100 KB raw/summary/log evidence.
 See [al-io-results.md](al-io-results.md) for commands and measurement boundaries.
 No second candidate, new scheduler, frozen bench, website or main merge.
+Focused review launch at integrated 2617a94 failed because Codex CLI's ChatGPT
+account rejects gpt-6-luna. No substituted model or review approval claimed.
+Route one independent pinned-model review through the Hermes Kanban lane.
 

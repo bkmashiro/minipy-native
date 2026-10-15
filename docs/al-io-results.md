@@ -69,7 +69,7 @@ HTTP为同runtime localhost TCP fixture，共享HttpService/连接池。每条mi
 
 ## 验证、身份与资源
 
-本机 Apple M4/macOS26.4.1、rustc1.93.1；offline/locked、单编译job、唯一既有 `/Users/yuzhe/projects/minipy-native/target`，无下载/VM/WSL/Docker/其他并发性能任务。起止可用磁盘约12 GiB；target约12 GiB，未复制。新增几个小executable，不保留二进制到Git；三个evidence目录合计约100 KB，不测RSS/PSS或density，不宣称内存改善。
+本机 Apple M4/macOS26.4.1、rustc1.93.1；offline/locked、单编译job、唯一既有 `/Users/yuzhe/projects/minipy-native/target`，无下载/VM/WSL/Docker/其他并发性能任务。验证全部完成后可用磁盘约12→11 GiB，shared target约12→13 GiB，增量包括本工作区debug/all-feature测试和Clippy产物，未复制target。release两条probe可执行文件分别约9.8 MB/0.69 MB（Cargo同内容带hash文件不作第二套证据保存），不进Git；三个evidence目录合计约100 KB，不测RSS/PSS或density，不宣称内存改善。
 
 `evidence/al-io-discovery` 420 batch rows/13 cells，`evidence/al-io`492/15，`evidence/al-wake`72/4，共984 batch rows。这不是984逐请求样本。全部进程保留，不选择较快进程。identity记录实际binary SHA256、probe source SHA256、lock SHA256、基线提交和工具链。discovery源码快照保留在`support.rs.txt`，hash与其identity一致。候选仅运行参数，两个arm完全相同可执行文件。raw CSV为唯一原始数据，summary只存聚合。
 
@@ -89,3 +89,5 @@ HTTP为同runtime localhost TCP fixture，共享HttpService/连接池。每条mi
     cargo fmt --check
 
 停在独立签名实验分支交付，不merge main、不发布网站、不改冻结benchmark/AF/Pysolate，不继续追第二候选。
+
+定向审查状态：固定集成提交2617a94已尝试通过Codex CLI0.146.0以`gpt-6-luna`、read-only启动，账户明确返回不支持该模型（`evidence/al-io/review-launch-failed.txt`）。这次启动失败不是审查通过，也没有换模型。交付分支后由独立看板review卡显式固定`gpt-6-luna`/`openai-codex`走Hermes路径执行，最终批准待该卡结果；若该路径亦不支持则应能力阻塞，不做静默替换。
