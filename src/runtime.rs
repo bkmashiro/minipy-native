@@ -656,7 +656,7 @@ async fn run<P: Provider>(
                                 .json
                                 .as_mut()
                                 .expect("JSON plan")
-                                .string_value(*slot)?,
+                                .string_argument(*slot, frame.batch as u32)?,
                         )
                     }
                     Some(source) => crate::tool::ToolArguments::String(

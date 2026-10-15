@@ -257,6 +257,29 @@ impl State {
             StringCache::Decoded(_) => unreachable!(),
         }
     }
+    /// Bound waiting payload retention for a direct plain JSON Tool argument.
+    /// Logical root length is only an eligibility heuristic, not backing capacity.
+    pub(crate) fn string_argument(
+        &mut self,
+        slot: usize,
+        live: u32,
+    ) -> Result<crate::tool::StringValue, TaskError> {
+        let value = self.string_value(slot)?;
+        let root = self.plan.paths[slot].root;
+        if live & (1 << root) == 0
+            && let crate::tool::StringValue::Json { owner, range } = &value
+            && owner.len() >= 64 * 1024
+            && range.len() <= 4096
+            && range.len() <= self.available()
+        {
+            // Validate/charge before copying. Keep transient root + leaf within
+            // the existing budget; low headroom retains the original owner.
+            let owner = Bytes::copy_from_slice(&owner[range.clone()]);
+            let range = 0..owner.len();
+            return Ok(crate::tool::StringValue::Json { owner, range });
+        }
+        Ok(value)
+    }
     fn charge(&mut self, bytes: usize) -> Result<(), TaskError> {
         if bytes > self.scan_left {
             return Err(TaskError::Budget);
@@ -446,6 +469,35 @@ mod tests {
             state.strings.as_ref().unwrap()[0],
             StringCache::Unchecked
         ));
+    }
+
+    #[test]
+    fn argument_copy_cutoffs_headroom_and_scan_charge() {
+        for (root_len, leaf_len, headroom, external, live, copied) in [
+            (65536, 10, 10, 0, 0, true),
+            (65535, 10, 10, 0, 0, false),
+            (65536, 4096, 4096, 0, 0, true),
+            (65536, 4097, 4097, 0, 0, false),
+            (65536, 10, 9, 0, 0, false),
+            (65536, 10, 10, 1, 0, false),
+            (65536, 10, 10, 0, 1, false),
+        ] {
+            let text = "x".repeat(leaf_len);
+            let mut raw = format!("{{\"s\":\"{text}\"}}").into_bytes();
+            raw.resize(root_len, b' ');
+            let mut state = state();
+            state.max = root_len + headroom;
+            state.scan_left = 10000;
+            state.set_external(external);
+            state.install(0, Bytes::from(raw), root_len).unwrap();
+            let value = state.string_argument(0, live).unwrap();
+            assert_eq!(value.as_str(), text);
+            assert_eq!(state.scan_left, 10000 - leaf_len - 2);
+            let crate::tool::StringValue::Json { owner, .. } = value else {
+                panic!("plain string expected")
+            };
+            assert_eq!(owner.len(), if copied { leaf_len } else { root_len });
+        }
     }
 
     #[test]

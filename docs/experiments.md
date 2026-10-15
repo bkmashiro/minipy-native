@@ -2100,3 +2100,39 @@ Receipt-verified `gpt-6-luna` independently reviewed fixed snapshot `24518d5`,
 confirmed production restoration and backing/cancellation reasoning, reproduced
 the reduction and found no blockers. See [BZ review](../evidence/bz-detach/review.md).
 
+## CC: accept bounded waiting-memory policy after concurrent census
+
+Reassess BZ for waiting memory rather than require a speedup. Integrate its private
+helper in both direct JSON Tool captures: validated plain leaf <=4096 B, logical
+root >=64 KiB, root dead in continuation, transient headroom sufficient. Low budget
+falls back to the old owner without a new error. Original scan charging,
+authorization/call debit, post-capture release and detached cancellation remain.
+Extra payload/copy work is bounded to 4096 B per capture; no new frame/state/API.
+
+One gated concurrent fixture, baseline and accepted source, runs six modes on
+both backends, eight simultaneous blocked operations each (96 tasks per arm).
+For dead roots each backend deallocates 8,388,968 B of actual Box backing before
+wait observation and retains 80 B of copied arguments. Small/live roots,
+4097 B leaves and tight budgets keep original owners; escaped strings already
+detach on baseline. Half the guests cancel while operations remain blocked,
+then every operation correctly reads its argument and releases it on completion.
+Other guests succeed with exact continuation output. This proves backing lifetime
+for unique test owners, not returned OS pages, RSS, wait prevalence or throughput.
+
+Full default/tool-json-debug-runtime release tests, exact cutoff/headroom/scan
+unit coverage, strict Clippy, fmt and diff checks pass. Existing external shared
+target and fcntl lock, one build job, offline/locked Rust 1.96 tests; installed
+1.93.1 Clippy/fmt. Reuse BZ latency evidence with no new campaign or speed claim.
+Accept the small bounded policy for its large proven waiting-owner benefit;
+threshold optimality and real workload frequency remain unknown. Full decision,
+raw, reducer and reproduction: [CC evidence](../evidence/cc-waiting/README.md).
+
+Stage: BV defer, BW keep allocation removal, BX/BY reject measured implementations
+(compact fusion/amortized Ready remain untested), BZ/CC keep bounded wait-memory
+release. CB remains isolated on `exp/cb-copy-patch` at `814fdd8`: real templates
+and direct installation work, but its optimistic raw install/call/free floor
+3.989 us already consumes the tiny full tape request 3.542 us. Stop that tiny-glue,
+per-request JIT-module design only; source backend/loop matrix were not reached
+and larger-loop value remains untested. No new worktree/target/download/CI or
+Linux/Wasm/Monty performance claim. Stop the stage here.
+

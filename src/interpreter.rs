@@ -287,7 +287,7 @@ async fn run<P: Provider>(
                                 .json
                                 .as_mut()
                                 .expect("JSON plan")
-                                .string_value(*slot)?,
+                                .string_argument(*slot, unit.json_live[state.pc])?,
                         )
                     }
                     Some(source) => crate::tool::ToolArguments::String(
