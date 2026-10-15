@@ -151,6 +151,7 @@ impl Op {
 struct Lower<'a> {
     ops: &'a mut Vec<Op>,
     next: usize,
+    high_water: usize,
 }
 impl Lower<'_> {
     fn temp(&mut self) -> Dest {
@@ -158,6 +159,7 @@ impl Lower<'_> {
         self.next += 1;
         // Each scratch slot originates at a bounded admitted expression node.
         assert!(self.next <= MAX_NODES);
+        self.high_water = self.high_water.max(self.next);
         Dest::Temp(i)
     }
     fn value(&mut self, e: Expr) -> Operand {
@@ -364,8 +366,14 @@ impl Lower<'_> {
         }
     }
 }
-pub(super) fn flatten(statements: Vec<Stmt>, ops: &mut Vec<Op>) {
-    Lower { ops, next: 0 }.statements(statements);
+pub(super) fn flatten(statements: Vec<Stmt>, ops: &mut Vec<Op>) -> usize {
+    let mut lower = Lower {
+        ops,
+        next: 0,
+        high_water: 0,
+    };
+    lower.statements(statements);
+    lower.high_water
 }
 
 pub(super) enum Boundary {
@@ -426,7 +434,7 @@ pub(super) fn json_liveness(ops: &[Op], plan: &crate::tool::Plan) -> Vec<u32> {
     live
 }
 #[inline]
-fn read(a: Operand, state: &State, temps: &[i64; MAX_NODES]) -> i64 {
+fn read(a: Operand, state: &State, temps: &[i64]) -> i64 {
     match a {
         Operand::Imm(v) => v,
         Operand::Local(i) => state.locals[i],
@@ -441,7 +449,7 @@ fn read(a: Operand, state: &State, temps: &[i64; MAX_NODES]) -> i64 {
     }
 }
 #[inline]
-fn write(dest: Dest, v: i64, state: &mut State, temps: &mut [i64; MAX_NODES]) {
+fn write(dest: Dest, v: i64, state: &mut State, temps: &mut [i64]) {
     match dest {
         Dest::Local(i) => state.locals[i] = v,
         Dest::Temp(i) => temps[i] = v,
@@ -456,8 +464,13 @@ pub(super) fn run_until_boundary(
     limits: &runtime::Limits,
     output: &mut Output,
 ) -> Result<Boundary, TaskError> {
-    let mut temps = [0; MAX_NODES];
-    run::<false>(unit, state, owners, limits, output, &mut temps)
+    // Two safe stack sizes, one dispatcher. Debug stepping retains its full array.
+    // The admitted high-water mark includes every branch and nested statement.
+    if unit.temp_slots <= 16 {
+        run::<false>(unit, state, owners, limits, output, &mut [0; 16])
+    } else {
+        run::<false>(unit, state, owners, limits, output, &mut [0; MAX_NODES])
+    }
 }
 // Constant specialization removes step accounting from production dispatch.
 pub(super) fn run<const STEP: bool>(
@@ -466,7 +479,7 @@ pub(super) fn run<const STEP: bool>(
     owners: &[Option<QuoteBuffer>],
     limits: &runtime::Limits,
     output: &mut Output,
-    temps: &mut [i64; MAX_NODES],
+    temps: &mut [i64],
 ) -> Result<Boundary, TaskError> {
     while state.pc < unit.ops.len() {
         let op = &unit.ops[state.pc];

@@ -2351,3 +2351,26 @@ Python workbench tests 通过。正式 source hashes 逐 Git blob+patch 重建�
 raw、源码身份、独立诊断、工程失败说明、复现及审阅见
 [CJ evidence](../evidence/cj-zero-buffer/README.md)。
 
+## CK：tape 临时槽初始化的单一安全候选
+
+固定 `049b810`，验证每个 production 同步 turn 实际清零4096 B，scratch不跨
+await；debug Step则必须保留表达式中间值。Lowering的既有硬上界512槽，独立
+CFG definite-write oracle覆盖effect/可能yield的清空、短路/分支/循环/JSON，
+实测0至127槽。唯一候选在lowering记录高水位，<=16槽用128 B安全数组，
+否则原4096 B，共享slice dispatcher，无unsafe、新allocation或执行器复制。
+
+正式A/B二进制反汇编确认small path四条向量pair stores替代4096 B `_bzero`；
+大路径保持。但wrapper outlining令同步栈4256→4368 B，Unit112→120 B，
+增加阈值分支和一次call；具体Provider等待future仍928/664 B。不能将清零
+范围下降称为栈frame缩小，更无PMU/cache/RSS结论。
+
+预设A/B、exact-A A/A各一轮ABBA，五类双后端，共80进程/1920正式完整请求
+全通过。tape scalar/branch/madd_short/loop/wait B:A为
+.97750/.99697/.96751/1.00873/1.00050，scalar A/A为.92598；native未变
+也有漂移。净收益不一致，建议撤回候选、结束路线，待固定提交独立审阅确认。
+完整default和tool-json/debug-runtime release suites、严格Clippy/fmt、
+九Python tests通过；新真实执行回归覆盖小/大scratch、深表达式、600行
+chunk7以及Tool挂起。无新target/worktree/dependency/download/CI或平台结论。
+原始证据、逐source重建、失败说明和复现见
+[CK evidence](../evidence/ck-scratch/README.md)。
+

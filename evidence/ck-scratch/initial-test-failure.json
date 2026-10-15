@@ -1,0 +1,26 @@
+[
+  {
+    "command": [
+      "cargo",
+      "+stable",
+      "fmt",
+      "--all"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "cargo",
+      "+1.96.0",
+      "test",
+      "--offline",
+      "--locked",
+      "--release"
+    ],
+    "exit_code": 101,
+    "stdout": "\nrunning 25 tests\ntest buffer::tests::empty_and_malformed_buffers_are_handled_without_raw_loads ... ok\ntest buffer::tests::exact_capacity_freeze_moves_the_payload_and_uses_a_thin_owner ... ok\ntest buffer::tests::from_quotes_enforces_row_limit ... ok\ntest buffer::tests::immutable_owner_clones_and_weak_observation_share_one_allocation ... ok\ntest codegen::tests::ce_arithmetic_code ... ignored, explicit serial CE code diagnostic, not formal timing\ntest buffer::tests::quote_v1_layout_and_offsets_are_stable ... ok\ntest buffer::tests::import_decodes_little_endian_and_preserves_extreme_patterns ... ok\ntest codegen::tests::layout ... ok\ntest frontend::tests::discarded_record_call_still_allocates_a_scratch_scalar ... ok\ntest frontend::tests::top_level_expressions_are_discarded_and_loop_locals_are_iteration_local ... ok\ntest frontend::tests::supports_legacy_main_semantics ... ok\ntest frontend::tests::accepts_definite_branch_init_and_sequential_buffers ... ok\ntest frontend::tests::accepts_int_local_annotation ... ok\ntest frontend::tests::print_is_allowed_in_loop_and_nested_branch_init_is_intersected ... ok\ntest frontend::tests::initialization_mask_covers_zero_and_all_32_slots ... ok\ntest interpreter::liveness_tests::cd_buffer_masks ... ok\ntest frontend::tests::rejects_unsafe_shapes_and_uninitialized_branches ... ok\ntest frontend::tests::parses_script_inputs_tools_print_and_loops ... ok\ntest interpreter::tape::bx_diagnostic ... ignored, explicit serial release preparation/layout diagnostic\ntest runtime::output_tests::growth_never_exceeds_the_task_cap_and_rejected_lines_are_atomic ... ok\ntest interpreter::liveness_tests::nonzero_buffer_mask_keeps_pc_bounds - should panic ... ok\ntest interpreter::scratch_tests::scratch_bounds_and_definite_writes ... FAILED\ntest provider::tests::cloned_buffer_lease_keeps_rows_alive_then_releases_them ... ok\ntest provider::tests::record_is_async_checked_and_failures_are_returned ... ok\ntest provider::tests::load_suspends_and_each_call_gets_an_independent_owner ... ok\n\nfailures:\n\n---- interpreter::scratch_tests::scratch_bounds_and_definite_writes stdout ----\nCK slots=0 ops=2\nCK slots=2 ops=6\n\nthread 'interpreter::scratch_tests::scratch_bounds_and_definite_writes' (46809476) panicked at src/interpreter/scratch_tests.rs:116:66:\ncalled `Result::unwrap()` on an `Err` value: CompileError { kind: Type, reason: \"initializer for 'x' has the wrong type\", location: Some((2, 1)) }\n\n\nfailures:\n    interpreter::scratch_tests::scratch_bounds_and_definite_writes\n\ntest result: FAILED. 22 passed; 1 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.11s\n\n",
+    "stderr": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 24.68s\n     Running unittests src/lib.rs (target/release/deps/minipy_native-ae2a0ed8901b3254)\nerror: test failed, to rerun pass `--lib`\n"
+  }
+]
