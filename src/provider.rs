@@ -23,6 +23,22 @@ pub trait Provider: Send + Sync + 'static {
     ) -> impl Future<Output = Result<crate::tool::Reply, TaskError>> + Send {
         async { Err(TaskError::Permission) }
     }
+    /// Unified bound dispatch; numeric providers retain their existing ABI.
+    #[cfg(feature = "tool-json")]
+    fn call_bound_tool(
+        &self,
+        id: u32,
+        args: crate::tool::ToolArguments,
+    ) -> impl Future<Output = Result<crate::tool::Reply, TaskError>> + Send {
+        async move {
+            match args {
+                crate::tool::ToolArguments::Numeric(values, count) => {
+                    self.call_tool(id, values, count).await
+                }
+                crate::tool::ToolArguments::String(_) => Err(TaskError::Permission),
+            }
+        }
+    }
     fn load_quotes(
         &self,
         batch_id: i64,

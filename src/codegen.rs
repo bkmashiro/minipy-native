@@ -124,6 +124,18 @@ impl CodeUnit {
             false,
         )
     }
+    #[cfg(feature = "tool-json")]
+    pub fn compile_with_declarations(
+        source: &str,
+        inputs: &[(&str, ir::Type)],
+        tools: &[crate::tool::ToolDeclaration],
+    ) -> Result<Self, CompileError> {
+        Self::lower(
+            crate::frontend::parse_with_declarations(source, inputs, tools)?,
+            "speed",
+            false,
+        )
+    }
     fn lower(program: ir::Program, opt: &str, retain_ir: bool) -> Result<Self, CompileError> {
         let (mut ctx, mut fc) = SCRATCH.with(|s| s.borrow_mut().take()).unwrap_or_else(|| {
             (
@@ -300,6 +312,16 @@ impl CodeUnit {
                 resumes: vec![start],
                 row: None,
                 inputs: program.inputs,
+                #[cfg(feature = "tool-json")]
+                string_roots: program
+                    .json
+                    .calls
+                    .iter()
+                    .map(|c| match c.string {
+                        Some(crate::tool::StringSource::Json { root, .. }) => Some(root),
+                        _ => None,
+                    })
+                    .collect(),
             };
             flow.stmts(&program.statements, Live::default());
             let resumes = flow.resumes;
@@ -393,6 +415,8 @@ struct Flow<'a, 'b> {
     views: Value,
     output: Value,
     print: cranelift_codegen::ir::FuncRef,
+    #[cfg(feature = "tool-json")]
+    string_roots: Vec<Option<usize>>,
     #[cfg(feature = "tool-json")]
     json_read: Option<cranelift_codegen::ir::FuncRef>,
     #[cfg(feature = "tool-json")]
@@ -669,6 +693,13 @@ impl Flow<'_, '_> {
                     self.constant(288, *target as i64);
                     if !*json {
                         live.scalars &= !(1 << target);
+                    }
+                    let after_json = live.json;
+                    if let Some(root) = self.string_roots[*call] {
+                        live.json |= 1 << root;
+                        // String calls have no numeric arguments: reuse the
+                        // otherwise dead batch slot for post-capture liveness.
+                        self.constant(280, after_json as i64);
                     }
                     let (pc, next) = self.continuation();
                     self.suspend(8 + *call as i64, pc, live);

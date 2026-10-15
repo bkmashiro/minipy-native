@@ -17,6 +17,7 @@ enum StringCache {
     Unchecked,
     Validated,
     Decoded(String),
+    Shared(std::sync::Arc<String>),
 }
 impl State {
     pub(crate) fn new(plan: std::rc::Rc<Plan>, max: usize, scan_bytes: usize) -> Self {
@@ -44,6 +45,7 @@ impl State {
                 d.iter()
                     .map(|s| match s {
                         StringCache::Decoded(value) => value.capacity(),
+                        StringCache::Shared(value) => value.capacity(),
                         _ => 0,
                     })
                     .sum()
@@ -66,6 +68,7 @@ impl State {
                 .filter(|(_, path)| path.root == root)
                 .map(|(i, _)| match self.strings.as_ref().map(|s| &s[i]) {
                     Some(StringCache::Decoded(value)) => value.capacity(),
+                    Some(StringCache::Shared(value)) => value.capacity(),
                     _ => 0,
                 })
                 .sum()
@@ -204,12 +207,40 @@ impl State {
         }
         match &self.strings.as_ref().unwrap()[slot] {
             StringCache::Decoded(value) => Ok(value),
+            StringCache::Shared(value) => Ok(value),
             StringCache::Validated => {
                 let owner = self.roots[root].as_ref().expect("validated owner");
                 // install/release invalidate the marker before changing the owner.
                 Ok(unsafe { validated_span(owner, range) })
             }
             StringCache::Unchecked => unreachable!(),
+        }
+    }
+    pub(crate) fn string_value(
+        &mut self,
+        slot: usize,
+    ) -> Result<crate::tool::StringValue, TaskError> {
+        self.validate_string(slot)?;
+        let range = self.ranges[slot].as_ref().expect("validated path").clone();
+        let cache = &mut self.strings.as_mut().expect("string plan")[slot];
+        if matches!(cache, StringCache::Decoded(_)) {
+            let StringCache::Decoded(s) = std::mem::replace(cache, StringCache::Unchecked) else {
+                unreachable!()
+            };
+            *cache = StringCache::Shared(std::sync::Arc::new(s));
+        }
+        match cache {
+            StringCache::Shared(s) => Ok(crate::tool::StringValue::Decoded(s.clone())),
+            StringCache::Validated => {
+                let root = self.plan.paths[slot].root;
+                let owner = self.roots[root].as_ref().expect("validated owner").clone();
+                Ok(crate::tool::StringValue::Json {
+                    owner,
+                    range: range.start + 1..range.end - 1,
+                })
+            }
+            StringCache::Unchecked => unreachable!(),
+            StringCache::Decoded(_) => unreachable!(),
         }
     }
     fn charge(&mut self, bytes: usize) -> Result<(), TaskError> {
@@ -409,8 +440,8 @@ mod tests {
         // Non-string JSON tasks do not allocate a decoded vector, but retain
         // the additional inline Option<Vec> and budget counters.
         assert_eq!(std::mem::size_of::<super::State>(), 128);
-        // The two marker states fit in String's niche on this target;
-        // previous Option<String> also used 24 bytes per path.
+        // Ordinary escaped JSON still caches an inline String. A Tool argument
+        // moves that string to an Arc only when it must outlive cancellation.
         assert_eq!(std::mem::size_of::<super::StringCache>(), 24);
     }
 }

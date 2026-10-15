@@ -1,5 +1,6 @@
 //! Preparation-owned Tool declarations and statically bound JSON paths.
 use crate::ir::{AdmissionKind, CompileError};
+use std::{ops::Range, sync::Arc};
 
 pub const LOAD_QUOTES: u32 = 0;
 pub const RECORD_TOTAL: u32 = 1;
@@ -97,11 +98,109 @@ impl ToolSchema {
         Ok(())
     }
 }
+/// New declarations share the finite name/ID namespace with legacy numeric Tools.
+/// The first string slice admits exactly one named string argument.
+#[derive(Clone, Debug)]
+pub enum ArgumentSchema {
+    I64(String),
+    String(String),
+}
+impl ArgumentSchema {
+    pub fn name(&self) -> &str {
+        match self {
+            Self::I64(n) | Self::String(n) => n,
+        }
+    }
+}
+#[derive(Clone, Debug)]
+pub struct ToolDeclaration {
+    pub id: u32,
+    pub name: String,
+    pub arguments: Vec<ArgumentSchema>,
+    pub result: ResultSchema,
+}
+impl From<&ToolSchema> for ToolDeclaration {
+    fn from(value: &ToolSchema) -> Self {
+        Self {
+            id: value.id,
+            name: value.name.clone(),
+            arguments: value
+                .arguments
+                .iter()
+                .cloned()
+                .map(ArgumentSchema::I64)
+                .collect(),
+            result: value.result.clone(),
+        }
+    }
+}
+impl ToolDeclaration {
+    pub fn validate_all(tools: &[Self]) -> Result<(), CompileError> {
+        let numeric: Vec<_> = tools
+            .iter()
+            .map(|t| ToolSchema {
+                id: t.id,
+                name: t.name.clone(),
+                arguments: t.arguments.iter().map(|a| a.name().to_owned()).collect(),
+                result: t.result.clone(),
+            })
+            .collect();
+        ToolSchema::validate_all(&numeric)?;
+        for tool in tools {
+            let strings = tool
+                .arguments
+                .iter()
+                .filter(|a| matches!(a, ArgumentSchema::String(_)))
+                .count();
+            if strings > 0 && (strings != 1 || tool.arguments.len() != 1) {
+                return Err(CompileError::new(
+                    AdmissionKind::Schema,
+                    "string Tool requires one string argument",
+                ));
+            }
+        }
+        Ok(())
+    }
+}
+/// An operation-owned string view. The borrowed JSON span is validated before
+/// the owner is cloned; decoded escapes share their already allocated cache.
+#[derive(Clone, Debug)]
+pub enum StringValue {
+    Literal(Arc<str>),
+    Json {
+        owner: bytes::Bytes,
+        range: Range<usize>,
+    },
+    Decoded(Arc<String>),
+}
+impl StringValue {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Literal(s) => s,
+            Self::Decoded(s) => s,
+            Self::Json { owner, range } => {
+                // The runtime constructs this span only after validation. Keep
+                // public values memory-safe even if a Host constructs one itself.
+                std::str::from_utf8(owner.get(range.clone()).unwrap_or_default()).unwrap_or("")
+            }
+        }
+    }
+}
+pub enum ToolArguments {
+    Numeric([i64; 2], usize),
+    String(StringValue),
+}
+#[derive(Clone, Debug)]
+pub enum StringSource {
+    Literal(Arc<str>),
+    Json { slot: usize, root: usize },
+}
 #[derive(Clone, Debug)]
 pub struct BoundCall {
     pub id: u32,
     pub arguments: usize,
     pub json: bool,
+    pub string: Option<StringSource>,
 }
 #[derive(Clone, Debug)]
 pub struct PathSlot {
@@ -121,6 +220,14 @@ impl Plan {
     pub(crate) fn owned_bytes(&self) -> usize {
         std::mem::size_of::<Self>()
             + self.calls.capacity() * std::mem::size_of::<BoundCall>()
+            + self
+                .calls
+                .iter()
+                .map(|c| match &c.string {
+                    Some(StringSource::Literal(s)) => s.len(),
+                    _ => 0,
+                })
+                .sum::<usize>()
             + self.paths.capacity() * std::mem::size_of::<PathSlot>()
             + self.paths.iter().map(|p| p.key.capacity()).sum::<usize>()
             + self.needles.capacity() * std::mem::size_of::<String>()
