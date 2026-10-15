@@ -41,10 +41,24 @@ impl Provider for Host {
         Err(TaskError::Permission)
     }
     fn allows_tool(&self, id: u32) -> bool {
-        id == 101
+        id == 101 || id == 102
     }
     async fn call_bound_tool(&self, id: u32, args: ToolArguments) -> Result<Reply, TaskError> {
+        if id == 102 {
+            let ToolArguments::String(value) = args else {
+                panic!("string binding")
+            };
+            assert_eq!(value.as_str(), "hello error");
+            return Ok(Reply::I64(7));
+        }
         assert_eq!(id, 101);
+        if matches!(args, ToolArguments::Numeric(values, _) if values[0] == -2) {
+            // Fresh producer allocation and destruction remain inside each request.
+            return Ok(Reply::Json(bytes::Bytes::from(format!(
+                "{{\"message\":\"hello error\",\"padding\":\"{}\"}}",
+                "x".repeat(1_048_576)
+            ))));
+        }
         if matches!(args, ToolArguments::Numeric(values, _) if values[0] == -1) {
             return Ok(Reply::Json(bytes::Bytes::from_static(
                 br#"{"message":"hello\nerror"}"#,
@@ -64,8 +78,16 @@ fn declarations() -> Vec<ToolDeclaration> {
             } else {
                 format!("unused{i}")
             },
-            arguments: vec![ArgumentSchema::I64("key".into())],
-            result: ResultSchema::JsonTyped(vec![(vec!["message".into()], JsonLeaf::String)]),
+            arguments: if i == 1 {
+                vec![ArgumentSchema::String("text".into())]
+            } else {
+                vec![ArgumentSchema::I64("key".into())]
+            },
+            result: if i == 1 {
+                ResultSchema::I64
+            } else {
+                ResultSchema::JsonTyped(vec![(vec!["message".into()], JsonLeaf::String)])
+            },
         })
         .collect()
 }
@@ -150,6 +172,21 @@ fn resident_request() {
         // Different literal each time, no prepared-code or result reuse.
         let n = sample + 1;
         let (source, expected) = match case.as_str() {
+            "detach" | "detach_live" => (
+                format!(
+                    "n={n}\ndata=tools.fetch(-2)\ntext=data['message']\nr=tools.unused1(text)\nprint(r){}",
+                    if case == "detach_live" {
+                        "\nprint(text)"
+                    } else {
+                        ""
+                    }
+                ),
+                if case == "detach_live" {
+                    "7\nhello error\n".into()
+                } else {
+                    "7\n".into()
+                },
+            ),
             "madd_short" => (format!("x={n}\nx=x*3+x\nprint(x)"), format!("{}\n", n * 4)),
             "madd_loop" => (
                 format!(

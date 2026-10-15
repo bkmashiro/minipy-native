@@ -2059,3 +2059,40 @@ confirmed the prototype stays archived and final production matches the base,
 recomputed timing/layout evidence and found no blockers. See
 [BY review record](../evidence/by-ready/review.md).
 
+## BZ: large-root / small async parameter lifetime, bounded stage decision
+
+Base `f311832`. A private candidate copies only an already validated direct plain
+JSON leaf when its root has no continuation consumer, root length >=64 KiB,
+leaf <=4096 B and current transient budget has headroom. These are experimental
+engineering cutoffs, not a wait predictor or measured optimum. Existing
+validation/scan fuel, authority order, call debit, post-capture root release and
+detached operation cancellation/ownership remain. Escaped/concatenated strings
+already own their text. Low headroom falls back without introducing a task error.
+
+Separate Box-backed Bytes diagnostics explicitly deallocate the backing before
+publishing a release marker: both backends release 1,048,621 B before waiting and
+retain a 10 B copied parameter, still readable after guest cancellation. Live
+roots, small roots, long leaves and tight-budget controls keep the old owner;
+escaped strings already release it on baseline. Wrapper future remains 984 B,
+not a per-backend future measurement. Preliminary Weak<Arc<[u8]>> observations
+are retained but excluded from backing-deallocation claims; the Weak retains its
+allocation. Corrected tests and diagnostics were rerun. No RSS/census claim.
+
+Formal A/B and exact-binary A/A each completed 64 processes / 2048 fresh-source
+requests in two ABBA rounds, with all status/stdout assertions passing. Detach
+B:A is tape 1.01754, native 1.00914, with early process drift and untouched scalar
+control movement. This establishes no stable request gain or causal regression.
+Retain the mechanism as an isolated patch, defer the default copy policy and
+restore production exactly to base. The ready synthetic workload establishes
+neither real waiting distributions nor prevalence of this retention opportunity.
+
+Stage: BV defer, BW keep measured allocation elimination without E2E claim,
+BX revert widening fusion, BY revert its every-Ready-yield representation (not
+an amortized allowance experiment), BZ defer workload-dependent copying despite
+proven backing release. Stop this stage rather than chase a speedup. The
+pre-created CB lane tests a distinct larger hypothesis: remove per-source native
+backend work with actual precompiled templates, bounded checked pure regions,
+installation/cleanup counted and current unfused tape as the control. No C&P
+result is claimed here. Full commands, corrected tests, raw, synthesis and
+reducer: [BZ evidence](../evidence/bz-detach/README.md).
+

@@ -1,0 +1,26 @@
+{
+  "mode": "baseline",
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--features",
+        "tool-json",
+        "--test",
+        "bz_detach",
+        "root_detachment_diagnostic",
+        "--",
+        "--ignored",
+        "--nocapture"
+      ],
+      "exit_code": 0,
+      "stdout": "\nrunning 1 test\nBZ_LAYOUT {\"mode\":\"dead\",\"native\":false,\"wrapper_future_bytes\":984}\nBZ {\"backing_released_before_wait\":false,\"copied_bytes\":0,\"mode\":\"dead\",\"native\":false,\"root_bytes\":1048621,\"waiting_argument_owner_bytes\":1048621}\nBZ_LAYOUT {\"mode\":\"live\",\"native\":false,\"wrapper_future_bytes\":984}\nBZ {\"backing_released_before_wait\":false,\"copied_bytes\":0,\"mode\":\"live\",\"native\":false,\"root_bytes\":1048621,\"waiting_argument_owner_bytes\":1048621}\nBZ_LAYOUT {\"mode\":\"escaped\",\"native\":false,\"wrapper_future_bytes\":984}\nBZ {\"backing_released_before_wait\":true,\"copied_bytes\":0,\"mode\":\"escaped\",\"native\":false,\"root_bytes\":1048626,\"waiting_argument_owner_bytes\":10}\nBZ_LAYOUT {\"mode\":\"tight\",\"native\":false,\"wrapper_future_bytes\":984}\nBZ {\"backing_released_before_wait\":false,\"copied_bytes\":0,\"mode\":\"tight\",\"native\":false,\"root_bytes\":1048621,\"waiting_argument_owner_bytes\":1048621}\nBZ_LAYOUT {\"mode\":\"large\",\"native\":false,\"wrapper_future_bytes\":984}\nBZ {\"backing_released_before_wait\":false,\"copied_bytes\":0,\"mode\":\"large\",\"native\":false,\"root_bytes\":1053611,\"waiting_argument_owner_bytes\":1053611}\nBZ_LAYOUT {\"mode\":\"small\",\"native\":false,\"wrapper_future_bytes\":984}\nBZ {\"backing_released_before_wait\":false,\"copied_bytes\":0,\"mode\":\"small\",\"native\":false,\"root_bytes\":45,\"waiting_argument_owner_bytes\":45}\nBZ_LAYOUT {\"mode\":\"dead\",\"native\":true,\"wrapper_future_bytes\":984}\nBZ {\"backing_released_before_wait\":false,\"copied_bytes\":0,\"mode\":\"dead\",\"native\":true,\"root_bytes\":1048621,\"waiting_argument_owner_bytes\":1048621}\nBZ_LAYOUT {\"mode\":\"live\",\"native\":true,\"wrapper_future_bytes\":984}\nBZ {\"backing_released_before_wait\":false,\"copied_bytes\":0,\"mode\":\"live\",\"native\":true,\"root_bytes\":1048621,\"waiting_argument_owner_bytes\":1048621}\nBZ_LAYOUT {\"mode\":\"escaped\",\"native\":true,\"wrapper_future_bytes\":984}\nBZ {\"backing_released_before_wait\":true,\"copied_bytes\":0,\"mode\":\"escaped\",\"native\":true,\"root_bytes\":1048626,\"waiting_argument_owner_bytes\":10}\nBZ_LAYOUT {\"mode\":\"tight\",\"native\":true,\"wrapper_future_bytes\":984}\nBZ {\"backing_released_before_wait\":false,\"copied_bytes\":0,\"mode\":\"tight\",\"native\":true,\"root_bytes\":1048621,\"waiting_argument_owner_bytes\":1048621}\nBZ_LAYOUT {\"mode\":\"large\",\"native\":true,\"wrapper_future_bytes\":984}\nBZ {\"backing_released_before_wait\":false,\"copied_bytes\":0,\"mode\":\"large\",\"native\":true,\"root_bytes\":1053611,\"waiting_argument_owner_bytes\":1053611}\nBZ_LAYOUT {\"mode\":\"small\",\"native\":true,\"wrapper_future_bytes\":984}\nBZ {\"backing_released_before_wait\":false,\"copied_bytes\":0,\"mode\":\"small\",\"native\":true,\"root_bytes\":45,\"waiting_argument_owner_bytes\":45}\ntest root_detachment_diagnostic ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.01s\n\n",
+      "stderr": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 8.16s\n     Running tests/bz_detach.rs (target/release/deps/bz_detach-546867f66e8b7d2d)\n"
+    }
+  ]
+}

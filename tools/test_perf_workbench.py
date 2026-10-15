@@ -32,7 +32,8 @@ class Reduction(unittest.TestCase):
         self.assertEqual(pw.DEFAULT_CASES, ('scalar', 'quote', 'ready', 'loopback'))
         self.assertEqual(pw.CASES, pw.DEFAULT_CASES + (
             'scalar_inputs', 'ready_inputs', 'plain_sink', 'escaped_sink',
-            'joined_sink', 'fstring_sink', 'escaped_join', 'madd_short', 'madd_loop'))
+            'joined_sink', 'fstring_sink', 'escaped_join', 'madd_short', 'madd_loop',
+            'detach', 'detach_live'))
 
     def reduce(self, records):
         with tempfile.TemporaryDirectory(dir=pw.SCRATCH) as directory:
