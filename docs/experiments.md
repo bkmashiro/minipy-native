@@ -1763,3 +1763,85 @@ speed nor old-path regression/improvement is established. BQ's earlier numeric
 medians 28.750/172.416 µs were in another process/run. No Monty comparison for this synthetic Host-specific
 call: this is not an unchanged private script or production workload.
 
+## BS: string-script integration gate (2026-10-15)
+
+Fast-forwarded BR `05773fc` onto BP main `bbca816` in the BS branch; BR includes
+the BQ commit as `240a679`. Independent gpt-6-luna read-only review of that fixed
+snapshot examined native/tape source-root liveness, authorization and output.
+Its initial native dead-root concern was a false positive: native `suspend`
+releases to the *pre-capture* mask, then dispatch captures `StringValue` and
+releases to `after_json`; tape's `state.pc` has advanced to the following op,
+so `json_live[state.pc]` is also post-capture. A second independent targeted
+review confirmed the native correction. A tight 5,000-byte aggregate budget
+test with two real 3,900-byte file replies confirms both engines release the
+first dead root before installing the second. Existing BR tests cover live
+alias across an intervening call, ordered errors, atomic stdout, cancellation
+and late-completion owner; no production Host or platform claim follows.
+
+`tests/local_read_host.rs` uses an actual temporary read-only filesystem Host
+adapter and executes complete source on both backends: literal read→JSON
+print, JSON content as the next path, prefix/f-string print, i64 f-string
+argument, escaped UTF-8, denied absolute/traversal/symlink escape, missing,
+invalid UTF-8, oversized reply and preserved earlier stdout. The adapter
+canonicalizes under a fixture root and enforces a 4,096-byte file bound; it
+is **not** Hermes's `read_file`, which also implements task-relative protected
+paths, pagination, redaction and deduplication. The test fixture is trusted
+and not a race-safe production filesystem sandbox. Historical private 0/64
+complete-source admission, measured without Host schema, is unchanged and
+cannot be translated into a coverage gain from these constructed scripts.
+
+Bounded macOS arm64 Rust 1.96.0 resident-process new-source campaign:
+`python3 tools/bs_request_pair.py` (shared fcntl build/measurement lock, one
+identical harness overlaid into detached BQ `6b48ebc`, BS candidate BR base
+`05773fc`). `evidence/bs-string-integration/request-cost.jsonl`: **936 rows**,
+SHA256 `ddcde8f340d0f65be9ccb36d94736bcb32fd6650ccf331a1a4239f21432f5618`.
+BQ/BS binaries and harness digests are in each row. Four process arms B/A/A/B,
+24 requests plus one warmup per case/backend/process; fixture setup and build
+separate, each timed request includes source preparation, dispatch of a ready
+already-resident JSON reply, output and cleanup. Pooled median BS/BQ old
+scalar tape **21.250/6.917 µs (+207%)**, native **103.167/79.688 µs (+29%)**;
+Quote tape **13.042/9.563 µs (+36%)**, native **107.271/86.021 µs (+25%)**.
+These pooled figures are *not stable regressions*: scalar tape process medians
+B0/A1/A2/B3 = **8.58/28.58/5.50/4.96 µs**, native
+**85.21/162.00/54.75/52.12 µs**, drifting far more than the paired design
+can attribute to code. The same natural plain-string case BS/BQ pooled tape
+**13.834/12.083 µs (+14%)**, native **89.146/76.292 µs (+17%)**; A2/B3
+plain native **63.29/65.96 µs** even reverses sign. This bounded evidence
+does not prove either a meaningful benefit or a stable major old-path loss.
+The synthetic string fixture is not actual filesystem I/O or a Monty
+comparison; different semantics prevent claiming scalar/Quote speed ratios as
+string speedup.
+
+Independent allocation/wait diagnostic: `python3 tools/bs_sink_diagnostic.py`,
+`evidence/bs-string-integration/sink-diagnostic.jsonl` (**208 rows**, SHA256
+`c10ff9c48add2ba7c6ef5777a895b38aae65b64e5f2f02ae8cddc84147e2604a`).
+Same output bytes for single f-string sink and multi-piece `+` sink; the
+former has literal path, latter joins path pieces, so preparation is *not*
+an isolated print comparison. Short `héllo` and long 4,096-byte UTF-8 content,
+ready vs one-millisecond gated Provider; 12 measured new-source requests per
+shape after one warmup. Counting global allocator reports *requested*
+allocation bytes and calls inside this single-threaded process, not resident
+memory or exact payload copies. On ready tape, short single/multi execution
+median **8.8/7.8 µs**, long **20.3/19.6 µs**; native short **17.9/14.8 µs**,
+long **29.2/25.9 µs**. In the long case, execution alloc calls are tape
+**11/12**, native **12/13**; requested bytes **9280/9289** and
+**9600/9609**, consistent with a small additional joined argument, while
+preparation allocates many more objects and varies strongly by source form.
+Gated execution is around **2.53–2.58 ms** in both paths due to timer/wait,
+overwhelming the ready-path differences; it is not a service latency SLO.
+Owner survival through cancelled gated operations is asserted separately in
+`tests/string_tool.rs`, not inferred from allocation counts. A simple
+same-output consecutive `String` concatenation reference parses the identical
+JSON bytes but omits Host authorization, task limits, scheduling and source
+preparation: `evidence/bs-string-integration/concat-reference.jsonl`
+(50 rows, SHA256 `324cb3dc3f88a9af84c0e642fddad1b9cc718792e9d8e505e1ef823d4ecaeeea`),
+short/long median **0.125/2.688 µs**. It is only a low-work floor, not an
+equivalent full-request competitor. No general speed win is claimed.
+
+Decision: retain the optional unified BQ declaration and bounded BR sinks
+for the newly tested complete-source behavior; do not expand public semantics
+or optimize noisy microdeltas. Default and `tool-json` full suites, all-target
+clippy `-D warnings` in both feature modes, rustfmt and diff check passed on
+macOS. Linux, pinned-toolchain Wasm and unchanged private-script execution
+remain unverified; no cross-platform pass is asserted.
+

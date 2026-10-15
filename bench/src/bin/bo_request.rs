@@ -1,11 +1,11 @@
-//! BO: resident worker, fresh-source prepare + full request, setup separate.
-//! Usage: bo-request <tape|native> <scalar|quote|string> <reps>.
+//! Resident worker: new-source preparation + full request, setup separately.
+//! Usage: bo-request <tape|native> <scalar|quote|string|plain|joined> <reps>.
 use bytes::Bytes;
 use minipy_native::{
     buffer::{Quote, QuoteBuffer}, codegen::CodeUnit, error::TaskError,
     interpreter::{self, InterpreterUnit}, ir::Type, provider::Provider,
     runtime::{self, Cancellation, ScriptLimits},
-    tool::{JsonLeaf, Reply, ResultSchema, ToolSchema},
+    tool::{ArgumentSchema, JsonLeaf, Reply, ResultSchema, ToolArguments, ToolDeclaration, ToolSchema},
 };
 use std::{rc::Rc, sync::Arc, time::Instant};
 
@@ -13,9 +13,17 @@ const INPUTS: &[(&str, Type)] = &[("batch_id", Type::I64)];
 const SCALAR: &str = "x = batch_id + 1\nprint(x)";
 const QUOTE: &str = "rows = tools.load_quotes(batch_id)\nprint(len(rows))";
 const STRING: &str = "data = tools.fetch(batch_id)\ntext = data[\"message\"]\nprint(text)";
+const PLAIN: &str = "data = tools.read_file(\"notes.txt\")\nprint(data[\"message\"])";
+const JOINED: &str = "data = tools.read_file(\"notes\" + \".txt\")\nprint(f\"{data['message']}\")";
 fn schema() -> [ToolSchema; 1] {
     [ToolSchema {
         id: 101, name: "fetch".into(), arguments: vec!["batch_id".into()],
+        result: ResultSchema::JsonTyped(vec![(vec!["message".into()], JsonLeaf::String)]),
+    }]
+}
+fn string_schema() -> [ToolDeclaration; 1] {
+    [ToolDeclaration {
+        id: 101, name: "read_file".into(), arguments: vec![ArgumentSchema::String("path".into())],
         result: ResultSchema::JsonTyped(vec![(vec!["message".into()], JsonLeaf::String)]),
     }]
 }
@@ -34,6 +42,14 @@ impl Provider for Ready {
     async fn call_tool(&self, _: u32, _: [i64; 2], _: usize) -> Result<Reply, TaskError> {
         Ok(Reply::Json(self.bytes.clone()))
     }
+    async fn call_bound_tool(&self, id: u32, args: ToolArguments) -> Result<Reply, TaskError> {
+        match args {
+            ToolArguments::Numeric(values, count) => self.call_tool(id, values, count).await,
+            ToolArguments::String(s) if id == 101 && s.as_str() == "notes.txt" =>
+                Ok(Reply::Json(self.bytes.clone())),
+            _ => Err(TaskError::Permission),
+        }
+    }
 }
 #[tokio::main(flavor = "current_thread")]
 async fn main() {
@@ -50,23 +66,29 @@ async fn main() {
         "scalar" => (SCALAR, "8\n"),
         "quote" => (QUOTE, "256\n"),
         "string" => (STRING, "héllo from tool\n"),
+        "plain" => (PLAIN, "héllo from tool\n"),
+        "joined" => (JOINED, "héllo from tool\n"),
         _ => panic!("unknown case"),
     };
     for _ in 0..reps + 1 {
         let start = Instant::now();
         let stdout = match args[1].as_str() {
             "native" => {
-                let code = Rc::new(if args[2] == "string" {
-                    CodeUnit::compile_with_tools(source, INPUTS, &schema()).unwrap()
-                } else { CodeUnit::compile_script(source, INPUTS).unwrap() });
+                let code = Rc::new(match args[2].as_str() {
+                    "string" => CodeUnit::compile_with_tools(source, INPUTS, &schema()).unwrap(),
+                    "plain" | "joined" => CodeUnit::compile_with_declarations(source, INPUTS, &string_schema()).unwrap(),
+                    _ => CodeUnit::compile_script(source, INPUTS).unwrap(),
+                });
                 let result = runtime::execute_script(code, provider.clone(), &[7],
                     ScriptLimits::default(), Cancellation::default(), None).await;
                 result.status.unwrap(); result.stdout
             }
             "tape" => {
-                let code = Rc::new(if args[2] == "string" {
-                    InterpreterUnit::prepare_with_tools(source, INPUTS, &schema()).unwrap()
-                } else { InterpreterUnit::prepare_script(source, INPUTS).unwrap() });
+                let code = Rc::new(match args[2].as_str() {
+                    "string" => InterpreterUnit::prepare_with_tools(source, INPUTS, &schema()).unwrap(),
+                    "plain" | "joined" => InterpreterUnit::prepare_with_declarations(source, INPUTS, &string_schema()).unwrap(),
+                    _ => InterpreterUnit::prepare_script(source, INPUTS).unwrap(),
+                });
                 let result = interpreter::execute_script(code, provider.clone(), &[7],
                     ScriptLimits::default(), Cancellation::default(), None).await;
                 result.status.unwrap(); result.stdout

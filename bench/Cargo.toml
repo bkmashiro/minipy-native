@@ -43,3 +43,13 @@ required-features = ["string-probe"]
 name = "bo-request"
 path = "src/bin/bo_request.rs"
 required-features = ["string-probe"]
+
+[[bin]]
+name = "bs-diag"
+path = "src/bin/bs_diag.rs"
+required-features = ["string-probe"]
+
+[[bin]]
+name = "bs-concat-ref"
+path = "src/bin/bs_concat_ref.rs"
+required-features = ["string-probe"]
