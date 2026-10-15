@@ -2128,3 +2128,8 @@ Template payload 100 B; timed request code 36 B; four i64 state slots 32 B;
 one-page 16 KiB code allocation is source-derived, not RSS/density evidence.
 Raw, exact commands and limitations: [CB evidence](../evidence/cb-copy-patch/README.md).
 
+Receipt-verified `gpt-6-luna` reviewed fixed snapshot `f9ee2d4` read-only and found
+no blockers, including the narrow installer-cost stop decision and explicit
+unbuilt source/workload coverage. Focused release tests, strict gate Clippy,
+rustfmt, raw reductions and production equality passed. See [CB review](../evidence/cb-copy-patch/review.md).
+

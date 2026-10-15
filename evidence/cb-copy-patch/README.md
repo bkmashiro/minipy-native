@@ -154,4 +154,7 @@ The Rust test is experimental-only on this branch, not production/API integratio
 `prototype.patch` preserves its source/tooling additions relative to the base;
 raw/templates/docs are small retained evidence. Temporary object and gate binary
 are deleted. First Rust build needed an explicit Result error type; no semantics
-or tests were weakened. Focused review and final validation are recorded separately.
+or tests were weakened. Release gate tests, strict gate Clippy, rustfmt, committed
+raw reduction equality, malformed object identity rejection and empty production
+diff passed; see `verification.json`. A receipt-verified `gpt-6-luna` reviewed
+fixed commit `f9ee2d4` read-only and found no blockers; see [review](review.md).
