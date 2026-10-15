@@ -1650,3 +1650,60 @@ all passed. Rust 1.96's rustfmt component is absent locally; the available
 default rustfmt was used without downloading a toolchain. Linux, Wasm and
 production Host integration remain untested by this mainline integration.
 
+## BQ: unified bound string Tool argument (2026-10-15)
+
+The opt-in `tool-json` lane now binds a single named string argument through
+`ToolDeclaration` (`ArgumentSchema::String`), in the same validated ID/name
+namespace as numeric declarations. The existing `ToolSchema`,
+`compile_with_tools`/`prepare_with_tools`, `Provider::call_tool`, `HttpProvider`
+and numeric `[i64; 2]` fields remain source-compatible. The unified
+`Provider::call_bound_tool` defaults to forwarding numeric calls and denying
+strings; declaration, result shape and ID alone do not grant authority.
+The Host-owned provider must authorize the ID and validate the path/reply,
+including task-relative policy, redaction and bounds. No filesystem Host was
+integrated. No claim that original private `read_file(...)` scripts run
+unchanged: only static `tools.read_file("literal")` and previously declared
+JSON string leaves/aliases are accepted; offset/limit, dynamic paths, lists,
+imports and global aliasing remain unsupported.
+
+Literal UTF-8 is bounded to 4,096 bytes; the whole source remains 16 KiB.
+Sealed calls store an immutable `Arc<str>` or a JSON path slot. At dispatch,
+an accessed plain leaf is validated then lends a `Bytes` span, while an
+escaped leaf shares its decoded `Arc<String>` owner. The detached future owns
+the span or decoded string after cancellation; the task drops unrelated JSON
+owners at last use. Native uses the otherwise unused string-call `batch`
+field to retain the post-capture liveness mask without growing `Frame`; tape
+captures before releasing the source root. Both apply the pre-existing Tool
+count/permission gate and JSON owner/stdout byte caps; errors preserve prior
+printed output. A trusted Host must still bound concurrently detached work.
+
+`tests/string_tool.rs` exercises literal and named binding, multiple declared
+IDs, denial, missing/null/invalid UTF-8, Unicode print, stdout budget with
+prefix preservation, schema/shape errors, old numeric API, and delayed
+cancelled Tool completion with weak owner observation for escaped and plain
+JSON on both native and tape. The response is a synthetic bounded JSON dict,
+not a real `read_file` Host adapter. Existing `tool_json`, `http_tool` and
+default feature tests remain the numeric regression control.
+
+Small resident-process source-cold fixture: `cargo +1.96.0 test --release
+--offline --locked --features tool-json --test string_tool
+resident_request_cost -- --ignored --nocapture`. Raw
+`evidence/bq-string-tool/request-cost.jsonl` has 104 rows, SHA256
+`33ba921142e3e11d6c305aca97761519db18fe54f72453ab20f616827cd874eb`.
+Source identity: this BQ commit on parent `bbca816`, benchmark harness
+`tests/string_tool.rs` SHA256
+`233495c8df46b385d99531bc5bcdda147415b95d87b49f0c6b5bcd6e85979e88`.
+macOS 26.4.1 arm64, rustc 1.96.0 (`ac68faa20`); 26 fresh-source requests per
+backend/argument shape, two initial warmups per shape excluded; alternating
+numeric/string order. Timing includes source preparation, real dispatch of an
+already-resident bounded JSON reply, stdout and cleanup; fixture/schema setup
+and Cargo build are outside the interval. Median of 24 measured requests:
+tape numeric/string 28.750/30.375 µs; native 172.416/170.333 µs. P90:
+tape 49.666/44.958 µs; native 181.125/188.542 µs. Numeric vs string
+inputs differ in argument semantics; these small synthetic, noisy paired
+samples show neither a general speed gain nor a proven old-path regression.
+An earlier same-command run varied materially in absolute medians (tape
+17.750/17.375 µs; native 141.083/140.042 µs), reinforcing this limit.
+No Monty baseline, unchanged private script, Linux/Wasm or production Host
+validation is claimed by this bounded campaign.
+

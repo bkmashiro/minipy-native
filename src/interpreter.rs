@@ -44,6 +44,14 @@ impl InterpreterUnit {
     ) -> Result<Self, CompileError> {
         Self::from_program(frontend::parse_with_tools(source, inputs, tools)?)
     }
+    #[cfg(feature = "tool-json")]
+    pub fn prepare_with_declarations(
+        source: &str,
+        inputs: &[(&str, Type)],
+        tools: &[crate::tool::ToolDeclaration],
+    ) -> Result<Self, CompileError> {
+        Self::from_program(frontend::parse_with_declarations(source, inputs, tools)?)
+    }
     fn from_program(program: crate::ir::Program) -> Result<Self, CompileError> {
         let mut ops = Vec::new();
         flatten(program.statements, &mut ops);
@@ -72,7 +80,7 @@ impl InterpreterUnit {
         }
         #[cfg(feature = "tool-json")]
         let json_live = if program.json.roots > 0 {
-            tape::json_liveness(&ops)
+            tape::json_liveness(&ops, &program.json)
         } else {
             Vec::new()
         };
@@ -194,10 +202,6 @@ async fn run<P: Provider>(
             json.set_external(owners.iter().flatten().map(QuoteBuffer::bytes).sum());
         }
         let boundary = tape::run_until_boundary(unit, &mut state, &owners, &limits, output)?;
-        #[cfg(feature = "tool-json")]
-        if let Some(json) = &mut output.json {
-            json.release(unit.json_live[state.pc]);
-        }
         match boundary {
             #[cfg(feature = "debug-runtime")]
             Boundary::Step => unreachable!("production specialization never stops per instruction"),
@@ -247,12 +251,32 @@ async fn run<P: Provider>(
             Boundary::Tool(call, target, args) => {
                 let held = release(&mut owners, unit.live[state.pc]);
                 let call = &unit.json.as_ref().expect("sealed Tool plan").calls[call];
-                runtime::authorize_tool(&cancel, provider.allows_tool(call.id), &mut calls)?;
                 let (id, count, is_json) = (call.id, call.arguments, call.json);
+                let argument = match &call.string {
+                    Some(crate::tool::StringSource::Literal(s)) => {
+                        crate::tool::ToolArguments::String(crate::tool::StringValue::Literal(
+                            s.clone(),
+                        ))
+                    }
+                    Some(crate::tool::StringSource::Json { slot, .. }) => {
+                        crate::tool::ToolArguments::String(
+                            output
+                                .json
+                                .as_mut()
+                                .expect("JSON plan")
+                                .string_value(*slot)?,
+                        )
+                    }
+                    None => crate::tool::ToolArguments::Numeric(args, count),
+                };
+                runtime::authorize_tool(&cancel, provider.allows_tool(call.id), &mut calls)?;
+                if let Some(json) = &mut output.json {
+                    json.release(unit.json_live[state.pc]);
+                }
                 let p = provider.clone();
                 let (tx, rx) = oneshot::channel();
                 tokio::spawn(async move {
-                    let _ = tx.send(p.call_tool(id, args, count).await);
+                    let _ = tx.send(p.call_bound_tool(id, argument).await);
                 });
                 match (is_json, runtime::receive(rx, &cancel).await?) {
                     (true, crate::tool::Reply::Json(bytes)) => {
@@ -282,6 +306,10 @@ async fn run<P: Provider>(
                 });
                 state.locals[target] = runtime::receive(rx, &cancel).await?;
             }
+        }
+        #[cfg(feature = "tool-json")]
+        if let Some(json) = &mut output.json {
+            json.release(unit.json_live[state.pc]);
         }
     }
     runtime::event(&trace, "done", 0, 0, state.remaining, state.index as u64);

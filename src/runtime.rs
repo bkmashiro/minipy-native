@@ -461,14 +461,37 @@ async fn run<P: Provider>(
                     .calls
                     .get((status - 8) as usize)
                     .ok_or(TaskError::Input)?;
-                authorize_tool(&cancel, provider.allows_tool(call.id), &mut calls)?;
                 let (id, count, json) = (call.id, call.arguments, call.json);
+                let argument = match &call.string {
+                    Some(crate::tool::StringSource::Literal(s)) => {
+                        crate::tool::ToolArguments::String(crate::tool::StringValue::Literal(
+                            s.clone(),
+                        ))
+                    }
+                    Some(crate::tool::StringSource::Json { slot, .. }) => {
+                        crate::tool::ToolArguments::String(
+                            output
+                                .json
+                                .as_mut()
+                                .expect("JSON plan")
+                                .string_value(*slot)?,
+                        )
+                    }
+                    None => crate::tool::ToolArguments::Numeric([frame.batch, frame.total], count),
+                };
+                authorize_tool(&cancel, provider.allows_tool(call.id), &mut calls)?;
+                if matches!(call.string, Some(crate::tool::StringSource::Json { .. })) {
+                    output
+                        .json
+                        .as_mut()
+                        .expect("JSON plan")
+                        .release(frame.batch as u32);
+                }
                 let target = frame.target as usize;
-                let args = [frame.batch, frame.total];
                 let p = provider.clone();
                 let (tx, rx) = oneshot::channel();
                 tokio::spawn(async move {
-                    let _ = tx.send(p.call_tool(id, args, count).await);
+                    let _ = tx.send(p.call_bound_tool(id, argument).await);
                 });
                 match (json, receive(rx, &cancel).await?) {
                     (true, crate::tool::Reply::Json(bytes)) => output

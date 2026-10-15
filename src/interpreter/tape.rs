@@ -338,7 +338,7 @@ pub(super) enum Boundary {
     Step,
 }
 #[cfg(feature = "tool-json")]
-pub(super) fn json_liveness(ops: &[Op]) -> Vec<u32> {
+pub(super) fn json_liveness(ops: &[Op], plan: &crate::tool::Plan) -> Vec<u32> {
     let mut live = vec![0; ops.len() + 1];
     loop {
         let mut changed = false;
@@ -351,6 +351,10 @@ pub(super) fn json_liveness(ops: &[Op]) -> Vec<u32> {
                 Op::JsonRead(_, _, root, _) => next | (1 << root),
                 Op::JsonString(_, _, root, _) => next | (1 << root),
                 Op::PrintJsonString(_, root) => next | (1 << root),
+                Op::Tool(call, _, _) => match &plan.calls[*call].string {
+                    Some(crate::tool::StringSource::Json { root, .. }) => next | (1 << root),
+                    _ => next,
+                },
                 Op::Return => 0,
                 _ => next,
             };

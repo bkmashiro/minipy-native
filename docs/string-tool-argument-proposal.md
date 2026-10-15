@@ -1,4 +1,6 @@
-# BP follow-up: literal UTF-8 Tool argument (proposal only)
+# BP follow-up: literal UTF-8 Tool argument (initial proposal)
+
+The bounded BQ prototype now implements a unified numeric/string declaration and a declared JSON string-leaf argument; see [BQ evidence](experiments.md#bq-unified-bound-string-tool-argument-2026-10-15) for the actual API and limitations. The text below is retained as the original design hypothesis, not as an exact description of the implementation.
 
 Decision gate: BO prints a declared JSON string leaf, but the numeric Tool ABI still cannot call the real read-only `read_file(path: str, offset: int = 1, limit: int = 2000)` Host API unchanged. BN's audited response is a dictionary (including `content` and `total_lines`, or an error), with task-relative path authorization, protected-path checks, redaction, pagination and deduplication in the Host. This proposal describes one optional, explicitly Host-bound literal-path call; it neither implements it nor claims unchanged private-script admission. Dynamic paths, list loops, imports and generic Python strings remain out of scope. Proceed only after a Host-owned fixture can enforce the real permission/error/bound contract.
 

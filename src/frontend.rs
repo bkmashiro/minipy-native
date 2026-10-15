@@ -50,7 +50,19 @@ pub fn parse_with_tools(
     inputs: &[(&str, Type)],
     tools: &[crate::tool::ToolSchema],
 ) -> Result<Program> {
-    crate::tool::ToolSchema::validate_all(tools)?;
+    parse_with_declarations(
+        source,
+        inputs,
+        &tools.iter().map(Into::into).collect::<Vec<_>>(),
+    )
+}
+#[cfg(feature = "tool-json")]
+pub fn parse_with_declarations(
+    source: &str,
+    inputs: &[(&str, Type)],
+    tools: &[crate::tool::ToolDeclaration],
+) -> Result<Program> {
+    crate::tool::ToolDeclaration::validate_all(tools)?;
     if source.len() > ir::MAX_SOURCE_BYTES {
         return Err(err("source exceeds MAX_SOURCE_BYTES"));
     }
@@ -156,7 +168,7 @@ struct Compiler<'a> {
     inputs: usize,
     legacy: bool,
     #[cfg(feature = "tool-json")]
-    tools: Vec<crate::tool::ToolSchema>,
+    tools: Vec<crate::tool::ToolDeclaration>,
     #[cfg(feature = "tool-json")]
     json: crate::tool::Plan,
     #[cfg(feature = "tool-json")]
@@ -772,6 +784,51 @@ impl<'a> Compiler<'a> {
             return Err(err("tool calls are unsupported inside loops"));
         }
         self.node(depth)?;
+        if matches!(
+            tool.arguments.first(),
+            Some(crate::tool::ArgumentSchema::String(_))
+        ) {
+            if c.args.len() + c.keywords.len() != 1
+                || c.args.len() > 1
+                || c.keywords.first().is_some_and(|k| {
+                    k.arg.as_ref().map(|s| s.as_str()) != Some(tool.arguments[0].name())
+                })
+            {
+                return Err(err("string Tool requires its declared argument"));
+            }
+            let value = if let Some(value) = c.args.first() {
+                value
+            } else {
+                &c.keywords[0].value
+            };
+            let source = if let ast::Expr::Constant(v) = value {
+                if let ast::Constant::Str(s) = &v.value {
+                    if s.len() > 4096 {
+                        return Err(err("string Tool literal exceeds 4096 bytes"));
+                    }
+                    crate::tool::StringSource::Literal(std::sync::Arc::from(s.as_str()))
+                } else {
+                    return Err(type_err(
+                        "string Tool requires a string literal or declared JSON leaf",
+                    ));
+                }
+            } else if let Some((root, path)) = self.json_path(value)? {
+                if !self.json_leaves[root]
+                    .iter()
+                    .any(|(p, t)| p == &path && *t == crate::tool::JsonLeaf::String)
+                {
+                    return Err(type_err("string Tool requires a declared JSON string leaf"));
+                }
+                let slot = self.json.path(root, &path)?;
+                self.json.string_paths = true;
+                crate::tool::StringSource::Json { slot, root }
+            } else {
+                return Err(type_err(
+                    "string Tool requires a string literal or declared JSON leaf",
+                ));
+            };
+            return self.bind_tool(name, tool.id, tool.result, Vec::new(), Some(source), out);
+        }
         if c.args.len() > tool.arguments.len() {
             return Err(err("too many Tool arguments"));
         }
@@ -794,7 +851,7 @@ impl<'a> Compiler<'a> {
             let position = tool
                 .arguments
                 .iter()
-                .position(|a| a == key.as_str())
+                .position(|a| a.name() == key.as_str())
                 .ok_or_else(|| err("unknown Tool argument name"))?;
             if args[position].is_some() {
                 return Err(err("duplicate Tool argument"));
@@ -811,7 +868,19 @@ impl<'a> Compiler<'a> {
             .into_iter()
             .map(|a| a.ok_or_else(|| err("missing Tool argument")))
             .collect::<Result<Vec<_>>>()?;
-        let json = !matches!(tool.result, crate::tool::ResultSchema::I64);
+        self.bind_tool(name, tool.id, tool.result, args, None, out)
+    }
+    #[cfg(feature = "tool-json")]
+    fn bind_tool(
+        &mut self,
+        name: &str,
+        id: u32,
+        result: crate::tool::ResultSchema,
+        args: Vec<Expr>,
+        string: Option<crate::tool::StringSource>,
+        out: &mut Vec<Stmt>,
+    ) -> Result<bool> {
+        let json = !matches!(result, crate::tool::ResultSchema::I64);
         let target = if json {
             if self.json.roots >= 32 {
                 return Err(err("too many JSON owners"));
@@ -819,7 +888,7 @@ impl<'a> Compiler<'a> {
             let root = self.json.roots;
             self.bind_json(name, root, Vec::new())?;
             self.json.roots += 1;
-            let leaves = match tool.result {
+            let leaves = match result {
                 crate::tool::ResultSchema::Json(paths) => paths
                     .into_iter()
                     .map(|p| (p, crate::tool::JsonLeaf::I64))
@@ -836,9 +905,10 @@ impl<'a> Compiler<'a> {
         };
         let call = self.json.calls.len();
         self.json.calls.push(crate::tool::BoundCall {
-            id: tool.id,
+            id,
             arguments: args.len(),
             json,
+            string,
         });
         out.push(Stmt::Tool {
             call,
