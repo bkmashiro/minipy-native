@@ -1,0 +1,49 @@
+{
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--features",
+        "tool-json",
+        "--test",
+        "by_dispatch",
+        "by_diagnostic",
+        "--",
+        "--ignored",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "stdout": "\nrunning 1 test\ntest by_diagnostic ... BY {\"native\":false,\"mode\":0,\"sample\":0,\"future_bytes\":1144,\"allocations\":7,\"requested_bytes\":740}\nBY {\"native\":false,\"mode\":0,\"sample\":1,\"future_bytes\":1144,\"allocations\":5,\"requested_bytes\":612}\nBY {\"native\":false,\"mode\":0,\"sample\":2,\"future_bytes\":1144,\"allocations\":5,\"requested_bytes\":612}\nBY {\"native\":false,\"mode\":0,\"sample\":3,\"future_bytes\":1144,\"allocations\":5,\"requested_bytes\":612}\nBY {\"native\":false,\"mode\":0,\"sample\":4,\"future_bytes\":1144,\"allocations\":4,\"requested_bytes\":548}\nBY {\"native\":false,\"mode\":1,\"sample\":0,\"future_bytes\":1144,\"allocations\":2,\"requested_bytes\":68}\nBY {\"native\":false,\"mode\":1,\"sample\":1,\"future_bytes\":1144,\"allocations\":2,\"requested_bytes\":68}\nBY {\"native\":false,\"mode\":1,\"sample\":2,\"future_bytes\":1144,\"allocations\":2,\"requested_bytes\":68}\nBY {\"native\":false,\"mode\":1,\"sample\":3,\"future_bytes\":1144,\"allocations\":2,\"requested_bytes\":68}\nBY {\"native\":false,\"mode\":1,\"sample\":4,\"future_bytes\":1144,\"allocations\":2,\"requested_bytes\":68}\nBY {\"native\":true,\"mode\":0,\"sample\":0,\"future_bytes\":880,\"allocations\":5,\"requested_bytes\":868}\nBY {\"native\":true,\"mode\":0,\"sample\":1,\"future_bytes\":880,\"allocations\":5,\"requested_bytes\":868}\nBY {\"native\":true,\"mode\":0,\"sample\":2,\"future_bytes\":880,\"allocations\":5,\"requested_bytes\":868}\nBY {\"native\":true,\"mode\":0,\"sample\":3,\"future_bytes\":880,\"allocations\":5,\"requested_bytes\":868}\nBY {\"native\":true,\"mode\":0,\"sample\":4,\"future_bytes\":880,\"allocations\":5,\"requested_bytes\":868}\nBY {\"native\":true,\"mode\":1,\"sample\":0,\"future_bytes\":880,\"allocations\":3,\"requested_bytes\":388}\nBY {\"native\":true,\"mode\":1,\"sample\":1,\"future_bytes\":880,\"allocations\":3,\"requested_bytes\":388}\nBY {\"native\":true,\"mode\":1,\"sample\":2,\"future_bytes\":880,\"allocations\":3,\"requested_bytes\":388}\nBY {\"native\":true,\"mode\":1,\"sample\":3,\"future_bytes\":880,\"allocations\":3,\"requested_bytes\":388}\nBY {\"native\":true,\"mode\":1,\"sample\":4,\"future_bytes\":880,\"allocations\":3,\"requested_bytes\":388}\nok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.01s\n\n",
+      "stderr": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 8.45s\n     Running tests/by_dispatch.rs (target/release/deps/by_dispatch-84a29bbd75346850)\n"
+    }
+  ],
+  "sources": {
+    "src/bin/minipy.rs": "14c157179b8156816de8b6bd2736407af8998059b5f1940b79073528f154a76f",
+    "src/buffer.rs": "728e3dc082ed1f8bed96864f608c1ddb22f7f6b9016531dba0e5deff7d9d2867",
+    "src/codegen.rs": "964b230ee261016df2a109623cce5c62677af8036c582d7a9acf41ccc8a18034",
+    "src/compiler_profile.rs": "7fdb8442d6d37d630fcf9c679c2abb1da0c49ab52ffc6b2741cd05ff46fcaefb",
+    "src/error.rs": "71b911094d7d0cc11b0d1445abd15c059e2b9ae6a32f76e14cda16020afb142c",
+    "src/fixture_reference.rs": "d3c67f1003a5816832fbd15c6d377edbb4d422c6db9be1b3cab7c40ae58aff53",
+    "src/frontend/schema_probe.rs": "63aa58fae1ae8175b0fba0cf55087c8bfed263e510aab7b3cb9d10895bf747cb",
+    "src/frontend.rs": "dfb305b190595ee2a8315d23fa2d74eb02518a6e723d0729f5b97862f3946731",
+    "src/http_provider.rs": "fde2d86e841e245c4c8300771f68304819589692741743e6449ae695a5208f1e",
+    "src/interpreter/debug.rs": "c46ea90a2cf6deddb8b7db9227447235efbb561c4f0376e73ea38ff0a49906b5",
+    "src/interpreter/tape.rs": "b7698082475b74e64d78520b0220bf1148535fc86fa4b9aed5c32401a171a548",
+    "src/interpreter.rs": "e99d1b0b55cad34e1525965b67aa94e142df76cbace6766f2cb999367d94fabe",
+    "src/interpreter_profile.rs": "ca14500ff28ec156553ae1d2e0672381afdad261b2f309ea72455bd11fa7722c",
+    "src/ir.rs": "2044c3db8638ec7bb6d20ed5d7c7de00cb6d7e6501f9c72616d193e7b6e24abe",
+    "src/json_view.rs": "9855131d8250cb5f1f3254a8c0ef2b151d3359b818d5e6b359ef9ab25eb3f924",
+    "src/lib.rs": "d4e08a6ac47ee51961389937efa9d630d94c77005e2a45882705ca946a7153b6",
+    "src/provider.rs": "65054989a9155222c7f642a85621f8e7c86fc0a689a13025c9f56a03225ba295",
+    "src/runtime.rs": "c2e1d3e9db4c81f1167d839d5f9ba0fe9c81c1b1e94c1a0211ff6050be68857d",
+    "src/tool.rs": "634309d8006b63b5a443368b0b4882f2d0f7d83a5c814ddf0e07b718422d9ca2",
+    "src/wasm.rs": "d29e071173a706dd80a506557075af0fe3d6a26b7d2ed4be261658123edfb623"
+  },
+  "test_sha256": "25afb1e9eb87364d0e2b66aa7fd3995a0a74c3bd87f07eb575c5a2553127fb04"
+}

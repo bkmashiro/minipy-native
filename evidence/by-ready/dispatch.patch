@@ -1,0 +1,82 @@
+diff --git a/src/interpreter.rs b/src/interpreter.rs
+index 57fde2f..685fbbc 100644
+--- a/src/interpreter.rs
++++ b/src/interpreter.rs
+@@ -300,12 +300,10 @@ async fn run<P: Provider>(
+                 {
+                     json.release(mask);
+                 }
+-                let p = provider.clone();
+-                let (tx, rx) = oneshot::channel();
+-                tokio::spawn(async move {
+-                    let _ = tx.send(p.call_bound_tool(id, argument).await);
+-                });
+-                match (is_json, runtime::receive(rx, &cancel).await?) {
++                match (
++                    is_json,
++                    runtime::dispatch_tool(provider.clone(), id, argument, &cancel).await?,
++                ) {
+                     (true, crate::tool::Reply::Json(bytes)) => {
+                         let json = output.json.as_mut().expect("sealed JSON plan");
+                         json.install(target, bytes, limits.buffer_bytes.saturating_sub(held))?;
+diff --git a/src/runtime.rs b/src/runtime.rs
+index 2f31292..f8d35e3 100644
+--- a/src/runtime.rs
++++ b/src/runtime.rs
+@@ -126,6 +126,39 @@ pub(crate) async fn receive<T>(
+     check(cancel)?;
+     result
+ }
++/// BY isolated experiment: explicit completion only, never poll an async future inline.
++#[cfg(all(feature = "tool-json", not(target_arch = "wasm32")))]
++pub(crate) async fn dispatch_tool<P: Provider>(
++    provider: Arc<P>,
++    id: u32,
++    argument: crate::tool::ToolArguments,
++    cancel: &Cancellation,
++) -> Result<crate::tool::Reply, TaskError> {
++    use crate::provider::ToolDispatch;
++    let dispatch = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
++        provider.begin_tool(id, argument)
++    }));
++    match dispatch {
++        Ok(ToolDispatch::Deferred(argument)) => {
++            let (tx, rx) = oneshot::channel();
++            tokio::spawn(async move {
++                let _ = tx.send(provider.call_bound_tool(id, argument).await);
++            });
++            receive(rx, cancel).await
++        }
++        ready => {
++            // Preserve a scheduling/cancellation boundary even for chains of Ready calls.
++            // No provider future, parameter lease or permit may remain pending here.
++            tokio::task::yield_now().await;
++            check(cancel)?;
++            match ready {
++                Ok(ToolDispatch::Ready(result)) => result,
++                Err(_) => Err(TaskError::Provider("operation lost".into())),
++                _ => unreachable!(),
++            }
++        }
++    }
++}
+ #[cfg(not(target_arch = "wasm32"))]
+ pub async fn execute<P: Provider>(
+     code: Rc<CodeUnit>,
+@@ -673,12 +706,10 @@ async fn run<P: Provider>(
+                         .release(frame.batch as u32);
+                 }
+                 let target = frame.target as usize;
+-                let p = provider.clone();
+-                let (tx, rx) = oneshot::channel();
+-                tokio::spawn(async move {
+-                    let _ = tx.send(p.call_bound_tool(id, argument).await);
+-                });
+-                match (json, receive(rx, &cancel).await?) {
++                match (
++                    json,
++                    dispatch_tool(provider.clone(), id, argument, &cancel).await?,
++                ) {
+                     (true, crate::tool::Reply::Json(bytes)) => output
+                         .json
+                         .as_mut()

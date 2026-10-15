@@ -2026,3 +2026,31 @@ release suites pass, as do strict all-target Clippy, 9 Python workbench tests,
 rustfmt and patch/diff checks. Tests use Rust 1.96.0; installed Clippy/rustfmt use
 Rust 1.93.1. See [BX review record](../evidence/bx-madd/review.md).
 
+## BY: explicit Ready Tool dispatch deferred after bounded prototype
+
+Base `03a39af`. An additive Provider begin_tool returning owned Ready(result) or
+Deferred(arguments) can preserve existing Provider source compatibility; the
+default remains detached. This isolated prototype never polls a future inline.
+Ready completion catches unwind panic, yields once and rechecks cancellation;
+Deferred retains the original spawn/oneshot ownership, HTTP permits and timeout.
+Both engines preserve argument errors, authority, call debit and reply consumers.
+
+A/B and exact-binary A/A each complete 64 processes / 3072 fresh-source requests.
+Ready tape B:A is 0.9470, native 1.0106; unchanged scalar tape is 0.9433 and A/A
+controls drift up to 2.32%. Thus there is no consistent causal request win.
+Separate prepared-execution diagnostics remove two allocations / 480 requested
+bytes on explicit-ready calls, but concrete execution future sizes increase
+tape 928→1144 B and native 664→880 B, including Deferred mode. No density/RSS or
+HTTP speed gain is claimed. Preserve fairness rather than removing its yield to
+rescue the measurement. Stop this candidate and restore all production/API and
+normal workbench code exactly to the base; keep patch, tests and small evidence.
+
+Candidate and final full default and tool-json/debug-runtime release suites pass
+on Rust 1.96.0. Initial 64-call fairness test exceeded existing MAX_LOCALS; its
+passing eight-call replacement does not relax admission. Final strict all-target
+Clippy (installed Rust 1.93.1), nine Python workbench tests, fmt and patch/diff
+checks pass. No Linux/Wasm/Monty performance campaign. The pre-created BZ lane
+owns the distinct large-root/small-leaf async retention experiment.
+Commands, raw, layout/allocation limits and compatible API prototype:
+[BY Ready evidence](../evidence/by-ready/README.md).
+

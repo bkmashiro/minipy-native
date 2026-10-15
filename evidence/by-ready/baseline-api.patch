@@ -1,0 +1,51 @@
+diff --git a/src/provider.rs b/src/provider.rs
+index 1543ede..5048029 100644
+--- a/src/provider.rs
++++ b/src/provider.rs
+@@ -7,8 +7,24 @@ use std::sync::atomic::{AtomicUsize, Ordering};
+ use std::sync::{Arc, Mutex};
+ use std::time::Duration;
+ 
++/// Explicit synchronous completion, or untouched arguments for the existing async path.
++#[cfg(feature = "tool-json")]
++pub enum ToolDispatch {
++    Ready(Result<crate::tool::Reply, TaskError>),
++    Deferred(crate::tool::ToolArguments),
++}
++
+ /// Capability-facing asynchronous operations for the quote vertical slice.
+ pub trait Provider: Send + Sync + 'static {
++    /// Called only after task authorization and call-budget debit.
++    /// Ready must finish synchronously with an owned reply and no outstanding work.
++    /// Deferred must not submit an effect: call_bound_tool will receive these arguments once.
++    /// Implementations must be bounded and nonblocking. Existing providers default to Deferred.
++    #[cfg(feature = "tool-json")]
++    fn begin_tool(&self, _id: u32, args: crate::tool::ToolArguments) -> ToolDispatch {
++        ToolDispatch::Deferred(args)
++    }
++
+     /// The Host binds a task capability set in its Provider instance. Schema is not authority.
+     #[cfg(feature = "tool-json")]
+     fn allows_tool(&self, _id: u32) -> bool {
+diff --git a/tests/perf_workbench.rs b/tests/perf_workbench.rs
+index 13f4d2b..f4ed3b5 100644
+--- a/tests/perf_workbench.rs
++++ b/tests/perf_workbench.rs
+@@ -26,6 +26,17 @@ use tokio::{
+ 
+ struct Host;
+ impl Provider for Host {
++    fn begin_tool(&self, id: u32, args: ToolArguments) -> minipy_native::provider::ToolDispatch {
++        assert_eq!(id, 101);
++        let escaped = matches!(args, ToolArguments::Numeric(values, _) if values[0] == -1);
++        minipy_native::provider::ToolDispatch::Ready(Ok(Reply::Json(bytes::Bytes::from_static(
++            if escaped {
++                br#"{"message":"hello\nerror"}"#
++            } else {
++                br#"{"message":"hello error"}"#
++            },
++        ))))
++    }
+     async fn load_quotes(&self, _: i64) -> Result<QuoteBuffer, TaskError> {
+         // Producer construction/import is request work, not prebuilt resident input.
+         QuoteBuffer::from_quotes(
