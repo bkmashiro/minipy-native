@@ -1321,3 +1321,47 @@ pass. Linux/WSL and remote HTTP measurements were not run in BD. The
 default-feature suite and strict Clippy pass separately; AY's existing default control
 remains the comparison for that configuration. No website, CI or VM changes.
 
+### BD review supplement: actual layout and weighted tape
+
+On `004404b`, an ephemeral `#[cfg(test)]` probe inside `src/interpreter.rs`
+printed `size_of::<Op, tape::Operand, Field, State, Quote, QuoteBuffer>()`,
+`offset_of!(State, ...)`, and `Debug` for the sealed ops from
+`InterpreterUnit::prepare_script(include_str!("../fixtures/weighted_script.py"),
+&[("batch_id", Type::I64), ("price_limit", Type::I64)])`. It ran via
+`CARGO_BUILD_JOBS=1 cargo +1.96.0 test --offline --locked --features tool-json
+--lib bd_temporary_layout_probe -- --nocapture` on `aarch64-apple-darwin`
+(Rust 1.96.0, test/unoptimized profile, `tool-json`; existing `target/`).
+The temporary test was removed afterward, so that *exact* command requires
+reinstating the described probe; it is not a committed diagnostic API. Output:
+
+    Op=56 Operand=16 Field=4 State=328 Quote=16 QuoteBuffer=8
+    State: row@0 record_row@24 locals@40 pc@296 index@304 chunk_left@312 remaining@320
+    weighted tape: 13 ops, 728 logical op bytes
+    3: Scan { buffer: 0, end: 10, stride: 16 }
+    4: LeJump(Field(Quantity), Imm(0), 9)
+    5: GtJump(Field(Price), Local(1), 9)
+    6: Mul(Local(3), Field(Price), Field(Quantity))
+    7: Add(Local(2), Local(2), Local(3))
+    8: Jump(9)
+    9: Next(3)
+    10: Record(4, Local(0), Local(2))
+
+This is the real prepared Quote tape for the current source and feature, not
+an LLVM/assembly dump. Neither AY nor pre-record was rebuilt with the probe:
+their `Op`/`State` sizes and exact emitted tapes are **not measured** here.
+The identical source fixture and preparation entrypoint were used in the
+paired `interpreter_ab` comparisons above; the source changes from AY to A
+(`git diff 446a8eb..004404b -- src/interpreter/tape.rs`) are confined to
+`read(Field)` at lines 364–389 and `Op::Scan` at 516–545. Before A, the scan
+obtained `owners[*buffer].as_ref().rows()` separately for length and row;
+after A, it binds `rows` once and indexes it. Before A, Price/Quantity each
+looked up `state.row`; after A, they share a Quote row arm. These are source
+facts, not proof of distinct machine instructions or why the remainder costs
+17%. No compiler IR or disassembled hot loop was retained for any matched
+revision. In particular the measured 56-byte op and 328-byte state cannot
+be compared with an unmeasured baseline layout or attributed a cycle cost.
+The actual paired ablation and negative B control are the raw files and
+medians above. The remaining Quote warm regression versus pre-record is
+unisolated, and this branch is not eligible for integration on a performance-
+neutrality claim.
+
