@@ -1221,3 +1221,103 @@ so small cold/warm differences are not robust. This synthetic zero-delay
 macOS result neither isolates the remaining cause nor predicts Linux or real
 provider delays. Do not merge the feature on a performance-neutrality claim.
 
+## BD: AY Quote tape regression attribution (2026-10-15)
+
+Experimental branch `exp/bd-schema-cost` merges reviewed AY `446a8eb` into
+current main `20e454a` at `3209474`, retaining both parents. Main remains
+unchanged. The only merge conflict appended both BC and AY experiment notes.
+This is a follow-up to AY's opt-in `tool-json` Quote tape regression, not an
+automatic record integration decision. The record schema/buffer contract and
+all authorization, fuel, owner-release and error paths remain unchanged.
+
+Diff inspection against pre-record main found that the Quote `Op::Scan` had
+changed from one borrowed `rows` slice to a separate owner/slice lookup for
+length and another for the indexed row; `read(Field)` now matched a possible
+record field before reading Quote fields. Candidate A restores the single
+borrow and routes Quote fields through one row reference inside the field
+match. This changes only tape dispatch/field read. The optimizer's emitted
+instruction attribution was not profiled; the identified extra accesses are
+source-level evidence, not an isolated cycle count.
+
+Paired release binaries were built offline with Rust 1.96.0, `CARGO_BUILD_JOBS=1`,
+shared existing `bench/target`, and `minipy-native/tool-json`. Pre-record main
+`20e454a`, AY `446a8eb`, and candidate source were built separately (git
+archives in temporary `.ab/{base,ay}`); binaries copied before another build.
+`tools/bd_measure.py` drives 3 AB/BA rounds, 6 independent processes × 7
+invocations per revision/cell, checking stdout/status in the original
+`interpreter_ab`/`record_probe` harnesses. Process startup is excluded. Cold
+includes actual source preparation, ready Provider construction/async Tools,
+scan, output and cleanup; warm excludes explicit preparation. Zero-delay
+synthetic cells are not real HTTP workloads. Raw JSONL retains binary SHA256,
+all samples, CPU attribution where available, and order/round. The final
+post-format interpreter binary (SHA256 `c3f2427e…`) has its own paired raw in
+`bench/results/bd-final-ay-ab-macos.jsonl` and `bd-final-base-ab-macos.jsonl`;
+the separately built record probe is in `bd-record-ab-macos.jsonl`. Earlier
+candidate A binary (`94453b7b…`) pairs are retained in
+`bd-ay-fix-legacy-ab-macos.jsonl` and `bd-final-legacy-ab-macos.jsonl`;
+initial three-arm attribution and rejected B remain in `bd-quote-ab-macos.jsonl`
+and `bd-operand-ab-macos.jsonl`. Formatting touched only the same source file,
+but rebuilding changed the interpreter binary hash; we do not pool those builds
+or claim byte identity. No data were pooled across campaigns.
+
+Median full-task wall ns (42 samples per revision/cell):
+
+| matched pair | case | mode | before | candidate | change |
+|---|---|---|---:|---:|---:|
+| AY → final A | Quote tape 4096 | cold | 78625 | 76000 | -3.3% |
+| AY → final A | Quote tape 4096 | warm | 53729 | 45416 | -15.5% |
+| pre-record → final A | Quote tape 4096 | cold | 54875 | 57480 | +4.7% |
+| pre-record → final A | Quote tape 4096 | warm | 30854 | 36104 | +17.0% |
+| AY → final A | scalar tape | cold | 13646 | 13771 | +0.9% |
+| AY → final A | Quote native 4096 | cold | 177021 | 179896 | +1.6% |
+| AY → A | Record tape 4096 | cold | 82500 | 70458 | -14.6% |
+| AY → A | Record tape 4096 | warm | 65416 | 52146 | -20.3% |
+| AY → A | Record native 4096 | cold | 175771 | 168146 | -4.3% |
+
+Record-probe's source/producer boundary differs from legacy AB: it decodes
+wire bytes for the record reply versus cloning typed Quote source rows. Its
+42-per-cell paired result tests that the new end-to-end path was not regressed
+by A; it is not a like-for-like data adapter comparison. The first record
+round was slower in both binaries (e.g. Record tape cold 140.6/91.7 µs);
+retaining all rounds avoids cherry-picking warmed process medians. Scalar
+warm and native weighted controls show no material change in this campaign.
+
+The pre-format A pair was stronger (AY → A: 72.188 → 62.854 µs cold,
+50.020 → 40.396 µs warm); the final AY pair's first round regressed while
+later rounds improved. Cold improvement is not stable. All three final
+pre-record pairs still show a slower Quote tape. The native and scalar controls
+do not suggest a general speedup. Candidate B additionally flattened Quote
+and bound-record field operands into
+distinct variants, hoping to remove a field branch. It regressed Quote tape:
+paired 3-round medians with A 76.229/40.250 µs cold/warm versus B
+102.416/49.416 µs, respectively (`bd-operand-ab-macos.jsonl`). B was reverted;
+its first round was especially poor and is retained, not attributed to a
+specific cache mechanism. A reduces AY's warm old-path cost but still
+loses 4.7% cold / 17.0% warm to pre-record in separate matched runs; remaining cause is
+unisolated. The wider record-enabled tape dispatch/state or memory layout
+is a hypothesis, not established causality. No third candidate or full
+benchmark campaign is justified here. Do not merge AY on a neutrality claim.
+
+Reproduction (from the experimental branch; temporary archives/binaries are
+not committed, use any local scratch directory and reuse the existing target):
+
+    git archive 20e454a | tar -x -C .ab/base
+    git archive 446a8eb | tar -x -C .ab/ay
+    CARGO_BUILD_JOBS=1 CARGO_TARGET_DIR="$PWD/bench/target" cargo +1.96.0 build --offline --locked --release --manifest-path .ab/base/bench/Cargo.toml --features minipy-native/tool-json --bin interpreter_ab
+    # Copy bench/target/release/interpreter_ab to .ab/bin/base-interpreter-ab;
+    # build the same bin from .ab/ay and this branch, copy each after build.
+    python3 tools/bd_measure.py legacy .ab/bin/ay-interpreter-ab .ab/bin/final-interpreter-ab bench/results/bd-final-ay-ab-macos.jsonl
+    python3 tools/bd_measure.py legacy .ab/bin/base-interpreter-ab .ab/bin/final-interpreter-ab bench/results/bd-final-base-ab-macos.jsonl
+    # Build --features record-probe --bin record-probe for AY and this branch.
+    python3 tools/bd_measure.py record .ab/bin/ay-record-probe .ab/bin/fix-record-probe bench/results/bd-record-ab-macos.jsonl
+    cargo test --offline --locked --features tool-json
+    cargo test --offline --locked --features 'tool-json debug-runtime' --test record_scan
+    cargo clippy --offline --locked --all-targets --features tool-json -- -D warnings
+    cargo fmt --all -- --check
+
+On local macOS ARM64, 91 opt-in tests including real localhost HTTP and the
+four record-scan tests pass; debug record tests (4), strict Clippy and format
+pass. Linux/WSL and remote HTTP measurements were not run in BD. The
+default-feature suite and strict Clippy pass separately; AY's existing default control
+remains the comparison for that configuration. No website, CI or VM changes.
+

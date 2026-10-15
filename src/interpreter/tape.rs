@@ -368,19 +368,20 @@ fn read(a: Operand, state: &State, temps: &[i64; MAX_NODES]) -> i64 {
         Operand::Temp(i) => temps[i],
         Operand::Field(f) => {
             match f {
-                Field::Price => {
-                    state
-                        .row
-                        .as_ref()
-                        .expect("sealed Quote row")
-                        .unit_price_cents
-                }
-                Field::Quantity => state.row.as_ref().expect("sealed Quote row").quantity,
                 #[cfg(feature = "tool-json")]
                 Field::Bound { offset, .. } => {
                     let ptr = state.record_row.expect("sealed record row inside scan");
                     // Immutable owner survives this turn; stride, offset and row are validated.
                     unsafe { *ptr.add(offset as usize / 8) }
+                }
+                Field::Price | Field::Quantity => {
+                    let row = state.row.as_ref().expect("sealed Quote row");
+                    match f {
+                        Field::Price => row.unit_price_cents,
+                        Field::Quantity => row.quantity,
+                        #[cfg(feature = "tool-json")]
+                        Field::Bound { .. } => unreachable!(),
+                    }
                 }
             }
         }
@@ -517,12 +518,8 @@ pub(super) fn run<const STEP: bool>(
                 end,
                 stride,
             } => {
-                let len = owners[*buffer]
-                    .as_ref()
-                    .expect("sealed scan owner")
-                    .rows()
-                    .len();
-                if state.index == len {
+                let rows = owners[*buffer].as_ref().expect("sealed scan owner").rows();
+                if state.index == rows.len() {
                     state.row = None;
                     state.pc = *end;
                     #[cfg(feature = "debug-runtime")]
@@ -537,14 +534,14 @@ pub(super) fn run<const STEP: bool>(
                     if state.remaining == 0 {
                         return Err(TaskError::Budget);
                     }
-                    let count = (len - state.index)
+                    let count = (rows.len() - state.index)
                         .min(limits.chunk)
                         .min(state.remaining as usize);
                     state.remaining -= count as u64;
                     state.chunk_left = count;
                 }
                 let _ = stride;
-                state.row = Some(owners[*buffer].as_ref().unwrap().rows()[state.index]);
+                state.row = Some(rows[state.index]);
             }
             Op::Next(header) => {
                 state.index += 1;
