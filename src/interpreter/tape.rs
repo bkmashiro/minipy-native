@@ -47,7 +47,15 @@ pub(super) enum Op {
         end: usize,
         stride: usize,
     },
+    #[cfg(feature = "tool-json")]
+    RecordScan {
+        buffer: usize,
+        end: usize,
+        stride: usize,
+    },
     Next(usize),
+    #[cfg(feature = "tool-json")]
+    RecordNext(usize),
     Load(usize, Operand),
     Record(usize, Operand, Operand),
     Print(Operand, Type),
@@ -333,7 +341,11 @@ pub(super) fn json_liveness(ops: &[Op]) -> Vec<u32> {
             let before = match &ops[pc] {
                 op if op.branch_target().is_some() => next | live[op.branch_target().unwrap()],
                 Op::Jump(t) | Op::Next(t) => live[*t],
+                #[cfg(feature = "tool-json")]
+                Op::RecordNext(t) => live[*t],
                 Op::Scan { end, .. } => next | live[*end],
+                #[cfg(feature = "tool-json")]
+                Op::RecordScan { end, .. } => next | live[*end],
                 Op::JsonRead(_, _, root, _) => next | (1 << root),
                 Op::JsonString(_, _, root, _) => next | (1 << root),
                 Op::Return => 0,
@@ -505,20 +517,6 @@ pub(super) fn run<const STEP: bool>(
                 end,
                 stride,
             } => {
-                #[cfg(feature = "tool-json")]
-                let record = records[*buffer].as_ref();
-                #[cfg(feature = "tool-json")]
-                let len = record.map_or_else(
-                    || {
-                        owners[*buffer]
-                            .as_ref()
-                            .expect("sealed scan owner")
-                            .rows()
-                            .len()
-                    },
-                    |r| r.len(),
-                );
-                #[cfg(not(feature = "tool-json"))]
                 let len = owners[*buffer]
                     .as_ref()
                     .expect("sealed scan owner")
@@ -526,10 +524,6 @@ pub(super) fn run<const STEP: bool>(
                     .len();
                 if state.index == len {
                     state.row = None;
-                    #[cfg(feature = "tool-json")]
-                    {
-                        state.record_row = None;
-                    }
                     state.pc = *end;
                     #[cfg(feature = "debug-runtime")]
                     if STEP {
@@ -549,18 +543,8 @@ pub(super) fn run<const STEP: bool>(
                     state.remaining -= count as u64;
                     state.chunk_left = count;
                 }
-                #[cfg(feature = "tool-json")]
-                if let Some(record) = record {
-                    state.record_row =
-                        Some(unsafe { record.words().as_ptr().add(state.index * stride / 8) });
-                } else {
-                    state.row = Some(owners[*buffer].as_ref().unwrap().rows()[state.index]);
-                }
-                #[cfg(not(feature = "tool-json"))]
-                {
-                    let _ = stride;
-                    state.row = Some(owners[*buffer].as_ref().unwrap().rows()[state.index]);
-                }
+                let _ = stride;
+                state.row = Some(owners[*buffer].as_ref().unwrap().rows()[state.index]);
             }
             Op::Next(header) => {
                 state.index += 1;
@@ -569,13 +553,52 @@ pub(super) fn run<const STEP: bool>(
                 let Op::Scan { buffer, .. } = unit.ops[*header] else {
                     unreachable!()
                 };
-                #[cfg(feature = "tool-json")]
-                let len = records[buffer].as_ref().map_or_else(
-                    || owners[buffer].as_ref().unwrap().rows().len(),
-                    |r| r.len(),
-                );
-                #[cfg(not(feature = "tool-json"))]
                 let len = owners[buffer].as_ref().unwrap().rows().len();
+                if state.chunk_left == 0 && state.index < len {
+                    return Ok(Boundary::Yield);
+                }
+            }
+            #[cfg(feature = "tool-json")]
+            Op::RecordScan {
+                buffer,
+                end,
+                stride,
+            } => {
+                let record = records[*buffer].as_ref().expect("sealed record scan owner");
+                let len = record.len();
+                if state.index == len {
+                    state.record_row = None;
+                    state.pc = *end;
+                    #[cfg(feature = "debug-runtime")]
+                    if STEP {
+                        return Ok(Boundary::Step);
+                    }
+                    continue;
+                }
+                if state.chunk_left == 0 {
+                    #[cfg(feature = "interpreter-profile")]
+                    crate::interpreter_profile::update(|c| c.fuel_reservations += 1);
+                    if state.remaining == 0 {
+                        return Err(TaskError::Budget);
+                    }
+                    let count = (len - state.index)
+                        .min(limits.chunk)
+                        .min(state.remaining as usize);
+                    state.remaining -= count as u64;
+                    state.chunk_left = count;
+                }
+                state.record_row =
+                    Some(unsafe { record.words().as_ptr().add(state.index * stride / 8) });
+            }
+            #[cfg(feature = "tool-json")]
+            Op::RecordNext(header) => {
+                state.index += 1;
+                state.chunk_left -= 1;
+                state.pc = *header;
+                let Op::RecordScan { buffer, .. } = unit.ops[*header] else {
+                    unreachable!()
+                };
+                let len = records[buffer].as_ref().unwrap().len();
                 if state.chunk_left == 0 && state.index < len {
                     return Ok(Boundary::Yield);
                 }

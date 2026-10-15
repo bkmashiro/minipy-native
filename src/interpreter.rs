@@ -47,6 +47,38 @@ impl InterpreterUnit {
     fn from_program(program: crate::ir::Program) -> Result<Self, CompileError> {
         let mut ops = Vec::new();
         flatten(program.statements, &program.strides, &mut ops);
+        // Seal each scan's owner kind once. A Quote-only tape never probes the
+        // record owners inside its per-row dispatch, even with tool-json enabled.
+        #[cfg(feature = "tool-json")]
+        {
+            let mut record_slots = 0u32;
+            for op in &ops {
+                if let Op::Tool(call, target, _) = op
+                    && program.json.calls[*call].record.is_some()
+                {
+                    record_slots |= 1 << target;
+                }
+            }
+            for pc in 0..ops.len() {
+                match ops[pc] {
+                    Op::Scan {
+                        buffer,
+                        end,
+                        stride,
+                    } if record_slots & (1 << buffer) != 0 => {
+                        ops[pc] = Op::RecordScan {
+                            buffer,
+                            end,
+                            stride,
+                        };
+                    }
+                    Op::Next(header) if matches!(ops[header], Op::RecordScan { .. }) => {
+                        ops[pc] = Op::RecordNext(header);
+                    }
+                    _ => {}
+                }
+            }
+        }
         // Buffer liveness at each PC, including loop backedges. No extra scalar
         // analysis is needed: slots already reside in the task's fixed local array.
         let mut live = vec![0; ops.len() + 1];
@@ -57,7 +89,11 @@ impl InterpreterUnit {
                 let before = match &ops[pc] {
                     op if op.branch_target().is_some() => next | live[op.branch_target().unwrap()],
                     Op::Jump(target) | Op::Next(target) => live[*target],
+                    #[cfg(feature = "tool-json")]
+                    Op::RecordNext(target) => live[*target],
                     Op::Scan { buffer, end, .. } => next | live[*end] | (1 << buffer),
+                    #[cfg(feature = "tool-json")]
+                    Op::RecordScan { buffer, end, .. } => next | live[*end] | (1 << buffer),
                     Op::Load(target, _) => next & !(1 << target),
                     #[cfg(feature = "tool-json")]
                     Op::Tool(call, target, _) if program.json.calls[*call].record.is_some() => {

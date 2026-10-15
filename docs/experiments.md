@@ -1161,3 +1161,41 @@ synthetic A/B does not establish behavior under real provider/network delays or
 Linux, and it is not a Monty comparison. Keep the tape cost as a performance
 follow-up; do not claim legacy opt-in performance neutrality.
 
+### AY bounded Quote tape specialization follow-up (macOS ARM64)
+
+In `src/interpreter.rs` preparation, record-producing Tool targets are bound to
+distinct `RecordScan`/`RecordNext` tape ops. `Scan`/`Next` now access only Quote
+owners; record ops access only validated record owners. No runtime record-owner
+probe remains in the Quote row loop. The layout, row fuel/chunk and yield logic
+is unchanged. This is a targeted mechanism test, not an accepted performance fix.
+
+Built opt-in `interpreter_ab` from `4aaae37` (pre-record), `83470f6` (before
+specialization), and the specialized working tree (source diff SHA256
+`9a9feb30c370f046032b0cbbac7fb1aa9f3c61f173aa2a690bdbf2180111de44`)
+with `CARGO_TARGET_DIR=$PWD/bench/target cargo +1.96.0 build --offline
+--release --manifest-path <revision>/bench/Cargo.toml --features
+minipy-native/tool-json --bin interpreter_ab`. Copied the binaries to
+`.ab/bin/{parent,base,fixed}-interpreter-ab`, then invoked each with
+`interpreter weighted {cold,warm} 4096 7`, two rounds of ABBA/BAAB process
+order, 28 timed calls per revision/mode. Same current-thread Tokio fixture,
+`RequestProvider::ready`, source and output assertions; cold includes
+preparation and invocation, warm includes invocation with prepared unit.
+Process startup excluded. Raw calls and binary hashes:
+`bench/results/ay-quote-scan-fix-ab-macos.jsonl` (base vs fixed) and
+`bench/results/ay-quote-scan-parent-ab-macos.jsonl` (parent vs fixed).
+
+| paired run | mode | baseline median ns | fixed median ns | delta |
+|---|---|---:|---:|---:|
+| 83470f6 vs fixed | cold | 82542 | 78980 | -4.3% |
+| 83470f6 vs fixed | warm | 52855 | 52625 | -0.4% |
+| 4aaae37 vs fixed | cold | 68771 | 83146 | +20.9% |
+| 4aaae37 vs fixed | warm | 39688 | 59813 | +50.7% |
+
+The owner-kind probe was eliminated by source inspection, but the paired warm
+execution does not show an end-to-end recovery relative to the unspecialized
+record build; the pre-record baseline still wins substantially. The two paired
+runs also show different absolute medians (e.g. fixed warm 52.6 vs 59.8 µs),
+so small cold/warm differences are not robust. This synthetic zero-delay
+macOS result neither isolates the remaining cause nor predicts Linux or real
+provider delays. Do not merge the feature on a performance-neutrality claim.
+
