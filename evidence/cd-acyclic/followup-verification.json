@@ -1,0 +1,74 @@
+[
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools",
+      "-p",
+      "test_perf_workbench.py"
+    ],
+    "exit_code": 0,
+    "output": ".........\n----------------------------------------------------------------------\nRan 9 tests in 0.004s\n\nOK\n"
+  },
+  {
+    "command": [
+      "python3",
+      "tools/cd_acyclic_reduce.py"
+    ],
+    "exit_code": 0,
+    "output": "scalar buffer 2->2 JSON 0->0 ops=2\nstraight_buffer buffer 14->7 JSON 0->0 ops=7\nbranch_buffer buffer 20->10 JSON 0->0 ops=10\nloop_buffer buffer 36->36 JSON 0->0 ops=12\nbranch_following_buffer buffer 16->8 JSON 0->0 ops=8\nstraight_json buffer 5->5 JSON 10->5 ops=5\nbranch_json buffer 10->10 JSON 20->10 ops=10\nstring_wait buffer 7->7 JSON 14->7 ops=7\nloop_json buffer 36->36 JSON 36->36 ops=12\nbranch_following_json buffer 8->8 JSON 16->8 ops=8\nnative branch A/B 0.98948 A/A 1.00049 ns {'A': 65406.5, 'B': 64718.75}\nnative branch_ready A/B 1.00189 A/A 1.00633 ns {'A': 82895.75, 'B': 83052.25}\nnative quote A/B 1.01277 A/A 0.95832 ns {'A': 109271.0, 'B': 110666.75}\nnative ready A/B 1.00576 A/A 0.99693 ns {'A': 79604.0, 'B': 80062.5}\nnative scalar A/B 1.02096 A/A 0.98145 ns {'A': 39760.25, 'B': 40593.75}\ntape branch A/B 0.98455 A/A 1.01113 ns {'A': 6697.75, 'B': 6594.25}\ntape branch_ready A/B 0.96708 A/A 1.02108 ns {'A': 11073.0, 'B': 10708.5}\ntape quote A/B 1.00468 A/A 0.99908 ns {'A': 11208.0, 'B': 11260.5}\ntape ready A/B 0.95214 A/A 1.01643 ns {'A': 10448.0, 'B': 9948.0}\ntape scalar A/B 0.97699 A/A 0.99522 ns {'A': 2271.0, 'B': 2218.75}\n"
+  },
+  {
+    "command": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "candidate_manifest_matches_disk": {
+      "src/bin/minipy.rs": true,
+      "src/buffer.rs": true,
+      "src/codegen.rs": true,
+      "src/compiler_profile.rs": true,
+      "src/error.rs": true,
+      "src/fixture_reference.rs": true,
+      "src/frontend/schema_probe.rs": true,
+      "src/frontend.rs": true,
+      "src/http_provider.rs": true,
+      "src/interpreter/debug.rs": true,
+      "src/interpreter/liveness_tests.rs": true,
+      "src/interpreter/tape.rs": true,
+      "src/interpreter.rs": true,
+      "src/interpreter_profile.rs": true,
+      "src/ir.rs": true,
+      "src/json_view.rs": true,
+      "src/lib.rs": true,
+      "src/provider.rs": true,
+      "src/runtime.rs": true,
+      "src/tool.rs": true,
+      "src/wasm.rs": true,
+      "Cargo.toml": true,
+      "Cargo.lock": true,
+      "tests/perf_workbench.rs": true
+    }
+  },
+  {
+    "cb_branch": "814fdd8fc178d0c654e39b4abd250a4ca514dc7f",
+    "native_codegen_unchanged": true
+  }
+]

@@ -2142,3 +2142,36 @@ blobs and found no blockers. The raw records pre-commit base HEAD plus actual
 source hashes; this provenance distinction and baseline replay are clarified in
 the following documentation-only update. See [CC review](../evidence/cc-waiting/review.md).
 
+## CD: remove acyclic tape convergence confirmation
+
+Base `0e2caed`, macOS ARM64/Rust 1.96. Test-only instruction visit counters
+confirm the supplied CA hypothesis: nonzero buffer/JSON masks on forward-only
+tape took two reverse passes. Identify backward/self edges in the existing
+transfer arms and end after the first pass only when none exist. Preserve the
+original fixed-point solver for loops. No CFG, prepass, persistent metadata,
+allocation, API, runtime check or task layout change. Native scalar/owner
+analysis remains unchanged; tape scalar slots have no liveness analysis.
+
+The pre-CD oracle matches every PC mask across branches, multiple owners,
+Tool string captures and loops. Nonzero DAG analysis visits halve, e.g.
+buffer branch 20→10 and JSON string capture 14→7. Loop examples stay 36→36;
+all-zero buffer and absent-JSON paths already did no redundant work. Existing
+native/tape differential, error-order, wait/cancellation and CC retention tests
+pass with full default and tool-json/debug-runtime release suites, strict
+Clippy, fmt, diff checks and nine workbench tests. Initial unsupported-return
+test fixtures and a missing opt-in case-list expectation were corrected without
+relaxing admission or assertions; verification history is retained.
+
+One fixed-binary A/B and exact-A A/A campaign each completes 80 processes /
+3,840 fresh-source prepare+execute+cleanup requests with exact output/status.
+Tape B:A scalar .97699, branch .98455, ready JSON .95214, branch JSON .96708,
+Quote loop 1.00468. A/A and untouched native controls drift too. There is no
+meaningful observed request regression and no causal speedup claim. Keep the
+certain small work removal and stop measuring. CC and isolated CB stay intact;
+no new target/worktree/dependency/download/CI or Linux/Wasm/Monty campaign.
+
+Raw identities, source-hash provenance, visit counts, commands, verification
+and bounded decision: [CD evidence](../evidence/cd-acyclic/README.md). Next
+unresolved question is the dominant preparation cost in representative real
+Host sources and loop/wait mix, before selecting further representation work.
+

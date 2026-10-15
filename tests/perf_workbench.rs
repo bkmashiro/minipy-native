@@ -172,6 +172,21 @@ fn resident_request() {
         // Different literal each time, no prepared-code or result reuse.
         let n = sample + 1;
         let (source, expected) = match case.as_str() {
+            "branch" => (
+                format!("x={n}\nif x > 2:\n    print(x + 1)\nelse:\n    print(x - 1)"),
+                format!("{}\n", if n > 2 { n + 1 } else { n - 1 }),
+            ),
+            "branch_ready" => (
+                format!(
+                    "data=tools.fetch({n})\ntext=data['message']\nif {n} > 2:\n    print(text + '!')\nelse:\n    print(text)"
+                ),
+                if n > 2 {
+                    "hello error!\n"
+                } else {
+                    "hello error\n"
+                }
+                .into(),
+            ),
             "detach" | "detach_live" => (
                 format!(
                     "n={n}\ndata=tools.fetch(-2)\ntext=data['message']\nr=tools.unused1(text)\nprint(r){}",

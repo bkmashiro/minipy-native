@@ -381,14 +381,28 @@ pub(super) enum Boundary {
 #[cfg(feature = "tool-json")]
 pub(super) fn json_liveness(ops: &[Op], plan: &crate::tool::Plan) -> Vec<u32> {
     let mut live = vec![0; ops.len() + 1];
+    // As for buffer owners, forward-only tape is solved by the first pass.
+    let mut backward = false;
     loop {
         let mut changed = false;
         for pc in (0..ops.len()).rev() {
+            #[cfg(test)]
+            liveness_tests::visit(true);
             let next = live[pc + 1];
             let before = match &ops[pc] {
-                op if op.branch_target().is_some() => next | live[op.branch_target().unwrap()],
-                Op::Jump(t) | Op::Next(t) => live[*t],
-                Op::Scan { end, .. } => next | live[*end],
+                op if op.branch_target().is_some() => {
+                    let target = op.branch_target().unwrap();
+                    backward |= target <= pc;
+                    next | live[target]
+                }
+                Op::Jump(t) | Op::Next(t) => {
+                    backward |= *t <= pc;
+                    live[*t]
+                }
+                Op::Scan { end, .. } => {
+                    backward |= *end <= pc;
+                    next | live[*end]
+                }
                 Op::JsonRead(_, _, root, _) => next | (1 << root),
                 Op::JsonString(_, _, root, _) => next | (1 << root),
                 Op::PrintJsonString(_, root) => next | (1 << root),
@@ -405,7 +419,7 @@ pub(super) fn json_liveness(ops: &[Op], plan: &crate::tool::Plan) -> Vec<u32> {
             changed |= before != live[pc];
             live[pc] = before;
         }
-        if !changed {
+        if !changed || !backward {
             break;
         }
     }

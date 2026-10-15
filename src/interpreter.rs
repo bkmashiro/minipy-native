@@ -18,6 +18,8 @@ use std::sync::Arc;
 use tokio::sync::oneshot;
 #[cfg(feature = "debug-runtime")]
 pub mod debug;
+#[cfg(test)]
+mod liveness_tests;
 mod tape;
 use tape::{Boundary, Op, flatten};
 /// Only the existing bounded frontend can construct this sealed executable.
@@ -71,14 +73,29 @@ impl InterpreterUnit {
         // Buffer liveness at each PC, including loop backedges. No extra scalar
         // analysis is needed: slots already reside in the task's fixed local array.
         let mut live = vec![0; ops.len() + 1];
+        // Forward successors are final when visited in reverse order. Discover
+        // backward/self edges in that same pass; only those need convergence.
+        let mut backward = false;
         loop {
             let mut changed = false;
             for pc in (0..ops.len()).rev() {
+                #[cfg(test)]
+                liveness_tests::visit(false);
                 let next = live[pc + 1];
                 let before = match &ops[pc] {
-                    op if op.branch_target().is_some() => next | live[op.branch_target().unwrap()],
-                    Op::Jump(target) | Op::Next(target) => live[*target],
-                    Op::Scan { buffer, end } => next | live[*end] | (1 << buffer),
+                    op if op.branch_target().is_some() => {
+                        let target = op.branch_target().unwrap();
+                        backward |= target <= pc;
+                        next | live[target]
+                    }
+                    Op::Jump(target) | Op::Next(target) => {
+                        backward |= *target <= pc;
+                        live[*target]
+                    }
+                    Op::Scan { buffer, end } => {
+                        backward |= *end <= pc;
+                        next | live[*end] | (1 << buffer)
+                    }
                     Op::BufferLen(_, buffer) => next | (1 << buffer),
                     Op::Load(target, _) => next & !(1 << target),
                     Op::Return => 0,
@@ -87,7 +104,7 @@ impl InterpreterUnit {
                 changed |= before != live[pc];
                 live[pc] = before;
             }
-            if !changed {
+            if !changed || !backward {
                 break;
             }
         }

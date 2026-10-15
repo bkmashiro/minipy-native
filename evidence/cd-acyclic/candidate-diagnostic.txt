@@ -1,0 +1,20 @@
+
+running 2 tests
+test interpreter::liveness_tests::cd_buffer_masks ... CD case=scalar ops=2 buffer_visits=2 old_buffer_visits=2 json_visits=0 old_json_visits=0
+CD case=straight_buffer ops=7 buffer_visits=7 old_buffer_visits=14 json_visits=0 old_json_visits=0
+CD case=branch_buffer ops=10 buffer_visits=10 old_buffer_visits=20 json_visits=0 old_json_visits=0
+CD case=loop_buffer ops=12 buffer_visits=36 old_buffer_visits=36 json_visits=0 old_json_visits=0
+CD case=branch_following_buffer ops=8 buffer_visits=8 old_buffer_visits=16 json_visits=0 old_json_visits=0
+ok
+test interpreter::liveness_tests::cd_json_masks ... CD case=straight_json ops=5 buffer_visits=5 old_buffer_visits=5 json_visits=5 old_json_visits=10
+CD case=branch_json ops=10 buffer_visits=10 old_buffer_visits=10 json_visits=10 old_json_visits=20
+CD case=string_wait ops=7 buffer_visits=7 old_buffer_visits=7 json_visits=7 old_json_visits=14
+CD case=loop_json ops=12 buffer_visits=36 old_buffer_visits=36 json_visits=36 old_json_visits=36
+CD case=branch_following_json ops=8 buffer_visits=8 old_buffer_visits=8 json_visits=8 old_json_visits=16
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 28 filtered out; finished in 0.00s
+
+   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `release` profile [optimized + debuginfo] target(s) in 4.38s
+     Running unittests src/lib.rs (target/release/deps/minipy_native-5c76f542d8e0b57a)

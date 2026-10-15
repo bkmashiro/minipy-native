@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRATCH = Path.home() / '.hermes/cache/scratch'
 LOCK = SCRATCH / 'minipy-perf-build.lock'
 DEFAULT_CASES = ('scalar', 'quote', 'ready', 'loopback')
-CASES = DEFAULT_CASES + ('scalar_inputs', 'ready_inputs', 'plain_sink', 'escaped_sink', 'joined_sink', 'fstring_sink', 'escaped_join', 'madd_short', 'madd_loop', 'detach', 'detach_live')
+CASES = DEFAULT_CASES + ('scalar_inputs', 'ready_inputs', 'plain_sink', 'escaped_sink', 'joined_sink', 'fstring_sink', 'escaped_join', 'madd_short', 'madd_loop', 'detach', 'detach_live', 'branch', 'branch_ready')
 BACKENDS = ('tape', 'native')
 
 
