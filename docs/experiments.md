@@ -889,3 +889,40 @@ fixture/pool also executes standalone publish on both backends before print.
 This feature is an
 incremental Host-tool syntax slice, not general Python support.
 
+### Bounded standalone-vs-assigned-discard probe
+
+Ran the existing `examples/aj_http_probe.rs` three times as independent
+processes against its loopback HTTP fixture and shared connection pool. Both
+arms use the same binary, source-derived fetch→scalar-publish program, actual
+HTTP requests, and stdout consumption; each timing batch checks response count,
+`27\n` output, one reused connection, zero copied bytes and full permit return.
+The standalone arm discards publish's i64; the control assigns then prints it.
+`source_cold` includes prepare/compile, execute, stdout consumption and unit
+cleanup; `prepared` explicitly excludes preparation. Each cell has three
+sub-batches per process (20 cold or 100 prepared invocations; nine batch means
+per arm overall). Raw CSVs are
+`bench/results/an-probe-run{1,2,3}.csv`.
+
+Reproduce: `CARGO_TARGET_DIR=/Users/yuzhe/projects/minipy-native/target
+CARGO_BUILD_JOBS=1 cargo run --offline --locked --features tool-json --example
+aj_http_probe`, then run the resulting
+`target/debug/examples/aj_http_probe` three times. Source commit
+`ee2fee72855482053c67da446dc6574f8e6060f0`; rustc/cargo 1.93.1;
+binary SHA-256 `0bef3e3c312c3e4c7495f0f3800b356d2bef00de66bad2a608e5b40586a9cc71`.
+On this macOS M4 probe, median-of-three-batch per-call ns (assigned → discard):
+
+| Backend / lifecycle | Assigned | Discard | Discard/assigned |
+| --- | ---: | ---: | ---: |
+| tape / source_cold | 309,871 | 268,610 | 0.867 |
+| native / source_cold | 1,812,046 | 1,731,240 | 0.955 |
+| tape / prepared | 146,076 | 144,351 | 0.988 |
+| native / prepared | 145,151 | 144,170 | 0.993 |
+
+These are small-fixture observations, not a performance claim. The existing
+probe fixes arm order (assigned before discard) and groups cells in one process;
+therefore these runs do not satisfy the prescribed independent AB/BA/AB
+ordering. The observed differences cannot distinguish syntax cost from
+order/warm-up effects and are not a substitute for that order-balanced
+protocol. No timing-based optimization or runtime change is made; Linux remains
+unrun.
+
