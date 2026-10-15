@@ -1325,3 +1325,15 @@ subagent time-quantile sample, so only the independently reconciled CLI stratum
 is reported; the old 632-source cross-stratum aggregate is not reused as a
 fresh full-source admission denominator.
 
+## BJ: ablation and static-work ledger (2026-10-15)
+
+Read-only synthesis of existing E–BH reports and experimental-branch summaries:
+[short conclusions, detailed lifecycle table and next hypotheses](ablation-summary.md),
+with a compact [machine-readable transcription](ablation-summary.json). Each
+reported time change uses candidate/baseline minus one; CPU, wall, cold/prepared,
+machine and version are separated. No production source, landing page, Cargo
+build, new benchmark or raw evidence was changed by this documentation task.
+Existing comparisons remain independently scoped; AY/BD/BF/BE withdrawn
+branches are not silently promoted to main. The next steps are admission
+hypotheses, not authorized performance implementations.
+
