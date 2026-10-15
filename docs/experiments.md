@@ -839,3 +839,27 @@ diagnostic rows; `python3 tools/aj_verify.py` recomputes summaries exactly.
 No frozen benchmark, AF/WSL workload, main, website or dependency change.
 Signed independent branch is submitted for focused review, not auto-merge.
 
+## AL: I/O scheduler attribution and bounded negative result
+
+Built on accepted AJ a780931 (AH f7167ad ancestry verified), not main.
+Production src and Cargo files remain identical to AJ. One Host-only candidate,
+Tokio current-thread event_interval 61 -> 256, had no stable net gain and is
+not adopted. Both arms kept I/O enabled, default chunk/fuel, yields and owners.
+Final mixed/native prepared 80.415 -> 80.325 us, cold 390.423 -> 385.118 us;
+old native weighted cold 153.397 -> 157.905 us. Short sibling means, all paired
+directions, and the earlier discovery noise are retained, not screened out.
+
+Isolated source-path investigation refines the previous ~14 us attribution:
+three bare yields cost IO/time 1.272/0.262 us, two detached oneshot handoffs
+0.981/0.366 us, and their combination 14.734/0.623 us. Deferred wake -> root
+unpark -> Mio kqueue and idle park_timeout paths are documented, but there is
+no syscall trace or claim that individual syscall timings were isolated.
+
+Real loopback mixed scan/scalar/fetch->publish->print runs validate response
+counts, output, arguments, permits and connection reuse. 984 canonical batch
+rows across discovery/final/isolated probes exactly recompute. macOS 89 tests,
+strict all-target/all-feature Clippy and fmt passed. Existing shared target,
+offline/locked single job, ~12 GiB disk free, ~100 KB raw/summary/log evidence.
+See [al-io-results.md](al-io-results.md) for commands and measurement boundaries.
+No second candidate, new scheduler, frozen bench, website or main merge.
+
