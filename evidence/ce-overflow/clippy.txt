@@ -1,0 +1,25 @@
+    Checking minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+error: this `if` statement can be collapsed
+   --> src/codegen.rs:949:9
+    |
+949 | /         if let Expr::Binary(BinOp::Add | BinOp::Sub | BinOp::Mul, a, b) = e {
+950 | |             if (matches!(a.as_ref(), Expr::Binary(..)) || matches!(b.as_ref(), Expr::Binary(..)))
+951 | |                 && pure(e)
+...   |
+961 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.93.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+949 ~         if let Expr::Binary(BinOp::Add | BinOp::Sub | BinOp::Mul, a, b) = e
+950 ~             && (matches!(a.as_ref(), Expr::Binary(..)) || matches!(b.as_ref(), Expr::Binary(..)))
+951 |                 && pure(e)
+...
+959 |                 return v;
+960 ~             }
+    |
+
+error: could not compile `minipy-native` (lib) due to 1 previous error

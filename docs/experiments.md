@@ -2180,3 +2180,42 @@ replayed both evidence reductions, checked all 24 B source hashes against Git
 blobs and found no blockers. Lead separately verified those source hashes and
 the unchanged CB branch. See [CD review](../evidence/cd-acyclic/review.md).
 
+## CE: coalesce pure native arithmetic overflow exits
+
+One bounded candidate on `e3055b2`, macOS ARM64/Rust 1.96. Cranelift's actual
+lowering retains per-operation overflow branches. For a single pure add/sub/mul
+tree with infallible scalar/validated-buffer leaves, retain all intermediate
+flags and branch on their OR before committing the result. Preserve tree and
+left-to-right order, short circuit and all effect/error boundaries. Overflow
+has one existing error identity without a source position. No reassociation,
+tape/Op/ABI/runtime/resource-policy change, persistent metadata or dependency.
+
+Separate actual CLIF/VCode diagnostics show four overflow exits reduced to one,
+short input-bound code 228→212 B and computed-loop code 600→528 B. This removes
+real control work, adding three flag ORs. Tiny BT request literals can constant
+fold; do not equate its timing with the four-operation input-bound diagnostic.
+Full native/tape suites cover intermediate overflow that later returns in range
+or multiplies by zero, prior stdout, skipped RHS, aliasing, JSON error order and
+prevented later effects. Final default/tool-json/debug-runtime release suites,
+strict all-target Clippy, fmt, nine BT Python tests and diff checks pass.
+
+Fixed-source-manifest A/B and exact-binary A/A each contain 80 successful
+processes / 3,840 complete prepare+run+cleanup requests. Native tiny/compute-loop
+B:A are .94332/.94984, their A/A .99696/.99806. Original Quote .99565 versus
+A/A .98357 has no established benefit. Native Ready control also drifts to
+.96048 and one candidate tiny process is slower, so no precise causal 5% or
+general-workload speedup claim. Keep the modest local candidate based on certain
+code/work reduction and bounded matched-request support; stop without scaling
+samples. No Linux/Wasm/Monty, RSS, allocation, density or throughput claim.
+
+CC/CD and isolated CB remain intact. Existing external target, one build job,
+offline/locked test builds and common fcntl lock were used. Environment deviation:
+`cargo +1.93.1 fmt` auto-installed that named toolchain although existing stable
+already reported 1.93.1, violating this card's no-download constraint. Default
+toolchain/config was not changed; subsequent commands use installed stable and
+disable auto-install. First Clippy's collapsible-if finding was fixed normally;
+no suppression or weakened tests. Final CLIF/VCode equal the measured candidate.
+
+Commands, small raw, exact reconstructed source identities and verification:
+[CE evidence](../evidence/ce-overflow/README.md).
+

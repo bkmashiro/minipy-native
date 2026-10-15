@@ -1,0 +1,418 @@
+   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `release` profile [optimized + debuginfo] target(s) in 5.15s
+     Running unittests src/lib.rs (target/release/deps/minipy_native-5c76f542d8e0b57a)
+
+running 1 test
+test codegen::tests::ce_arithmetic_code ... CE_CASE short
+CE_NATIVE
+  pacibsp
+  unwind Aarch64SetPointerAuth { return_addresses: true }
+  stp fp, lr, [sp, #-16]!
+  unwind PushFrameRegs { offset_upward_to_caller_sp: 16 }
+  mov fp, sp
+  unwind DefineNewFrame { offset_upward_to_caller_sp: 16, offset_downward_to_clobbers: 16 }
+  str x28, [sp, #-16]!
+  unwind SaveReg { clobber_offset: 0, reg: p28i }
+block0:
+  mov x4, x2
+  ldr x10, [x0]
+  ldr x11, [x0, #8]
+  b label1
+block1:
+  ldr x12, [x0, #264]
+  mov x28, x0
+  cbnz x12, label7 ; b label2
+block2:
+  movz x14, #1
+  adds x12, x10, x14
+  cset x13, vs
+  subs x15, x11, x14
+  cset x14, vs
+  madd x11, x12, x15, xzr
+  smulh x12, x12, x15
+  subs xzr, x12, x11, ASR 63
+  cset x15, ne
+  adds x1, x11, x10
+  cset x3, vs
+  orr w13, w15, w13
+  orr w13, w13, w14
+  orr w13, w3, w13
+  uxtb w13, w13
+  cbnz x13, label6 ; b label3
+block3:
+  movz x2, #0
+  load_ext_name_far x14, User(userextname0)+0
+  mov x0, x4
+  blr x14
+  cbnz x0, label5 ; b label4
+block4:
+  movz x0, #0
+  mov x6, x28
+  str x0, [x6, #272]
+  str x0, [x6, #312]
+  ldr x28, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+block5:
+  movz x0, #6
+  ldr x28, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+block6:
+  movz x0, #1
+  ldr x28, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+block7:
+  movz x0, #5
+  ldr x28, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+
+CE_BYTES 212
+CE_CLIF
+function u0:0(i64, i64, i64) -> i64 apple_aarch64 {
+    sig0 = (i64, i64, i64) -> i64 apple_aarch64
+    fn0 = u0:0 sig0
+
+block0(v0: i64, v1: i64, v2: i64):
+    v3 = load.i64 notrap aligned v0
+    v29 -> v3
+    v5 -> v29
+    v4 = load.i64 notrap aligned v0+8
+    v30 -> v4
+    v9 -> v30
+    jump block5
+
+block4:
+    v6 = iconst.i64 1
+    v7, v8 = sadd_overflow.i64 v5, v6  ; v6 = 1
+    v10 = iconst.i64 1
+    v11, v12 = ssub_overflow.i64 v9, v10  ; v10 = 1
+    v13, v14 = smul_overflow v7, v11
+    v15 = bor v14, v8
+    v16 = bor v15, v12
+    v17, v18 = sadd_overflow v13, v5
+    v19 = bor v18, v16
+    brif v19, block1, block6
+
+block6:
+    v20 = iconst.i64 0
+    v21 = call fn0(v2, v17, v20)  ; v20 = 0
+    brif v21, block3, block7
+
+block7:
+    v22 = iconst.i64 0
+    store notrap aligned v22, v0+272  ; v22 = 0
+    v23 = iconst.i64 0
+    store notrap aligned v23, v0+312  ; v23 = 0
+    v24 = iconst.i64 0
+    return v24  ; v24 = 0
+
+block5:
+    v25 = load.i64 notrap aligned v0+264
+    brif v25, block2, block4
+
+block1:
+    v26 = iconst.i64 1
+    return v26  ; v26 = 1
+
+block2:
+    v27 = iconst.i64 5
+    return v27  ; v27 = 5
+
+block3:
+    v28 = iconst.i64 6
+    return v28  ; v28 = 6
+}
+
+CE_CASE loop
+CE_NATIVE
+  pacibsp
+  unwind Aarch64SetPointerAuth { return_addresses: true }
+  stp fp, lr, [sp, #-16]!
+  unwind PushFrameRegs { offset_upward_to_caller_sp: 16 }
+  mov fp, sp
+  unwind DefineNewFrame { offset_upward_to_caller_sp: 16, offset_downward_to_clobbers: 32 }
+  str x21, [sp, #-16]!
+  unwind SaveReg { clobber_offset: 16, reg: p21i }
+  stp x19, x20, [sp, #-16]!
+  unwind SaveReg { clobber_offset: 0, reg: p19i }
+  unwind SaveReg { clobber_offset: 8, reg: p20i }
+block0:
+  mov x7, x1
+  mov x21, x2
+  ldr x10, [x0]
+  ldr x11, [x0, #8]
+  ldr x1, [x0, #16]
+  b label1
+block1:
+  ldr x11, [x0, #264]
+  orr x12, xzr, #4294967295
+  subs xzr, x11, x12
+  b.hi label2 ; b label3
+block2:
+  b label20
+block3:
+  emit_island 44
+  subs wzr, w11, #3
+  b.hs label4 ; csel x2, xzr, x11, hs ; csdb ; adr x15, pc+16 ; ldrsw x2, [x15, x2, uxtw #2] ; add x15, x15, x2 ; br x15 ; jt_entries [MachLabel(19), MachLabel(6), MachLabel(5)]
+block4:
+  b label20
+block5:
+  b label7
+block6:
+  movz x1, #0
+  str x1, [x0, #256]
+  b label7
+block7:
+  ldr x6, [x0, #256]
+  mov x8, x7
+  ldr x3, [x8, #8]
+  ldr x4, [x8]
+  ldr x5, [x0, #296]
+  ldr x7, [x0, #304]
+  sub x8, x3, x6
+  movz x9, #0
+  mov x20, x9
+  subs xzr, x8, #0
+  cset x9, ne
+  subs xzr, x5, #0
+  cset x10, eq
+  and w9, w9, w10
+  uxtb w9, w9
+  cbnz x9, label8 ; b label9
+block8:
+  b label20
+block9:
+  subs xzr, x8, x7
+  csel x8, x8, x7, lo
+  subs xzr, x8, x5
+  csel x9, x8, x5, lo
+  sub x10, x5, x9
+  str x10, [x0, #296]
+  add x10, x6, x9
+  b label10
+block10:
+  subs xzr, x6, x10
+  b.lo label16 ; b label11
+block11:
+  mov x19, x0
+  str x6, [x19, #256]
+  subs xzr, x6, x3
+  b.lo label15 ; b label12
+block12:
+  load_ext_name_far x3, User(userextname0)+0
+  mov x0, x21
+  mov x2, x20
+  blr x3
+  cbnz x0, label14 ; b label13
+block13:
+  mov x0, x20
+  str x0, [x19, #272]
+  str x0, [x19, #312]
+  ldp x19, x20, [sp], #16
+  ldr x21, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+block14:
+  movz x0, #6
+  ldp x19, x20, [sp], #16
+  ldr x21, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+block15:
+  str x1, [x19, #16]
+  movz x6, #2
+  str x6, [x19, #264]
+  movz x7, #1
+  str x7, [x19, #312]
+  movz x0, #4
+  ldp x19, x20, [sp], #16
+  ldr x21, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+block16:
+  mov x19, x0
+  lsl x9, x6, #4
+  ldr x11, [x4, x9]
+  movz x0, #1
+  adds x8, x11, x0
+  cset x11, vs
+  add x12, x4, #8
+  ldr x12, [x12, x9]
+  adds x9, x12, x0
+  cset x12, vs
+  madd x7, x8, x9, xzr
+  smulh x9, x8, x9
+  subs xzr, x9, x7, ASR 63
+  cset x13, ne
+  adds x1, x1, x7
+  cset x14, vs
+  orr w11, w13, w11
+  orr w11, w11, w12
+  orr w11, w14, w11
+  uxtb w11, w11
+  cbnz x11, label18 ; b label17
+block17:
+  add x6, x6, #1
+  mov x0, x19
+  b label10
+block18:
+  ldp x19, x20, [sp], #16
+  ldr x21, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+block19:
+  mov x19, x0
+  str x10, [x19, #280]
+  movz x14, #0
+  str x14, [x19, #288]
+  movz x15, #1
+  str x15, [x19, #264]
+  str x15, [x19, #312]
+  movz x0, #2
+  ldp x19, x20, [sp], #16
+  ldr x21, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+block20:
+  movz x0, #5
+  ldp x19, x20, [sp], #16
+  ldr x21, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+
+CE_BYTES 528
+CE_CLIF
+function u0:0(i64, i64, i64) -> i64 apple_aarch64 {
+    sig0 = (i64, i64, i64) -> i64 apple_aarch64
+    fn0 = u0:0 sig0
+
+block0(v0: i64, v1: i64, v2: i64):
+    v3 = load.i64 notrap aligned v0
+    v66 -> v3
+    v6 -> v66
+    v4 = load.i64 notrap aligned v0+8
+    v5 = load.i64 notrap aligned v0+16
+    jump block5
+
+block4:
+    store.i64 notrap aligned v6, v0+280
+    v7 = iconst.i64 0
+    store notrap aligned v7, v0+288  ; v7 = 0
+    v8 = iconst.i64 1
+    store notrap aligned v8, v0+264  ; v8 = 1
+    v9 = iconst.i64 1
+    store notrap aligned v9, v0+312  ; v9 = 1
+    v10 = iconst.i64 2
+    return v10  ; v10 = 2
+
+block6:
+    v11 = iconst.i64 0
+    v12 = iconst.i64 0
+    store notrap aligned v12, v0+256  ; v12 = 0
+    jump block7(v11)  ; v11 = 0
+
+block7(v68: i64):
+    v13 = load.i64 notrap aligned v0+256
+    v14 = load.i64 notrap aligned v1+8
+    v15 = load.i64 notrap aligned v1
+    v16 = isub v14, v13
+    v17 = load.i64 notrap aligned v0+296
+    v18 = load.i64 notrap aligned v0+304
+    v19 = umin v16, v18
+    v20 = umin v19, v17
+    v21 = icmp_imm ne v16, 0
+    v22 = icmp_imm eq v17, 0
+    v23 = band v21, v22
+    brif v23, block2, block8
+
+block8:
+    v24 = isub.i64 v17, v20
+    store notrap aligned v24, v0+296
+    v25 = iadd.i64 v13, v20
+    jump block9(v13, v68)
+
+block9(v26: i64, v67: i64):
+    v46 -> v26
+    v48 -> v26
+    v30 -> v67
+    v50 -> v67
+    v54 -> v67
+    v27 = icmp ult v26, v25
+    brif v27, block10, block11
+
+block10:
+    v28 = ishl_imm.i64 v26, 4
+    v29 = iadd.i64 v15, v28
+    v31 = load.i64 notrap aligned v29
+    v32 = iconst.i64 1
+    v33, v34 = sadd_overflow v31, v32  ; v32 = 1
+    v35 = load.i64 notrap aligned v29+8
+    v36 = iconst.i64 1
+    v37, v38 = sadd_overflow v35, v36  ; v36 = 1
+    v39, v40 = smul_overflow v33, v37
+    v41 = bor v40, v34
+    v42 = bor v41, v38
+    v43, v44 = sadd_overflow.i64 v30, v39
+    v45 = bor v44, v42
+    brif v45, block1, block12
+
+block12:
+    v47 = iadd_imm.i64 v46, 1
+    jump block9(v47, v43)
+
+block11:
+    store.i64 notrap aligned v48, v0+256
+    v49 = icmp.i64 ult v48, v14
+    brif v49, block13, block14
+
+block13:
+    store.i64 notrap aligned v50, v0+16
+    v51 = iconst.i64 2
+    store notrap aligned v51, v0+264  ; v51 = 2
+    v52 = iconst.i64 1
+    store notrap aligned v52, v0+312  ; v52 = 1
+    v53 = iconst.i64 4
+    return v53  ; v53 = 4
+
+block14:
+    v55 = iconst.i64 0
+    v56 = call fn0(v2, v54, v55)  ; v55 = 0
+    brif v56, block3, block15
+
+block15:
+    v57 = iconst.i64 0
+    store notrap aligned v57, v0+272  ; v57 = 0
+    v58 = iconst.i64 0
+    store notrap aligned v58, v0+312  ; v58 = 0
+    v59 = iconst.i64 0
+    return v59  ; v59 = 0
+
+block5:
+    v60 = load.i64 notrap aligned v0+264
+    v61 = icmp_imm ugt v60, 0xffff_ffff
+    brif v61, block2, block16
+
+block16:
+    v62 = ireduce.i32 v60
+    br_table v62, block2, [block4, block6, block7(v5)]
+
+block1:
+    v63 = iconst.i64 1
+    return v63  ; v63 = 1
+
+block2:
+    v64 = iconst.i64 5
+    return v64  ; v64 = 5
+
+block3:
+    v65 = iconst.i64 6
+    return v65  ; v65 = 6
+}
+
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 30 filtered out; finished in 0.01s
+

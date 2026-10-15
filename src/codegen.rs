@@ -380,7 +380,16 @@ impl CodeUnit {
         };
         #[cfg(feature = "compiler-profile")]
         let start = std::time::Instant::now();
+        #[cfg(test)]
+        ctx.set_disasm(retain_ir);
         module.define_function(id, ctx).map_err(error)?;
+        #[cfg(test)]
+        if retain_ir {
+            println!(
+                "CE_NATIVE\n{}",
+                ctx.compiled_code().unwrap().vcode.as_deref().unwrap()
+            );
+        }
         #[cfg(feature = "compiler-profile")]
         crate::compiler_profile::update(|p| p.backend_ns = crate::compiler_profile::elapsed(start));
         #[cfg(feature = "compiler-profile")]
@@ -927,6 +936,28 @@ impl Emit<'_, '_> {
         }
     }
     fn expr(&mut self, e: &Expr) -> Value {
+        // Only infallible leaves and checked arithmetic may share an error exit.
+        // Keep tree/evaluation order; every intermediate flag survives even if
+        // a later operation wraps back in range. Nothing commits before brif.
+        fn pure(e: &Expr) -> bool {
+            match e {
+                Expr::Int(_) | Expr::Local(_) | Expr::Field(_) | Expr::BufferLen(_) => true,
+                Expr::Binary(BinOp::Add | BinOp::Sub | BinOp::Mul, a, b) => pure(a) && pure(b),
+                _ => false,
+            }
+        }
+        if let Expr::Binary(BinOp::Add | BinOp::Sub | BinOp::Mul, a, b) = e
+            && (matches!(a.as_ref(), Expr::Binary(..)) || matches!(b.as_ref(), Expr::Binary(..)))
+            && pure(e)
+        {
+            let (v, flag) = self.arithmetic(e);
+            let next = self.b.create_block();
+            self.b
+                .ins()
+                .brif(flag.unwrap(), self.overflow, &[], next, &[]);
+            self.b.switch_to_block(next);
+            return v;
+        }
         match e {
             Expr::Int(v) => self.b.ins().iconst(types::I64, *v),
             Expr::Bool(v) => self.b.ins().iconst(types::I64, i64::from(*v)),
@@ -1059,10 +1090,47 @@ impl Emit<'_, '_> {
             }
         }
     }
+    fn arithmetic(&mut self, e: &Expr) -> (Value, Option<Value>) {
+        let Expr::Binary(op, l, r) = e else {
+            return (self.expr(e), None);
+        };
+        let (a, left) = self.arithmetic(l);
+        let (b, right) = self.arithmetic(r);
+        let (v, mut flag) = match op {
+            BinOp::Add => self.b.ins().sadd_overflow(a, b),
+            BinOp::Sub => self.b.ins().ssub_overflow(a, b),
+            BinOp::Mul => self.b.ins().smul_overflow(a, b),
+            _ => unreachable!(),
+        };
+        for child in [left, right].into_iter().flatten() {
+            flag = self.b.ins().bor(flag, child);
+        }
+        (v, Some(flag))
+    }
 }
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    #[ignore = "explicit serial CE code diagnostic, not formal timing"]
+    fn ce_arithmetic_code() {
+        for (name, source) in [
+            ("short", "print((a + 1) * (b - 1) + a)"),
+            (
+                "loop",
+                "rows=tools.load_quotes(a)\ntotal=0\nfor row in rows:\n    total=total+(row.unit_price_cents+1)*(row.quantity+1)\nprint(total)",
+            ),
+        ] {
+            println!("CE_CASE {name}");
+            let program = crate::frontend::parse_with_inputs(
+                source,
+                &[("a", ir::Type::I64), ("b", ir::Type::I64)],
+            )
+            .unwrap();
+            let code = CodeUnit::lower(program, "speed", true).unwrap();
+            println!("CE_BYTES {}\nCE_CLIF\n{}", code.code_bytes, code.clif);
+        }
+    }
     #[test]
     fn layout() {
         assert_eq!(std::mem::offset_of!(Frame, index), 256);

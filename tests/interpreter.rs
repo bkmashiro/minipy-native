@@ -166,6 +166,45 @@ async fn checked_multiply_add_alias_overflow_and_short_circuit() {
     }
 }
 #[tokio::test]
+async fn arithmetic_intermediate_overflow_cannot_cancel_back_in_range() {
+    let schema = [("a", Type::I64), ("b", Type::I64)];
+    for (expression, values) in [
+        ("(a + 1) - 1", [i64::MAX, 0]),
+        ("(a - 1) + 1", [i64::MIN, 0]),
+        ("(a * b) * 0", [i64::MAX, 2]),
+        ("(a + 1) * 0 + b", [i64::MAX, 7]),
+        ("a + (b - 1)", [1, i64::MIN]),
+    ] {
+        let source = format!("print(17)\nx={expression}\nprint(x)\nr=tools.record_total(1,x)");
+        let out = differential(&source, &schema, &values, rows(), ScriptLimits::default()).await;
+        assert_eq!(out.status, Err(TaskError::Overflow), "{expression}");
+        assert_eq!(out.stdout, "17\n");
+        for (guard, error) in [("False and", false), ("True or", false), ("True and", true)] {
+            let source = format!("print(17)\nprint({guard} ({expression} == 0))");
+            let out =
+                differential(&source, &schema, &values, rows(), ScriptLimits::default()).await;
+            assert_eq!(
+                out.status,
+                if error {
+                    Err(TaskError::Overflow)
+                } else {
+                    Ok(())
+                }
+            );
+            assert_eq!(
+                out.stdout,
+                if error {
+                    "17\n"
+                } else if guard == "False and" {
+                    "17\nFalse\n"
+                } else {
+                    "17\nTrue\n"
+                }
+            );
+        }
+    }
+}
+#[tokio::test]
 async fn computed_operands_self_assignment_and_boolean_consumers() {
     let source = "x=3\nx=(x+1)*(x-1)+(x*2)\nprint(x)\nflag=(a or b) and (not c or a)\nflag=flag and (not flag or b)\nprint(flag)\nprint((a and b) == (c or not a))\nif not ((a and not b) or (c and (x+1 > x*2))):\n    print(x+2)\nelse:\n    print(x-2)\nreceipt=tools.record_total((x+1)*(x-1), (x*2)+(x-3))\nprint(receipt)";
     for a in [0, 1] {

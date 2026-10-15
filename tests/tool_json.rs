@@ -36,6 +36,14 @@ async fn multiply_add_preserves_fallible_operand_order() {
                 "(9223372036854775807*2)+(p['data']['count']+1)",
                 TaskError::Overflow,
             ),
+            (
+                "((9223372036854775807+1)-1)+p['data']['count']",
+                TaskError::Overflow,
+            ),
+            (
+                "p['data']['count']+((9223372036854775807+1)-1)",
+                TaskError::Json("expected signed-i64 integer"),
+            ),
         ] {
             let provider = Arc::new(P::new(br#"{"data":{"count":null}}"#));
             let source = format!(
