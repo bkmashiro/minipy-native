@@ -2175,3 +2175,8 @@ and bounded decision: [CD evidence](../evidence/cd-acyclic/README.md). Next
 unresolved question is the dominant preparation cost in representative real
 Host sources and loop/wait mix, before selecting further representation work.
 
+Receipt-verified `gpt-6-luna` independently reviewed fixed commit `528f7fc`,
+replayed both evidence reductions, checked all 24 B source hashes against Git
+blobs and found no blockers. Lead separately verified those source hashes and
+the unchanged CB branch. See [CD review](../evidence/cd-acyclic/review.md).
+

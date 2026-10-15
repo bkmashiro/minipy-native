@@ -1,0 +1,14 @@
+{
+  "model": "gpt-6-luna",
+  "provider": "openai-codex",
+  "session_id": "20261016_024131_f53978",
+  "completed": true,
+  "partial": false,
+  "interrupted": false,
+  "failed": false,
+  "turn_exit_reason": "text_response(finish_reason=stop)",
+  "process_exit_code": 0,
+  "fixed_commit": "528f7fc321d6bd2e7efc96c084a1e743707d8eae",
+  "verdict": "no blockers",
+  "source": "selected fields from actual Hermes --usage-file receipt, plus parent-observed exit status and reviewer result"
+}
