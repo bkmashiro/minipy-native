@@ -1125,19 +1125,32 @@ means in µs/request; pairs, not individual requests, are replication units.
 The small cold tape advantage does not repay absent/negative prepared value
 and the extra duplicated receiver path. The same-binary detached/yield control
 stays ~13.43 µs in both arms, as expected because it still uses oneshot; it is
-not evidence the new path reduces kernel wakes. No syscall trace, density/RSS,
-per-task CPU, throughput or real remote API measurement was made. The process
-wall clock includes its server and client work but is not a CPU attribution.
-Decision: revert the sole
+not evidence the new path reduces kernel wakes. A separate AB/BA/BA/AB
+`run_cpu.py` control reruns the same binaries, verifies the 45 batches/process
+and records `RUSAGE_CHILDREN` user+system CPU across the *whole child process*,
+including all threads, setup and warmups. Median total CPU is 0.128288 s
+oneshot versus 0.128677 s JoinHandle; paired changes are
+-1.15/-1.46/+0.63/+0.81%. These totals are not per-request CPU, are a separate
+run from the timing CSVs and cannot isolate HTTP work. Raw totals are in
+`process-cpu.json`. No syscall trace, density/RSS, throughput or real remote API
+measurement was made. Decision: revert the sole
 candidate and stop. No second optimization, Linux performance inference, VM,
 Pysolate, website, default feature, or production file change.
+The remaining observed bottleneck is the I/O-enabled current-thread driver's
+deferred-yield/idle wake path interacting with detached completion boundaries
+(AL's 2-handoff/3-yield control, ~14.7 µs versus ~0.6 µs time-only). Replacing
+only the completion notification does not remove the fair yield or scheduler
+turns; attributing the residual to a specific syscall requires a separate trace.
 
 Reproduction: `cargo build --offline --locked --release --features tool-json
 --example al_io_probe` at baseline; copy executable to `base`, apply preserved
 candidate via Hermes patch tool, `cargo test --offline --locked --all-features`,
 `cargo clippy --offline --locked --all-features --all-targets -- -D warnings`,
-rebuild release, copy as `join`; then `python3 evidence/be-http-cost/run.py
-<base> <join>`. The runner writes canonical CSV and summaries in its directory.
+rebuild release, copy as `join`; then
+`python3 evidence/be-http-cost/run.py <base> <join>`. The runner writes canonical
+CSV and summaries in its directory.
+`python3 evidence/be-http-cost/run_cpu.py <base> <join>` performs the separate
+process-inclusive CPU control, without overwriting latency raw files.
 The baseline/JoinHandle SHA256 are in `identity.json`. Local disk was 21 GiB
 free at start, 19 GiB after debug/release builds; no build tree was committed.
 
