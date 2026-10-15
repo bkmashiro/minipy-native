@@ -351,6 +351,11 @@ async fn sink_join_print_and_tool_preserve_order_and_bounds() {
         for (source, expected, calls) in [
             ("print(\"é\" + \"🌍\")", "é🌍\n", 0),
             (
+                "a = -9223372036854775807 - 1\nb = 9223372036854775807\nprint(f\"{a}{b}{0}{True}{False}\")",
+                "-922337203685477580892233720368547758070TrueFalse\n",
+                0,
+            ),
+            (
                 "data = tools.read_file(\"report\" + \".txt\")\nname = data[\"content\"]\nprint(\"[\" + name + \"/\" + name + \"]\")",
                 "[hello 🌍/hello 🌍]\n",
                 1,

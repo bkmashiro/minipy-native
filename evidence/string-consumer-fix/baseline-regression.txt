@@ -1,0 +1,34 @@
+
+running 3 tests
+test declaration_validation_preserves_errors_and_order ... ok
+test declaration_validation_borrows_the_schema ... FAILED
+test scalar_sink_does_not_allocate_per_piece ... FAILED
+
+failures:
+
+---- declaration_validation_borrows_the_schema stdout ----
+
+thread 'declaration_validation_borrows_the_schema' (46264956) panicked at tests/tool_validation_cost.rs:44:5:
+assertion `left == right` failed: validation must not clone declaration data
+  left: 12
+ right: 4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- scalar_sink_does_not_allocate_per_piece stdout ----
+
+thread 'scalar_sink_does_not_allocate_per_piece' (46264958) panicked at tests/tool_validation_cost.rs:98:5:
+assertion `left == right` failed: scalar pieces must not each allocate a String
+  left: 4
+ right: 11
+
+
+failures:
+    declaration_validation_borrows_the_schema
+    scalar_sink_does_not_allocate_per_piece
+
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.21s
+     Running tests/tool_validation_cost.rs (target/debug/deps/tool_validation_cost-e06279e4a3c4b486)
+error: test failed, to rerun pass `--test tool_validation_cost`

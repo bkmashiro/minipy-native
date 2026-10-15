@@ -1,0 +1,68 @@
+{
+  "B": {
+    "binary_sha256": "4b2d7a0ba2ff01ba62cb9223bb7bc1aa5283808fbff370f1f25e73c78fa183e9",
+    "command": [
+      "cargo",
+      "+1.96.0",
+      "test",
+      "--release",
+      "--offline",
+      "--locked",
+      "--features",
+      "tool-json",
+      "--test",
+      "string_cost_probe",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "sources": {
+      "src/tool.rs": "41a98b4cd9e554104c4886cc7afe7f421eb91489e81ba5d84a7c43f847cf0a8a",
+      "src/runtime.rs": "11d7e72f13cc9406379af6fa597b840f0fe62a2d08dd731043e1c6f44faaa29b",
+      "tests/string_cost_probe.rs": "5e1b1ad6e36f16104bb52e6b480fef1c1ed433a5436ea333393640c441f0c6fe"
+    }
+  },
+  "V": {
+    "binary_sha256": "34ccdc75d0e5b8f6d9aa3b4c788d7b27b855ddf141fb719aa5e4f2a4dbad4d21",
+    "command": [
+      "cargo",
+      "+1.96.0",
+      "test",
+      "--release",
+      "--offline",
+      "--locked",
+      "--features",
+      "tool-json",
+      "--test",
+      "string_cost_probe",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "sources": {
+      "src/tool.rs": "0b5f0be0b81852b4feff15b1b4e076e4140badd6d89f789c96a4d1bee0c89ef9",
+      "src/runtime.rs": "11d7e72f13cc9406379af6fa597b840f0fe62a2d08dd731043e1c6f44faaa29b",
+      "tests/string_cost_probe.rs": "5e1b1ad6e36f16104bb52e6b480fef1c1ed433a5436ea333393640c441f0c6fe"
+    }
+  },
+  "S": {
+    "binary_sha256": "b54a362b221852388b2f6f93afd8b0a1b24badee64ece60b1755846678876e03",
+    "command": [
+      "cargo",
+      "+1.96.0",
+      "test",
+      "--release",
+      "--offline",
+      "--locked",
+      "--features",
+      "tool-json",
+      "--test",
+      "string_cost_probe",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "sources": {
+      "src/tool.rs": "0b5f0be0b81852b4feff15b1b4e076e4140badd6d89f789c96a4d1bee0c89ef9",
+      "src/runtime.rs": "af4a925826493764d69f43760b4fca1ddf7e482d76ba0129157374d3cfdcf993",
+      "tests/string_cost_probe.rs": "5e1b1ad6e36f16104bb52e6b480fef1c1ed433a5436ea333393640c441f0c6fe"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+
+running 3 tests
+declaration allocations: numeric=4, declaration=4
+test declaration_validation_borrows_the_schema ... ok
+test declaration_validation_preserves_errors_and_order ... ok
+scalar sink allocations: one=3, eight=3
+test scalar_sink_does_not_allocate_per_piece ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.23s
+     Running tests/tool_validation_cost.rs (target/debug/deps/tool_validation_cost-e06279e4a3c4b486)

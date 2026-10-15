@@ -1,0 +1,163 @@
+diff --git a/src/tool.rs b/src/tool.rs
+index bf70564..ed8738d 100644
+--- a/src/tool.rs
++++ b/src/tool.rs
+@@ -29,74 +29,83 @@ pub struct ToolSchema {
+ }
+ impl ToolSchema {
+     pub fn validate_all(tools: &[Self]) -> Result<(), CompileError> {
+-        if tools.len() > MAX_TOOLS {
++        validate_tools(tools.iter().map(|t| {
++            (
++                t.id,
++                t.name.as_str(),
++                t.arguments.iter().map(String::as_str),
++                &t.result,
++            )
++        }))
++    }
++}
++
++fn validate_tools<'a, A: ExactSizeIterator<Item = &'a str>>(
++    tools: impl ExactSizeIterator<Item = (u32, &'a str, A, &'a ResultSchema)>,
++) -> Result<(), CompileError> {
++    if tools.len() > MAX_TOOLS {
++        return Err(CompileError::new(
++            AdmissionKind::Schema,
++            "too many Tool declarations",
++        ));
++    }
++    let mut ids = std::collections::HashSet::new();
++    let mut names = std::collections::HashSet::new();
++    for (id, name, mut arguments, result) in tools {
++        let identifier = |s: &str| {
++            !s.is_empty()
++                && s.chars().enumerate().all(|(i, c)| {
++                    c == '_' || c.is_ascii_alphabetic() || i > 0 && c.is_ascii_digit()
++                })
++        };
++        if id < 2
++            || !ids.insert(id)
++            || !names.insert(name)
++            || !identifier(name)
++            || ["load_quotes", "record_total"].contains(&name)
++        {
+             return Err(CompileError::new(
+                 AdmissionKind::Schema,
+-                "too many Tool declarations",
++                "Tool IDs/names must be unique and non-reserved",
+             ));
+         }
+-        let mut ids = std::collections::HashSet::new();
+-        let mut names = std::collections::HashSet::new();
+-        for t in tools {
+-            let identifier = |s: &str| {
+-                !s.is_empty()
+-                    && s.chars().enumerate().all(|(i, c)| {
+-                        c == '_' || c.is_ascii_alphabetic() || i > 0 && c.is_ascii_digit()
+-                    })
+-            };
+-            if t.id < 2
+-                || !ids.insert(t.id)
+-                || !names.insert(&t.name)
+-                || !identifier(&t.name)
+-                || ["load_quotes", "record_total"].contains(&t.name.as_str())
+-            {
+-                return Err(CompileError::new(
+-                    AdmissionKind::Schema,
+-                    "Tool IDs/names must be unique and non-reserved",
+-                ));
+-            }
+-            let mut args = std::collections::HashSet::new();
+-            if t.arguments.len() > 2
+-                || t.arguments
++        let mut args = std::collections::HashSet::new();
++        if arguments.len() > 2 || arguments.any(|a| !identifier(a) || !args.insert(a)) {
++            return Err(CompileError::new(
++                AdmissionKind::Schema,
++                "Tools accept at most two unique named i64 arguments",
++            ));
++        }
++        let paths: Vec<&Vec<String>> = match result {
++            ResultSchema::Json(paths) => paths.iter().collect(),
++            ResultSchema::JsonTyped(paths) => paths.iter().map(|(p, _)| p).collect(),
++            ResultSchema::I64 => Vec::new(),
++        };
++        if !paths.is_empty() {
++            if paths.len() > MAX_PATHS
++                || paths
+                     .iter()
+-                    .any(|a| !identifier(a) || !args.insert(a))
++                    .any(|p| p.is_empty() || p.len() > 32 || p.iter().any(|k| k.len() > 256))
+             {
+                 return Err(CompileError::new(
+                     AdmissionKind::Schema,
+-                    "Tools accept at most two unique named i64 arguments",
++                    "JSON schema exceeds bounded leaf paths",
+                 ));
+             }
+-            let paths: Vec<&Vec<String>> = match &t.result {
+-                ResultSchema::Json(paths) => paths.iter().collect(),
+-                ResultSchema::JsonTyped(paths) => paths.iter().map(|(p, _)| p).collect(),
+-                ResultSchema::I64 => Vec::new(),
+-            };
+-            if !paths.is_empty() {
+-                if paths.len() > MAX_PATHS
+-                    || paths
+-                        .iter()
+-                        .any(|p| p.is_empty() || p.len() > 32 || p.iter().any(|k| k.len() > 256))
++            for (i, p) in paths.iter().enumerate() {
++                if paths[..i]
++                    .iter()
++                    .any(|q| p.starts_with(q) || q.starts_with(p))
+                 {
+                     return Err(CompileError::new(
+                         AdmissionKind::Schema,
+-                        "JSON schema exceeds bounded leaf paths",
++                        "JSON leaf paths overlap",
+                     ));
+                 }
+-                for (i, p) in paths.iter().enumerate() {
+-                    if paths[..i]
+-                        .iter()
+-                        .any(|q| p.starts_with(q) || q.starts_with(p))
+-                    {
+-                        return Err(CompileError::new(
+-                            AdmissionKind::Schema,
+-                            "JSON leaf paths overlap",
+-                        ));
+-                    }
+-                }
+             }
+         }
+-        Ok(())
+     }
++    Ok(())
+ }
+ /// New declarations share the finite name/ID namespace with legacy numeric Tools.
+ /// The first string slice admits exactly one named string argument.
+@@ -136,16 +145,14 @@ impl From<&ToolSchema> for ToolDeclaration {
+ }
+ impl ToolDeclaration {
+     pub fn validate_all(tools: &[Self]) -> Result<(), CompileError> {
+-        let numeric: Vec<_> = tools
+-            .iter()
+-            .map(|t| ToolSchema {
+-                id: t.id,
+-                name: t.name.clone(),
+-                arguments: t.arguments.iter().map(|a| a.name().to_owned()).collect(),
+-                result: t.result.clone(),
+-            })
+-            .collect();
+-        ToolSchema::validate_all(&numeric)?;
++        validate_tools(tools.iter().map(|t| {
++            (
++                t.id,
++                t.name.as_str(),
++                t.arguments.iter().map(ArgumentSchema::name),
++                &t.result,
++            )
++        }))?;
+         for tool in tools {
+             let strings = tool
+                 .arguments

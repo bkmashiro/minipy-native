@@ -237,7 +237,61 @@ pub(crate) unsafe extern "C" fn native_print_plan(
         }
     }
 }
+// Only runtime-validated StringValues enter this private consumer representation.
+// Scalars are formatted on the stack until the final consumer owns the bytes.
+#[cfg(feature = "tool-json")]
+enum SinkPart {
+    Text(crate::tool::StringValue),
+    Scalar { bytes: [u8; 20], len: usize },
+}
+#[cfg(feature = "tool-json")]
+impl SinkPart {
+    fn scalar(value: i64, boolean: bool) -> Self {
+        use std::io::Write;
+        let mut bytes = [0u8; 20];
+        let mut remaining = bytes.as_mut_slice();
+        if boolean {
+            remaining
+                .write_all(if value == 0 { b"False" } else { b"True" })
+                .unwrap();
+        } else {
+            // Every signed i64, including MIN, fits in 20 decimal ASCII bytes.
+            write!(remaining, "{value}").unwrap();
+        }
+        let len = 20 - remaining.len();
+        Self::Scalar { bytes, len }
+    }
+    fn len(&self) -> usize {
+        use crate::tool::StringValue as V;
+        match self {
+            Self::Scalar { len, .. } => *len,
+            Self::Text(V::Literal(s)) => s.len(),
+            Self::Text(V::Decoded(s)) => s.len(),
+            Self::Text(V::Joined(s)) => s.len(),
+            Self::Text(V::Json { range, .. }) => range.len(),
+        }
+    }
+    fn as_str(&self) -> &str {
+        match self {
+            Self::Scalar { bytes, len } => std::str::from_utf8(&bytes[..*len]).unwrap(),
+            Self::Text(value) => value.as_str(),
+        }
+    }
+}
 impl Output {
+    #[cfg(feature = "tool-json")]
+    fn sink_part(
+        &mut self,
+        source: &crate::tool::StringSource,
+        locals: &[i64],
+    ) -> Result<SinkPart, TaskError> {
+        match source {
+            crate::tool::StringSource::Scalar { slot, boolean } => {
+                Ok(SinkPart::scalar(locals[*slot], *boolean))
+            }
+            _ => self.string_value(source, locals).map(SinkPart::Text),
+        }
+    }
     #[cfg(feature = "tool-json")]
     pub(crate) fn string_value(
         &mut self,
@@ -258,12 +312,12 @@ impl Output {
                 locals[*slot].to_string()
             })),
             S::Joined(parts) => {
-                let mut values: [Option<V>; 32] = std::array::from_fn(|_| None);
+                let mut values: [Option<SinkPart>; 32] = std::array::from_fn(|_| None);
                 let mut len = 0usize;
                 for (i, part) in parts.iter().enumerate() {
-                    values[i] = Some(self.string_value(part, locals)?);
+                    values[i] = Some(self.sink_part(part, locals)?);
                     len = len
-                        .checked_add(values[i].as_ref().unwrap().as_str().len())
+                        .checked_add(values[i].as_ref().unwrap().len())
                         .ok_or(TaskError::Budget)?;
                     if len > 64 * 1024 {
                         return Err(TaskError::Budget);
@@ -291,12 +345,12 @@ impl Output {
             crate::tool::StringSource::Joined(parts) => parts.as_slice(),
             other => std::slice::from_ref(other),
         };
-        let mut values: [Option<crate::tool::StringValue>; 32] = std::array::from_fn(|_| None);
+        let mut values: [Option<SinkPart>; 32] = std::array::from_fn(|_| None);
         let mut len = 1usize;
         for (i, part) in parts.iter().enumerate() {
-            values[i] = Some(self.string_value(part, locals)?);
+            values[i] = Some(self.sink_part(part, locals)?);
             len = len
-                .checked_add(values[i].as_ref().unwrap().as_str().len())
+                .checked_add(values[i].as_ref().unwrap().len())
                 .ok_or(TaskError::Budget)?;
             if len > 64 * 1024 + 1 {
                 return Err(TaskError::Budget);

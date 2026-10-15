@@ -1893,3 +1893,25 @@ before its full report; this specific finding was traced and tested locally.
 The previously published BAAB/diagnostic data belongs to `73130f6`, not the
 follow-up; no performance delta is claimed for this correctness repair.
 
+## String consumer and declaration allocation repair
+
+Base `7f85049`. Declaration validation now borrows the existing schema rather
+than deep-copying it into the numeric compatibility representation. Private
+synchronous string sinks format scalar pieces on a 20-byte stack buffer and
+use validated byte lengths before the final checked string access. Public
+StringValue, errors, budgets, cancellation and per-task state are unchanged.
+
+The isolated fixture records declaration validation **12→4 allocations (−66.7%)**
+and eight scalar pieces **11→3 execution allocations (−72.7%)**. Both regression
+tests fail on the base and pass on the candidate. These are allocation counts,
+not whole-request speedups. The 4,848-row exploratory and 9,696-row confirmation
+campaigns include resident-service source preparation and execution. Confirmation
+supports lower tape costs for declared scalar and JSON output, while native
+results and the first campaign show drift; no stable native speedup is claimed.
+
+Keep these bounded work eliminations. Default/tool-json full suites, strict
+tool-json Clippy, formatting and focused independent review passed. Patches,
+raw, per-process reduction, timing boundaries and reproduction commands:
+[evidence/string-consumer-fix](../evidence/string-consumer-fix/README.md).
+No full benchmark or Linux/Wasm performance campaign was run.
+
