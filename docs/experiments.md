@@ -1337,3 +1337,70 @@ Existing comparisons remain independently scoped; AY/BD/BF/BE withdrawn
 branches are not silently promoted to main. The next steps are admission
 hypotheses, not authorized performance implementations.
 
+## BK: BI/BJ integration gate (2026-10-15)
+
+Integration branch fast-forwarded the independently reviewed BI commit
+`493d9e4` from main `89b898b`, then cherry-picked BJ `164ebd5` as `db5eda0`.
+The sole overlap was the append-only tail of this file: both BI and BJ sections
+are retained without changing either report. BJ adds no production code.
+
+BI's 64/520 deterministic private CLI complete-source sample admitted **0/64**
+with no Host schema (32 first unsupported calls, 12 statements, 8 expressions,
+1 name, 11 other unsupported). That probe is read-only and neither the 0/64 nor
+AO syntactic presence estimates production acceptance. The admitted functionality
+is typed Quote-buffer `len`, checked-i64 `abs` and two-argument scalar `min/max`;
+`len(string/JSON)`, iterable/generator forms and general Python remain missing.
+Host fallback must be chosen on preparation rejection before any Tool effect;
+there is no automatic runtime replay. Syntax/source diagnostics include byte
+position when available; Host schema/backend errors do not.
+
+Independent old-source integration control ran **two** B/A/A/B rounds under the
+shared build lock on macOS ARM64, Rust 1.96.0 release, default features, ready
+provider, with `tools/bk_control.py`. Each arm cleaned and rebuilt the two
+packages in the same shared target to avoid wrong-checkout binary reuse. The
+script checks completed result, records binary SHA and exact source revision;
+each process has 50 fresh-source requests for each of scalar(0)/weighted(256)
+× tape/native. Both arms run identical old sources without builtins. The
+[1600 raw rows](../evidence/bk-integration/source-cold.jsonl.gz) decompress to
+SHA256 `643f3de88d10c3be74aadbb7d77889f780f3fa114e5a3dcb0f250dc6bbada584`.
+Each cell below is median wall ns within its process, B = main 89b898b,
+A = integration db5eda0; adjacent A/B elapsed changes use
+`(A/B - 1)*100%` (positive is slower):
+
+| engine/case | B0 | A1 | A2 | B3 | B4 | A5 | A6 | B7 | adjacent A/B changes |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| tape scalar | 24,083 | 29,459 | 28,146 | 25,625 | 21,209 | 28,334 | 28,292 | 29,562 | +22.32%, +9.84%, +33.60%, -4.30% |
+| tape weighted | 38,771 | 43,667 | 39,625 | 38,667 | 25,751 | 43,875 | 43,792 | 43,917 | +12.63%, +2.48%, +70.38%, -0.28% |
+| native scalar | 148,833 | 148,583 | 151,792 | 148,813 | 156,896 | 146,896 | 148,854 | 149,625 | -0.17%, +2.00%, -6.37%, -0.52% |
+| native weighted | 210,333 | 212,626 | 214,730 | 221,667 | 223,583 | 212,250 | 232,521 | 232,980 | +1.09%, -3.13%, -5.07%, -0.20% |
+
+Tape scalar/weighted changes are mostly positive; B4 is unusually fast in
+both tape cases, while A6/B7 are essentially matched. Tape prepare medians
+track wall changes closely (scalar +22.78/+9.76/+31.66/-4.98%; weighted
++11.95/+2.84/+71.58/-0.06%). Native is mixed/small. This is an unresolved
+source-cold tape *regression risk*, not proof of a stable 10–70% penalty or a
+production capacity estimate. The round limit is reached; do not repeat until
+convenient. There is no evidence here to eliminate the tape risk. Prepared
+execution and service load were not measured in BK. No new target or toolchain
+was created; temporary detached baseline worktree was removed.
+
+Integration correctness checks under the same lock: `cargo +1.96.0 test
+--offline --locked` and `--features tool-json` (including localhost HTTP)
+passed; `--features debug-runtime --test debug_runtime` passed 6/6;
+`cargo +1.96.0 clippy --offline --locked --all-targets --features tool-json
+-- -D warnings` passed. Default-toolchain `cargo fmt --all -- --check`
+passed; Rust 1.96.0 has no installed rustfmt component, so its fmt command
+cannot run without installing a component. BI's missing 1.96.0 Wasm target
+and lack of Linux run remain unvalidated, not converted into successful runs.
+
+**Decision:** keep BI/BJ together as a signed, reviewable integration branch,
+but **do not merge main yet**. The genuine functionality and diagnostics are
+correct in exercised configurations, while complete-script applicability is
+low in this bounded no-schema sample and old-source tape performance has a
+plausible nontrivial regression. A later separately authorized, mechanism-led
+stage may investigate the frontend/admission/tape code layout with controlled
+process affinity/phase attribution and then decide whether to narrow or revert
+BI. Do not hide that work in an unbounded benchmark or claim BJ percentages
+compose into a new integrated speedup. The existing finite typed helper remains
+the strong simple alternative for expressible aggregate workloads.
+
