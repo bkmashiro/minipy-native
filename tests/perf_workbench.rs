@@ -16,7 +16,10 @@ use minipy_native::{
 };
 use std::{
     rc::Rc,
-    sync::Arc,
+    sync::{
+        Arc,
+        atomic::{AtomicUsize, Ordering},
+    },
     time::{Duration, Instant},
 };
 use tokio::{
@@ -24,7 +27,15 @@ use tokio::{
     net::TcpListener,
 };
 
-struct Host;
+#[derive(Default)]
+struct Gate {
+    entered: tokio::sync::Notify,
+    release: tokio::sync::Notify,
+    stage: AtomicUsize,
+}
+struct Host {
+    gate: Option<Arc<Gate>>,
+}
 impl Provider for Host {
     async fn load_quotes(&self, _: i64) -> Result<QuoteBuffer, TaskError> {
         // Producer construction/import is request work, not prebuilt resident input.
@@ -48,6 +59,12 @@ impl Provider for Host {
             let ToolArguments::String(value) = args else {
                 panic!("string binding")
             };
+            if let Some(gate) = &self.gate {
+                assert_eq!(gate.stage.swap(1, Ordering::SeqCst), 0);
+                gate.entered.notify_one();
+                gate.release.notified().await;
+                assert_eq!(gate.stage.swap(2, Ordering::SeqCst), 1);
+            }
             assert_eq!(value.as_str(), "hello error");
             return Ok(Reply::I64(7));
         }
@@ -147,7 +164,7 @@ fn resident_request() {
         )
         .unwrap(),
     );
-    let ready = Arc::new(Host);
+    let ready = Arc::new(Host { gate: None });
     let schema = [("input_0", Type::I64), ("input_1", Type::I64)];
     let inputs = if case.ends_with("_inputs") {
         &schema[..]
@@ -187,7 +204,7 @@ fn resident_request() {
                 }
                 .into(),
             ),
-            "detach" | "detach_live" => (
+            "detach" | "detach_live" | "detach_wait" => (
                 format!(
                     "n={n}\ndata=tools.fetch(-2)\ntext=data['message']\nr=tools.unused1(text)\nprint(r){}",
                     if case == "detach_live" {
@@ -262,6 +279,25 @@ fn resident_request() {
         #[cfg(feature = "compiler-profile")]
         minipy_native::compiler_profile::reset(false);
         let start = Instant::now();
+        // Count fresh gate setup and observe a genuinely blocked operation.
+        let gate = (case == "detach_wait").then(|| Arc::new(Gate::default()));
+        let waiter = gate.as_ref().map(|gate| {
+            let gate = gate.clone();
+            rt.spawn(async move {
+                gate.entered.notified().await;
+                tokio::task::yield_now().await;
+                assert_eq!(gate.stage.load(Ordering::SeqCst), 1);
+                gate.release.notify_one();
+            })
+        });
+        let host = gate.as_ref().map_or_else(
+            || ready.clone(),
+            |gate| {
+                Arc::new(Host {
+                    gate: Some(gate.clone()),
+                })
+            },
+        );
         // Only diagnostic builds have phase timers. Default records one E2E interval.
         #[cfg(feature = "compiler-profile")]
         let prepare_ns;
@@ -290,7 +326,7 @@ fn resident_request() {
             } else {
                 rt.block_on(runtime::execute_script(
                     code,
-                    ready.clone(),
+                    host.clone(),
                     values,
                     ScriptLimits::default(),
                     Cancellation::default(),
@@ -322,7 +358,7 @@ fn resident_request() {
             } else {
                 rt.block_on(interpreter::execute_script(
                     code,
-                    ready.clone(),
+                    host.clone(),
                     values,
                     ScriptLimits::default(),
                     Cancellation::default(),
@@ -332,6 +368,12 @@ fn resident_request() {
         };
         #[cfg(feature = "compiler-profile")]
         let execute_ns = start.elapsed().as_nanos() - prepare_ns;
+        if let Some(waiter) = waiter {
+            rt.block_on(waiter).unwrap();
+            assert_eq!(gate.as_ref().unwrap().stage.load(Ordering::SeqCst), 2);
+        }
+        drop(host);
+        drop(gate);
         // Keep tiny output/status checks inside E2E so output can be released before stop.
         assert_eq!(outcome.status, Ok(()));
         assert_eq!(outcome.stdout, expected);

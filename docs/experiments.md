@@ -2225,3 +2225,40 @@ Its fixed-range diff check found four logs' trailing empty lines missed by the
 lead's working-tree-only check. Text-only follow-up removes them and verifies
 the whole base-to-result range. See [CE review](../evidence/ce-overflow/review.md).
 
+## CF：近期优化组合验收与阶段结束
+
+固定 pre-BW `c8d28f0` 和 main `1507ae8`，验证祖先关系和最终源码差异，
+只保留 BW/CC/CD/CE 的组合；没有生产代码修改。四类 identical-adapter
+新源请求：短 branch、escaped joined print、约 1 MiB JSON 的小 string
+参数经真实 Notify-gated Tool 等待、256-row computed arithmetic loop。
+双后端 A/B 与 exact-A A/A 各两轮 ABBA、64 进程 / 1536 正式请求，所有
+status/stdout/等待阶段断言通过。计时包括 prepare、执行、生产者构造导入、
+code/output 和 gate 清理，不含调用方 source 构造与 resident fixture 启动。
+
+tape 的 branch/join/wait/loop B:A 为 .89676/.97825/.99288/1.01372；native
+为 1.01051/.98591/1.01577/.92223。早期进程漂移显著，branch 全零 owner
+mask 也没有 CE 多算术树，不能将其差异归为 CD 收益。native loop 的局部
+支持不扩展为精确因果 7.8% 或通用加速。其余小幅变化混合，不追加样本。
+CC 继续以等待 backing 释放为保留依据，不因未证延迟改善自动回滚。
+
+分别保留已证实的 BW 一次 allocation 去除、CC 每后端八 owner 的
+8,388,968 B backing 释放 / 80 B 参数、CD 非零 DAG visits 减半、CE
+四到一 overflow exits。复用旧 CC census 并在当前 main 重跑原 fixture，
+不将 backing 重新命名为 RSS。完整 default/tool-json-debug-runtime release
+suites、严格 all-target Clippy、fmt、九个 Python tests 通过。正式两臂源码
+hash 对各自 Git blob 完整校验，包含显式相同 CF adapter / inert test overlay；
+采集时 A/B 的 HEAD 标签均为 main，源码 hash 才标识临时 baseline 内容。
+
+先枚举 toolchains、禁用 auto-install，再在 no overrides、进程/open-file
+与项目引用检查、49,691 个文件与 stable 对比后，只删除 CE 误装的命名版
+1.93.1。所有程序/库与 stable 相同，仅两项 rustup inventories 不同。
+stable（仍 1.93.1）、1.92/1.96、共享 target 和其他项目保持。无新
+worktree/target/dependency/download/CI 或 Linux/Wasm/Monty 性能结论。
+
+阶段结束，保留 BW/CC/CD/CE。最高价值问题是实际 Host source 和 cold-prepare
+比例：历史 BT 独立 instrumented Ready raw 的 backend/prepare 中位比例
+78.7%，与本次 native/tape 总成本差距指向 preparation 的调查价值，但不是
+当前 phase share 或新 backend 的批准。先判断真实 source/loop/wait 分布，
+不自动继续零碎优化。小 raw、归约、边界、清理和复现：
+[CF stage evidence](../evidence/cf-stage/README.md)。
+

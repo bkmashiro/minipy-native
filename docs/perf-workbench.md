@@ -36,6 +36,13 @@ Quote is another matched loop. The rejected candidate and bounded A/B/A/A result
 are in [BX evidence](../evidence/bx-madd/README.md). Default cases remain unchanged.
 Build identities now recursively hash all Rust submodules, including the tape.
 
+CF adds opt-in `detach_wait`: the existing large-JSON/small-string source now
+uses an actual Notify-gated second Tool operation. Fresh gate/Host construction,
+blocked-stage assertions, controller join and release are included in the request
+boundary on both arms. Default case selection is unchanged. The four-case combined
+acceptance and its source overlays are documented in
+[CF evidence](../evidence/cf-stage/README.md); this is not a production Provider API.
+
 Both tape and actual native code execute and assert exact stdout/status. Every
 iteration changes a source literal and reparses/prepares it; there is no prepared
 unit reuse or source/result cache. There are 16 immutable Tool declarations,

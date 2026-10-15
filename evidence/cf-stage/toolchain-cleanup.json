@@ -1,0 +1,18 @@
+{
+  "auto_install_disabled": true,
+  "initial_installed": ["stable-aarch64-apple-darwin (active, default)", "1.92.0-aarch64-apple-darwin", "1.93.1-aarch64-apple-darwin", "1.96.0-aarch64-apple-darwin"],
+  "stable_and_named_rustc": "rustc 1.93.1 (01f6ddf75 2026-02-11), LLVM 21.1.8, aarch64-apple-darwin",
+  "override_list": "no overrides",
+  "project_toolchain_file_scan": "projects scan found only oxc/rust-toolchain.toml selecting 1.96.0; no 1.93.1 references found in project TOML files or this repository's tools",
+  "process_scan": "no cargo/rustc/rustfmt/clippy process or process command referencing named 1.93.1 toolchain at inspection",
+  "lsof_named_toolchain": {"command": "lsof -Fn +D /Users/yuzhe/.rustup/toolchains/1.93.1-aarch64-apple-darwin", "exit_code": 1, "stdout": "", "stderr": ""},
+  "named_files_compared_to_stable_sha256": 49691,
+  "differing_files": ["lib/rustlib/multirust-config.toml", "lib/rustlib/components"],
+  "difference_reason": "rustup toolchain/component inventories; stable has additional cross-target std components",
+  "du_before_KiB": {"stable": 1861884, "named_1.93.1": 1282516},
+  "removal": {"command": "RUSTUP_AUTO_INSTALL=0 rustup toolchain uninstall 1.93.1-aarch64-apple-darwin", "exit_code": 0},
+  "final_installed": ["stable-aarch64-apple-darwin (active, default)", "1.92.0-aarch64-apple-darwin", "1.96.0-aarch64-apple-darwin"],
+  "post_removal_stable_rustc": "rustc 1.93.1 (01f6ddf75 2026-02-11)",
+  "post_removal_stable_fmt_check": 0,
+  "limitations": "Usage checks are point-in-time and scoped to live process/open files, rustup overrides and projects. du is prior reported tree usage, not a measured amount of reclaimed physical storage. No active caches, other toolchains, project files or default setting removed."
+}
