@@ -1660,7 +1660,7 @@ could be smaller than generic Python containers/filesystem objects; it must
 retain original call spelling and result shape to count as original coverage.
 Measure new-source full requests only after actual fixture execution. If the
 finite slice cannot preserve that contract, keep the Host fallback rather
-rather than adding a generic filesystem/shell adapter or inventing numeric types.
+than adding a generic filesystem/shell adapter or inventing numeric types.
 
 ### BN follow-up design gate (not implemented)
 
