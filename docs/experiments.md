@@ -1631,3 +1631,22 @@ aggregate deltas do **not** establish either a stable old-path regression
 or a speed gain. The case is synthetic: no real filesystem Host adapter,
 network latency, unchanged private script, Linux or Wasm claim.
 
+## BP: BO mainline integration (2026-10-15)
+
+Cherry-picked the reviewed BO commit `5003385` onto main `0b6c826`; no BN
+runtime ABI or record-layout experiment was brought in. The 1240-row BO
+resident-request raw file independently matches its documented SHA256 above;
+its process-order drift does not establish a stable gain or regression. No
+new performance campaign was run. README now describes the opt-in JSON print
+behavior, and the separate [literal-string Tool argument proposal](string-tool-argument-proposal.md)
+is design only, not an implemented capability or admission claim.
+
+Local macOS aarch64 checks with shared Cargo target under the build lock:
+`cargo +1.96.0 test --offline --locked` and the same with `--features tool-json`
+(including the four `string_contains` tests exercising native and tape),
+`cargo +1.96.0 clippy --offline --locked --all-targets -- -D warnings`,
+the same clippy with `--features tool-json`, and `cargo fmt --all -- --check`
+all passed. Rust 1.96's rustfmt component is absent locally; the available
+default rustfmt was used without downloading a toolchain. Linux, Wasm and
+production Host integration remain untested by this mainline integration.
+

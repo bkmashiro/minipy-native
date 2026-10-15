@@ -11,7 +11,7 @@ pub enum ResultSchema {
     I64,
     /// Explicit i64 leaf paths. Other paths may form raw subviews, never values.
     Json(Vec<Vec<String>>),
-    /// Explicit typed leaves; string values are only usable by literal `in`.
+    /// Explicit typed leaves; strings support literal `in` and bounded `print`.
     JsonTyped(Vec<(Vec<String>, JsonLeaf)>),
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
