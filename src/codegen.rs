@@ -156,7 +156,10 @@ impl CodeUnit {
             .finish(settings::Flags::new(flags))
             .map_err(error)?;
         if isa.pointer_type() != types::I64 {
-            return Err(CompileError("only 64-bit hosts supported".into()));
+            return Err(CompileError::new(
+                ir::AdmissionKind::Backend,
+                "only 64-bit hosts supported",
+            ));
         }
         let mut builder = JITBuilder::with_isa(isa, cranelift_module::default_libcall_names());
         builder.symbol("minipy_print", crate::runtime::native_print as *const u8);
@@ -323,7 +326,7 @@ impl CodeUnit {
         crate::compiler_profile::inventory(&ctx.func, false);
         let code_bytes = ctx
             .compiled_code()
-            .ok_or_else(|| CompileError("missing machine code".into()))?
+            .ok_or_else(|| CompileError::new(ir::AdmissionKind::Backend, "missing machine code"))?
             .code_info()
             .total_size as usize;
         #[cfg(feature = "compiler-profile")]
@@ -361,7 +364,7 @@ impl CodeUnit {
     }
 }
 fn error(e: impl std::fmt::Display) -> CompileError {
-    CompileError(e.to_string())
+    CompileError::new(ir::AdmissionKind::Backend, e.to_string())
 }
 /// Compile structured statements directly to native CFG. PCs exist only at
 /// actual Host waits and row-chunk yields, never as an interpreted instruction stream.
@@ -405,8 +408,18 @@ impl Live {
 fn used(e: &Expr) -> u32 {
     match e {
         Expr::Local(i) => 1u32 << i,
-        Expr::Binary(_, a, b) => used(a) | used(b),
-        Expr::Not(e) => used(e),
+        Expr::Binary(_, a, b) | Expr::Min(a, b) | Expr::Max(a, b) => used(a) | used(b),
+        Expr::Not(e) | Expr::Abs(e) => used(e),
+        _ => 0,
+    }
+}
+fn buffer_used(e: &Expr) -> u64 {
+    match e {
+        Expr::BufferLen(i) => 1u64 << i,
+        Expr::Binary(_, a, b) | Expr::Min(a, b) | Expr::Max(a, b) => {
+            buffer_used(a) | buffer_used(b)
+        }
+        Expr::Not(e) | Expr::Abs(e) => buffer_used(e),
         _ => 0,
     }
 }
@@ -433,12 +446,26 @@ fn json_used(e: &Expr) -> u32 {
         | Expr::JsonView { root, .. }
         | Expr::JsonString { root, .. }
         | Expr::Contains { root, .. } => 1 << root,
-        Expr::Binary(_, a, b) => json_used(a) | json_used(b),
-        Expr::Not(e) => json_used(e),
+        Expr::Binary(_, a, b) | Expr::Min(a, b) | Expr::Max(a, b) => json_used(a) | json_used(b),
+        Expr::Not(e) | Expr::Abs(e) => json_used(e),
         _ => 0,
     }
 }
 fn live_statement(s: &Stmt, mut live: Live) -> Live {
+    match s {
+        Stmt::Set(_, e) | Stmt::Load(_, e) | Stmt::Eval(e) | Stmt::Print(e, _) => {
+            live.buffers |= buffer_used(e)
+        }
+        Stmt::Record(_, a, b) => live.buffers |= buffer_used(a) | buffer_used(b),
+        #[cfg(feature = "tool-json")]
+        Stmt::Tool { args, .. } => {
+            for e in args {
+                live.buffers |= buffer_used(e);
+            }
+        }
+        Stmt::If(_, _, _) => {}
+        Stmt::Return(_) | Stmt::For(_, _) => {}
+    }
     #[cfg(feature = "tool-json")]
     {
         match s {
@@ -463,7 +490,7 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
         Stmt::Return(e) => {
             return Live {
                 scalars: used(e),
-                buffers: 0,
+                buffers: buffer_used(e),
                 #[cfg(feature = "tool-json")]
                 json: json_used(e),
             };
@@ -471,6 +498,7 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
         Stmt::If(e, yes, no) => {
             live = live_before(yes, live).union(live_before(no, live));
             live.scalars |= used(e);
+            live.buffers |= buffer_used(e);
             #[cfg(feature = "tool-json")]
             {
                 live.json |= json_used(e);
@@ -500,6 +528,7 @@ impl Flow<'_, '_> {
             b: self.b,
             vars: self.vars,
             row: self.row,
+            views: self.views,
             overflow: self.overflow,
             #[cfg(feature = "tool-json")]
             json: self
@@ -577,6 +606,7 @@ impl Flow<'_, '_> {
                         b: self.b,
                         vars: self.vars,
                         row: self.row,
+                        views: self.views,
                         overflow: self.overflow,
                         #[cfg(feature = "tool-json")]
                         json: self
@@ -731,6 +761,7 @@ struct Emit<'a, 'b> {
     b: &'a mut FunctionBuilder<'b>,
     vars: &'a [Variable],
     row: Option<Value>,
+    views: Value,
     overflow: cranelift_codegen::ir::Block,
     #[cfg(feature = "tool-json")]
     json: Option<(
@@ -777,6 +808,32 @@ impl Emit<'_, '_> {
             Expr::Int(v) => self.b.ins().iconst(types::I64, *v),
             Expr::Bool(v) => self.b.ins().iconst(types::I64, i64::from(*v)),
             Expr::Local(i) => self.b.use_var(self.vars[*i]),
+            Expr::BufferLen(i) => self.b.ins().load(
+                types::I64,
+                MemFlags::trusted(),
+                self.views,
+                (i * 16 + 8) as i32,
+            ),
+            Expr::Abs(x) => {
+                let v = self.expr(x);
+                let min = self.b.ins().iconst(types::I64, i64::MIN);
+                let overflow = self.b.ins().icmp(IntCC::Equal, v, min);
+                let next = self.b.create_block();
+                self.b.ins().brif(overflow, self.overflow, &[], next, &[]);
+                self.b.switch_to_block(next);
+                let negative = self.b.ins().icmp_imm(IntCC::SignedLessThan, v, 0);
+                let negated = self.b.ins().ineg(v);
+                self.b.ins().select(negative, negated, v)
+            }
+            Expr::Min(a, b) | Expr::Max(a, b) => {
+                let a = self.expr(a);
+                let b = self.expr(b);
+                if matches!(e, Expr::Min(..)) {
+                    self.b.ins().smin(a, b)
+                } else {
+                    self.b.ins().smax(a, b)
+                }
+            }
             #[cfg(feature = "tool-json")]
             Expr::JsonI64 { slot, .. } | Expr::JsonView { slot, .. } => {
                 let (output, frame, helper, error) = self.json.expect("frontend bound JSON plan");

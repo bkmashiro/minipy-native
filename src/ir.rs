@@ -32,6 +32,10 @@ pub enum Expr {
     Int(i64),
     Bool(bool),
     Local(usize),
+    BufferLen(usize),
+    Abs(Box<Expr>),
+    Min(Box<Expr>, Box<Expr>),
+    Max(Box<Expr>, Box<Expr>),
     #[cfg(feature = "tool-json")]
     JsonI64 {
         slot: usize,
@@ -87,11 +91,46 @@ pub struct Program {
     #[cfg(feature = "tool-json")]
     pub json: crate::tool::Plan,
 }
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum AdmissionKind {
+    Syntax,
+    Unsupported,
+    Type,
+    Schema,
+    Backend,
+}
 #[derive(Clone, Debug, PartialEq, Eq)]
-pub struct CompileError(pub String);
+pub struct CompileError {
+    pub kind: AdmissionKind,
+    pub reason: String,
+    /// One-based line and UTF-8 byte column, when source caused the error.
+    pub location: Option<(usize, usize)>,
+}
+impl CompileError {
+    pub fn new(kind: AdmissionKind, reason: impl Into<String>) -> Self {
+        Self {
+            kind,
+            reason: reason.into(),
+            location: None,
+        }
+    }
+    pub fn at(mut self, source: &str, offset: usize) -> Self {
+        if self.location.is_none() {
+            let prefix = &source[..offset.min(source.len())];
+            self.location = Some((
+                prefix.bytes().filter(|c| *c == b'\n').count() + 1,
+                prefix.rsplit('\n').next().unwrap_or("").len() + 1,
+            ));
+        }
+        self
+    }
+}
 impl std::fmt::Display for CompileError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(&self.0)
+        if let Some((line, col)) = self.location {
+            write!(f, "{line}:{col}: ")?;
+        }
+        f.write_str(&self.reason)
     }
 }
 impl std::error::Error for CompileError {}

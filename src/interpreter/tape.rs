@@ -17,6 +17,10 @@ pub(super) enum Dest {
 #[derive(Debug)]
 pub(super) enum Op {
     Copy(Dest, Operand),
+    BufferLen(Dest, usize),
+    Abs(Dest, Operand),
+    Min(Dest, Operand, Operand),
+    Max(Dest, Operand, Operand),
     #[cfg(feature = "tool-json")]
     JsonRead(Dest, usize, usize, bool),
     #[cfg(feature = "tool-json")]
@@ -60,7 +64,11 @@ impl Op {
             Self::JsonRead(d, ..) => Some(*d),
             #[cfg(feature = "tool-json")]
             Self::JsonString(d, ..) => Some(*d),
-            Self::Copy(d, _)
+            Self::BufferLen(d, _)
+            | Self::Abs(d, _)
+            | Self::Min(d, _, _)
+            | Self::Max(d, _, _)
+            | Self::Copy(d, _)
             | Self::Add(d, _, _)
             | Self::Sub(d, _, _)
             | Self::Mul(d, _, _)
@@ -127,6 +135,21 @@ impl Lower<'_> {
     }
     fn assign(&mut self, e: Expr, dest: Dest) {
         match e {
+            Expr::BufferLen(i) => self.ops.push(Op::BufferLen(dest, i)),
+            Expr::Abs(e) => {
+                let a = self.value(*e);
+                self.ops.push(Op::Abs(dest, a));
+            }
+            Expr::Min(a, b) => {
+                let a = self.value(*a);
+                let b = self.value(*b);
+                self.ops.push(Op::Min(dest, a, b));
+            }
+            Expr::Max(a, b) => {
+                let a = self.value(*a);
+                let b = self.value(*b);
+                self.ops.push(Op::Max(dest, a, b));
+            }
             #[cfg(feature = "tool-json")]
             Expr::JsonI64 { slot, root } | Expr::JsonView { slot, root } => self.ops.push(
                 Op::JsonRead(dest, slot, root, matches!(e, Expr::JsonView { .. })),
@@ -392,6 +415,30 @@ pub(super) fn run<const STEP: bool>(
         macro_rules! cmp { ($d:expr,$a:expr,$b:expr,$operator:tt) => {{ let v=i64::from(read(*$a,state,temps) $operator read(*$b,state,temps)); write(*$d,v,state,temps); }} }
         macro_rules! jump { ($a:expr,$b:expr,$target:expr,$operator:tt) => { if read(*$a,state,temps) $operator read(*$b,state,temps) {state.pc=*$target;} } }
         match op {
+            Op::BufferLen(d, i) => write(
+                *d,
+                owners[*i]
+                    .as_ref()
+                    .expect("sealed buffer owner")
+                    .rows()
+                    .len() as i64,
+                state,
+                temps,
+            ),
+            Op::Abs(d, a) => {
+                let v = read(*a, state, temps)
+                    .checked_abs()
+                    .ok_or(TaskError::Overflow)?;
+                write(*d, v, state, temps);
+            }
+            Op::Min(d, a, b) => {
+                let v = read(*a, state, temps).min(read(*b, state, temps));
+                write(*d, v, state, temps);
+            }
+            Op::Max(d, a, b) => {
+                let v = read(*a, state, temps).max(read(*b, state, temps));
+                write(*d, v, state, temps);
+            }
             #[cfg(feature = "tool-json")]
             Op::JsonRead(d, slot, _, view) => {
                 let json = output.json.as_mut().expect("sealed JSON plan");

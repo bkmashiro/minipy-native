@@ -1,5 +1,5 @@
 //! Preparation-owned Tool declarations and statically bound JSON paths.
-use crate::ir::CompileError;
+use crate::ir::{AdmissionKind, CompileError};
 
 pub const LOAD_QUOTES: u32 = 0;
 pub const RECORD_TOTAL: u32 = 1;
@@ -29,7 +29,10 @@ pub struct ToolSchema {
 impl ToolSchema {
     pub fn validate_all(tools: &[Self]) -> Result<(), CompileError> {
         if tools.len() > MAX_TOOLS {
-            return Err(CompileError("too many Tool declarations".into()));
+            return Err(CompileError::new(
+                AdmissionKind::Schema,
+                "too many Tool declarations",
+            ));
         }
         let mut ids = std::collections::HashSet::new();
         let mut names = std::collections::HashSet::new();
@@ -46,8 +49,9 @@ impl ToolSchema {
                 || !identifier(&t.name)
                 || ["load_quotes", "record_total"].contains(&t.name.as_str())
             {
-                return Err(CompileError(
-                    "Tool IDs/names must be unique and non-reserved".into(),
+                return Err(CompileError::new(
+                    AdmissionKind::Schema,
+                    "Tool IDs/names must be unique and non-reserved",
                 ));
             }
             let mut args = std::collections::HashSet::new();
@@ -56,8 +60,9 @@ impl ToolSchema {
                     .iter()
                     .any(|a| !identifier(a) || !args.insert(a))
             {
-                return Err(CompileError(
-                    "Tools accept at most two unique named i64 arguments".into(),
+                return Err(CompileError::new(
+                    AdmissionKind::Schema,
+                    "Tools accept at most two unique named i64 arguments",
                 ));
             }
             let paths: Vec<&Vec<String>> = match &t.result {
@@ -71,8 +76,9 @@ impl ToolSchema {
                         .iter()
                         .any(|p| p.is_empty() || p.len() > 32 || p.iter().any(|k| k.len() > 256))
                 {
-                    return Err(CompileError(
-                        "JSON schema exceeds bounded leaf paths".into(),
+                    return Err(CompileError::new(
+                        AdmissionKind::Schema,
+                        "JSON schema exceeds bounded leaf paths",
                     ));
                 }
                 for (i, p) in paths.iter().enumerate() {
@@ -80,7 +86,10 @@ impl ToolSchema {
                         .iter()
                         .any(|q| p.starts_with(q) || q.starts_with(p))
                     {
-                        return Err(CompileError("JSON leaf paths overlap".into()));
+                        return Err(CompileError::new(
+                            AdmissionKind::Schema,
+                            "JSON leaf paths overlap",
+                        ));
                     }
                 }
             }
@@ -128,7 +137,10 @@ impl Plan {
                 i
             } else {
                 if self.paths.len() >= MAX_PATHS {
-                    return Err(CompileError("too many bound JSON path slots".into()));
+                    return Err(CompileError::new(
+                        AdmissionKind::Schema,
+                        "too many bound JSON path slots",
+                    ));
                 }
                 let i = self.paths.len();
                 self.paths.push(PathSlot {
@@ -140,7 +152,12 @@ impl Plan {
             };
             parent = Some(slot);
         }
-        parent.ok_or_else(|| CompileError("JSON scalar access requires a leaf path".into()))
+        parent.ok_or_else(|| {
+            CompileError::new(
+                AdmissionKind::Schema,
+                "JSON scalar access requires a leaf path",
+            )
+        })
     }
 }
 /// Capability-facing reply. Bytes is transferred by ownership, never reconstructed.

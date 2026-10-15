@@ -1,12 +1,15 @@
 //! Restricted Python source frontend: RustPython AST -> typed semantic IR.
-use crate::ir::{self, BinOp, CompileError, Expr, Field, Program, Stmt, Type};
-use rustpython_parser::{Parse, ast};
+use crate::ir::{self, AdmissionKind, BinOp, CompileError, Expr, Field, Program, Stmt, Type};
+use rustpython_parser::{Parse, ast, ast::Ranged};
 use std::collections::{HashMap, HashSet};
 
 const MAX_DEPTH: usize = 32;
 type Result<T> = std::result::Result<T, CompileError>;
 fn err(message: impl Into<String>) -> CompileError {
-    CompileError(message.into())
+    CompileError::new(AdmissionKind::Unsupported, message)
+}
+fn type_err(message: impl Into<String>) -> CompileError {
+    CompileError::new(AdmissionKind::Type, message)
 }
 
 /// Parse with the historical two scalar inputs.
@@ -26,13 +29,15 @@ pub fn parse_with_inputs(source: &str, inputs: &[(&str, Type)]) -> Result<Progra
     validate_inputs(inputs)?;
     #[cfg(feature = "compiler-profile")]
     let start = std::time::Instant::now();
-    let module = ast::Suite::parse(source, "<minipy>")
-        .map_err(|e| err(format!("Python syntax error: {e}")))?;
+    let module = ast::Suite::parse(source, "<minipy>").map_err(|e| {
+        CompileError::new(AdmissionKind::Syntax, format!("Python syntax error: {e}"))
+            .at(source, e.offset.to_usize())
+    })?;
     #[cfg(feature = "compiler-profile")]
     crate::compiler_profile::update(|p| p.parse_ns = crate::compiler_profile::elapsed(start));
     #[cfg(feature = "compiler-profile")]
     let start = std::time::Instant::now();
-    let result = Compiler::new(inputs)?.program(module);
+    let result = Compiler::new(inputs, source)?.program(module);
     #[cfg(feature = "compiler-profile")]
     crate::compiler_profile::update(|p| p.type_ns = crate::compiler_profile::elapsed(start));
     result
@@ -51,29 +56,44 @@ pub fn parse_with_tools(
     }
     check_delimiter_depth(source)?;
     validate_inputs(inputs)?;
-    let module = ast::Suite::parse(source, "<minipy>")
-        .map_err(|e| err(format!("Python syntax error: {e}")))?;
-    let mut compiler = Compiler::new(inputs)?;
+    let module = ast::Suite::parse(source, "<minipy>").map_err(|e| {
+        CompileError::new(AdmissionKind::Syntax, format!("Python syntax error: {e}"))
+            .at(source, e.offset.to_usize())
+    })?;
+    let mut compiler = Compiler::new(inputs, source)?;
     compiler.tools = tools.to_vec();
     compiler.program(module)
 }
 
 fn validate_inputs(inputs: &[(&str, Type)]) -> Result<()> {
     if inputs.len() > ir::MAX_LOCALS {
-        return Err(err("program exceeds MAX_LOCALS"));
+        return Err(CompileError::new(
+            AdmissionKind::Schema,
+            "input schema exceeds MAX_LOCALS",
+        ));
     }
     let mut names = HashSet::new();
     for (name, _) in inputs {
         if name.is_empty() || !names.insert(*name) {
-            return Err(err("input names must be unique identifiers"));
+            return Err(CompileError::new(
+                AdmissionKind::Schema,
+                "input names must be unique identifiers",
+            ));
         }
         if !name
             .chars()
             .enumerate()
             .all(|(i, c)| c == '_' || c.is_alphanumeric() && (i != 0 || !c.is_numeric()))
-            || ["tools", "print", "quotes", "True", "False", "i64", "bool"].contains(name)
+            || [
+                "tools", "print", "quotes", "True", "False", "i64", "bool", "len", "abs", "min",
+                "max",
+            ]
+            .contains(name)
         {
-            return Err(err(format!("reserved or invalid input name '{name}'")));
+            return Err(CompileError::new(
+                AdmissionKind::Schema,
+                format!("reserved or invalid input name '{name}'"),
+            ));
         }
     }
     Ok(())
@@ -124,7 +144,8 @@ fn check_delimiter_depth(s: &str) -> Result<()> {
     Ok(())
 }
 
-struct Compiler {
+struct Compiler<'a> {
+    source: &'a str,
     nodes: usize,
     locals: Vec<Type>,
     names: Vec<String>,
@@ -143,12 +164,13 @@ struct Compiler {
     #[cfg(feature = "tool-json")]
     json_leaves: Vec<Vec<(Vec<String>, crate::tool::JsonLeaf)>>,
 }
-impl Compiler {
-    fn new(inputs: &[(&str, Type)]) -> Result<Self> {
+impl<'a> Compiler<'a> {
+    fn new(inputs: &[(&str, Type)], source: &'a str) -> Result<Self> {
         if inputs.len() > ir::MAX_LOCALS {
             return Err(err("program exceeds MAX_LOCALS"));
         }
         Ok(Self {
+            source,
             nodes: 0,
             locals: inputs.iter().map(|x| x.1).collect(),
             names: inputs.iter().map(|x| x.0.to_owned()).collect(),
@@ -285,7 +307,10 @@ impl Compiler {
         if self.json_names.contains_key(name) {
             return Err(err("JSON view names cannot be rebound"));
         }
-        if ["tools", "print", "True", "False"].contains(&name)
+        if [
+            "tools", "print", "True", "False", "len", "abs", "min", "max",
+        ]
+        .contains(&name)
             || self.buffers.contains_key(name)
             || self.rows.contains(name)
         {
@@ -296,7 +321,7 @@ impl Compiler {
                 return Err(err(format!("host input '{name}' is immutable")));
             }
             if self.locals[i] != ty {
-                return Err(err(format!("local '{name}' changes type")));
+                return Err(type_err(format!("local '{name}' changes type")));
             }
             if !allow_existing && self.initialized & (1 << i) != 0 {
                 return Err(err(format!("local '{name}' is already initialized")));
@@ -312,6 +337,17 @@ impl Compiler {
         Ok(i)
     }
     fn compile_stmt(
+        &mut self,
+        s: &ast::Stmt,
+        depth: usize,
+        in_loop: bool,
+        in_loop_body: bool,
+        out: &mut Vec<Stmt>,
+    ) -> Result<()> {
+        self.compile_stmt_inner(s, depth, in_loop, in_loop_body, out)
+            .map_err(|e| e.at(self.source, s.start().to_usize()))
+    }
+    fn compile_stmt_inner(
         &mut self,
         s: &ast::Stmt,
         depth: usize,
@@ -380,14 +416,14 @@ impl Compiler {
                     }
                     let (batch, ty) = self.expr(&args[0], depth + 2, false)?;
                     if ty != Type::I64 {
-                        return Err(err("load_quotes batch expression must be i64"));
+                        return Err(type_err("load_quotes batch expression must be i64"));
                     }
                     if self.next_buffer >= ir::MAX_BUFFERS {
                         return Err(err("program exceeds 32 quote buffers"));
                     }
                     if self.names.iter().any(|n| n == &name)
                         || self.buffers.contains_key(&name)
-                        || ["tools", "print"].contains(&name.as_str())
+                        || ["tools", "print", "len", "abs", "min", "max"].contains(&name.as_str())
                     {
                         return Err(err("buffer name conflicts with a reserved or scalar name"));
                     }
@@ -410,7 +446,9 @@ impl Compiler {
                 if let Some(expected) = expected
                     && expected != ty
                 {
-                    return Err(err(format!("initializer for '{name}' has the wrong type")));
+                    return Err(type_err(format!(
+                        "initializer for '{name}' has the wrong type"
+                    )));
                 }
                 let i = self.declare(&name, ty, true)?;
                 self.initialized |= 1 << i;
@@ -426,7 +464,9 @@ impl Compiler {
                     .ok_or_else(|| err("locals must be initialized at declaration"))?;
                 let (value, actual) = self.expr(value, depth + 1, in_loop)?;
                 if ty != actual {
-                    return Err(err(format!("initializer for '{name}' has the wrong type")));
+                    return Err(type_err(format!(
+                        "initializer for '{name}' has the wrong type"
+                    )));
                 }
                 let i = self.declare(&name, ty, true)?;
                 self.initialized |= 1 << i;
@@ -440,7 +480,7 @@ impl Compiler {
                     return Err(err(format!("local '{n}' is immutable or uninitialized")));
                 }
                 if self.locals[i] != Type::I64 {
-                    return Err(err("augmented arithmetic requires i64"));
+                    return Err(type_err("augmented arithmetic requires i64"));
                 }
                 let op = match a.op {
                     ast::Operator::Add => BinOp::Add,
@@ -450,7 +490,7 @@ impl Compiler {
                 };
                 let (rhs, ty) = self.expr(&a.value, depth + 1, in_loop)?;
                 if ty != Type::I64 {
-                    return Err(err("augmented arithmetic requires i64"));
+                    return Err(type_err("augmented arithmetic requires i64"));
                 }
                 out.push(Stmt::Set(
                     i,
@@ -461,7 +501,7 @@ impl Compiler {
             ast::Stmt::If(a) => {
                 let (test, ty) = self.expr(&a.test, depth + 1, in_loop)?;
                 if ty != Type::Bool {
-                    return Err(err("if condition must be bool"));
+                    return Err(type_err("if condition must be bool"));
                 }
                 let buffers_before = self.next_buffer;
                 #[cfg(feature = "tool-json")]
@@ -506,7 +546,7 @@ impl Compiler {
                 let row = Self::target_name(&f.target)?;
                 if self.names.iter().any(|n| n == &row)
                     || self.buffers.contains_key(&row)
-                    || ["tools", "print"].contains(&row.as_str())
+                    || ["tools", "print", "len", "abs", "min", "max"].contains(&row.as_str())
                 {
                     return Err(err(
                         "row name conflicts with a scalar, buffer, or reserved name",
@@ -665,7 +705,10 @@ impl Compiler {
             || self.buffers.contains_key(name)
             || self.rows.contains(name)
             || self.json_names.contains_key(name)
-            || ["tools", "print", "True", "False"].contains(&name)
+            || [
+                "tools", "print", "True", "False", "len", "abs", "min", "max",
+            ]
+            .contains(&name)
         {
             return Err(err(
                 "JSON view name conflicts with an existing/reserved binding",
@@ -718,7 +761,7 @@ impl Compiler {
         for (position, arg) in c.args.iter().enumerate() {
             let (e, t) = self.expr(arg, depth + 1, false)?;
             if t != Type::I64 {
-                return Err(err("Tool argument must be i64"));
+                return Err(type_err("Tool argument must be i64"));
             }
             let slot = self.hidden_scalar(t)?;
             out.push(Stmt::Set(slot, e));
@@ -739,7 +782,7 @@ impl Compiler {
             }
             let (e, t) = self.expr(&kw.value, depth + 1, false)?;
             if t != Type::I64 {
-                return Err(err("Tool argument must be i64"));
+                return Err(type_err("Tool argument must be i64"));
             }
             let slot = self.hidden_scalar(t)?;
             out.push(Stmt::Set(slot, e));
@@ -807,7 +850,7 @@ impl Compiler {
         }
         let (value, ty) = self.expr(e, depth + 1, false)?;
         if ty != Type::I64 {
-            return Err(err("return expression must be i64"));
+            return Err(type_err("return expression must be i64"));
         }
         out.push(Stmt::Return(value));
         Ok(())
@@ -822,7 +865,7 @@ impl Compiler {
             _ => None,
         }
     }
-    fn call_args<'a>(e: &'a ast::Expr, tool: &str) -> Result<&'a [ast::Expr]> {
+    fn call_args<'b>(e: &'b ast::Expr, tool: &str) -> Result<&'b [ast::Expr]> {
         let (call, _) =
             Self::call_parts(e).ok_or_else(|| err(format!("expected tools.{tool}(...)")))?;
         let ast::Expr::Call(c) = call else {
@@ -873,14 +916,14 @@ impl Compiler {
         self.node(depth)?;
         let (batch, bt) = self.expr(&args[0], depth + 1, in_loop)?;
         if bt != Type::I64 {
-            return Err(err("tool batch expression must be i64"));
+            return Err(type_err("tool batch expression must be i64"));
         }
         if tool == "load_quotes" {
             return Ok(Some((batch, Expr::Int(0))));
         }
         let (total, tt) = self.expr(&args[1], depth + 1, in_loop)?;
         if tt != Type::I64 {
-            return Err(err("record_total total expression must be i64"));
+            return Err(type_err("record_total total expression must be i64"));
         }
         let _ = call;
         Ok(Some((batch, total)))
@@ -904,6 +947,10 @@ impl Compiler {
         Ok(Some(&c.args[0]))
     }
     fn expr(&mut self, e: &ast::Expr, depth: usize, in_loop: bool) -> Result<(Expr, Type)> {
+        self.expr_inner(e, depth, in_loop)
+            .map_err(|error| error.at(self.source, e.start().to_usize()))
+    }
+    fn expr_inner(&mut self, e: &ast::Expr, depth: usize, in_loop: bool) -> Result<(Expr, Type)> {
         self.node(depth)?;
         #[cfg(feature = "tool-json")]
         if let Some((root, path)) = self.json_path(e)? {
@@ -921,6 +968,46 @@ impl Compiler {
             return Ok((Expr::JsonI64 { slot, root }, Type::I64));
         }
         match e {
+            ast::Expr::Call(c) => {
+                let ast::Expr::Name(name) = c.func.as_ref() else {
+                    return Err(err("unsupported call expression"));
+                };
+                let name = name.id.as_str();
+                if !["len", "abs", "min", "max"].contains(&name) {
+                    return Err(err(format!("unsupported builtin '{name}'")));
+                }
+                let arity = if matches!(name, "len" | "abs") { 1 } else { 2 };
+                if !c.keywords.is_empty() || c.args.len() != arity {
+                    return Err(err(format!("{name} expects {arity} positional arguments")));
+                }
+                if name == "len" {
+                    if let ast::Expr::Name(n) = &c.args[0]
+                        && let Some(&slot) = self.buffers.get(n.id.as_str())
+                    {
+                        return Ok((Expr::BufferLen(slot), Type::I64));
+                    }
+                    return Err(err("len requires a loaded quote buffer"));
+                }
+                let (left, ty) = self.expr(&c.args[0], depth + 1, in_loop)?;
+                if ty != Type::I64 {
+                    return Err(type_err(format!("{name} requires i64 operands")));
+                }
+                if name == "abs" {
+                    return Ok((Expr::Abs(Box::new(left)), Type::I64));
+                }
+                let (right, ty) = self.expr(&c.args[1], depth + 1, in_loop)?;
+                if ty != Type::I64 {
+                    return Err(type_err(format!("{name} requires i64 operands")));
+                }
+                Ok((
+                    if name == "min" {
+                        Expr::Min(Box::new(left), Box::new(right))
+                    } else {
+                        Expr::Max(Box::new(left), Box::new(right))
+                    },
+                    Type::I64,
+                ))
+            }
             ast::Expr::Constant(c) => match &c.value {
                 ast::Constant::Bool(b) => Ok((Expr::Bool(*b), Type::Bool)),
                 ast::Constant::Int(n) => {
@@ -974,7 +1061,7 @@ impl Compiler {
                 ast::UnaryOp::Not => {
                     let (x, t) = self.expr(&u.operand, depth + 1, in_loop)?;
                     if t != Type::Bool {
-                        return Err(err("not requires bool"));
+                        return Err(type_err("not requires bool"));
                     }
                     Ok((Expr::Not(Box::new(x)), Type::Bool))
                 }
@@ -987,7 +1074,7 @@ impl Compiler {
                     }
                     let (x, t) = self.expr(&u.operand, depth + 1, in_loop)?;
                     if t != Type::I64 {
-                        return Err(err("unary minus requires i64"));
+                        return Err(type_err("unary minus requires i64"));
                     }
                     Ok((
                         Expr::Binary(BinOp::Sub, Box::new(Expr::Int(0)), Box::new(x)),
@@ -1006,7 +1093,7 @@ impl Compiler {
                 let (l, lt) = self.expr(&b.left, depth + 1, in_loop)?;
                 let (r, rt) = self.expr(&b.right, depth + 1, in_loop)?;
                 if lt != Type::I64 || rt != Type::I64 {
-                    return Err(err("arithmetic operands must be i64"));
+                    return Err(type_err("arithmetic operands must be i64"));
                 }
                 Ok((Expr::Binary(op, Box::new(l), Box::new(r)), Type::I64))
             }
@@ -1021,13 +1108,13 @@ impl Compiler {
                 let mut iter = b.values.iter();
                 let (first, t) = self.expr(iter.next().unwrap(), depth + 1, in_loop)?;
                 if t != Type::Bool {
-                    return Err(err("and/or operands must be bool"));
+                    return Err(type_err("and/or operands must be bool"));
                 }
                 let mut result = first;
                 for rhs in iter {
                     let (r, t) = self.expr(rhs, depth + 1, in_loop)?;
                     if t != Type::Bool {
-                        return Err(err("and/or operands must be bool"));
+                        return Err(type_err("and/or operands must be bool"));
                     }
                     result = Expr::Binary(op, Box::new(result), Box::new(r));
                 }
@@ -1082,10 +1169,10 @@ impl Compiler {
                     _ => return Err(err("unsupported comparison")),
                 };
                 if lt != rt {
-                    return Err(err("comparison operands must have the same type"));
+                    return Err(type_err("comparison operands must have the same type"));
                 }
                 if !matches!(op, BinOp::Eq | BinOp::Ne) && lt != Type::I64 {
-                    return Err(err("ordering comparisons require i64"));
+                    return Err(type_err("ordering comparisons require i64"));
                 }
                 Ok((Expr::Binary(op, Box::new(l), Box::new(r)), Type::Bool))
             }

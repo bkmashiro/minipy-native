@@ -1204,3 +1204,41 @@ or release automation. HTTP operation ownership, cancellation and budgeting
 remain unchanged. Future HTTP work needs a measured real handoff cost and a
 bounded service entry design; no new optimization task is opened here.
 
+## BI: bounded builtins and source admission (2026-10-15)
+
+Source admission remains one RustPython parse and typed lowering, not a Python
+runtime. AO's `evidence/ao-kernels/operations.json` counted syntactic presence
+only: its 520 exact-unique `hermes/cli` sources contain 6 unresolved `min`
+and 15 unresolved `max` syntactic presences, often with generators; these
+counts cannot establish i64, quote-buffer provenance or full-source
+compatibility. The low-complexity admitted slice is
+direct `len` of a loaded Quote/v1 buffer (already bounded by MAX_QUOTES),
+checked i64 `abs`, and two-operand i64 `min`/`max`. They use the existing typed
+IR and both native/tape backends. `len` reads validated view/owner length
+without materializing rows or spending row fuel; future Tool waits retain the
+owner through existing liveness. `abs(i64::MIN)` yields Overflow before any
+later effect. Builtin identifiers cannot be rebound. String/JSON len,
+iterable min/max, generators, `sum`, `any`, `all`, `sorted` and arbitrary calls
+remain rejected. No general dynamic `Value` or iterable protocol was added.
+
+`CompileError` now exposes `kind` (Syntax, Unsupported, Type, Schema, Backend),
+`reason`, and optional one-based `(line, UTF-8 byte column)` location. AST
+expression and statement errors report the innermost known source node;
+Host input/Tool schema and backend failures have no source location. Earlier
+stdout is only relevant to an admitted program at runtime: rejected source
+never begins a task and cannot dispatch a Tool. `tests/builtins_admission.rs`
+checks acceptance, overflow ordering, short-circuit, empty/nonempty buffers,
+wait retention and rejection on both backends. The AO corpus is private and
+no raw trajectory is copied into this branch; the synthetic rejection examples
+are shape tests, not claims that sampled scripts run end-to-end.
+
+Mac aarch64 Rust 1.96.0: `CARGO_TARGET_DIR=<shared target> CARGO_BUILD_JOBS=1
+cargo +1.96.0 test --offline --locked --features tool-json` passed (including
+real localhost HTTP tests), and strict all-target Clippy for that feature
+passed under `minipy-perf-build.lock`. `--features debug-runtime --test
+debug_runtime` passed. The `wasm32-unknown-unknown` target is listed for the
+default toolchain but not installed under Rust 1.96.0; an attempted offline
+check fails at missing `core`, so no Wasm validation is claimed. No numerical
+throughput gain or complete natural-source admission gain is claimed; no
+matched cold/warm performance run or Linux run was done in this slice.
+

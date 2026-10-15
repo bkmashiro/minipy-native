@@ -58,6 +58,7 @@ impl InterpreterUnit {
                     op if op.branch_target().is_some() => next | live[op.branch_target().unwrap()],
                     Op::Jump(target) | Op::Next(target) => live[*target],
                     Op::Scan { buffer, end } => next | live[*end] | (1 << buffer),
+                    Op::BufferLen(_, buffer) => next | (1 << buffer),
                     Op::Load(target, _) => next & !(1 << target),
                     Op::Return => 0,
                     _ => next,
