@@ -1639,6 +1639,20 @@ actual path authorization, response bound and errors in a local fixture. Outside
 the lowest-64 sample, the same 520-source pool has a shorter complete shape
 consisting only of a literal list of paths, a `for` loop, `read_file(path)` and
 printing its `content` leaf; this is a **candidate**, not an admission result.
+It is not an implementable variant of the existing scalar Tool slice: its
+iteration values are strings, the call is a preimported global with a dynamic
+string argument, its return is a dictionary with a string leaf, and `print`
+must stream potentially thousands of UTF-8 lines. The current `Type`/Tool
+argument ABI and both execution backends have none of these string-value or
+string-output paths; lowering only the literal list still leaves the other
+three missing contracts. A direct Rust filesystem call would bypass the real
+Host's task-relative resolution, protected-path checks, redaction and
+deduplication/error policy. A synthetic in-memory JSON string containment
+adapter already has double-backend coverage in `tests/string_contains.rs`,
+but cannot substitute for this complete script's string output or genuine
+Host integration. Implementing it as a test-only surrogate would add no new
+acceptance evidence, and broadening the public Provider ABI is a different
+architecture decision from this card's single bounded slice.
 First bound the source's printed content against `ScriptLimits` and the Host's
 pagination/dedup semantics, then attempt the unchanged complete source on
 both backends. A statically bound literal-path loop plus bounded string output
