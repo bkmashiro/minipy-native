@@ -1138,7 +1138,7 @@ Raw gzip, per-pair reduction and probe-only source patch are in
 `evidence/bg-string-validation/`. Baseline/candidate repeat binary SHA-256:
 `91de87d921abc0a62dc4901522da16defda781d0192c6eb9f1150703fac4d3dd` /
 `12512ef4b3d22c2183bb73e888773a5d42f8d6ed715e80f8b4c65003ba23d98c`.
-Reproduction: apply `repeat-source.patch` to each of an exact-HEAD worktree
+Reproduction: decompress and apply `repeat-source.patch.gz` to each of an exact-HEAD worktree
 and this tree, build with `CARGO_TARGET_DIR=<shared-target> cargo +1.96.0 build
 --offline --locked --release --manifest-path bench/Cargo.toml --features
 string-probe --bin ar-contains`, save distinct binaries and run each with `60`
