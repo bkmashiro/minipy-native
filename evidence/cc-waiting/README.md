@@ -103,9 +103,12 @@ python3 tools/cc_waiting_reduce.py
 ```
 
 Fresh output names are mandatory. To replay the baseline without checking out a
-new worktree, temporarily reverse only the production diff in the three runtime
-files (not the unit test) under a clean, saved checkout, then restore it before
-final tests. Raw includes source hashes, host/toolchain, commands and exit status.
+new worktree, temporarily reverse the full base-to-integration diff in the three
+`src/` files, including the helper unit test, under a clean, saved checkout. Keep
+the integration tests/driver present and run only the baseline command above.
+Restore the `src/` diff before final tests. Raw includes source hashes,
+host/toolchain, commands and exit status; `identity.commit` is the pre-commit base
+HEAD at collection, while the source hashes identify the actual tested contents.
 No raw timing campaign or RSS measurement is included.
 
 ## Stage conclusion

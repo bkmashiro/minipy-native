@@ -2136,3 +2136,9 @@ per-request JIT-module design only; source backend/loop matrix were not reached
 and larger-loop value remains untested. No new worktree/target/download/CI or
 Linux/Wasm/Monty performance claim. Stop the stage here.
 
+Receipt-verified `gpt-6-luna` independently reviewed fixed commit `29077ad`,
+replayed the census reducer, verified all 22 final source hashes against commit
+blobs and found no blockers. The raw records pre-commit base HEAD plus actual
+source hashes; this provenance distinction and baseline replay are clarified in
+the following documentation-only update. See [CC review](../evidence/cc-waiting/review.md).
+
