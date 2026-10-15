@@ -1476,8 +1476,9 @@ and [round 2 raw with setup](../evidence/bl-request-cost/service-cold.jsonl.gz)
 1920 speed rows each. Round 1 preceded a harness-only setup-emission change;
 its execution boundary is otherwise the same. The [ablation raw](../evidence/bl-request-cost/ablation.jsonl.gz)
 (SHA256 `6f33a7f2381a145a91cc107cdee3f5e7cdc045bcc3ab13eb8d078ee41e328f58`)
-has 400 speed rows and predates that setup emission. Round 2 median full wall
-µs, in B0/A1/A2/B3 process order, with adjacent `(A/B−1)×100%`:
+has 800 speed rows (four processes × two cases × 100 requests) and predates
+that setup emission. Round 2 median full wall µs, in B0/A1/A2/B3 process
+order, with adjacent `(A/B−1)×100%`:
 
 | Engine / old source | B0 | A1 | A2 | B3 | A1/B0 | A2/B3 |
 |---|---:|---:|---:|---:|---:|---:|
@@ -1564,4 +1565,20 @@ UTF-8/error/size accounting and both tape/native lowering; a simpler
 scalar-only `print(value)` control already exists. Avoid promoting a generic
 container/module/OS capability stack from frequency counts. This candidate
 remains a separate decision, not authorized implementation in BK.
+
+## BM: BI/BJ integration decision (2026-10-15)
+
+BI's finite typed builtins and structured admission diagnostics, BJ's ablation
+summary, and the bounded BK/BL integration evidence are integrated together.
+The imported source history is `1678c82..92fe643` on top of `89b898b`; no
+AY/BD record representation or BF/BE experimental production code is imported.
+The BK tape-prepare regression signal remains documented, while BL's paired
+resident new-source full-request control did not reproduce a repeatable material
+old-source penalty. This is a bounded integration decision, not a claim of
+general performance neutrality or improved compatibility: BI admitted 0/64
+complete private CLI sources without their Host schema. No private source is
+stored in the repo. The raw BL ablation contains **800** speed rows, as its
+ANNA × two cases × 100 request runner specifies; the earlier 400-row count was
+a documentation error, not a change to the retained raw file or its digest.
+macOS validation and remaining Linux/Wasm limits are recorded in the BM card.
 
