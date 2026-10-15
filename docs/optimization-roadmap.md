@@ -1,6 +1,21 @@
 # Current optimization pointer
 
-## N: current compact interpreter qualification
+## CI–CL: integrated low-level phase stop
+
+`main` now includes the reviewed CI–CL history through `2f75eb3`, fast-forwarded
+from `ebee3c1`. [Experiments](experiments.md#cmci–cl-主线集成) records integration
+and validation reuse. [CL evidence](../evidence/cl-dest/README.md) is the phase
+conclusion; fixed reviews are recorded for [CJ](../evidence/cj-zero-buffer/review.md)
+and [CL](../evidence/cl-dest/review.md).
+
+CJ retains the zero-buffer allocation/traversal deletion; CK is fully reverted;
+CL retains compact private destinations for deterministic tape backing density.
+There is no established general request speedup, no regression bound and no
+cumulative CI–CL speedup claim. Stop this phase without further compression,
+cache/backend/Tool expansion or reopening CG's workload-fit stop. New work needs
+actual Host source and end-to-end cost evidence. Earlier sections are historical.
+
+## N: historical compact interpreter qualification
 
 [compact-interpreter-experiment.md](compact-interpreter-experiment.md) replaces
 recursive interpreted expressions with a sealed computation tape in the existing

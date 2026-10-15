@@ -2411,3 +2411,31 @@ CL保留此最小密度改动。不同campaign不能相加为阶段加速；CG�
 后端/Tool适配。原始证据、源码重建、反汇编与复现见
 [CL evidence](../evidence/cl-dest/README.md)。
 
+## CM：CI–CL 主线集成
+
+`main` 从 `ebee3c1dfd87b4835f8bc16a00c2734f3dd53d69` fast-forward 到
+已审阅分支顶端 `2f75eb348a6139696d8404c9e1a391107ebf11e5`，随后只增加
+本节和 roadmap 当前入口的签名文档提交。不 squash、不重写或删除实验分支。
+合入树与固定 CL 审阅树相同，没有冲突解决或额外生产实现。
+
+逐 Git diff 核对 `src/`、`tests/`、Cargo manifest/lock：`049b810..552faed`
+为空，CK 已完整撤回；`53fcd0a..2f75eb3` 等于 `552faed..2d873b3`，
+最终生产/测试差异恰为 CJ 加 CL。新增追踪路径仅为这些源码/测试、复现脚本、
+CI–CL evidence 和实验文档；未带入 target、依赖树、formal binary 或凭据文件。
+保留的 `.gz` 是既有压缩 raw/patch/反汇编证据，不是构建产物。
+
+本卡复用同树验证，没有重新构建或计时。实际回读
+`evidence/cl-dest/verification.json.gz` 的全部11条 exit0记录，逐 SHA-256
+确认全部生产源码和 `tests/cl_dest.rs` 与当前树一致。既有证据包含完整
+default 与 tool-json/debug-runtime release suites、两套严格 all-target
+Clippy、stable fmt、九个 Python tests 和 sealed bounds 诊断。
+本卡只读重放 `tools/cl_dest_reduce.py`，拦截 summary 写入并核对与已提交
+summary 逐字节相同，重建 source manifests、核对完整 campaign 和布局不变量。
+另运行九个 Python tests 和 `git diff --check`；未重新声称 Cargo suites 执行。
+
+复用 [CJ 固定审阅](../evidence/cj-zero-buffer/review.md) 和
+[CL 固定审阅](../evidence/cl-dest/review.md)，不启动重复审阅。
+CJ 保留确定 prepare work/backing 删除，CK 撤回，CL 保留最小目的槽表示；
+没有通用请求提速、无回归界或累计阶段加速结论。CG stop 与 BT/BX/BY/CB
+负结果不变。此卡只完成主线整合，不开启新实验、CI、依赖下载或平台验证。
+
