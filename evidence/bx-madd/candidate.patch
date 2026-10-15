@@ -1,0 +1,74 @@
+--- a/src/interpreter/tape.rs
++++ b/src/interpreter/tape.rs
+@@ -67,6 +67,7 @@
+     Add(Dest, Operand, Operand),
+     Sub(Dest, Operand, Operand),
+     Mul(Dest, Operand, Operand),
++    MulAdd(Dest, Operand, Operand, Operand),
+     Eq(Dest, Operand, Operand),
+     Ne(Dest, Operand, Operand),
+     Lt(Dest, Operand, Operand),
+@@ -113,6 +114,7 @@
+             | Self::Add(d, _, _)
+             | Self::Sub(d, _, _)
+             | Self::Mul(d, _, _)
++            | Self::MulAdd(d, _, _, _)
+             | Self::Eq(d, _, _)
+             | Self::Ne(d, _, _)
+             | Self::Lt(d, _, _)
+@@ -207,8 +209,27 @@
+             Expr::Binary(op, a, b) if !matches!(op, BinOp::And | BinOp::Or) => {
+                 let a = self.value(*a);
+                 let b = self.value(*b);
+-                self.ops.push(match op {
+-                    BinOp::Add => Op::Add(dest, a, b),
++                let lowered = match op {
++                    BinOp::Add => {
++                        // Fuse only the immediately preceding multiply of a bound
++                        // temporary. All fallible operand evaluation stays before
++                        // that multiply, in source order. No scan/Tool boundary or
++                        // jump target can intervene, and no temporary escapes.
++                        let fused = match self.ops.last() {
++                            Some(Op::Mul(Dest::Temp(i), x, y)) => match (a, b) {
++                                (Operand::Temp(j), c) if *i == j => Some((*x, *y, c)),
++                                (c, Operand::Temp(j)) if *i == j => Some((*x, *y, c)),
++                                _ => None,
++                            },
++                            _ => None,
++                        };
++                        if let Some((x, y, c)) = fused {
++                            self.ops.pop();
++                            Op::MulAdd(dest, x, y, c)
++                        } else {
++                            Op::Add(dest, a, b)
++                        }
++                    }
+                     BinOp::Sub => Op::Sub(dest, a, b),
+                     BinOp::Mul => Op::Mul(dest, a, b),
+                     BinOp::Eq => Op::Eq(dest, a, b),
+@@ -218,7 +239,8 @@
+                     BinOp::Gt => Op::Gt(dest, a, b),
+                     BinOp::Ge => Op::Ge(dest, a, b),
+                     _ => unreachable!(),
+-                });
++                };
++                self.ops.push(lowered);
+             }
+             e @ (Expr::Binary(..) | Expr::Not(_)) => {
+                 // Do not write the final local until the entire RHS has been read.
+@@ -535,6 +557,15 @@
+             Op::Add(d, a, b) => calc!(d, a, b, checked_add),
+             Op::Sub(d, a, b) => calc!(d, a, b, checked_sub),
+             Op::Mul(d, a, b) => calc!(d, a, b, checked_mul),
++            Op::MulAdd(d, a, b, c) => {
++                let product = read(*a, state, temps)
++                    .checked_mul(read(*b, state, temps))
++                    .ok_or(TaskError::Overflow)?;
++                let value = product
++                    .checked_add(read(*c, state, temps))
++                    .ok_or(TaskError::Overflow)?;
++                write(*d, value, state, temps);
++            }
+             Op::Eq(d, a, b) => cmp!(d,a,b,==),
+             Op::Ne(d, a, b) => cmp!(d,a,b,!=),
+             Op::Lt(d, a, b) => cmp!(d,a,b,<),

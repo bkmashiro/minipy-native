@@ -150,6 +150,13 @@ fn resident_request() {
         // Different literal each time, no prepared-code or result reuse.
         let n = sample + 1;
         let (source, expected) = match case.as_str() {
+            "madd_short" => (format!("x={n}\nx=x*3+x\nprint(x)"), format!("{}\n", n * 4)),
+            "madd_loop" => (
+                format!(
+                    "rows=tools.load_quotes({n})\ntotal=0\nfor row in rows:\n    total=total+(row.unit_price_cents+1)*(row.quantity+1)\nprint(total)"
+                ),
+                "98688\n".into(),
+            ),
             "scalar" => (format!("print({n} + 1)"), format!("{}\n", n + 1)),
             "scalar_inputs" => (
                 format!("print(input_0 + input_1 + {n})"),

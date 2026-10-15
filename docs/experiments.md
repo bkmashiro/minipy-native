@@ -1991,3 +1991,31 @@ The delegation receipt verified the requested model. An earlier standalone
 Codex attempt failed before review because that account did not support the
 model; no substitute was used. See [review record](../evidence/bw-sink/review.md).
 
+## BX: checked multiply-add tape fusion rejected
+
+Bounded local peephole experiment on `889b134` (macOS ARM64, Rust 1.96.0):
+fold an immediately preceding temporary multiply consumed by Add into one
+checked multiply-then-add instruction, with general bound operands and unchanged
+source/error order. Default and tool-json/debug-runtime release suites pass,
+including signed overflow, self-assignment, short-circuit and distinguishable
+JSON-vs-overflow errors. Existing boundary/lifetime tests remain unchanged.
+
+The certain cost is global Op stride growth from 56 to 64 bytes (+14.3%), including
+unmatched code. Matched short prepared capacity falls 608→408 bytes at a Vec
+threshold, but computed-loop capacity rises 1104→1224 bytes; task State (312 B),
+unit (112 B) and synchronous scratch (4096 B) do not change. No waiting-state
+density, allocation or RSS improvement is claimed. Preparation-only diagnostic
+runs visibly warm differently and cannot establish a causal timing delta.
+
+Fixed-binary A/B and A/A each contain 80 successful processes / 3840 measured
+fresh-source full requests. Tape B:A: short multiply-add 0.9683, original Quote
+0.9457, computed-operand loop 1.1786. Unmatched scalar/ready and unchanged native
+controls also drift, with A/A up to 4.1%. There is no consistent matched-request
+net win sufficient to justify global instruction widening. Remove the production
+candidate rather than adding layout/storage machinery or extending the campaign.
+Only regressions, a test-only diagnostic, adapter cases and evidence remain.
+Source manifests now include nested Rust modules, including the tape source.
+
+Small raw results, rejected patch, commands and reduction:
+[BX evidence](../evidence/bx-madd/README.md). No Monty/Linux/Wasm performance claim.
+

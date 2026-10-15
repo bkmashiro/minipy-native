@@ -1,0 +1,41 @@
+{
+  "command": [
+    "cargo",
+    "+1.96.0",
+    "test",
+    "--offline",
+    "--locked",
+    "--release",
+    "--features",
+    "tool-json",
+    "--lib",
+    "bx_diagnostic",
+    "--",
+    "--ignored",
+    "--nocapture"
+  ],
+  "stdout": "\nrunning 1 test\nBX layout unmatched stride=64 ops=4 capacity=4 prepared_bytes=408 unit=112 state=312 scratch=4096\nBX tape unmatched [Copy(Local(0), Imm(7)), Add(Local(0), Local(0), Imm(3)), Print(Local(0), I64), Return]\nBX prepare unmatched batch=0 count=1000 ns=13603792\nBX prepare unmatched batch=1 count=1000 ns=9758417\nBX prepare unmatched batch=2 count=1000 ns=8535500\nBX prepare unmatched batch=3 count=1000 ns=7268542\nBX prepare unmatched batch=4 count=1000 ns=6568792\nBX prepare unmatched batch=5 count=1000 ns=5859084\nBX prepare unmatched batch=6 count=1000 ns=5414791\nBX prepare unmatched batch=7 count=1000 ns=5169083\nBX prepare unmatched batch=8 count=1000 ns=4738000\nBX layout short stride=64 ops=4 capacity=4 prepared_bytes=408 unit=112 state=312 scratch=4096\nBX tape short [Copy(Local(0), Imm(7)), MulAdd(Local(0), Local(0), Imm(3), Local(0)), Print(Local(0), I64), Return]\nBX prepare short batch=0 count=1000 ns=4830333\nBX prepare short batch=1 count=1000 ns=4587208\nBX prepare short batch=2 count=1000 ns=4275209\nBX prepare short batch=3 count=1000 ns=4158083\nBX prepare short batch=4 count=1000 ns=4069917\nBX prepare short batch=5 count=1000 ns=3868583\nBX prepare short batch=6 count=1000 ns=3910334\nBX prepare short batch=7 count=1000 ns=3943250\nBX prepare short batch=8 count=1000 ns=3930041\nBX layout loop stride=64 ops=10 capacity=16 prepared_bytes=1224 unit=112 state=312 scratch=4096\nBX tape loop [Load(0, Imm(1)), Copy(Local(0), Imm(0)), Start, Scan { buffer: 0, end: 8 }, Add(Temp(1), Field(Price), Imm(1)), Add(Temp(2), Field(Quantity), Imm(1)), MulAdd(Local(0), Temp(1), Temp(2), Local(0)), Next(3), Print(Local(0), I64), Return]\nBX prepare loop batch=0 count=1000 ns=9996458\nBX prepare loop batch=1 count=1000 ns=9994708\nBX prepare loop batch=2 count=1000 ns=10015250\nBX prepare loop batch=3 count=1000 ns=10022084\nBX prepare loop batch=4 count=1000 ns=10414500\nBX prepare loop batch=5 count=1000 ns=10288167\nBX prepare loop batch=6 count=1000 ns=10213500\nBX prepare loop batch=7 count=1000 ns=10330833\nBX prepare loop batch=8 count=1000 ns=10160375\ntest interpreter::tape::bx_diagnostic ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 26 filtered out; finished in 0.20s\n\n",
+  "stderr": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 4.33s\n     Running unittests src/lib.rs (target/release/deps/minipy_native-5c76f542d8e0b57a)\n",
+  "sources": {
+    "src/bin/minipy.rs": "14c157179b8156816de8b6bd2736407af8998059b5f1940b79073528f154a76f",
+    "src/buffer.rs": "728e3dc082ed1f8bed96864f608c1ddb22f7f6b9016531dba0e5deff7d9d2867",
+    "src/codegen.rs": "964b230ee261016df2a109623cce5c62677af8036c582d7a9acf41ccc8a18034",
+    "src/compiler_profile.rs": "7fdb8442d6d37d630fcf9c679c2abb1da0c49ab52ffc6b2741cd05ff46fcaefb",
+    "src/error.rs": "71b911094d7d0cc11b0d1445abd15c059e2b9ae6a32f76e14cda16020afb142c",
+    "src/fixture_reference.rs": "d3c67f1003a5816832fbd15c6d377edbb4d422c6db9be1b3cab7c40ae58aff53",
+    "src/frontend/schema_probe.rs": "63aa58fae1ae8175b0fba0cf55087c8bfed263e510aab7b3cb9d10895bf747cb",
+    "src/frontend.rs": "dfb305b190595ee2a8315d23fa2d74eb02518a6e723d0729f5b97862f3946731",
+    "src/http_provider.rs": "fde2d86e841e245c4c8300771f68304819589692741743e6449ae695a5208f1e",
+    "src/interpreter/debug.rs": "c46ea90a2cf6deddb8b7db9227447235efbb561c4f0376e73ea38ff0a49906b5",
+    "src/interpreter/tape.rs": "b05bd8b20883e3876edd644833e51a99e7c4e4a4c603878cdcb20446ac5988af",
+    "src/interpreter.rs": "620ca58d8c86ef42b091c7a9082442d1939b0ccf36fbf6ca98bf043edeed5314",
+    "src/interpreter_profile.rs": "ca14500ff28ec156553ae1d2e0672381afdad261b2f309ea72455bd11fa7722c",
+    "src/ir.rs": "2044c3db8638ec7bb6d20ed5d7c7de00cb6d7e6501f9c72616d193e7b6e24abe",
+    "src/json_view.rs": "9855131d8250cb5f1f3254a8c0ef2b151d3359b818d5e6b359ef9ab25eb3f924",
+    "src/lib.rs": "d4e08a6ac47ee51961389937efa9d630d94c77005e2a45882705ca946a7153b6",
+    "src/provider.rs": "642cc57c0434f445a82fdbc41a4ff6271a4609ece93ca045d7ed3569624312da",
+    "src/runtime.rs": "86eec4aa36cf3f8fdaf7772360ecbb15e6192dd14437625a644669dbd1995547",
+    "src/tool.rs": "634309d8006b63b5a443368b0b4882f2d0f7d83a5c814ddf0e07b718422d9ca2",
+    "src/wasm.rs": "d29e071173a706dd80a506557075af0fe3d6a26b7d2ed4be261658123edfb623"
+  }
+}

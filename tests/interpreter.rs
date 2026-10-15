@@ -83,6 +83,89 @@ async fn differential(
     y
 }
 #[tokio::test]
+async fn checked_multiply_add_alias_overflow_and_short_circuit() {
+    let schema = [("ia", Type::I64), ("ib", Type::I64), ("ic", Type::I64)];
+    let expressions = [
+        "a*b+c",
+        "c+a*b",
+        "(a+1)*(b-1)+c",
+        "(c+1)+(a+1)*(b-1)",
+        "a*b+(c+1)",
+        "(a*b)+(b*c)",
+    ];
+    for (a, b, c) in [
+        (2, 3, 4),
+        (-7, 9, -11),
+        (i64::MAX, 2, i64::MIN),
+        (i64::MAX, 1, 1),
+        (i64::MIN, -1, 0),
+        (0, i64::MIN, 1),
+    ] {
+        for e in expressions {
+            // Both the multiplication and addition may alias the destination.
+            let source = format!(
+                "a=ia\nb=ib\nc=ic\nprint(17)\na={e}\nprint(a)\nreceipt=tools.record_total(1,a)"
+            );
+            let out = differential(
+                &source,
+                &schema,
+                &[a, b, c],
+                rows(),
+                ScriptLimits::default(),
+            )
+            .await;
+            let expected = match e {
+                "a*b+c" | "c+a*b" => a.checked_mul(b).and_then(|v| v.checked_add(c)),
+                "(a+1)*(b-1)+c" => a
+                    .checked_add(1)
+                    .zip(b.checked_sub(1))
+                    .and_then(|(a, b)| a.checked_mul(b))
+                    .and_then(|v| v.checked_add(c)),
+                "(c+1)+(a+1)*(b-1)" => c
+                    .checked_add(1)
+                    .zip(
+                        a.checked_add(1)
+                            .zip(b.checked_sub(1))
+                            .and_then(|(a, b)| a.checked_mul(b)),
+                    )
+                    .and_then(|(c, v)| c.checked_add(v)),
+                "a*b+(c+1)" => a
+                    .checked_mul(b)
+                    .zip(c.checked_add(1))
+                    .and_then(|(v, c)| v.checked_add(c)),
+                _ => a
+                    .checked_mul(b)
+                    .zip(b.checked_mul(c))
+                    .and_then(|(x, y)| x.checked_add(y)),
+            };
+            assert_eq!(
+                out.status,
+                expected.map(|_| ()).ok_or(TaskError::Overflow),
+                "{source}"
+            );
+            assert_eq!(
+                out.stdout,
+                expected.map_or_else(|| "17\n".into(), |v| format!("17\n{v}\n"))
+            );
+        }
+    }
+    for (condition, expected) in [
+        ("False and (a*b+c > 0)", "False\n"),
+        ("True or (a*b+c > 0)", "True\n"),
+    ] {
+        let out = differential(
+            &format!("a=ia\nb=ib\nc=ic\nprint({condition})"),
+            &schema,
+            &[i64::MAX, 2, i64::MIN],
+            rows(),
+            ScriptLimits::default(),
+        )
+        .await;
+        assert_eq!(out.status, Ok(()));
+        assert_eq!(out.stdout, expected);
+    }
+}
+#[tokio::test]
 async fn computed_operands_self_assignment_and_boolean_consumers() {
     let source = "x=3\nx=(x+1)*(x-1)+(x*2)\nprint(x)\nflag=(a or b) and (not c or a)\nflag=flag and (not flag or b)\nprint(flag)\nprint((a and b) == (c or not a))\nif not ((a and not b) or (c and (x+1 > x*2))):\n    print(x+2)\nelse:\n    print(x-2)\nreceipt=tools.record_total((x+1)*(x-1), (x*2)+(x-3))\nprint(receipt)";
     for a in [0, 1] {

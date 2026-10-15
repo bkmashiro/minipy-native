@@ -21,6 +21,41 @@ use std::{
 };
 
 #[tokio::test]
+async fn multiply_add_preserves_fallible_operand_order() {
+    for native in [false, true] {
+        for (expression, expected) in [
+            (
+                "9223372036854775807*2+p['data']['count']",
+                TaskError::Overflow,
+            ),
+            (
+                "p['data']['count']+9223372036854775807*2",
+                TaskError::Json("expected signed-i64 integer"),
+            ),
+            (
+                "(9223372036854775807*2)+(p['data']['count']+1)",
+                TaskError::Overflow,
+            ),
+        ] {
+            let provider = Arc::new(P::new(br#"{"data":{"count":null}}"#));
+            let source = format!(
+                "p=tools.fetch(batch_id)\nprint(17)\nx={expression}\nreceipt=tools.publish(batch_id,x)"
+            );
+            let out = run(
+                native,
+                &source,
+                provider.clone(),
+                ScriptLimits::default(),
+                Cancellation::default(),
+            )
+            .await;
+            assert_eq!(out.status, Err(expected), "{source}");
+            assert_eq!(out.stdout, "17\n");
+            assert_eq!(provider.calls.lock().unwrap().len(), 1);
+        }
+    }
+}
+#[tokio::test]
 async fn direct_scalar_tool_print_matches_explicit_binding_and_bounds() {
     for native in [false, true] {
         for direct in [false, true] {

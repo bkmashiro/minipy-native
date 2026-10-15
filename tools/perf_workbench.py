@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRATCH = Path.home() / '.hermes/cache/scratch'
 LOCK = SCRATCH / 'minipy-perf-build.lock'
 DEFAULT_CASES = ('scalar', 'quote', 'ready', 'loopback')
-CASES = DEFAULT_CASES + ('scalar_inputs', 'ready_inputs', 'plain_sink', 'escaped_sink', 'joined_sink', 'fstring_sink', 'escaped_join')
+CASES = DEFAULT_CASES + ('scalar_inputs', 'ready_inputs', 'plain_sink', 'escaped_sink', 'joined_sink', 'fstring_sink', 'escaped_join', 'madd_short', 'madd_loop')
 BACKENDS = ('tape', 'native')
 
 
@@ -82,7 +82,7 @@ def build(args):
                     'host': platform.platform(),
                     'tracked_diff_sha256': hashlib.sha256(command(['git', 'diff', 'HEAD']).encode()).hexdigest(),
                     'sources': {str(p.relative_to(ROOT)): sha(p) for p in
-                                sorted((ROOT / 'src').glob('*.rs')) +
+                                sorted((ROOT / 'src').rglob('*.rs')) +
                                 [ROOT / 'Cargo.toml', ROOT / 'Cargo.lock', ROOT / 'tests/perf_workbench.rs']}}
         Path(str(out) + '.json').write_text(json.dumps(identity, indent=2) + '\n')
     print(json.dumps(identity, indent=2))

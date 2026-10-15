@@ -2,6 +2,43 @@
 use super::*;
 use crate::ir::MAX_NODES;
 
+#[test]
+#[ignore = "explicit serial release preparation/layout diagnostic"]
+fn bx_diagnostic() {
+    use std::{hint::black_box, time::Instant};
+    for (case, source) in [
+        ("unmatched", "x=7\nx=x+3\nprint(x)"),
+        ("short", "x=7\nx=x*3+x\nprint(x)"),
+        (
+            "loop",
+            "rows=tools.load_quotes(1)\ntotal=0\nfor row in rows:\n    total=total+(row.unit_price_cents+1)*(row.quantity+1)\nprint(total)",
+        ),
+    ] {
+        let unit = InterpreterUnit::prepare_script(source, &[]).unwrap();
+        println!(
+            "BX layout {case} stride={} ops={} capacity={} prepared_bytes={} unit={} state={} scratch={}",
+            std::mem::size_of::<Op>(),
+            unit.ops.len(),
+            unit.ops.capacity(),
+            unit.prepared_bytes(),
+            std::mem::size_of::<InterpreterUnit>(),
+            std::mem::size_of::<State>(),
+            std::mem::size_of::<[i64; MAX_NODES]>()
+        );
+        println!("BX tape {case} {:?}", unit.ops);
+        for batch in 0..9 {
+            let start = Instant::now();
+            for _ in 0..1000 {
+                black_box(InterpreterUnit::prepare_script(black_box(source), &[]).unwrap());
+            }
+            println!(
+                "BX prepare {case} batch={batch} count=1000 ns={}",
+                start.elapsed().as_nanos()
+            );
+        }
+    }
+}
+
 #[derive(Clone, Copy, Debug)]
 pub(super) enum Operand {
     Imm(i64),

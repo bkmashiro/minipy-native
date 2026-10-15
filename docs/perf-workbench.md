@@ -30,6 +30,12 @@ is unchanged. The private schema/frontend preparation diagnostic and bounded
 A/A decision are in [BV evidence](../evidence/bv-input-gate/README.md); they add
 no production optimization or public schema API.
 
+BX adds opt-in `madd_short` (self-assigned checked multiply-add) and `madd_loop`
+(256-row computed-operand multiply-add). Scalar/ready are unmatched controls;
+Quote is another matched loop. The rejected candidate and bounded A/B/A/A result
+are in [BX evidence](../evidence/bx-madd/README.md). Default cases remain unchanged.
+Build identities now recursively hash all Rust submodules, including the tape.
+
 Both tape and actual native code execute and assert exact stdout/status. Every
 iteration changes a source literal and reparses/prepares it; there is no prepared
 unit reuse or source/result cache. There are 16 immutable Tool declarations,
