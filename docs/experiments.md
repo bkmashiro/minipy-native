@@ -2019,3 +2019,10 @@ Source manifests now include nested Rust modules, including the tape source.
 Small raw results, rejected patch, commands and reduction:
 [BX evidence](../evidence/bx-madd/README.md). No Monty/Linux/Wasm performance claim.
 
+The focused independent review of fixed integration commit `6c7b577`, with
+receipt-verified `gpt-6-luna`, found no blockers and independently reproduced
+the evidence reduction. Final restored-source default and tool-json/debug-runtime
+release suites pass, as do strict all-target Clippy, 9 Python workbench tests,
+rustfmt and patch/diff checks. Tests use Rust 1.96.0; installed Clippy/rustfmt use
+Rust 1.93.1. See [BX review record](../evidence/bx-madd/review.md).
+
