@@ -9,10 +9,53 @@ pub const MAX_PATHS: usize = 128;
 #[derive(Clone, Debug)]
 pub enum ResultSchema {
     I64,
+    Records(RecordSchema),
     /// Explicit i64 leaf paths. Other paths may form raw subviews, never values.
     Json(Vec<Vec<String>>),
     /// Explicit typed leaves; string values are only usable by literal `in`.
     JsonTyped(Vec<(Vec<String>, JsonLeaf)>),
+}
+/// Fixed-width little-endian i64/bool cells; gaps and reordered fields are allowed.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct RecordField {
+    pub name: String,
+    pub ty: crate::ir::Type,
+    pub offset: usize,
+}
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct RecordSchema {
+    pub stride: usize,
+    pub fields: Vec<RecordField>,
+}
+impl RecordSchema {
+    pub fn validate(&self) -> Result<(), CompileError> {
+        if !(8..=256).contains(&self.stride)
+            || !self.stride.is_multiple_of(8)
+            || self.fields.is_empty()
+            || self.fields.len() > 32
+        {
+            return Err(CompileError(
+                "invalid fixed record stride or field count".into(),
+            ));
+        }
+        let mut names = std::collections::HashSet::new();
+        let mut offsets = std::collections::HashSet::new();
+        for f in &self.fields {
+            if f.offset % 8 != 0
+                || f.offset > self.stride - 8
+                || f.name.is_empty()
+                || f.name.len() > 256
+                || !f.name.bytes().enumerate().all(|(i, b)| {
+                    b == b'_' || b.is_ascii_alphabetic() || i > 0 && b.is_ascii_digit()
+                })
+                || !names.insert(&f.name)
+                || !offsets.insert(f.offset)
+            {
+                return Err(CompileError("invalid or overlapping record field".into()));
+            }
+        }
+        Ok(())
+    }
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum JsonLeaf {
@@ -63,6 +106,10 @@ impl ToolSchema {
             let paths: Vec<&Vec<String>> = match &t.result {
                 ResultSchema::Json(paths) => paths.iter().collect(),
                 ResultSchema::JsonTyped(paths) => paths.iter().map(|(p, _)| p).collect(),
+                ResultSchema::Records(schema) => {
+                    schema.validate()?;
+                    Vec::new()
+                }
                 ResultSchema::I64 => Vec::new(),
             };
             if !paths.is_empty() {
@@ -93,6 +140,7 @@ pub struct BoundCall {
     pub id: u32,
     pub arguments: usize,
     pub json: bool,
+    pub record: Option<RecordSchema>,
 }
 #[derive(Clone, Debug)]
 pub struct PathSlot {
@@ -112,6 +160,15 @@ impl Plan {
     pub(crate) fn owned_bytes(&self) -> usize {
         std::mem::size_of::<Self>()
             + self.calls.capacity() * std::mem::size_of::<BoundCall>()
+            + self
+                .calls
+                .iter()
+                .filter_map(|c| c.record.as_ref())
+                .map(|r| {
+                    r.fields.capacity() * std::mem::size_of::<RecordField>()
+                        + r.fields.iter().map(|f| f.name.capacity()).sum::<usize>()
+                })
+                .sum::<usize>()
             + self.paths.capacity() * std::mem::size_of::<PathSlot>()
             + self.paths.iter().map(|p| p.key.capacity()).sum::<usize>()
             + self.needles.capacity() * std::mem::size_of::<String>()
@@ -147,4 +204,5 @@ impl Plan {
 pub enum Reply {
     I64(i64),
     Json(bytes::Bytes),
+    Records(crate::buffer::RecordBuffer),
 }

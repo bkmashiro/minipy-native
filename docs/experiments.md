@@ -1056,3 +1056,55 @@ The dependent AS integration card owns paired old scalar/scan regression and
 candidate keep/drop against the combined branch; this AR probe alone is not
 evidence of zero regression for the other workloads.
 
+## AY: opt-in fixed-width Tool record scans (2026-10-15)
+
+Design/migration: [record-scan-design.md](record-scan-design.md). A Tool may now
+declare bounded `Records(RecordSchema)` with named i64/bool fields at distinct
+8-byte offsets and stride 8–256 (multiple of 8). Import validates whole rows,
+total 16 MiB/1M-row bounds and bool encodings once. Fields and stride are bound
+at preparation; native and tape scan contiguous aligned words without per-row
+objects or names. `Quote/v1` and its Host contract remain. This is an opt-in
+`tool-json` API, not a change to default Quote execution.
+
+macOS ARM64 tests exercised two distinct non-Quote schemas (24-byte with gap,
+bool and reordered fields; 16-byte with unrelated names), both actual native and
+tape execution, chunk=1, output, last-use release before a following effect,
+authority denial, schema mismatch, budget/fuel failure, prefix and malformed
+layout/bool rejection, plus cancellation during pending Tool reply and detached
+owner release. The default and `tool-json debug-runtime` full suites,
+strict Clippy in both feature configurations, fmt and diff check pass. Default
+WASI library check passes with existing unused-code warnings. The pre-existing
+`tool-json` feature still enables unsupported `tokio/net` for WASI, so no
+Tool-record WASI runtime/cross-build claim. Linux native execution not run.
+
+Bounded local synthetic A/B: `bench/src/bin/record_probe.rs`, raw 200 timed
+invocations plus identity in `bench/results/ay-record-probe-macos.jsonl`. Command:
+
+    cargo +1.96.0 run --offline --release --manifest-path bench/Cargo.toml \
+      --features record-probe --bin record-probe -- 25 4096 \
+      > bench/results/ay-record-probe-macos.jsonl
+
+Toolchain: project rustc 1.93.1; bench cargo/rustc 1.96.0 (pinned Monty needs
+1.96); source parent 4aaae37, macOS ARM64. One current-thread process, 25
+AB/reverse-order repetitions per engine/mode; one warmup per cell not reported.
+Each reported cold invocation includes preparation plus async provider load,
+execution/output and release; warm reuses a prepared unit. Both read the same
+4096 pairs and compute the same filtered weighted sum. Quote provider clones a
+typed Vec<Quote>; record provider imports little-endian wire bytes into aligned
+words and validates its declared layout. This is intentionally an end-to-end
+representation comparison, not equal-cost provider adaptation or a Monty
+cross-runtime comparison. No simulated network wait.
+
+Median wall ns (25 measurements each):
+
+| mode | Quote native | Record native | Quote tape | Record tape |
+|---|---:|---:|---:|---:|
+| preparation + execution | 167417 | 175541 | 76458 | 86416 |
+| prepared execution | 26666 | 35166 | 61750 | 71333 |
+
+The record path costs +8.1 µs cold native, +10.0 µs cold tape, +8.5 µs
+prepared native, +9.6 µs prepared tape in this workload. The extra wire decode
+and per-reply schema copy are included; these numbers neither isolate scan
+instruction cost nor imply an advantage over Monty. The API is retained for
+genuine typed datasets, not as a faster substitute for already-typed Quote/v1.
+

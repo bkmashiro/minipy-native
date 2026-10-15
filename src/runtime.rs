@@ -321,6 +321,9 @@ async fn run<P: Provider>(
     }
     let mut calls = options.tool_calls;
     let mut owners: Vec<Option<QuoteBuffer>> = (0..code.buffers).map(|_| None).collect();
+    #[cfg(feature = "tool-json")]
+    let mut records: Vec<Option<crate::buffer::RecordBuffer>> =
+        (0..code.buffers).map(|_| None).collect();
     let mut views = vec![View::default(); code.buffers];
     let mut frame = Box::new(Frame::new(inputs, limits.rows, limits.chunk));
     loop {
@@ -329,7 +332,18 @@ async fn run<P: Provider>(
         if code.json.as_ref().is_some_and(|p| p.string_paths)
             && let Some(json) = &mut output.json
         {
-            json.set_external(owners.iter().flatten().map(QuoteBuffer::bytes).sum());
+            json.set_external(
+                owners
+                    .iter()
+                    .flatten()
+                    .map(QuoteBuffer::bytes)
+                    .sum::<usize>()
+                    + records
+                        .iter()
+                        .flatten()
+                        .map(crate::buffer::RecordBuffer::bytes)
+                        .sum::<usize>(),
+            );
         }
         let status = code.resume(&mut frame, &views, output);
         let boundary = matches!(status, 0 | 2 | 3 | 4 | 7);
@@ -342,8 +356,22 @@ async fn run<P: Provider>(
                     views[i] = View::default();
                 }
             }
+            #[cfg(feature = "tool-json")]
+            for (i, owner) in records.iter_mut().enumerate() {
+                if frame.live & (1u64 << i) == 0 {
+                    *owner = None;
+                    views[i] = View::default();
+                }
+            }
         }
         let held: usize = owners.iter().flatten().map(QuoteBuffer::bytes).sum();
+        #[cfg(feature = "tool-json")]
+        let held = held
+            + records
+                .iter()
+                .flatten()
+                .map(crate::buffer::RecordBuffer::bytes)
+                .sum::<usize>();
         match status {
             0 => {
                 event(&trace, "done", 0, 0, frame.remaining, frame.index);
@@ -446,7 +474,8 @@ async fn run<P: Provider>(
                     .get((status - 8) as usize)
                     .ok_or(TaskError::Input)?;
                 authorize_tool(&cancel, provider.allows_tool(call.id), &mut calls)?;
-                let (id, count, json) = (call.id, call.arguments, call.json);
+                let (id, count, json, schema) =
+                    (call.id, call.arguments, call.json, call.record.clone());
                 let target = frame.target as usize;
                 let args = [frame.batch, frame.total];
                 let p = provider.clone();
@@ -454,13 +483,29 @@ async fn run<P: Provider>(
                 tokio::spawn(async move {
                     let _ = tx.send(p.call_tool(id, args, count).await);
                 });
-                match (json, receive(rx, &cancel).await?) {
-                    (true, crate::tool::Reply::Json(bytes)) => output
+                match (json, schema, receive(rx, &cancel).await?) {
+                    (true, None, crate::tool::Reply::Json(bytes)) => output
                         .json
                         .as_mut()
                         .expect("sealed JSON plan")
                         .install(target, bytes, limits.buffer_bytes.saturating_sub(held))?,
-                    (false, crate::tool::Reply::I64(v)) => frame.locals[target] = v,
+                    (false, Some(schema), crate::tool::Reply::Records(buffer))
+                        if buffer.schema() == &schema =>
+                    {
+                        let total = held + output.json.as_ref().map_or(0, |j| j.held());
+                        if buffer.bytes() > limits.buffer_bytes.saturating_sub(total) {
+                            return Err(TaskError::Budget);
+                        }
+                        if frame.live & (1u64 << target) != 0 {
+                            views[target] = View {
+                                ptr: buffer.words().as_ptr().cast(),
+                                len: buffer.len() as u64,
+                            };
+                            records[target] = Some(buffer);
+                        }
+                    }
+                    (false, None, crate::tool::Reply::I64(v)) => frame.locals[target] = v,
+                    (false, Some(_), _) => return Err(TaskError::Buffer),
                     _ => return Err(TaskError::Json("Tool reply does not match declaration")),
                 }
             }

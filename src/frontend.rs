@@ -132,6 +132,11 @@ struct Compiler {
     buffers: HashMap<String, usize>,
     rows: HashSet<String>,
     next_buffer: usize,
+    strides: Vec<usize>,
+    #[cfg(feature = "tool-json")]
+    record_schemas: Vec<Option<crate::tool::RecordSchema>>,
+    #[cfg(feature = "tool-json")]
+    active_record: Option<crate::tool::RecordSchema>,
     inputs: usize,
     legacy: bool,
     #[cfg(feature = "tool-json")]
@@ -156,6 +161,11 @@ impl Compiler {
             buffers: HashMap::new(),
             rows: HashSet::new(),
             next_buffer: 0,
+            strides: Vec::new(),
+            #[cfg(feature = "tool-json")]
+            record_schemas: Vec::new(),
+            #[cfg(feature = "tool-json")]
+            active_record: None,
             inputs: inputs.len(),
             legacy: false,
             #[cfg(feature = "tool-json")]
@@ -237,6 +247,7 @@ impl Compiler {
             locals: self.locals,
             inputs: self.inputs,
             buffers: self.next_buffer,
+            strides: self.strides,
             statements,
             legacy: self.legacy,
             #[cfg(feature = "tool-json")]
@@ -397,6 +408,9 @@ impl Compiler {
                     }
                     let slot = self.next_buffer;
                     self.next_buffer += 1;
+                    self.strides.push(16);
+                    #[cfg(feature = "tool-json")]
+                    self.record_schemas.push(None);
                     self.buffers.insert(name, slot);
                     out.push(Stmt::Load(slot, batch));
                     return Ok(());
@@ -517,10 +531,18 @@ impl Compiler {
                     return Err(err("row name conflicts with JSON view"));
                 }
                 self.rows.insert(row.clone());
+                #[cfg(feature = "tool-json")]
+                {
+                    self.active_record = self.record_schemas[slot].clone();
+                }
                 let before = self.initialized;
                 let compiled = self.compile_block(&f.body, depth + 1, true, true)?;
                 self.initialized = before;
                 self.rows.remove(&row);
+                #[cfg(feature = "tool-json")]
+                {
+                    self.active_record = None;
+                }
                 out.push(Stmt::For(slot, compiled));
                 Ok(())
             }
@@ -549,6 +571,9 @@ impl Compiler {
                         return Err(err("too many quote buffers"));
                     }
                     self.next_buffer += 1;
+                    self.strides.push(16);
+                    #[cfg(feature = "tool-json")]
+                    self.record_schemas.push(None);
                     self.buffers.insert(format!("\0discard{slot}"), slot);
                     out.push(Stmt::Load(slot, batch));
                     return Ok(());
@@ -561,7 +586,9 @@ impl Compiler {
                         // scalar printer. NUL names cannot collide with source names.
                         let name = format!("\0print{}", self.locals.len());
                         if self.compile_tool(&name, arg, depth + 2, in_loop, out)? {
-                            if self.json.calls.last().expect("bound Tool").json {
+                            if self.json.calls.last().expect("bound Tool").json
+                                || self.json.calls.last().expect("bound Tool").record.is_some()
+                            {
                                 return Err(err("print accepts only scalar Tool results"));
                             }
                             let slot = self.lookup(&name)?;
@@ -596,7 +623,9 @@ impl Compiler {
                     // result in a compiler-only slot that source cannot name.
                     let name = format!("\0discard{}", self.locals.len());
                     if self.compile_tool(&name, &e.value, depth + 1, in_loop, out)? {
-                        if self.json.calls.last().expect("bound Tool").json {
+                        if self.json.calls.last().expect("bound Tool").json
+                            || self.json.calls.last().expect("bound Tool").record.is_some()
+                        {
                             return Err(err("discarded Tool results must be scalar"));
                         }
                         return Ok(());
@@ -749,8 +778,31 @@ impl Compiler {
             .into_iter()
             .map(|a| a.ok_or_else(|| err("missing Tool argument")))
             .collect::<Result<Vec<_>>>()?;
-        let json = !matches!(tool.result, crate::tool::ResultSchema::I64);
-        let target = if json {
+        let json = matches!(
+            tool.result,
+            crate::tool::ResultSchema::Json(_) | crate::tool::ResultSchema::JsonTyped(_)
+        );
+        let record = match &tool.result {
+            crate::tool::ResultSchema::Records(schema) => Some(schema.clone()),
+            _ => None,
+        };
+        let target = if let Some(schema) = &record {
+            if self.next_buffer >= ir::MAX_BUFFERS
+                || self.names.iter().any(|n| n == name)
+                || self.buffers.contains_key(name)
+                || self.rows.contains(name)
+                || self.json_names.contains_key(name)
+                || ["tools", "print"].contains(&name)
+            {
+                return Err(err("record buffer name conflicts or exceeds buffer limit"));
+            }
+            let slot = self.next_buffer;
+            self.next_buffer += 1;
+            self.strides.push(schema.stride);
+            self.record_schemas.push(Some(schema.clone()));
+            self.buffers.insert(name.to_owned(), slot);
+            slot
+        } else if json {
             if self.json.roots >= 32 {
                 return Err(err("too many JSON owners"));
             }
@@ -763,6 +815,7 @@ impl Compiler {
                     .map(|p| (p, crate::tool::JsonLeaf::I64))
                     .collect(),
                 crate::tool::ResultSchema::JsonTyped(paths) => paths,
+                crate::tool::ResultSchema::Records(_) => unreachable!(),
                 crate::tool::ResultSchema::I64 => unreachable!(),
             };
             self.json_leaves.push(leaves);
@@ -777,11 +830,13 @@ impl Compiler {
             id: tool.id,
             arguments: args.len(),
             json,
+            record,
         });
         out.push(Stmt::Tool {
             call,
             target,
             json,
+            record: self.json.calls[call].record.is_some(),
             args,
         });
         Ok(true)
@@ -953,6 +1008,24 @@ impl Compiler {
                 Ok((Expr::Local(i), self.locals[i]))
             }
             ast::Expr::Attribute(a) if in_loop => {
+                #[cfg(feature = "tool-json")]
+                if let ast::Expr::Name(n) = a.value.as_ref()
+                    && self.rows.contains(n.id.as_str())
+                    && let Some(schema) = &self.active_record
+                {
+                    let f = schema
+                        .fields
+                        .iter()
+                        .find(|f| f.name == a.attr.as_str())
+                        .ok_or_else(|| err("field is absent from the declared record schema"))?;
+                    return Ok((
+                        Expr::Field(Field::Bound {
+                            offset: f.offset as u16,
+                            ty: f.ty,
+                        }),
+                        f.ty,
+                    ));
+                }
                 let field = match (a.value.as_ref(), a.attr.as_str()) {
                     (ast::Expr::Name(n), "unit_price_cents")
                         if self.rows.contains(n.id.as_str()) =>

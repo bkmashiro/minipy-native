@@ -6,6 +6,7 @@ use std::sync::{Arc, Weak};
 
 /// Maximum number of Quote rows accepted by the prototype ABI.
 pub const MAX_QUOTES: usize = 1_000_000;
+pub const MAX_RECORD_BYTES: usize = MAX_QUOTES * 16;
 const QUOTE_STRIDE: usize = 16;
 
 /// Quote/v1 in-memory record. Its C layout matches the fixed 16-byte ABI.
@@ -90,6 +91,75 @@ impl QuoteBuffer {
     #[inline]
     pub fn downgrade(&self) -> QuoteWeak {
         Arc::downgrade(&self.rows)
+    }
+}
+
+/// Aligned, immutable fixed-width rows. Offsets and stride are bound at preparation.
+#[cfg(feature = "tool-json")]
+#[derive(Clone, Debug)]
+pub struct RecordBuffer {
+    schema: crate::tool::RecordSchema,
+    words: Arc<Box<[i64]>>,
+}
+
+#[cfg(feature = "tool-json")]
+impl RecordBuffer {
+    pub fn import_bytes(
+        schema: crate::tool::RecordSchema,
+        bytes: &[u8],
+    ) -> Result<Self, TaskError> {
+        schema.validate().map_err(|_| TaskError::Buffer)?;
+        if bytes.len() > MAX_RECORD_BYTES || bytes.len() / schema.stride > MAX_QUOTES {
+            return Err(TaskError::Budget);
+        }
+        if !bytes.len().is_multiple_of(schema.stride) {
+            return Err(TaskError::Buffer);
+        }
+        let mut words = Vec::with_capacity(bytes.len() / 8);
+        for cell in bytes.chunks_exact(8) {
+            words.push(i64::from_le_bytes(
+                cell.try_into().map_err(|_| TaskError::Buffer)?,
+            ));
+        }
+        let bool_offsets: Vec<_> = schema
+            .fields
+            .iter()
+            .filter(|f| f.ty == crate::ir::Type::Bool)
+            .map(|f| f.offset / 8)
+            .collect();
+        if !bool_offsets.is_empty() {
+            for row in words.chunks_exact(schema.stride / 8) {
+                if bool_offsets
+                    .iter()
+                    .any(|&offset| ![0, 1].contains(&row[offset]))
+                {
+                    return Err(TaskError::Buffer);
+                }
+            }
+        }
+        Ok(Self {
+            schema,
+            words: Arc::new(words.into_boxed_slice()),
+        })
+    }
+
+    pub fn schema(&self) -> &crate::tool::RecordSchema {
+        &self.schema
+    }
+    pub fn bytes(&self) -> usize {
+        self.words.len() * 8
+    }
+    pub fn len(&self) -> usize {
+        self.bytes() / self.schema.stride
+    }
+    pub fn is_empty(&self) -> bool {
+        self.words.is_empty()
+    }
+    pub fn words(&self) -> &[i64] {
+        &self.words
+    }
+    pub fn downgrade(&self) -> Weak<Box<[i64]>> {
+        Arc::downgrade(&self.words)
     }
 }
 

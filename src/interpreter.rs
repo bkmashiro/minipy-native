@@ -46,7 +46,7 @@ impl InterpreterUnit {
     }
     fn from_program(program: crate::ir::Program) -> Result<Self, CompileError> {
         let mut ops = Vec::new();
-        flatten(program.statements, &mut ops);
+        flatten(program.statements, &program.strides, &mut ops);
         // Buffer liveness at each PC, including loop backedges. No extra scalar
         // analysis is needed: slots already reside in the task's fixed local array.
         let mut live = vec![0; ops.len() + 1];
@@ -57,8 +57,12 @@ impl InterpreterUnit {
                 let before = match &ops[pc] {
                     op if op.branch_target().is_some() => next | live[op.branch_target().unwrap()],
                     Op::Jump(target) | Op::Next(target) => live[*target],
-                    Op::Scan { buffer, end } => next | live[*end] | (1 << buffer),
+                    Op::Scan { buffer, end, .. } => next | live[*end] | (1 << buffer),
                     Op::Load(target, _) => next & !(1 << target),
+                    #[cfg(feature = "tool-json")]
+                    Op::Tool(call, target, _) if program.json.calls[*call].record.is_some() => {
+                        next & !(1 << target)
+                    }
                     Op::Return => 0,
                     _ => next,
                 };
@@ -107,9 +111,24 @@ struct State {
     chunk_left: usize,
     remaining: u64,
     row: Option<Quote>,
+    #[cfg(feature = "tool-json")]
+    record_row: Option<*const i64>,
 }
 
 fn release(owners: &mut [Option<QuoteBuffer>], live: u64) -> usize {
+    let mut held = 0;
+    for (i, owner) in owners.iter_mut().enumerate() {
+        if live & (1 << i) == 0 {
+            *owner = None;
+        }
+        if let Some(owner) = owner {
+            held += owner.bytes();
+        }
+    }
+    held
+}
+#[cfg(feature = "tool-json")]
+fn release_records(owners: &mut [Option<crate::buffer::RecordBuffer>], live: u64) -> usize {
     let mut held = 0;
     for (i, owner) in owners.iter_mut().enumerate() {
         if live & (1 << i) == 0 {
@@ -179,9 +198,14 @@ async fn run<P: Provider>(
         chunk_left: 0,
         remaining: limits.rows,
         row: None,
+        #[cfg(feature = "tool-json")]
+        record_row: None,
     };
     state.locals[..inputs.len()].copy_from_slice(inputs);
     let mut owners: Vec<Option<QuoteBuffer>> = (0..unit.buffers).map(|_| None).collect();
+    #[cfg(feature = "tool-json")]
+    let mut records: Vec<Option<crate::buffer::RecordBuffer>> =
+        (0..unit.buffers).map(|_| None).collect();
     let mut calls = options.tool_calls;
     // Cancellation is checked at the same bounded turns as native: entry, Tool,
     // and chunk yield. Scalar dispatch remains bounded by frontend admission.
@@ -190,8 +214,23 @@ async fn run<P: Provider>(
         if unit.json.as_ref().is_some_and(|p| p.string_paths)
             && let Some(json) = &mut output.json
         {
-            json.set_external(owners.iter().flatten().map(QuoteBuffer::bytes).sum());
+            json.set_external(
+                owners
+                    .iter()
+                    .flatten()
+                    .map(QuoteBuffer::bytes)
+                    .sum::<usize>()
+                    + records
+                        .iter()
+                        .flatten()
+                        .map(crate::buffer::RecordBuffer::bytes)
+                        .sum::<usize>(),
+            );
         }
+        #[cfg(feature = "tool-json")]
+        let boundary =
+            tape::run_until_boundary(unit, &mut state, &owners, &records, &limits, output)?;
+        #[cfg(not(feature = "tool-json"))]
         let boundary = tape::run_until_boundary(unit, &mut state, &owners, &limits, output)?;
         #[cfg(feature = "tool-json")]
         if let Some(json) = &mut output.json {
@@ -203,6 +242,8 @@ async fn run<P: Provider>(
             Boundary::Done => break,
             Boundary::Yield => {
                 let held = release(&mut owners, unit.live[state.pc]);
+                #[cfg(feature = "tool-json")]
+                let held = held + release_records(&mut records, unit.live[state.pc]);
                 #[cfg(feature = "interpreter-profile")]
                 crate::interpreter_profile::update(|c| c.yields += 1);
                 runtime::event(
@@ -218,6 +259,8 @@ async fn run<P: Provider>(
             }
             Boundary::Load(target, batch) => {
                 let held = release(&mut owners, unit.live[state.pc]);
+                #[cfg(feature = "tool-json")]
+                let held = held + release_records(&mut records, unit.live[state.pc]);
                 runtime::authorize_tool(&cancel, limits.allow_load, &mut calls)?;
                 runtime::event(
                     &trace,
@@ -245,26 +288,42 @@ async fn run<P: Provider>(
             #[cfg(feature = "tool-json")]
             Boundary::Tool(call, target, args) => {
                 let held = release(&mut owners, unit.live[state.pc]);
+                let held = held + release_records(&mut records, unit.live[state.pc]);
                 let call = &unit.json.as_ref().expect("sealed Tool plan").calls[call];
                 runtime::authorize_tool(&cancel, provider.allows_tool(call.id), &mut calls)?;
-                let (id, count, is_json) = (call.id, call.arguments, call.json);
+                let (id, count, is_json, schema) =
+                    (call.id, call.arguments, call.json, call.record.clone());
                 let p = provider.clone();
                 let (tx, rx) = oneshot::channel();
                 tokio::spawn(async move {
                     let _ = tx.send(p.call_tool(id, args, count).await);
                 });
-                match (is_json, runtime::receive(rx, &cancel).await?) {
-                    (true, crate::tool::Reply::Json(bytes)) => {
+                match (is_json, schema, runtime::receive(rx, &cancel).await?) {
+                    (true, None, crate::tool::Reply::Json(bytes)) => {
                         let json = output.json.as_mut().expect("sealed JSON plan");
                         json.install(target, bytes, limits.buffer_bytes.saturating_sub(held))?;
                         json.release(unit.json_live[state.pc]);
                     }
-                    (false, crate::tool::Reply::I64(v)) => state.locals[target] = v,
+                    (false, Some(schema), crate::tool::Reply::Records(buffer))
+                        if buffer.schema() == &schema =>
+                    {
+                        let total = held + output.json.as_ref().map_or(0, |j| j.held());
+                        if buffer.bytes() > limits.buffer_bytes.saturating_sub(total) {
+                            return Err(TaskError::Budget);
+                        }
+                        if unit.live[state.pc] & (1 << target) != 0 {
+                            records[target] = Some(buffer);
+                        }
+                    }
+                    (false, None, crate::tool::Reply::I64(v)) => state.locals[target] = v,
+                    (false, Some(_), _) => return Err(TaskError::Buffer),
                     _ => return Err(TaskError::Json("Tool reply does not match declaration")),
                 }
             }
             Boundary::Record(target, batch, total) => {
                 let held = release(&mut owners, unit.live[state.pc]);
+                #[cfg(feature = "tool-json")]
+                let held = held + release_records(&mut records, unit.live[state.pc]);
                 runtime::authorize_tool(&cancel, limits.allow_record, &mut calls)?;
                 runtime::event(
                     &trace,
