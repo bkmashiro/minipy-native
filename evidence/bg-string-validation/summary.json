@@ -1,0 +1,515 @@
+{
+  "source_commit": "4e54261",
+  "lock": "minipy-perf-build.lock held during shared-target builds and runs",
+  "order": [
+    "base",
+    "candidate",
+    "candidate",
+    "base",
+    "candidate",
+    "base",
+    "base",
+    "candidate"
+  ],
+  "reps_per_cell_process": 60,
+  "pairs": [
+    {
+      "native/cold/short-hit": {
+        "baseline_ns": 247749.5,
+        "candidate_ns": 246479.0,
+        "change_pct": -0.51
+      },
+      "native/cold/long-hit": {
+        "baseline_ns": 206666.0,
+        "candidate_ns": 194083.5,
+        "change_pct": -6.09
+      },
+      "native/cold/long-miss": {
+        "baseline_ns": 160874.5,
+        "candidate_ns": 147895.5,
+        "change_pct": -8.07
+      },
+      "native/cold/escaped-hit": {
+        "baseline_ns": 137625.0,
+        "candidate_ns": 137604.5,
+        "change_pct": -0.01
+      },
+      "native/cold/max-miss": {
+        "baseline_ns": 135187.5,
+        "candidate_ns": 126166.5,
+        "change_pct": -6.67
+      },
+      "native/warm/short-hit": {
+        "baseline_ns": 1417.0,
+        "candidate_ns": 1312.5,
+        "change_pct": -7.37
+      },
+      "native/warm/long-hit": {
+        "baseline_ns": 15166.5,
+        "candidate_ns": 6104.5,
+        "change_pct": -59.75
+      },
+      "native/warm/long-miss": {
+        "baseline_ns": 8416.5,
+        "candidate_ns": 5270.5,
+        "change_pct": -37.38
+      },
+      "native/warm/escaped-hit": {
+        "baseline_ns": 11625.0,
+        "candidate_ns": 12292.0,
+        "change_pct": 5.74
+      },
+      "native/warm/max-miss": {
+        "baseline_ns": 28833.0,
+        "candidate_ns": 19334.0,
+        "change_pct": -32.94
+      },
+      "tape/cold/short-hit": {
+        "baseline_ns": 31020.5,
+        "candidate_ns": 31208.5,
+        "change_pct": 0.61
+      },
+      "tape/cold/long-hit": {
+        "baseline_ns": 42500.0,
+        "candidate_ns": 31395.5,
+        "change_pct": -26.13
+      },
+      "tape/cold/long-miss": {
+        "baseline_ns": 27312.5,
+        "candidate_ns": 22792.0,
+        "change_pct": -16.55
+      },
+      "tape/cold/escaped-hit": {
+        "baseline_ns": 26437.0,
+        "candidate_ns": 26771.0,
+        "change_pct": 1.26
+      },
+      "tape/cold/max-miss": {
+        "baseline_ns": 38771.5,
+        "candidate_ns": 30166.0,
+        "change_pct": -22.2
+      },
+      "tape/warm/short-hit": {
+        "baseline_ns": 1562.5,
+        "candidate_ns": 1458.0,
+        "change_pct": -6.69
+      },
+      "tape/warm/long-hit": {
+        "baseline_ns": 13937.5,
+        "candidate_ns": 6250.0,
+        "change_pct": -55.16
+      },
+      "tape/warm/long-miss": {
+        "baseline_ns": 7854.0,
+        "candidate_ns": 5812.5,
+        "change_pct": -25.99
+      },
+      "tape/warm/escaped-hit": {
+        "baseline_ns": 11812.5,
+        "candidate_ns": 12500.0,
+        "change_pct": 5.82
+      },
+      "tape/warm/max-miss": {
+        "baseline_ns": 28875.0,
+        "candidate_ns": 19479.5,
+        "change_pct": -32.54
+      }
+    },
+    {
+      "native/cold/short-hit": {
+        "baseline_ns": 111771.0,
+        "candidate_ns": 111958.0,
+        "change_pct": 0.17
+      },
+      "native/cold/long-hit": {
+        "baseline_ns": 122875.0,
+        "candidate_ns": 118500.5,
+        "change_pct": -3.56
+      },
+      "native/cold/long-miss": {
+        "baseline_ns": 118271.0,
+        "candidate_ns": 117687.5,
+        "change_pct": -0.49
+      },
+      "native/cold/escaped-hit": {
+        "baseline_ns": 121500.0,
+        "candidate_ns": 122541.5,
+        "change_pct": 0.86
+      },
+      "native/cold/max-miss": {
+        "baseline_ns": 135229.5,
+        "candidate_ns": 126916.5,
+        "change_pct": -6.15
+      },
+      "native/warm/short-hit": {
+        "baseline_ns": 1458.5,
+        "candidate_ns": 1270.5,
+        "change_pct": -12.89
+      },
+      "native/warm/long-hit": {
+        "baseline_ns": 13708.0,
+        "candidate_ns": 6458.5,
+        "change_pct": -52.89
+      },
+      "native/warm/long-miss": {
+        "baseline_ns": 7875.0,
+        "candidate_ns": 5334.0,
+        "change_pct": -32.27
+      },
+      "native/warm/escaped-hit": {
+        "baseline_ns": 11792.0,
+        "candidate_ns": 11292.0,
+        "change_pct": -4.24
+      },
+      "native/warm/max-miss": {
+        "baseline_ns": 28875.0,
+        "candidate_ns": 19333.0,
+        "change_pct": -33.05
+      },
+      "tape/cold/short-hit": {
+        "baseline_ns": 16875.0,
+        "candidate_ns": 16229.0,
+        "change_pct": -3.83
+      },
+      "tape/cold/long-hit": {
+        "baseline_ns": 28542.0,
+        "candidate_ns": 20916.5,
+        "change_pct": -26.72
+      },
+      "tape/cold/long-miss": {
+        "baseline_ns": 22062.5,
+        "candidate_ns": 19937.5,
+        "change_pct": -9.63
+      },
+      "tape/cold/escaped-hit": {
+        "baseline_ns": 26916.5,
+        "candidate_ns": 27542.0,
+        "change_pct": 2.32
+      },
+      "tape/cold/max-miss": {
+        "baseline_ns": 40750.0,
+        "candidate_ns": 32625.0,
+        "change_pct": -19.94
+      },
+      "tape/warm/short-hit": {
+        "baseline_ns": 1583.5,
+        "candidate_ns": 1459.0,
+        "change_pct": -7.86
+      },
+      "tape/warm/long-hit": {
+        "baseline_ns": 13875.0,
+        "candidate_ns": 6687.0,
+        "change_pct": -51.81
+      },
+      "tape/warm/long-miss": {
+        "baseline_ns": 7854.0,
+        "candidate_ns": 5437.5,
+        "change_pct": -30.77
+      },
+      "tape/warm/escaped-hit": {
+        "baseline_ns": 11875.0,
+        "candidate_ns": 11500.0,
+        "change_pct": -3.16
+      },
+      "tape/warm/max-miss": {
+        "baseline_ns": 28875.0,
+        "candidate_ns": 19354.5,
+        "change_pct": -32.97
+      }
+    },
+    {
+      "native/cold/short-hit": {
+        "baseline_ns": 113937.5,
+        "candidate_ns": 112979.0,
+        "change_pct": -0.84
+      },
+      "native/cold/long-hit": {
+        "baseline_ns": 124979.0,
+        "candidate_ns": 118104.5,
+        "change_pct": -5.5
+      },
+      "native/cold/long-miss": {
+        "baseline_ns": 119333.5,
+        "candidate_ns": 117979.0,
+        "change_pct": -1.14
+      },
+      "native/cold/escaped-hit": {
+        "baseline_ns": 124458.5,
+        "candidate_ns": 121104.0,
+        "change_pct": -2.7
+      },
+      "native/cold/max-miss": {
+        "baseline_ns": 135771.0,
+        "candidate_ns": 126041.5,
+        "change_pct": -7.17
+      },
+      "native/warm/short-hit": {
+        "baseline_ns": 1500.0,
+        "candidate_ns": 1375.0,
+        "change_pct": -8.33
+      },
+      "native/warm/long-hit": {
+        "baseline_ns": 15270.5,
+        "candidate_ns": 6375.0,
+        "change_pct": -58.25
+      },
+      "native/warm/long-miss": {
+        "baseline_ns": 8625.0,
+        "candidate_ns": 5292.0,
+        "change_pct": -38.64
+      },
+      "native/warm/escaped-hit": {
+        "baseline_ns": 12250.0,
+        "candidate_ns": 11333.0,
+        "change_pct": -7.49
+      },
+      "native/warm/max-miss": {
+        "baseline_ns": 28875.0,
+        "candidate_ns": 19208.5,
+        "change_pct": -33.48
+      },
+      "tape/cold/short-hit": {
+        "baseline_ns": 17083.5,
+        "candidate_ns": 16708.5,
+        "change_pct": -2.2
+      },
+      "tape/cold/long-hit": {
+        "baseline_ns": 27563.0,
+        "candidate_ns": 20791.5,
+        "change_pct": -24.57
+      },
+      "tape/cold/long-miss": {
+        "baseline_ns": 22375.5,
+        "candidate_ns": 19813.0,
+        "change_pct": -11.45
+      },
+      "tape/cold/escaped-hit": {
+        "baseline_ns": 27687.5,
+        "candidate_ns": 26583.0,
+        "change_pct": -3.99
+      },
+      "tape/cold/max-miss": {
+        "baseline_ns": 41042.0,
+        "candidate_ns": 32104.5,
+        "change_pct": -21.78
+      },
+      "tape/warm/short-hit": {
+        "baseline_ns": 1625.0,
+        "candidate_ns": 1500.0,
+        "change_pct": -7.69
+      },
+      "tape/warm/long-hit": {
+        "baseline_ns": 14416.5,
+        "candidate_ns": 6500.0,
+        "change_pct": -54.91
+      },
+      "tape/warm/long-miss": {
+        "baseline_ns": 8291.5,
+        "candidate_ns": 5520.5,
+        "change_pct": -33.42
+      },
+      "tape/warm/escaped-hit": {
+        "baseline_ns": 12708.5,
+        "candidate_ns": 11625.0,
+        "change_pct": -8.53
+      },
+      "tape/warm/max-miss": {
+        "baseline_ns": 28916.5,
+        "candidate_ns": 18916.5,
+        "change_pct": -34.58
+      }
+    },
+    {
+      "native/cold/short-hit": {
+        "baseline_ns": 114416.5,
+        "candidate_ns": 112104.5,
+        "change_pct": -2.02
+      },
+      "native/cold/long-hit": {
+        "baseline_ns": 125146.0,
+        "candidate_ns": 118062.5,
+        "change_pct": -5.66
+      },
+      "native/cold/long-miss": {
+        "baseline_ns": 119500.0,
+        "candidate_ns": 116854.0,
+        "change_pct": -2.21
+      },
+      "native/cold/escaped-hit": {
+        "baseline_ns": 122104.5,
+        "candidate_ns": 121979.5,
+        "change_pct": -0.1
+      },
+      "native/cold/max-miss": {
+        "baseline_ns": 136187.0,
+        "candidate_ns": 126583.0,
+        "change_pct": -7.05
+      },
+      "native/warm/short-hit": {
+        "baseline_ns": 1542.0,
+        "candidate_ns": 1291.0,
+        "change_pct": -16.28
+      },
+      "native/warm/long-hit": {
+        "baseline_ns": 15250.0,
+        "candidate_ns": 7125.0,
+        "change_pct": -53.28
+      },
+      "native/warm/long-miss": {
+        "baseline_ns": 8583.0,
+        "candidate_ns": 5292.0,
+        "change_pct": -38.34
+      },
+      "native/warm/escaped-hit": {
+        "baseline_ns": 12000.0,
+        "candidate_ns": 11625.0,
+        "change_pct": -3.12
+      },
+      "native/warm/max-miss": {
+        "baseline_ns": 28875.0,
+        "candidate_ns": 19375.0,
+        "change_pct": -32.9
+      },
+      "tape/cold/short-hit": {
+        "baseline_ns": 17166.0,
+        "candidate_ns": 16792.0,
+        "change_pct": -2.18
+      },
+      "tape/cold/long-hit": {
+        "baseline_ns": 27729.0,
+        "candidate_ns": 20750.0,
+        "change_pct": -25.17
+      },
+      "tape/cold/long-miss": {
+        "baseline_ns": 22229.5,
+        "candidate_ns": 21250.0,
+        "change_pct": -4.41
+      },
+      "tape/cold/escaped-hit": {
+        "baseline_ns": 26833.0,
+        "candidate_ns": 27437.5,
+        "change_pct": 2.25
+      },
+      "tape/cold/max-miss": {
+        "baseline_ns": 41062.5,
+        "candidate_ns": 32125.0,
+        "change_pct": -21.77
+      },
+      "tape/warm/short-hit": {
+        "baseline_ns": 1666.0,
+        "candidate_ns": 1459.0,
+        "change_pct": -12.42
+      },
+      "tape/warm/long-hit": {
+        "baseline_ns": 14104.0,
+        "candidate_ns": 6333.5,
+        "change_pct": -55.09
+      },
+      "tape/warm/long-miss": {
+        "baseline_ns": 8499.5,
+        "candidate_ns": 5917.0,
+        "change_pct": -30.38
+      },
+      "tape/warm/escaped-hit": {
+        "baseline_ns": 11916.5,
+        "candidate_ns": 12021.0,
+        "change_pct": 0.88
+      },
+      "tape/warm/max-miss": {
+        "baseline_ns": 28875.0,
+        "candidate_ns": 19395.5,
+        "change_pct": -32.83
+      }
+    }
+  ],
+  "identities": [
+    {
+      "arch": "aarch64",
+      "engine": "ar-contains",
+      "kind": "identity",
+      "os": "macos",
+      "reps": 60,
+      "rust": "0.1.0",
+      "source_host": "hit = await contains_message(batch_id)\nprint(hit)\n",
+      "source_monty": "data = await fetch(batch_id)\ntext = data[\"message\"]\nprint(\"error\" in text)\n",
+      "source_native": "data = tools.fetch(batch_id)\ntext = data[\"message\"]\nprint((\"error\" in text) and (\"error\" in text) and (\"error\" in text))\n"
+    },
+    {
+      "arch": "aarch64",
+      "engine": "ar-contains",
+      "kind": "identity",
+      "os": "macos",
+      "reps": 60,
+      "rust": "0.1.0",
+      "source_host": "hit = await contains_message(batch_id)\nprint(hit)\n",
+      "source_monty": "data = await fetch(batch_id)\ntext = data[\"message\"]\nprint(\"error\" in text)\n",
+      "source_native": "data = tools.fetch(batch_id)\ntext = data[\"message\"]\nprint((\"error\" in text) and (\"error\" in text) and (\"error\" in text))\n"
+    },
+    {
+      "arch": "aarch64",
+      "engine": "ar-contains",
+      "kind": "identity",
+      "os": "macos",
+      "reps": 60,
+      "rust": "0.1.0",
+      "source_host": "hit = await contains_message(batch_id)\nprint(hit)\n",
+      "source_monty": "data = await fetch(batch_id)\ntext = data[\"message\"]\nprint(\"error\" in text)\n",
+      "source_native": "data = tools.fetch(batch_id)\ntext = data[\"message\"]\nprint((\"error\" in text) and (\"error\" in text) and (\"error\" in text))\n"
+    },
+    {
+      "arch": "aarch64",
+      "engine": "ar-contains",
+      "kind": "identity",
+      "os": "macos",
+      "reps": 60,
+      "rust": "0.1.0",
+      "source_host": "hit = await contains_message(batch_id)\nprint(hit)\n",
+      "source_monty": "data = await fetch(batch_id)\ntext = data[\"message\"]\nprint(\"error\" in text)\n",
+      "source_native": "data = tools.fetch(batch_id)\ntext = data[\"message\"]\nprint((\"error\" in text) and (\"error\" in text) and (\"error\" in text))\n"
+    },
+    {
+      "arch": "aarch64",
+      "engine": "ar-contains",
+      "kind": "identity",
+      "os": "macos",
+      "reps": 60,
+      "rust": "0.1.0",
+      "source_host": "hit = await contains_message(batch_id)\nprint(hit)\n",
+      "source_monty": "data = await fetch(batch_id)\ntext = data[\"message\"]\nprint(\"error\" in text)\n",
+      "source_native": "data = tools.fetch(batch_id)\ntext = data[\"message\"]\nprint((\"error\" in text) and (\"error\" in text) and (\"error\" in text))\n"
+    },
+    {
+      "arch": "aarch64",
+      "engine": "ar-contains",
+      "kind": "identity",
+      "os": "macos",
+      "reps": 60,
+      "rust": "0.1.0",
+      "source_host": "hit = await contains_message(batch_id)\nprint(hit)\n",
+      "source_monty": "data = await fetch(batch_id)\ntext = data[\"message\"]\nprint(\"error\" in text)\n",
+      "source_native": "data = tools.fetch(batch_id)\ntext = data[\"message\"]\nprint((\"error\" in text) and (\"error\" in text) and (\"error\" in text))\n"
+    },
+    {
+      "arch": "aarch64",
+      "engine": "ar-contains",
+      "kind": "identity",
+      "os": "macos",
+      "reps": 60,
+      "rust": "0.1.0",
+      "source_host": "hit = await contains_message(batch_id)\nprint(hit)\n",
+      "source_monty": "data = await fetch(batch_id)\ntext = data[\"message\"]\nprint(\"error\" in text)\n",
+      "source_native": "data = tools.fetch(batch_id)\ntext = data[\"message\"]\nprint((\"error\" in text) and (\"error\" in text) and (\"error\" in text))\n"
+    },
+    {
+      "arch": "aarch64",
+      "engine": "ar-contains",
+      "kind": "identity",
+      "os": "macos",
+      "reps": 60,
+      "rust": "0.1.0",
+      "source_host": "hit = await contains_message(batch_id)\nprint(hit)\n",
+      "source_monty": "data = await fetch(batch_id)\ntext = data[\"message\"]\nprint(\"error\" in text)\n",
+      "source_native": "data = tools.fetch(batch_id)\ntext = data[\"message\"]\nprint((\"error\" in text) and (\"error\" in text) and (\"error\" in text))\n"
+    }
+  ]
+}

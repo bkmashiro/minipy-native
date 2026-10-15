@@ -1,0 +1,46 @@
+{
+  "scalar": [
+    {
+      "baseline_ns": 71459.0,
+      "candidate_ns": 67812.5,
+      "change_pct": -5.1
+    },
+    {
+      "baseline_ns": 70229.0,
+      "candidate_ns": 67645.5,
+      "change_pct": -3.68
+    },
+    {
+      "baseline_ns": 68854.0,
+      "candidate_ns": 70708.0,
+      "change_pct": 2.69
+    },
+    {
+      "baseline_ns": 68479.5,
+      "candidate_ns": 68250.0,
+      "change_pct": -0.34
+    }
+  ],
+  "weighted": [
+    {
+      "baseline_ns": 151770.5,
+      "candidate_ns": 149812.5,
+      "change_pct": -1.29
+    },
+    {
+      "baseline_ns": 152104.5,
+      "candidate_ns": 152687.5,
+      "change_pct": 0.38
+    },
+    {
+      "baseline_ns": 151937.0,
+      "candidate_ns": 150812.5,
+      "change_pct": -0.74
+    },
+    {
+      "baseline_ns": 153896.0,
+      "candidate_ns": 151562.5,
+      "change_pct": -1.52
+    }
+  ]
+}
