@@ -1,0 +1,14 @@
+{
+  "base": {
+    "path": "/var/folders/2h/m6vg_6ps0nx5ldbj_xr55hlh0000gn/T/as-binaries/base",
+    "sha256": "584f4eb858ea9971644b45d8c32001cc4060e70130242a7fabd47143afd6fff2"
+  },
+  "default": {
+    "path": "/var/folders/2h/m6vg_6ps0nx5ldbj_xr55hlh0000gn/T/as-binaries/default",
+    "sha256": "f52552fda85286096f2be5bf86b2cb1c6ffab78344417b6ca41373e0ae82ae8f"
+  },
+  "feature": {
+    "path": "/var/folders/2h/m6vg_6ps0nx5ldbj_xr55hlh0000gn/T/as-binaries/feature",
+    "sha256": "8cbe5c45c81bd5b635edfeeda9299aa59d20e885e256c3e4e35490d68191a0ff"
+  }
+}

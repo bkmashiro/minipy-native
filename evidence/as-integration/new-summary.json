@@ -1,0 +1,534 @@
+{
+  "string": [
+    {
+      "case": "escaped-hit",
+      "lifecycle": "cold",
+      "engine": "host-bool",
+      "median_process_median_ns": 13000.0,
+      "process_medians_ns": [
+        18833.5,
+        13000.0,
+        11062.0
+      ]
+    },
+    {
+      "case": "escaped-hit",
+      "lifecycle": "cold",
+      "engine": "monty",
+      "median_process_median_ns": 15437.0,
+      "process_medians_ns": [
+        22812.5,
+        15437.0,
+        13333.5
+      ]
+    },
+    {
+      "case": "escaped-hit",
+      "lifecycle": "cold",
+      "engine": "native",
+      "median_process_median_ns": 105062.5,
+      "process_medians_ns": [
+        152916.5,
+        105062.5,
+        88521.0
+      ]
+    },
+    {
+      "case": "escaped-hit",
+      "lifecycle": "cold",
+      "engine": "tape",
+      "median_process_median_ns": 22083.5,
+      "process_medians_ns": [
+        32187.5,
+        22083.5,
+        18583.0
+      ]
+    },
+    {
+      "case": "escaped-hit",
+      "lifecycle": "warm",
+      "engine": "host-bool",
+      "median_process_median_ns": 8395.5,
+      "process_medians_ns": [
+        10875.0,
+        8395.5,
+        7729.0
+      ]
+    },
+    {
+      "case": "escaped-hit",
+      "lifecycle": "warm",
+      "engine": "monty",
+      "median_process_median_ns": 9125.0,
+      "process_medians_ns": [
+        11750.0,
+        9125.0,
+        8375.0
+      ]
+    },
+    {
+      "case": "escaped-hit",
+      "lifecycle": "warm",
+      "engine": "native",
+      "median_process_median_ns": 11104.5,
+      "process_medians_ns": [
+        14396.0,
+        11104.5,
+        10000.0
+      ]
+    },
+    {
+      "case": "escaped-hit",
+      "lifecycle": "warm",
+      "engine": "tape",
+      "median_process_median_ns": 11229.5,
+      "process_medians_ns": [
+        14708.5,
+        11229.5,
+        10166.0
+      ]
+    },
+    {
+      "case": "long-hit",
+      "lifecycle": "cold",
+      "engine": "host-bool",
+      "median_process_median_ns": 11500.5,
+      "process_medians_ns": [
+        20375.0,
+        11500.5,
+        9625.0
+      ]
+    },
+    {
+      "case": "long-hit",
+      "lifecycle": "cold",
+      "engine": "monty",
+      "median_process_median_ns": 14396.0,
+      "process_medians_ns": [
+        25562.5,
+        14396.0,
+        11875.5
+      ]
+    },
+    {
+      "case": "long-hit",
+      "lifecycle": "cold",
+      "engine": "native",
+      "median_process_median_ns": 106208.5,
+      "process_medians_ns": [
+        191729.0,
+        106208.5,
+        88041.5
+      ]
+    },
+    {
+      "case": "long-hit",
+      "lifecycle": "cold",
+      "engine": "tape",
+      "median_process_median_ns": 19125.0,
+      "process_medians_ns": [
+        34312.5,
+        19125.0,
+        15770.5
+      ]
+    },
+    {
+      "case": "long-hit",
+      "lifecycle": "warm",
+      "engine": "host-bool",
+      "median_process_median_ns": 6437.5,
+      "process_medians_ns": [
+        8416.5,
+        6437.5,
+        5958.0
+      ]
+    },
+    {
+      "case": "long-hit",
+      "lifecycle": "warm",
+      "engine": "monty",
+      "median_process_median_ns": 7563.0,
+      "process_medians_ns": [
+        9792.0,
+        7563.0,
+        6875.0
+      ]
+    },
+    {
+      "case": "long-hit",
+      "lifecycle": "warm",
+      "engine": "native",
+      "median_process_median_ns": 7562.5,
+      "process_medians_ns": [
+        9791.5,
+        7562.5,
+        6875.0
+      ]
+    },
+    {
+      "case": "long-hit",
+      "lifecycle": "warm",
+      "engine": "tape",
+      "median_process_median_ns": 7625.0,
+      "process_medians_ns": [
+        9916.5,
+        7625.0,
+        6958.5
+      ]
+    },
+    {
+      "case": "long-miss",
+      "lifecycle": "cold",
+      "engine": "host-bool",
+      "median_process_median_ns": 11041.5,
+      "process_medians_ns": [
+        17520.5,
+        11041.5,
+        9333.5
+      ]
+    },
+    {
+      "case": "long-miss",
+      "lifecycle": "cold",
+      "engine": "monty",
+      "median_process_median_ns": 13458.0,
+      "process_medians_ns": [
+        21834.0,
+        13458.0,
+        11625.0
+      ]
+    },
+    {
+      "case": "long-miss",
+      "lifecycle": "cold",
+      "engine": "native",
+      "median_process_median_ns": 101187.0,
+      "process_medians_ns": [
+        164979.0,
+        101187.0,
+        86312.5
+      ]
+    },
+    {
+      "case": "long-miss",
+      "lifecycle": "cold",
+      "engine": "tape",
+      "median_process_median_ns": 18145.5,
+      "process_medians_ns": [
+        29646.0,
+        18145.5,
+        15458.0
+      ]
+    },
+    {
+      "case": "long-miss",
+      "lifecycle": "warm",
+      "engine": "host-bool",
+      "median_process_median_ns": 6562.5,
+      "process_medians_ns": [
+        8312.5,
+        6562.5,
+        5833.5
+      ]
+    },
+    {
+      "case": "long-miss",
+      "lifecycle": "warm",
+      "engine": "monty",
+      "median_process_median_ns": 7500.0,
+      "process_medians_ns": [
+        9625.0,
+        7500.0,
+        6854.5
+      ]
+    },
+    {
+      "case": "long-miss",
+      "lifecycle": "warm",
+      "engine": "native",
+      "median_process_median_ns": 7500.0,
+      "process_medians_ns": [
+        9750.0,
+        7500.0,
+        6875.0
+      ]
+    },
+    {
+      "case": "long-miss",
+      "lifecycle": "warm",
+      "engine": "tape",
+      "median_process_median_ns": 7604.0,
+      "process_medians_ns": [
+        9917.0,
+        7604.0,
+        6958.5
+      ]
+    },
+    {
+      "case": "max-miss",
+      "lifecycle": "cold",
+      "engine": "host-bool",
+      "median_process_median_ns": 17291.5,
+      "process_medians_ns": [
+        23520.5,
+        17291.5,
+        15271.0
+      ]
+    },
+    {
+      "case": "max-miss",
+      "lifecycle": "cold",
+      "engine": "monty",
+      "median_process_median_ns": 20833.5,
+      "process_medians_ns": [
+        28333.0,
+        20833.5,
+        18417.0
+      ]
+    },
+    {
+      "case": "max-miss",
+      "lifecycle": "cold",
+      "engine": "native",
+      "median_process_median_ns": 115875.0,
+      "process_medians_ns": [
+        158146.0,
+        115875.0,
+        102187.5
+      ]
+    },
+    {
+      "case": "max-miss",
+      "lifecycle": "cold",
+      "engine": "tape",
+      "median_process_median_ns": 36437.5,
+      "process_medians_ns": [
+        50021.5,
+        36437.5,
+        32104.5
+      ]
+    },
+    {
+      "case": "max-miss",
+      "lifecycle": "warm",
+      "engine": "host-bool",
+      "median_process_median_ns": 13145.5,
+      "process_medians_ns": [
+        15687.5,
+        13145.5,
+        12145.5
+      ]
+    },
+    {
+      "case": "max-miss",
+      "lifecycle": "warm",
+      "engine": "monty",
+      "median_process_median_ns": 15041.0,
+      "process_medians_ns": [
+        17999.5,
+        15041.0,
+        13854.5
+      ]
+    },
+    {
+      "case": "max-miss",
+      "lifecycle": "warm",
+      "engine": "native",
+      "median_process_median_ns": 25958.0,
+      "process_medians_ns": [
+        31499.5,
+        25958.0,
+        23896.0
+      ]
+    },
+    {
+      "case": "max-miss",
+      "lifecycle": "warm",
+      "engine": "tape",
+      "median_process_median_ns": 26000.0,
+      "process_medians_ns": [
+        31625.0,
+        26000.0,
+        23895.5
+      ]
+    },
+    {
+      "case": "short-hit",
+      "lifecycle": "cold",
+      "engine": "host-bool",
+      "median_process_median_ns": 9104.0,
+      "process_medians_ns": [
+        17354.0,
+        9104.0,
+        7562.5
+      ]
+    },
+    {
+      "case": "short-hit",
+      "lifecycle": "cold",
+      "engine": "monty",
+      "median_process_median_ns": 12041.0,
+      "process_medians_ns": [
+        22396.0,
+        12041.0,
+        10208.5
+      ]
+    },
+    {
+      "case": "short-hit",
+      "lifecycle": "cold",
+      "engine": "native",
+      "median_process_median_ns": 103020.5,
+      "process_medians_ns": [
+        167375.0,
+        103020.5,
+        85104.5
+      ]
+    },
+    {
+      "case": "short-hit",
+      "lifecycle": "cold",
+      "engine": "tape",
+      "median_process_median_ns": 12458.0,
+      "process_medians_ns": [
+        22896.0,
+        12458.0,
+        10291.5
+      ]
+    },
+    {
+      "case": "short-hit",
+      "lifecycle": "warm",
+      "engine": "host-bool",
+      "median_process_median_ns": 4208.0,
+      "process_medians_ns": [
+        5354.5,
+        4208.0,
+        3875.0
+      ]
+    },
+    {
+      "case": "short-hit",
+      "lifecycle": "warm",
+      "engine": "monty",
+      "median_process_median_ns": 4916.5,
+      "process_medians_ns": [
+        6375.0,
+        4916.5,
+        4541.5
+      ]
+    },
+    {
+      "case": "short-hit",
+      "lifecycle": "warm",
+      "engine": "native",
+      "median_process_median_ns": 1417.0,
+      "process_medians_ns": [
+        1791.0,
+        1417.0,
+        1291.5
+      ]
+    },
+    {
+      "case": "short-hit",
+      "lifecycle": "warm",
+      "engine": "tape",
+      "median_process_median_ns": 1541.5,
+      "process_medians_ns": [
+        1937.5,
+        1541.5,
+        1375.0
+      ]
+    }
+  ],
+  "http": [
+    {
+      "syntax": "assigned",
+      "backend": "native",
+      "lifecycle": "prepared",
+      "median_process_mean_ns": 78964.30333333333,
+      "process_means_ns": [
+        81256.11,
+        78311.25333333333,
+        78964.30333333333
+      ]
+    },
+    {
+      "syntax": "assigned",
+      "backend": "native",
+      "lifecycle": "source_cold",
+      "median_process_mean_ns": 183461.11666666667,
+      "process_means_ns": [
+        208104.16666666666,
+        171239.58333333334,
+        183461.11666666667
+      ]
+    },
+    {
+      "syntax": "assigned",
+      "backend": "tape",
+      "lifecycle": "prepared",
+      "median_process_mean_ns": 78851.10666666667,
+      "process_means_ns": [
+        120913.47333333333,
+        78851.10666666667,
+        78723.19333333333
+      ]
+    },
+    {
+      "syntax": "assigned",
+      "backend": "tape",
+      "lifecycle": "source_cold",
+      "median_process_mean_ns": 96038.88333333333,
+      "process_means_ns": [
+        253353.48333333334,
+        92250.7,
+        96038.88333333333
+      ]
+    },
+    {
+      "syntax": "direct",
+      "backend": "native",
+      "lifecycle": "prepared",
+      "median_process_mean_ns": 78178.33333333333,
+      "process_means_ns": [
+        78193.33333333333,
+        78178.33333333333,
+        77442.08333333333
+      ]
+    },
+    {
+      "syntax": "direct",
+      "backend": "native",
+      "lifecycle": "source_cold",
+      "median_process_mean_ns": 175677.08333333334,
+      "process_means_ns": [
+        170209.71666666667,
+        176502.78333333333,
+        175677.08333333334
+      ]
+    },
+    {
+      "syntax": "direct",
+      "backend": "tape",
+      "lifecycle": "prepared",
+      "median_process_mean_ns": 78361.66666666667,
+      "process_means_ns": [
+        80517.08,
+        77762.50333333333,
+        78361.66666666667
+      ]
+    },
+    {
+      "syntax": "direct",
+      "backend": "tape",
+      "lifecycle": "source_cold",
+      "median_process_mean_ns": 95505.56666666667,
+      "process_means_ns": [
+        95505.56666666667,
+        99354.16666666667,
+        92839.56666666667
+      ]
+    }
+  ]
+}

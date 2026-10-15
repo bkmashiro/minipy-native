@@ -1,0 +1,14 @@
+{
+  "mode": "allocation",
+  "independent_processes": 1,
+  "rows": 33,
+  "executable_sha256": "1a96207051136054b05857d546afa6bb5d883be9ba278ee4b175373b335a2d6e",
+  "platform": "macOS-26.4.1-arm64-arm-64bit",
+  "architecture": "arm64",
+  "compiler": "rustc 1.93.1 (01f6ddf75 2026-02-11)",
+  "fixture": "8192-byte padding, {data:{a:17,b:23}}; 1000 rows price=i%97 quantity=i%5",
+  "parser_boundary": "valid-input parse + compute + cleanup, input resident",
+  "source_boundary": "resident frozen Provider result, real source parse/prepare where source_cold, Tool dispatch, JSON access, stdout and cleanup",
+  "trace": false,
+  "runtime_drivers": "time only; no network in ready-provider measurement"
+}
