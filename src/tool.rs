@@ -11,6 +11,13 @@ pub enum ResultSchema {
     I64,
     /// Explicit i64 leaf paths. Other paths may form raw subviews, never values.
     Json(Vec<Vec<String>>),
+    /// Explicit typed leaves; string values are only usable by literal `in`.
+    JsonTyped(Vec<(Vec<String>, JsonLeaf)>),
+}
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum JsonLeaf {
+    I64,
+    String,
 }
 #[derive(Clone, Debug)]
 pub struct ToolSchema {
@@ -53,7 +60,12 @@ impl ToolSchema {
                     "Tools accept at most two unique named i64 arguments".into(),
                 ));
             }
-            if let ResultSchema::Json(paths) = &t.result {
+            let paths: Vec<&Vec<String>> = match &t.result {
+                ResultSchema::Json(paths) => paths.iter().collect(),
+                ResultSchema::JsonTyped(paths) => paths.iter().map(|(p, _)| p).collect(),
+                ResultSchema::I64 => Vec::new(),
+            };
+            if !paths.is_empty() {
                 if paths.len() > MAX_PATHS
                     || paths
                         .iter()
@@ -93,6 +105,8 @@ pub struct Plan {
     pub roots: usize,
     pub paths: Vec<PathSlot>,
     pub calls: Vec<BoundCall>,
+    pub needles: Vec<String>,
+    pub string_paths: bool,
 }
 impl Plan {
     pub(crate) fn owned_bytes(&self) -> usize {
@@ -100,6 +114,8 @@ impl Plan {
             + self.calls.capacity() * std::mem::size_of::<BoundCall>()
             + self.paths.capacity() * std::mem::size_of::<PathSlot>()
             + self.paths.iter().map(|p| p.key.capacity()).sum::<usize>()
+            + self.needles.capacity() * std::mem::size_of::<String>()
+            + self.needles.iter().map(String::capacity).sum::<usize>()
     }
     pub(crate) fn path(&mut self, root: usize, keys: &[String]) -> Result<usize, CompileError> {
         let mut parent = None;

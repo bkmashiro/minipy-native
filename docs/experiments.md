@@ -955,3 +955,90 @@ WSL/VM work or benchmark campaign. Proposed next experiment is one bounded
 read-only JSON string predicate after Host schema/ownership/byte-work decisions,
 not a generic Value system or automatic follow-up development card.
 
+## AR: declared JSON string leaf + literal `in` bounded experiment (2026-10-15)
+
+Starting at AO `3b6b800`, added exactly one natural string predicate:
+`data = tools.fetch(batch_id); text = data["message"]; print("error" in text)`.
+`ResultSchema::JsonTyped` identifies individual `I64`/`String` leaves; old
+`Json` remains i64-only. String values are neither printable nor Tool arguments
+nor general locals; only a literal UTF-8 needle (<=256 bytes) with an explicitly
+declared string leaf/alias is admitted. Dynamic/tuple needles, methods, raw
+JSON output, arbitrary string expressions and arrays remain unsupported. The
+compiler stores bounded literal needles in the sealed plan; native JIT and
+interpreter both use the same borrowed JSON implementation. Literal direct
+access and an alias through an async Tool wait run with real source and result.
+
+The immutable `Bytes` owner holds the selected JSON range; unescaped strings
+borrow, escaped strings decode once into a per-task cache. Selected missing,
+null/nonstring, malformed escape and invalid UTF-8 become task errors at the
+access point. First duplicate key follows the existing sonic path semantics;
+unvisited fields are not eagerly parsed. The string leaf cap is 64 KiB encoded
+bytes, default cumulative per-task validation/decode/search budget is 1 MiB
+(engineering admission choices, not Python or JSON limits),
+configured via `ScriptLimits::string_scan_bytes`. Decoded *capacity* joins
+existing root/quote aggregate buffer accounting, and releases with the owner;
+temporary decode allocation is bounded by the 64 KiB leaf cap before the
+postallocation capacity check. Unescaped tasks do not allocate decoded
+payloads; non-string JSON tasks do not allocate a decoded vector but their
+boxed state grows from 80 to 128 bytes (+48 on 64-bit). No per-row scanning or
+branch eager read.
+Errors retain earlier stdout, and cancellation/late Tool completion drops the
+root. No output/Tool byte ABI, generic `Value`, or extra dependency in the
+production crate.
+
+Verification: both real backends against literal UTF-8/escaped/empty/duplicate
+cases and a `serde_json` content oracle where duplicate semantics agree;
+negative admission, mixed i64/string schema, missing/null/wrong type, malformed
+escape, short-circuit error order, stdout prefix, 64 KiB/scan/buffer caps,
+actual wait with observed owner drop on cancellation, plus a real loopback
+HTTP JSON response. Full `--all-features` and no-feature Rust suites, strict
+all-target Clippy, fmt and diff-check passed on macOS; Linux/WSL not run.
+`wasm32-wasip1` `--lib --no-default-features` check passed (existing unused-code
+warnings); feature `tool-json` cannot cross-build on this target because its
+pre-existing Cargo feature enables `tokio/net`, rejected by Tokio on wasm.
+No wasm guest execution or string-path validation is claimed.
+
+Bounded operation probe (two processes, 30 AB/reverse-order repetitions each,
+60 per case/engine/mode) at `evidence/ar-contains/{run1,run2}.jsonl`; validated
+40 groups/2,400 raw result rows and summary at `summary.json`. Runner and
+source: `bench/src/bin/ar_contains.rs`; bench feature `string-probe` uses the
+already pinned Monty rev 56949a4 and rustc 1.96.0 (required by Monty, installed
+locally; default project rustc 1.93.1). Run command:
+
+    CARGO_TARGET_DIR=/Users/yuzhe/projects/minipy-native/target CARGO_BUILD_JOBS=1 \
+      cargo +1.96.0 run --offline --locked --release --manifest-path bench/Cargo.toml \
+      --features string-probe --bin ar-contains -- 30
+
+Each timed invocation includes source compilation in cold mode (prepared
+runner cloned in warm), async Tool hop, JSON handling, guest execution, output
+consumption and cleanup. Provider starts with immutable JSON `Bytes`; there is
+no HTTP wait in this probe. Monty `await fetch` creates a dict/string by parsing
+the same JSON *inside* the timed Host callback; `await contains_message` is the
+strong simpler Host-bool baseline (also parses the JSON inside the callback).
+The latter moves the predicate into the trusted Host and has a different Tool
+return contract, so it is a decision comparison, not an implementation of the
+same guest interface. Separate loopback test checks the HTTP integration.
+
+Median wall ns (small hit / 16 KiB tail hit / 16 KiB miss / escaped hit / 64 KiB miss):
+
+| mode | native | interpreter | Monty dict | Monty Host bool |
+|---|---|---|---|---|
+| cold | 181917 / 152104 / 124583 / 102666 / 120479 | 21999 / 28124 / 23854 / 21792 / 38375 | 21812 / 21979 / 16625 / 16729 / 22646 | 15895 / 15833 / 13354 / 13312 / 18687 |
+| prepared | 1624 / 8146 / 8041 / 11875 / 28687 | 1687 / 9125 / 8937 / 11792 / 29520 | 5625 / 8020 / 8770 / 10250 / 15125 | 5208 / 6792 / 7250 / 9666 / 13354 |
+
+These are local synthetic payloads, not observed application latency or
+network-inclusive measurements. Native prepared small-hit beats Monty dict
+~3.46x, but cold native is ~8.34x slower and long/escaped prepared results do
+not consistently beat the strong simple baseline. Thus there is no blanket
+kernel speedup: this branch is a narrow correctness/performance candidate for
+review, not a default deployment or justification for more string operations.
+If the target workload is cold or large/escaped strings, prefer Host-bool or
+the existing interpreter rather than expanding this slice. The 64 KiB prepared
+whole-task native path reached a 33 µs maximum over 60 runs on this host;
+this is an observation, not a cancellation-latency guarantee or proof for
+arbitrary payloads beyond the admission cap. No CI/VM, new
+machine, global changes, or production dependencies were used.
+The dependent AS integration card owns paired old scalar/scan regression and
+candidate keep/drop against the combined branch; this AR probe alone is not
+evidence of zero regression for the other workloads.
+

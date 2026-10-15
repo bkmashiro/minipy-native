@@ -42,6 +42,17 @@ pub enum Expr {
         slot: usize,
         root: usize,
     },
+    #[cfg(feature = "tool-json")]
+    JsonString {
+        slot: usize,
+        root: usize,
+    },
+    #[cfg(feature = "tool-json")]
+    Contains {
+        slot: usize,
+        root: usize,
+        needle: usize,
+    },
     Field(Field),
     Binary(BinOp, Box<Expr>, Box<Expr>),
     Not(Box<Expr>),

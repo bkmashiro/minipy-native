@@ -162,7 +162,11 @@ async fn run<P: Provider>(
     if let Some(plan) = &unit.json
         && plan.roots > 0
     {
-        output.json = Some(Box::new(crate::json_view::State::new(plan.clone())));
+        output.json = Some(Box::new(crate::json_view::State::new(
+            plan.clone(),
+            options.limits.buffer_bytes,
+            options.string_scan_bytes,
+        )));
     }
     let limits = options.limits;
     if limits.chunk == 0 || limits.chunk > 4096 {
@@ -182,6 +186,12 @@ async fn run<P: Provider>(
     // Cancellation is checked at the same bounded turns as native: entry, Tool,
     // and chunk yield. Scalar dispatch remains bounded by frontend admission.
     loop {
+        #[cfg(feature = "tool-json")]
+        if unit.json.as_ref().is_some_and(|p| p.string_paths)
+            && let Some(json) = &mut output.json
+        {
+            json.set_external(owners.iter().flatten().map(QuoteBuffer::bytes).sum());
+        }
         let boundary = tape::run_until_boundary(unit, &mut state, &owners, &limits, output)?;
         #[cfg(feature = "tool-json")]
         if let Some(json) = &mut output.json {

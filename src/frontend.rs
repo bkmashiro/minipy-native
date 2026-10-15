@@ -141,7 +141,7 @@ struct Compiler {
     #[cfg(feature = "tool-json")]
     json_names: HashMap<String, (usize, Vec<String>)>,
     #[cfg(feature = "tool-json")]
-    json_leaves: Vec<Vec<Vec<String>>>,
+    json_leaves: Vec<Vec<(Vec<String>, crate::tool::JsonLeaf)>>,
 }
 impl Compiler {
     fn new(inputs: &[(&str, Type)]) -> Result<Self> {
@@ -329,7 +329,8 @@ impl Compiler {
                         return Ok(());
                     }
                     if let Some((root, path)) = self.json_path(&a.value)?
-                        && !self.json_leaves[root].contains(&path)
+                        && (path.is_empty()
+                            || !self.json_leaves[root].iter().any(|(p, _)| p == &path))
                     {
                         if in_loop {
                             return Err(err("JSON view aliases are unsupported inside loops"));
@@ -338,6 +339,20 @@ impl Compiler {
                             let slot = self.json.path(root, &path)?;
                             out.push(Stmt::Eval(Expr::JsonView { slot, root }));
                         }
+                        self.bind_json(&name, root, path)?;
+                        return Ok(());
+                    }
+                    if let Some((root, path)) = self.json_path(&a.value)?
+                        && self.json_leaves[root]
+                            .iter()
+                            .any(|(p, t)| p == &path && *t == crate::tool::JsonLeaf::String)
+                    {
+                        if in_loop {
+                            return Err(err("JSON string aliases are unsupported inside loops"));
+                        }
+                        let slot = self.json.path(root, &path)?;
+                        self.json.string_paths = true;
+                        out.push(Stmt::Eval(Expr::JsonString { slot, root }));
                         self.bind_json(&name, root, path)?;
                         return Ok(());
                     }
@@ -632,7 +647,11 @@ impl Compiler {
                     return Err(err("JSON indices must be literal field keys"));
                 };
                 keys.push(key.clone());
-                if keys.len() > 32 || !self.json_leaves[root].iter().any(|p| p.starts_with(&keys)) {
+                if keys.len() > 32
+                    || !self.json_leaves[root]
+                        .iter()
+                        .any(|(p, _)| p.starts_with(&keys))
+                {
                     return Err(err("JSON field path is absent from the declared schema"));
                 }
                 Ok(Some((root, keys)))
@@ -730,14 +749,22 @@ impl Compiler {
             .into_iter()
             .map(|a| a.ok_or_else(|| err("missing Tool argument")))
             .collect::<Result<Vec<_>>>()?;
-        let json = matches!(tool.result, crate::tool::ResultSchema::Json(_));
-        let target = if let crate::tool::ResultSchema::Json(leaves) = tool.result {
+        let json = !matches!(tool.result, crate::tool::ResultSchema::I64);
+        let target = if json {
             if self.json.roots >= 32 {
                 return Err(err("too many JSON owners"));
             }
             let root = self.json.roots;
             self.bind_json(name, root, Vec::new())?;
             self.json.roots += 1;
+            let leaves = match tool.result {
+                crate::tool::ResultSchema::Json(paths) => paths
+                    .into_iter()
+                    .map(|p| (p, crate::tool::JsonLeaf::I64))
+                    .collect(),
+                crate::tool::ResultSchema::JsonTyped(paths) => paths,
+                crate::tool::ResultSchema::I64 => unreachable!(),
+            };
             self.json_leaves.push(leaves);
             root
         } else {
@@ -880,8 +907,15 @@ impl Compiler {
         self.node(depth)?;
         #[cfg(feature = "tool-json")]
         if let Some((root, path)) = self.json_path(e)? {
-            if !self.json_leaves[root].contains(&path) {
-                return Err(err("JSON expression must name a declared i64 leaf"));
+            let leaf = self.json_leaves[root]
+                .iter()
+                .find(|(p, _)| p == &path)
+                .map(|(_, t)| *t)
+                .ok_or_else(|| err("JSON expression must name a declared leaf"))?;
+            if leaf != crate::tool::JsonLeaf::I64 {
+                return Err(err(
+                    "string leaf is only supported as the right operand of literal `in`",
+                ));
             }
             let slot = self.json.path(root, &path)?;
             return Ok((Expr::JsonI64 { slot, root }, Type::I64));
@@ -1002,6 +1036,39 @@ impl Compiler {
             ast::Expr::Compare(c) => {
                 if c.ops.len() != 1 || c.comparators.len() != 1 {
                     return Err(err("chained comparisons are unsupported"));
+                }
+                #[cfg(feature = "tool-json")]
+                if matches!(c.ops[0], ast::CmpOp::In) {
+                    let ast::Expr::Constant(literal) = c.left.as_ref() else {
+                        return Err(err("contains needle must be a string literal"));
+                    };
+                    let ast::Constant::Str(needle) = &literal.value else {
+                        return Err(err("contains needle must be a string literal"));
+                    };
+                    if needle.len() > 256 {
+                        return Err(err("contains needle exceeds 256 UTF-8 bytes"));
+                    }
+                    let (root, path) = self.json_path(&c.comparators[0])?.ok_or_else(|| {
+                        err("contains haystack must be a declared JSON string leaf")
+                    })?;
+                    if !self.json_leaves[root]
+                        .iter()
+                        .any(|(p, t)| p == &path && *t == crate::tool::JsonLeaf::String)
+                    {
+                        return Err(err("contains haystack must be a declared JSON string leaf"));
+                    }
+                    let slot = self.json.path(root, &path)?;
+                    let needle_slot = self.json.needles.len();
+                    self.json.needles.push(needle.clone());
+                    self.json.string_paths = true;
+                    return Ok((
+                        Expr::Contains {
+                            slot,
+                            root,
+                            needle: needle_slot,
+                        },
+                        Type::Bool,
+                    ));
                 }
                 let (l, lt) = self.expr(&c.left, depth + 1, in_loop)?;
                 let (r, rt) = self.expr(&c.comparators[0], depth + 1, in_loop)?;

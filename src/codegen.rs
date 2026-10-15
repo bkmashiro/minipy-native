@@ -170,6 +170,12 @@ impl CodeUnit {
                 "minipy_json_release",
                 crate::json_view::native_release as *const u8,
             );
+            if program.json.string_paths {
+                builder.symbol(
+                    "minipy_json_string",
+                    crate::json_view::native_string as *const u8,
+                );
+            }
         }
         let mut module = JITModule::new(builder);
         module.clear_context(ctx);
@@ -186,6 +192,18 @@ impl CodeUnit {
         let json_read = if program.json.roots > 0 {
             let id = module
                 .declare_function("minipy_json_read", Linkage::Import, &print_sig)
+                .map_err(error)?;
+            Some(module.declare_func_in_func(id, &mut ctx.func))
+        } else {
+            None
+        };
+        #[cfg(feature = "tool-json")]
+        let json_string = if program.json.string_paths {
+            let mut sig = module.make_signature();
+            sig.params = vec![AbiParam::new(types::I64); 4];
+            sig.returns.push(AbiParam::new(types::I64));
+            let id = module
+                .declare_function("minipy_json_string", Linkage::Import, &sig)
                 .map_err(error)?;
             Some(module.declare_func_in_func(id, &mut ctx.func))
         } else {
@@ -250,6 +268,8 @@ impl CodeUnit {
                 print,
                 #[cfg(feature = "tool-json")]
                 json_read,
+                #[cfg(feature = "tool-json")]
+                json_string,
                 #[cfg(feature = "tool-json")]
                 json_release,
 
@@ -355,6 +375,8 @@ struct Flow<'a, 'b> {
     #[cfg(feature = "tool-json")]
     json_read: Option<cranelift_codegen::ir::FuncRef>,
     #[cfg(feature = "tool-json")]
+    json_string: Option<cranelift_codegen::ir::FuncRef>,
+    #[cfg(feature = "tool-json")]
     json_release: Option<cranelift_codegen::ir::FuncRef>,
     overflow: cranelift_codegen::ir::Block,
     budget: cranelift_codegen::ir::Block,
@@ -407,7 +429,10 @@ fn live_loop(buffer: usize, body: &[Stmt], following: Live) -> Live {
 #[cfg(feature = "tool-json")]
 fn json_used(e: &Expr) -> u32 {
     match e {
-        Expr::JsonI64 { root, .. } | Expr::JsonView { root, .. } => 1 << root,
+        Expr::JsonI64 { root, .. }
+        | Expr::JsonView { root, .. }
+        | Expr::JsonString { root, .. }
+        | Expr::Contains { root, .. } => 1 << root,
         Expr::Binary(_, a, b) => json_used(a) | json_used(b),
         Expr::Not(e) => json_used(e),
         _ => 0,
@@ -480,6 +505,8 @@ impl Flow<'_, '_> {
             json: self
                 .json_read
                 .map(|read| (self.output, self.frame, read, self.output_error)),
+            #[cfg(feature = "tool-json")]
+            json_string: self.json_string,
         }
         .expr(expr)
     }
@@ -555,6 +582,8 @@ impl Flow<'_, '_> {
                         json: self
                             .json_read
                             .map(|read| (self.output, self.frame, read, self.output_error)),
+                        #[cfg(feature = "tool-json")]
+                        json_string: self.json_string,
                     }
                     .predicate(e, y, n);
                     self.b.switch_to_block(y);
@@ -710,6 +739,8 @@ struct Emit<'a, 'b> {
         cranelift_codegen::ir::FuncRef,
         cranelift_codegen::ir::Block,
     )>,
+    #[cfg(feature = "tool-json")]
+    json_string: Option<cranelift_codegen::ir::FuncRef>,
 }
 impl Emit<'_, '_> {
     // Predicate consumers need control flow, not a materialized bool join.
@@ -757,6 +788,28 @@ impl Emit<'_, '_> {
                 let slot = self.b.ins().iconst(types::I64, slot);
                 let result = self.b.ins().iadd_imm(frame, 272);
                 let call = self.b.ins().call(helper, &[output, slot, result]);
+                let failed = self.b.inst_results(call)[0];
+                let next = self.b.create_block();
+                self.b.ins().brif(failed, error, &[], next, &[]);
+                self.b.switch_to_block(next);
+                self.b
+                    .ins()
+                    .load(types::I64, MemFlags::trusted(), frame, 272)
+            }
+            #[cfg(feature = "tool-json")]
+            Expr::JsonString { slot, .. } | Expr::Contains { slot, .. } => {
+                let (output, frame, _, error) = self.json.expect("frontend bound JSON plan");
+                let needle = match e {
+                    Expr::Contains { needle, .. } => *needle as i64,
+                    _ => -1,
+                };
+                let slot = self.b.ins().iconst(types::I64, *slot as i64);
+                let needle = self.b.ins().iconst(types::I64, needle);
+                let result = self.b.ins().iadd_imm(frame, 272);
+                let call = self.b.ins().call(
+                    self.json_string.expect("string helper"),
+                    &[output, slot, needle, result],
+                );
                 let failed = self.b.inst_results(call)[0];
                 let next = self.b.create_block();
                 self.b.ins().brif(failed, error, &[], next, &[]);

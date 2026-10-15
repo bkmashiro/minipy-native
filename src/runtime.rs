@@ -162,6 +162,8 @@ pub struct ScriptLimits {
     pub tool_calls: u64,
     pub stdout_bytes: usize,
     pub allow_print: bool,
+    /// Cumulative UTF-8 validation, JSON escape decode and contains scan bytes.
+    pub string_scan_bytes: usize,
 }
 impl Default for ScriptLimits {
     fn default() -> Self {
@@ -170,6 +172,7 @@ impl Default for ScriptLimits {
             tool_calls: 512,
             stdout_bytes: 16 * 1024,
             allow_print: true,
+            string_scan_bytes: 1024 * 1024,
         }
     }
 }
@@ -310,7 +313,11 @@ async fn run<P: Provider>(
     if let Some(plan) = &code.json
         && plan.roots > 0
     {
-        output.json = Some(Box::new(crate::json_view::State::new(plan.clone())));
+        output.json = Some(Box::new(crate::json_view::State::new(
+            plan.clone(),
+            limits.buffer_bytes,
+            options.string_scan_bytes,
+        )));
     }
     let mut calls = options.tool_calls;
     let mut owners: Vec<Option<QuoteBuffer>> = (0..code.buffers).map(|_| None).collect();
@@ -318,6 +325,12 @@ async fn run<P: Provider>(
     let mut frame = Box::new(Frame::new(inputs, limits.rows, limits.chunk));
     loop {
         check(&cancel)?;
+        #[cfg(feature = "tool-json")]
+        if code.json.as_ref().is_some_and(|p| p.string_paths)
+            && let Some(json) = &mut output.json
+        {
+            json.set_external(owners.iter().flatten().map(QuoteBuffer::bytes).sum());
+        }
         let status = code.resume(&mut frame, &views, output);
         let boundary = matches!(status, 0 | 2 | 3 | 4 | 7);
         #[cfg(feature = "tool-json")]

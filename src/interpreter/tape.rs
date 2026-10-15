@@ -20,6 +20,8 @@ pub(super) enum Op {
     #[cfg(feature = "tool-json")]
     JsonRead(Dest, usize, usize, bool),
     #[cfg(feature = "tool-json")]
+    JsonString(Dest, usize, usize, Option<usize>),
+    #[cfg(feature = "tool-json")]
     Tool(usize, usize, [u8; 2]),
     Add(Dest, Operand, Operand),
     Sub(Dest, Operand, Operand),
@@ -56,6 +58,8 @@ impl Op {
         match self {
             #[cfg(feature = "tool-json")]
             Self::JsonRead(d, ..) => Some(*d),
+            #[cfg(feature = "tool-json")]
+            Self::JsonString(d, ..) => Some(*d),
             Self::Copy(d, _)
             | Self::Add(d, _, _)
             | Self::Sub(d, _, _)
@@ -127,6 +131,15 @@ impl Lower<'_> {
             Expr::JsonI64 { slot, root } | Expr::JsonView { slot, root } => self.ops.push(
                 Op::JsonRead(dest, slot, root, matches!(e, Expr::JsonView { .. })),
             ),
+            #[cfg(feature = "tool-json")]
+            Expr::JsonString { slot, root } => {
+                self.ops.push(Op::JsonString(dest, slot, root, None))
+            }
+            #[cfg(feature = "tool-json")]
+            Expr::Contains { slot, root, needle } => {
+                self.ops
+                    .push(Op::JsonString(dest, slot, root, Some(needle)))
+            }
             Expr::Binary(op, a, b) if !matches!(op, BinOp::And | BinOp::Or) => {
                 let a = self.value(*a);
                 let b = self.value(*b);
@@ -307,6 +320,7 @@ pub(super) fn json_liveness(ops: &[Op]) -> Vec<u32> {
                 Op::Jump(t) | Op::Next(t) => live[*t],
                 Op::Scan { end, .. } => next | live[*end],
                 Op::JsonRead(_, _, root, _) => next | (1 << root),
+                Op::JsonString(_, _, root, _) => next | (1 << root),
                 Op::Return => 0,
                 _ => next,
             };
@@ -385,6 +399,16 @@ pub(super) fn run<const STEP: bool>(
                     json.view(*slot)?
                 } else {
                     json.integer(*slot)?
+                };
+                write(*d, v, state, temps);
+            }
+            #[cfg(feature = "tool-json")]
+            Op::JsonString(d, slot, _, needle) => {
+                let json = output.json.as_mut().expect("sealed JSON plan");
+                let v = if let Some(needle) = needle {
+                    json.contains(*slot, *needle)?
+                } else {
+                    json.validate_string(*slot)?
                 };
                 write(*d, v, state, temps);
             }

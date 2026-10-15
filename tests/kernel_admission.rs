@@ -1,10 +1,10 @@
-//! AO admission evidence only. No new language or kernel implementation.
+//! AO boundary plus AR's narrowly admitted string predicate.
 #![cfg(all(feature = "tool-json", not(target_arch = "wasm32")))]
 use minipy_native::{
     codegen::CodeUnit,
     interpreter::InterpreterUnit,
     ir::Type,
-    tool::{ResultSchema, ToolSchema},
+    tool::{JsonLeaf, ResultSchema, ToolSchema},
 };
 
 #[test]
@@ -85,4 +85,17 @@ fn kernel_candidates_need_new_value_or_iteration_contracts() {
         assert_eq!(native.is_ok(), admitted, "native: {label}");
         println!("{label}: admitted={admitted} (tape and native)");
     }
+    let strings = [ToolSchema {
+        id: 101,
+        name: "fetch".into(),
+        arguments: vec!["batch_id".into()],
+        result: ResultSchema::JsonTyped(vec![(vec!["message".into()], JsonLeaf::String)]),
+    }];
+    let source =
+        "data = tools.fetch(batch_id)\ntext = data[\"message\"]\nprint(\"error\" in text)\n";
+    assert!(InterpreterUnit::prepare_with_tools(source, &inputs, &strings).is_ok());
+    assert!(CodeUnit::compile_with_tools(source, &inputs, &strings).is_ok());
+    // A string is not a general-purpose Value or a dynamically typed haystack.
+    assert!(InterpreterUnit::prepare_with_tools(source, &inputs, &tools).is_err());
+    assert!(CodeUnit::compile_with_tools(source, &inputs, &tools).is_err());
 }

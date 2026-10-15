@@ -7,7 +7,7 @@ use minipy_native::{
     ir::Type,
     provider::Provider,
     runtime::{self, Cancellation, ScriptLimits},
-    tool::{Reply, ResultSchema, ToolSchema},
+    tool::{JsonLeaf, Reply, ResultSchema, ToolSchema},
 };
 use std::{
     rc::Rc,
@@ -74,6 +74,7 @@ async fn fixture() -> Fixture {
                     let result=match path.as_str(){
                         "/json" | "/blocked" => stream.write_all(b"HTTP/1.1 200 OK\r\nContent-Length: 23\r\n\r\n{\"data\":{\"count\":10}}  ").await,
                         "/scalar" => stream.write_all(b"HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\n27").await,
+                        "/string" => stream.write_all(b"HTTP/1.1 200 OK\r\nContent-Length: 19\r\n\r\n{\"message\":\"error\"}").await,
                         "/status" => stream.write_all(b"HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\n\r\n").await,
                         "/large" => stream.write_all(b"HTTP/1.1 200 OK\r\nContent-Length: 100000\r\n\r\n").await,
                         "/chunks" | "/largechunks" => {
@@ -183,6 +184,58 @@ async fn real_http_pool_roundtrip_runs_both_backends_without_json_materializatio
     assert_eq!(requests.len(), 4);
     assert!(requests[1].contains("x-minipy-arg-0: 7"));
     assert!(requests[1].contains("x-minipy-arg-1: 20"));
+}
+#[tokio::test]
+async fn real_http_json_string_contains_both_backends() {
+    let f = fixture().await;
+    let service = HttpService::new(1, 1024, Duration::from_secs(2)).unwrap();
+    let provider = Arc::new(
+        HttpProvider::new(service.clone(), vec![endpoint(&f, 101, "/string", 1, true)]).unwrap(),
+    );
+    let schema = [ToolSchema {
+        id: 101,
+        name: "fetch".into(),
+        arguments: vec!["batch_id".into()],
+        result: ResultSchema::JsonTyped(vec![(vec!["message".into()], JsonLeaf::String)]),
+    }];
+    let source = "data = tools.fetch(batch_id)\ntext = data[\"message\"]\nprint(\"error\" in text)";
+    for native in [false, true] {
+        let output = if native {
+            runtime::execute_script(
+                Rc::new(
+                    CodeUnit::compile_with_tools(source, &[("batch_id", Type::I64)], &schema)
+                        .unwrap(),
+                ),
+                provider.clone(),
+                &[7],
+                ScriptLimits::default(),
+                Cancellation::default(),
+                None,
+            )
+            .await
+        } else {
+            interpreter::execute_script(
+                Rc::new(
+                    InterpreterUnit::prepare_with_tools(
+                        source,
+                        &[("batch_id", Type::I64)],
+                        &schema,
+                    )
+                    .unwrap(),
+                ),
+                provider.clone(),
+                &[7],
+                ScriptLimits::default(),
+                Cancellation::default(),
+                None,
+            )
+            .await
+        };
+        assert_eq!(output.status, Ok(()));
+        assert_eq!(output.stdout, "True\n");
+    }
+    assert_eq!(service.responses(), 2);
+    assert_eq!(f.requests.lock().unwrap().len(), 2);
 }
 #[tokio::test]
 async fn multi_chunk_merge_is_one_copy_and_body_status_limits_are_errors() {
