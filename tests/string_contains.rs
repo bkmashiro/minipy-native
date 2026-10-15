@@ -330,7 +330,6 @@ fn schema_rejects_unapproved_shapes() {
     let inputs = &[("batch_id", Type::I64)];
     for source in [
         "print(\"a\" in \"abc\")",
-        "d = tools.fetch(batch_id)\nprint(d[\"message\"])",
         "d = tools.fetch(batch_id)\nprint(7 in d[\"message\"])",
         "d = tools.fetch(batch_id)\nprint(\"x\" in d[\"count\"])",
         "d = tools.fetch(batch_id)\nprint(d[\"message\"].split(\"x\"))",
@@ -343,5 +342,120 @@ fn schema_rejects_unapproved_shapes() {
             InterpreterUnit::prepare_with_tools(source, inputs, &schema()).is_err(),
             "{source}"
         );
+    }
+}
+
+#[tokio::test]
+async fn print_declared_json_string_leaf_both_backends() {
+    for native in [false, true] {
+        for (data, expected) in [
+            (r#"{"message":""}"#, "\n"),
+            (r#"{"message":"hé😀"}"#, "hé😀\n"),
+            (r#"{"message":"a\n\"b\"\u0063"}"#, "a\n\"b\"c\n"),
+            (r#"{"message":"first","message":"second"}"#, "first\n"),
+        ] {
+            let r = run(
+                native,
+                "d = tools.fetch(batch_id)\nprint(d[\"message\"])",
+                Arc::new(P::new(Bytes::copy_from_slice(data.as_bytes()))),
+                ScriptLimits::default(),
+                Cancellation::default(),
+            )
+            .await;
+            assert_eq!(r.status, Ok(()), "{native} {data}");
+            assert_eq!(r.stdout, expected);
+        }
+        for data in [r#"{}"#, r#"{"message":null}"#, r#"{"message":"\uD800"}"#] {
+            let r = run(
+                native,
+                "d = tools.fetch(batch_id)\nprint(1)\nprint(d[\"message\"])",
+                Arc::new(P::new(Bytes::copy_from_slice(data.as_bytes()))),
+                ScriptLimits::default(),
+                Cancellation::default(),
+            )
+            .await;
+            assert!(
+                matches!(r.status, Err(TaskError::Json(_))),
+                "{native} {data}"
+            );
+            assert_eq!(r.stdout, "1\n");
+        }
+        let r = run(
+            native,
+            "d = tools.fetch(batch_id)\nprint(1)\nprint(d[\"message\"])",
+            Arc::new(P::new(Bytes::from_static(b"{\"message\":\"\xff\"}"))),
+            ScriptLimits::default(),
+            Cancellation::default(),
+        )
+        .await;
+        assert!(matches!(r.status, Err(TaskError::Json(_))));
+        assert_eq!(r.stdout, "1\n");
+        let mut limits = ScriptLimits {
+            stdout_bytes: 5,
+            ..ScriptLimits::default()
+        };
+        let source = "d = tools.fetch(batch_id)\nprint(1)\nprint(d[\"message\"])";
+        let r = run(
+            native,
+            source,
+            Arc::new(P::new(Bytes::from_static(br#"{"message":"abc"}"#))),
+            limits,
+            Cancellation::default(),
+        )
+        .await;
+        assert_eq!(r.status, Err(TaskError::Budget));
+        assert_eq!(r.stdout, "1\n", "line is atomic");
+        limits.stdout_bytes = 6;
+        let r = run(
+            native,
+            source,
+            Arc::new(P::new(Bytes::from_static(br#"{"message":"abc"}"#))),
+            limits,
+            Cancellation::default(),
+        )
+        .await;
+        assert_eq!(r.status, Ok(()));
+        assert_eq!(r.stdout, "1\nabc\n");
+        limits.allow_print = false;
+        let r = run(
+            native,
+            "d = tools.fetch(batch_id)\nprint(d[\"message\"])",
+            Arc::new(P::new(Bytes::from_static(br#"{"message":"abc"}"#))),
+            limits,
+            Cancellation::default(),
+        )
+        .await;
+        assert_eq!(r.status, Err(TaskError::Permission));
+        assert_eq!(r.stdout, "");
+        let r = run(native, "d = tools.fetch(batch_id)\ns = d[\"message\"]\nprint(s)\nr = tools.publish(batch_id)\nprint(s)",
+            Arc::new(P::new(Bytes::from_static(br#"{"message":"\u0061"}"#))),
+            ScriptLimits::default(), Cancellation::default()).await;
+        assert_eq!(r.status, Ok(()));
+        assert_eq!(r.stdout, "a\na\n");
+        let live = Arc::new(AtomicUsize::new(1));
+        let owner = Owner {
+            data: br#"{"message":"\u0061"}"#.to_vec().into_boxed_slice(),
+            live: live.clone(),
+        };
+        let mut provider = P::new(Bytes::from_owner(owner));
+        provider.gate = true;
+        let provider = Arc::new(provider);
+        let cancel = Cancellation::default();
+        let task = run(
+            native,
+            "d = tools.fetch(batch_id)\ns = d[\"message\"]\nprint(s)\nr = tools.publish(batch_id)\nprint(s)",
+            provider.clone(),
+            ScriptLimits::default(),
+            cancel.clone(),
+        );
+        tokio::pin!(task);
+        tokio::select! { r = &mut task => panic!("early {:?}", r.status), _ = provider.started.notified() => {} }
+        assert_eq!(live.load(Ordering::SeqCst), 1);
+        cancel.cancel();
+        let result = task.await;
+        assert_eq!(result.status, Err(TaskError::Cancelled));
+        assert_eq!(result.stdout, "a\n");
+        assert_eq!(live.load(Ordering::SeqCst), 0);
+        provider.proceed.notify_one();
     }
 }

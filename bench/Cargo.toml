@@ -38,3 +38,8 @@ path = "src/scripts.rs"
 name = "ar-contains"
 path = "src/bin/ar_contains.rs"
 required-features = ["string-probe"]
+
+[[bin]]
+name = "bo-request"
+path = "src/bin/bo_request.rs"
+required-features = ["string-probe"]

@@ -218,10 +218,6 @@ pub(crate) unsafe extern "C" fn native_print(output: *mut Output, value: i64, bo
 }
 impl Output {
     pub(crate) fn append(&mut self, value: i64, boolean: bool) -> Result<(), TaskError> {
-        let output = self;
-        if !output.allowed {
-            return Err(TaskError::Permission);
-        }
         let mut bytes = [0u8; 21];
         bytes[20] = b'\n';
         let line = if boolean {
@@ -244,26 +240,46 @@ impl Output {
             // The stack buffer contains only ASCII digits, minus and newline.
             unsafe { std::str::from_utf8_unchecked(&bytes[position..]) }
         };
-        if line.len() > output.max.saturating_sub(output.stdout.len()) {
+        self.append_line(line)
+    }
+    #[cfg(feature = "tool-json")]
+    pub(crate) fn append_json_string(&mut self, slot: usize) -> Result<(), TaskError> {
+        // Evaluate and validate the leaf before testing print authority.
+        let json = self.json.as_mut().expect("sealed JSON plan");
+        json.validate_string(slot)?;
+        let line = json.string(slot)?;
+        Self::append_parts(&mut self.stdout, self.max, self.allowed, line, true)
+    }
+    fn append_line(&mut self, line: &str) -> Result<(), TaskError> {
+        Self::append_parts(&mut self.stdout, self.max, self.allowed, line, false)
+    }
+    fn append_parts(
+        stdout: &mut String,
+        max: usize,
+        allowed: bool,
+        line: &str,
+        newline: bool,
+    ) -> Result<(), TaskError> {
+        if !allowed {
+            return Err(TaskError::Permission);
+        }
+        let length = line.len() + usize::from(newline);
+        if length > max.saturating_sub(stdout.len()) {
             return Err(TaskError::Budget);
         }
-        let required = output.stdout.len() + line.len();
-        if required > output.stdout.capacity() {
+        let required = stdout.len() + length;
+        if required > stdout.capacity() {
             // Amortize repeated line appends without letting capacity exceed the
             // task's explicit output bound. Small single-line output stays small.
-            let capacity = required
-                .checked_next_power_of_two()
-                .unwrap_or(output.max)
-                .min(output.max);
-            if output
-                .stdout
-                .try_reserve_exact(capacity - output.stdout.len())
-                .is_err()
-            {
+            let capacity = required.checked_next_power_of_two().unwrap_or(max).min(max);
+            if stdout.try_reserve_exact(capacity - stdout.len()).is_err() {
                 return Err(TaskError::Budget);
             }
         }
-        output.stdout.push_str(line);
+        stdout.push_str(line);
+        if newline {
+            stdout.push('\n');
+        }
         Ok(())
     }
 }
