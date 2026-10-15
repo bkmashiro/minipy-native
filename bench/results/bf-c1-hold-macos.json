@@ -1,0 +1,214 @@
+[
+  {
+    "revision": "base",
+    "sha256": "6b11f865732ef89602eb429c432f151465873de86a51b8d50e2f3f3e125581ef",
+    "rows": [
+      {
+        "allocation": {
+          "allocated_bytes": 77370,
+          "allocation_calls": 48,
+          "freed_bytes": 65744,
+          "live_requested_bytes": 11626,
+          "peak_requested_bytes": 66726,
+          "realloc_calls": 0
+        },
+        "case": "weighted",
+        "code": "shared",
+        "count": 16,
+        "engine": "interpreter",
+        "input_payload_bytes": 0,
+        "kind": "hold",
+        "phase": "startup",
+        "physical": {
+          "kernel_vm_hwm_bytes": null,
+          "method": "ps-rss/getrusage; no macOS PSS",
+          "peak_rss_bytes": 7045120,
+          "pss_bytes": null,
+          "rss_bytes": 7110656
+        },
+        "rows": 4096
+      },
+      {
+        "allocation": {
+          "allocated_bytes": 2238783,
+          "allocation_calls": 454,
+          "freed_bytes": 1142427,
+          "live_requested_bytes": 1096356,
+          "peak_requested_bytes": 1096356,
+          "realloc_calls": 29
+        },
+        "case": "weighted",
+        "code": "shared",
+        "count": 16,
+        "engine": "interpreter",
+        "input_payload_bytes": 1048576,
+        "kind": "hold",
+        "phase": "load_wait",
+        "physical": {
+          "kernel_vm_hwm_bytes": null,
+          "method": "ps-rss/getrusage; no macOS PSS",
+          "peak_rss_bytes": 9601024,
+          "pss_bytes": null,
+          "rss_bytes": 9633792
+        },
+        "rows": 4096
+      },
+      {
+        "allocation": {
+          "allocated_bytes": 2250404,
+          "allocation_calls": 528,
+          "freed_bytes": 2202622,
+          "live_requested_bytes": 47782,
+          "peak_requested_bytes": 1098341,
+          "realloc_calls": 36
+        },
+        "case": "weighted",
+        "code": "shared",
+        "count": 16,
+        "engine": "interpreter",
+        "input_payload_bytes": 0,
+        "kind": "hold",
+        "phase": "record_wait",
+        "physical": {
+          "kernel_vm_hwm_bytes": null,
+          "method": "ps-rss/getrusage; no macOS PSS",
+          "peak_rss_bytes": 9715712,
+          "pss_bytes": null,
+          "rss_bytes": 9715712
+        },
+        "rows": 4096
+      },
+      {
+        "allocation": {
+          "allocated_bytes": 2253767,
+          "allocation_calls": 585,
+          "freed_bytes": 2240021,
+          "live_requested_bytes": 13746,
+          "peak_requested_bytes": 1098341,
+          "realloc_calls": 40
+        },
+        "case": "weighted",
+        "code": "shared",
+        "count": 16,
+        "engine": "interpreter",
+        "input_payload_bytes": 0,
+        "kind": "hold",
+        "phase": "reclaimed",
+        "physical": {
+          "kernel_vm_hwm_bytes": null,
+          "method": "ps-rss/getrusage; no macOS PSS",
+          "peak_rss_bytes": 9748480,
+          "pss_bytes": null,
+          "rss_bytes": 9748480
+        },
+        "rows": 4096
+      }
+    ]
+  },
+  {
+    "revision": "c1",
+    "sha256": "903e495f91cb4190391bc1eda3682a21b58ad61b684f3ad8a3a7a53b403d6e72",
+    "rows": [
+      {
+        "allocation": {
+          "allocated_bytes": 77370,
+          "allocation_calls": 48,
+          "freed_bytes": 65744,
+          "live_requested_bytes": 11626,
+          "peak_requested_bytes": 66726,
+          "realloc_calls": 0
+        },
+        "case": "weighted",
+        "code": "shared",
+        "count": 16,
+        "engine": "interpreter",
+        "input_payload_bytes": 0,
+        "kind": "hold",
+        "phase": "startup",
+        "physical": {
+          "kernel_vm_hwm_bytes": null,
+          "method": "ps-rss/getrusage; no macOS PSS",
+          "peak_rss_bytes": 7045120,
+          "pss_bytes": null,
+          "rss_bytes": 7110656
+        },
+        "rows": 4096
+      },
+      {
+        "allocation": {
+          "allocated_bytes": 2238151,
+          "allocation_calls": 438,
+          "freed_bytes": 1142427,
+          "live_requested_bytes": 1095724,
+          "peak_requested_bytes": 1095724,
+          "realloc_calls": 29
+        },
+        "case": "weighted",
+        "code": "shared",
+        "count": 16,
+        "engine": "interpreter",
+        "input_payload_bytes": 1048576,
+        "kind": "hold",
+        "phase": "load_wait",
+        "physical": {
+          "kernel_vm_hwm_bytes": null,
+          "method": "ps-rss/getrusage; no macOS PSS",
+          "peak_rss_bytes": 9601024,
+          "pss_bytes": null,
+          "rss_bytes": 9633792
+        },
+        "rows": 4096
+      },
+      {
+        "allocation": {
+          "allocated_bytes": 2249772,
+          "allocation_calls": 512,
+          "freed_bytes": 2202622,
+          "live_requested_bytes": 47150,
+          "peak_requested_bytes": 1097709,
+          "realloc_calls": 36
+        },
+        "case": "weighted",
+        "code": "shared",
+        "count": 16,
+        "engine": "interpreter",
+        "input_payload_bytes": 0,
+        "kind": "hold",
+        "phase": "record_wait",
+        "physical": {
+          "kernel_vm_hwm_bytes": null,
+          "method": "ps-rss/getrusage; no macOS PSS",
+          "peak_rss_bytes": 9732096,
+          "pss_bytes": null,
+          "rss_bytes": 9732096
+        },
+        "rows": 4096
+      },
+      {
+        "allocation": {
+          "allocated_bytes": 2253135,
+          "allocation_calls": 569,
+          "freed_bytes": 2239389,
+          "live_requested_bytes": 13746,
+          "peak_requested_bytes": 1097709,
+          "realloc_calls": 40
+        },
+        "case": "weighted",
+        "code": "shared",
+        "count": 16,
+        "engine": "interpreter",
+        "input_payload_bytes": 0,
+        "kind": "hold",
+        "phase": "reclaimed",
+        "physical": {
+          "kernel_vm_hwm_bytes": null,
+          "method": "ps-rss/getrusage; no macOS PSS",
+          "peak_rss_bytes": 9764864,
+          "pss_bytes": null,
+          "rss_bytes": 9764864
+        },
+        "rows": 4096
+      }
+    ]
+  }
+]

@@ -1,0 +1,61 @@
+{
+  "base": [
+    {
+      "address": "0000000100575b90",
+      "symbol": "__ZN13minipy_native11interpreter4tape18run_until_boundary17h40e9df8f3bf9ce2dE",
+      "instructions": 42,
+      "branches": 0,
+      "first": [
+        "100575b90: a9ba6ffc    \tstp\tx28, x27, [sp, #-0x60]!",
+        "100575b94: a90167fa    \tstp\tx26, x25, [sp, #0x10]",
+        "100575b98: a9025ff8    \tstp\tx24, x23, [sp, #0x20]"
+      ]
+    },
+    {
+      "address": "0000000100575c38",
+      "symbol": "__ZN13minipy_native11interpreter4tape3run17h1984cf6e022ad5aaE",
+      "instructions": 1784,
+      "branches": 395,
+      "first": [
+        "100575c38: d102c3ff    \tsub\tsp, sp, #0xb0",
+        "100575c3c: a9056ffc    \tstp\tx28, x27, [sp, #0x50]",
+        "100575c40: a90667fa    \tstp\tx26, x25, [sp, #0x60]"
+      ]
+    }
+  ],
+  "c2": [
+    {
+      "address": "0000000100580948",
+      "symbol": "__ZN13minipy_native11interpreter4tape18run_until_boundary17hb488d9cfb14a2dc9E",
+      "instructions": 54,
+      "branches": 1,
+      "first": [
+        "100580948: a9ba6ffc    \tstp\tx28, x27, [sp, #-0x60]!",
+        "10058094c: a90167fa    \tstp\tx26, x25, [sp, #0x10]",
+        "100580950: a9025ff8    \tstp\tx24, x23, [sp, #0x20]"
+      ]
+    },
+    {
+      "address": "0000000100580a20",
+      "symbol": "__ZN13minipy_native11interpreter4tape3run17h0f69017e4ebeb455E",
+      "instructions": 1784,
+      "branches": 395,
+      "first": [
+        "100580a20: d102c3ff    \tsub\tsp, sp, #0xb0",
+        "100580a24: a9056ffc    \tstp\tx28, x27, [sp, #0x50]",
+        "100580a28: a90667fa    \tstp\tx26, x25, [sp, #0x60]"
+      ]
+    },
+    {
+      "address": "0000000100582600",
+      "symbol": "__ZN13minipy_native11interpreter4tape3run17h1c65acd69c549faeE",
+      "instructions": 1856,
+      "branches": 454,
+      "first": [
+        "100582600: d102c3ff    \tsub\tsp, sp, #0xb0",
+        "100582604: a9056ffc    \tstp\tx28, x27, [sp, #0x50]",
+        "100582608: a90667fa    \tstp\tx26, x25, [sp, #0x60]"
+      ]
+    }
+  ]
+}

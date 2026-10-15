@@ -1365,3 +1365,73 @@ medians above. The remaining Quote warm regression versus pre-record is
 unisolated, and this branch is not eligible for integration on a performance-
 neutrality claim.
 
+## BF: record-state isolation and finite tape specialization (2026-10-15)
+
+Independent `exp/bf-record-isolation` branch based on BD
+`cae9087823fe34d3c05c8df966639c1c61a13c83` (merged with current main).
+Both bounded candidates below were **reverted**; the production source remains
+BD's implementation. This is a negative result, not an approval to merge the
+record feature into main. No separate Linux or remote HTTP performance run.
+
+Layout probe (temporary in-module test, then removed) on macOS ARM64, Rust
+1.96.0, `tool-json`, test profile: `Op=56`, `Operand=16`, `Field=4`, `State=328`
+bytes, Quote row offset 0 and record row offset 24; the weighted prepared tape
+has 13 ops, capacity 16. The *concrete* `run::<TestProvider>` future was 800
+bytes, `execute_script::<TestProvider>` future 1000 bytes. These are concrete
+type sizes in this build, not Tokio task allocation or waited resident memory;
+the baseline and pre-record concrete futures were not separately instrumented.
+
+Candidate 1 sealed a `record_buffers` flag after tape preparation and avoided
+initializing the record-owner Vec for Quote-only programs. The existing empty
+release scan then had zero iterations. It did not move `record_row` out of
+`State` or reduce the async future. In a separate allocation-instrumented
+16-task 4096-row Quote wait, the candidate removed exactly 16 allocations and
+632 requested bytes (39.5/task) at both `load_wait` and `record_wait`; all
+payloads, output and lifetime assertions were unchanged. The requested live
+bytes at `load_wait` were 1,096,356 → 1,095,724; these are allocator requested
+bytes, not resident or backing allocation. In the uninstrumented paired
+source-once benchmark, Quote tape 4096 cold was 66,354 → 64,062 ns and warm
+39,896 → 39,770 ns (42 calls per revision/cell). Scalar and native controls
+are in `bf-c1-legacy-ab-macos.jsonl`; the near-zero warm change does not
+justify keeping an extra prepared flag and conditional path. **Reverted C1.**
+
+Candidate 2, independently against BD, retained a prepared record flag only
+for selecting between two const-generic tape `run/read` instantiations at each
+turn; core's bound-field arm became unreachable, and debug kept the general
+version. No per-schema interpreter was generated, but the async entry and its
+future remained shared. Two independent 3-round AB/BA paired campaigns
+(`bf-c2-legacy-{ab,repeat-ab}-macos.jsonl`, 42 calls per revision/cell each)
+gave Quote tape 4096 cold 65,417 → 60,667 and 65,896 → 60,625 ns; warm
+40,270 → 35,416 and 42,542 → 38,604 ns. A distinct record/Quote producer
+probe (`bf-c2-record-ab-macos.jsonl`, 42/cell) gave Quote tape cold/warm
+75,375/57,542 → 64,875/49,562 ns and record tape
+83,750/60,646 → 79,000/58,666 ns. Both record layouts and all four
+`record_scan` tests including cancellation, budget, fuel, owner release,
+authority and error prefix passed with `tool-json debug-runtime`.
+
+However, release Mach-O disassembly (`bf-c2-disasm-macos.json`) shows that the
+existing general tape `run` has 1,784 ARM64 instructions / 395 conditional
+branches, and C2 emits *two* tape runs: the record-capable version has exactly
+1,784 / 395, while the selected core version has 1,856 / 454. The wrapper
+adds a category test and call; binary size grew 16,480 bytes. These are whole
+function counts, not dynamic executed instructions or proof that hot blocks
+match. The paired timing improvement is real for these two local synthetic
+campaigns, but it does not demonstrate fewer hot instructions; code placement,
+branch layout or linker effects cannot be excluded. Without a demonstrated
+execution-work reduction, **reverted C2** rather than retain another large
+interpreter body. The ~17% BD warm gap to pre-record remains unisolated.
+
+Reproduce the raw comparisons from BD and the two described temporary diffs
+using the existing shared target, `CARGO_BUILD_JOBS=1`,
+`cargo +1.96.0 build --offline --locked --release --manifest-path bench/Cargo.toml
+--features minipy-native/tool-json --bin interpreter_ab`, then
+`python3 tools/bd_measure.py legacy BASE CANDIDATE OUTPUT`. The record probe
+uses `--features record-probe --bin record-probe` and `bd_measure.py record`.
+All builds and timed processes held the same exclusive `fcntl.flock` on
+`~/.hermes/cache/scratch/minipy-perf-build.lock` until child exit; baseline
+was archived from BD merge into scratch. Raw identity lines contain each
+binary SHA256. An initial invocation without explicit `CARGO_TARGET_DIR`
+accidentally copied *identical stale binaries* from the shared target; its
+samples were discarded and the raw file replaced with a freshly built,
+distinct-SHA pair. No diagnostic allocator hooks were present in speed bins.
+
