@@ -1,5 +1,23 @@
 # Experiments
 
+## DW: fixed complete-script acceptance and Linux closure (2026-10-16)
+
+One [fixed entry](acceptance.md) reuses seven existing full-script/contract
+suites, including the ten public DI cases and frozen 181-case CPython line
+oracle. macOS arm64 and actual ARM64 Alpine Linux each pass 53 tests through
+real native/tape paths. Two Python tests verify that empty, duplicate, missing,
+skipped or filtered inventories cannot produce success. Existing exact stdout,
+status, ordered Tool arguments, wait/owner, budget, cancellation and no-replay
+assertions remain unchanged. No private corpus or model requests are involved.
+
+Rust 1.96.0 offline/locked ordinary release builds share the existing external
+target and build lock, one job. Linux is cross-built with existing Zig 0.15.2,
+then uploaded, hash-verified, executed and hash-verified again. Existing VM is
+restored from off to off, with no resource/system changes. Commands, source and
+binary identities and raw logs are in `bench/results/dw/`. No production change
+was needed; performance, total memory, x86 Linux and Wasm are not measured.
+Signed publication and remote read-back precede focused same-card review.
+
 ## DT: approved borrowed-line integration (2026-10-16)
 
 With explicit approval of the public enum additions and JSON State +8 B tradeoff,

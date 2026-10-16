@@ -95,6 +95,7 @@ trigger fallback or replay. No external Python executor is included.
 
 - [Design and semantic contract](docs/design.md)
 - [Current generation guide](docs/code-mode-guide.md)
+- [Complete-script acceptance and Linux run](docs/acceptance.md)
 - [Experiments and reproducibility](docs/experiments.md)
 - [Implementation and handoff](docs/implementation.md)
 - [Optional Rust-host PGO build and bounded results](docs/cu-pgo.md)

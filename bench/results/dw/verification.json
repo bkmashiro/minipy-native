@@ -1,0 +1,62 @@
+{
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_acceptance.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "562788a",
+        "--",
+        "src",
+        "tests",
+        "examples",
+        "fixtures",
+        "Cargo.toml",
+        "Cargo.lock"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "checked_source_identity": true,
+  "identical_platform_test_inventories": true,
+  "raw_log_archive": {
+    "files": 114,
+    "bytes": 31414,
+    "sha256": "675da9bce134a9776bc8f754280253712f96f27173db6a5aba8e078da9206fa4"
+  },
+  "vm": {
+    "initial": "off; no vfkit process; SSH preflight connection closed",
+    "launch": "existing run-vm.sh, 2 vCPU, 2048 MiB; no launcher edit",
+    "shutdown": "SSH sync; poweroff exit 0; launcher exited 0 and reported VM is stopped",
+    "final": "off; no vfkit process",
+    "rest_port_18081_connect_errno": 61
+  },
+  "python_test_source_sha256": "19d963650627a618795bb8dc8fb0114fa0428f2f0b25fd9455515176d45d5721"
+}

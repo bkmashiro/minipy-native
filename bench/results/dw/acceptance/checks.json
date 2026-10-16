@@ -1,0 +1,1306 @@
+{
+  "complete": true,
+  "suites": {
+    "di_corpus": "controlled_smoke_both_backends_and_separate_memory_mode",
+    "json_get": "unchanged_cv05_and_complete_tool_script",
+    "json_fstring": "unchanged_cv01_and_unexecuted_branch",
+    "json_array": "cv04_original_and_ordered_lazy_fields",
+    "line_scan": "complete_count_and_filter_both_backends",
+    "cy_routing": "cancellation_after_submission_keeps_effect_once_and_never_routes",
+    "dl_contract": "uniform_stdout_policy_counts_utf8_and_keeps_failed_print_atomic"
+  },
+  "commands": [
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "name": "head",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "rustc",
+        "+1.96.0",
+        "-Vv"
+      ],
+      "name": "rustc",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "uname -sm; uptime; free -m; df -h /; ps -o pid,comm"
+      ],
+      "name": "linux-preflight",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "zig",
+        "version"
+      ],
+      "name": "zig",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--features",
+        "tool-json",
+        "--message-format=json",
+        "--test",
+        "di_corpus",
+        "--test",
+        "json_get",
+        "--test",
+        "json_fstring",
+        "--test",
+        "json_array",
+        "--test",
+        "line_scan",
+        "--test",
+        "cy_routing",
+        "--test",
+        "dl_contract",
+        "--no-run"
+      ],
+      "name": "host-build",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/Users/yuzhe/projects/minipy-native/target/release/deps/cy_routing-1add952d3562a6d7",
+        "--list"
+      ],
+      "name": "host-cy_routing-list",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/Users/yuzhe/projects/minipy-native/target/release/deps/cy_routing-1add952d3562a6d7",
+        "--test-threads=1"
+      ],
+      "name": "host-cy_routing-run",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/Users/yuzhe/projects/minipy-native/target/release/deps/di_corpus-1971137354badd9f",
+        "--list"
+      ],
+      "name": "host-di_corpus-list",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/Users/yuzhe/projects/minipy-native/target/release/deps/di_corpus-1971137354badd9f",
+        "--test-threads=1"
+      ],
+      "name": "host-di_corpus-run",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/Users/yuzhe/projects/minipy-native/target/release/deps/dl_contract-fbf62961c895497f",
+        "--list"
+      ],
+      "name": "host-dl_contract-list",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/Users/yuzhe/projects/minipy-native/target/release/deps/dl_contract-fbf62961c895497f",
+        "--test-threads=1"
+      ],
+      "name": "host-dl_contract-run",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/Users/yuzhe/projects/minipy-native/target/release/deps/json_array-48d9726dc0511f6d",
+        "--list"
+      ],
+      "name": "host-json_array-list",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/Users/yuzhe/projects/minipy-native/target/release/deps/json_array-48d9726dc0511f6d",
+        "--test-threads=1"
+      ],
+      "name": "host-json_array-run",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/Users/yuzhe/projects/minipy-native/target/release/deps/json_fstring-2fa36e441cd54e0f",
+        "--list"
+      ],
+      "name": "host-json_fstring-list",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/Users/yuzhe/projects/minipy-native/target/release/deps/json_fstring-2fa36e441cd54e0f",
+        "--test-threads=1"
+      ],
+      "name": "host-json_fstring-run",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/Users/yuzhe/projects/minipy-native/target/release/deps/json_get-2e04d67031a2bfa2",
+        "--list"
+      ],
+      "name": "host-json_get-list",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/Users/yuzhe/projects/minipy-native/target/release/deps/json_get-2e04d67031a2bfa2",
+        "--test-threads=1"
+      ],
+      "name": "host-json_get-run",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/Users/yuzhe/projects/minipy-native/target/release/deps/line_scan-77092640648b6162",
+        "--list"
+      ],
+      "name": "host-line_scan-list",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/Users/yuzhe/projects/minipy-native/target/release/deps/line_scan-77092640648b6162",
+        "--test-threads=1"
+      ],
+      "name": "host-line_scan-run",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "zigbuild",
+        "--offline",
+        "--locked",
+        "--release",
+        "--features",
+        "tool-json",
+        "--message-format=json",
+        "--test",
+        "di_corpus",
+        "--test",
+        "json_get",
+        "--test",
+        "json_fstring",
+        "--test",
+        "json_array",
+        "--test",
+        "line_scan",
+        "--test",
+        "cy_routing",
+        "--test",
+        "dl_contract",
+        "--target",
+        "aarch64-unknown-linux-musl"
+      ],
+      "name": "linux-build",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "mkdir /root/minipy-acceptance-46634de0233d"
+      ],
+      "name": "linux-mkdir",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "scp",
+        "-O",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "/Users/yuzhe/projects/minipy-native/target/aarch64-unknown-linux-musl/release/deps/cy_routing-0abe9b788acca054",
+        "root@192.168.64.3:/root/minipy-acceptance-46634de0233d/cy_routing"
+      ],
+      "name": "cy_routing-upload",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "sha256sum /root/minipy-acceptance-46634de0233d/cy_routing"
+      ],
+      "name": "cy_routing-remote-sha",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "/root/minipy-acceptance-46634de0233d/cy_routing",
+        "--list"
+      ],
+      "name": "linux-cy_routing-list",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "/root/minipy-acceptance-46634de0233d/cy_routing",
+        "--test-threads=1"
+      ],
+      "name": "linux-cy_routing-run",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "sha256sum /root/minipy-acceptance-46634de0233d/cy_routing"
+      ],
+      "name": "cy_routing-remote-sha-after",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "scp",
+        "-O",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "/Users/yuzhe/projects/minipy-native/target/aarch64-unknown-linux-musl/release/deps/di_corpus-e3ecf900a38cc142",
+        "root@192.168.64.3:/root/minipy-acceptance-46634de0233d/di_corpus"
+      ],
+      "name": "di_corpus-upload",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "sha256sum /root/minipy-acceptance-46634de0233d/di_corpus"
+      ],
+      "name": "di_corpus-remote-sha",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "/root/minipy-acceptance-46634de0233d/di_corpus",
+        "--list"
+      ],
+      "name": "linux-di_corpus-list",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "/root/minipy-acceptance-46634de0233d/di_corpus",
+        "--test-threads=1"
+      ],
+      "name": "linux-di_corpus-run",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "sha256sum /root/minipy-acceptance-46634de0233d/di_corpus"
+      ],
+      "name": "di_corpus-remote-sha-after",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "scp",
+        "-O",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "/Users/yuzhe/projects/minipy-native/target/aarch64-unknown-linux-musl/release/deps/dl_contract-8086db53d24f1260",
+        "root@192.168.64.3:/root/minipy-acceptance-46634de0233d/dl_contract"
+      ],
+      "name": "dl_contract-upload",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "sha256sum /root/minipy-acceptance-46634de0233d/dl_contract"
+      ],
+      "name": "dl_contract-remote-sha",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "/root/minipy-acceptance-46634de0233d/dl_contract",
+        "--list"
+      ],
+      "name": "linux-dl_contract-list",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "/root/minipy-acceptance-46634de0233d/dl_contract",
+        "--test-threads=1"
+      ],
+      "name": "linux-dl_contract-run",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "sha256sum /root/minipy-acceptance-46634de0233d/dl_contract"
+      ],
+      "name": "dl_contract-remote-sha-after",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "scp",
+        "-O",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "/Users/yuzhe/projects/minipy-native/target/aarch64-unknown-linux-musl/release/deps/json_array-9acb61d4ebc704ef",
+        "root@192.168.64.3:/root/minipy-acceptance-46634de0233d/json_array"
+      ],
+      "name": "json_array-upload",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "sha256sum /root/minipy-acceptance-46634de0233d/json_array"
+      ],
+      "name": "json_array-remote-sha",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "/root/minipy-acceptance-46634de0233d/json_array",
+        "--list"
+      ],
+      "name": "linux-json_array-list",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "/root/minipy-acceptance-46634de0233d/json_array",
+        "--test-threads=1"
+      ],
+      "name": "linux-json_array-run",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "sha256sum /root/minipy-acceptance-46634de0233d/json_array"
+      ],
+      "name": "json_array-remote-sha-after",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "scp",
+        "-O",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "/Users/yuzhe/projects/minipy-native/target/aarch64-unknown-linux-musl/release/deps/json_fstring-ef90c63b6904f78c",
+        "root@192.168.64.3:/root/minipy-acceptance-46634de0233d/json_fstring"
+      ],
+      "name": "json_fstring-upload",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "sha256sum /root/minipy-acceptance-46634de0233d/json_fstring"
+      ],
+      "name": "json_fstring-remote-sha",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "/root/minipy-acceptance-46634de0233d/json_fstring",
+        "--list"
+      ],
+      "name": "linux-json_fstring-list",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "/root/minipy-acceptance-46634de0233d/json_fstring",
+        "--test-threads=1"
+      ],
+      "name": "linux-json_fstring-run",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "sha256sum /root/minipy-acceptance-46634de0233d/json_fstring"
+      ],
+      "name": "json_fstring-remote-sha-after",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "scp",
+        "-O",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "/Users/yuzhe/projects/minipy-native/target/aarch64-unknown-linux-musl/release/deps/json_get-8cc59e987b89d1c4",
+        "root@192.168.64.3:/root/minipy-acceptance-46634de0233d/json_get"
+      ],
+      "name": "json_get-upload",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "sha256sum /root/minipy-acceptance-46634de0233d/json_get"
+      ],
+      "name": "json_get-remote-sha",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "/root/minipy-acceptance-46634de0233d/json_get",
+        "--list"
+      ],
+      "name": "linux-json_get-list",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "/root/minipy-acceptance-46634de0233d/json_get",
+        "--test-threads=1"
+      ],
+      "name": "linux-json_get-run",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "sha256sum /root/minipy-acceptance-46634de0233d/json_get"
+      ],
+      "name": "json_get-remote-sha-after",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "scp",
+        "-O",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "/Users/yuzhe/projects/minipy-native/target/aarch64-unknown-linux-musl/release/deps/line_scan-21f76c355457e886",
+        "root@192.168.64.3:/root/minipy-acceptance-46634de0233d/line_scan"
+      ],
+      "name": "line_scan-upload",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "sha256sum /root/minipy-acceptance-46634de0233d/line_scan"
+      ],
+      "name": "line_scan-remote-sha",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "/root/minipy-acceptance-46634de0233d/line_scan",
+        "--list"
+      ],
+      "name": "linux-line_scan-list",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "/root/minipy-acceptance-46634de0233d/line_scan",
+        "--test-threads=1"
+      ],
+      "name": "linux-line_scan-run",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "sha256sum /root/minipy-acceptance-46634de0233d/line_scan"
+      ],
+      "name": "line_scan-remote-sha-after",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-i",
+        "/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/command-key",
+        "-o",
+        "HostKeyAlias=192.168.64.2",
+        "-o",
+        "UserKnownHostsFile=/Users/yuzhe/.hermes/tmp/pysolate-durable/vm/known_hosts",
+        "root@192.168.64.3",
+        "rm /root/minipy-acceptance-46634de0233d/di_corpus /root/minipy-acceptance-46634de0233d/json_get /root/minipy-acceptance-46634de0233d/json_fstring /root/minipy-acceptance-46634de0233d/json_array /root/minipy-acceptance-46634de0233d/line_scan /root/minipy-acceptance-46634de0233d/cy_routing /root/minipy-acceptance-46634de0233d/dl_contract; rmdir /root/minipy-acceptance-46634de0233d"
+      ],
+      "name": "linux-cleanup",
+      "exit_code": 0
+    }
+  ],
+  "runs": [
+    {
+      "lane": "host",
+      "suite": "cy_routing",
+      "passed": 5,
+      "tests": [
+        "cancellation_after_submission_keeps_effect_once_and_never_routes",
+        "fresh_source_success_and_whole_script_admission_before_any_effect",
+        "json_preparation_limits_are_resource_errors_on_both_backends",
+        "malformed_type_schema_and_preparation_limits_are_rejected_not_routed",
+        "runtime_errors_keep_partial_stdout_and_never_replay_or_fallback"
+      ],
+      "binary_sha256": "6f0b8d0aa7506a75610e03af59ce732eb9aebc61a3ec55d258ab7beefb801581"
+    },
+    {
+      "lane": "host",
+      "suite": "di_corpus",
+      "passed": 5,
+      "tests": [
+        "controlled_smoke_both_backends_and_separate_memory_mode",
+        "correctness_requires_complete_contract_oracle_and_expected",
+        "fixture_contract_is_strict_but_private_top_level_fields_are_not_executed",
+        "malformed_json_and_numeric_two_args_use_actual_host_contract",
+        "resource_rejection_and_runtime_mismatch_never_fallback_or_replay"
+      ],
+      "binary_sha256": "2b22612e77cf19f6c9338379dcd2910196de8b6183b381200daf5980a360cd83"
+    },
+    {
+      "lane": "host",
+      "suite": "dl_contract",
+      "passed": 4,
+      "tests": [
+        "document_default_is_bounded_without_changing_library_default",
+        "explicit_quota_preserves_permission_and_precancellation",
+        "scalar_reassignment_is_supported_but_json_binding_is_static",
+        "uniform_stdout_policy_counts_utf8_and_keeps_failed_print_atomic"
+      ],
+      "binary_sha256": "42921511d6167c75c88ff0acca0b304e0ebebcbc48d558b8d4336d20f7d0ce5a"
+    },
+    {
+      "lane": "host",
+      "suite": "json_array",
+      "passed": 13,
+      "tests": [
+        "array_schema_validation_and_static_field_binding",
+        "bounds_overflow_unicode_and_effect_order",
+        "cv04_original_and_ordered_lazy_fields",
+        "dotted_array_and_row_are_the_same_bound_program",
+        "exact_visited_fuel_and_chunk_edges",
+        "first_chunk_cancellation_drops_cursor_and_prevents_later_tool",
+        "general_body_break_skips_remainder_and_cache_resets",
+        "metadata_stdout_and_cumulative_fuel_bounds",
+        "owner_across_real_wait_last_use_and_wait_cancellation",
+        "quote_and_array_share_fuel_and_aggregate_memory",
+        "reached_errors_and_prior_output",
+        "shared_prepared_units_do_not_share_cursor_or_scalar_state",
+        "unsupported_source_is_whole_source_rejection"
+      ],
+      "binary_sha256": "444921e80848c065cce977de849404740e5bd9b581a9ebd22774f255be085d42"
+    },
+    {
+      "lane": "host",
+      "suite": "json_fstring",
+      "passed": 7,
+      "tests": [
+        "admission_stays_limited_to_declared_leaves_and_existing_format_subset",
+        "evaluated_integer_does_not_bypass_authority_or_call_budget",
+        "integer_extrema_mixed_sinks_and_nested_view",
+        "invalid_leaf_is_atomic_and_never_submits_tool",
+        "left_to_right_scan_type_size_and_authority_priority",
+        "root_liveness_across_wait_and_detached_argument_after_cancel",
+        "unchanged_cv01_and_unexecuted_branch"
+      ],
+      "binary_sha256": "9d693592eff58808f5ca25ebd68db0ca4a743bf65bb9a5e5a34d6662e904e83e"
+    },
+    {
+      "lane": "host",
+      "suite": "json_get",
+      "passed": 11,
+      "tests": [
+        "dot_paths_share_ir_sinks_aliases_and_errors",
+        "dot_rejections_locations_and_method_name_collisions",
+        "dot_tool_authority_bounds_and_detached_owner",
+        "exact_scan_budgets_atomicity_and_error_order",
+        "invalid_values_parents_and_missing_proofs_never_fallback_or_submit",
+        "lazy_present_and_selected_receiver_only_with_duplicate_first",
+        "real_wait_root_liveness_and_cancelled_operation_owns_argument",
+        "shared_sinks_aliases_expression_defaults_and_required_path",
+        "token_join_retained_bounds_and_piece_priority",
+        "unchanged_cv05_and_complete_tool_script",
+        "whole_source_admission_and_limits"
+      ],
+      "binary_sha256": "9185c6e1d3bb6ebb5214331e198fa763cf97db42efa1f8108ab9b37320506727"
+    },
+    {
+      "lane": "host",
+      "suite": "line_scan",
+      "passed": 8,
+      "tests": [
+        "chunk_cancellation_preserves_prefix_and_prevents_later_tool",
+        "complete_count_and_filter_both_backends",
+        "cpython_splitlines_oracle",
+        "entry_validation_and_atomic_output_errors",
+        "more_than_256_lines_and_exact_fuel",
+        "owner_retention_across_wait_and_cancellation",
+        "reject_escaping_and_dynamic_lines_whole_source",
+        "scan_budget_long_line_break_short_circuit_and_permission"
+      ],
+      "binary_sha256": "f22f9172a3a680e8669b438c43d1a6ad4d52afbc278837f6928be9b2cbe4cc24"
+    },
+    {
+      "lane": "linux",
+      "suite": "cy_routing",
+      "passed": 5,
+      "tests": [
+        "cancellation_after_submission_keeps_effect_once_and_never_routes",
+        "fresh_source_success_and_whole_script_admission_before_any_effect",
+        "json_preparation_limits_are_resource_errors_on_both_backends",
+        "malformed_type_schema_and_preparation_limits_are_rejected_not_routed",
+        "runtime_errors_keep_partial_stdout_and_never_replay_or_fallback"
+      ],
+      "binary_sha256": "8804fff9028be8fafc641dbe3faa89c0df35a9be5eb07bad281d2da6684a0bbd"
+    },
+    {
+      "lane": "linux",
+      "suite": "di_corpus",
+      "passed": 5,
+      "tests": [
+        "controlled_smoke_both_backends_and_separate_memory_mode",
+        "correctness_requires_complete_contract_oracle_and_expected",
+        "fixture_contract_is_strict_but_private_top_level_fields_are_not_executed",
+        "malformed_json_and_numeric_two_args_use_actual_host_contract",
+        "resource_rejection_and_runtime_mismatch_never_fallback_or_replay"
+      ],
+      "binary_sha256": "d887f0f763d7a59c4b6cea17457ef295041b51e184d4f744763b6545bf0e3acf"
+    },
+    {
+      "lane": "linux",
+      "suite": "dl_contract",
+      "passed": 4,
+      "tests": [
+        "document_default_is_bounded_without_changing_library_default",
+        "explicit_quota_preserves_permission_and_precancellation",
+        "scalar_reassignment_is_supported_but_json_binding_is_static",
+        "uniform_stdout_policy_counts_utf8_and_keeps_failed_print_atomic"
+      ],
+      "binary_sha256": "271596e3c2cf86ed64492a82d3ef68dfe04d7eb08e657d36f6769159628a4a36"
+    },
+    {
+      "lane": "linux",
+      "suite": "json_array",
+      "passed": 13,
+      "tests": [
+        "array_schema_validation_and_static_field_binding",
+        "bounds_overflow_unicode_and_effect_order",
+        "cv04_original_and_ordered_lazy_fields",
+        "dotted_array_and_row_are_the_same_bound_program",
+        "exact_visited_fuel_and_chunk_edges",
+        "first_chunk_cancellation_drops_cursor_and_prevents_later_tool",
+        "general_body_break_skips_remainder_and_cache_resets",
+        "metadata_stdout_and_cumulative_fuel_bounds",
+        "owner_across_real_wait_last_use_and_wait_cancellation",
+        "quote_and_array_share_fuel_and_aggregate_memory",
+        "reached_errors_and_prior_output",
+        "shared_prepared_units_do_not_share_cursor_or_scalar_state",
+        "unsupported_source_is_whole_source_rejection"
+      ],
+      "binary_sha256": "1cfb6da3648d533d46d3cbe5f34b86e0aff41de36ba9e2df7559215ec3341143"
+    },
+    {
+      "lane": "linux",
+      "suite": "json_fstring",
+      "passed": 7,
+      "tests": [
+        "admission_stays_limited_to_declared_leaves_and_existing_format_subset",
+        "evaluated_integer_does_not_bypass_authority_or_call_budget",
+        "integer_extrema_mixed_sinks_and_nested_view",
+        "invalid_leaf_is_atomic_and_never_submits_tool",
+        "left_to_right_scan_type_size_and_authority_priority",
+        "root_liveness_across_wait_and_detached_argument_after_cancel",
+        "unchanged_cv01_and_unexecuted_branch"
+      ],
+      "binary_sha256": "328b9471025e9e45021d55d034e7bb326a9c59368d4a15a9df50f88b253e96de"
+    },
+    {
+      "lane": "linux",
+      "suite": "json_get",
+      "passed": 11,
+      "tests": [
+        "dot_paths_share_ir_sinks_aliases_and_errors",
+        "dot_rejections_locations_and_method_name_collisions",
+        "dot_tool_authority_bounds_and_detached_owner",
+        "exact_scan_budgets_atomicity_and_error_order",
+        "invalid_values_parents_and_missing_proofs_never_fallback_or_submit",
+        "lazy_present_and_selected_receiver_only_with_duplicate_first",
+        "real_wait_root_liveness_and_cancelled_operation_owns_argument",
+        "shared_sinks_aliases_expression_defaults_and_required_path",
+        "token_join_retained_bounds_and_piece_priority",
+        "unchanged_cv05_and_complete_tool_script",
+        "whole_source_admission_and_limits"
+      ],
+      "binary_sha256": "64e3feecb1c8ab26127c22e49d36856bb39d15e63cbb77d50927f0273035a6cd"
+    },
+    {
+      "lane": "linux",
+      "suite": "line_scan",
+      "passed": 8,
+      "tests": [
+        "chunk_cancellation_preserves_prefix_and_prevents_later_tool",
+        "complete_count_and_filter_both_backends",
+        "cpython_splitlines_oracle",
+        "entry_validation_and_atomic_output_errors",
+        "more_than_256_lines_and_exact_fuel",
+        "owner_retention_across_wait_and_cancellation",
+        "reject_escaping_and_dynamic_lines_whole_source",
+        "scan_budget_long_line_break_short_circuit_and_permission"
+      ],
+      "binary_sha256": "cafb49080f987fc4882cc16022786ea275dae12bac9bf22f895e3cdfdf522b53"
+    }
+  ],
+  "head": "562788a7ae224caffb2bd484dda3c5bc8c101bd1",
+  "platform": "macOS-26.4.1-arm64-arm-64bit-Mach-O",
+  "target": "/Volumes/M.2/caches/minipy-native-target",
+  "sources": {
+    "Cargo.toml": "1629d1686cb94656593372d1d02b0d9401d6f6d25bdeba2e9b48075a111b9426",
+    "Cargo.lock": "15a236e43daf854bedbd6a83a6a667d1e7a173e9100008be03d82efbc3efe97e",
+    "tools/acceptance.py": "96d2765916e5d350be84e9856b355de391641af3eb9329c67e263fd208241580",
+    "examples/di_corpus.rs": "66105452ba8d182d9823e23c252f6c49a074c9066619b9ba28c0676ef7ca9fc2",
+    "tools/perf_workbench.py": "8bc5fcca7cb877574af9f52237920060805468691c5d7d4323711958c7796425",
+    "src/bin/minipy.rs": "14c157179b8156816de8b6bd2736407af8998059b5f1940b79073528f154a76f",
+    "src/buffer.rs": "728e3dc082ed1f8bed96864f608c1ddb22f7f6b9016531dba0e5deff7d9d2867",
+    "src/codegen.rs": "539bf9c1623e4eade1cfaa0a1012098f05b1fa02307efd6808e1b2e5663aeed0",
+    "src/compiler_profile.rs": "7fdb8442d6d37d630fcf9c679c2abb1da0c49ab52ffc6b2741cd05ff46fcaefb",
+    "src/error.rs": "71b911094d7d0cc11b0d1445abd15c059e2b9ae6a32f76e14cda16020afb142c",
+    "src/fixture_reference.rs": "d3c67f1003a5816832fbd15c6d377edbb4d422c6db9be1b3cab7c40ae58aff53",
+    "src/frontend/schema_probe.rs": "63aa58fae1ae8175b0fba0cf55087c8bfed263e510aab7b3cb9d10895bf747cb",
+    "src/frontend.rs": "b1c0c853bd2ed0f486189c6c6e9692679fa5cdd9c7a0172c0e7847eec9cc389f",
+    "src/http_provider.rs": "fde2d86e841e245c4c8300771f68304819589692741743e6449ae695a5208f1e",
+    "src/interpreter/debug.rs": "fd6a458256c51a7a0d27bc9725c97a9330b7368247dc3031d96390f622b78fd0",
+    "src/interpreter/line_tests.rs": "01924398614d29e6a0b8a2e65ca352f17df6a4a72ae8c35fdb518b65110d710b",
+    "src/interpreter/liveness_tests.rs": "fc1a0a3a22aa67350e3ac97a2652ee502d59aad1a85f7c4f0c92d8a2527e6282",
+    "src/interpreter/tape.rs": "0b319db33db2b54d1bdac09cccf6a461acac47ad734bd9ab55c73c73dfb92d81",
+    "src/interpreter.rs": "004094b5f1f3ebcd1e744e4ff043364ff830a75db7711dca013bd50fa9651275",
+    "src/interpreter_profile.rs": "ca14500ff28ec156553ae1d2e0672381afdad261b2f309ea72455bd11fa7722c",
+    "src/ir.rs": "766ab87bfbb170d13a736f6566dabaf996f465145a1b2ec6eb4462519246f253",
+    "src/json_view.rs": "0ce5156b1fe36d261f34507123ffe8f6d4536a44cec90eb0ce4d3539b2da9d78",
+    "src/lib.rs": "d4e08a6ac47ee51961389937efa9d630d94c77005e2a45882705ca946a7153b6",
+    "src/provider.rs": "642cc57c0434f445a82fdbc41a4ff6271a4609ece93ca045d7ed3569624312da",
+    "src/runtime.rs": "d9c907d2b054cb6193e7f0d37a6f02488225ef8ce4a92745c7cf063ca4cc07ee",
+    "src/tool.rs": "b14518c8d56bec16038ce1b010e9ae46795859890fd5f77b0ec9da81d5cc770a",
+    "src/wasm.rs": "d29e071173a706dd80a506557075af0fe3d6a26b7d2ed4be261658123edfb623",
+    "tests/di_corpus.rs": "a6f095897971ff35a8e7eae69d6020aa6c2e3b061c053fce1f1cff4ad24a94de",
+    "tests/json_get.rs": "c20342e90b17213fa6df2a3970275ca436785fe048c3c6185dcb834798b619e3",
+    "tests/json_fstring.rs": "aa312cc9da480f01304025269b335bbcf3d04d93187e877abb69239d03a4f4c6",
+    "tests/json_array.rs": "46ec070412e3512b155fbcccdafb18c1d6e68183556d48c42ce5289183c9e18c",
+    "tests/line_scan.rs": "315d64b7285b780626485f3fd1fdf32f17b8dea525b871291d88cacc59043c3a",
+    "tests/cy_routing.rs": "59cde3358351caf428ca6a90240860d69476589a824ae2bde1d95b73a7f90dd4",
+    "tests/dl_contract.rs": "6059f4fa2c3714b446f525fe10cab743c2c00d56048b1cc5f1e1d29f4059d397",
+    "fixtures/common_scalar.py": "008fd3768dfa8cdc505ee9e358bc2b10fca542dc648d7ca17db4103c27614954",
+    "fixtures/common_stateful.py": "59bbc9edc6de385affd0d16d1b7a23f6b77abc85904855f0ca67e4874771893c",
+    "fixtures/common_weighted.py": "d696a3da28a69d20c12ec805e9bf1e0ad452855a4b974d6ba3583fab69b0883c",
+    "fixtures/cv/01_status_summary.py": "257392e9a26e1df98b7f9df6f63f1b80b046839b175c40ee7093618bafba7d80",
+    "fixtures/cv/02_json_few_fields.py": "5c54fc772464e19864a1686b8dea917c6160943f8696f20207754a421bcf5dd2",
+    "fixtures/cv/03_path_then_call.py": "2c7d5fdfb72cc1d3bbdc00cd78013c07478aea4f26fac4df2cd5342d60631cbd",
+    "fixtures/cv/04_first_matching_result.py": "0d9387d277f42cf732d4a8188c1ccb23a9d2535025cab9c659208d56e814d40d",
+    "fixtures/cv/05_missing_default.py": "cccf623fdc16c1f03933eded0b5106e6b4052e4df03f7a9c6a5db92e99beee36",
+    "fixtures/cv/06_multi_call_branch.py": "cec35cfbebf762136ece9670cddbc78f940ab5c3eba84aa2cce1568d73c0851f",
+    "fixtures/cv/07_exact_route.py": "0f3d4d8e5e69b59dfbb581861f54e4f6d5eb2d80b80a801b85d54639cbe5960a",
+    "fixtures/cv/08_nonempty_message.py": "1fd6181b336ab2c2ddbfbf750c6a345a1a7fc062fc49b34b514dae57ef601f1b",
+    "fixtures/cv/09_prefix_route.py": "a899b23e3e365a96fff160d58dae57191bd8372b4bcfc7edbffada13d56ddf8c",
+    "fixtures/cv/10_alias_contains_summary.py": "2db682ffb4917495e5d2db1715c3020258f7e588de88dace2f1897dd95e1aaf3",
+    "fixtures/predicate_nested.py": "07426a8b1d6a4d9021c33f1a3b6f7319539488a279fbd457ad736c967e458556",
+    "fixtures/print_loop_script.py": "f5950ec83e981d8a9bab70c8d0d69c982c165715ef429bc8822c3267ee2605b9",
+    "fixtures/profile_two_scan.py": "699466219f817554b82544897959128001eef9976463ee85dc4c649e978134c4",
+    "fixtures/scalar_script.py": "cef0195dec5e222a76a43807706a5cf054058418c38f89ec200ffaf7d506cca2",
+    "fixtures/scan_script.py": "ad33b826535c6c62f9234acbb45d842316daef78a024e26df7a48361d6632c6f",
+    "fixtures/stateful_branch.py": "115f57c51b3684f1996b0cd34c38a873bc3a8a86349881584cb45379eec75bb3",
+    "fixtures/weighted_scan.py": "3682bfb78d4d4f288008b8cb79846dc65d2e2bd6b9e51d818acda6240ccf7f79",
+    "fixtures/weighted_script.py": "9d28d5a3f59f76f7c142ef78389920ea9bb831c09c571d1e3dfdbb2481946e8a",
+    "fixtures/di/smoke.jsonl": "4c4bb708d4b0634af5b61887b598b4871dc9696c51474ad8316dcbe28bddd056",
+    "bench/results/dr/splitlines-oracle.json": "a708043e6b4de2f396843b64039c6c2f6bbad0e1fa67114d93862146e0df3b8c"
+  },
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)\nbinary: rustc\ncommit-hash: ac68faa20c58cbccd01ee7208bf3b6e93a7d7f96\ncommit-date: 2026-05-25\nhost: aarch64-apple-darwin\nrelease: 1.96.0\nLLVM version: 22.1.2\n",
+  "zig": "0.15.2",
+  "passed": {
+    "host": 53,
+    "linux": 53
+  }
+}
