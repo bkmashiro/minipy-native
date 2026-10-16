@@ -1,5 +1,26 @@
 # Experiments
 
+## DJ: private bounded corpus pilot checkpoint (2026-10-16)
+
+Ran the reviewed DH v2 prompts through actual text-only model calls and the DI
+adapter at `d9eb6d9`, with fresh native/tape preparation and separate timing and
+ownership-diagnostic executions. The private predeclared smoke gate stopped
+generation expansion after observed failures. No syntax, runtime, Host contract,
+replay, oracle, resource policy or dependency was changed to rescue a case.
+Original-source compatibility is recorded separately from generated-task success.
+
+Prompts, sources, raw model events, identities, outcomes, costs, limitations and
+the Chinese report remain only in the authorized private corpus directory under
+`dj-pilot/`; none are copied into Git. Incomplete Host contracts and unmeasured
+cases remain explicit, not counted as language rejection or task failure. The
+report distinguishes an observed execution limit from source-derived infeasibility
+and documents a reduced-information diagnostic-mapping defect in the private
+driver without rerunning or discarding attempts. No representative coverage,
+performance improvement, Monty comparison, total-memory or Linux/Wasm claim.
+Existing mounted external target and shared build/run lock only; no new target,
+worktree, dependencies, CI or real corpus Tool effects. Submit on the original
+DJ card for review; no successor or automatic language expansion.
+
 ## DI review repair: correctness eligibility (2026-10-16)
 
 The same-card review found that `correct` compared a supplied expected value
