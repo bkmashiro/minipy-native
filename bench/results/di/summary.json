@@ -1,0 +1,49 @@
+{
+  "timing": {
+    "cases": 20,
+    "correct": 20,
+    "routes": {
+      "executed": 12,
+      "fallback_stub": 2,
+      "rejected": 6
+    },
+    "binding_denominators": {
+      "native": {
+        "tool_call_sites": 8,
+        "data_selector_sites": 4
+      },
+      "tape": {
+        "tool_call_sites": 8,
+        "data_selector_sites": 4
+      }
+    }
+  },
+  "diagnostic": {
+    "cases": 20,
+    "correct": 20,
+    "routes": {
+      "executed": 12,
+      "fallback_stub": 2,
+      "rejected": 6
+    },
+    "binding_denominators": {
+      "native": {
+        "tool_call_sites": 8,
+        "data_selector_sites": 4
+      },
+      "tape": {
+        "tool_call_sites": 8,
+        "data_selector_sites": 4
+      }
+    },
+    "all_raw_json_owners_released": true,
+    "rss_pss": "unknown",
+    "total_task_state_bytes": "unknown"
+  },
+  "targeted_test_results": [
+    "ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s",
+    "ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s",
+    "ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s",
+    "ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s"
+  ]
+}

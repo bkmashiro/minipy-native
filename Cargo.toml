@@ -65,3 +65,7 @@ debug = 1
 [[example]]
 name = "cx_probe"
 required-features = ["tool-json"]
+
+[[example]]
+name = "di_corpus"
+required-features = ["tool-json"]

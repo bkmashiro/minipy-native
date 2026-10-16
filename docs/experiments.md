@@ -1,5 +1,44 @@
 # Experiments
 
+## DI: controlled corpus admission/replay runner (2026-10-16)
+
+From reviewed DG `757cb0c`, add one opt-in example and a small Python driver,
+with no production/runtime/syntax/dependency changes. The adapter uses existing
+declaration-aware native/tape entry points, preserving CY's whole-source gate
+and no runtime fallback/replay. JSONL v1 freezes Host declarations, numeric or
+single-string arguments, ordered controlled replies/waits and expected stdout,
+status and submissions. Actual command/file/message Tool effects never run.
+The shared ABI was supplied to the separate DH private-corpus lane; this card
+does not run private cases, a model, a correctness pilot or a campaign.
+
+Timing uses a resident warmed runtime but fresh preparation/execution/unit drop
+per case. Runtime setup, per-request Host setup, source lifecycle, execution,
+code teardown and observed gated waits are separate. The inclusive request
+interval retains Host setup and teardown costs; reporting serialization and
+immutable fixture decoding are excluded explicitly. These one-shot synthetic
+smoke observations support no speedup, workload-coverage or Monty comparison.
+The untimed whole-source AST inventory keeps unsupported tails in denominators;
+whole-program bound sites require complete admission AND a complete Host contract.
+
+A separate diagnostic run uses existing Trace and Host-only Bytes owner-drop
+observation. It counts unique raw JSON Vec backing capacities at actual Provider
+and end phases without retaining owners. Tape logical prepared bytes and native
+emitted code are reported separately. Native metadata, total task-state bytes,
+RSS/PSS and unobserved transient peaks remain unknown, never inferred from
+partial frame/buffer budget counters. No allocation/timing instrumentation mix.
+
+Local macOS arm64 Rust 1.96 offline/locked release: 29 targeted Rust tests
+(CY 5, DI 4, DG 12, DF 8), three Python inventory tests, targeted Clippy and stable
+fmt/diff checks pass. Ten public synthetic cases x two backends pass in each
+mode: 12 executed, two Unsupported stubs, six other admission rejections per
+mode; source inventory per backend has eight Tool sites/four selector sites.
+All diagnostic executions release handed-off raw JSON owners by final phase.
+The same source/binary identity produced both modes. Existing mounted external
+target, shared fcntl build lock, one job. No new target/worktree, downloads,
+Linux/Wasm run or CI. Contract, commands and boundaries: [di-corpus.md](di-corpus.md).
+Raw identities, outputs and checks: `bench/results/di/`. Fixed-snapshot focused
+independent review is the remaining implementation handoff step.
+
 ## DG: bounded declared object-array loop and break (2026-10-16)
 
 From reviewed DF `4fc5564`, add one opt-in boxed ObjectArraySchema with literal

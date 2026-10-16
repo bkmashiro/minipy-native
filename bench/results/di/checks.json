@@ -1,0 +1,65 @@
+[
+  {
+    "command": [
+      "cargo",
+      "+1.96.0",
+      "test",
+      "--offline",
+      "--locked",
+      "--release",
+      "--features",
+      "tool-json",
+      "--test",
+      "di_corpus",
+      "--test",
+      "cy_routing",
+      "--test",
+      "json_array",
+      "--test",
+      "json_get"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "cargo",
+      "+1.96.0",
+      "clippy",
+      "--offline",
+      "--locked",
+      "--release",
+      "--features",
+      "tool-json",
+      "--lib",
+      "--example",
+      "di_corpus",
+      "--test",
+      "di_corpus",
+      "--",
+      "-D",
+      "warnings",
+      "-A",
+      "clippy::type_complexity"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "cargo",
+      "+stable",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit": 0
+  }
+]

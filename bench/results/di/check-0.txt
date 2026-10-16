@@ -1,0 +1,55 @@
+   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `release` profile [optimized + debuginfo] target(s) in 4.32s
+     Running tests/cy_routing.rs (target/release/deps/cy_routing-1add952d3562a6d7)
+
+running 5 tests
+test malformed_type_schema_and_preparation_limits_are_rejected_not_routed ... ok
+test json_preparation_limits_are_resource_errors_on_both_backends ... ok
+test cancellation_after_submission_keeps_effect_once_and_never_routes ... ok
+test fresh_source_success_and_whole_script_admission_before_any_effect ... ok
+test runtime_errors_keep_partial_stdout_and_never_replay_or_fallback ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/di_corpus.rs (target/release/deps/di_corpus-1971137354badd9f)
+
+running 4 tests
+test fixture_contract_is_strict_but_private_top_level_fields_are_not_executed ... ok
+test resource_rejection_and_runtime_mismatch_never_fallback_or_replay ... ok
+test malformed_json_and_numeric_two_args_use_actual_host_contract ... ok
+test controlled_smoke_both_backends_and_separate_memory_mode ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/json_array.rs (target/release/deps/json_array-48d9726dc0511f6d)
+
+running 12 tests
+test array_schema_validation_and_static_field_binding ... ok
+test first_chunk_cancellation_drops_cursor_and_prevents_later_tool ... ok
+test shared_prepared_units_do_not_share_cursor_or_scalar_state ... ok
+test general_body_break_skips_remainder_and_cache_resets ... ok
+test unsupported_source_is_whole_source_rejection ... ok
+test owner_across_real_wait_last_use_and_wait_cancellation ... ok
+test metadata_stdout_and_cumulative_fuel_bounds ... ok
+test quote_and_array_share_fuel_and_aggregate_memory ... ok
+test cv04_original_and_ordered_lazy_fields ... ok
+test bounds_overflow_unicode_and_effect_order ... ok
+test exact_visited_fuel_and_chunk_edges ... ok
+test reached_errors_and_prior_output ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/json_get.rs (target/release/deps/json_get-2e04d67031a2bfa2)
+
+running 8 tests
+test whole_source_admission_and_limits ... ok
+test shared_sinks_aliases_expression_defaults_and_required_path ... ok
+test lazy_present_and_selected_receiver_only_with_duplicate_first ... ok
+test real_wait_root_liveness_and_cancelled_operation_owns_argument ... ok
+test unchanged_cv05_and_complete_tool_script ... ok
+test token_join_retained_bounds_and_piece_priority ... ok
+test exact_scan_budgets_atomicity_and_error_order ... ok
+test invalid_values_parents_and_missing_proofs_never_fallback_or_submit ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
