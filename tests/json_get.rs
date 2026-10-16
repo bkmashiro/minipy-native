@@ -157,6 +157,244 @@ async fn run(
     }
 }
 const FETCH: &str = "state = tools.fetch_state(request_id)\n";
+
+#[tokio::test]
+async fn dot_paths_share_ir_sinks_aliases_and_errors() {
+    let dotted = format!(
+        "{FETCH}meta = state.meta\nowner = meta.owner\nn = state.count\nprint(n + 1)\nprint(owner == 'alice')\nprint(state.meta.owner.startswith('al'))\nprint('lic' in state.meta['owner'])\nprint(f\"{{state.count}}:{{state['meta'].owner}}\")\nr=tools.publish_owner('[' + state.meta.owner + ']')\nprint(state.meta.get('owner','none'))\n"
+    );
+    let indexed = dotted
+        .replace("state.meta", "state['meta']")
+        .replace("meta.owner", "meta['owner']")
+        .replace("state.count", "state['count']")
+        .replace("state['meta'].owner", "state['meta']['owner']");
+    let parse = |source: &str| {
+        frontend::parse_with_declarations(source, &[("request_id", Type::I64)], &declarations())
+            .unwrap()
+    };
+    assert_eq!(
+        format!("{:?}", parse(&dotted)),
+        format!("{:?}", parse(&indexed))
+    );
+    for native in [false, true] {
+        for source in [&dotted, &indexed] {
+            let host = Arc::new(Host::new(r#"{"meta":{"owner":"alice"},"count":4}"#));
+            let out = run(
+                native,
+                source,
+                host.clone(),
+                ScriptLimits::default(),
+                Cancellation::default(),
+            )
+            .await;
+            assert_eq!(out.status, Ok(()));
+            assert_eq!(out.stdout, "5\nTrue\nTrue\nTrue\n4:alice\nalice\n");
+            assert_eq!(*host.calls.lock().unwrap(), ["fetch", "publish:[alice]"]);
+        }
+        for (dot, sub, data, expected, ok) in [
+            (
+                "print(False and state.owner.startswith('x'))",
+                "print(False and state['owner'].startswith('x'))",
+                "{}",
+                "False\n",
+                true,
+            ),
+            (
+                "print(1)\nprint(state.owner)",
+                "print(1)\nprint(state['owner'])",
+                "{}",
+                "1\n",
+                false,
+            ),
+            (
+                "print(state.count)",
+                "print(state['count'])",
+                r#"{"count":"bad"}"#,
+                "",
+                false,
+            ),
+            (
+                "print(state.meta.get('owner','none'))",
+                "print(state['meta'].get('owner','none'))",
+                r#"{"meta":{}}"#,
+                "none\n",
+                true,
+            ),
+        ] {
+            for tail in [dot, sub] {
+                let out = run(
+                    native,
+                    &format!("{FETCH}{tail}"),
+                    Arc::new(Host::new(data)),
+                    ScriptLimits::default(),
+                    Cancellation::default(),
+                )
+                .await;
+                if ok {
+                    assert_eq!(out.status, Ok(()));
+                } else {
+                    assert!(matches!(out.status, Err(TaskError::Json(_))));
+                }
+                assert_eq!(out.stdout, expected);
+            }
+        }
+    }
+}
+
+#[test]
+fn dot_rejections_locations_and_method_name_collisions() {
+    let mut decl = declarations();
+    let ResultSchema::JsonTyped(leaves) = &mut decl[0].result else {
+        unreachable!()
+    };
+    for key in ["get", "startswith", "not-an-identifier", "__class__"] {
+        leaves.push((vec![key.into()], JsonLeaf::String));
+    }
+    let parse = |source: &str| {
+        frontend::parse_with_declarations(source, &[("request_id", Type::I64)], &decl)
+    };
+    // Bare selectors are data, including method-like names. Calls keep method semantics.
+    for tail in [
+        "print(state.get)",
+        "print(state.startswith)",
+        "print(state.__class__)",
+        "print(state['get'])",
+        "print(state['not-an-identifier'])",
+        "print(state.get('get','none'))",
+        "print(state.startswith.startswith('x'))",
+    ] {
+        parse(&format!("{FETCH}{tail}")).unwrap();
+    }
+    for (dot, sub) in [
+        ("print(state.unknown)", "print(state['unknown'])"),
+        (
+            "print(state.meta.unknown)",
+            "print(state['meta']['unknown'])",
+        ),
+    ] {
+        let a = parse(&format!("{FETCH}{dot}")).unwrap_err();
+        let b = parse(&format!("{FETCH}{sub}")).unwrap_err();
+        assert_eq!(a, b);
+        assert_eq!(a.location, Some((2, 1)));
+    }
+    for tail in [
+        "print(state.owner())",
+        "print(state.get())",
+        "print(state['get']())",
+        "print(state.startswith('x'))",
+        "print(state.owner.get('x','y'))",
+        "print(getattr(state,'owner'))",
+        "print(request_id.real)",
+        "print(state[request_id])",
+        "state.owner = 1",
+        "print(state.meta)",
+    ] {
+        let source = format!("{FETCH}{tail}");
+        let error = parse(&source).unwrap_err();
+        assert!(error.location.is_some(), "{tail}");
+        assert!(
+            CodeUnit::compile_with_declarations(&source, &[("request_id", Type::I64)], &decl)
+                .is_err()
+        );
+        assert!(
+            InterpreterUnit::prepare_with_declarations(
+                &source,
+                &[("request_id", Type::I64)],
+                &decl
+            )
+            .is_err()
+        );
+    }
+}
+
+#[tokio::test]
+async fn dot_tool_authority_bounds_and_detached_owner() {
+    for native in [false, true] {
+        for (limits, allow, expected) in [
+            (
+                ScriptLimits {
+                    tool_calls: 1,
+                    ..ScriptLimits::default()
+                },
+                true,
+                TaskError::Budget,
+            ),
+            (
+                ScriptLimits {
+                    string_scan_bytes: 0,
+                    ..ScriptLimits::default()
+                },
+                true,
+                TaskError::Budget,
+            ),
+            (
+                ScriptLimits {
+                    stdout_bytes: 1,
+                    ..ScriptLimits::default()
+                },
+                true,
+                TaskError::Budget,
+            ),
+            (ScriptLimits::default(), false, TaskError::Permission),
+        ] {
+            for leaf in ["state.owner", "state['owner']"] {
+                let mut h = Host::new(r#"{"owner":"x"}"#);
+                h.allow_publish = allow;
+                let host = Arc::new(h);
+                let source = format!("{FETCH}r=tools.publish_owner({leaf})\nprint({leaf})");
+                let out = run(
+                    native,
+                    &source,
+                    host.clone(),
+                    limits,
+                    Cancellation::default(),
+                )
+                .await;
+                assert_eq!(out.status, Err(expected.clone()));
+                assert_eq!(out.stdout, "");
+                let calls = host.calls.lock().unwrap();
+                assert_eq!(calls[0], "fetch");
+                assert_eq!(calls.len(), if limits.stdout_bytes == 1 { 2 } else { 1 });
+            }
+        }
+        let backing: Arc<[u8]> = Arc::from(r#"{"owner":"x"}"#.as_bytes());
+        let weak = Arc::downgrade(&backing);
+        let mut h = Host::new(Bytes::from_owner(Owned(backing)));
+        h.wait_checkpoint = true;
+        h.wait_publish = true;
+        let host = Arc::new(h);
+        let cancel = Cancellation::default();
+        let source = format!(
+            "{FETCH}checkpoint=tools.checkpoint(request_id)\nr=tools.publish_owner(state.owner)"
+        );
+        let task = run(
+            native,
+            &source,
+            host.clone(),
+            ScriptLimits::default(),
+            cancel.clone(),
+        );
+        let control = async {
+            host.entered.notified().await;
+            assert!(weak.upgrade().is_some());
+            host.finish.notify_one();
+            host.entered.notified().await;
+            cancel.cancel();
+        };
+        let (out, ()) = tokio::join!(task, control);
+        assert_eq!(out.status, Err(TaskError::Cancelled));
+        assert!(weak.upgrade().is_some());
+        host.finish.notify_one();
+        host.done.notified().await;
+        tokio::task::yield_now().await;
+        assert!(weak.upgrade().is_none());
+        assert_eq!(
+            *host.calls.lock().unwrap(),
+            ["fetch", "checkpoint", "publish:x"]
+        );
+    }
+}
+
 const TOOL: &str = "state = tools.fetch_state(request_id)\ncheckpoint = tools.checkpoint(request_id)\nreceipt = tools.publish_owner(state.get(\"owner\", \"unassigned\"))\nprint(receipt)\n";
 
 #[tokio::test]

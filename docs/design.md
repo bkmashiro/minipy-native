@@ -52,6 +52,18 @@ Tool implementations stay behind declared capabilities; runtime authorization re
 
 With `tool-json`, the Host can declare a finite `ToolDeclaration` with one `ArgumentSchema::String("path")` and a `ResultSchema::JsonTyped` string leaf. Source may call `tools.read_file("notes.txt")`, `tools.read_file(path="notes.txt")`, or pass an already declared JSON string leaf/alias. `print(data["content"])`, `print("[" + data["content"] + "]")`, and `print(f"{n}: {data['content']}")` consume bounded strings directly. A `+` chain accepts only literals and declared string leaves; limited f-strings additionally accept i64/bool scalar fields without format specifiers or conversions. At most 32 pieces are sealed per sink. Source is capped at 16 KiB, individual literal at 4096 UTF-8 bytes, joined Tool argument at 64 KiB, and stdout (including newline) at its task cap. No string local values, generic operations, `read_file` global alias, dynamic iteration, or Python objects are exposed. A string-valued Tool call retains its arguments across detached operation completion even if the task cancels; the Host must recheck ID/path and bound independent in-flight work. The controlled real-file adapter in `tests/local_read_host.rs` validates this subset but does not reproduce Hermes read_file permissions, pagination, redaction or deduplication.
 
+Declared JSON fields additionally admit dot selectors as literal-subscript
+aliases: `data.content`, `data["content"]`, nested/mixed paths and existing
+subview/string aliases normalize to the same static path and sealed slots.
+The same alias applies to already supported one-level i64 array-row fields.
+Identifier spelling follows the source parser; keys that cannot be written as
+identifiers require subscripts. Undeclared paths fail preparation, with the
+same path-depth and schema checks as subscripts. No runtime property dispatch,
+general object attributes, reflection or field assignment is added. Bare
+`data.get`/`data.startswith` select declared fields; call syntax retains the
+existing `get`/`startswith` method rules, not callable data fields. In particular,
+`data["get"]` remains an unambiguous way to read a field named `get`.
+
 ### Bounded declared JSON object arrays
 
 With `tool-json`, `ResultSchema::JsonObjectArray(Box<ObjectArraySchema>)` declares

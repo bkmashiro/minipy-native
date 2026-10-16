@@ -42,6 +42,14 @@ Top-level scripts support inferred i64/bool locals, optional annotations, checke
 
 With `tool-json`, Hosts can declare JSON leaves and bounded string Tool arguments. String leaves, literal concatenation and limited f-strings work at print/Tool sinks. String predicates support literal `in`, declared string leaf `==` / `!=` literal (either side), and `leaf.startswith(literal)`, including existing leaf aliases. Equality and prefixes compare decoded Unicode without normalization. Prefix/equality literals are bounded to 4096 UTF-8 bytes. Tuple prefixes, start/end arguments, general string-valued locals and arbitrary string operations are unsupported.
 
+Declared JSON selectors accept `data.content` as an alias for `data["content"]`,
+including nested/mixed paths, existing view/leaf aliases and declared array-row
+i64 fields. Both forms bind the same path and share caches and runtime behavior.
+Nonidentifier keys require subscripts. Bare `data.get` selects a declared `get`
+field; `data.get("key", "default")` still means the existing method. Tool calls
+and `startswith` methods are unchanged. No general object attributes, dynamic
+lookup or field mutation are provided; unknown fields fail preparation.
+
 Limited f-strings also consume declared JSON i64 leaves directly, for example
 `print(f"ready: {state['count']}")`. Fields evaluate left to right at the sink;
 format specifiers, conversions and arbitrary embedded expressions remain unsupported.

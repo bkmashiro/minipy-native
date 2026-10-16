@@ -1,0 +1,103 @@
+{
+  "base": "45d4c3d8cdaf4d0d3d04f6846dbe53845c12d3f7",
+  "source_sha256": {
+    "src/frontend.rs": "6128c1e27e2cbbe8931bbd1571a2bb85247861e860d89ec88e1322ea4237eb81",
+    "tests/json_get.rs": "c20342e90b17213fa6df2a3970275ca436785fe048c3c6185dcb834798b619e3",
+    "tests/json_array.rs": "46ec070412e3512b155fbcccdafb18c1d6e68183556d48c42ce5289183c9e18c"
+  },
+  "checks": [
+    {
+      "command": [
+        "cargo",
+        "+stable",
+        "fmt",
+        "--all"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--features",
+        "tool-json,debug-runtime",
+        "--test",
+        "json_get",
+        "--test",
+        "json_array",
+        "--test",
+        "json_fstring",
+        "--test",
+        "tool_json",
+        "--test",
+        "cy_routing",
+        "--test",
+        "di_corpus"
+      ],
+      "exit_code": 0,
+      "output": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 2.80s\n     Running tests/cy_routing.rs (target/release/deps/cy_routing-fe40a4996045a3ee)\n\nrunning 5 tests\ntest malformed_type_schema_and_preparation_limits_are_rejected_not_routed ... ok\ntest json_preparation_limits_are_resource_errors_on_both_backends ... ok\ntest cancellation_after_submission_keeps_effect_once_and_never_routes ... ok\ntest fresh_source_success_and_whole_script_admission_before_any_effect ... ok\ntest runtime_errors_keep_partial_stdout_and_never_replay_or_fallback ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n     Running tests/di_corpus.rs (target/release/deps/di_corpus-e1c789a9cdb5abb0)\n\nrunning 5 tests\ntest fixture_contract_is_strict_but_private_top_level_fields_are_not_executed ... ok\ntest malformed_json_and_numeric_two_args_use_actual_host_contract ... ok\ntest resource_rejection_and_runtime_mismatch_never_fallback_or_replay ... ok\ntest correctness_requires_complete_contract_oracle_and_expected ... ok\ntest controlled_smoke_both_backends_and_separate_memory_mode ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n     Running tests/json_array.rs (target/release/deps/json_array-2c24284d0dd7ed3d)\n\nrunning 13 tests\ntest array_schema_validation_and_static_field_binding ... ok\ntest first_chunk_cancellation_drops_cursor_and_prevents_later_tool ... ok\ntest dotted_array_and_row_are_the_same_bound_program ... ok\ntest general_body_break_skips_remainder_and_cache_resets ... ok\ntest unsupported_source_is_whole_source_rejection ... ok\ntest shared_prepared_units_do_not_share_cursor_or_scalar_state ... ok\ntest quote_and_array_share_fuel_and_aggregate_memory ... ok\ntest owner_across_real_wait_last_use_and_wait_cancellation ... ok\ntest metadata_stdout_and_cumulative_fuel_bounds ... ok\ntest cv04_original_and_ordered_lazy_fields ... ok\ntest reached_errors_and_prior_output ... ok\ntest exact_visited_fuel_and_chunk_edges ... ok\ntest bounds_overflow_unicode_and_effect_order ... ok\n\ntest result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n     Running tests/json_fstring.rs (target/release/deps/json_fstring-d4706fb3254e0794)\n\nrunning 7 tests\ntest admission_stays_limited_to_declared_leaves_and_existing_format_subset ... ok\ntest evaluated_integer_does_not_bypass_authority_or_call_budget ... ok\ntest unchanged_cv01_and_unexecuted_branch ... ok\ntest root_liveness_across_wait_and_detached_argument_after_cancel ... ok\ntest integer_extrema_mixed_sinks_and_nested_view ... ok\ntest left_to_right_scan_type_size_and_authority_priority ... ok\ntest invalid_leaf_is_atomic_and_never_submits_tool ... ok\n\ntest result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n     Running tests/json_get.rs (target/release/deps/json_get-d11190ee39d62555)\n\nrunning 11 tests\ntest dot_rejections_locations_and_method_name_collisions ... ok\ntest whole_source_admission_and_limits ... ok\ntest lazy_present_and_selected_receiver_only_with_duplicate_first ... ok\ntest unchanged_cv05_and_complete_tool_script ... ok\ntest token_join_retained_bounds_and_piece_priority ... ok\ntest shared_sinks_aliases_expression_defaults_and_required_path ... ok\ntest dot_paths_share_ir_sinks_aliases_and_errors ... ok\ntest dot_tool_authority_bounds_and_detached_owner ... ok\ntest real_wait_root_liveness_and_cancelled_operation_owns_argument ... ok\ntest exact_scan_budgets_atomicity_and_error_order ... ok\ntest invalid_values_parents_and_missing_proofs_never_fallback_or_submit ... ok\n\ntest result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s\n\n     Running tests/tool_json.rs (target/release/deps/tool_json-5ef9ab3a2ea920ee)\n\nrunning 15 tests\ntest direct_tool_print_rejects_json_nested_calls_and_loop_effects ... ok\ntest schema_and_binding_reject_unsupported_without_runtime ... ok\ntest direct_tool_print_suspends_and_cancellation_preserves_prefix ... ok\ntest standalone_scalar_tool_call_executes_and_discards_result ... ok\ntest cancellation_with_live_subview_drops_task_owner_not_operation ... ok\ntest source_binding_and_real_backends_share_results ... ok\ntest subview_keeps_root_across_actual_wait_then_releases ... ok\ntest task_tool_permissions_counts_and_buffer_cap ... ok\ntest malformed_accessed_content_is_task_error_not_partial_success ... ok\ntest branch_last_use_alias_error_and_multiple_owner_budget ... ok\ntest duplicate_escaped_keys_extremes_and_unvisited_suffix_contract ... ok\ntest multiply_add_preserves_fallible_operand_order ... ok\ntest direct_scalar_tool_print_matches_explicit_binding_and_bounds ... ok\ntest accessed_errors_short_circuit_and_left_to_right_are_preserved ... ok\ntest cancellation_detached_late_json_response_drops_owner ... ok\n\ntest result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s\n\n"
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--test",
+        "script"
+      ],
+      "exit_code": 101,
+      "output": "error: no test target named `script` in default-run packages\n\nhelp: a target with a similar name exists: `scripts`\n"
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--test",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "output": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 6.05s\n     Running tests/scripts.rs (target/release/deps/scripts-5d7449592691cc5f)\n\nrunning 14 tests\ntest frontend_named_safety_bounds_and_rejections ... ok\ntest failures_keep_earlier_stdout_and_prevent_later_effects ... ok\ntest nested_predicates_match_value_consumers_and_join_locals ... ok\ntest compilation_of_different_sources_does_not_reuse_semantics_or_diagnostics ... ok\ntest scalar_script_private_stdout_and_no_implicit_echo ... ok\ntest branch_tool_resumption_and_loop_print_do_not_duplicate ... ok\ntest nested_predicates_preserve_chunk_carry_and_tool_join_order ... ok\ntest scalar_values_cross_tools_and_chunk_backedges_only_when_live ... ok\ntest real_scan_without_record_and_then_record_receipt ... ok\ntest future_scans_keep_owners_across_tools_and_live_bytes_are_aggregate ... ok\ntest ordered_two_loops_and_tools_preserve_locals_and_total_fuel ... ok\ntest predicate_short_circuit_preserves_overflow_and_output_order ... ok\ntest cancelling_after_print_during_record_keeps_output_and_discards_late_completion ... ok\ntest delayed_order_code_lifetime_and_last_use_buffer_release ... ok\n\ntest result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s\n\n"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/di_corpus_test.py"
+      ],
+      "exit_code": 0,
+      "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.002s\n\nOK\n"
+    },
+    {
+      "command": [
+        "cargo",
+        "+stable",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    }
+  ]
+}

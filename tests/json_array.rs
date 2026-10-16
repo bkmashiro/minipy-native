@@ -19,6 +19,57 @@ use std::{
 };
 
 const CV: &str = include_str!("../fixtures/cv/04_first_matching_result.py");
+
+#[tokio::test]
+async fn dotted_array_and_row_are_the_same_bound_program() {
+    let indexed = "data=tools.search(request_id)\ntotal=0\nfor row in data['results']:\n    total += row['score']\n    if row['id'] == 9:\n        break\nprint(total)";
+    let dotted = indexed
+        .replace("data['results']", "data.results")
+        .replace("row['score']", "row.score")
+        .replace("row['id']", "row.id");
+    let inputs = &[("request_id", Type::I64)];
+    assert_eq!(
+        format!(
+            "{:?}",
+            frontend::parse_with_declarations(indexed, inputs, &declarations()).unwrap()
+        ),
+        format!(
+            "{:?}",
+            frontend::parse_with_declarations(&dotted, inputs, &declarations()).unwrap()
+        )
+    );
+    for native in [false, true] {
+        for source in [indexed, &dotted] {
+            let host = Arc::new(Host::new(
+                r#"{"results":[{"score":3,"id":1},{"score":4,"id":9},null]}"#,
+            ));
+            let out = run(
+                native,
+                source,
+                host,
+                ScriptLimits::default(),
+                Cancellation::default(),
+            )
+            .await;
+            assert_eq!(out.status, Ok(()));
+            assert_eq!(out.stdout, "7\n");
+        }
+    }
+    for field in [
+        "row.unknown",
+        "row['unknown']",
+        "row.score.real",
+        "row[request_id]",
+    ] {
+        let source =
+            format!("data=tools.search(request_id)\nfor row in data.results:\n    print({field})");
+        assert!(CodeUnit::compile_with_declarations(&source, inputs, &declarations()).is_err());
+        assert!(
+            InterpreterUnit::prepare_with_declarations(&source, inputs, &declarations()).is_err()
+        );
+    }
+}
+
 fn declarations() -> Vec<ToolDeclaration> {
     vec![
         ToolDeclaration {

@@ -817,17 +817,19 @@ impl<'a> Compiler<'a> {
     fn json_path(&self, e: &ast::Expr) -> Result<Option<(usize, Vec<String>)>> {
         match e {
             ast::Expr::Name(n) => Ok(self.json_names.get(n.id.as_str()).cloned()),
-            ast::Expr::Subscript(s) => {
-                let Some((root, mut keys)) = self.json_path(&s.value)? else {
+            ast::Expr::Subscript(_) | ast::Expr::Attribute(_) => {
+                let value = match e {
+                    ast::Expr::Subscript(s) => &s.value,
+                    ast::Expr::Attribute(a) => &a.value,
+                    _ => unreachable!(),
+                };
+                let Some((root, mut keys)) = self.json_path(value)? else {
                     return Ok(None);
                 };
-                let ast::Expr::Constant(c) = s.slice.as_ref() else {
-                    return Err(err("JSON indices must be literal field keys"));
-                };
-                let ast::Constant::Str(key) = &c.value else {
-                    return Err(err("JSON indices must be literal field keys"));
-                };
-                keys.push(key.clone());
+                keys.push(Self::json_field_key(
+                    e,
+                    "JSON indices must be literal field keys",
+                )?);
                 if keys.len() > 32
                     || !self.json_leaves[root]
                         .iter()
@@ -840,6 +842,20 @@ impl<'a> Compiler<'a> {
                 Ok(Some((root, keys)))
             }
             _ => Ok(None),
+        }
+    }
+    #[cfg(feature = "tool-json")]
+    fn json_field_key(e: &ast::Expr, message: &str) -> Result<String> {
+        match e {
+            ast::Expr::Attribute(a) => Ok(a.attr.to_string()),
+            ast::Expr::Subscript(s) => match s.slice.as_ref() {
+                ast::Expr::Constant(c) => match &c.value {
+                    ast::Constant::Str(key) => Ok(key.clone()),
+                    _ => Err(err(message)),
+                },
+                _ => Err(err(message)),
+            },
+            _ => unreachable!(),
         }
     }
     #[cfg(feature = "tool-json")]
@@ -1402,21 +1418,20 @@ impl<'a> Compiler<'a> {
         self.node(depth)?;
         #[cfg(feature = "tool-json")]
         if let Some((row, root, path)) = &self.json_row
-            && let ast::Expr::Subscript(s) = e
-            && let ast::Expr::Name(n) = s.value.as_ref()
+            && let Some(value) = match e {
+                ast::Expr::Subscript(s) => Some(s.value.as_ref()),
+                ast::Expr::Attribute(a) => Some(a.value.as_ref()),
+                _ => None,
+            }
+            && let ast::Expr::Name(n) = value
             && n.id.as_str() == row
         {
-            let ast::Expr::Constant(c) = s.slice.as_ref() else {
-                return Err(err("array row fields must be literal keys"));
-            };
-            let ast::Constant::Str(key) = &c.value else {
-                return Err(err("array row fields must be literal keys"));
-            };
+            let key = Self::json_field_key(e, "array row fields must be literal keys")?;
             let crate::tool::ResultSchema::JsonObjectArray(schema) = self.json_leaves[*root].0
             else {
                 unreachable!()
             };
-            if !schema.i64_fields.contains(key) {
+            if !schema.i64_fields.contains(&key) {
                 return Err(CompileError::new(
                     AdmissionKind::Schema,
                     "undeclared array row field",
@@ -1424,7 +1439,7 @@ impl<'a> Compiler<'a> {
             }
             let root = *root;
             let mut path = path.clone();
-            path.push(key.clone());
+            path.push(key);
             let slot = self.json.path(root, &path)?;
             return Ok((Expr::JsonI64 { slot, root }, Type::I64));
         }

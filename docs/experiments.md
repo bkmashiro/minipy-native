@@ -1,5 +1,38 @@
 # Experiments
 
+## DK: declared JSON dot/subscript binding (2026-10-16)
+
+User-approved dot selectors normalize in the shared frontend to the existing
+literal-key path, including nested/mixed views, string aliases and the existing
+one-level i64 array-row slice. No new IR or runtime helpers, property dispatch,
+caches, dependencies, budgets, authority or public API representations. Calls retain
+Tool/get/startswith dispatch; unsupported calls and unknown fields still fail
+whole-source preparation. Tests compare complete bound Program debug structures
+for paired dot/subscript scripts, then execute both real backends. They cover
+string sinks/predicates, direct integer f-strings, aliases, method-name fields,
+rejection locations, short circuit, partial stdout, bounds, permissions and
+owner retention through actual waits and cancellation of a detached argument.
+
+macOS arm64, Rust 1.96, offline/locked release: 56 JSON/routing/corpus tests with
+debug-runtime, 14 default-feature script tests and four DI Python tests pass;
+stable fmt/diff checks pass. Commands, raw output and tested source hashes are
+in `bench/results/dk/checks.json`. The initial default-feature command used the
+nonexistent singular `script` test target; its failure is retained alongside the
+corrected `scripts` run. A test fixture initially treated the payload-bearing
+Json error variant as a unit variant; corrected before the passing runs.
+
+Separately replayed the four original DJ first answers unchanged, against their
+unchanged frozen Host fixtures, through both backends in separate timing and
+diagnostic modes. All private raw inputs/results and the Chinese report stay
+under the authorized corpus directory in `dk-dot-replay/`; 64 historical DJ
+files hash-identical before/after. This is a syntax-change diagnostic, not a new
+generation campaign or replacement for the historical score. No model generation,
+case repair, changed stdout policy or real Tool effects. The replay exposes
+remaining runtime-budget, argument-contract and binding obstacles rather than
+treating admission as task success. No representative coverage, performance,
+total-memory, Monty, Linux or Wasm claim. Existing mounted external target and
+shared fcntl lock only; no new target/worktree, downloads or CI.
+
 ## DJ: private bounded corpus pilot checkpoint (2026-10-16)
 
 Ran the reviewed DH v2 prompts through actual text-only model calls and the DI
