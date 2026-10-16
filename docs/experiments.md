@@ -2,6 +2,8 @@
 
 ## CW: checked scalar integer conversion (2026-10-16)
 
+One actual gpt-6-luna/openai-codex read-only [review](cw-review.md) approved fixed `6717fd5`, independently checking raw reduction and semantics. Operator same-card review remains the release gate for CX.
+
 Replace BigInt decimal formatting/parsing with existing borrowed checked conversions, including the unary-negative minimum magnitude. No dependency or runtime behavior change. Separate allocation diagnosis removes 6 calls/28 requested bytes for ordinary short arithmetic and 128 calls/2432 bytes for 32 large negative literals on either backend; the no-integer control is unchanged. Preserve the initial Xprotect-contended run and one lower-load ABBA+A/A replacement (36 processes/2304 measured requests each). Dense tape has a favorable signal, but controls drift and neither short-source nor native establishes stable acceleration. Retain the tiny work-removal change and stop sampling. Default focused suites passed 43 tests; tool-json passed 6 with 2 existing performance tests ignored. Exact semantics, identities, commands, raw and limitations: [CW](cw-integer.md), `bench/results/cw/`. Linux not run.
 
 ## CU: optional Rust-host PGO and integrated holdouts (2026-10-16)
