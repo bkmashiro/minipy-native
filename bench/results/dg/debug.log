@@ -1,0 +1,58 @@
+COMMAND ['cargo', '+1.96.0', 'test', '--offline', '--locked', '--release', '--features', 'tool-json,debug-runtime', '--test', 'json_array', '--test', 'json_get', '--test', 'co_count', '--test', 'debug_runtime']
+   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `release` profile [optimized + debuginfo] target(s) in 17.57s
+     Running tests/co_count.rs (target/release/deps/co_count-f1c6f8c7ea56e5c5)
+
+running 5 tests
+test count_cancels_at_first_chunk_and_reuses_immutable_unit ... ok
+test count_retains_live_json_across_chunk_yields ... ok
+test count_nonmatching_shapes_and_multiple_loops ... ok
+test count_overflow_and_ordered_effects ... ok
+test count_fields_distributions_tails_and_chunk_fuel ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.87s
+
+     Running tests/debug_runtime.rs (target/release/deps/debug_runtime-fb784cb9696c520b)
+
+running 6 tests
+test admission_and_collection_bounds ... ok
+test fixture_import_checks_budget_before_allocation_and_cancel_frees_rows ... ok
+test step_retains_scratch_and_reports_real_memory ... ok
+test cancellation_isolated_and_stale_token_rejected ... ok
+test limits_permissions_and_provider_errors_are_task_errors ... ok
+test instruction_and_fast_dispatch_match_native_interpreter ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/json_array.rs (target/release/deps/json_array-2c24284d0dd7ed3d)
+
+running 12 tests
+test array_schema_validation_and_static_field_binding ... ok
+test first_chunk_cancellation_drops_cursor_and_prevents_later_tool ... ok
+test shared_prepared_units_do_not_share_cursor_or_scalar_state ... ok
+test owner_across_real_wait_last_use_and_wait_cancellation ... ok
+test quote_and_array_share_fuel_and_aggregate_memory ... ok
+test unsupported_source_is_whole_source_rejection ... ok
+test general_body_break_skips_remainder_and_cache_resets ... ok
+test metadata_stdout_and_cumulative_fuel_bounds ... ok
+test cv04_original_and_ordered_lazy_fields ... ok
+test reached_errors_and_prior_output ... ok
+test bounds_overflow_unicode_and_effect_order ... ok
+test exact_visited_fuel_and_chunk_edges ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/json_get.rs (target/release/deps/json_get-d11190ee39d62555)
+
+running 8 tests
+test whole_source_admission_and_limits ... ok
+test shared_sinks_aliases_expression_defaults_and_required_path ... ok
+test lazy_present_and_selected_receiver_only_with_duplicate_first ... ok
+test real_wait_root_liveness_and_cancelled_operation_owns_argument ... ok
+test unchanged_cv05_and_complete_tool_script ... ok
+test token_join_retained_bounds_and_piece_priority ... ok
+test exact_scan_budgets_atomicity_and_error_order ... ok
+test invalid_values_parents_and_missing_proofs_never_fallback_or_submit ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+

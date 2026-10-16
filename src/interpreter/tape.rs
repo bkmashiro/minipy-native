@@ -167,6 +167,12 @@ pub(super) enum Op {
     PrintJsonString(usize, usize),
     #[cfg(feature = "tool-json")]
     PrintString(usize),
+    #[cfg(feature = "tool-json")]
+    ArrayStart(usize, usize),
+    #[cfg(feature = "tool-json")]
+    ArrayStep(usize, usize),
+    #[cfg(feature = "tool-json")]
+    ArrayFinish,
     Return,
 }
 impl Op {
@@ -223,6 +229,8 @@ impl Op {
 struct Lower<'a> {
     ops: &'a mut Vec<Op>,
     next: usize,
+    #[cfg(feature = "tool-json")]
+    breaks: Vec<usize>,
 }
 impl Lower<'_> {
     fn temp(&mut self) -> Dest {
@@ -438,6 +446,25 @@ impl Lower<'_> {
                     self.statements(no);
                     *self.ops[jump].target() = self.ops.len();
                 }
+                #[cfg(feature = "tool-json")]
+                Stmt::JsonBreak => {
+                    self.breaks.push(self.ops.len());
+                    self.ops.push(Op::Jump(0));
+                }
+                #[cfg(feature = "tool-json")]
+                Stmt::JsonFor { slot, root, body } => {
+                    self.ops.push(Op::ArrayStart(slot, root));
+                    let header = self.ops.len();
+                    self.ops.push(Op::ArrayStep(root, 0));
+                    self.statements(body);
+                    self.ops.push(Op::Jump(header));
+                    let end = self.ops.len();
+                    self.ops[header] = Op::ArrayStep(root, end);
+                    for edge in self.breaks.drain(..) {
+                        *self.ops[edge].target() = end;
+                    }
+                    self.ops.push(Op::ArrayFinish);
+                }
                 Stmt::For(buffer, body) => {
                     self.ops.push(Op::Start);
                     if let Some(count) = Count::recognize(buffer, &body) {
@@ -456,7 +483,33 @@ impl Lower<'_> {
     }
 }
 pub(super) fn flatten(statements: Vec<Stmt>, ops: &mut Vec<Op>) {
-    Lower { ops, next: 0 }.statements(statements);
+    Lower {
+        ops,
+        next: 0,
+        #[cfg(feature = "tool-json")]
+        breaks: Vec::new(),
+    }
+    .statements(statements);
+}
+
+#[test]
+#[cfg(all(feature = "tool-json", not(target_arch = "wasm32")))]
+fn dg_no_array_layout() {
+    let unit = InterpreterUnit::prepare_script("x=7\nx=x+3\nprint(x)", &[]).unwrap();
+    println!(
+        "DG no-array Op={} State={} Unit={} prepared={} ops={} capacity={} Frame={} Output={}",
+        std::mem::size_of::<Op>(),
+        std::mem::size_of::<State>(),
+        std::mem::size_of::<InterpreterUnit>(),
+        unit.prepared_bytes(),
+        unit.ops.len(),
+        unit.ops.capacity(),
+        std::mem::size_of::<crate::codegen::Frame>(),
+        std::mem::size_of::<Output>()
+    );
+    assert_eq!(std::mem::size_of::<Op>(), 48);
+    assert_eq!(std::mem::size_of::<State>(), 312);
+    assert_eq!(unit.prepared_bytes(), 304);
 }
 
 #[test]
@@ -529,6 +582,8 @@ pub(super) fn json_liveness(ops: &[Op], plan: &crate::tool::Plan) -> Vec<u32> {
                     backward |= *end <= pc;
                     next | live[*end]
                 }
+                Op::ArrayStart(_, root) => next | (1 << root),
+                Op::ArrayStep(root, end) => next | live[*end] | (1 << root),
                 Op::JsonRead(_, _, root, _) => next | (1 << root),
                 Op::JsonString(_, _, root, _)
                 | Op::StringEq(_, _, root, _)
@@ -612,6 +667,30 @@ pub(super) fn run<const STEP: bool>(
         macro_rules! cmp { ($d:expr,$a:expr,$b:expr,$operator:tt) => {{ let v=i64::from(read(*$a,state,temps) $operator read(*$b,state,temps)); write(*$d,v,state,temps); }} }
         macro_rules! jump { ($a:expr,$b:expr,$target:expr,$operator:tt) => { if read(*$a,state,temps) $operator read(*$b,state,temps) {state.pc=*$target;} } }
         match op {
+            #[cfg(feature = "tool-json")]
+            Op::ArrayStart(slot, _) => output
+                .json
+                .as_mut()
+                .expect("array plan")
+                .array_start(*slot)?,
+            #[cfg(feature = "tool-json")]
+            Op::ArrayStep(_, end) => {
+                match output
+                    .json
+                    .as_mut()
+                    .expect("array plan")
+                    .array_step(&mut state.remaining, limits.chunk)?
+                {
+                    crate::json_view::ArrayStep::Done => state.pc = *end,
+                    crate::json_view::ArrayStep::Row => {}
+                    crate::json_view::ArrayStep::Yield => {
+                        state.pc -= 1;
+                        return Ok(Boundary::Yield);
+                    }
+                }
+            }
+            #[cfg(feature = "tool-json")]
+            Op::ArrayFinish => output.json.as_mut().expect("array plan").array_finish(),
             Op::BufferLen(d, i) => write(
                 *d,
                 owners[*i]

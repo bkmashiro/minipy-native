@@ -1,0 +1,36 @@
+COMMAND ['cargo', '+1.96.0', 'clippy', '--offline', '--locked', '--release', '--all-targets', '--features', 'tool-json,debug-runtime', '--', '-D', 'warnings', '-A', 'clippy::type_complexity']
+    Checking minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+error: useless use of `format!`
+  --> tests/ct_schema.rs:31:47
+   |
+31 |               Ok(Reply::Json(bytes::Bytes::from(format!(
+   |  _______________________________________________^
+32 | |                 "{{\"v0\":7,\"v1\":9}}"
+33 | |             ))))
+   | |_____________^ help: consider using `.to_string()`: `"{\"v0\":7,\"v1\":9}".to_string()`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#useless_format
+   = note: `-D clippy::useless-format` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::useless_format)]`
+
+error: stripping a prefix manually
+  --> tests/ct_schema.rs:78:33
+   |
+78 |         let parts: Vec<usize> = case[1..].split('_').map(|s| s.parse().unwrap()).collect();
+   |                                 ^^^^^^^^^
+   |
+note: the prefix was tested here
+  --> tests/ct_schema.rs:77:5
+   |
+77 |     if case.starts_with('w') {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#manual_strip
+   = note: `-D clippy::manual-strip` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::manual_strip)]`
+help: try using the `strip_prefix` method
+   |
+77 ~     if let Some(<stripped>) = case.strip_prefix('w') {
+78 ~         let parts: Vec<usize> = <stripped>.split('_').map(|s| s.parse().unwrap()).collect();
+   |
+
+error: could not compile `minipy-native` (test "ct_schema") due to 2 previous errors

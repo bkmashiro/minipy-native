@@ -588,7 +588,10 @@ async fn run<P: Provider>(
     loop {
         check(&cancel)?;
         #[cfg(feature = "tool-json")]
-        if code.json.as_ref().is_some_and(|p| p.string_paths)
+        if code
+            .json
+            .as_ref()
+            .is_some_and(|p| p.string_paths || p.array_paths)
             && let Some(json) = &mut output.json
         {
             json.set_external(owners.iter().flatten().map(QuoteBuffer::bytes).sum());

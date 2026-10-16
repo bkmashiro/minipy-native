@@ -78,6 +78,14 @@ pub enum Stmt {
     Set(usize, Expr),
     If(Expr, Vec<Stmt>, Vec<Stmt>),
     For(usize, Vec<Stmt>),
+    #[cfg(feature = "tool-json")]
+    JsonFor {
+        slot: usize,
+        root: usize,
+        body: Vec<Stmt>,
+    },
+    #[cfg(feature = "tool-json")]
+    JsonBreak,
     Load(usize, Expr),
     Record(usize, Expr, Expr),
     #[cfg(feature = "tool-json")]

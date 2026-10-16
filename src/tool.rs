@@ -10,10 +10,18 @@ pub const MAX_PATHS: usize = 128;
 #[derive(Clone, Debug)]
 pub enum ResultSchema {
     I64,
+    /// One immutable object array with statically declared one-level i64 fields.
+    JsonObjectArray(Box<ObjectArraySchema>),
     /// Explicit i64 leaf paths. Other paths may form raw subviews, never values.
     Json(Vec<Vec<String>>),
     /// Explicit typed leaves; strings support literal `in` and bounded `print`.
     JsonTyped(Vec<(Vec<String>, JsonLeaf)>),
+}
+/// A declaration-time allocation only for Hosts opting into object-array scans.
+#[derive(Clone, Debug)]
+pub struct ObjectArraySchema {
+    pub path: Vec<String>,
+    pub i64_fields: Vec<String>,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum JsonLeaf {
@@ -77,6 +85,22 @@ fn validate_tools<'a, A: ExactSizeIterator<Item = &'a str>>(
             ));
         }
         let paths: Vec<&Vec<String>> = match result {
+            ResultSchema::JsonObjectArray(schema) => {
+                let ObjectArraySchema { path, i64_fields } = schema.as_ref();
+                let unique: std::collections::HashSet<_> = i64_fields.iter().collect();
+                if i64_fields.is_empty()
+                    || i64_fields.len() >= MAX_PATHS
+                    || unique.len() != i64_fields.len()
+                    || i64_fields.iter().any(|k| k.len() > 256)
+                    || path.len() >= 32
+                {
+                    return Err(CompileError::new(
+                        AdmissionKind::Schema,
+                        "invalid object-array fields",
+                    ));
+                }
+                vec![path]
+            }
             ResultSchema::Json(paths) => paths.iter().collect(),
             ResultSchema::JsonTyped(paths) => paths.iter().map(|(p, _)| p).collect(),
             ResultSchema::I64 => Vec::new(),
@@ -288,6 +312,8 @@ pub struct Plan {
     /// Literal operands for contains and exact string equality.
     pub needles: Vec<String>,
     pub string_paths: bool,
+    /// Sealed frontend plans that need retained-array metadata budgeting.
+    pub array_paths: bool,
     pub prints: Vec<StringSource>,
 }
 impl Plan {
@@ -374,6 +400,31 @@ mod get_layout_tests {
     #[test]
     fn public_get_layout_and_owned_default_cost() {
         use std::mem::size_of;
+        // Exact pre-array declaration shapes, independently laid out by rustc.
+        #[allow(dead_code)]
+        enum BeforeSchema {
+            I64,
+            Json(Vec<Vec<String>>),
+            JsonTyped(Vec<(Vec<String>, JsonLeaf)>),
+        }
+        #[allow(dead_code)]
+        struct BeforeDeclaration {
+            id: u32,
+            name: String,
+            arguments: Vec<ArgumentSchema>,
+            result: BeforeSchema,
+        }
+        println!(
+            "DG ResultSchema before/after={}/{} ToolDeclaration before/after={}/{} Plan={}",
+            size_of::<BeforeSchema>(),
+            size_of::<ResultSchema>(),
+            size_of::<BeforeDeclaration>(),
+            size_of::<ToolDeclaration>(),
+            size_of::<Plan>()
+        );
+        assert_eq!(size_of::<ResultSchema>(), size_of::<BeforeSchema>());
+        assert_eq!(size_of::<ToolDeclaration>(), size_of::<BeforeDeclaration>());
+        assert_eq!(size_of::<Plan>(), 112);
         println!(
             "StringSource before/after: {}/{}; Option: {}/{}; BoundCall: {}/{}; Plan: {}",
             size_of::<Before>(),

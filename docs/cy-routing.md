@@ -80,6 +80,12 @@ unsupported. Runtime required-parent/value-type/JSON failures remain executed er
 never routing triggers. Earlier counts are historical. See [df-get.md](df-get.md)
 for the missing-only validation policy and public enum migration.
 
+DG update: CV04 now runs unchanged using its explicit object-array Host schema
+on native and tape. The current synthetic total is ten of ten complete originals;
+the earlier counts are historical snapshots, not production coverage. Runtime
+array/type/budget errors remain task failures, not routing triggers. Unsupported
+general collections still reject before effects. See [dg-arrays.md](dg-arrays.md).
+
 ## Verification and bounded timing
 
 `python3 tools/cy_check.py` uses the existing external target, shared fcntl lock,

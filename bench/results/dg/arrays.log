@@ -1,0 +1,23 @@
+COMMAND ['cargo', '+1.96.0', 'test', '--offline', '--locked', '--release', '--features', 'tool-json', '--test', 'json_array', '--', '--nocapture']
+    Finished `release` profile [optimized + debuginfo] target(s) in 0.06s
+     Running tests/json_array.rs (target/release/deps/json_array-48d9726dc0511f6d)
+
+running 12 tests
+test array_schema_validation_and_static_field_binding ... ok
+DG array futures native=664 tape=928
+DG array futures native=664 tape=928
+DG array futures native=664 tape=928
+test shared_prepared_units_do_not_share_cursor_or_scalar_state ... ok
+test first_chunk_cancellation_drops_cursor_and_prevents_later_tool ... ok
+test unsupported_source_is_whole_source_rejection ... ok
+test general_body_break_skips_remainder_and_cache_resets ... ok
+test metadata_stdout_and_cumulative_fuel_bounds ... ok
+test cv04_original_and_ordered_lazy_fields ... ok
+test owner_across_real_wait_last_use_and_wait_cancellation ... ok
+test quote_and_array_share_fuel_and_aggregate_memory ... ok
+test exact_visited_fuel_and_chunk_edges ... ok
+test reached_errors_and_prior_output ... ok
+test bounds_overflow_unicode_and_effect_order ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

@@ -1,0 +1,12 @@
+COMMAND ['cargo', '+1.96.0', 'test', '--offline', '--locked', '--release', '--features', 'tool-json', '--lib', 'public_get_layout', '--', '--nocapture']
+   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `release` profile [optimized + debuginfo] target(s) in 5.98s
+     Running unittests src/lib.rs (target/release/deps/minipy_native-5c76f542d8e0b57a)
+
+running 1 test
+DG ResultSchema before/after=32/32 ToolDeclaration before/after=88/88 Plan=112
+StringSource before/after: 24/40; Option: 24/40; BoundCall: 40/56; Plan: 112
+test tool::get_layout_tests::public_get_layout_and_owned_default_cost ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 35 filtered out; finished in 0.00s
+

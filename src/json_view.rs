@@ -12,6 +12,20 @@ pub(crate) struct State {
     max: usize,
     external: usize,
     scan_left: usize,
+    array: Option<Box<ArrayCursor>>,
+}
+struct ArrayCursor {
+    slot: usize,
+    root: usize,
+    range: Range<usize>,
+    position: usize,
+    visited: usize,
+    chunk_used: usize,
+}
+pub(crate) enum ArrayStep {
+    Done,
+    Row,
+    Yield,
 }
 enum StringCache {
     Unchecked,
@@ -36,6 +50,7 @@ impl State {
             max,
             external: 0,
             scan_left: scan_bytes,
+            array: None,
             plan,
         }
     }
@@ -44,6 +59,10 @@ impl State {
     }
     pub(crate) fn held(&self) -> usize {
         self.roots.iter().flatten().map(Bytes::len).sum::<usize>()
+            + self
+                .array
+                .as_ref()
+                .map_or(0, |_| std::mem::size_of::<ArrayCursor>())
             + self.strings.as_ref().map_or(0, |d| {
                 d.iter()
                     .map(|s| match s {
@@ -90,6 +109,9 @@ impl State {
         Ok(())
     }
     fn clear_root(&mut self, root: usize) {
+        if self.array.as_ref().is_some_and(|a| a.root == root) {
+            self.array = None;
+        }
         for (i, path) in self.plan.paths.iter().enumerate() {
             if path.root == root {
                 self.ranges[i] = None;
@@ -101,6 +123,13 @@ impl State {
         }
     }
     pub(crate) fn release(&mut self, live: u32) {
+        if self
+            .array
+            .as_ref()
+            .is_some_and(|a| live & (1 << a.root) == 0)
+        {
+            self.array = None;
+        }
         for (root, bytes) in self.roots.iter_mut().enumerate() {
             if live & (1 << root) == 0 {
                 *bytes = None;
@@ -115,6 +144,112 @@ impl State {
                 }
             }
         }
+    }
+    /// Cursor metadata is the only retained array allocation. No borrowed parser
+    /// survives this call, a yield, or owner replacement.
+    pub(crate) fn array_start(&mut self, slot: usize) -> Result<(), TaskError> {
+        let range = self.locate(slot)?;
+        let root = self.plan.paths[slot].root;
+        let bytes = &self.roots[root]
+            .as_ref()
+            .ok_or(TaskError::Json("released owner"))?[range.clone()];
+        if bytes.first() != Some(&b'[') {
+            return Err(TaskError::Json("expected object array"));
+        }
+        if range.len() > 64 * 1024 || self.available() < std::mem::size_of::<ArrayCursor>() {
+            return Err(TaskError::Budget);
+        }
+        self.array = Some(Box::new(ArrayCursor {
+            slot,
+            root,
+            position: range.start + 1,
+            range,
+            visited: 0,
+            chunk_used: 0,
+        }));
+        Ok(())
+    }
+    fn clear_element(&mut self, slot: usize) {
+        for (i, p) in self.plan.paths.iter().enumerate() {
+            if p.parent == Some(slot) {
+                self.ranges[i] = None;
+                self.integers[i] = None;
+                if let Some(strings) = &mut self.strings {
+                    strings[i] = StringCache::Unchecked;
+                }
+            }
+        }
+    }
+    pub(crate) fn array_finish(&mut self) {
+        if let Some(a) = self.array.take() {
+            self.clear_element(a.slot);
+            self.ranges[a.slot] = Some(a.range);
+        }
+    }
+    pub(crate) fn array_step(
+        &mut self,
+        fuel: &mut u64,
+        chunk: usize,
+    ) -> Result<ArrayStep, TaskError> {
+        let a = self.array.as_mut().expect("sealed active array cursor");
+        let owner = self.roots[a.root]
+            .as_ref()
+            .ok_or(TaskError::Json("released owner"))?;
+        let bytes = &owner[..a.range.end];
+        let skip = |mut p: usize| {
+            while bytes
+                .get(p)
+                .is_some_and(|b| matches!(b, b' ' | b'\t' | b'\r' | b'\n'))
+            {
+                p += 1;
+            }
+            p
+        };
+        let mut pos = skip(a.position);
+        if bytes.get(pos) == Some(&b']') {
+            return Ok(ArrayStep::Done);
+        }
+        if a.visited > 0 {
+            if bytes.get(pos) != Some(&b',') {
+                return Err(TaskError::Json("invalid array separator"));
+            }
+            pos = skip(pos + 1);
+            if bytes.get(pos) == Some(&b']') {
+                return Err(TaskError::Json("trailing array comma"));
+            }
+        }
+        if a.chunk_used == chunk {
+            a.chunk_used = 0;
+            return Ok(ArrayStep::Yield);
+        }
+        if *fuel == 0 || a.visited == 256 {
+            return Err(TaskError::Budget);
+        }
+        *fuel -= 1;
+        // A mature parser consumes exactly one value. IgnoredAny retains no DOM.
+        // Explicit UTF-8 is needed because IgnoredAny may skip string bytes.
+        let mut stream = serde_json::Deserializer::from_slice(&bytes[pos..])
+            .into_iter::<serde::de::IgnoredAny>();
+        stream
+            .next()
+            .ok_or(TaskError::Json("missing array element"))?
+            .map_err(|_| TaskError::Json("invalid array element"))?;
+        let end = pos
+            .checked_add(stream.byte_offset())
+            .filter(|e| *e <= a.range.end)
+            .ok_or(TaskError::Json("invalid array element range"))?;
+        std::str::from_utf8(&bytes[pos..end])
+            .map_err(|_| TaskError::Json("invalid array element UTF-8"))?;
+        if bytes.get(pos) != Some(&b'{') {
+            return Err(TaskError::Json("expected object array element"));
+        }
+        a.position = end;
+        a.visited += 1;
+        a.chunk_used += 1;
+        let slot = a.slot;
+        self.clear_element(slot);
+        self.ranges[slot] = Some(pos..end);
+        Ok(ArrayStep::Row)
     }
     pub(crate) fn view(&mut self, slot: usize) -> Result<i64, TaskError> {
         self.locate(slot).map(|_| 0)
@@ -409,6 +544,42 @@ pub(crate) unsafe extern "C" fn native_read(
         }
     }
 }
+/// Generated CFG controls the loop and body. This AOT helper only manages the
+/// cursor, element parsing and the existing task's fuel. Status: -1 error,
+/// 0 done, 1 row ready, 2 yield before the next element.
+#[cfg(not(target_arch = "wasm32"))]
+pub(crate) unsafe extern "C" fn native_array(
+    output: *mut crate::runtime::Output,
+    frame: *mut crate::codegen::Frame,
+    slot: i64,
+    action: i64,
+) -> i64 {
+    let output = unsafe { &mut *output };
+    let frame = unsafe { &mut *frame };
+    let json = output.json.as_mut().expect("sealed array plan");
+    let result = match action {
+        0 => json.array_start(slot as usize).map(|_| 0),
+        1 => json
+            .array_step(&mut frame.remaining, frame.chunk as usize)
+            .map(|s| match s {
+                ArrayStep::Done => 0,
+                ArrayStep::Row => 1,
+                ArrayStep::Yield => 2,
+            }),
+        2 => {
+            json.array_finish();
+            Ok(0)
+        }
+        _ => unreachable!("sealed array action"),
+    };
+    match result {
+        Ok(v) => v,
+        Err(e) => {
+            output.error = Some(e);
+            -1
+        }
+    }
+}
 #[cfg(not(target_arch = "wasm32"))]
 pub(crate) unsafe extern "C" fn native_string(
     output: *mut crate::runtime::Output,
@@ -467,7 +638,7 @@ pub(crate) unsafe extern "C" fn native_release(output: *mut crate::runtime::Outp
 
 #[cfg(all(test, target_pointer_width = "64"))]
 mod tests {
-    use super::{State, StringCache};
+    use super::{State, StringCache, TaskError};
     use crate::tool::{PathSlot, Plan};
     use bytes::Bytes;
     use std::rc::Rc;
@@ -622,11 +793,65 @@ mod tests {
     }
 
     #[test]
+    fn array_metadata_cache_invalidation_replacement_and_release() {
+        let mut plan = Plan {
+            roots: 1,
+            array_paths: true,
+            ..Plan::default()
+        };
+        let slot = plan.path(0, &["a".into()]).unwrap();
+        let field = plan.path(0, &["a".into(), "x".into()]).unwrap();
+        let mut state = State::new(Rc::new(plan), 1024, 1024);
+        let data = Bytes::from_static(br#"{"a":[{"x":1},{"x":2}]}"#);
+        state.install(0, data.clone(), 1024).unwrap();
+        assert!(state.array.is_none());
+        state.set_external(1024 - data.len() - 55);
+        assert!(matches!(state.array_start(slot), Err(TaskError::Budget)));
+        state.set_external(1024 - data.len() - 56);
+        state.array_start(slot).unwrap();
+        assert_eq!(state.held(), data.len() + 56);
+        let mut fuel = 2;
+        assert!(matches!(
+            state.array_step(&mut fuel, 1),
+            Ok(super::ArrayStep::Row)
+        ));
+        assert_eq!(state.integer(field), Ok(1));
+        assert!(matches!(
+            state.array_step(&mut fuel, 1),
+            Ok(super::ArrayStep::Yield)
+        ));
+        state.release(1);
+        assert!(state.array.is_some());
+        assert!(matches!(
+            state.array_step(&mut fuel, 1),
+            Ok(super::ArrayStep::Row)
+        ));
+        assert_eq!(state.integer(field), Ok(2));
+        state.array_finish();
+        assert!(state.array.is_none());
+        assert_eq!(state.held(), data.len());
+        state.set_external(0);
+        state.array_start(slot).unwrap();
+        state
+            .install(0, Bytes::from_static(br#"{"a":[]}"#), 1024)
+            .unwrap();
+        assert!(state.array.is_none());
+        assert!(state.ranges.iter().all(Option::is_none));
+        state.array_start(slot).unwrap();
+        state.release(0);
+        assert!(state.array.is_none());
+        assert_eq!(state.held(), 0);
+    }
+
+    #[test]
     fn static_json_task_state_size() {
         // The pre-string state was Rc<Plan> plus three Vecs (80 bytes).
         // Non-string JSON tasks do not allocate a decoded vector, but retain
         // the additional inline Option<Vec> and budget counters.
-        assert_eq!(std::mem::size_of::<super::State>(), 128);
+        // Array support adds one optional pointer to all JSON task states.
+        // The 56-byte cursor is allocated only when entering an array loop.
+        assert_eq!(std::mem::size_of::<super::State>(), 136);
+        assert_eq!(std::mem::size_of::<super::ArrayCursor>(), 56);
         // Ordinary escaped JSON still caches an inline String. A Tool argument
         // moves that string to an Arc only when it must outlive cancellation.
         assert_eq!(std::mem::size_of::<super::StringCache>(), 24);

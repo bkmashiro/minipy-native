@@ -1,0 +1,3 @@
+COMMAND ['cargo', '+1.96.0', 'clippy', '--offline', '--locked', '--release', '--lib', '--test', 'json_array', '--test', 'string_equality', '--features', 'tool-json,debug-runtime', '--', '-D', 'warnings', '-A', 'clippy::type_complexity']
+    Checking minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `release` profile [optimized + debuginfo] target(s) in 1.12s

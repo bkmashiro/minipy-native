@@ -201,6 +201,7 @@ impl SchemaLeaves<'_> {
             ResultSchema::Json(paths) => (paths, &[]),
             ResultSchema::JsonTyped(paths) => (&[], paths),
             ResultSchema::I64 => (&[], &[]),
+            ResultSchema::JsonObjectArray(_) => (&[], &[]),
         };
         numeric
             .iter()
@@ -228,6 +229,8 @@ struct Compiler<'a> {
     json_names: HashMap<String, (usize, Vec<String>)>,
     #[cfg(feature = "tool-json")]
     json_leaves: Vec<SchemaLeaves<'a>>,
+    #[cfg(feature = "tool-json")]
+    json_row: Option<(String, usize, Vec<String>)>,
 }
 impl<'a> Compiler<'a> {
     fn new(inputs: &[(&str, Type)], source: &'a str) -> Result<Self> {
@@ -253,6 +256,8 @@ impl<'a> Compiler<'a> {
             json_names: HashMap::new(),
             #[cfg(feature = "tool-json")]
             json_leaves: Vec::new(),
+            #[cfg(feature = "tool-json")]
+            json_row: None,
         })
     }
     fn node(&mut self, depth: usize) -> Result<()> {
@@ -602,12 +607,49 @@ impl<'a> Compiler<'a> {
                 out.push(Stmt::If(test, then_body, else_body));
                 Ok(())
             }
+            #[cfg(feature = "tool-json")]
+            ast::Stmt::Break(_) if self.json_row.is_some() => {
+                out.push(Stmt::JsonBreak);
+                Ok(())
+            }
             ast::Stmt::For(f) => {
                 if in_loop {
                     return Err(err("nested loops are unsupported"));
                 }
                 if !f.orelse.is_empty() {
                     return Err(err("for-else is unsupported"));
+                }
+                #[cfg(feature = "tool-json")]
+                if let Some((root, path)) = self.json_path(&f.iter)? {
+                    let crate::tool::ResultSchema::JsonObjectArray(schema) =
+                        self.json_leaves[root].0
+                    else {
+                        return Err(err("for requires a declared JSON object array"));
+                    };
+                    if path != schema.path {
+                        return Err(err("for requires the declared array path"));
+                    }
+                    let row = Self::target_name(&f.target)?;
+                    if self.names.contains(&row)
+                        || self.buffers.contains_key(&row)
+                        || self.json_names.contains_key(&row)
+                        || ["tools", "print", "len", "abs", "min", "max"].contains(&row.as_str())
+                    {
+                        return Err(err(
+                            "array row name conflicts with existing/reserved binding",
+                        ));
+                    }
+                    let slot = self.json.path(root, &path)?;
+                    self.rows.insert(row.clone());
+                    self.json_row = Some((row.clone(), root, path));
+                    let before = self.initialized;
+                    let body = self.compile_block(&f.body, depth + 1, true, true)?;
+                    self.initialized = before;
+                    self.json_row = None;
+                    self.rows.remove(&row);
+                    out.push(Stmt::JsonFor { slot, root, body });
+                    self.json.array_paths = true;
+                    return Ok(());
                 }
                 let ast::Expr::Name(buf_name) = f.iter.as_ref() else {
                     return Err(err("for must iterate over a loaded quote buffer"));
@@ -790,6 +832,8 @@ impl<'a> Compiler<'a> {
                     || !self.json_leaves[root]
                         .iter()
                         .any(|(p, _)| p.starts_with(&keys))
+                        && !matches!(self.json_leaves[root].0,
+                            crate::tool::ResultSchema::JsonObjectArray(schema) if schema.path.starts_with(&keys))
                 {
                     return Err(err("JSON field path is absent from the declared schema"));
                 }
@@ -1356,6 +1400,34 @@ impl<'a> Compiler<'a> {
     }
     fn expr_inner(&mut self, e: &ast::Expr, depth: usize, in_loop: bool) -> Result<(Expr, Type)> {
         self.node(depth)?;
+        #[cfg(feature = "tool-json")]
+        if let Some((row, root, path)) = &self.json_row
+            && let ast::Expr::Subscript(s) = e
+            && let ast::Expr::Name(n) = s.value.as_ref()
+            && n.id.as_str() == row
+        {
+            let ast::Expr::Constant(c) = s.slice.as_ref() else {
+                return Err(err("array row fields must be literal keys"));
+            };
+            let ast::Constant::Str(key) = &c.value else {
+                return Err(err("array row fields must be literal keys"));
+            };
+            let crate::tool::ResultSchema::JsonObjectArray(schema) = self.json_leaves[*root].0
+            else {
+                unreachable!()
+            };
+            if !schema.i64_fields.contains(key) {
+                return Err(CompileError::new(
+                    AdmissionKind::Schema,
+                    "undeclared array row field",
+                ));
+            }
+            let root = *root;
+            let mut path = path.clone();
+            path.push(key.clone());
+            let slot = self.json.path(root, &path)?;
+            return Ok((Expr::JsonI64 { slot, root }, Type::I64));
+        }
         #[cfg(feature = "tool-json")]
         if let Some((root, path)) = self.json_path(e)? {
             let leaf = self.json_leaves[root]

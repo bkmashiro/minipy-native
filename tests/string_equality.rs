@@ -274,7 +274,8 @@ async fn original_cv_scripts_and_branches_both_backends() {
 }
 #[test]
 fn bounded_admission_and_remaining_cv_gaps() {
-    // CV04 still requires arrays/iteration; CV05 now executes in the matrix above.
+    // This string-only Host intentionally lacks array declarations. CV04 runs
+    // unchanged with its JsonObjectArray Host in json_array.rs; CV05 runs above.
     let a = CodeUnit::compile_with_declarations(CASES[3], INPUTS, &declarations())
         .err()
         .unwrap();

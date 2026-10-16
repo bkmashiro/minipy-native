@@ -7,7 +7,7 @@ can use `.get(key_literal, default_literal)` at existing string sinks. The full
 leaf path must be declared `JsonLeaf::String`. This is one shared string source
 for print, single-string Tool arguments (including the outer Tool keyword), `+`
 and limited f-strings. CV05 is unchanged and now executes on native and tape.
-Nine of the ten synthetic CV originals now run; only CV04's arrays/iteration
+At the DF snapshot, nine of the ten synthetic CV originals run; only CV04's arrays/iteration
 remain unsupported. This is not a production coverage estimate.
 
 Only the final missing object key selects the literal. Required parents still

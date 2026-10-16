@@ -1,5 +1,46 @@
 # Experiments
 
+## DG: bounded declared object-array loop and break (2026-10-16)
+
+From reviewed DF `4fc5564`, add one opt-in boxed ObjectArraySchema with literal
+path/one-level i64 fields, shared JsonFor/JsonBreak IR, source-dependent native
+CFG and tape ArrayStart/ArrayStep/ArrayFinish. Unchanged CV04 now executes on
+both real backends. All ten synthetic CV originals run; this is not production
+coverage or general Python collection support. Provider/Reply/Type, get/string
+paths, dependencies, execution entry points and routing no-replay stay unchanged.
+
+Safe sonic range selection plus per-visited-value serde_json IgnoredAny and
+explicit UTF-8 use a single optional 56-byte cursor, no DOM/full index/row copy.
+Selected arrays cap at 64 KiB and 256 visited elements per loop (engineering
+bounds). Visited elements share cumulative row fuel with Quote; existing chunk
+yields/cancellation and aggregate buffer cap include cursor and live owners.
+Break skips later user logic/field conversion, but safe initial container lookup
+may scan/reject malformed array tails. Reached fields retain first-match i64
+semantics; only reached objects receive the new structural/UTF-8 proof.
+
+Actual Rust 1.96 arm64 layouts: schema/declaration remain 32/88 after rejecting
+the inline 48/104 candidate; Plan/Op/tape State/native Frame remain
+112/48/312/320, no-array four-op prepared bytes remain 304. Every JSON task
+State grows 128→136, even without arrays. Actual loop entry allocates/meters the
+cursor. Test Host public futures remain tape/native 928/664. No additional
+no-array task allocation site found by source inspection; no allocation-count,
+RSS or latency experiment. Public ResultSchema/Stmt cases and Plan.array_paths
+require exhaustive-match/full-struct-literal consumers to migrate.
+
+Local offline/locked release: default 84 passed/3 ignored, full tool-json
+187/13, focused tool-json+debug-runtime 31/0. Twelve new integration tests cover
+native/tape source execution, budgets, mixed Quote owners/fuel, actual Host waits,
+chunk/wait cancellation, owner last-use, cache refresh and prepared reuse.
+CPython runs five valid-input CV04 oracles. Internal tests prove cursor cleanup,
+exact metadata cap, layouts and source-dependent native CLIF. Focused Clippy,
+stable fmt/diff check pass. Strict all-target Clippy encounters existing ct_schema
+useless_format/manual_strip; failure retained, no unrelated edit/extra allowance.
+Initial schema-red/layout/import/test-initializer failures were corrected without
+relaxing behavior assertions. Existing mounted external target, shared fcntl
+lock, one job; no new target/worktree, downloads, CI, Linux/Wasm or performance
+campaign. Exact policy/costs/API migration and commands: [dg-arrays.md](dg-arrays.md);
+small raw logs/source identities: `bench/results/dg/`.
+
 ## DF: shared declared-string get/default (2026-10-16)
 
 Implemented the approved StringSource::JsonGetLiteral on the shared print/Tool

@@ -1,0 +1,69 @@
+{
+  "source_sha256": "0d9387d277f42cf732d4a8188c1ccb23a9d2535025cab9c659208d56e814d40d",
+  "cases": [
+    {
+      "rows": [],
+      "stdout": "0\n",
+      "calls": [
+        "search"
+      ]
+    },
+    {
+      "rows": [
+        {
+          "score": 81,
+          "id": 7
+        }
+      ],
+      "stdout": "7\n",
+      "calls": [
+        "search"
+      ]
+    },
+    {
+      "rows": [
+        {
+          "score": 80
+        },
+        {
+          "score": 82,
+          "id": 9
+        }
+      ],
+      "stdout": "9\n",
+      "calls": [
+        "search"
+      ]
+    },
+    {
+      "rows": [
+        {
+          "score": 1
+        },
+        {
+          "score": 2
+        }
+      ],
+      "stdout": "0\n",
+      "calls": [
+        "search"
+      ]
+    },
+    {
+      "rows": [
+        {
+          "score": 81,
+          "id": 7
+        },
+        null,
+        {
+          "score": "bad"
+        }
+      ],
+      "stdout": "7\n",
+      "calls": [
+        "search"
+      ]
+    }
+  ]
+}

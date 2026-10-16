@@ -101,6 +101,8 @@ impl InterpreterUnit {
                             backward |= *end <= pc;
                             next | live[*end] | (1 << buffer)
                         }
+                        #[cfg(feature = "tool-json")]
+                        Op::ArrayStep(_, end) => next | live[*end],
                         Op::Count(count) => next | (1 << count.buffer),
                         Op::BufferLen(_, buffer) => next | (1 << buffer),
                         Op::Load(target, _) => next & !(1 << target),
@@ -239,7 +241,10 @@ async fn run<P: Provider>(
     // and chunk yield. Scalar dispatch remains bounded by frontend admission.
     loop {
         #[cfg(feature = "tool-json")]
-        if unit.json.as_ref().is_some_and(|p| p.string_paths)
+        if unit
+            .json
+            .as_ref()
+            .is_some_and(|p| p.string_paths || p.array_paths)
             && let Some(json) = &mut output.json
         {
             json.set_external(owners.iter().flatten().map(QuoteBuffer::bytes).sum());

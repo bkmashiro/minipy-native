@@ -1,0 +1,68 @@
+{
+  "fmt": {
+    "returncode": 0,
+    "passed": 0,
+    "failed": 0,
+    "ignored": 0
+  },
+  "arrays": {
+    "returncode": 0,
+    "passed": 12,
+    "failed": 0,
+    "ignored": 0
+  },
+  "layout": {
+    "returncode": 0,
+    "passed": 1,
+    "failed": 0,
+    "ignored": 0
+  },
+  "default": {
+    "returncode": 0,
+    "passed": 84,
+    "failed": 0,
+    "ignored": 3
+  },
+  "json": {
+    "returncode": 0,
+    "passed": 187,
+    "failed": 0,
+    "ignored": 13
+  },
+  "debug": {
+    "returncode": 0,
+    "passed": 31,
+    "failed": 0,
+    "ignored": 0
+  },
+  "clippy": {
+    "returncode": 0,
+    "passed": 0,
+    "failed": 0,
+    "ignored": 0
+  },
+  "no-array-layout": {
+    "returncode": 0,
+    "passed": 1,
+    "failed": 0,
+    "ignored": 0
+  },
+  "native-cfg": {
+    "returncode": 0,
+    "passed": 1,
+    "failed": 0,
+    "ignored": 0
+  },
+  "fmt-check": {
+    "returncode": 0,
+    "passed": 0,
+    "failed": 0,
+    "ignored": 0
+  },
+  "diff-check": {
+    "returncode": 0,
+    "passed": 0,
+    "failed": 0,
+    "ignored": 0
+  }
+}

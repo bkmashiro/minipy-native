@@ -198,6 +198,15 @@ impl CodeUnit {
         let mut builder = JITBuilder::with_isa(isa, cranelift_module::default_libcall_names());
         builder.symbol("minipy_print", crate::runtime::native_print as *const u8);
         #[cfg(feature = "tool-json")]
+        let arrays = program.json.array_paths;
+        #[cfg(feature = "tool-json")]
+        if arrays {
+            builder.symbol(
+                "minipy_json_array",
+                crate::json_view::native_array as *const u8,
+            );
+        }
+        #[cfg(feature = "tool-json")]
         if !program.json.prints.is_empty() {
             builder.symbol(
                 "minipy_print_plan",
@@ -292,6 +301,18 @@ impl CodeUnit {
         let id = module
             .declare_function("scan", Linkage::Local, &ctx.func.signature)
             .map_err(error)?;
+        #[cfg(feature = "tool-json")]
+        let json_array = if arrays {
+            let mut sig = module.make_signature();
+            sig.params = vec![AbiParam::new(types::I64); 4];
+            sig.returns.push(AbiParam::new(types::I64));
+            let id = module
+                .declare_function("minipy_json_array", Linkage::Import, &sig)
+                .map_err(error)?;
+            Some(module.declare_func_in_func(id, &mut ctx.func))
+        } else {
+            None
+        };
         #[cfg(feature = "compiler-profile")]
         crate::compiler_profile::update(|p| {
             p.setup_ns = crate::compiler_profile::elapsed(start);
@@ -345,7 +366,10 @@ impl CodeUnit {
                 json_print_string,
                 #[cfg(feature = "tool-json")]
                 json_release,
-
+                #[cfg(feature = "tool-json")]
+                json_array,
+                #[cfg(feature = "tool-json")]
+                break_exit: None,
                 overflow,
                 budget,
                 output_error,
@@ -446,6 +470,7 @@ impl CodeUnit {
 fn error(e: impl std::fmt::Display) -> CompileError {
     CompileError::new(ir::AdmissionKind::Backend, e.to_string())
 }
+
 /// Compile structured statements directly to native CFG. PCs exist only at
 /// actual Host waits and row-chunk yields, never as an interpreted instruction stream.
 struct Flow<'a, 'b> {
@@ -465,6 +490,10 @@ struct Flow<'a, 'b> {
     json_print_string: Option<cranelift_codegen::ir::FuncRef>,
     #[cfg(feature = "tool-json")]
     json_release: Option<cranelift_codegen::ir::FuncRef>,
+    #[cfg(feature = "tool-json")]
+    json_array: Option<cranelift_codegen::ir::FuncRef>,
+    #[cfg(feature = "tool-json")]
+    break_exit: Option<cranelift_codegen::ir::Block>,
     overflow: cranelift_codegen::ir::Block,
     budget: cranelift_codegen::ir::Block,
     output_error: cranelift_codegen::ir::Block,
@@ -552,6 +581,8 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
         Stmt::If(_, _, _) => {}
         Stmt::Return(_) | Stmt::For(_, _) => {}
         #[cfg(feature = "tool-json")]
+        Stmt::JsonFor { .. } | Stmt::JsonBreak => {}
+        #[cfg(feature = "tool-json")]
         Stmt::PrintJsonString { .. } | Stmt::PrintString { .. } => {}
     }
     #[cfg(feature = "tool-json")]
@@ -599,6 +630,19 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
             }
         }
         Stmt::For(i, body) => live = live_loop(*i, body, live),
+        #[cfg(feature = "tool-json")]
+        Stmt::JsonFor { root, body, .. } => {
+            live.json |= 1 << root;
+            loop {
+                let next = live.union(live_before(body, live));
+                if next == live {
+                    break;
+                }
+                live = next;
+            }
+        }
+        #[cfg(feature = "tool-json")]
+        Stmt::JsonBreak => {}
         #[cfg(feature = "tool-json")]
         Stmt::Tool {
             target,
@@ -682,7 +726,7 @@ impl Flow<'_, '_> {
         self.resumes.push(block);
         (pc, block)
     }
-    fn stmts(&mut self, ss: &[Stmt], following: Live) {
+    fn stmts(&mut self, ss: &[Stmt], following: Live) -> bool {
         let mut after = vec![following; ss.len()];
         let mut live = following;
         for (i, s) in ss.iter().enumerate().rev() {
@@ -718,11 +762,18 @@ impl Flow<'_, '_> {
                     }
                     .predicate(e, y, n);
                     self.b.switch_to_block(y);
-                    self.stmts(yes, live);
-                    self.b.ins().jump(join, &[]);
+                    let yes_terminal = self.stmts(yes, live);
+                    if !yes_terminal {
+                        self.b.ins().jump(join, &[]);
+                    }
                     self.b.switch_to_block(n);
-                    self.stmts(no, live);
-                    self.b.ins().jump(join, &[]);
+                    let no_terminal = self.stmts(no, live);
+                    if !no_terminal {
+                        self.b.ins().jump(join, &[]);
+                    }
+                    if yes_terminal && no_terminal {
+                        return true;
+                    }
                     self.b.switch_to_block(join);
                 }
                 #[cfg(feature = "tool-json")]
@@ -825,6 +876,15 @@ impl Flow<'_, '_> {
                     self.b.ins().brif(failed, self.output_error, &[], next, &[]);
                     self.b.switch_to_block(next);
                 }
+                #[cfg(feature = "tool-json")]
+                Stmt::JsonFor { slot, root, body } => self.array_scan(*slot, *root, body, live),
+                #[cfg(feature = "tool-json")]
+                Stmt::JsonBreak => {
+                    self.b
+                        .ins()
+                        .jump(self.break_exit.expect("sealed array break"), &[]);
+                    return true;
+                }
                 Stmt::For(buffer, body) => self.scan(*buffer, body, live),
                 Stmt::Return(e) => {
                     let value = self.expr(e);
@@ -832,9 +892,62 @@ impl Flow<'_, '_> {
                     self.constant(312, 0);
                     let done = self.b.ins().iconst(types::I64, 0);
                     self.b.ins().return_(&[done]);
+                    return true;
                 }
             }
         }
+        false
+    }
+    #[cfg(feature = "tool-json")]
+    fn array_call(&mut self, slot: usize, action: i64) -> Value {
+        let slot = self.b.ins().iconst(types::I64, slot as i64);
+        let action = self.b.ins().iconst(types::I64, action);
+        let call = self.b.ins().call(
+            self.json_array.expect("array helper"),
+            &[self.output, self.frame, slot, action],
+        );
+        let status = self.b.inst_results(call)[0];
+        let failed = self.b.ins().icmp_imm(IntCC::SignedLessThan, status, 0);
+        let next = self.b.create_block();
+        self.b.ins().brif(failed, self.output_error, &[], next, &[]);
+        self.b.switch_to_block(next);
+        status
+    }
+    #[cfg(feature = "tool-json")]
+    fn array_scan(&mut self, slot: usize, root: usize, body: &[Stmt], following: Live) {
+        let mut live = following;
+        live.json |= 1 << root;
+        loop {
+            let next = live.union(live_before(body, live));
+            if next == live {
+                break;
+            }
+            live = next;
+        }
+        self.array_call(slot, 0);
+        let (pc, header) = self.continuation();
+        let finish = self.b.create_block();
+        self.b.ins().jump(header, &[]);
+        self.b.switch_to_block(header);
+        let status = self.array_call(slot, 1);
+        let done = self.b.ins().icmp_imm(IntCC::Equal, status, 0);
+        let ready = self.b.create_block();
+        self.b.ins().brif(done, finish, &[], ready, &[]);
+        self.b.switch_to_block(ready);
+        let yielding = self.b.ins().icmp_imm(IntCC::Equal, status, 2);
+        let yield_block = self.b.create_block();
+        let row = self.b.create_block();
+        self.b.ins().brif(yielding, yield_block, &[], row, &[]);
+        self.b.switch_to_block(yield_block);
+        self.suspend(4, pc, live);
+        self.b.switch_to_block(row);
+        self.break_exit = Some(finish);
+        if !self.stmts(body, live) {
+            self.b.ins().jump(header, &[]);
+        }
+        self.break_exit = None;
+        self.b.switch_to_block(finish);
+        self.array_call(slot, 2);
     }
     fn scan(&mut self, buffer: usize, body: &[Stmt], following: Live) {
         let live = live_loop(buffer, body, following);
@@ -1147,6 +1260,36 @@ mod tests {
             println!("CE_BYTES {}\nCE_CLIF\n{}", code.code_bytes, code.clif);
         }
     }
+    #[test]
+    #[cfg(feature = "tool-json")]
+    fn dg_array_source_cfg() {
+        use crate::tool::{ObjectArraySchema, ResultSchema, ToolDeclaration};
+        let source = "data=tools.fetch()\ntotal=0\nfor row in data['items']:\n    if row['value']>threshold:\n        total+=row['value']*factor\n        break\nprint(total)";
+        let tools = [ToolDeclaration {
+            id: 101,
+            name: "fetch".into(),
+            arguments: vec![],
+            result: ResultSchema::JsonObjectArray(Box::new(ObjectArraySchema {
+                path: vec!["items".into()],
+                i64_fields: vec!["value".into()],
+            })),
+        }];
+        let program = crate::frontend::parse_with_declarations(
+            source,
+            &[("threshold", ir::Type::I64), ("factor", ir::Type::I64)],
+            &tools,
+        )
+        .unwrap();
+        let code = CodeUnit::lower(program, "speed", true).unwrap();
+        assert!(code.clif.contains("smul_overflow"));
+        assert!(code.clif.contains("sadd_overflow"));
+        assert!(code.clif.contains("brif"));
+        println!(
+            "DG source-dependent native bytes={}\n{}",
+            code.code_bytes, code.clif
+        );
+    }
+
     #[test]
     fn layout() {
         assert_eq!(std::mem::offset_of!(Frame, index), 256);

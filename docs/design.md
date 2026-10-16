@@ -52,6 +52,26 @@ Tool implementations stay behind declared capabilities; runtime authorization re
 
 With `tool-json`, the Host can declare a finite `ToolDeclaration` with one `ArgumentSchema::String("path")` and a `ResultSchema::JsonTyped` string leaf. Source may call `tools.read_file("notes.txt")`, `tools.read_file(path="notes.txt")`, or pass an already declared JSON string leaf/alias. `print(data["content"])`, `print("[" + data["content"] + "]")`, and `print(f"{n}: {data['content']}")` consume bounded strings directly. A `+` chain accepts only literals and declared string leaves; limited f-strings additionally accept i64/bool scalar fields without format specifiers or conversions. At most 32 pieces are sealed per sink. Source is capped at 16 KiB, individual literal at 4096 UTF-8 bytes, joined Tool argument at 64 KiB, and stdout (including newline) at its task cap. No string local values, generic operations, `read_file` global alias, dynamic iteration, or Python objects are exposed. A string-valued Tool call retains its arguments across detached operation completion even if the task cancels; the Host must recheck ID/path and bound independent in-flight work. The controlled real-file adapter in `tests/local_read_host.rs` validates this subset but does not reproduce Hermes read_file permissions, pagination, redaction or deduplication.
 
+### Bounded declared JSON object arrays
+
+With `tool-json`, `ResultSchema::JsonObjectArray(Box<ObjectArraySchema>)` declares
+one literal object-array path and one-level i64 fields. A sequential `for` over
+that path or an existing static subview alias reads iteration-only field slots;
+`break` exits this array loop. Existing scalar bodies and initialization rules
+apply. No generic object/list locals, dynamic indices, nested scans, element
+aliases, string fields, continue/for-else or Tool calls inside loops are admitted.
+
+Safe container lookup may scan the full array. Reached elements are structurally
+parsed and UTF-8 checked before the body; reached fields use existing first-match
+signed-i64 conversion. Break skips later user work, not necessarily tail syntax
+checking. The 64-KiB selected-range and 256-visited-element per-loop limits are
+engineering bounds. Each visited element consumes existing cumulative row fuel,
+and cursor metadata shares the aggregate buffer cap with live JSON/Quote owners.
+The existing chunk yield, cancellation, partial stdout and no-replay contracts
+remain. See [DG's exact validation, ownership and costs](dg-arrays.md), including
+the extra 8 inline bytes on all JSON task states and the public schema/Plan/IR
+migrations. General JSON arrays remain outside this slice.
+
 ### Direct JSON i64 f-string fields
 
 Direct declared JSON i64 leaves are also admitted in these limited f-strings.

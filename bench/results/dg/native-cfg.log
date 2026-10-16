@@ -1,0 +1,378 @@
+COMMAND ['cargo', '+1.96.0', 'test', '--offline', '--locked', '--release', '--features', 'tool-json', '--lib', 'dg_array_source_cfg', '--', '--nocapture']
+   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `release` profile [optimized + debuginfo] target(s) in 7.05s
+     Running unittests src/lib.rs (target/release/deps/minipy_native-5c76f542d8e0b57a)
+
+running 1 test
+CE_NATIVE
+  pacibsp
+  unwind Aarch64SetPointerAuth { return_addresses: true }
+  stp fp, lr, [sp, #-16]!
+  unwind PushFrameRegs { offset_upward_to_caller_sp: 16 }
+  mov fp, sp
+  unwind DefineNewFrame { offset_upward_to_caller_sp: 16, offset_downward_to_clobbers: 48 }
+  stp x26, x28, [sp, #-16]!
+  unwind SaveReg { clobber_offset: 32, reg: p26i }
+  unwind SaveReg { clobber_offset: 40, reg: p28i }
+  stp x22, x24, [sp, #-16]!
+  unwind SaveReg { clobber_offset: 16, reg: p22i }
+  unwind SaveReg { clobber_offset: 24, reg: p24i }
+  stp x20, x21, [sp, #-16]!
+  unwind SaveReg { clobber_offset: 0, reg: p20i }
+  unwind SaveReg { clobber_offset: 8, reg: p21i }
+block0:
+  mov x26, x2
+  ldr x22, [x0]
+  ldr x20, [x0, #8]
+  ldr x1, [x0, #16]
+  b label1
+block1:
+  ldr x4, [x0, #264]
+  mov x6, x0
+  orr x5, xzr, #4294967295
+  subs xzr, x4, x5
+  b.hi label2 ; b label3
+block2:
+  b label35
+block3:
+  movz x0, #0
+  mov x24, x0
+  emit_island 44
+  subs wzr, w4, #3
+  b.hs label4 ; csel x9, xzr, x4, hs ; csdb ; adr x8, pc+16 ; ldrsw x9, [x8, x9, uxtw #2] ; add x8, x8, x9 ; br x8 ; jt_entries [MachLabel(34), MachLabel(6), MachLabel(5)]
+block4:
+  b label35
+block5:
+  mov x21, x6
+  mov x28, x1
+  b label9
+block6:
+  movz x3, #0
+  load_ext_name_far x10, User(userextname3)+0
+  mov x21, x6
+  mov x0, x26
+  mov x1, x21
+  mov x2, x3
+  blr x10
+  subs xzr, x0, #0
+  b.lt label7 ; b label8
+block7:
+  b label33
+block8:
+  movz x1, #0
+  mov x28, x1
+  b label9
+block9:
+  movz x3, #1
+  load_ext_name_far x14, User(userextname3)+0
+  mov x0, x26
+  mov x1, x21
+  mov x2, x24
+  blr x14
+  subs xzr, x0, #0
+  b.lt label10 ; b label11
+block10:
+  b label33
+block11:
+  subs xzr, x0, #0
+  b.eq label12 ; b label13
+block12:
+  b label28
+block13:
+  subs xzr, x0, #2
+  b.eq label27 ; b label14
+block14:
+  movz x1, #1
+  add x2, x21, #272
+  load_ext_name_far x6, User(userextname1)+0
+  mov x0, x26
+  blr x6
+  cbnz x0, label15 ; b label16
+block15:
+  b label33
+block16:
+  ldr x8, [x21, #272]
+  subs xzr, x8, x22
+  b.gt label19 ; b label17
+block17:
+  b label18
+block18:
+  b label9
+block19:
+  movz x1, #1
+  add x2, x21, #272
+  load_ext_name_far x12, User(userextname1)+0
+  mov x0, x26
+  blr x12
+  cbnz x0, label20 ; b label21
+block20:
+  b label33
+block21:
+  ldr x14, [x21, #272]
+  madd x12, x14, x20, xzr
+  smulh x14, x14, x20
+  subs xzr, x14, x12, ASR 63
+  cset x1, ne
+  uxtb w15, w1
+  cbnz x15, label22 ; b label23
+block22:
+  b label26
+block23:
+  mov x1, x28
+  adds x1, x1, x12
+  mov x28, x1
+  cset x2, vs
+  uxtb w1, w2
+  cbnz x1, label24 ; b label25
+block24:
+  b label26
+block25:
+  b label28
+block26:
+  movz x0, #1
+  ldp x20, x21, [sp], #16
+  ldp x22, x24, [sp], #16
+  ldp x26, x28, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+block27:
+  movz x1, #1
+  load_ext_name_far x5, User(userextname2)+0
+  mov x0, x26
+  blr x5
+  mov x1, x28
+  str x1, [x21, #16]
+  movz x7, #2
+  str x7, [x21, #264]
+  mov x0, x24
+  str x0, [x21, #312]
+  movz x0, #4
+  ldp x20, x21, [sp], #16
+  ldp x22, x24, [sp], #16
+  ldp x26, x28, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+block28:
+  movz x3, #2
+  load_ext_name_far x10, User(userextname3)+0
+  mov x0, x26
+  mov x1, x21
+  mov x2, x24
+  blr x10
+  subs xzr, x0, #0
+  b.lt label29 ; b label30
+block29:
+  b label33
+block30:
+  load_ext_name_far x13, User(userextname0)+0
+  mov x0, x26
+  mov x1, x28
+  mov x2, x24
+  blr x13
+  cbnz x0, label31 ; b label32
+block31:
+  b label33
+block32:
+  mov x0, x24
+  str x0, [x21, #272]
+  str x0, [x21, #312]
+  ldp x20, x21, [sp], #16
+  ldp x22, x24, [sp], #16
+  ldp x26, x28, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+block33:
+  movz x0, #6
+  ldp x20, x21, [sp], #16
+  ldp x22, x24, [sp], #16
+  ldp x26, x28, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+block34:
+  mov x0, x24
+  mov x21, x6
+  str x0, [x21, #280]
+  str x0, [x21, #272]
+  str x0, [x21, #288]
+  movz x22, #1
+  load_ext_name_far x6, User(userextname2)+0
+  mov x0, x26
+  mov x1, x22
+  blr x6
+  str x22, [x21, #264]
+  mov x0, x24
+  str x0, [x21, #312]
+  movz x0, #8
+  ldp x20, x21, [sp], #16
+  ldp x22, x24, [sp], #16
+  ldp x26, x28, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+block35:
+  movz x0, #5
+  ldp x20, x21, [sp], #16
+  ldp x22, x24, [sp], #16
+  ldp x26, x28, [sp], #16
+  ldp fp, lr, [sp], #16
+  retabsp
+
+DG source-dependent native bytes=728
+function u0:0(i64, i64, i64) -> i64 apple_aarch64 {
+    sig0 = (i64, i64, i64) -> i64 apple_aarch64
+    sig1 = (i64, i64, i64) -> i64 apple_aarch64
+    sig2 = (i64, i64) apple_aarch64
+    sig3 = (i64, i64, i64, i64) -> i64 apple_aarch64
+    fn0 = u0:0 sig0
+    fn1 = u0:1 sig1
+    fn2 = u0:2 sig2
+    fn3 = u0:4 sig3
+
+block0(v0: i64, v1: i64, v2: i64):
+    v3 = load.i64 notrap aligned v0
+    v4 = load.i64 notrap aligned v0+8
+    v41 -> v4
+    v66 -> v4
+    v5 = load.i64 notrap aligned v0+16
+    jump block5
+
+block4:
+    v6 = iconst.i64 0
+    v7 = iconst.i64 0
+    store notrap aligned v6, v0+280  ; v6 = 0
+    store notrap aligned v7, v0+272  ; v7 = 0
+    v8 = iconst.i64 0
+    store notrap aligned v8, v0+288  ; v8 = 0
+    v9 = iconst.i64 1
+    call fn2(v2, v9)  ; v9 = 1
+    v10 = iconst.i64 1
+    store notrap aligned v10, v0+264  ; v10 = 1
+    v11 = iconst.i64 0
+    store notrap aligned v11, v0+312  ; v11 = 0
+    v12 = iconst.i64 8
+    return v12  ; v12 = 8
+
+block6:
+    v13 = iconst.i64 0
+    v14 = iconst.i64 0
+    v15 = iconst.i64 0
+    v16 = call fn3(v2, v0, v14, v15)  ; v14 = 0, v15 = 0
+    v17 = icmp_imm slt v16, 0
+    brif v17, block3, block7
+
+block7:
+    jump block8(v13, v3)  ; v13 = 0
+
+block8(v62: i64, v65: i64):
+    v25 -> v62
+    v64 -> v62
+    v36 -> v64
+    v63 -> v64
+    v33 -> v65
+    v18 = iconst.i64 0
+    v19 = iconst.i64 1
+    v20 = call fn3(v2, v0, v18, v19)  ; v18 = 0, v19 = 1
+    v21 = icmp_imm slt v20, 0
+    brif v21, block3, block10
+
+block10:
+    v22 = icmp_imm.i64 eq v20, 0
+    brif v22, block9(v62), block11
+
+block11:
+    v23 = icmp_imm.i64 eq v20, 2
+    brif v23, block12, block13
+
+block12:
+    v24 = iconst.i64 1
+    call fn2(v2, v24)  ; v24 = 1
+    store.i64 notrap aligned v25, v0+16
+    v26 = iconst.i64 2
+    store notrap aligned v26, v0+264  ; v26 = 2
+    v27 = iconst.i64 0
+    store notrap aligned v27, v0+312  ; v27 = 0
+    v28 = iconst.i64 4
+    return v28  ; v28 = 4
+
+block13:
+    v29 = iconst.i64 1
+    v30 = iadd_imm.i64 v0, 272
+    v31 = call fn1(v2, v29, v30)  ; v29 = 1
+    brif v31, block3, block17
+
+block17:
+    v32 = load.i64 notrap aligned v0+272
+    v34 = icmp sgt v32, v33
+    v35 = uextend.i64 v34
+    brif v35, block14, block15
+
+block14:
+    v37 = iconst.i64 1
+    v38 = iadd_imm.i64 v0, 272
+    v39 = call fn1(v2, v37, v38)  ; v37 = 1
+    brif v39, block3, block18
+
+block18:
+    v40 = load.i64 notrap aligned v0+272
+    v42, v43 = smul_overflow v40, v41
+    brif v43, block1, block19
+
+block19:
+    v44, v45 = sadd_overflow.i64 v36, v42
+    brif v45, block1, block20
+
+block20:
+    jump block9(v44)
+
+block15:
+    jump block16
+
+block16:
+    jump block8(v63, v33)
+
+block9(v67: i64):
+    v50 -> v67
+    v46 = iconst.i64 0
+    v47 = iconst.i64 2
+    v48 = call fn3(v2, v0, v46, v47)  ; v46 = 0, v47 = 2
+    v49 = icmp_imm slt v48, 0
+    brif v49, block3, block21
+
+block21:
+    v51 = iconst.i64 0
+    v52 = call fn0(v2, v50, v51)  ; v51 = 0
+    brif v52, block3, block22
+
+block22:
+    v53 = iconst.i64 0
+    store notrap aligned v53, v0+272  ; v53 = 0
+    v54 = iconst.i64 0
+    store notrap aligned v54, v0+312  ; v54 = 0
+    v55 = iconst.i64 0
+    return v55  ; v55 = 0
+
+block5:
+    v56 = load.i64 notrap aligned v0+264
+    v57 = icmp_imm ugt v56, 0xffff_ffff
+    brif v57, block2, block23
+
+block23:
+    v58 = ireduce.i32 v56
+    br_table v58, block2, [block4, block6, block8(v5, v3)]
+
+block1:
+    v59 = iconst.i64 1
+    return v59  ; v59 = 1
+
+block2:
+    v60 = iconst.i64 5
+    return v60  ; v60 = 5
+
+block3:
+    v61 = iconst.i64 6
+    return v61  ; v61 = 6
+}
+
+test codegen::tests::dg_array_source_cfg ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 37 filtered out; finished in 0.01s
+

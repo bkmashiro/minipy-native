@@ -53,7 +53,14 @@ Candidate missing objects receive bounded UTF-8/structural validation, while
 present/required access retains its lazy behavior. See [semantics, costs and the
 public StringSource migration](docs/df-get.md).
 
-Iteration currently uses the fixed Quote/v1 layout (`unit_price_cents`, `quantity`). General record schemas, nested scans, Tool calls inside loops, conditional buffer creation, buffer aliases, general functions/objects and packages are unsupported.
+Default iteration uses the fixed Quote/v1 layout (`unit_price_cents`, `quantity`).
+With `tool-json`, Hosts can also opt into one declared object-array path per Tool,
+with static i64 fields, sequential `for` and `break`. This slice bounds selected
+arrays to 64 KiB and visited elements to 256 per loop, using the existing task
+fuel, aggregate buffer cap and chunk cancellation. See [array semantics, costs
+and API migration](docs/dg-arrays.md). General collections/record schemas, nested
+scans, Tool calls inside loops, conditional buffer creation, Quote buffer aliases,
+general functions/objects and packages remain unsupported.
 
 Execution bounds cover scanned rows, retained buffers, Tool calls and stdout. Chunk limits apply per scan, not per task CPU slice. Compiler, runtime and providers are trusted components. Providers must authorize each Tool call and bound detached work. Task budgets do not impose a service-wide memory or in-flight-operation quota.
 
