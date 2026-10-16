@@ -237,3 +237,10 @@ measurement. Private CU scratch is 170,924 KiB and committed evidence about
 4,680 KiB. No dependencies, extra targets/worktrees, large machine-code dumps,
 profraw/profdata or executables are committed. These costs plus the tape regression
 reinforce keeping the pipeline opt-in and ending this optimization round.
+
+The sole focused independent `gpt-6-luna / openai-codex` review approves fixed
+implementation commit d35de79, with no blocking changes. [Review record](cu-review.md).
+Formal raw stores timings rather than per-request status/stdout; successful
+process exit attests the committed in-process oracles passed, not a standalone
+output replay from the timing rows. Operator review on the original card remains
+the final task gate.
