@@ -40,6 +40,10 @@ relaxing behavior assertions. Existing mounted external target, shared fcntl
 lock, one job; no new target/worktree, downloads, CI, Linux/Wasm or performance
 campaign. Exact policy/costs/API migration and commands: [dg-arrays.md](dg-arrays.md);
 small raw logs/source identities: `bench/results/dg/`.
+Fixed signed implementation `8ce91de` received one focused read-only independent
+review: actual delegate result model gpt-6-luna, configured/reported provider
+openai-codex, seven API calls; no confirmed blocker, file edit or Cargo rerun.
+Implementation unchanged after review. Review record is `bench/results/dg/review.md`.
 
 ## DF: shared declared-string get/default (2026-10-16)
 
