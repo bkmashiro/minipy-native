@@ -52,6 +52,21 @@ Tool implementations stay behind declared capabilities; runtime authorization re
 
 With `tool-json`, the Host can declare a finite `ToolDeclaration` with one `ArgumentSchema::String("path")` and a `ResultSchema::JsonTyped` string leaf. Source may call `tools.read_file("notes.txt")`, `tools.read_file(path="notes.txt")`, or pass an already declared JSON string leaf/alias. `print(data["content"])`, `print("[" + data["content"] + "]")`, and `print(f"{n}: {data['content']}")` consume bounded strings directly. A `+` chain accepts only literals and declared string leaves; limited f-strings additionally accept i64/bool scalar fields without format specifiers or conversions. At most 32 pieces are sealed per sink. Source is capped at 16 KiB, individual literal at 4096 UTF-8 bytes, joined Tool argument at 64 KiB, and stdout (including newline) at its task cap. No string local values, generic operations, `read_file` global alias, dynamic iteration, or Python objects are exposed. A string-valued Tool call retains its arguments across detached operation completion even if the task cancels; the Host must recheck ID/path and bound independent in-flight work. The controlled real-file adapter in `tests/local_read_host.rs` validates this subset but does not reproduce Hermes read_file permissions, pagination, redaction or deduplication.
 
+### Direct JSON i64 f-string fields
+
+Direct declared JSON i64 leaves are also admitted in these limited f-strings.
+They use the existing path/integer cache and scalar decimal formatter, evaluated
+left to right with other pieces at the consuming sink. They are not lowered to
+an eager pre-sink read: a prior string decode/size error still wins over a later
+bad integer. Integer reads retain their existing budget contract (no string scan
+charge); mixed string pieces retain their validation/decode charges. Root masks
+keep owners live until consumption and across intervening waits. Stdout commits
+only after all pieces and output permission/size checks succeed. Tool argument
+evaluation precedes authorization/submission, and its owned text survives task
+cancellation. `+` does not implicitly coerce a JSON integer to a string. This
+adds `StringSource::JsonInteger` to the public sealed-plan representation, so
+exhaustive consumers of that enum need to handle the new variant.
+
 ### Bounded string equality
 
 With `tool-json`, a declared JSON string leaf or existing leaf alias supports

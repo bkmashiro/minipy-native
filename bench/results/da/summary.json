@@ -1,0 +1,14 @@
+{
+  "tape": {
+    "pairs": 32,
+    "direct_median_ns": 20062.5,
+    "temporary_median_ns": 23124.5,
+    "paired_direct_over_temporary_median": 0.8661953012338685
+  },
+  "native": {
+    "pairs": 32,
+    "direct_median_ns": 159979.5,
+    "temporary_median_ns": 180313.0,
+    "paired_direct_over_temporary_median": 0.8933440958578339
+  }
+}

@@ -63,6 +63,12 @@ candidate is direct JSON-i64 f-string consumption for 01, but it is not implemen
 or scheduled by this task. Arrays/defaults/prefix operations remain independent
 gaps. Stop this phase here rather than expanding toward full Python.
 
+DA update: the CY matrix above records the CY snapshot. Direct JSON-i64 f-string
+consumption is now implemented and CV01 runs unchanged in both backends, including
+its non-ready branch. The current count is seven synthetic complete originals;
+04/05/09 retain the listed gaps. See `tests/json_fstring.rs` and
+`bench/results/da/README.md`. This count is not a production coverage percentage.
+
 ## Verification and bounded timing
 
 `python3 tools/cy_check.py` uses the existing external target, shared fcntl lock,

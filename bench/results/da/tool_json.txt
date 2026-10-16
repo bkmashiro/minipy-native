@@ -1,0 +1,82 @@
+   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `release` profile [optimized + debuginfo] target(s) in 9.39s
+     Running tests/cy_routing.rs (target/release/deps/cy_routing-1add952d3562a6d7)
+
+running 5 tests
+test malformed_type_schema_and_preparation_limits_are_rejected_not_routed ... ok
+test json_preparation_limits_are_resource_errors_on_both_backends ... ok
+test cancellation_after_submission_keeps_effect_once_and_never_routes ... ok
+test fresh_source_success_and_whole_script_admission_before_any_effect ... ok
+test runtime_errors_keep_partial_stdout_and_never_replay_or_fallback ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/json_fstring.rs (target/release/deps/json_fstring-2fa36e441cd54e0f)
+
+running 7 tests
+test admission_stays_limited_to_declared_leaves_and_existing_format_subset ... ok
+test evaluated_integer_does_not_bypass_authority_or_call_budget ... ok
+test unchanged_cv01_and_unexecuted_branch ... ok
+test root_liveness_across_wait_and_detached_argument_after_cancel ... ok
+test integer_extrema_mixed_sinks_and_nested_view ... ok
+test left_to_right_scan_type_size_and_authority_priority ... ok
+test invalid_leaf_is_atomic_and_never_submits_tool ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/string_contains.rs (target/release/deps/string_contains-a60012f840df2f19)
+
+running 4 tests
+test schema_rejects_unapproved_shapes ... ok
+test budgets_and_wait_lifetime ... ok
+test print_declared_json_string_leaf_both_backends ... ok
+test real_source_differential ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/string_equality.rs (target/release/deps/string_equality-802252b3477d6654)
+
+running 6 tests
+test bounded_admission_and_remaining_cv_gaps ... ok
+test exact_scan_decode_retained_and_token_budgets ... ok
+test original_cv_scripts_and_branches_both_backends ... ok
+test owner_across_wait_last_use_cancellation_and_detached_argument ... ok
+test error_order_short_circuit_and_no_later_effect ... ok
+test unicode_predicates_literals_on_either_side_and_aliases ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/string_tool.rs (target/release/deps/string_tool-2274f0f4bf23c4b6)
+
+running 7 tests
+test resident_request_cost ... ignored
+test resident_sink_cost ... ignored
+test admission_location_and_legacy_numeric_api ... ok
+test joined_argument_remains_owned_after_cancellation ... ok
+test json_alias_escaped_utf8_and_detached_owner_survive_cancellation ... ok
+test literal_string_tools_are_not_special_cased_and_errors_preserve_output ... ok
+test sink_join_print_and_tool_preserve_order_and_bounds ... ok
+
+test result: ok. 5 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/tool_json.rs (target/release/deps/tool_json-ee2d4bc9fa294116)
+
+running 15 tests
+test direct_tool_print_rejects_json_nested_calls_and_loop_effects ... ok
+test schema_and_binding_reject_unsupported_without_runtime ... ok
+test direct_tool_print_suspends_and_cancellation_preserves_prefix ... ok
+test cancellation_with_live_subview_drops_task_owner_not_operation ... ok
+test source_binding_and_real_backends_share_results ... ok
+test standalone_scalar_tool_call_executes_and_discards_result ... ok
+test subview_keeps_root_across_actual_wait_then_releases ... ok
+test task_tool_permissions_counts_and_buffer_cap ... ok
+test branch_last_use_alias_error_and_multiple_owner_budget ... ok
+test malformed_accessed_content_is_task_error_not_partial_success ... ok
+test duplicate_escaped_keys_extremes_and_unvisited_suffix_contract ... ok
+test multiply_add_preserves_fallible_operand_order ... ok
+test direct_scalar_tool_print_matches_explicit_binding_and_bounds ... ok
+test accessed_errors_short_circuit_and_left_to_right_are_preserved ... ok
+test cancellation_detached_late_json_response_drops_owner ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+

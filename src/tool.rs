@@ -218,13 +218,14 @@ pub enum ToolArguments {
 pub enum StringSource {
     Literal(Arc<str>),
     Json { slot: usize, root: usize },
+    JsonInteger { slot: usize, root: usize },
     Scalar { slot: usize, boolean: bool },
     Joined(Vec<StringSource>),
 }
 impl StringSource {
     pub(crate) fn roots(&self) -> u32 {
         match self {
-            Self::Json { root, .. } => 1 << root,
+            Self::Json { root, .. } | Self::JsonInteger { root, .. } => 1 << root,
             Self::Joined(parts) => parts.iter().fold(0, |mask, p| mask | p.roots()),
             _ => 0,
         }

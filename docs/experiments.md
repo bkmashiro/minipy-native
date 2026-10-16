@@ -2593,3 +2593,39 @@ prepare+实际 execute+unit/outcome drop，源码文本生成和Host/runtime设�
 未由reviewer重跑测试。实际 session_model_usage 核验审阅为
 gpt-6-luna/openai-codex（8次调用），独立标题生成模型不计为审阅替代。
 prompt/output/identity 归档于 CX evidence；最终远端SHA留在原卡。
+
+## DA：直接 JSON-i64 f-string 消费
+
+在已审 CY main `f2e905d` 上只扩一项：声明 JSON i64 叶可直接用于现有
+print/Tool f-string sink。复用 path/integer cache、SinkPart 栈上十进制
+formatter 与 root liveness；没有新增普通字符串值、eager 临时读、后端
+helper、通用表达式/format spec/conversion。混合 pieces 按源顺序消费，
+前面字符串校验/大小错误不会被后面整数错误抢先。整数读取保持原预算
+合同，不另扣 string scan。stdout 整行提交与 Tool 授权顺序不变。
+
+CV01 原始脚本在 native/tape 完整执行，ready 输出 `ready: 3`，未命中分支
+输出 `not ready` 且不读取缺失/坏 count。当前七个合成完整脚本可运行，
+04 arrays/iteration/break、05 get/default、09 startswith 仍缺，不能推广
+真实覆盖率。新增七项测试覆盖 signed extrema、嵌套 view、混合 pieces、
+缺失/null/类型/范围、错误顺序/预算/权限、stdout 原子性、跨 wait owner
+存活与最后使用释放、取消后 detached 参数存活；两后端真实执行。
+
+`python3 tools/da_check.py`：macOS arm64 default 完整 release suite
+84 passed/3 ignored；tool-json 与 tool-json+debug-runtime 各定向六个
+integration suites 42 passed/2 ignored。定向 Clippy（允许既有 CT
+type_complexity）、stable fmt、diff check 通过。没有声称全 feature 完整
+suite、严格全 target Clippy 或 Linux/Wasm 运行。首次新测试误写 raw `"x"`
+token 的 scan 阈值为 4，原合同/实测为 3，仅修测试至 2 失败/3 通过。
+
+一次 `python3 tools/da_check.py --measure`，132 行 raw（4 warmup），
+每后端 32 对 direct/现有 temporary scalar。每次新 source，计时包括
+parse/prepare 或 native compile、实际 execute、状态/输出断言与 unit/out
+drop；source 构造、声明/Host/runtime 建立在外。tape direct/temporary
+中位 20.0625/23.1245 us，native 159.9795/180.3130 us；paired ratio
+0.8662/0.8933。仅单轮合成诊断，没有成立的隔离低负载条件或 Monty
+对照，不作优化净收益、通用提速或回退界声明，不补采。
+
+全部复用原外盘 target、fcntl 锁、单 job、Rust1.96 offline/locked，
+没有依赖下载、新 target/worktree、CI、Host executor、源码重写或新 campaign。
+原始命令/log/source hashes/raw/限制见 `bench/results/da/README.md`。
+固定签名提交交唯一一次 Luna 定向只读审阅，结果及远端 SHA 留在原卡。

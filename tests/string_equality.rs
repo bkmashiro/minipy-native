@@ -273,7 +273,7 @@ async fn original_cv_scripts_and_branches_both_backends() {
 }
 #[test]
 fn bounded_admission_and_remaining_cv_gaps() {
-    for index in [0, 3, 4, 8] {
+    for index in [3, 4, 8] {
         let a = CodeUnit::compile_with_declarations(CASES[index], INPUTS, &declarations())
             .err()
             .unwrap();
@@ -281,10 +281,6 @@ fn bounded_admission_and_remaining_cv_gaps() {
             .err()
             .unwrap();
         assert_eq!(a, b);
-        if index == 0 {
-            assert!(a.reason.contains("string") || a.reason.contains("format"));
-            assert_eq!(a.location.unwrap().0, 3);
-        }
     }
     for expr in [
         "d['message'] == d['status']",

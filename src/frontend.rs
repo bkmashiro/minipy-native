@@ -933,15 +933,25 @@ impl<'a> Compiler<'a> {
             }
             _ => {
                 if let Some((root, path)) = self.json_path(e)? {
-                    if !self.json_leaves[root]
+                    let leaf = self.json_leaves[root]
                         .iter()
-                        .any(|(p, t)| p == &path && *t == JsonLeaf::String)
-                    {
-                        return Err(type_err("string part requires declared JSON string leaf"));
+                        .find_map(|(p, t)| (p == &path).then_some(*t));
+                    match leaf {
+                        Some(JsonLeaf::String) => {
+                            let slot = self.json.path(root, &path)?;
+                            self.json.string_paths = true;
+                            parts.push(S::Json { slot, root });
+                        }
+                        Some(JsonLeaf::I64) if format => {
+                            let slot = self.json.path(root, &path)?;
+                            parts.push(S::JsonInteger { slot, root });
+                        }
+                        _ => {
+                            return Err(type_err(
+                                "string part requires declared JSON string leaf or f-string i64 leaf",
+                            ));
+                        }
                     }
-                    let slot = self.json.path(root, &path)?;
-                    self.json.string_paths = true;
-                    parts.push(S::Json { slot, root });
                 } else if format {
                     match e {
                         ast::Expr::Name(n) => {

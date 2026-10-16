@@ -289,6 +289,10 @@ impl Output {
             crate::tool::StringSource::Scalar { slot, boolean } => {
                 Ok(SinkPart::scalar(locals[*slot], *boolean))
             }
+            crate::tool::StringSource::JsonInteger { slot, .. } => {
+                let value = self.json.as_mut().expect("JSON plan").integer(*slot)?;
+                Ok(SinkPart::scalar(value, false))
+            }
             _ => self.string_value(source, locals).map(SinkPart::Text),
         }
     }
@@ -302,6 +306,9 @@ impl Output {
         match source {
             S::Literal(s) => Ok(V::Literal(s.clone())),
             S::Json { slot, .. } => self.json.as_mut().expect("JSON plan").string_value(*slot),
+            S::JsonInteger { .. } => Ok(V::Joined(
+                self.sink_part(source, locals)?.as_str().to_owned(),
+            )),
             S::Scalar { slot, boolean } => Ok(V::Joined(if *boolean {
                 if locals[*slot] == 0 {
                     "False".to_owned()
@@ -364,6 +371,12 @@ impl Output {
                     values[i] = Some(value);
                     size
                 }
+                S::JsonInteger { .. } => {
+                    let value = self.sink_part(part, locals)?;
+                    let size = value.len();
+                    values[i] = Some(value);
+                    size
+                }
                 S::Joined(_) => unreachable!("flattened sink plan"),
             };
             len = len.checked_add(size).ok_or(TaskError::Budget)?;
@@ -391,7 +404,7 @@ impl Output {
             let text = match part {
                 S::Literal(s) => s.as_ref(),
                 S::Json { slot, .. } => self.json.as_ref().unwrap().prepared_string(*slot),
-                S::Scalar { .. } => values[i].as_ref().unwrap().as_str(),
+                S::Scalar { .. } | S::JsonInteger { .. } => values[i].as_ref().unwrap().as_str(),
                 S::Joined(_) => unreachable!("flattened sink plan"),
             };
             self.stdout.push_str(text);

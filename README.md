@@ -42,6 +42,10 @@ Top-level scripts support inferred i64/bool locals, optional annotations, checke
 
 With `tool-json`, Hosts can declare JSON leaves and bounded string Tool arguments. String leaves, literal concatenation and limited f-strings work at print/Tool sinks. String predicates support literal `in` and declared string leaf `==` / `!=` literal (either side, including leaf aliases). Equality compares decoded Unicode without normalization. General string-valued locals and arbitrary string operations are unsupported.
 
+Limited f-strings also consume declared JSON i64 leaves directly, for example
+`print(f"ready: {state['count']}")`. Fields evaluate left to right at the sink;
+format specifiers, conversions and arbitrary embedded expressions remain unsupported.
+
 Iteration currently uses the fixed Quote/v1 layout (`unit_price_cents`, `quantity`). General record schemas, nested scans, Tool calls inside loops, conditional buffer creation, buffer aliases, general functions/objects and packages are unsupported.
 
 Execution bounds cover scanned rows, retained buffers, Tool calls and stdout. Chunk limits apply per scan, not per task CPU slice. Compiler, runtime and providers are trusted components. Providers must authorize each Tool call and bound detached work. Task budgets do not impose a service-wide memory or in-flight-operation quota.
