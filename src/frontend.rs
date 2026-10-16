@@ -87,13 +87,23 @@ fn parse_validated_tools(
     }
     check_delimiter_depth(source)?;
     validate_inputs(inputs)?;
+    #[cfg(feature = "compiler-profile")]
+    let start = std::time::Instant::now();
     let module = ast::Suite::parse(source, "<minipy>").map_err(|e| {
         CompileError::new(AdmissionKind::Syntax, format!("Python syntax error: {e}"))
             .at(source, e.offset.to_usize())
-    })?;
+    });
+    #[cfg(feature = "compiler-profile")]
+    crate::compiler_profile::update(|p| p.parse_ns = crate::compiler_profile::elapsed(start));
+    let module = module?;
+    #[cfg(feature = "compiler-profile")]
+    let start = std::time::Instant::now();
     let mut compiler = Compiler::new(inputs, source)?;
     compiler.tools = tools;
-    compiler.program(module)
+    let result = compiler.program(module);
+    #[cfg(feature = "compiler-profile")]
+    crate::compiler_profile::update(|p| p.type_ns = crate::compiler_profile::elapsed(start));
+    result
 }
 
 fn validate_inputs(inputs: &[(&str, Type)]) -> Result<()> {

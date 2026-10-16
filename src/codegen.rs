@@ -118,11 +118,14 @@ impl CodeUnit {
         inputs: &[(&str, ir::Type)],
         tools: &[crate::tool::ToolSchema],
     ) -> Result<Self, CompileError> {
-        Self::lower(
-            crate::frontend::parse_with_tools(source, inputs, tools)?,
-            "speed",
-            false,
-        )
+        #[cfg(feature = "compiler-profile")]
+        let start = std::time::Instant::now();
+        let program = crate::frontend::parse_with_tools(source, inputs, tools);
+        #[cfg(feature = "compiler-profile")]
+        crate::compiler_profile::update(|p| {
+            p.frontend_ns = crate::compiler_profile::elapsed(start)
+        });
+        Self::lower(program?, "speed", false)
     }
     #[cfg(feature = "tool-json")]
     pub fn compile_with_declarations(
@@ -130,11 +133,14 @@ impl CodeUnit {
         inputs: &[(&str, ir::Type)],
         tools: &[crate::tool::ToolDeclaration],
     ) -> Result<Self, CompileError> {
-        Self::lower(
-            crate::frontend::parse_with_declarations(source, inputs, tools)?,
-            "speed",
-            false,
-        )
+        #[cfg(feature = "compiler-profile")]
+        let start = std::time::Instant::now();
+        let program = crate::frontend::parse_with_declarations(source, inputs, tools);
+        #[cfg(feature = "compiler-profile")]
+        crate::compiler_profile::update(|p| {
+            p.frontend_ns = crate::compiler_profile::elapsed(start)
+        });
+        Self::lower(program?, "speed", false)
     }
     /// Compile new source using declarations already validated by the Host.
     #[cfg(feature = "tool-json")]
@@ -143,11 +149,14 @@ impl CodeUnit {
         inputs: &[(&str, ir::Type)],
         environment: &crate::tool::ToolEnvironment,
     ) -> Result<Self, CompileError> {
-        Self::lower(
-            crate::frontend::parse_with_environment(source, inputs, environment)?,
-            "speed",
-            false,
-        )
+        #[cfg(feature = "compiler-profile")]
+        let start = std::time::Instant::now();
+        let program = crate::frontend::parse_with_environment(source, inputs, environment);
+        #[cfg(feature = "compiler-profile")]
+        crate::compiler_profile::update(|p| {
+            p.frontend_ns = crate::compiler_profile::elapsed(start)
+        });
+        Self::lower(program?, "speed", false)
     }
     fn lower(program: ir::Program, opt: &str, retain_ir: bool) -> Result<Self, CompileError> {
         let (mut ctx, mut fc) = SCRATCH.with(|s| s.borrow_mut().take()).unwrap_or_else(|| {

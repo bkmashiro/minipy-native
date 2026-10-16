@@ -1,0 +1,45 @@
+   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `release` profile [optimized + debuginfo] target(s) in 14.48s
+     Running tests/co_count.rs (target/release/deps/co_count-84324f06d5ac9de8)
+
+running 5 tests
+test count_cancels_at_first_chunk_and_reuses_immutable_unit ... ok
+test count_retains_live_json_across_chunk_yields ... ok
+test count_nonmatching_shapes_and_multiple_loops ... ok
+test count_overflow_and_ordered_effects ... ok
+test count_fields_distributions_tails_and_chunk_fuel ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.84s
+
+     Running tests/ct_alloc.rs (target/release/deps/ct_alloc-6493dafe9bdba611)
+
+running 2 tests
+test allocation_diagnosis ... ignored, independent CT allocation diagnosis for both fixed source variants
+test matched_schema_width_does_not_add_allocations ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ct_errors.rs (target/release/deps/ct_errors-855e7d9be99f749f)
+
+running 1 test
+test structured_errors_preserve_priority_and_source_location ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ct_schema.rs (target/release/deps/ct_schema-3293f4f890c03cf4)
+
+running 2 tests
+test request ... ignored, explicit bounded CT timing under perf lock
+test prepared_plans_outlive_both_schema_variants ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/tool_environment.rs (target/release/deps/tool_environment-bd7ffefb0a8866d0)
+
+running 3 tests
+test resident_new_source_cost ... ignored
+test registration_and_source_errors_match_legacy_entry ... ok
+test registered_environment_is_reusable_but_not_authority ... ok
+
+test result: ok. 2 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

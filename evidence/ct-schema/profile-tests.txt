@@ -1,0 +1,13 @@
+   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.42s
+     Running tests/ct_profile.rs (target/debug/deps/ct_profile-50ec9622018373c1)
+
+running 2 tests
+test registration_error_diagnostics_stop_at_the_failed_phase ... ok
+CTPROFILE entry=0 frontend=2945042 parse=2644417 type=235917 lowering=1233500 define=5701583 finalize=37041
+CTPROFILE entry=1 frontend=434292 parse=351791 type=43084 lowering=155416 define=2790291 finalize=18916
+CTPROFILE entry=2 frontend=276916 parse=231041 type=26084 lowering=114458 define=2469959 finalize=19917
+test registered_and_declaration_frontend_timers_are_nested ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+

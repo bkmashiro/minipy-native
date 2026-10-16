@@ -48,3 +48,11 @@ All commands start in the repository. `tools/ct_schema.py command` acquires the 
 - Suites: `python3 tools/ct_schema.py command cargo +1.96.0 test --offline --locked`, then add `--features tool-json`, then `--release --features tool-json`.
 
 The ordinary release remains non-PGO. No parser/path/integer redesign, SIMD, kernel DSL, Tool specialization or website change is included.
+
+## Separate compiler-profile registration correction
+
+The follow-up diagnostic-only commit adds parse/type measurements to `parse_validated_tools` and an enclosing frontend measurement to native `compile_with_environment`. The two declaration-based native wrappers have the same missing outer measurement and receive the same correction. Parsing time is recorded even when AST parsing fails; type time is recorded for semantic failures. Schema/source-boundary failures before parsing do not claim parser work. Callers still reset the thread-local profile before each diagnostic; these fields are not an accumulating service telemetry API.
+
+All clocks and profile updates are guarded by `compiler-profile`. The ordinary build performs no new timer reads. Parser/type timers are nested within the native frontend interval and must not be added to frontend as disjoint phases. Tape's shared frontend now reports parse/type, but the native-only outer `frontend_ns` remains zero on tape. Two focused tests assert populated/nested success timers for all three Tool entry points and zero unreached backend phases for parser/type/schema errors. They passed with `tool-json,compiler-profile`; the ordinary release focused regression (both JSON variants, owned plans, allocation width, exact errors, authorization and fused CO) also passed after this change. Actual diagnostic values in `profile-tests.txt` are separate from formal request results; no phase-share estimate is constructed.
+
+Command: `python3 tools/ct_schema.py command cargo +1.96.0 test --offline --locked --features tool-json,compiler-profile --test ct_profile -- --nocapture`. Ordinary focused command: `python3 tools/ct_schema.py command cargo +1.96.0 test --offline --locked --release --features tool-json --test ct_schema --test ct_alloc --test ct_errors --test tool_environment --test co_count`.
