@@ -1,0 +1,86 @@
+{
+  "old_path_deltas": [
+    {
+      "source": "scalar",
+      "native": false,
+      "deltas": {
+        "execute_alloc_calls": 0,
+        "execute_alloc_requested_bytes": 0,
+        "future_bytes": 0,
+        "tape_prepared_bytes": 0,
+        "native_code_bytes": 0
+      }
+    },
+    {
+      "source": "scalar",
+      "native": true,
+      "deltas": {
+        "execute_alloc_calls": 0,
+        "execute_alloc_requested_bytes": 0,
+        "future_bytes": 0,
+        "tape_prepared_bytes": 0,
+        "native_code_bytes": 0
+      }
+    },
+    {
+      "source": "json",
+      "native": false,
+      "deltas": {
+        "execute_alloc_calls": 0,
+        "execute_alloc_requested_bytes": 8,
+        "future_bytes": 0,
+        "tape_prepared_bytes": 0,
+        "native_code_bytes": 0
+      }
+    },
+    {
+      "source": "json",
+      "native": true,
+      "deltas": {
+        "execute_alloc_calls": 0,
+        "execute_alloc_requested_bytes": 8,
+        "future_bytes": 0,
+        "tape_prepared_bytes": 0,
+        "native_code_bytes": 0
+      }
+    },
+    {
+      "source": "array",
+      "native": false,
+      "deltas": {
+        "execute_alloc_calls": 0,
+        "execute_alloc_requested_bytes": 8,
+        "future_bytes": 0,
+        "tape_prepared_bytes": 0,
+        "native_code_bytes": 0
+      }
+    },
+    {
+      "source": "array",
+      "native": true,
+      "deltas": {
+        "execute_alloc_calls": 0,
+        "execute_alloc_requested_bytes": 8,
+        "future_bytes": 0,
+        "tape_prepared_bytes": 0,
+        "native_code_bytes": 0
+      }
+    }
+  ],
+  "checks": {
+    "regression.json": {
+      "passed": 108,
+      "ignored": 5
+    },
+    "default.json": {
+      "passed": 30,
+      "ignored": 0
+    }
+  },
+  "tooling": {
+    "output": "rustfmt 1.8.0-stable (01f6ddf758 2026-02-11)\nrustc 1.93.1 (01f6ddf75 2026-02-11)",
+    "exit_code": 0,
+    "error": null
+  },
+  "timing_interpretation": "single instrumented observations, no regression/speedup conclusion"
+}

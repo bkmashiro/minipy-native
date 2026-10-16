@@ -89,3 +89,48 @@ source/payload/results remain in the authorized private corpus, not Git. No new
 model answers or Agent-success-rate increment. Only bounded synthetic fresh
 prepare/execute/drop observations, no Monty baseline or stable speedup claim.
 Linux, Wasm, total native metadata and RSS/PSS are unmeasured.
+
+### Measured costs (macOS arm64, Rust 1.96 release)
+
+Parent `bddcff0` was actually checked out sequentially in the same checkout and
+existing target, with the identical new `dr_cost` test temporarily symlinked from
+scratch. Only the three old sources ran (`DR_OLD_ONLY=1`); the original branch
+was restored in a finally block. No new worktree/target. Raw parent and candidate
+data are `baseline-costs.json`, `baseline-layout.json` and `costs-final.json`.
+Source hashes include the actual baseline code and identical diagnostic source.
+
+- Real State size is 144 B versus the parent's asserted 136 B. Array/line cursor
+  allocations are 56/48 B. Current Op 48, tape State 312, native Frame 320,
+  Output 72, Stmt 80, Expr 32, StringSource 40 and InterpreterUnit 112 bytes.
+- Native/tape execute futures are 664/928 B in both versions, using this exact
+  Provider and build. Futures are compiler/provider-specific, not all task memory.
+- Old scalar: tape/native execution allocation calls 1/2, requested bytes 2/322,
+  unchanged. Old JSON string: 14/15 calls unchanged, bytes 1040/1360 to 1048/1368.
+  Old array: 13/14 calls unchanged, bytes 1298/1618 to 1306/1626. Thus no new
+  allocation call on these paths, with +8 requested bytes when a JSON State exists.
+- Old scalar/JSON/array tape prepared bytes stay 304/855/1458 and native generated
+  code bytes stay 168/276/648. Native compiler metadata and aggregate heap are not
+  included by those metrics. Source-dependent line helpers are not registered in
+  a no-line native unit; no line op is emitted in a no-line tape.
+- Two new sources (count, print): tape prepared 1568/1720 B, native generated
+  code 660/568 B. Execution allocation calls are 14/15 (tape) and 15/16 (native).
+  These include escaped-token decoding and final stdout, not per-line objects.
+  Pointer-identity tests directly check plain/decoded cache reborrowing.
+- Single fresh prepare/execute/unit-drop observations for count/print are about
+  89/70 microseconds on tape and 529/417 microseconds on native. These instrumented,
+  tiny, one-shot observations exclude build/process/JSON I/O, include ordinary
+  Host/Rc setup and cleanup through unit drop, and do not include final outcome
+  drop. They are not timing-isolated or a stable latency/throughput comparison.
+  Parent/candidate timing differences cannot establish regression or speedup.
+
+The targeted feature regression passes 108 tests (five existing diagnostic tests
+ignored); default-feature scripts/interpreter passes 30. The separate cost test
+is explicitly invoked despite being ignored by default. Initial real RED was
+the whole-source Unsupported admission, not a synthetic stub. Retained failed
+attempts include a test-only borrow error, reserved synthetic Tool IDs, and the
+missing pinned rustfmt component; fixes did not weaken runtime assertions.
+
+Recommendation: retain this isolated candidate for focused review. It closes
+the concrete DP08 expressiveness gap with ordinary-source lowering and bounded
+borrowing. No basis yet to merge automatically, expand to general strings/lists,
+run another model campaign, or claim a performance win.
