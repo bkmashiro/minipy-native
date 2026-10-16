@@ -63,4 +63,8 @@ string, not a before/after comparison or a realistic workload distribution.
 `tools/cx_check.py --measure` documents the earlier invocation; do not rerun it
 as part of reconciliation. Source checks/testing and timing are separate.
 
-Fixed signed commit review and remote SHA are recorded on the original CX card.
+One fixed signed commit review examined `e647836`. `review-output.txt` reports
+no blocking findings and explicitly says the reviewer did not rerun tests.
+`review-identity.json` verifies eight actual gpt-6-luna/openai-codex review calls
+from the session usage table; the separate title-generation call is not review.
+The original CX card records the final remote SHA and review handoff.

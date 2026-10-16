@@ -2556,4 +2556,7 @@ run-*.csv/identity/load 分开保留（各594行含18 warmup），不池化、�
 prepare+实际 execute+unit/outcome drop，源码文本生成和Host/runtime设置
 在外；不能当 equality 对 contains 的优化证据。无Linux/Wasm运行或新campaign。
 复现/identity/原始日志/限制见 [CX evidence](../bench/results/cx/README.md)。
-固定签名提交交一次 Luna 只读定向审阅，结果及远端SHA留在原卡。
+固定签名提交 `e647836` 已完成唯一一次 Luna 只读定向审阅，无阻断项，
+未由reviewer重跑测试。实际 session_model_usage 核验审阅为
+gpt-6-luna/openai-codex（8次调用），独立标题生成模型不计为审阅替代。
+prompt/output/identity 归档于 CX evidence；最终远端SHA留在原卡。

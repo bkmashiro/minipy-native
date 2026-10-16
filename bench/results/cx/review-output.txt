@@ -1,0 +1,71 @@
+Query: 对 /Users/yuzhe/projects/minipy-native 固定提交 
+e647836b2823cb13a803d4afdf51f627832c4ee8 
+做本卡唯一一次独立定向只读审阅。你应当实际为 gpt-6-luna / 
+openai-codex，不允许模型替代。中文返回。你不是 Kanban 执行者，禁止所有 
+board/lifecycle 
+操作，不启动子审阅、不编辑仓库、不commit/push、不采样性能、不创建worktree/target
+、不下载依赖、不改配置。主控拥有验收。
+先读 AGENTS.md、README.md、docs/design.md 和 docs/experiments.md 的 CX 段，以及 
+bench/results/cx/README.md。仅聚焦 a2b5b2f..e647836 的 equality 
+编译/运行/liveness、预算与错误顺序、surrogate literal 
+检查，及完整脚本解锁/证据主张。追踪 helper 与相邻 
+contains，不做无界全库审计。原两个worker并发造成两批 timing 
+全降级诊断，无低负载/性能结论且禁止重跑性能。现有非release完整三套日志80/140/148
+被主控按全部36源码哈希核验并复用；主控已独立跑release四个string/local_read 
+suites 18passed+2ignored，debug equality 
+6passed，定向clippy/fmt。不要重复全套构建；可只读复核或有具体疑点时在原fcntl锁、
+CARGO_TARGET_DIR=/Users/yuzhe/projects/minipy-native/target CARGO_BUILD_JOBS=1 
+RUSTUP_AUTO_INSTALL=0 cargo +1.96.0 --offline --locked 下跑 targeted 
+test。target是/Volumes/M.2/caches/minipy-native-target现有symlink。
+关注不扩大语义、string 
+leaf/literal两侧仅==/!=、Unicode精确非归一化、错误不可effect、跨await/cancel/las
+tuse owner、eager 
+alias。排除通用字符串locals/ordering/startswith/len、get、数组、fallback等后续工
+作。代码的native selector编码sealed，literal计数受source/node限制。
+输出 
+findings（严重度、path:line、证据、建议），或明确无阻断项；指出任何真实验收缺口
+，区分既有CT clippy问题与新问题。不要用定向review替原卡关闭。
+Initializing agent...
+────────────────────────────────────────
+
+  ┊ 📖 read      AGENTS.md  0.1s
+  ┊ 📖 read      README.md  0.1s
+  ┊ 📖 read      design.md  0.1s
+  ┊ 🔎 grep      CX  0.2s
+  ┊ 📖 read      README.md  0.1s
+  ┊ 💻 $         git status --short --branch + 3 commands  0.2s
+  ┊ 💻 $         git diff --no-ext-diff --unified=35 a2b5b2f e647836 -- src/frontend.rs src/ir.rs src/codegen.rs src/interpreter/tape.rs src/json_view.rs src/tool.rs src/interpreter/liveness_tests.rs  0.1s
+  ┊ 🔎 grep      StringEquals|StringEq|JsonString|contains|StringContains|Equal  0.2s
+  ┊ 📖 read      experiments.md L2527-2566  0.0s
+  ┊ 📖 read      json_view.rs  0.0s
+  ┊ 📖 read      tape.rs  0.0s
+  ┊ 🔎 grep      equality_literal|StringEq|ast::Cmp|Compare|contains|needles.push  0.1s
+  ┊ 📖 read      frontend.rs L1720-1939  0.0s
+  ┊ 🔎 grep      StringEq|equality_literal  0.0s
+  ┊ 📖 read      frontend.rs L1400-1499  0.0s
+  ┊ 🔎 grep      surrogate|unicode|effect|budget|last|alias|contains|literal  0.0s
+
+╭─ ☤ Hermes ───────────────────────────────────────────────────────────────────╮
+审阅对象：e647836b2823cb13a803d4afdf51f627832c4ee8（当前 HEAD）。工作树中已有两个无关未跟踪文件；我没有读取或修改它们。未运行测试，也未执行任何 board/lifecycle 操作。
+
+未发现阻断项。
+
+重点核查结果：
+
+- Equality 只在单段 == / != 且一侧为字符串 literal、另一侧为已声明 JSON string leaf/alias 时进入新 IR；链式比较仍拒绝。literal 两侧均支持，!= 通过 bool 取反实现。入口见 src/frontend.rs:1448-1490。
+- Tape 与 native 都调用共享 JSON state 的 equality helper；native selector 编码由编译器生成，-1 保留给 validate、非负值给 contains、<=-2 给 equality。现有 needle 数量和 literal 长度限制约束其索引/编码范围。见 src/interpreter/tape.rs 的 Op::StringEq 分支、src/codegen.rs 的 Expr::StringEq 分支及 src/json_view.rs:298-305,338-353。
+- Helper 顺序为 locate、扣除 raw token 与 literal 的 scan budget、再验证/解码并比较；因此缺失路径先于预算错误，预算不足先于类型/解码错误，且不会因空值或长度不等绕过校验。累积预算仍在 State 中，decode 缓存仍走既有 retained-byte 记账。见 src/json_view.rs:178-215,283-305。
+- Equality root 已纳入 native 与 tape liveness；跨 await 保留、last-use release 和 detached Tool argument 生命周期沿用现有路径。相关覆盖列于 tests/string_equality.rs，CX 证据说明也记录了取消、等待、预算及 owner 情形。
+- surrogate literal 检查针对 RustPython 可能把 surrogate escape 替换为 U+FFFD 的情况；仅对包含 U+FFFD 的 literal 回看 lexer token，测试覆盖 surrogate 拒绝、真实 U+FFFD、raw/反斜杠和隐式拼接。见 src/frontend.rs:826-878 与 tests/string_equality.rs:324-360。
+
+验收证据方面，bench/results/cx/README.md 明确区分复用的三套完整日志与本次独立 release/debug 定向测试，也明确把两批争用 timing 降级为诊断、没有性能结论且未重跑。完整 CV 解锁数量及仍不支持的脚本路径均有限定为合成样例。审阅没有独立重执行这些验收命令；这与主控提供的核验记录一致，不构成我这次发现的代码阻断项。已有 CT Clippy 问题已与定向 Clippy 通过情况区分，未发现被误报为 CX 新问题的证据。
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Resume this session with:
+  hermes --resume 20261016_132419_14f237
+  hermes -c "审阅 equality 编译运行与证据完整性"
+
+Session:        20261016_132419_14f237
+Title:          审阅 equality 编译运行与证据完整性
+Duration:       41s
+Messages:       25 (1 user, 23 tool calls)

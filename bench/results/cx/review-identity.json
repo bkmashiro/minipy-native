@@ -1,0 +1,24 @@
+{
+  "reviewed_commit": "e647836b2823cb13a803d4afdf51f627832c4ee8",
+  "session_id": "20261016_132419_14f237",
+  "verification_source": "read-only query of sessions and session_model_usage in ~/.hermes/state.db",
+  "requested_model": "gpt-6-luna",
+  "requested_provider": "openai-codex",
+  "actual_review_usage": {
+    "model": "gpt-6-luna",
+    "billing_provider": "openai-codex",
+    "task": "",
+    "api_call_count": 8,
+    "input_tokens": 54818,
+    "output_tokens": 1658
+  },
+  "auxiliary_title_only": {
+    "model": "gpt-5.6-luna",
+    "billing_provider": "openai-codex",
+    "task": "title_generation",
+    "api_call_count": 1
+  },
+  "result": "no blocking findings",
+  "reviewer_tests_run": false,
+  "scope": "one fixed-commit read-only review; no lifecycle operation or source edit"
+}
