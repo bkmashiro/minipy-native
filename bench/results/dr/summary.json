@@ -78,9 +78,12 @@
     }
   },
   "tooling": {
+    "purpose": "default stable formatter identity/check only, not the compiler used for tests or cost observations",
+    "command": "rustfmt --version && rustc --version && cargo fmt --all -- --check && git diff --check",
     "output": "rustfmt 1.8.0-stable (01f6ddf758 2026-02-11)\nrustc 1.93.1 (01f6ddf75 2026-02-11)",
     "exit_code": 0,
     "error": null
   },
+  "build_compiler": "rustc 1.96.0 (ac68faa20 2026-05-25); explicit cargo +1.96.0 in baseline-costs.json, costs-final.json and regression.json",
   "timing_interpretation": "single instrumented observations, no regression/speedup conclusion"
 }

@@ -14,8 +14,16 @@ in JSON State (136 to 144); new line metadata is 48 bytes. Op remains 48 bytes.
 and filter acceptance has eight correct backend/mode rows with frozen hashes
 unchanged; no model answers or Agent-success-rate update. Public synthetic checks
 and bounded cost smoke are in `bench/results/dr/`. This is an isolated experiment,
-not main integration, a performance campaign or a release. Independent review
-and same-card review approval remain pending.
+not main integration, a performance campaign or a release. Targeted feature
+regressions pass 108 tests plus 30 default-feature tests. The matched parent
+comparison finds no additional execution allocation call, no future/prepared/code
+size change on the old scalar/JSON/array samples; JSON/array requested bytes grow
+by the measured 8-byte State tag. One-shot instrumented observations establish
+no timing conclusion. One bounded text-packet review at signed `f3a6bb1` actually
+returned `gpt-6-luna`, with no confirmed implementation blocker. Its formatter vs
+compiler identity concern was resolved against pinned raw compiler records;
+[scope and resolution](../bench/results/dr/review.md). Same-card approval remains
+pending, with no automatic successor or main merge.
 
 ## DM: bounded post-contract Code Mode retest (2026-10-16)
 

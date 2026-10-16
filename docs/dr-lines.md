@@ -98,6 +98,10 @@ scratch. Only the three old sources ran (`DR_OLD_ONLY=1`); the original branch
 was restored in a finally block. No new worktree/target. Raw parent and candidate
 data are `baseline-costs.json`, `baseline-layout.json` and `costs-final.json`.
 Source hashes include the actual baseline code and identical diagnostic source.
+The raw `rustc` fields record 1.96.0 for both builds. Separately, `summary.json`
+reports default rustc 1.93.1 only to identify the existing stable formatter run,
+not the compiler used for costs. `python3 bench/dr_oracle.py` rechecks all 181
+public oracle entries (observed CPython 3.9.6).
 
 - Real State size is 144 B versus the parent's asserted 136 B. Array/line cursor
   allocations are 56/48 B. Current Op 48, tape State 312, native Frame 320,
@@ -134,3 +138,7 @@ Recommendation: retain this isolated candidate for focused review. It closes
 the concrete DP08 expressiveness gap with ordinary-source lowering and bounded
 borrowing. No basis yet to merge automatically, expand to general strings/lists,
 run another model campaign, or claim a performance win.
+
+One actual `gpt-6-luna` text-packet review at signed `f3a6bb1` reports no confirmed
+implementation blocker. See [scope and compiler/formatter evidence resolution](../bench/results/dr/review.md).
+Same-card approval is still required; the reviewer did not independently execute.
