@@ -22,6 +22,7 @@ fn reference_buffers(ops: &[Op]) -> (Vec<u64>, usize) {
                 op if op.branch_target().is_some() => next | live[op.branch_target().unwrap()],
                 Op::Jump(t) | Op::Next(t) => live[*t],
                 Op::Scan { buffer, end } => next | live[*end] | (1 << buffer),
+                Op::Count(count) => next | (1 << count.buffer),
                 Op::BufferLen(_, buffer) => next | (1 << buffer),
                 Op::Load(target, _) => next & !(1 << target),
                 Op::Return => 0,

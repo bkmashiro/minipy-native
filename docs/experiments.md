@@ -2439,3 +2439,73 @@ CJ 保留确定 prepare work/backing 删除，CK 撤回，CL 保留最小目的�
 没有通用请求提速、无回归界或累计阶段加速结论。CG stop 与 BT/BX/BY/CB
 负结果不变。此卡只完成主线整合，不开启新实验、CI、依赖下载或平台验证。
 
+## CO：单一筛选计数标量批量 kernel
+
+固定 `44212e0`，生产release/Cargo配置仍与 `907eb40` 相同，未启用PGO。
+只匹配整个loop体为 `if row.FIELD > THRESHOLD: count=count+1` 的纯形状，
+两个既有signed-i64字段，literal或非count local阈值。lowering以Start+Count
+替换原tape区段，40B descriptor内联，Op48B、Unit112B、State312B及本具体
+Provider tape/native future928/664B不变，无IR备份或新heap/执行器。
+其他形状仍走原tape；debug-runtime保持原逐Op trace，不融合。
+
+独立600行诊断：chunk256两字段dispatch2407→10，fuel3/yield2不变；chunk7
+2407→93，fuel86/yield85不变。匹配形状tape11→7 ops、capacity16→8，
+prepared逻辑976→560B；alias与普通求和对照不变。实际正式arm64机器码每个
+kernel20指令/80B，scalar ldr/compare/checked adds/b.vs，没有SIMD。
+不能只数被LLVM分离后的wrapper：dispatcher7500→8084B，selected tape
+text+1116B，同步栈4256→4336B（+80），scratch仍4096B，future未变。
+
+九类双后端、每cell12正式请求、一轮ABBA+exact-A A/A。首对未保存期间CPU
+记录，降级保留；原binary/候选/计划不变，仅补一对带CPU记录替代采集，
+不池化、不调参、不做第三轮。共288进程/3456正式请求，全部exit0且精确
+status/stdout断言通过。替代对large price/quantity/none/all tape B/A为
+.42109/.46453/.51505/.41193；小输入1.00063/.99487，对照scalar/quote/ready
+.97786/1.00072/1.02991。原未控对小输入1.20180/1.09843及明显进程漂移
+完整保留，不能用替代对覆盖回退或用A/A声称噪声界。startup独立记录。
+
+替代对前两次有效top idle96.46%/97.14%；期间只有两snapshot，首次累计
+snapshot不能当delta，后次87.74% idle，无记录到≥50%无关单核竞争者。
+reader漏结EOF最后block，使采集器后置样本数断言失败，但两个raw均完整，
+CPU原文仍保存；已补EOF结算但不重跑计时。低频记录不是整轮硬独占证明。
+不从当前空闲反推过去干扰，不改CN结论，CR负责独立复核PGO。
+
+最终完整default/tool-json/tool-json+debug release suites79/130/138通过，
+三套严格Clippy、fmt、9个BT Python tests和diff check通过。覆盖字段/尾部/
+signed extrema、overflow/effect顺序、fuel/index/yield、取消与弱owner释放、
+JSON跨融合chunk保留、未匹配形状和immutable unit复用。early fixture与
+记录脚本失败逐项保留。全部共享外盘target/锁/单job/offline，未新增依赖、
+下载、worktree、CI、网站或平台执行。
+
+取舍：保留窄候选在独立分支，停止CO；大输入完整请求和确定dispatch删除
+支持继续评估，小输入/真实Host通用净收益未建立。main集成等待原卡审阅，
+CP再判断SIMD净值，不先扩框架或启用PGO。源码hash重建、全部raw、CPU限制、
+真实linked code、命令及失败说明见 [CO evidence](../evidence/co-count/README.md)。
+
+## CS：CO 标量计数主线集成
+
+在 `main` 的 README 整理提交 `820c79b` 上，仅移植已审阅 `71582f7` 的
+CO 提交增量。生产 `src/`、全部 `tests/`、Cargo manifest/lock 与该固定
+CO 快照逐 Git diff 相同；README 与 `820c79b` 逐字节相同。未合入 CO 的
+CN 父提交，也未带入 CP SIMD、CR、PGO flags/profile 或其他实验。唯一
+cherry-pick 冲突在本文件末尾，保留 CO 历史条目，移除非本次集成的 CN
+上下文。原实验分支、raw、patch 和 summary 不变；上节和 CO evidence
+所写“独立分支、main 未合入”描述的是当时的 CO 决策，本节更新当前状态。
+
+本次实际运行 `python3 tools/cs_verify.py`：macOS arm64 release default
+79、tool-json 130、tool-json+debug-runtime 138 tests 全部通过；前两套
+未启用 debug-runtime，实际覆盖 Count 融合。原 admission/layout test
+验证 descriptor 40 B、Op 48 B 及拒绝形状；`tests/co_count.rs` 对照 native
+核对 stdout/status、错误时 index/fuel/buffer trace、overflow 部分进度、
+effect 顺序、chunk yield、取消/弱 owner 释放、复用及 live JSON 保留。
+debug 套验证原逐 Op 路径，不把它当作融合验证。stable fmt、九项 Python
+workbench tests 通过，CO reducer 的 summary 与原件逐字节相同。
+
+验证原始命令、退出码、stdout/stderr、源码 SHA-256 和实际工具链见
+`evidence/cs-integration/verification.json`。所有构建使用已挂载外盘
+target、原 fcntl 锁、单 job、Rust 1.96.0 offline/locked，无 PGO flags。
+没有新增性能请求、Linux/Wasm 验证、依赖下载、worktree、target 或 CI。
+复用 CO 的大输入合成请求信号，保留其小输入回退、CPU 采样粒度和代码/
+同步栈增长限制，不推出通用提速或累加 PGO 收益。识别范围和公开接口不变。
+
+固定签名集成提交交一次 Luna 定向只读审阅，最终 SHA、审阅与远端 main
+回读记在 CS 卡片交付；CT/后续 PGO 必须引用该 SHA，不能沿用旧 profile。

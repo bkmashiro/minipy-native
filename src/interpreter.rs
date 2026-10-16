@@ -101,6 +101,7 @@ impl InterpreterUnit {
                             backward |= *end <= pc;
                             next | live[*end] | (1 << buffer)
                         }
+                        Op::Count(count) => next | (1 << count.buffer),
                         Op::BufferLen(_, buffer) => next | (1 << buffer),
                         Op::Load(target, _) => next & !(1 << target),
                         Op::Return => 0,
