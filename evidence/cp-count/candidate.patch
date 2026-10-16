@@ -1,0 +1,121 @@
+diff --git a/src/interpreter/tape.rs b/src/interpreter/tape.rs
+index 9301030..29485c3 100644
+--- a/src/interpreter/tape.rs
++++ b/src/interpreter/tape.rs
+@@ -94,14 +94,32 @@ impl Count {
+     }
+ }
+ 
+-// Checked sequential increment preserves the first overflowing row. Inspect the
+-// actual release machine code instead of assuming LLVM leaves this scalar.
++// Count a pure immutable chunk before publishing its checked total. The slice
++// length is bounded by QuoteBuffer admission, so its hit count fits in i64.
++// LLVM can vectorize the comparisons without a per-hit overflow dependency.
++// On overflow, replay the original sequential loop to preserve partial progress
++// and the first failing row. No effects or cancellation boundaries lie inside
++// this already fuel-reserved chunk.
+ #[inline(never)]
+-fn scalar_count<const QUANTITY: bool>(
++fn count_chunk<const QUANTITY: bool>(
+     rows: &[Quote],
+     threshold: i64,
+     count: &mut i64,
+ ) -> Result<(), usize> {
++    let hits = rows
++        .iter()
++        .filter(|row| {
++            (if QUANTITY {
++                row.quantity
++            } else {
++                row.unit_price_cents
++            }) > threshold
++        })
++        .count() as i64;
++    if let Some(next) = count.checked_add(hits) {
++        *count = next;
++        return Ok(());
++    }
+     for (i, row) in rows.iter().enumerate() {
+         let value = if QUANTITY {
+             row.quantity
+@@ -118,6 +136,62 @@ fn scalar_count<const QUANTITY: bool>(
+     Ok(())
+ }
+ 
++#[test]
++fn count_chunk_matches_sequential_partial_progress() {
++    fn check<const QUANTITY: bool>() {
++        let values = [i64::MIN, -7, -1, 0, 1, 9, i64::MAX];
++        let rows: Vec<_> = (0..4100)
++            .map(|i| Quote {
++                unit_price_cents: values[i % values.len()],
++                quantity: values[(i * 3 + 2) % values.len()],
++            })
++            .collect();
++        for length in (0..=33).chain([255, 256, 257, 4095, 4096]) {
++            for offset in 0..4 {
++                let rows = &rows[offset..offset + length];
++                for threshold in [i64::MIN, -1, 0, 9, i64::MAX] {
++                    for initial in [
++                        i64::MIN,
++                        -5,
++                        0,
++                        i64::MAX - length as i64,
++                        i64::MAX - 9,
++                        i64::MAX - 1,
++                        i64::MAX,
++                    ] {
++                        let mut expected = initial;
++                        let mut result = Ok(());
++                        for (i, row) in rows.iter().enumerate() {
++                            let value = if QUANTITY {
++                                row.quantity
++                            } else {
++                                row.unit_price_cents
++                            };
++                            if value > threshold {
++                                match expected.checked_add(1) {
++                                    Some(next) => expected = next,
++                                    None => {
++                                        result = Err(i);
++                                        break;
++                                    }
++                                }
++                            }
++                        }
++                        let mut actual = initial;
++                        assert_eq!(
++                            count_chunk::<QUANTITY>(rows, threshold, &mut actual),
++                            result
++                        );
++                        assert_eq!(actual, expected);
++                    }
++                }
++            }
++        }
++    }
++    check::<false>();
++    check::<true>();
++}
++
+ #[derive(Debug)]
+ pub(super) enum Op {
+     Copy(Dest, Operand),
+@@ -718,13 +792,11 @@ pub(super) fn run<const STEP: bool>(
+                 let threshold = read(count.threshold, state, temps);
+                 let chunk = &rows[state.index..state.index + length];
+                 let result = match count.field {
+-                    Field::Price => scalar_count::<false>(
+-                        chunk,
+-                        threshold,
+-                        &mut state.locals[count.accumulator],
+-                    ),
++                    Field::Price => {
++                        count_chunk::<false>(chunk, threshold, &mut state.locals[count.accumulator])
++                    }
+                     Field::Quantity => {
+-                        scalar_count::<true>(chunk, threshold, &mut state.locals[count.accumulator])
++                        count_chunk::<true>(chunk, threshold, &mut state.locals[count.accumulator])
+                     }
+                 };
+                 if let Err(completed) = result {

@@ -2521,3 +2521,37 @@ JSON跨融合chunk保留、未匹配形状和immutable unit复用。early fixtur
 CP再判断SIMD净值，不先扩框架或启用PGO。源码hash重建、全部raw、CPU限制、
 真实linked code、命令及失败说明见 [CO evidence](../evidence/co-count/README.md)。
 
+## CP：筛选计数 SIMD 准入，撤回并停止
+
+固定已审阅CO `71582f7`，复用其正式scalar binary为A，不混入PGO。
+两个实际kernel均20指令/80B且没有SIMD，故有一次有界比较的价值。
+唯一B以安全Rust先统计纯immutable chunk命中数，再checked累加；失败时
+重放原逐行checked循环，保持首个overflow row与部分count。LLVM已生成
+NEON signed cmgt.2d/sub.2d/addp.2d，8行向量主体加标量尾部，无需
+intrinsics、CPU分派或参数搜索。既有stride16、字段偏移0/8、fuel/chunk/
+yield/cancel/owner/权限与fallback不变，descriptor/识别无新增成本。
+
+真实linked两个kernel160→624B，全tape14852→15304B（+452），
+wrapper+run8084B与同步栈4336B不变。正式BT binary+1040B，不是RSS。
+小大输入六count case加scalar/quote/ready，双后端，一轮ABBA加exact-A
+A/A，共144进程/1728完整新源码请求全部断言通过，无追加采样或挑进程。
+tape price/quantity small B/A2.92107/1.52933，large1.56858/1.17879，
+none/all1.07009/.97877；未匹配scalar/quote/ready1.12490/1.05011/1.03143。
+B1/B2 price large445.167/191.250µs，明显漂移；不能只选较快B2。
+不变native小price也有−11%差异，不能把回退归因为SIMD指令本身。
+
+pre有效idle96.60%/97.40%；期间四有效1Hz delta96.96/92.67/89.15/
+92.24%，未见≥50%无关单核进程，guard达标但不证明微秒级请求无抢占。
+startup fixture AB/AA75.291/75.042µs单列，非进程启动时间。
+候选release default/tool-json/debug80/131/139通过，三套严格Clippy、
+fmt、9项BT tests通过；新增kernel10,920组合核对signed extrema、尾部、
+subslice、checked overflow首错与部分进度，原端到端预算/取消/owner仍通过。
+
+净收益未建立，按止损条件撤回唯一B，最终src/tests/Cargo逐hash等于CO；
+patch含新增测试、正式raw、CPU、实际机器码与全部验证保留，不留死实现。
+阶段取舍：keep标量实验基线；revert本次SIMD、defer准入；PGO沿用CR
+`c58cea8`的正向研究信号但defer默认生产启用，不混乘不同实验百分比。
+下一方向仅建议确定真实Host source/input分布，再判断shape占比与训练集；
+不自动扩大实验或集成main。外盘target/锁/单job/offline复用，无新平台/
+CI/下载/网站变更。重放与细节见 [CP evidence](../evidence/cp-count/README.md)。
+
