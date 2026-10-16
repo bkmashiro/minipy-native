@@ -35,7 +35,8 @@ class Reduction(unittest.TestCase):
             'joined_sink', 'fstring_sink', 'escaped_join', 'madd_short', 'madd_loop',
             'detach', 'detach_live', 'detach_wait', 'branch', 'branch_ready',
             'count_price_small', 'count_price_large', 'count_quantity_small',
-            'count_quantity_large', 'count_none', 'count_all'))
+            'count_quantity_large', 'count_none', 'count_all',
+            'multi_branch', 'multi_overflow', 'multi_permission'))
 
     def reduce(self, records):
         with tempfile.TemporaryDirectory(dir=pw.SCRATCH) as directory:
@@ -70,6 +71,16 @@ class Reduction(unittest.TestCase):
         self.assertEqual(result['measured_samples'], 6)
         self.assertEqual(len(result['failures']), 1)
         self.assertNotIn('b_over_a', result['cells'][0])
+
+    def test_resident_warmup_manifest_checked(self):
+        data = campaign()
+        data[0]['warmup_requests'] = 64
+        for process in data[1:-1]:
+            process['rows'][0]['warmup_requests'] = 64
+        self.assertTrue(self.reduce(data)['complete'])
+        data[1]['rows'][0]['warmup_requests'] = 1
+        with self.assertRaises(ValueError):
+            self.reduce(data)
 
     def test_duplicate_process_rejected(self):
         data = campaign()

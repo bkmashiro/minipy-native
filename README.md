@@ -58,6 +58,7 @@ Hosts choose the backend explicitly. There is no automatic tiering or source cac
 - [Design and semantic contract](docs/design.md)
 - [Experiments and reproducibility](docs/experiments.md)
 - [Implementation and handoff](docs/implementation.md)
+- [Optional Rust-host PGO build and bounded results](docs/cu-pgo.md)
 - [Browser Wasm tape and debugger API](docs/playground-engine.md)
 
 ## License

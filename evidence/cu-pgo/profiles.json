@@ -1,0 +1,154 @@
+{
+  "balanced": {
+    "profile_sha256": "641267410191bb1a5d5c5e74e5c8872b6dbdc6fa61bebf9cf4c16bdab17baa11",
+    "profile_bytes": 4611544,
+    "profraw": [
+      {
+        "name": "155469345468950347_0-21557.profraw",
+        "bytes": 3043528,
+        "sha256": "4b36f8ce63e354d7e9191cbbdc732e750f2748a2fd4a5c4809335277e11a8b2d"
+      },
+      {
+        "name": "155469345468950347_0-21558.profraw",
+        "bytes": 3043960,
+        "sha256": "fb43646301467079e99c393191f05885b459014e3638920375227835994bfad8"
+      },
+      {
+        "name": "155469345468950347_0-21559.profraw",
+        "bytes": 3044008,
+        "sha256": "8d8355a5b43f1c05897b0b1e13a76546df4a9118578f937a7be3ec0ab6062dc3"
+      },
+      {
+        "name": "155469345468950347_0-21560.profraw",
+        "bytes": 3043928,
+        "sha256": "e50e8c6d20a78596c3ef5a6f58ae87a5ff862eec7081441fe8bd951312e07428"
+      },
+      {
+        "name": "155469345468950347_0-21561.profraw",
+        "bytes": 3045480,
+        "sha256": "b05744c6ff8f1b9cfbd9654a94c15c88d3dedf9ef8cbe9ba81064c79cc23b2e2"
+      },
+      {
+        "name": "155469345468950347_0-21562.profraw",
+        "bytes": 3044104,
+        "sha256": "d52bb260b9bb4452ff82cc878686cf49eb216372c4963a97e34675084311c905"
+      },
+      {
+        "name": "155469345468950347_0-21563.profraw",
+        "bytes": 3045224,
+        "sha256": "2362cf12cb0389dd6c594aee3b9ca904075fa51c0f500b5816e4d7b840a6865c"
+      },
+      {
+        "name": "155469345468950347_0-21564.profraw",
+        "bytes": 3046440,
+        "sha256": "ec87db3aa88d9deed268186faa37cc8aed41f5032432a55eca5d09cd7862ba09"
+      },
+      {
+        "name": "155469345468950347_0-21565.profraw",
+        "bytes": 3046392,
+        "sha256": "0760cb4f4a78e40688a5ce68c0b64b4437185df24ef21be7beba3092fb2e34b0"
+      },
+      {
+        "name": "155469345468950347_0-21566.profraw",
+        "bytes": 3046008,
+        "sha256": "8c1c30aaed38310bb8660ea2f7a078d958ca2ce74e3f9fc2d18ebbc1b5e3885f"
+      },
+      {
+        "name": "155469345468950347_0-21567.profraw",
+        "bytes": 3047848,
+        "sha256": "b05d1be4668f05e30af413fd44bb4a5ca8a5fedb2b37a511af393117b2268273"
+      },
+      {
+        "name": "155469345468950347_0-21568.profraw",
+        "bytes": 3046952,
+        "sha256": "e5e94dd3061b401ebe6ae6e3203151ccae258713488179b372163f15c51b914e"
+      }
+    ],
+    "weights": {
+      "scalar": 24,
+      "quote": 24,
+      "ready": 24,
+      "plain_sink": 24,
+      "loopback": 24,
+      "count_price_small": 24
+    },
+    "tool_sha256": "998b3b0d2155aeef0ae75e7e4f5bfa2dd55727717eac2d144a83115e125c021d",
+    "tool_version": "LLVM (http://llvm.org/):\n  LLVM version 22.1.2-rust-1.96.0-stable\n  Optimized build.\n"
+  },
+  "strings": {
+    "profile_sha256": "91089a1bb06d48930f3730d0cf710852884351fba38c9cee0e9824a9d8c9c5f3",
+    "profile_bytes": 4611560,
+    "profraw": [
+      {
+        "name": "155469345468950347_0-21869.profraw",
+        "bytes": 3043528,
+        "sha256": "f7ef29190a4eb6c9d8ceaec87ede13583959e3bf418e5e51654f1fe7cf60e4ff"
+      },
+      {
+        "name": "155469345468950347_0-21870.profraw",
+        "bytes": 3043960,
+        "sha256": "da1859d7dd117eeb7150a8888cff90b13ceeec51d115bfedd77c34a6b569abcc"
+      },
+      {
+        "name": "155469345468950347_0-21871.profraw",
+        "bytes": 3044024,
+        "sha256": "d433937e16927001fc13a90e137cbd7fc1c431685a5b377e607b3259ffd0652d"
+      },
+      {
+        "name": "155469345468950347_0-21872.profraw",
+        "bytes": 3043928,
+        "sha256": "2a0408582e12ac805db78099caf8e40080ac5b42325f653f5c3ea96d1d814f6c"
+      },
+      {
+        "name": "155469345468950347_0-21873.profraw",
+        "bytes": 3045464,
+        "sha256": "1791042a3494f61df240e58ab18ea38463a2aff2d59bd7575e4571e8f2579ad9"
+      },
+      {
+        "name": "155469345468950347_0-21874.profraw",
+        "bytes": 3044104,
+        "sha256": "5666334703cf6764a5f62d7e474e7e69474d5a4ddf6e661b5a1e1e1c27a73e42"
+      },
+      {
+        "name": "155469345468950347_0-21875.profraw",
+        "bytes": 3045240,
+        "sha256": "02efe94df21bd54f12d0c8cd690a55de657bbefbf0d4e8f10d0d41e3d176577e"
+      },
+      {
+        "name": "155469345468950347_0-21876.profraw",
+        "bytes": 3046440,
+        "sha256": "1dc24b54c3b010212ece97c5fba0ffa98e54eb7b03d72ec83c87ede676944d5e"
+      },
+      {
+        "name": "155469345468950347_0-21877.profraw",
+        "bytes": 3046424,
+        "sha256": "156365b9ba3ba5dd1b0cb806642cbbfeb9639831950c99927ba1e21d2c9eb872"
+      },
+      {
+        "name": "155469345468950347_0-21878.profraw",
+        "bytes": 3046024,
+        "sha256": "a084b3c28df0fc7126be4afd297d9b03f834911d7c4e5fdc0ff48f311bf54160"
+      },
+      {
+        "name": "155469345468950347_0-21879.profraw",
+        "bytes": 3047880,
+        "sha256": "2b838cf26dbd9c240e606b1ff7f10a55500fa40ebdecc3a14c2c680ab8a5b97a"
+      },
+      {
+        "name": "155469345468950347_0-21880.profraw",
+        "bytes": 3046952,
+        "sha256": "224d80b328af1640bf743f5fc4afa6c1bad2ce4cc8ddda854ecce1f46f124425"
+      }
+    ],
+    "weights": {
+      "scalar": 24,
+      "quote": 24,
+      "ready": 96,
+      "plain_sink": 96,
+      "loopback": 96,
+      "count_price_small": 24
+    },
+    "tool_sha256": "998b3b0d2155aeef0ae75e7e4f5bfa2dd55727717eac2d144a83115e125c021d",
+    "tool_version": "LLVM (http://llvm.org/):\n  LLVM version 22.1.2-rust-1.96.0-stable\n  Optimized build.\n"
+  }
+}

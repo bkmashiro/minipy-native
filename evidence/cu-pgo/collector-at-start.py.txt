@@ -1,0 +1,242 @@
+#!/usr/bin/env python3
+"""CU: opt-in, fixed-source CN builds, two frozen training distributions. No tuning."""
+import argparse
+import gzip
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import threading
+import time
+from typing import Any
+
+import cn_pgo as cn
+from cr_pgo_recheck import assess, TOP
+from perf_workbench import ROOT, SCRATCH, locked, sha, validate, reduce
+
+OUT = ROOT / 'evidence/cu-pgo'
+WORK = SCRATCH / 'cu-pgo'
+TRAIN = ('scalar', 'quote', 'ready', 'plain_sink', 'loopback', 'count_price_small')
+HOLDOUT = ('branch', 'scalar_inputs', 'madd_loop', 'escaped_join', 'detach_wait')
+CASES = HOLDOUT + ('multi_branch', 'multi_overflow', 'multi_permission', 'quote', 'ready', 'count_quantity_large')
+WEIGHTS = {'balanced': {c: 24 for c in TRAIN},
+           'strings': {c: 96 if c in ('ready', 'plain_sink', 'loopback') else 24 for c in TRAIN}}
+
+
+def configure():
+    cn.OUT, cn.WORK = OUT, WORK
+    log = OUT / 'execution.json.gz'
+    if log.exists():
+        with gzip.open(log, 'rt') as f:
+            cn.RECORDS[:] = json.load(f)
+    # Never inherit ambient PGO, case or warmup settings.
+    for key in list(cn.ENV):
+        if key in ('RUSTFLAGS', 'CARGO_ENCODED_RUSTFLAGS', 'LLVM_PROFILE_FILE') or key.startswith('PW_'):
+            del cn.ENV[key]
+
+
+def save(name, value):
+    (OUT / name).write_text(json.dumps(value, indent=2) + '\n')
+
+
+def preflight():
+    assert os.path.ismount('/Volumes/M.2')
+    assert (ROOT / 'target').resolve() == Path('/Volumes/M.2/caches/minipy-native-target')
+    assert not (set(TRAIN) & set(HOLDOUT))
+
+
+def collect():
+    preflight()
+    assert not WORK.exists() and not OUT.exists(), 'one collection only, preserve failures'
+    OUT.mkdir(parents=True)
+    WORK.mkdir()
+    configure()
+    before = cn.sources()
+    save('plan.json', dict(base=cn.run(['git', 'rev-parse', 'HEAD']).strip(), sources=before,
+         weights=WEIGHTS, holdout=HOLDOUT, formal_cases=CASES, reps=12, warmups=[1, 64],
+         schedule='each warmup: balanced ABBA, strings ABBA, exact-A ABBA; no replacement samples',
+         driver_sha256=sha(ROOT / 'tools/perf_workbench.py'), collector_sha256=sha(__file__)))
+    with locked():
+        sysroot = Path(cn.run(['rustc', '+1.96.0', '--print', 'sysroot']).strip())
+        tools = sysroot / 'lib/rustlib' / cn.TARGET / 'bin'
+        profdata = tools / 'llvm-profdata'
+        version = cn.run([profdata, '--version'])
+        assert '22.1.2' in version
+        cn.build('baseline', '')
+        # Same instrumented executable, separately flushed process profiles.
+        generate = WORK / 'generate'
+        generate.mkdir()
+        instrumented = cn.build('instrumented', '-Cprofile-generate=' + str(generate))
+        profiles = {}
+        for distribution, counts in WEIGHTS.items():
+            folder = WORK / distribution
+            folder.mkdir()
+            for backend in ('tape', 'native'):
+                for case, reps in counts.items():
+                    env = dict(cn.ENV, PW_BACKEND=backend, PW_CASE=case, PW_ENTRY='registered',
+                               PW_REPS=str(reps), PW_WARMUP='1',
+                               LLVM_PROFILE_FILE=str(folder / '%m-%p.profraw'))
+                    text = cn.run([instrumented, '--ignored', '--exact', 'resident_request',
+                                   '--nocapture', '--test-threads=1'], env)
+                    rows = [json.loads(s.partition('PW ')[2]) for s in text.splitlines() if 'PW ' in s]
+                    validate(rows, reps, False)
+            files = sorted(folder.glob('*.profraw'))
+            assert len(files) == 12
+            merged = folder / 'merged.profdata'
+            cn.run([profdata, 'merge', '-o', merged, *files])
+            cn.run([profdata, 'show', merged])
+            profiles[distribution] = dict(profile_sha256=sha(merged), profile_bytes=merged.stat().st_size,
+                profraw=[dict(name=p.name, bytes=p.stat().st_size, sha256=sha(p)) for p in files],
+                weights=counts, tool_sha256=sha(profdata), tool_version=version)
+            cn.build('candidate-' + distribution, flags(distribution))
+        save('profiles.json', profiles)
+        machines = {}
+        for name in ('baseline', 'instrumented', 'candidate-balanced', 'candidate-strings'):
+            binary = WORK / name
+            symbols = cn.run([tools / 'llvm-nm', '--defined-only', binary])
+            matches = [s for s in symbols.splitlines() if '__llvm_profile' in s]
+            assert bool(matches) == (name == 'instrumented')
+            machines[name] = dict(sha256=sha(binary), bytes=binary.stat().st_size,
+                profile_symbols=matches, size=cn.run([tools / 'llvm-size', binary]))
+        save('machines.json', machines)
+        # Adapter smoke is correctness-only, not a replacement performance trial.
+        for backend in ('tape', 'native'):
+            for case in CASES:
+                cn.run([WORK / 'baseline', '--ignored', '--exact', 'resident_request', '--nocapture',
+                        '--test-threads=1'], dict(cn.ENV, PW_BACKEND=backend, PW_CASE=case,
+                        PW_ENTRY='registered', PW_REPS='2', PW_WARMUP='4'))
+        assert before == cn.sources()
+    save('builds-complete.json', {'sources': before})
+
+
+def flags(distribution):
+    return '-Cprofile-use=' + str(WORK / distribution / 'merged.profdata') + ' -Cllvm-args=-pgo-warn-missing-function'
+
+
+def measure():
+    preflight()
+    configure()
+    assert json.loads((OUT / 'builds-complete.json').read_text())['sources'] == cn.sources()
+    raw: dict[str, Any] = dict(start_epoch=time.time(), policy=dict(pre_idle_min=90, during_idle_min=85,
+        unrelated_core_cpu_max_exclusive=50, interval_seconds=1), records=[], monitor_samples=[])
+    owned = {os.getpid(), os.getppid()}
+    try:
+        with locked():
+            cmd = TOP.copy()
+            cmd[2] = '3'
+            pre = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            blocks = ['Processes:' + b for b in pre.stdout.split('Processes:')[1:]]
+            assert len(blocks) == 3
+            raw['preflight'] = dict(command=cmd, stdout=pre.stdout,
+                                   samples=[assess(b, 90, owned) for b in blocks[1:]])
+            assert not any(s['busy'] for s in raw['preflight']['samples']), 'busy preflight, stop'
+        monitor = subprocess.Popen(TOP, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+        owned.add(monitor.pid)
+        rejected = threading.Event()
+        lines = []
+
+        def watch():
+            assert monitor.stdout is not None
+            block = ''
+            began = None
+            index = 0
+            for line in monitor.stdout:
+                lines.append(line)
+                if line.startswith('Processes:'):
+                    if block:
+                        sample = dict(index=index, begin_epoch=began, end_epoch=time.time(),
+                                      valid_delta=index > 0, **assess(block, 85, owned))
+                        raw['monitor_samples'].append(sample)
+                        if sample['valid_delta'] and sample['busy']:
+                            rejected.set()
+                        index += 1
+                    block = ''
+                    began = time.time()
+                block += line
+
+        thread = threading.Thread(target=watch, daemon=True)
+        thread.start()
+        try:
+            time.sleep(2.2)
+            for warmup in (1, 64):
+                for distribution in ('balanced', 'strings', 'aa'):
+                    assert not rejected.is_set(), 'busy, stop without replacement'
+                    name = f'{distribution}-w{warmup}'
+                    cmd = [sys.executable, 'tools/perf_workbench.py', 'run', '--baseline', str(WORK / 'baseline'),
+                        '--cases', *CASES, '--rounds', '1', '--reps', '12', '--warmup', str(warmup),
+                        '--output', str(OUT / (name + '.jsonl.gz'))]
+                    cmd += ['--aa'] if distribution == 'aa' else ['--candidate', str(WORK / ('candidate-' + distribution))]
+                    start = time.time()
+                    child = subprocess.Popen(cmd, cwd=ROOT, env=cn.ENV, stdout=subprocess.PIPE,
+                                             stderr=subprocess.STDOUT, text=True, start_new_session=True)
+                    while True:
+                        try:
+                            stdout, _ = child.communicate(timeout=0.1)
+                            break
+                        except subprocess.TimeoutExpired:
+                            if rejected.is_set():
+                                os.killpg(child.pid, signal.SIGTERM)
+                                stdout, _ = child.communicate(timeout=10)
+                                break
+                    raw['records'].append(dict(name=name, command=cmd, start_epoch=start, end_epoch=time.time(),
+                                               exit_code=child.returncode, stdout=stdout))
+                    print(name, 'exit', child.returncode, flush=True)
+                    assert child.returncode == 0 and not rejected.is_set(), 'busy/failed campaign, stop'
+            time.sleep(2.2)
+        finally:
+            monitor.terminate()
+            monitor.wait(timeout=10)
+            thread.join(timeout=5)
+            raw.update(monitor_command=TOP, monitor_text=''.join(lines), rejected=rejected.is_set(),
+                       monitor_thread_stopped=not thread.is_alive())
+        assert not raw['rejected'] and raw['monitor_thread_stopped']
+        for record in raw['records']:
+            record['overlapping_valid_samples'] = [s['index'] for s in raw['monitor_samples']
+                if s['valid_delta'] and s['begin_epoch'] <= record['end_epoch'] and s['end_epoch'] >= record['start_epoch']]
+            assert record['overlapping_valid_samples']
+        raw['complete'] = True
+    finally:
+        raw['end_epoch'] = time.time()
+        with gzip.open(OUT / 'collection.json.gz', 'xt') as f:
+            json.dump(raw, f, indent=2)
+
+
+def diagnose():
+    configure()
+    assert json.loads((OUT / 'builds-complete.json').read_text())['sources'] == cn.sources()
+    with locked():
+        # Separate builds and data. These timers are never formal E2E observations.
+        for name, options in [('baseline', ''), ('balanced', flags('balanced')), ('strings', flags('strings'))]:
+            binary = cn.build('diagnostic-' + name, options, 'tool-json,compiler-profile')
+            rows = []
+            for backend in ('tape', 'native'):
+                for case in HOLDOUT:
+                    text = cn.run([binary, '--ignored', '--exact', 'resident_request', '--nocapture', '--test-threads=1'],
+                        dict(cn.ENV, PW_BACKEND=backend, PW_CASE=case, PW_ENTRY='registered', PW_REPS='12', PW_WARMUP='64'))
+                    parsed = [json.loads(s.partition('PW ')[2]) for s in text.splitlines() if 'PW ' in s]
+                    validate(parsed, 12, True)
+                    rows.append(dict(backend=backend, case=case, rows=parsed))
+            save('diagnostic-' + name + '.json', rows)
+        for distribution in ('balanced', 'strings'):
+            for features in (None, 'tool-json'):
+                cmd = ['cargo', '+1.96.0', 'test', '--offline', '--locked', '--release', '--target', cn.TARGET]
+                if features:
+                    cmd += ['--features', features]
+                cn.run(cmd, dict(cn.ENV, RUSTFLAGS=flags(distribution)))
+    assert json.loads((OUT / 'builds-complete.json').read_text())['sources'] == cn.sources()
+
+
+def summarize():
+    results = {p.stem.replace('.jsonl', ''): reduce(p) for p in sorted(OUT.glob('*-w*.jsonl.gz'))}
+    save('summary.json', results)
+    print(json.dumps({k: dict(complete=v['complete'], processes=v['observed_processes'],
+                            measured=v['measured_samples']) for k, v in results.items()}, indent=2))
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('action', choices=['collect', 'measure', 'diagnose', 'summarize'])
+    action = parser.parse_args().action
+    globals()[action]()

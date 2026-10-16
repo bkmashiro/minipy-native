@@ -152,6 +152,11 @@ fn resident_request() {
     assert!(["legacy", "registered"].contains(&entry.as_str()));
     let reps: usize = std::env::var("PW_REPS").unwrap().parse().unwrap();
     assert!((1..=1000).contains(&reps));
+    let warmup: usize = std::env::var("PW_WARMUP")
+        .unwrap_or_else(|_| "1".into())
+        .parse()
+        .unwrap();
+    assert!((1..=1000).contains(&warmup));
     let setup = Instant::now();
     let rt = tokio::runtime::Builder::new_current_thread()
         .enable_all()
@@ -191,14 +196,41 @@ fn resident_request() {
     println!(
         "PW {}",
         serde_json::json!({"kind":"setup", "ns":setup_ns,
-        "registration_and_runtime_ns":registration_ns, "diagnostic":diagnostic})
+        "registration_and_runtime_ns":registration_ns, "diagnostic":diagnostic,
+        "warmup_requests":warmup})
     );
     let mut rows = Vec::with_capacity(reps + 1);
-    for sample in 0..=reps {
+    for iteration in 0..warmup + reps {
+        let sample = iteration.saturating_sub(warmup - 1);
         // Source construction is caller work, outside the stated source-to-release boundary.
         // Different literal each time, no prepared-code or result reuse.
-        let n = sample + 1;
+        let n = iteration + 1;
         let (source, expected) = match case.as_str() {
+            "multi_branch" => (
+                format!(
+                    "n={n}\na=tools.fetch(n)\nif n > 2:\n    print(a['message'])\nelse:\n    print(n)\nb=tools.fetch(-1)\nprint(b['message'])"
+                ),
+                format!(
+                    "{}\nhello\nerror\n",
+                    if n > 2 {
+                        "hello error".into()
+                    } else {
+                        n.to_string()
+                    }
+                ),
+            ),
+            "multi_overflow" => (
+                format!(
+                    "n={n}\na=tools.fetch(n)\nprint(a['message'])\nb=tools.fetch(-1)\nif n > 0:\n    x=9223372036854775807\n    print(x+n)\nprint(b['message'])"
+                ),
+                "hello error\n".into(),
+            ),
+            "multi_permission" => (
+                format!(
+                    "n={n}\na=tools.fetch(n)\nprint(a['message'])\nif n > 0:\n    r=tools.record_total(n, 0)\n    print(r)"
+                ),
+                "hello error\n".into(),
+            ),
             "count_price_small"
             | "count_price_large"
             | "count_quantity_small"
@@ -413,7 +445,12 @@ fn resident_request() {
         drop(host);
         drop(gate);
         // Keep tiny output/status checks inside E2E so output can be released before stop.
-        assert_eq!(outcome.status, Ok(()));
+        let expected_status = match case.as_str() {
+            "multi_overflow" => Err(TaskError::Overflow),
+            "multi_permission" => Err(TaskError::Permission),
+            _ => Ok(()),
+        };
+        assert_eq!(outcome.status, expected_status);
         assert_eq!(outcome.stdout, expected);
         #[cfg(feature = "compiler-profile")]
         let cleanup = Instant::now();
@@ -434,10 +471,12 @@ fn resident_request() {
                 "backend_ns":p.backend_ns, "finalize_ns":p.finalize_ns, "cleanup_ns":p.cleanup_ns});
             row
         };
-        rows.push(row);
+        if iteration >= warmup - 1 {
+            rows.push(row);
+        }
     }
     if case == "loopback" {
-        assert_eq!(service.responses(), reps + 1);
+        assert_eq!(service.responses(), reps + warmup);
         assert_eq!(service.available_permits(), 1);
     }
     for row in rows {

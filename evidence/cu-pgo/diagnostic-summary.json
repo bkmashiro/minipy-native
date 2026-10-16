@@ -1,0 +1,608 @@
+{
+  "baseline": [
+    {
+      "backend": "tape",
+      "case": "branch",
+      "request_median_ns": 15271.0,
+      "phases_median_ns": {
+        "prepare_ns": 14521.0,
+        "execute_including_code_release_ns": 667.0,
+        "output_release_ns": 41.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 0.0,
+        "cleanup_ns": 0.0,
+        "finalize_ns": 0.0,
+        "frontend_ns": 0.0,
+        "lowering_ns": 0.0,
+        "parse_ns": 11771.0,
+        "setup_ns": 0.0,
+        "type_ns": 1917.0
+      }
+    },
+    {
+      "backend": "tape",
+      "case": "scalar_inputs",
+      "request_median_ns": 2834.0,
+      "phases_median_ns": {
+        "prepare_ns": 2542.0,
+        "execute_including_code_release_ns": 250.0,
+        "output_release_ns": 0.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 0.0,
+        "cleanup_ns": 0.0,
+        "finalize_ns": 0.0,
+        "frontend_ns": 0.0,
+        "lowering_ns": 0.0,
+        "parse_ns": 1896.0,
+        "setup_ns": 0.0,
+        "type_ns": 375.0
+      }
+    },
+    {
+      "backend": "tape",
+      "case": "madd_loop",
+      "request_median_ns": 14041.5,
+      "phases_median_ns": {
+        "prepare_ns": 10791.5,
+        "execute_including_code_release_ns": 3167.0,
+        "output_release_ns": 0.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 0.0,
+        "cleanup_ns": 0.0,
+        "finalize_ns": 0.0,
+        "frontend_ns": 0.0,
+        "lowering_ns": 0.0,
+        "parse_ns": 8791.5,
+        "setup_ns": 0.0,
+        "type_ns": 1375.0
+      }
+    },
+    {
+      "backend": "tape",
+      "case": "escaped_join",
+      "request_median_ns": 10042.0,
+      "phases_median_ns": {
+        "prepare_ns": 8500.0,
+        "execute_including_code_release_ns": 1500.0,
+        "output_release_ns": 41.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 0.0,
+        "cleanup_ns": 0.0,
+        "finalize_ns": 0.0,
+        "frontend_ns": 0.0,
+        "lowering_ns": 0.0,
+        "parse_ns": 6625.0,
+        "setup_ns": 0.0,
+        "type_ns": 1500.0
+      }
+    },
+    {
+      "backend": "tape",
+      "case": "detach_wait",
+      "request_median_ns": 74187.5,
+      "phases_median_ns": {
+        "prepare_ns": 9021.0,
+        "execute_including_code_release_ns": 64999.5,
+        "output_release_ns": 0.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 0.0,
+        "cleanup_ns": 0.0,
+        "finalize_ns": 0.0,
+        "frontend_ns": 0.0,
+        "lowering_ns": 0.0,
+        "parse_ns": 6937.5,
+        "setup_ns": 0.0,
+        "type_ns": 1479.0
+      }
+    },
+    {
+      "backend": "native",
+      "case": "branch",
+      "request_median_ns": 71646.0,
+      "phases_median_ns": {
+        "prepare_ns": 68771.0,
+        "execute_including_code_release_ns": 2813.0,
+        "output_release_ns": 0.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 55583.0,
+        "cleanup_ns": 541.5,
+        "finalize_ns": 2166.5,
+        "frontend_ns": 7187.5,
+        "lowering_ns": 2000.0,
+        "parse_ns": 5978.5,
+        "setup_ns": 646.0,
+        "type_ns": 1042.0
+      }
+    },
+    {
+      "backend": "native",
+      "case": "scalar_inputs",
+      "request_median_ns": 48646.0,
+      "phases_median_ns": {
+        "prepare_ns": 45917.0,
+        "execute_including_code_release_ns": 2625.0,
+        "output_release_ns": 0.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 37771.0,
+        "cleanup_ns": 500.0,
+        "finalize_ns": 1937.5,
+        "frontend_ns": 2958.5,
+        "lowering_ns": 1521.0,
+        "parse_ns": 2291.0,
+        "setup_ns": 584.0,
+        "type_ns": 500.0
+      }
+    },
+    {
+      "backend": "native",
+      "case": "madd_loop",
+      "request_median_ns": 125063.0,
+      "phases_median_ns": {
+        "prepare_ns": 120750.0,
+        "execute_including_code_release_ns": 4104.5,
+        "output_release_ns": 0.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 101854.0,
+        "cleanup_ns": 583.0,
+        "finalize_ns": 1917.0,
+        "frontend_ns": 11209.0,
+        "lowering_ns": 3750.0,
+        "parse_ns": 9333.5,
+        "setup_ns": 645.5,
+        "type_ns": 1666.5
+      }
+    },
+    {
+      "backend": "native",
+      "case": "escaped_join",
+      "request_median_ns": 81375.0,
+      "phases_median_ns": {
+        "prepare_ns": 76812.5,
+        "execute_including_code_release_ns": 4542.0,
+        "output_release_ns": 21.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 60375.0,
+        "cleanup_ns": 583.5,
+        "finalize_ns": 2041.5,
+        "frontend_ns": 9583.5,
+        "lowering_ns": 2167.0,
+        "parse_ns": 7583.5,
+        "setup_ns": 1625.0,
+        "type_ns": 1791.5
+      }
+    },
+    {
+      "backend": "native",
+      "case": "detach_wait",
+      "request_median_ns": 158396.0,
+      "phases_median_ns": {
+        "prepare_ns": 90854.5,
+        "execute_including_code_release_ns": 67249.5,
+        "output_release_ns": 20.5
+      },
+      "compiler_median_ns": {
+        "backend_ns": 73375.0,
+        "cleanup_ns": 625.0,
+        "finalize_ns": 2042.0,
+        "frontend_ns": 9520.5,
+        "lowering_ns": 2833.0,
+        "parse_ns": 7604.5,
+        "setup_ns": 1500.0,
+        "type_ns": 1667.0
+      }
+    }
+  ],
+  "balanced": [
+    {
+      "backend": "tape",
+      "case": "branch",
+      "request_median_ns": 26166.5,
+      "phases_median_ns": {
+        "prepare_ns": 24896.0,
+        "execute_including_code_release_ns": 1125.0,
+        "output_release_ns": 42.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 0.0,
+        "cleanup_ns": 0.0,
+        "finalize_ns": 0.0,
+        "frontend_ns": 0.0,
+        "lowering_ns": 0.0,
+        "parse_ns": 19854.0,
+        "setup_ns": 0.0,
+        "type_ns": 3417.0
+      }
+    },
+    {
+      "backend": "tape",
+      "case": "scalar_inputs",
+      "request_median_ns": 2791.5,
+      "phases_median_ns": {
+        "prepare_ns": 2459.0,
+        "execute_including_code_release_ns": 250.0,
+        "output_release_ns": 20.5
+      },
+      "compiler_median_ns": {
+        "backend_ns": 0.0,
+        "cleanup_ns": 0.0,
+        "finalize_ns": 0.0,
+        "frontend_ns": 0.0,
+        "lowering_ns": 0.0,
+        "parse_ns": 1770.5,
+        "setup_ns": 0.0,
+        "type_ns": 416.5
+      }
+    },
+    {
+      "backend": "tape",
+      "case": "madd_loop",
+      "request_median_ns": 13145.5,
+      "phases_median_ns": {
+        "prepare_ns": 9916.5,
+        "execute_including_code_release_ns": 3125.0,
+        "output_release_ns": 41.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 0.0,
+        "cleanup_ns": 0.0,
+        "finalize_ns": 0.0,
+        "frontend_ns": 0.0,
+        "lowering_ns": 0.0,
+        "parse_ns": 7854.0,
+        "setup_ns": 0.0,
+        "type_ns": 1458.0
+      }
+    },
+    {
+      "backend": "tape",
+      "case": "escaped_join",
+      "request_median_ns": 10000.5,
+      "phases_median_ns": {
+        "prepare_ns": 8416.5,
+        "execute_including_code_release_ns": 1562.5,
+        "output_release_ns": 20.5
+      },
+      "compiler_median_ns": {
+        "backend_ns": 0.0,
+        "cleanup_ns": 0.0,
+        "finalize_ns": 0.0,
+        "frontend_ns": 0.0,
+        "lowering_ns": 0.0,
+        "parse_ns": 6354.0,
+        "setup_ns": 0.0,
+        "type_ns": 1666.5
+      }
+    },
+    {
+      "backend": "tape",
+      "case": "detach_wait",
+      "request_median_ns": 73479.5,
+      "phases_median_ns": {
+        "prepare_ns": 9541.5,
+        "execute_including_code_release_ns": 63833.5,
+        "output_release_ns": 0.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 0.0,
+        "cleanup_ns": 0.0,
+        "finalize_ns": 0.0,
+        "frontend_ns": 0.0,
+        "lowering_ns": 0.0,
+        "parse_ns": 6958.5,
+        "setup_ns": 0.0,
+        "type_ns": 1833.0
+      }
+    },
+    {
+      "backend": "native",
+      "case": "branch",
+      "request_median_ns": 67792.0,
+      "phases_median_ns": {
+        "prepare_ns": 65167.0,
+        "execute_including_code_release_ns": 2520.5,
+        "output_release_ns": 41.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 53104.5,
+        "cleanup_ns": 542.0,
+        "finalize_ns": 1917.0,
+        "frontend_ns": 6375.0,
+        "lowering_ns": 1916.0,
+        "parse_ns": 5229.5,
+        "setup_ns": 625.0,
+        "type_ns": 979.5
+      }
+    },
+    {
+      "backend": "native",
+      "case": "scalar_inputs",
+      "request_median_ns": 47167.0,
+      "phases_median_ns": {
+        "prepare_ns": 44646.0,
+        "execute_including_code_release_ns": 2479.5,
+        "output_release_ns": 0.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 36958.5,
+        "cleanup_ns": 541.5,
+        "finalize_ns": 1792.0,
+        "frontend_ns": 2687.5,
+        "lowering_ns": 1500.0,
+        "parse_ns": 2000.0,
+        "setup_ns": 583.0,
+        "type_ns": 479.5
+      }
+    },
+    {
+      "backend": "native",
+      "case": "madd_loop",
+      "request_median_ns": 121791.5,
+      "phases_median_ns": {
+        "prepare_ns": 117562.5,
+        "execute_including_code_release_ns": 4104.0,
+        "output_release_ns": 0.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 99896.0,
+        "cleanup_ns": 583.0,
+        "finalize_ns": 1917.0,
+        "frontend_ns": 10188.0,
+        "lowering_ns": 3708.0,
+        "parse_ns": 8312.0,
+        "setup_ns": 625.0,
+        "type_ns": 1583.0
+      }
+    },
+    {
+      "backend": "native",
+      "case": "escaped_join",
+      "request_median_ns": 80645.5,
+      "phases_median_ns": {
+        "prepare_ns": 76041.5,
+        "execute_including_code_release_ns": 4646.0,
+        "output_release_ns": 0.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 60166.5,
+        "cleanup_ns": 645.5,
+        "finalize_ns": 1958.5,
+        "frontend_ns": 8917.0,
+        "lowering_ns": 2125.0,
+        "parse_ns": 6854.0,
+        "setup_ns": 1645.5,
+        "type_ns": 1875.0
+      }
+    },
+    {
+      "backend": "native",
+      "case": "detach_wait",
+      "request_median_ns": 150000.0,
+      "phases_median_ns": {
+        "prepare_ns": 86917.0,
+        "execute_including_code_release_ns": 63249.5,
+        "output_release_ns": 0.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 70479.5,
+        "cleanup_ns": 625.0,
+        "finalize_ns": 1958.5,
+        "frontend_ns": 8729.5,
+        "lowering_ns": 2770.5,
+        "parse_ns": 6812.5,
+        "setup_ns": 1500.0,
+        "type_ns": 1667.0
+      }
+    }
+  ],
+  "strings": [
+    {
+      "backend": "tape",
+      "case": "branch",
+      "request_median_ns": 21083.0,
+      "phases_median_ns": {
+        "prepare_ns": 20042.0,
+        "execute_including_code_release_ns": 854.5,
+        "output_release_ns": 42.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 0.0,
+        "cleanup_ns": 0.0,
+        "finalize_ns": 0.0,
+        "frontend_ns": 0.0,
+        "lowering_ns": 0.0,
+        "parse_ns": 16000.0,
+        "setup_ns": 0.0,
+        "type_ns": 2750.0
+      }
+    },
+    {
+      "backend": "tape",
+      "case": "scalar_inputs",
+      "request_median_ns": 2479.5,
+      "phases_median_ns": {
+        "prepare_ns": 2209.0,
+        "execute_including_code_release_ns": 208.0,
+        "output_release_ns": 41.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 0.0,
+        "cleanup_ns": 0.0,
+        "finalize_ns": 0.0,
+        "frontend_ns": 0.0,
+        "lowering_ns": 0.0,
+        "parse_ns": 1583.5,
+        "setup_ns": 0.0,
+        "type_ns": 375.0
+      }
+    },
+    {
+      "backend": "tape",
+      "case": "madd_loop",
+      "request_median_ns": 13625.0,
+      "phases_median_ns": {
+        "prepare_ns": 10125.0,
+        "execute_including_code_release_ns": 3458.0,
+        "output_release_ns": 0.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 0.0,
+        "cleanup_ns": 0.0,
+        "finalize_ns": 0.0,
+        "frontend_ns": 0.0,
+        "lowering_ns": 0.0,
+        "parse_ns": 8062.5,
+        "setup_ns": 0.0,
+        "type_ns": 1437.5
+      }
+    },
+    {
+      "backend": "tape",
+      "case": "escaped_join",
+      "request_median_ns": 10209.0,
+      "phases_median_ns": {
+        "prepare_ns": 8541.5,
+        "execute_including_code_release_ns": 1604.0,
+        "output_release_ns": 0.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 0.0,
+        "cleanup_ns": 0.0,
+        "finalize_ns": 0.0,
+        "frontend_ns": 0.0,
+        "lowering_ns": 0.0,
+        "parse_ns": 6541.5,
+        "setup_ns": 0.0,
+        "type_ns": 1583.0
+      }
+    },
+    {
+      "backend": "tape",
+      "case": "detach_wait",
+      "request_median_ns": 68791.5,
+      "phases_median_ns": {
+        "prepare_ns": 8875.0,
+        "execute_including_code_release_ns": 59667.0,
+        "output_release_ns": 20.5
+      },
+      "compiler_median_ns": {
+        "backend_ns": 0.0,
+        "cleanup_ns": 0.0,
+        "finalize_ns": 0.0,
+        "frontend_ns": 0.0,
+        "lowering_ns": 0.0,
+        "parse_ns": 6708.5,
+        "setup_ns": 0.0,
+        "type_ns": 1500.0
+      }
+    },
+    {
+      "backend": "native",
+      "case": "branch",
+      "request_median_ns": 66708.5,
+      "phases_median_ns": {
+        "prepare_ns": 64229.5,
+        "execute_including_code_release_ns": 2500.0,
+        "output_release_ns": 41.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 52312.5,
+        "cleanup_ns": 542.0,
+        "finalize_ns": 1875.0,
+        "frontend_ns": 6333.5,
+        "lowering_ns": 1875.0,
+        "parse_ns": 5208.5,
+        "setup_ns": 625.0,
+        "type_ns": 959.0
+      }
+    },
+    {
+      "backend": "native",
+      "case": "scalar_inputs",
+      "request_median_ns": 47188.0,
+      "phases_median_ns": {
+        "prepare_ns": 44646.0,
+        "execute_including_code_release_ns": 2500.0,
+        "output_release_ns": 0.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 36979.0,
+        "cleanup_ns": 500.0,
+        "finalize_ns": 1834.0,
+        "frontend_ns": 2750.0,
+        "lowering_ns": 1541.5,
+        "parse_ns": 2042.0,
+        "setup_ns": 583.0,
+        "type_ns": 500.0
+      }
+    },
+    {
+      "backend": "native",
+      "case": "madd_loop",
+      "request_median_ns": 121228.5,
+      "phases_median_ns": {
+        "prepare_ns": 117125.0,
+        "execute_including_code_release_ns": 4041.5,
+        "output_release_ns": 0.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 99312.5,
+        "cleanup_ns": 541.5,
+        "finalize_ns": 1917.0,
+        "frontend_ns": 10292.0,
+        "lowering_ns": 3729.5,
+        "parse_ns": 8500.0,
+        "setup_ns": 625.0,
+        "type_ns": 1542.0
+      }
+    },
+    {
+      "backend": "native",
+      "case": "escaped_join",
+      "request_median_ns": 78709.0,
+      "phases_median_ns": {
+        "prepare_ns": 74021.0,
+        "execute_including_code_release_ns": 4646.0,
+        "output_release_ns": 41.0
+      },
+      "compiler_median_ns": {
+        "backend_ns": 58541.5,
+        "cleanup_ns": 584.0,
+        "finalize_ns": 1959.0,
+        "frontend_ns": 8708.5,
+        "lowering_ns": 2125.0,
+        "parse_ns": 6792.0,
+        "setup_ns": 1583.0,
+        "type_ns": 1709.0
+      }
+    },
+    {
+      "backend": "native",
+      "case": "detach_wait",
+      "request_median_ns": 154771.0,
+      "phases_median_ns": {
+        "prepare_ns": 88041.5,
+        "execute_including_code_release_ns": 66500.0,
+        "output_release_ns": 41.5
+      },
+      "compiler_median_ns": {
+        "backend_ns": 71729.0,
+        "cleanup_ns": 645.5,
+        "finalize_ns": 2000.0,
+        "frontend_ns": 8562.5,
+        "lowering_ns": 2750.0,
+        "parse_ns": 6729.5,
+        "setup_ns": 1458.0,
+        "type_ns": 1625.0
+      }
+    }
+  ]
+}

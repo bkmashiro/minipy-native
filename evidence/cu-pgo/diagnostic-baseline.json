@@ -1,0 +1,2472 @@
+[
+  {
+    "backend": "tape",
+    "case": "branch",
+    "rows": [
+      {
+        "diagnostic": true,
+        "kind": "setup",
+        "ns": 1126250,
+        "registration_and_runtime_ns": 382416,
+        "warmup_requests": 64
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 11583,
+          "setup_ns": 0,
+          "type_ns": 1875
+        },
+        "execute_including_code_release_ns": 666,
+        "kind": "request",
+        "ns": 15084,
+        "output_release_ns": 0,
+        "prepare_ns": 14334,
+        "sample": 0
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 11667,
+          "setup_ns": 0,
+          "type_ns": 1916
+        },
+        "execute_including_code_release_ns": 666,
+        "kind": "request",
+        "ns": 15167,
+        "output_release_ns": 0,
+        "prepare_ns": 14417,
+        "sample": 1
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 14375,
+          "setup_ns": 0,
+          "type_ns": 2334
+        },
+        "execute_including_code_release_ns": 792,
+        "kind": "request",
+        "ns": 18667,
+        "output_release_ns": 42,
+        "prepare_ns": 17750,
+        "sample": 2
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 12541,
+          "setup_ns": 0,
+          "type_ns": 2333
+        },
+        "execute_including_code_release_ns": 792,
+        "kind": "request",
+        "ns": 16875,
+        "output_release_ns": 41,
+        "prepare_ns": 15958,
+        "sample": 3
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 14084,
+          "setup_ns": 0,
+          "type_ns": 2417
+        },
+        "execute_including_code_release_ns": 833,
+        "kind": "request",
+        "ns": 18458,
+        "output_release_ns": 41,
+        "prepare_ns": 17500,
+        "sample": 4
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 11792,
+          "setup_ns": 0,
+          "type_ns": 1916
+        },
+        "execute_including_code_release_ns": 667,
+        "kind": "request",
+        "ns": 15292,
+        "output_release_ns": 0,
+        "prepare_ns": 14542,
+        "sample": 5
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 12417,
+          "setup_ns": 0,
+          "type_ns": 2375
+        },
+        "execute_including_code_release_ns": 791,
+        "kind": "request",
+        "ns": 16666,
+        "output_release_ns": 42,
+        "prepare_ns": 15750,
+        "sample": 6
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 14042,
+          "setup_ns": 0,
+          "type_ns": 2041
+        },
+        "execute_including_code_release_ns": 625,
+        "kind": "request",
+        "ns": 17625,
+        "output_release_ns": 41,
+        "prepare_ns": 16917,
+        "sample": 7
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 11583,
+          "setup_ns": 0,
+          "type_ns": 1917
+        },
+        "execute_including_code_release_ns": 667,
+        "kind": "request",
+        "ns": 15083,
+        "output_release_ns": 41,
+        "prepare_ns": 14333,
+        "sample": 8
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 11625,
+          "setup_ns": 0,
+          "type_ns": 1917
+        },
+        "execute_including_code_release_ns": 625,
+        "kind": "request",
+        "ns": 15041,
+        "output_release_ns": 0,
+        "prepare_ns": 14333,
+        "sample": 9
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 11625,
+          "setup_ns": 0,
+          "type_ns": 1833
+        },
+        "execute_including_code_release_ns": 666,
+        "kind": "request",
+        "ns": 15042,
+        "output_release_ns": 42,
+        "prepare_ns": 14292,
+        "sample": 10
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 11708,
+          "setup_ns": 0,
+          "type_ns": 1875
+        },
+        "execute_including_code_release_ns": 625,
+        "kind": "request",
+        "ns": 15083,
+        "output_release_ns": 42,
+        "prepare_ns": 14375,
+        "sample": 11
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 11750,
+          "setup_ns": 0,
+          "type_ns": 1875
+        },
+        "execute_including_code_release_ns": 667,
+        "kind": "request",
+        "ns": 15250,
+        "output_release_ns": 42,
+        "prepare_ns": 14500,
+        "sample": 12
+      }
+    ]
+  },
+  {
+    "backend": "tape",
+    "case": "scalar_inputs",
+    "rows": [
+      {
+        "diagnostic": true,
+        "kind": "setup",
+        "ns": 92916,
+        "registration_and_runtime_ns": 35458,
+        "warmup_requests": 64
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 1833,
+          "setup_ns": 0,
+          "type_ns": 417
+        },
+        "execute_including_code_release_ns": 208,
+        "kind": "request",
+        "ns": 2791,
+        "output_release_ns": 0,
+        "prepare_ns": 2500,
+        "sample": 0
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 1917,
+          "setup_ns": 0,
+          "type_ns": 458
+        },
+        "execute_including_code_release_ns": 291,
+        "kind": "request",
+        "ns": 3042,
+        "output_release_ns": 42,
+        "prepare_ns": 2709,
+        "sample": 1
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 1917,
+          "setup_ns": 0,
+          "type_ns": 375
+        },
+        "execute_including_code_release_ns": 250,
+        "kind": "request",
+        "ns": 2875,
+        "output_release_ns": 42,
+        "prepare_ns": 2583,
+        "sample": 2
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 1834,
+          "setup_ns": 0,
+          "type_ns": 375
+        },
+        "execute_including_code_release_ns": 250,
+        "kind": "request",
+        "ns": 2792,
+        "output_release_ns": 42,
+        "prepare_ns": 2500,
+        "sample": 3
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 1917,
+          "setup_ns": 0,
+          "type_ns": 375
+        },
+        "execute_including_code_release_ns": 250,
+        "kind": "request",
+        "ns": 2916,
+        "output_release_ns": 0,
+        "prepare_ns": 2625,
+        "sample": 4
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 1958,
+          "setup_ns": 0,
+          "type_ns": 375
+        },
+        "execute_including_code_release_ns": 250,
+        "kind": "request",
+        "ns": 2917,
+        "output_release_ns": 42,
+        "prepare_ns": 2625,
+        "sample": 5
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 1917,
+          "setup_ns": 0,
+          "type_ns": 375
+        },
+        "execute_including_code_release_ns": 250,
+        "kind": "request",
+        "ns": 2834,
+        "output_release_ns": 42,
+        "prepare_ns": 2542,
+        "sample": 6
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 1917,
+          "setup_ns": 0,
+          "type_ns": 375
+        },
+        "execute_including_code_release_ns": 250,
+        "kind": "request",
+        "ns": 2875,
+        "output_release_ns": 0,
+        "prepare_ns": 2583,
+        "sample": 7
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 1833,
+          "setup_ns": 0,
+          "type_ns": 375
+        },
+        "execute_including_code_release_ns": 250,
+        "kind": "request",
+        "ns": 2833,
+        "output_release_ns": 0,
+        "prepare_ns": 2500,
+        "sample": 8
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 1875,
+          "setup_ns": 0,
+          "type_ns": 375
+        },
+        "execute_including_code_release_ns": 209,
+        "kind": "request",
+        "ns": 2792,
+        "output_release_ns": 0,
+        "prepare_ns": 2500,
+        "sample": 9
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 1875,
+          "setup_ns": 0,
+          "type_ns": 333
+        },
+        "execute_including_code_release_ns": 208,
+        "kind": "request",
+        "ns": 2750,
+        "output_release_ns": 0,
+        "prepare_ns": 2458,
+        "sample": 10
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 1834,
+          "setup_ns": 0,
+          "type_ns": 375
+        },
+        "execute_including_code_release_ns": 208,
+        "kind": "request",
+        "ns": 2834,
+        "output_release_ns": 0,
+        "prepare_ns": 2542,
+        "sample": 11
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 1833,
+          "setup_ns": 0,
+          "type_ns": 417
+        },
+        "execute_including_code_release_ns": 208,
+        "kind": "request",
+        "ns": 2750,
+        "output_release_ns": 0,
+        "prepare_ns": 2500,
+        "sample": 12
+      }
+    ]
+  },
+  {
+    "backend": "tape",
+    "case": "madd_loop",
+    "rows": [
+      {
+        "diagnostic": true,
+        "kind": "setup",
+        "ns": 88500,
+        "registration_and_runtime_ns": 34042,
+        "warmup_requests": 64
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 8667,
+          "setup_ns": 0,
+          "type_ns": 1458
+        },
+        "execute_including_code_release_ns": 3208,
+        "kind": "request",
+        "ns": 14000,
+        "output_release_ns": 42,
+        "prepare_ns": 10750,
+        "sample": 0
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 8917,
+          "setup_ns": 0,
+          "type_ns": 1542
+        },
+        "execute_including_code_release_ns": 3166,
+        "kind": "request",
+        "ns": 14334,
+        "output_release_ns": 0,
+        "prepare_ns": 11084,
+        "sample": 1
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 8708,
+          "setup_ns": 0,
+          "type_ns": 1375
+        },
+        "execute_including_code_release_ns": 3125,
+        "kind": "request",
+        "ns": 13916,
+        "output_release_ns": 41,
+        "prepare_ns": 10750,
+        "sample": 2
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 8750,
+          "setup_ns": 0,
+          "type_ns": 1417
+        },
+        "execute_including_code_release_ns": 3167,
+        "kind": "request",
+        "ns": 13958,
+        "output_release_ns": 41,
+        "prepare_ns": 10750,
+        "sample": 3
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 8875,
+          "setup_ns": 0,
+          "type_ns": 1375
+        },
+        "execute_including_code_release_ns": 3208,
+        "kind": "request",
+        "ns": 14250,
+        "output_release_ns": 0,
+        "prepare_ns": 10959,
+        "sample": 4
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 8750,
+          "setup_ns": 0,
+          "type_ns": 1375
+        },
+        "execute_including_code_release_ns": 3125,
+        "kind": "request",
+        "ns": 13959,
+        "output_release_ns": 0,
+        "prepare_ns": 10750,
+        "sample": 5
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 8667,
+          "setup_ns": 0,
+          "type_ns": 1375
+        },
+        "execute_including_code_release_ns": 3209,
+        "kind": "request",
+        "ns": 13958,
+        "output_release_ns": 0,
+        "prepare_ns": 10666,
+        "sample": 6
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 8833,
+          "setup_ns": 0,
+          "type_ns": 1375
+        },
+        "execute_including_code_release_ns": 3125,
+        "kind": "request",
+        "ns": 14000,
+        "output_release_ns": 0,
+        "prepare_ns": 10792,
+        "sample": 7
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 8750,
+          "setup_ns": 0,
+          "type_ns": 1333
+        },
+        "execute_including_code_release_ns": 3250,
+        "kind": "request",
+        "ns": 14042,
+        "output_release_ns": 0,
+        "prepare_ns": 10709,
+        "sample": 8
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 8917,
+          "setup_ns": 0,
+          "type_ns": 1416
+        },
+        "execute_including_code_release_ns": 3167,
+        "kind": "request",
+        "ns": 14250,
+        "output_release_ns": 0,
+        "prepare_ns": 11000,
+        "sample": 9
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 8792,
+          "setup_ns": 0,
+          "type_ns": 1417
+        },
+        "execute_including_code_release_ns": 3209,
+        "kind": "request",
+        "ns": 14041,
+        "output_release_ns": 41,
+        "prepare_ns": 10791,
+        "sample": 10
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 8875,
+          "setup_ns": 0,
+          "type_ns": 1375
+        },
+        "execute_including_code_release_ns": 3084,
+        "kind": "request",
+        "ns": 14042,
+        "output_release_ns": 0,
+        "prepare_ns": 10875,
+        "sample": 11
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 8791,
+          "setup_ns": 0,
+          "type_ns": 1417
+        },
+        "execute_including_code_release_ns": 3292,
+        "kind": "request",
+        "ns": 14125,
+        "output_release_ns": 41,
+        "prepare_ns": 10792,
+        "sample": 12
+      }
+    ]
+  },
+  {
+    "backend": "tape",
+    "case": "escaped_join",
+    "rows": [
+      {
+        "diagnostic": true,
+        "kind": "setup",
+        "ns": 87375,
+        "registration_and_runtime_ns": 33834,
+        "warmup_requests": 64
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 7250,
+          "setup_ns": 0,
+          "type_ns": 1625
+        },
+        "execute_including_code_release_ns": 1666,
+        "kind": "request",
+        "ns": 11042,
+        "output_release_ns": 0,
+        "prepare_ns": 9292,
+        "sample": 0
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 7500,
+          "setup_ns": 0,
+          "type_ns": 1750
+        },
+        "execute_including_code_release_ns": 1541,
+        "kind": "request",
+        "ns": 11375,
+        "output_release_ns": 0,
+        "prepare_ns": 9750,
+        "sample": 1
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6667,
+          "setup_ns": 0,
+          "type_ns": 1500
+        },
+        "execute_including_code_release_ns": 1500,
+        "kind": "request",
+        "ns": 10042,
+        "output_release_ns": 0,
+        "prepare_ns": 8500,
+        "sample": 2
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6667,
+          "setup_ns": 0,
+          "type_ns": 1541
+        },
+        "execute_including_code_release_ns": 1500,
+        "kind": "request",
+        "ns": 10125,
+        "output_release_ns": 41,
+        "prepare_ns": 8584,
+        "sample": 3
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6625,
+          "setup_ns": 0,
+          "type_ns": 1500
+        },
+        "execute_including_code_release_ns": 1500,
+        "kind": "request",
+        "ns": 10041,
+        "output_release_ns": 41,
+        "prepare_ns": 8500,
+        "sample": 4
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6625,
+          "setup_ns": 0,
+          "type_ns": 1500
+        },
+        "execute_including_code_release_ns": 1500,
+        "kind": "request",
+        "ns": 10083,
+        "output_release_ns": 0,
+        "prepare_ns": 8500,
+        "sample": 5
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6625,
+          "setup_ns": 0,
+          "type_ns": 1459
+        },
+        "execute_including_code_release_ns": 1542,
+        "kind": "request",
+        "ns": 10041,
+        "output_release_ns": 41,
+        "prepare_ns": 8458,
+        "sample": 6
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6625,
+          "setup_ns": 0,
+          "type_ns": 1500
+        },
+        "execute_including_code_release_ns": 1542,
+        "kind": "request",
+        "ns": 10042,
+        "output_release_ns": 42,
+        "prepare_ns": 8458,
+        "sample": 7
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6667,
+          "setup_ns": 0,
+          "type_ns": 1500
+        },
+        "execute_including_code_release_ns": 1542,
+        "kind": "request",
+        "ns": 10084,
+        "output_release_ns": 0,
+        "prepare_ns": 8500,
+        "sample": 8
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6625,
+          "setup_ns": 0,
+          "type_ns": 1459
+        },
+        "execute_including_code_release_ns": 1459,
+        "kind": "request",
+        "ns": 9916,
+        "output_release_ns": 41,
+        "prepare_ns": 8416,
+        "sample": 9
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6625,
+          "setup_ns": 0,
+          "type_ns": 1500
+        },
+        "execute_including_code_release_ns": 1500,
+        "kind": "request",
+        "ns": 10042,
+        "output_release_ns": 42,
+        "prepare_ns": 8500,
+        "sample": 10
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6542,
+          "setup_ns": 0,
+          "type_ns": 1459
+        },
+        "execute_including_code_release_ns": 1500,
+        "kind": "request",
+        "ns": 9917,
+        "output_release_ns": 42,
+        "prepare_ns": 8375,
+        "sample": 11
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6500,
+          "setup_ns": 0,
+          "type_ns": 1458
+        },
+        "execute_including_code_release_ns": 1500,
+        "kind": "request",
+        "ns": 9958,
+        "output_release_ns": 0,
+        "prepare_ns": 8375,
+        "sample": 12
+      }
+    ]
+  },
+  {
+    "backend": "tape",
+    "case": "detach_wait",
+    "rows": [
+      {
+        "diagnostic": true,
+        "kind": "setup",
+        "ns": 74834,
+        "registration_and_runtime_ns": 30834,
+        "warmup_requests": 64
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 7500,
+          "setup_ns": 0,
+          "type_ns": 1583
+        },
+        "execute_including_code_release_ns": 62583,
+        "kind": "request",
+        "ns": 72542,
+        "output_release_ns": 42,
+        "prepare_ns": 9750,
+        "sample": 0
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 7625,
+          "setup_ns": 0,
+          "type_ns": 1792
+        },
+        "execute_including_code_release_ns": 62458,
+        "kind": "request",
+        "ns": 72791,
+        "output_release_ns": 41,
+        "prepare_ns": 10125,
+        "sample": 1
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 7584,
+          "setup_ns": 0,
+          "type_ns": 1625
+        },
+        "execute_including_code_release_ns": 62458,
+        "kind": "request",
+        "ns": 72625,
+        "output_release_ns": 0,
+        "prepare_ns": 9917,
+        "sample": 2
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 7459,
+          "setup_ns": 0,
+          "type_ns": 1542
+        },
+        "execute_including_code_release_ns": 62750,
+        "kind": "request",
+        "ns": 72708,
+        "output_release_ns": 41,
+        "prepare_ns": 9750,
+        "sample": 3
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6917,
+          "setup_ns": 0,
+          "type_ns": 1500
+        },
+        "execute_including_code_release_ns": 64834,
+        "kind": "request",
+        "ns": 74084,
+        "output_release_ns": 0,
+        "prepare_ns": 9000,
+        "sample": 4
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6958,
+          "setup_ns": 0,
+          "type_ns": 1417
+        },
+        "execute_including_code_release_ns": 64958,
+        "kind": "request",
+        "ns": 74250,
+        "output_release_ns": 0,
+        "prepare_ns": 9042,
+        "sample": 5
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6875,
+          "setup_ns": 0,
+          "type_ns": 1416
+        },
+        "execute_including_code_release_ns": 65041,
+        "kind": "request",
+        "ns": 74209,
+        "output_release_ns": 42,
+        "prepare_ns": 8959,
+        "sample": 6
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6833,
+          "setup_ns": 0,
+          "type_ns": 1417
+        },
+        "execute_including_code_release_ns": 65125,
+        "kind": "request",
+        "ns": 74166,
+        "output_release_ns": 41,
+        "prepare_ns": 8833,
+        "sample": 7
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6834,
+          "setup_ns": 0,
+          "type_ns": 1458
+        },
+        "execute_including_code_release_ns": 67459,
+        "kind": "request",
+        "ns": 76625,
+        "output_release_ns": 0,
+        "prepare_ns": 8875,
+        "sample": 8
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 9625,
+          "setup_ns": 0,
+          "type_ns": 1958
+        },
+        "execute_including_code_release_ns": 65583,
+        "kind": "request",
+        "ns": 78333,
+        "output_release_ns": 0,
+        "prepare_ns": 12500,
+        "sample": 9
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 7542,
+          "setup_ns": 0,
+          "type_ns": 1541
+        },
+        "execute_including_code_release_ns": 62542,
+        "kind": "request",
+        "ns": 72583,
+        "output_release_ns": 0,
+        "prepare_ns": 9791,
+        "sample": 10
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6792,
+          "setup_ns": 0,
+          "type_ns": 1416
+        },
+        "execute_including_code_release_ns": 65166,
+        "kind": "request",
+        "ns": 74209,
+        "output_release_ns": 0,
+        "prepare_ns": 8834,
+        "sample": 11
+      },
+      {
+        "compiler": {
+          "backend_ns": 0,
+          "cleanup_ns": 0,
+          "finalize_ns": 0,
+          "frontend_ns": 0,
+          "lowering_ns": 0,
+          "parse_ns": 6750,
+          "setup_ns": 0,
+          "type_ns": 1417
+        },
+        "execute_including_code_release_ns": 65792,
+        "kind": "request",
+        "ns": 74875,
+        "output_release_ns": 42,
+        "prepare_ns": 8833,
+        "sample": 12
+      }
+    ]
+  },
+  {
+    "backend": "native",
+    "case": "branch",
+    "rows": [
+      {
+        "diagnostic": true,
+        "kind": "setup",
+        "ns": 87291,
+        "registration_and_runtime_ns": 28208,
+        "warmup_requests": 64
+      },
+      {
+        "compiler": {
+          "backend_ns": 55459,
+          "cleanup_ns": 583,
+          "finalize_ns": 1959,
+          "frontend_ns": 7208,
+          "lowering_ns": 2000,
+          "parse_ns": 6000,
+          "setup_ns": 625,
+          "type_ns": 1083
+        },
+        "execute_including_code_release_ns": 2667,
+        "kind": "request",
+        "ns": 71209,
+        "output_release_ns": 0,
+        "prepare_ns": 68500,
+        "sample": 0
+      },
+      {
+        "compiler": {
+          "backend_ns": 53042,
+          "cleanup_ns": 500,
+          "finalize_ns": 2333,
+          "frontend_ns": 7541,
+          "lowering_ns": 2125,
+          "parse_ns": 6209,
+          "setup_ns": 708,
+          "type_ns": 1125
+        },
+        "execute_including_code_release_ns": 3000,
+        "kind": "request",
+        "ns": 69833,
+        "output_release_ns": 0,
+        "prepare_ns": 66750,
+        "sample": 1
+      },
+      {
+        "compiler": {
+          "backend_ns": 51625,
+          "cleanup_ns": 500,
+          "finalize_ns": 2125,
+          "frontend_ns": 6917,
+          "lowering_ns": 1875,
+          "parse_ns": 5708,
+          "setup_ns": 583,
+          "type_ns": 1084
+        },
+        "execute_including_code_release_ns": 2792,
+        "kind": "request",
+        "ns": 67208,
+        "output_release_ns": 41,
+        "prepare_ns": 64375,
+        "sample": 2
+      },
+      {
+        "compiler": {
+          "backend_ns": 61375,
+          "cleanup_ns": 583,
+          "finalize_ns": 2458,
+          "frontend_ns": 6709,
+          "lowering_ns": 1833,
+          "parse_ns": 5584,
+          "setup_ns": 584,
+          "type_ns": 958
+        },
+        "execute_including_code_release_ns": 3709,
+        "kind": "request",
+        "ns": 77875,
+        "output_release_ns": 41,
+        "prepare_ns": 74125,
+        "sample": 3
+      },
+      {
+        "compiler": {
+          "backend_ns": 56417,
+          "cleanup_ns": 541,
+          "finalize_ns": 4833,
+          "frontend_ns": 7542,
+          "lowering_ns": 2000,
+          "parse_ns": 6333,
+          "setup_ns": 667,
+          "type_ns": 1042
+        },
+        "execute_including_code_release_ns": 2875,
+        "kind": "request",
+        "ns": 75584,
+        "output_release_ns": 0,
+        "prepare_ns": 72625,
+        "sample": 4
+      },
+      {
+        "compiler": {
+          "backend_ns": 56375,
+          "cleanup_ns": 542,
+          "finalize_ns": 2000,
+          "frontend_ns": 7333,
+          "lowering_ns": 2042,
+          "parse_ns": 6041,
+          "setup_ns": 667,
+          "type_ns": 1042
+        },
+        "execute_including_code_release_ns": 2792,
+        "kind": "request",
+        "ns": 72375,
+        "output_release_ns": 0,
+        "prepare_ns": 69500,
+        "sample": 5
+      },
+      {
+        "compiler": {
+          "backend_ns": 56083,
+          "cleanup_ns": 583,
+          "finalize_ns": 2208,
+          "frontend_ns": 7375,
+          "lowering_ns": 2000,
+          "parse_ns": 6125,
+          "setup_ns": 625,
+          "type_ns": 1041
+        },
+        "execute_including_code_release_ns": 2834,
+        "kind": "request",
+        "ns": 72375,
+        "output_release_ns": 41,
+        "prepare_ns": 69500,
+        "sample": 6
+      },
+      {
+        "compiler": {
+          "backend_ns": 55833,
+          "cleanup_ns": 583,
+          "finalize_ns": 2125,
+          "frontend_ns": 7417,
+          "lowering_ns": 2041,
+          "parse_ns": 6208,
+          "setup_ns": 709,
+          "type_ns": 1042
+        },
+        "execute_including_code_release_ns": 5583,
+        "kind": "request",
+        "ns": 74917,
+        "output_release_ns": 42,
+        "prepare_ns": 69292,
+        "sample": 7
+      },
+      {
+        "compiler": {
+          "backend_ns": 51250,
+          "cleanup_ns": 459,
+          "finalize_ns": 4208,
+          "frontend_ns": 7250,
+          "lowering_ns": 2000,
+          "parse_ns": 6042,
+          "setup_ns": 625,
+          "type_ns": 1083
+        },
+        "execute_including_code_release_ns": 2667,
+        "kind": "request",
+        "ns": 69208,
+        "output_release_ns": 0,
+        "prepare_ns": 66458,
+        "sample": 8
+      },
+      {
+        "compiler": {
+          "backend_ns": 50709,
+          "cleanup_ns": 541,
+          "finalize_ns": 1958,
+          "frontend_ns": 6667,
+          "lowering_ns": 1750,
+          "parse_ns": 5500,
+          "setup_ns": 583,
+          "type_ns": 958
+        },
+        "execute_including_code_release_ns": 2417,
+        "kind": "request",
+        "ns": 65209,
+        "output_release_ns": 42,
+        "prepare_ns": 62750,
+        "sample": 9
+      },
+      {
+        "compiler": {
+          "backend_ns": 55125,
+          "cleanup_ns": 542,
+          "finalize_ns": 1917,
+          "frontend_ns": 6750,
+          "lowering_ns": 2042,
+          "parse_ns": 5542,
+          "setup_ns": 667,
+          "type_ns": 1083
+        },
+        "execute_including_code_release_ns": 2666,
+        "kind": "request",
+        "ns": 70375,
+        "output_release_ns": 0,
+        "prepare_ns": 67667,
+        "sample": 10
+      },
+      {
+        "compiler": {
+          "backend_ns": 55333,
+          "cleanup_ns": 625,
+          "finalize_ns": 2000,
+          "frontend_ns": 7125,
+          "lowering_ns": 1958,
+          "parse_ns": 5916,
+          "setup_ns": 667,
+          "type_ns": 1042
+        },
+        "execute_including_code_release_ns": 2583,
+        "kind": "request",
+        "ns": 70917,
+        "output_release_ns": 0,
+        "prepare_ns": 68250,
+        "sample": 11
+      },
+      {
+        "compiler": {
+          "backend_ns": 61209,
+          "cleanup_ns": 500,
+          "finalize_ns": 2500,
+          "frontend_ns": 7125,
+          "lowering_ns": 1958,
+          "parse_ns": 5916,
+          "setup_ns": 625,
+          "type_ns": 1042
+        },
+        "execute_including_code_release_ns": 3166,
+        "kind": "request",
+        "ns": 77792,
+        "output_release_ns": 0,
+        "prepare_ns": 74542,
+        "sample": 12
+      }
+    ]
+  },
+  {
+    "backend": "native",
+    "case": "scalar_inputs",
+    "rows": [
+      {
+        "diagnostic": true,
+        "kind": "setup",
+        "ns": 88667,
+        "registration_and_runtime_ns": 34292,
+        "warmup_requests": 64
+      },
+      {
+        "compiler": {
+          "backend_ns": 36917,
+          "cleanup_ns": 458,
+          "finalize_ns": 2000,
+          "frontend_ns": 2708,
+          "lowering_ns": 1417,
+          "parse_ns": 2083,
+          "setup_ns": 542,
+          "type_ns": 459
+        },
+        "execute_including_code_release_ns": 2791,
+        "kind": "request",
+        "ns": 47375,
+        "output_release_ns": 42,
+        "prepare_ns": 44542,
+        "sample": 0
+      },
+      {
+        "compiler": {
+          "backend_ns": 38208,
+          "cleanup_ns": 500,
+          "finalize_ns": 2292,
+          "frontend_ns": 3125,
+          "lowering_ns": 1584,
+          "parse_ns": 2375,
+          "setup_ns": 584,
+          "type_ns": 584
+        },
+        "execute_including_code_release_ns": 3041,
+        "kind": "request",
+        "ns": 49917,
+        "output_release_ns": 0,
+        "prepare_ns": 46792,
+        "sample": 1
+      },
+      {
+        "compiler": {
+          "backend_ns": 37917,
+          "cleanup_ns": 459,
+          "finalize_ns": 2250,
+          "frontend_ns": 3000,
+          "lowering_ns": 1459,
+          "parse_ns": 2291,
+          "setup_ns": 584,
+          "type_ns": 500
+        },
+        "execute_including_code_release_ns": 3250,
+        "kind": "request",
+        "ns": 49583,
+        "output_release_ns": 0,
+        "prepare_ns": 46250,
+        "sample": 2
+      },
+      {
+        "compiler": {
+          "backend_ns": 37583,
+          "cleanup_ns": 500,
+          "finalize_ns": 2208,
+          "frontend_ns": 3000,
+          "lowering_ns": 1542,
+          "parse_ns": 2334,
+          "setup_ns": 583,
+          "type_ns": 500
+        },
+        "execute_including_code_release_ns": 3625,
+        "kind": "request",
+        "ns": 49583,
+        "output_release_ns": 0,
+        "prepare_ns": 45875,
+        "sample": 3
+      },
+      {
+        "compiler": {
+          "backend_ns": 38042,
+          "cleanup_ns": 500,
+          "finalize_ns": 2584,
+          "frontend_ns": 2959,
+          "lowering_ns": 1500,
+          "parse_ns": 2250,
+          "setup_ns": 584,
+          "type_ns": 500
+        },
+        "execute_including_code_release_ns": 3125,
+        "kind": "request",
+        "ns": 49917,
+        "output_release_ns": 0,
+        "prepare_ns": 46709,
+        "sample": 4
+      },
+      {
+        "compiler": {
+          "backend_ns": 37958,
+          "cleanup_ns": 458,
+          "finalize_ns": 2208,
+          "frontend_ns": 3084,
+          "lowering_ns": 1708,
+          "parse_ns": 2292,
+          "setup_ns": 584,
+          "type_ns": 583
+        },
+        "execute_including_code_release_ns": 3000,
+        "kind": "request",
+        "ns": 49459,
+        "output_release_ns": 42,
+        "prepare_ns": 46417,
+        "sample": 5
+      },
+      {
+        "compiler": {
+          "backend_ns": 37625,
+          "cleanup_ns": 542,
+          "finalize_ns": 1875,
+          "frontend_ns": 2958,
+          "lowering_ns": 1542,
+          "parse_ns": 2291,
+          "setup_ns": 583,
+          "type_ns": 459
+        },
+        "execute_including_code_release_ns": 2500,
+        "kind": "request",
+        "ns": 48125,
+        "output_release_ns": 42,
+        "prepare_ns": 45583,
+        "sample": 6
+      },
+      {
+        "compiler": {
+          "backend_ns": 38083,
+          "cleanup_ns": 458,
+          "finalize_ns": 1875,
+          "frontend_ns": 2917,
+          "lowering_ns": 1542,
+          "parse_ns": 2250,
+          "setup_ns": 584,
+          "type_ns": 500
+        },
+        "execute_including_code_release_ns": 2583,
+        "kind": "request",
+        "ns": 48625,
+        "output_release_ns": 0,
+        "prepare_ns": 45959,
+        "sample": 7
+      },
+      {
+        "compiler": {
+          "backend_ns": 36792,
+          "cleanup_ns": 416,
+          "finalize_ns": 1958,
+          "frontend_ns": 3000,
+          "lowering_ns": 1500,
+          "parse_ns": 2292,
+          "setup_ns": 584,
+          "type_ns": 458
+        },
+        "execute_including_code_release_ns": 2625,
+        "kind": "request",
+        "ns": 47458,
+        "output_release_ns": 0,
+        "prepare_ns": 44750,
+        "sample": 8
+      },
+      {
+        "compiler": {
+          "backend_ns": 36667,
+          "cleanup_ns": 417,
+          "finalize_ns": 1791,
+          "frontend_ns": 2750,
+          "lowering_ns": 1375,
+          "parse_ns": 2083,
+          "setup_ns": 542,
+          "type_ns": 458
+        },
+        "execute_including_code_release_ns": 2292,
+        "kind": "request",
+        "ns": 46333,
+        "output_release_ns": 0,
+        "prepare_ns": 43958,
+        "sample": 9
+      },
+      {
+        "compiler": {
+          "backend_ns": 36500,
+          "cleanup_ns": 500,
+          "finalize_ns": 1917,
+          "frontend_ns": 2709,
+          "lowering_ns": 1417,
+          "parse_ns": 2042,
+          "setup_ns": 542,
+          "type_ns": 459
+        },
+        "execute_including_code_release_ns": 2542,
+        "kind": "request",
+        "ns": 46625,
+        "output_release_ns": 0,
+        "prepare_ns": 44000,
+        "sample": 10
+      },
+      {
+        "compiler": {
+          "backend_ns": 37417,
+          "cleanup_ns": 500,
+          "finalize_ns": 1875,
+          "frontend_ns": 2916,
+          "lowering_ns": 1500,
+          "parse_ns": 2291,
+          "setup_ns": 583,
+          "type_ns": 500
+        },
+        "execute_including_code_release_ns": 2541,
+        "kind": "request",
+        "ns": 48042,
+        "output_release_ns": 0,
+        "prepare_ns": 45417,
+        "sample": 11
+      },
+      {
+        "compiler": {
+          "backend_ns": 38000,
+          "cleanup_ns": 500,
+          "finalize_ns": 1917,
+          "frontend_ns": 2917,
+          "lowering_ns": 1542,
+          "parse_ns": 2250,
+          "setup_ns": 667,
+          "type_ns": 500
+        },
+        "execute_including_code_release_ns": 2625,
+        "kind": "request",
+        "ns": 48667,
+        "output_release_ns": 0,
+        "prepare_ns": 46000,
+        "sample": 12
+      }
+    ]
+  },
+  {
+    "backend": "native",
+    "case": "madd_loop",
+    "rows": [
+      {
+        "diagnostic": true,
+        "kind": "setup",
+        "ns": 83542,
+        "registration_and_runtime_ns": 35084,
+        "warmup_requests": 64
+      },
+      {
+        "compiler": {
+          "backend_ns": 100250,
+          "cleanup_ns": 458,
+          "finalize_ns": 1833,
+          "frontend_ns": 11250,
+          "lowering_ns": 3750,
+          "parse_ns": 9416,
+          "setup_ns": 625,
+          "type_ns": 1542
+        },
+        "execute_including_code_release_ns": 3834,
+        "kind": "request",
+        "ns": 122667,
+        "output_release_ns": 41,
+        "prepare_ns": 118750,
+        "sample": 0
+      },
+      {
+        "compiler": {
+          "backend_ns": 101625,
+          "cleanup_ns": 625,
+          "finalize_ns": 1958,
+          "frontend_ns": 11333,
+          "lowering_ns": 3792,
+          "parse_ns": 9417,
+          "setup_ns": 625,
+          "type_ns": 1708
+        },
+        "execute_including_code_release_ns": 4167,
+        "kind": "request",
+        "ns": 124875,
+        "output_release_ns": 0,
+        "prepare_ns": 120625,
+        "sample": 1
+      },
+      {
+        "compiler": {
+          "backend_ns": 102083,
+          "cleanup_ns": 583,
+          "finalize_ns": 1917,
+          "frontend_ns": 11375,
+          "lowering_ns": 3792,
+          "parse_ns": 9417,
+          "setup_ns": 667,
+          "type_ns": 1708
+        },
+        "execute_including_code_release_ns": 4084,
+        "kind": "request",
+        "ns": 125208,
+        "output_release_ns": 0,
+        "prepare_ns": 121041,
+        "sample": 2
+      },
+      {
+        "compiler": {
+          "backend_ns": 101833,
+          "cleanup_ns": 583,
+          "finalize_ns": 1917,
+          "frontend_ns": 11209,
+          "lowering_ns": 3833,
+          "parse_ns": 9250,
+          "setup_ns": 625,
+          "type_ns": 1709
+        },
+        "execute_including_code_release_ns": 4084,
+        "kind": "request",
+        "ns": 124750,
+        "output_release_ns": 41,
+        "prepare_ns": 120625,
+        "sample": 3
+      },
+      {
+        "compiler": {
+          "backend_ns": 105084,
+          "cleanup_ns": 583,
+          "finalize_ns": 2833,
+          "frontend_ns": 11209,
+          "lowering_ns": 3750,
+          "parse_ns": 9333,
+          "setup_ns": 625,
+          "type_ns": 1583
+        },
+        "execute_including_code_release_ns": 4709,
+        "kind": "request",
+        "ns": 129416,
+        "output_release_ns": 41,
+        "prepare_ns": 124666,
+        "sample": 4
+      },
+      {
+        "compiler": {
+          "backend_ns": 102334,
+          "cleanup_ns": 500,
+          "finalize_ns": 2250,
+          "frontend_ns": 11375,
+          "lowering_ns": 3875,
+          "parse_ns": 9458,
+          "setup_ns": 666,
+          "type_ns": 1708
+        },
+        "execute_including_code_release_ns": 5250,
+        "kind": "request",
+        "ns": 127000,
+        "output_release_ns": 0,
+        "prepare_ns": 121666,
+        "sample": 5
+      },
+      {
+        "compiler": {
+          "backend_ns": 101625,
+          "cleanup_ns": 500,
+          "finalize_ns": 2166,
+          "frontend_ns": 11167,
+          "lowering_ns": 3708,
+          "parse_ns": 9334,
+          "setup_ns": 667,
+          "type_ns": 1542
+        },
+        "execute_including_code_release_ns": 5709,
+        "kind": "request",
+        "ns": 126292,
+        "output_release_ns": 0,
+        "prepare_ns": 120500,
+        "sample": 6
+      },
+      {
+        "compiler": {
+          "backend_ns": 101791,
+          "cleanup_ns": 625,
+          "finalize_ns": 1917,
+          "frontend_ns": 11584,
+          "lowering_ns": 3667,
+          "parse_ns": 9375,
+          "setup_ns": 708,
+          "type_ns": 2000
+        },
+        "execute_including_code_release_ns": 4083,
+        "kind": "request",
+        "ns": 125042,
+        "output_release_ns": 42,
+        "prepare_ns": 120917,
+        "sample": 7
+      },
+      {
+        "compiler": {
+          "backend_ns": 102208,
+          "cleanup_ns": 583,
+          "finalize_ns": 1917,
+          "frontend_ns": 11209,
+          "lowering_ns": 3750,
+          "parse_ns": 9333,
+          "setup_ns": 625,
+          "type_ns": 1625
+        },
+        "execute_including_code_release_ns": 4125,
+        "kind": "request",
+        "ns": 125084,
+        "output_release_ns": 0,
+        "prepare_ns": 120875,
+        "sample": 8
+      },
+      {
+        "compiler": {
+          "backend_ns": 101875,
+          "cleanup_ns": 584,
+          "finalize_ns": 1917,
+          "frontend_ns": 11083,
+          "lowering_ns": 3709,
+          "parse_ns": 9292,
+          "setup_ns": 625,
+          "type_ns": 1583
+        },
+        "execute_including_code_release_ns": 4041,
+        "kind": "request",
+        "ns": 124584,
+        "output_release_ns": 0,
+        "prepare_ns": 120459,
+        "sample": 9
+      },
+      {
+        "compiler": {
+          "backend_ns": 101542,
+          "cleanup_ns": 667,
+          "finalize_ns": 1916,
+          "frontend_ns": 11166,
+          "lowering_ns": 3750,
+          "parse_ns": 9375,
+          "setup_ns": 625,
+          "type_ns": 1542
+        },
+        "execute_including_code_release_ns": 4084,
+        "kind": "request",
+        "ns": 124500,
+        "output_release_ns": 0,
+        "prepare_ns": 120333,
+        "sample": 10
+      },
+      {
+        "compiler": {
+          "backend_ns": 101708,
+          "cleanup_ns": 583,
+          "finalize_ns": 1917,
+          "frontend_ns": 11084,
+          "lowering_ns": 3708,
+          "parse_ns": 9250,
+          "setup_ns": 667,
+          "type_ns": 1584
+        },
+        "execute_including_code_release_ns": 4000,
+        "kind": "request",
+        "ns": 124292,
+        "output_release_ns": 42,
+        "prepare_ns": 120250,
+        "sample": 11
+      },
+      {
+        "compiler": {
+          "backend_ns": 103375,
+          "cleanup_ns": 667,
+          "finalize_ns": 1916,
+          "frontend_ns": 11250,
+          "lowering_ns": 3750,
+          "parse_ns": 9250,
+          "setup_ns": 667,
+          "type_ns": 1750
+        },
+        "execute_including_code_release_ns": 4708,
+        "kind": "request",
+        "ns": 127209,
+        "output_release_ns": 0,
+        "prepare_ns": 122417,
+        "sample": 12
+      }
+    ]
+  },
+  {
+    "backend": "native",
+    "case": "escaped_join",
+    "rows": [
+      {
+        "diagnostic": true,
+        "kind": "setup",
+        "ns": 79459,
+        "registration_and_runtime_ns": 31417,
+        "warmup_requests": 64
+      },
+      {
+        "compiler": {
+          "backend_ns": 60708,
+          "cleanup_ns": 625,
+          "finalize_ns": 2500,
+          "frontend_ns": 9875,
+          "lowering_ns": 2167,
+          "parse_ns": 7834,
+          "setup_ns": 1583,
+          "type_ns": 1792
+        },
+        "execute_including_code_release_ns": 4666,
+        "kind": "request",
+        "ns": 82708,
+        "output_release_ns": 42,
+        "prepare_ns": 78000,
+        "sample": 0
+      },
+      {
+        "compiler": {
+          "backend_ns": 60375,
+          "cleanup_ns": 583,
+          "finalize_ns": 2083,
+          "frontend_ns": 9792,
+          "lowering_ns": 2208,
+          "parse_ns": 7708,
+          "setup_ns": 1667,
+          "type_ns": 1875
+        },
+        "execute_including_code_release_ns": 4625,
+        "kind": "request",
+        "ns": 81875,
+        "output_release_ns": 0,
+        "prepare_ns": 77167,
+        "sample": 1
+      },
+      {
+        "compiler": {
+          "backend_ns": 60541,
+          "cleanup_ns": 583,
+          "finalize_ns": 2042,
+          "frontend_ns": 9750,
+          "lowering_ns": 2250,
+          "parse_ns": 7708,
+          "setup_ns": 1625,
+          "type_ns": 1791
+        },
+        "execute_including_code_release_ns": 4583,
+        "kind": "request",
+        "ns": 81833,
+        "output_release_ns": 0,
+        "prepare_ns": 77167,
+        "sample": 2
+      },
+      {
+        "compiler": {
+          "backend_ns": 60375,
+          "cleanup_ns": 584,
+          "finalize_ns": 2042,
+          "frontend_ns": 9583,
+          "lowering_ns": 2125,
+          "parse_ns": 7542,
+          "setup_ns": 1666,
+          "type_ns": 1791
+        },
+        "execute_including_code_release_ns": 4583,
+        "kind": "request",
+        "ns": 81500,
+        "output_release_ns": 0,
+        "prepare_ns": 76833,
+        "sample": 3
+      },
+      {
+        "compiler": {
+          "backend_ns": 60125,
+          "cleanup_ns": 584,
+          "finalize_ns": 2000,
+          "frontend_ns": 9542,
+          "lowering_ns": 2250,
+          "parse_ns": 7500,
+          "setup_ns": 1625,
+          "type_ns": 1834
+        },
+        "execute_including_code_release_ns": 4542,
+        "kind": "request",
+        "ns": 81250,
+        "output_release_ns": 0,
+        "prepare_ns": 76625,
+        "sample": 4
+      },
+      {
+        "compiler": {
+          "backend_ns": 57083,
+          "cleanup_ns": 583,
+          "finalize_ns": 2000,
+          "frontend_ns": 9250,
+          "lowering_ns": 1958,
+          "parse_ns": 7375,
+          "setup_ns": 1458,
+          "type_ns": 1667
+        },
+        "execute_including_code_release_ns": 4542,
+        "kind": "request",
+        "ns": 77500,
+        "output_release_ns": 42,
+        "prepare_ns": 72916,
+        "sample": 5
+      },
+      {
+        "compiler": {
+          "backend_ns": 60416,
+          "cleanup_ns": 583,
+          "finalize_ns": 2042,
+          "frontend_ns": 9542,
+          "lowering_ns": 2125,
+          "parse_ns": 7500,
+          "setup_ns": 1625,
+          "type_ns": 1792
+        },
+        "execute_including_code_release_ns": 4500,
+        "kind": "request",
+        "ns": 81375,
+        "output_release_ns": 0,
+        "prepare_ns": 76792,
+        "sample": 6
+      },
+      {
+        "compiler": {
+          "backend_ns": 60375,
+          "cleanup_ns": 583,
+          "finalize_ns": 2000,
+          "frontend_ns": 9584,
+          "lowering_ns": 2125,
+          "parse_ns": 7625,
+          "setup_ns": 1625,
+          "type_ns": 1834
+        },
+        "execute_including_code_release_ns": 4541,
+        "kind": "request",
+        "ns": 81333,
+        "output_release_ns": 42,
+        "prepare_ns": 76750,
+        "sample": 7
+      },
+      {
+        "compiler": {
+          "backend_ns": 60708,
+          "cleanup_ns": 625,
+          "finalize_ns": 2041,
+          "frontend_ns": 9542,
+          "lowering_ns": 2167,
+          "parse_ns": 7583,
+          "setup_ns": 1667,
+          "type_ns": 1792
+        },
+        "execute_including_code_release_ns": 4541,
+        "kind": "request",
+        "ns": 81875,
+        "output_release_ns": 42,
+        "prepare_ns": 77250,
+        "sample": 8
+      },
+      {
+        "compiler": {
+          "backend_ns": 60209,
+          "cleanup_ns": 625,
+          "finalize_ns": 2041,
+          "frontend_ns": 9541,
+          "lowering_ns": 2208,
+          "parse_ns": 7542,
+          "setup_ns": 1625,
+          "type_ns": 1750
+        },
+        "execute_including_code_release_ns": 4542,
+        "kind": "request",
+        "ns": 81333,
+        "output_release_ns": 0,
+        "prepare_ns": 76708,
+        "sample": 9
+      },
+      {
+        "compiler": {
+          "backend_ns": 60167,
+          "cleanup_ns": 625,
+          "finalize_ns": 2042,
+          "frontend_ns": 9625,
+          "lowering_ns": 2208,
+          "parse_ns": 7584,
+          "setup_ns": 1667,
+          "type_ns": 1834
+        },
+        "execute_including_code_release_ns": 4500,
+        "kind": "request",
+        "ns": 81375,
+        "output_release_ns": 42,
+        "prepare_ns": 76833,
+        "sample": 10
+      },
+      {
+        "compiler": {
+          "backend_ns": 56458,
+          "cleanup_ns": 625,
+          "finalize_ns": 2042,
+          "frontend_ns": 9625,
+          "lowering_ns": 2125,
+          "parse_ns": 7625,
+          "setup_ns": 1625,
+          "type_ns": 1750
+        },
+        "execute_including_code_release_ns": 4542,
+        "kind": "request",
+        "ns": 77500,
+        "output_release_ns": 42,
+        "prepare_ns": 72916,
+        "sample": 11
+      },
+      {
+        "compiler": {
+          "backend_ns": 60375,
+          "cleanup_ns": 583,
+          "finalize_ns": 2041,
+          "frontend_ns": 9667,
+          "lowering_ns": 2167,
+          "parse_ns": 7666,
+          "setup_ns": 1709,
+          "type_ns": 1750
+        },
+        "execute_including_code_release_ns": 4583,
+        "kind": "request",
+        "ns": 81625,
+        "output_release_ns": 42,
+        "prepare_ns": 77000,
+        "sample": 12
+      }
+    ]
+  },
+  {
+    "backend": "native",
+    "case": "detach_wait",
+    "rows": [
+      {
+        "diagnostic": true,
+        "kind": "setup",
+        "ns": 76125,
+        "registration_and_runtime_ns": 30375,
+        "warmup_requests": 64
+      },
+      {
+        "compiler": {
+          "backend_ns": 67792,
+          "cleanup_ns": 709,
+          "finalize_ns": 2000,
+          "frontend_ns": 9500,
+          "lowering_ns": 2667,
+          "parse_ns": 7666,
+          "setup_ns": 1458,
+          "type_ns": 1625
+        },
+        "execute_including_code_release_ns": 66792,
+        "kind": "request",
+        "ns": 152125,
+        "output_release_ns": 41,
+        "prepare_ns": 85042,
+        "sample": 0
+      },
+      {
+        "compiler": {
+          "backend_ns": 73500,
+          "cleanup_ns": 709,
+          "finalize_ns": 2042,
+          "frontend_ns": 9625,
+          "lowering_ns": 2917,
+          "parse_ns": 7625,
+          "setup_ns": 1583,
+          "type_ns": 1750
+        },
+        "execute_including_code_release_ns": 66500,
+        "kind": "request",
+        "ns": 158042,
+        "output_release_ns": 0,
+        "prepare_ns": 91292,
+        "sample": 1
+      },
+      {
+        "compiler": {
+          "backend_ns": 73250,
+          "cleanup_ns": 625,
+          "finalize_ns": 2084,
+          "frontend_ns": 9541,
+          "lowering_ns": 2833,
+          "parse_ns": 7542,
+          "setup_ns": 1542,
+          "type_ns": 1791
+        },
+        "execute_including_code_release_ns": 67083,
+        "kind": "request",
+        "ns": 158167,
+        "output_release_ns": 0,
+        "prepare_ns": 90834,
+        "sample": 2
+      },
+      {
+        "compiler": {
+          "backend_ns": 78250,
+          "cleanup_ns": 625,
+          "finalize_ns": 2417,
+          "frontend_ns": 9500,
+          "lowering_ns": 2833,
+          "parse_ns": 7583,
+          "setup_ns": 1500,
+          "type_ns": 1708
+        },
+        "execute_including_code_release_ns": 69292,
+        "kind": "request",
+        "ns": 165584,
+        "output_release_ns": 0,
+        "prepare_ns": 96000,
+        "sample": 3
+      },
+      {
+        "compiler": {
+          "backend_ns": 73500,
+          "cleanup_ns": 709,
+          "finalize_ns": 2042,
+          "frontend_ns": 9667,
+          "lowering_ns": 2833,
+          "parse_ns": 7791,
+          "setup_ns": 1459,
+          "type_ns": 1625
+        },
+        "execute_including_code_release_ns": 67291,
+        "kind": "request",
+        "ns": 158625,
+        "output_release_ns": 0,
+        "prepare_ns": 91084,
+        "sample": 4
+      },
+      {
+        "compiler": {
+          "backend_ns": 73000,
+          "cleanup_ns": 667,
+          "finalize_ns": 2042,
+          "frontend_ns": 9417,
+          "lowering_ns": 2875,
+          "parse_ns": 7541,
+          "setup_ns": 1500,
+          "type_ns": 1709
+        },
+        "execute_including_code_release_ns": 65750,
+        "kind": "request",
+        "ns": 156458,
+        "output_release_ns": 42,
+        "prepare_ns": 90458,
+        "sample": 5
+      },
+      {
+        "compiler": {
+          "backend_ns": 70375,
+          "cleanup_ns": 625,
+          "finalize_ns": 1958,
+          "frontend_ns": 9542,
+          "lowering_ns": 2792,
+          "parse_ns": 7708,
+          "setup_ns": 1500,
+          "type_ns": 1625
+        },
+        "execute_including_code_release_ns": 67500,
+        "kind": "request",
+        "ns": 155500,
+        "output_release_ns": 41,
+        "prepare_ns": 87750,
+        "sample": 6
+      },
+      {
+        "compiler": {
+          "backend_ns": 73000,
+          "cleanup_ns": 667,
+          "finalize_ns": 2041,
+          "frontend_ns": 9375,
+          "lowering_ns": 2833,
+          "parse_ns": 7500,
+          "setup_ns": 1542,
+          "type_ns": 1667
+        },
+        "execute_including_code_release_ns": 66083,
+        "kind": "request",
+        "ns": 156667,
+        "output_release_ns": 0,
+        "prepare_ns": 90334,
+        "sample": 7
+      },
+      {
+        "compiler": {
+          "backend_ns": 73583,
+          "cleanup_ns": 625,
+          "finalize_ns": 2041,
+          "frontend_ns": 9416,
+          "lowering_ns": 2792,
+          "parse_ns": 7584,
+          "setup_ns": 1458,
+          "type_ns": 1666
+        },
+        "execute_including_code_release_ns": 69959,
+        "kind": "request",
+        "ns": 161084,
+        "output_release_ns": 42,
+        "prepare_ns": 90875,
+        "sample": 8
+      },
+      {
+        "compiler": {
+          "backend_ns": 72875,
+          "cleanup_ns": 625,
+          "finalize_ns": 1958,
+          "frontend_ns": 9666,
+          "lowering_ns": 2875,
+          "parse_ns": 7834,
+          "setup_ns": 1500,
+          "type_ns": 1625
+        },
+        "execute_including_code_release_ns": 69041,
+        "kind": "request",
+        "ns": 159625,
+        "output_release_ns": 41,
+        "prepare_ns": 90334,
+        "sample": 9
+      },
+      {
+        "compiler": {
+          "backend_ns": 73791,
+          "cleanup_ns": 666,
+          "finalize_ns": 2667,
+          "frontend_ns": 9583,
+          "lowering_ns": 2833,
+          "parse_ns": 7667,
+          "setup_ns": 1542,
+          "type_ns": 1750
+        },
+        "execute_including_code_release_ns": 67208,
+        "kind": "request",
+        "ns": 159458,
+        "output_release_ns": 42,
+        "prepare_ns": 92000,
+        "sample": 10
+      },
+      {
+        "compiler": {
+          "backend_ns": 73209,
+          "cleanup_ns": 583,
+          "finalize_ns": 2042,
+          "frontend_ns": 9500,
+          "lowering_ns": 2834,
+          "parse_ns": 7584,
+          "setup_ns": 1458,
+          "type_ns": 1667
+        },
+        "execute_including_code_release_ns": 66708,
+        "kind": "request",
+        "ns": 157500,
+        "output_release_ns": 0,
+        "prepare_ns": 90500,
+        "sample": 11
+      },
+      {
+        "compiler": {
+          "backend_ns": 77167,
+          "cleanup_ns": 625,
+          "finalize_ns": 2208,
+          "frontend_ns": 9500,
+          "lowering_ns": 2792,
+          "parse_ns": 7625,
+          "setup_ns": 1542,
+          "type_ns": 1666
+        },
+        "execute_including_code_release_ns": 68625,
+        "kind": "request",
+        "ns": 163583,
+        "output_release_ns": 42,
+        "prepare_ns": 94750,
+        "sample": 12
+      }
+    ]
+  }
+]

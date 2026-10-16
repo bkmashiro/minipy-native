@@ -1,0 +1,1395 @@
+{
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--target",
+        "aarch64-apple-darwin",
+        "--features",
+        "tool-json",
+        "--test",
+        "perf_workbench",
+        "--no-run",
+        "--message-format=json"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 15.393958417,
+      "environment": {
+        "RUSTUP_AUTO_INSTALL": "0",
+        "CARGO_BUILD_JOBS": "1",
+        "CARGO_TARGET_DIR": "/Users/yuzhe/projects/minipy-native/target",
+        "RUSTFLAGS": ""
+      },
+      "missing_profile_warning_lines": 0,
+      "test_results": [],
+      "tests_passed": 0,
+      "stdout_smoke": null
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--target",
+        "aarch64-apple-darwin",
+        "--features",
+        "tool-json",
+        "--test",
+        "perf_workbench",
+        "--no-run",
+        "--message-format=json"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 116.978960667,
+      "environment": {
+        "RUSTUP_AUTO_INSTALL": "0",
+        "CARGO_BUILD_JOBS": "1",
+        "CARGO_TARGET_DIR": "/Users/yuzhe/projects/minipy-native/target",
+        "RUSTFLAGS": "-Cprofile-generate=/Users/yuzhe/.hermes/cache/scratch/cu-pgo/generate"
+      },
+      "missing_profile_warning_lines": 0,
+      "test_results": [],
+      "tests_passed": 0,
+      "stdout_smoke": null
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--target",
+        "aarch64-apple-darwin",
+        "--features",
+        "tool-json",
+        "--test",
+        "perf_workbench",
+        "--no-run",
+        "--message-format=json"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 113.360948083,
+      "environment": {
+        "RUSTUP_AUTO_INSTALL": "0",
+        "CARGO_BUILD_JOBS": "1",
+        "CARGO_TARGET_DIR": "/Users/yuzhe/projects/minipy-native/target",
+        "RUSTFLAGS": "-Cprofile-use=/Users/yuzhe/.hermes/cache/scratch/cu-pgo/balanced/merged.profdata -Cllvm-args=-pgo-warn-missing-function"
+      },
+      "missing_profile_warning_lines": 895,
+      "test_results": [],
+      "tests_passed": 0,
+      "stdout_smoke": null
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--target",
+        "aarch64-apple-darwin",
+        "--features",
+        "tool-json",
+        "--test",
+        "perf_workbench",
+        "--no-run",
+        "--message-format=json"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 113.970527625,
+      "environment": {
+        "RUSTUP_AUTO_INSTALL": "0",
+        "CARGO_BUILD_JOBS": "1",
+        "CARGO_TARGET_DIR": "/Users/yuzhe/projects/minipy-native/target",
+        "RUSTFLAGS": "-Cprofile-use=/Users/yuzhe/.hermes/cache/scratch/cu-pgo/strings/merged.profdata -Cllvm-args=-pgo-warn-missing-function"
+      },
+      "missing_profile_warning_lines": 895,
+      "test_results": [],
+      "tests_passed": 0,
+      "stdout_smoke": null
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--target",
+        "aarch64-apple-darwin",
+        "--features",
+        "tool-json,compiler-profile",
+        "--test",
+        "perf_workbench",
+        "--no-run",
+        "--message-format=json"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 47.290908792,
+      "environment": {
+        "RUSTUP_AUTO_INSTALL": "0",
+        "CARGO_BUILD_JOBS": "1",
+        "CARGO_TARGET_DIR": "/Users/yuzhe/projects/minipy-native/target",
+        "RUSTFLAGS": ""
+      },
+      "missing_profile_warning_lines": 0,
+      "test_results": [],
+      "tests_passed": 0,
+      "stdout_smoke": null
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--target",
+        "aarch64-apple-darwin",
+        "--features",
+        "tool-json,compiler-profile",
+        "--test",
+        "perf_workbench",
+        "--no-run",
+        "--message-format=json"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 52.4691465,
+      "environment": {
+        "RUSTUP_AUTO_INSTALL": "0",
+        "CARGO_BUILD_JOBS": "1",
+        "CARGO_TARGET_DIR": "/Users/yuzhe/projects/minipy-native/target",
+        "RUSTFLAGS": "-Cprofile-use=/Users/yuzhe/.hermes/cache/scratch/cu-pgo/balanced/merged.profdata -Cllvm-args=-pgo-warn-missing-function"
+      },
+      "missing_profile_warning_lines": 4625,
+      "test_results": [],
+      "tests_passed": 0,
+      "stdout_smoke": null
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--target",
+        "aarch64-apple-darwin",
+        "--features",
+        "tool-json,compiler-profile",
+        "--test",
+        "perf_workbench",
+        "--no-run",
+        "--message-format=json"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 52.525126833,
+      "environment": {
+        "RUSTUP_AUTO_INSTALL": "0",
+        "CARGO_BUILD_JOBS": "1",
+        "CARGO_TARGET_DIR": "/Users/yuzhe/projects/minipy-native/target",
+        "RUSTFLAGS": "-Cprofile-use=/Users/yuzhe/.hermes/cache/scratch/cu-pgo/strings/merged.profdata -Cllvm-args=-pgo-warn-missing-function"
+      },
+      "missing_profile_warning_lines": 4625,
+      "test_results": [],
+      "tests_passed": 0,
+      "stdout_smoke": null
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--target",
+        "aarch64-apple-darwin"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 87.696146166,
+      "environment": {
+        "RUSTUP_AUTO_INSTALL": "0",
+        "CARGO_BUILD_JOBS": "1",
+        "CARGO_TARGET_DIR": "/Users/yuzhe/projects/minipy-native/target",
+        "RUSTFLAGS": "-Cprofile-use=/Users/yuzhe/.hermes/cache/scratch/cu-pgo/balanced/merged.profdata -Cllvm-args=-pgo-warn-missing-function"
+      },
+      "missing_profile_warning_lines": 0,
+      "test_results": [
+        [
+          "ok",
+          "23",
+          "0",
+          "2",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "7",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "8",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "4",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "2",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "4",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "16",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "14",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "tests_passed": 79,
+      "stdout_smoke": null
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--target",
+        "aarch64-apple-darwin",
+        "--features",
+        "tool-json"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 121.218175084,
+      "environment": {
+        "RUSTUP_AUTO_INSTALL": "0",
+        "CARGO_BUILD_JOBS": "1",
+        "CARGO_TARGET_DIR": "/Users/yuzhe/projects/minipy-native/target",
+        "RUSTFLAGS": "-Cprofile-use=/Users/yuzhe/.hermes/cache/scratch/cu-pgo/balanced/merged.profdata -Cllvm-args=-pgo-warn-missing-function"
+      },
+      "missing_profile_warning_lines": 0,
+      "test_results": [
+        [
+          "ok",
+          "30",
+          "0",
+          "3",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "7",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "8",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "4",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "2",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "5",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "5",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "16",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "14",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "4",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "5",
+          "0",
+          "2",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "2",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "15",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "5",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "tests_passed": 133,
+      "stdout_smoke": null
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--target",
+        "aarch64-apple-darwin"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 87.778187167,
+      "environment": {
+        "RUSTUP_AUTO_INSTALL": "0",
+        "CARGO_BUILD_JOBS": "1",
+        "CARGO_TARGET_DIR": "/Users/yuzhe/projects/minipy-native/target",
+        "RUSTFLAGS": "-Cprofile-use=/Users/yuzhe/.hermes/cache/scratch/cu-pgo/strings/merged.profdata -Cllvm-args=-pgo-warn-missing-function"
+      },
+      "missing_profile_warning_lines": 0,
+      "test_results": [
+        [
+          "ok",
+          "23",
+          "0",
+          "2",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "7",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "8",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "4",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "2",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "4",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "16",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "14",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "tests_passed": 79,
+      "stdout_smoke": null
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--target",
+        "aarch64-apple-darwin",
+        "--features",
+        "tool-json"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 121.474553917,
+      "environment": {
+        "RUSTUP_AUTO_INSTALL": "0",
+        "CARGO_BUILD_JOBS": "1",
+        "CARGO_TARGET_DIR": "/Users/yuzhe/projects/minipy-native/target",
+        "RUSTFLAGS": "-Cprofile-use=/Users/yuzhe/.hermes/cache/scratch/cu-pgo/strings/merged.profdata -Cllvm-args=-pgo-warn-missing-function"
+      },
+      "missing_profile_warning_lines": 0,
+      "test_results": [
+        [
+          "ok",
+          "30",
+          "0",
+          "3",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "7",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "8",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "4",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "2",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "5",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "5",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "16",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "1",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "3",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "14",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "4",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "5",
+          "0",
+          "2",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "2",
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "15",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "5",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "ok",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "tests_passed": 133,
+      "stdout_smoke": null
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "build",
+        "--offline",
+        "--locked",
+        "--release",
+        "--target",
+        "aarch64-apple-darwin",
+        "--features",
+        "tool-json",
+        "--bin",
+        "minipy-native",
+        "--message-format=json"
+      ],
+      "exit_code": 101,
+      "wall_seconds": 0.106853833,
+      "environment": {
+        "RUSTUP_AUTO_INSTALL": "0",
+        "CARGO_BUILD_JOBS": "1",
+        "CARGO_TARGET_DIR": "/Users/yuzhe/projects/minipy-native/target",
+        "RUSTFLAGS": "-Cprofile-use=/Users/yuzhe/.hermes/cache/scratch/cu-pgo/balanced/merged.profdata -Cllvm-args=-pgo-warn-missing-function"
+      },
+      "missing_profile_warning_lines": 0,
+      "test_results": [],
+      "tests_passed": 0,
+      "stdout_smoke": null
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "build",
+        "--offline",
+        "--locked",
+        "--release",
+        "--target",
+        "aarch64-apple-darwin",
+        "--features",
+        "tool-json",
+        "--bin",
+        "minipy",
+        "--message-format=json"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.113702875,
+      "environment": {
+        "RUSTUP_AUTO_INSTALL": "0",
+        "CARGO_BUILD_JOBS": "1",
+        "CARGO_TARGET_DIR": "/Users/yuzhe/projects/minipy-native/target",
+        "RUSTFLAGS": "-Cprofile-use=/Users/yuzhe/.hermes/cache/scratch/cu-pgo/balanced/merged.profdata -Cllvm-args=-pgo-warn-missing-function"
+      },
+      "missing_profile_warning_lines": 671,
+      "test_results": [],
+      "tests_passed": 0,
+      "stdout_smoke": null
+    },
+    {
+      "command": [
+        "/Users/yuzhe/.hermes/cache/scratch/cu-pgo/minipy-balanced",
+        "fixtures/weighted_script.py"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.490709167,
+      "environment": {
+        "RUSTUP_AUTO_INSTALL": "0",
+        "CARGO_BUILD_JOBS": "1",
+        "CARGO_TARGET_DIR": "/Users/yuzhe/projects/minipy-native/target"
+      },
+      "missing_profile_warning_lines": 0,
+      "test_results": [],
+      "tests_passed": 0,
+      "stdout_smoke": "compile_ns=2744833 code_bytes=552\n41\nstatus=ok loads=1 records=1\nload_wait buffer_bytes=0 frame_bytes=320 remaining=1000000 index=0\nrecord_wait buffer_bytes=0 frame_bytes=320 remaining=999997 index=3\ndone buffer_bytes=0 frame_bytes=0 remaining=999997 index=3\n"
+    }
+  ],
+  "formal_binary_growth_percent": {
+    "candidate-balanced": 3.669353036690559,
+    "candidate-strings": 3.668906135947214
+  },
+  "production_diff_to_c5c0295": 0,
+  "python_contract_tests": {
+    "perf_workbench_passed": 10,
+    "cu_policy_passed": 3
+  },
+  "preexisting_no_pgo_correctness": "CT at c5c0295, production sources unchanged"
+}

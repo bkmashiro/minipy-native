@@ -19,6 +19,7 @@ SCRATCH = Path.home() / '.hermes/cache/scratch'
 LOCK = SCRATCH / 'minipy-perf-build.lock'
 DEFAULT_CASES = ('scalar', 'quote', 'ready', 'loopback')
 CASES = DEFAULT_CASES + ('scalar_inputs', 'ready_inputs', 'plain_sink', 'escaped_sink', 'joined_sink', 'fstring_sink', 'escaped_join', 'madd_short', 'madd_loop', 'detach', 'detach_live', 'detach_wait', 'branch', 'branch_ready', 'count_price_small', 'count_price_large', 'count_quantity_small', 'count_quantity_large', 'count_none', 'count_all')
+CASES += ('multi_branch', 'multi_overflow', 'multi_permission')
 BACKENDS = ('tape', 'native')
 
 
@@ -131,6 +132,7 @@ def run(args):
         with gzip.open(args.output, 'xt') as f:
             emit(f, {'kind': 'manifest', 'version': 1, 'diagnostic': args.diagnostic,
                      'aa': args.aa, 'arms': {'A': a, 'B': b}, 'reps': args.reps,
+                     'warmup_requests': args.warmup,
                      'rounds': args.rounds, 'cells': cells, 'order': 'ABBA',
                      'entries': {'A': args.baseline_entry,
                                  'B': args.baseline_entry if args.aa else args.candidate_entry},
@@ -143,7 +145,8 @@ def run(args):
                         entry = args.baseline_entry if arm == 'A' or args.aa else args.candidate_entry
                         key = {'round': rnd, 'slot': slot, 'arm': arm, 'backend': backend, 'case': case}
                         cmd = [item['path'], '--ignored', '--exact', 'resident_request', '--nocapture', '--test-threads=1']
-                        env = dict(os.environ, PW_BACKEND=backend, PW_CASE=case, PW_ENTRY=entry, PW_REPS=str(args.reps))
+                        env = dict(os.environ, PW_BACKEND=backend, PW_CASE=case, PW_ENTRY=entry,
+                                   PW_REPS=str(args.reps), PW_WARMUP=str(args.warmup))
                         rows = []
                         error = None
                         code = None
@@ -157,6 +160,8 @@ def run(args):
                             if code:
                                 raise ValueError(f'exit {code}: {result.stderr[-1500:]} {result.stdout[-1500:]}')
                             validate(rows, args.reps, args.diagnostic)
+                            if rows[0].get('warmup_requests') != args.warmup:
+                                raise ValueError('warmup count disagrees with binary')
                             if sha(item['path']) != item['binary_sha256']:
                                 raise ValueError('binary changed during run')
                         except (ValueError, OSError, subprocess.TimeoutExpired) as exc:
@@ -200,6 +205,8 @@ def reduce(path):
         if p.get('exit_code') != 0:
             raise ValueError('successful process has nonzero exit code')
         validate(p['rows'], m['reps'], m['diagnostic'])
+        if 'warmup_requests' in m and p['rows'][0].get('warmup_requests') != m['warmup_requests']:
+            raise ValueError('warmup count disagrees with manifest')
         samples = p['rows'][2:]  # setup and sample 0 are NEVER measured requests
         measured += len(samples)
         setups.append(p['rows'][0]['ns'])
@@ -255,6 +262,7 @@ def main():
     r.add_argument('--backends', choices=BACKENDS, nargs='+', default=list(BACKENDS))
     r.add_argument('--rounds', type=int, choices=range(1, 5), default=1)
     r.add_argument('--reps', type=int, choices=range(1, 1001), default=24)
+    r.add_argument('--warmup', type=int, choices=range(1, 1001), default=1)
     r.add_argument('--timeout', type=float, default=60)
     r.add_argument('--output', type=Path, required=True)
     s = sub.add_parser('reduce')
