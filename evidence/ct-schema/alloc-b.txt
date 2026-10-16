@@ -1,0 +1,15 @@
+
+running 2 tests
+CTALLOC {"typed":false,"calls":1,"width":2,"allocations":50}
+CTALLOC {"typed":false,"calls":1,"width":64,"allocations":50}
+CTALLOC {"typed":false,"calls":4,"width":2,"allocations":155}
+CTALLOC {"typed":false,"calls":4,"width":64,"allocations":155}
+CTALLOC {"typed":true,"calls":1,"width":2,"allocations":50}
+CTALLOC {"typed":true,"calls":1,"width":64,"allocations":50}
+CTALLOC {"typed":true,"calls":4,"width":2,"allocations":155}
+CTALLOC {"typed":true,"calls":4,"width":64,"allocations":155}
+test matched_schema_width_does_not_add_allocations ... ok
+test allocation_diagnosis ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

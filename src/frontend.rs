@@ -175,6 +175,25 @@ fn check_delimiter_depth(s: &str) -> Result<()> {
     Ok(())
 }
 
+// These views live only during preparation. The resulting Plan owns its bound paths.
+#[cfg(feature = "tool-json")]
+struct SchemaLeaves<'a>(&'a crate::tool::ResultSchema);
+#[cfg(feature = "tool-json")]
+impl SchemaLeaves<'_> {
+    fn iter(&self) -> impl Iterator<Item = (&Vec<String>, &crate::tool::JsonLeaf)> {
+        use crate::tool::{JsonLeaf, ResultSchema};
+        let (numeric, typed): (&[Vec<String>], &[(Vec<String>, JsonLeaf)]) = match self.0 {
+            ResultSchema::Json(paths) => (paths, &[]),
+            ResultSchema::JsonTyped(paths) => (&[], paths),
+            ResultSchema::I64 => (&[], &[]),
+        };
+        numeric
+            .iter()
+            .map(|p| (p, &JsonLeaf::I64))
+            .chain(typed.iter().map(|(p, t)| (p, t)))
+    }
+}
+
 struct Compiler<'a> {
     source: &'a str,
     nodes: usize,
@@ -193,7 +212,7 @@ struct Compiler<'a> {
     #[cfg(feature = "tool-json")]
     json_names: HashMap<String, (usize, Vec<String>)>,
     #[cfg(feature = "tool-json")]
-    json_leaves: Vec<Vec<(Vec<String>, crate::tool::JsonLeaf)>>,
+    json_leaves: Vec<SchemaLeaves<'a>>,
 }
 impl<'a> Compiler<'a> {
     fn new(inputs: &[(&str, Type)], source: &'a str) -> Result<Self> {
@@ -936,12 +955,7 @@ impl<'a> Compiler<'a> {
         if !matches!(a.value.as_ref(), ast::Expr::Name(n) if n.id.as_str() == "tools") {
             return Ok(false);
         }
-        let Some(tool) = self
-            .tools
-            .iter()
-            .find(|t| t.name == a.attr.as_str())
-            .cloned()
-        else {
+        let Some(tool) = self.tools.iter().find(|t| t.name == a.attr.as_str()) else {
             return Ok(false);
         };
         if in_loop {
@@ -995,7 +1009,7 @@ impl<'a> Compiler<'a> {
                     "string Tool requires a string literal or declared JSON leaf",
                 ));
             };
-            return self.bind_tool(name, tool.id, tool.result, Vec::new(), Some(source), out);
+            return self.bind_tool(name, tool.id, &tool.result, Vec::new(), Some(source), out);
         }
         if c.args.len() > tool.arguments.len() {
             return Err(err("too many Tool arguments"));
@@ -1036,14 +1050,14 @@ impl<'a> Compiler<'a> {
             .into_iter()
             .map(|a| a.ok_or_else(|| err("missing Tool argument")))
             .collect::<Result<Vec<_>>>()?;
-        self.bind_tool(name, tool.id, tool.result, args, None, out)
+        self.bind_tool(name, tool.id, &tool.result, args, None, out)
     }
     #[cfg(feature = "tool-json")]
     fn bind_tool(
         &mut self,
         name: &str,
         id: u32,
-        result: crate::tool::ResultSchema,
+        result: &'a crate::tool::ResultSchema,
         args: Vec<Expr>,
         string: Option<crate::tool::StringSource>,
         out: &mut Vec<Stmt>,
@@ -1056,15 +1070,7 @@ impl<'a> Compiler<'a> {
             let root = self.json.roots;
             self.bind_json(name, root, Vec::new())?;
             self.json.roots += 1;
-            let leaves = match result {
-                crate::tool::ResultSchema::Json(paths) => paths
-                    .into_iter()
-                    .map(|p| (p, crate::tool::JsonLeaf::I64))
-                    .collect(),
-                crate::tool::ResultSchema::JsonTyped(paths) => paths,
-                crate::tool::ResultSchema::I64 => unreachable!(),
-            };
-            self.json_leaves.push(leaves);
+            self.json_leaves.push(SchemaLeaves(result));
             root
         } else {
             let slot = self.declare(name, Type::I64, true)?;
@@ -1221,7 +1227,7 @@ impl<'a> Compiler<'a> {
         if let Some((root, path)) = self.json_path(e)? {
             let leaf = self.json_leaves[root]
                 .iter()
-                .find(|(p, _)| p == &path)
+                .find(|(p, _)| *p == &path)
                 .map(|(_, t)| *t)
                 .ok_or_else(|| err("JSON expression must name a declared leaf"))?;
             if leaf != crate::tool::JsonLeaf::I64 {

@@ -1,0 +1,328 @@
+   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 33.47s
+     Running unittests src/lib.rs (target/debug/deps/minipy_native-bfaf5b85174d05f6)
+
+running 33 tests
+test codegen::tests::ce_arithmetic_code ... ignored, explicit serial CE code diagnostic, not formal timing
+test frontend::schema_probe::schema_prepare_diagnosis ... ignored, explicit serial release diagnosis under perf lock
+test codegen::tests::layout ... ok
+test buffer::tests::quote_v1_layout_and_offsets_are_stable ... ok
+test buffer::tests::immutable_owner_clones_and_weak_observation_share_one_allocation ... ok
+test buffer::tests::exact_capacity_freeze_moves_the_payload_and_uses_a_thin_owner ... ok
+test buffer::tests::empty_and_malformed_buffers_are_handled_without_raw_loads ... ok
+test buffer::tests::import_decodes_little_endian_and_preserves_extreme_patterns ... ok
+test frontend::tests::discarded_record_call_still_allocates_a_scratch_scalar ... ok
+test frontend::tests::accepts_int_local_annotation ... ok
+test frontend::tests::accepts_definite_branch_init_and_sequential_buffers ... ok
+test frontend::tests::parses_script_inputs_tools_print_and_loops ... ok
+test frontend::tests::top_level_expressions_are_discarded_and_loop_locals_are_iteration_local ... ok
+test frontend::tests::print_is_allowed_in_loop_and_nested_branch_init_is_intersected ... ok
+test interpreter::tape::bx_diagnostic ... ignored, explicit serial release preparation/layout diagnostic
+test frontend::tests::rejects_unsafe_shapes_and_uninitialized_branches ... ok
+test frontend::tests::supports_legacy_main_semantics ... ok
+test http_provider::http_collect_cost_tests::report_fetch_future_size_for_collection_candidate ... ok
+test json_view::tests::static_json_task_state_size ... ok
+test interpreter::liveness_tests::nonzero_buffer_mask_keeps_pc_bounds - should panic ... ok
+test json_view::tests::rejected_plain_token_never_sets_validation_marker ... ok
+test json_view::tests::validated_span_is_reused_and_invalidated_with_its_owner ... ok
+test interpreter::liveness_tests::cd_buffer_masks ... ok
+test runtime::output_tests::borrowed_sink_prepares_before_authority_and_commits_atomically ... ok
+test runtime::output_tests::growth_never_exceeds_the_task_cap_and_rejected_lines_are_atomic ... ok
+test interpreter::liveness_tests::cd_json_masks ... ok
+test json_view::tests::argument_copy_cutoffs_headroom_and_scan_charge ... ok
+test provider::tests::cloned_buffer_lease_keeps_rows_alive_then_releases_them ... ok
+test interpreter::tape::count_admission_and_layout ... ok
+test frontend::tests::initialization_mask_covers_zero_and_all_32_slots ... ok
+test buffer::tests::from_quotes_enforces_row_limit ... ok
+test provider::tests::load_suspends_and_each_call_gets_an_independent_owner ... ok
+test provider::tests::record_is_async_checked_and_failures_are_returned ... ok
+
+test result: ok. 30 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running unittests src/bin/minipy.rs (target/debug/deps/minipy-9af59258aeea64a5)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/acceptance.rs (target/debug/deps/acceptance-e53895c803c7f73c)
+
+running 7 tests
+test second_await_does_not_retain_quote_owner ... ok
+test cancellation_drops_late_load_and_record_results_without_reviving_task ... ok
+test provider_total_receipt_is_checked_for_overflow ... ok
+test load_and_record_permissions_are_independent_and_rc_code_state_is_per_task ... ok
+test overflow_is_a_task_error_and_skipped_rows_do_not_overflow ... ok
+test chunk_yields_resume_and_total_row_budget_is_not_refilled ... ok
+test empty_filter_and_mixed_records_execute_real_native_code ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/boundaries.rs (target/debug/deps/boundaries-951b2b5f7e54d811)
+
+running 8 tests
+test cancelled_record_does_not_pin_code_until_io_completion ... ok
+test dropping_receiver_during_load_also_releases_late_buffer ... ok
+test cancellation_returns_before_provider_and_detached_owner_survives ... ok
+test cancellation_at_chunk_boundary_prevents_record_and_drops_rows ... ok
+test stateful_source_changes_code_and_chunk_resume_result ... ok
+test diagnostic_ir_is_opt_in_and_preserves_native_execution ... ok
+test malformed_limits_buffer_caps_and_provider_errors_are_task_errors ... ok
+test checked_arithmetic_and_boolean_error_order_execute_native ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/builtins_admission.rs (target/debug/deps/builtins_admission-e2922e7cf09b398c)
+
+running 4 tests
+test top_level_admission_reports_source_locations_on_both_backends ... ok
+test preparation_rejects_before_effects_with_typed_locations ... ok
+test scalar_builtins_evaluate_in_order_and_preserve_errors ... ok
+test buffer_len_survives_waits_without_scanning_or_spending_row_fuel ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/bz_detach.rs (target/debug/deps/bz_detach-14b72023dd7abe1f)
+
+running 2 tests
+test root_detachment_diagnostic ... ignored, separate ownership diagnostic, not formal latency
+test root_detachment_regression ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/cc_waiting.rs (target/debug/deps/cc_waiting-88250a9c6a88ce21)
+
+running 1 test
+test concurrent_waiting_payload ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/cl_dest.rs (target/debug/deps/cl_dest-109a2f16e54aa2a3)
+
+running 2 tests
+test admission_limits_still_return_compile_errors ... ok
+test admitted_frontier_locals_aliases_and_many_chunks ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+     Running tests/co_count.rs (target/debug/deps/co_count-0c3f1e7aa374580c)
+
+running 5 tests
+test count_cancels_at_first_chunk_and_reuses_immutable_unit ... ok
+test count_retains_live_json_across_chunk_yields ... ok
+test count_nonmatching_shapes_and_multiple_loops ... ok
+test count_overflow_and_ordered_effects ... ok
+test count_fields_distributions_tails_and_chunk_fuel ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.85s
+
+     Running tests/ct_alloc.rs (target/debug/deps/ct_alloc-7931a8e7e8967871)
+
+running 2 tests
+test allocation_diagnosis ... ignored, independent CT allocation diagnosis for both fixed source variants
+test matched_schema_width_does_not_add_allocations ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/ct_errors.rs (target/debug/deps/ct_errors-b8235417866f080e)
+
+running 1 test
+test structured_errors_preserve_priority_and_source_location ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/ct_schema.rs (target/debug/deps/ct_schema-5c2d8ba57a8d30fe)
+
+running 2 tests
+test request ... ignored, explicit bounded CT timing under perf lock
+test prepared_plans_outlive_both_schema_variants ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/debug_runtime.rs (target/debug/deps/debug_runtime-52e2d1e5959b0b24)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/fixture_lifecycle.rs (target/debug/deps/fixture_lifecycle-7f27d4acc769fa16)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/fixture_reference.rs (target/debug/deps/fixture_reference-aa2e7b545f8ad070)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/http_collect_cost.rs (target/debug/deps/http_collect_cost-591cfb074fe00432)
+
+running 2 tests
+test measure_loopback_single_chunk ... ignored, bounded local measurement; run serially with the perf lock
+test singleton_collection_allocation_shape ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/http_tool.rs (target/debug/deps/http_tool-f2f3221ce8efb31e)
+
+running 5 tests
+test cancelled_receiver_keeps_http_admission_until_real_completion ... ok
+test real_http_json_string_contains_both_backends ... ok
+test real_http_pool_roundtrip_runs_both_backends_without_json_materialization ... ok
+test multi_chunk_merge_is_one_copy_and_body_status_limits_are_errors ... ok
+test http_timeout_returns_permit_without_reviving_task ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/input_schema_cost.rs (target/debug/deps/input_schema_cost-43f68ed75e537995)
+
+running 2 tests
+test resident_request_cost ... ignored, bounded resident new-source timing probe
+test input_schema_names_and_errors ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/interpreter.rs (target/debug/deps/interpreter-1d0f53c44c03aee6)
+
+running 16 tests
+test dropped_task_receiver_releases_late_load_without_resuming ... ok
+test chunk_cancellation_and_shared_unit_state ... ok
+test exact_chunks_in_sequential_scans_are_not_a_task_time_slice ... ok
+test real_await_cancellation_late_completion_release_and_stdout ... ok
+test provider_failures_and_cancelled_entry_do_not_run_later_effects ... ok
+test scalar_short_circuit_error_order_and_stdout ... ok
+test sealed_preparation_rejects_unsupported_and_unbound_source ... ok
+test overflow_filter_and_loop_stdout_bound ... ok
+test arithmetic_intermediate_overflow_cannot_cancel_back_in_range ... ok
+test scratch_is_recomputed_after_tool_and_chunk_boundaries ... ok
+test empty_else_joins_nested_scan_and_tool_continuations ... ok
+test computed_operands_self_assignment_and_boolean_consumers ... ok
+test checked_multiply_add_alias_overflow_and_short_circuit ... ok
+test scripts_and_sequential_conditional_tools ... ok
+test scan_next_chunk_boundary_and_final_partial_chunk ... ok
+test budget_across_yields_tools_live_owner_and_empty_scan ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.57s
+
+     Running tests/kernel_admission.rs (target/debug/deps/kernel_admission-7b09b462aaa74094)
+
+running 1 test
+test kernel_candidates_need_new_value_or_iteration_contracts ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/local_read_host.rs (target/debug/deps/local_read_host-9d7e9c039e2a0335)
+
+running 3 tests
+test dead_json_owner_released_before_quote_load_budget ... ok
+test dead_json_owner_released_before_next_literal_tool_reply ... ok
+test whole_scripts_read_real_files_with_bound_host_policy ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/perf_workbench.rs (target/debug/deps/perf_workbench-b48ed79bdddbee85)
+
+running 1 test
+test resident_request ... ignored, explicit serial release experiment under perf lock
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scripts.rs (target/debug/deps/scripts-1b6012e122f71206)
+
+running 14 tests
+test branch_tool_resumption_and_loop_print_do_not_duplicate ... ok
+test nested_predicates_preserve_chunk_carry_and_tool_join_order ... ok
+test failures_keep_earlier_stdout_and_prevent_later_effects ... ok
+test frontend_named_safety_bounds_and_rejections ... ok
+test nested_predicates_match_value_consumers_and_join_locals ... ok
+test future_scans_keep_owners_across_tools_and_live_bytes_are_aggregate ... ok
+test scalar_script_private_stdout_and_no_implicit_echo ... ok
+test real_scan_without_record_and_then_record_receipt ... ok
+test scalar_values_cross_tools_and_chunk_backedges_only_when_live ... ok
+test ordered_two_loops_and_tools_preserve_locals_and_total_fuel ... ok
+test compilation_of_different_sources_does_not_reuse_semantics_or_diagnostics ... ok
+test delayed_order_code_lifetime_and_last_use_buffer_release ... ok
+test predicate_short_circuit_preserves_overflow_and_output_order ... ok
+test cancelling_after_print_during_record_keeps_output_and_discards_late_completion ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/string_contains.rs (target/debug/deps/string_contains-c4c4e0242d889590)
+
+running 4 tests
+test schema_rejects_unapproved_shapes ... ok
+test budgets_and_wait_lifetime ... ok
+test print_declared_json_string_leaf_both_backends ... ok
+test real_source_differential ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/string_cost_probe.rs (target/debug/deps/string_cost_probe-2f48ef830c328d2d)
+
+running 1 test
+test resident_source_cost ... ignored
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/string_tool.rs (target/debug/deps/string_tool-84757c341a506d36)
+
+running 7 tests
+test resident_request_cost ... ignored
+test resident_sink_cost ... ignored
+test admission_location_and_legacy_numeric_api ... ok
+test joined_argument_remains_owned_after_cancellation ... ok
+test json_alias_escaped_utf8_and_detached_owner_survive_cancellation ... ok
+test literal_string_tools_are_not_special_cased_and_errors_preserve_output ... ok
+test sink_join_print_and_tool_preserve_order_and_bounds ... ok
+
+test result: ok. 5 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/tool_environment.rs (target/debug/deps/tool_environment-8f13945f1f3eee01)
+
+running 3 tests
+test resident_new_source_cost ... ignored
+test registration_and_source_errors_match_legacy_entry ... ok
+test registered_environment_is_reusable_but_not_authority ... ok
+
+test result: ok. 2 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/tool_json.rs (target/debug/deps/tool_json-8c5f1fbf8b81a7d9)
+
+running 15 tests
+test direct_tool_print_rejects_json_nested_calls_and_loop_effects ... ok
+test schema_and_binding_reject_unsupported_without_runtime ... ok
+test direct_tool_print_suspends_and_cancellation_preserves_prefix ... ok
+test cancellation_with_live_subview_drops_task_owner_not_operation ... ok
+test source_binding_and_real_backends_share_results ... ok
+test subview_keeps_root_across_actual_wait_then_releases ... ok
+test branch_last_use_alias_error_and_multiple_owner_budget ... ok
+test malformed_accessed_content_is_task_error_not_partial_success ... ok
+test duplicate_escaped_keys_extremes_and_unvisited_suffix_contract ... ok
+test task_tool_permissions_counts_and_buffer_cap ... ok
+test standalone_scalar_tool_call_executes_and_discards_result ... ok
+test multiply_add_preserves_fallible_operand_order ... ok
+test direct_scalar_tool_print_matches_explicit_binding_and_bounds ... ok
+test accessed_errors_short_circuit_and_left_to_right_are_preserved ... ok
+test cancellation_detached_late_json_response_drops_owner ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+     Running tests/tool_validation_cost.rs (target/debug/deps/tool_validation_cost-e06279e4a3c4b486)
+
+running 5 tests
+test declaration_validation_borrows_the_schema ... ok
+test declaration_validation_preserves_errors_and_order ... ok
+test unused_registered_tools_do_not_add_preparation_allocations ... ok
+test scalar_sink_does_not_allocate_per_piece ... ok
+test synchronous_join_does_not_promote_decoded_text_to_arc ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+   Doc-tests minipy_native
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

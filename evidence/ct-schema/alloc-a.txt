@@ -1,0 +1,14 @@
+
+running 1 test
+CTALLOC {"typed":false,"calls":1,"width":2,"allocations":57}
+CTALLOC {"typed":false,"calls":1,"width":64,"allocations":181}
+CTALLOC {"typed":false,"calls":4,"width":2,"allocations":183}
+CTALLOC {"typed":false,"calls":4,"width":64,"allocations":679}
+CTALLOC {"typed":true,"calls":1,"width":2,"allocations":56}
+CTALLOC {"typed":true,"calls":1,"width":64,"allocations":180}
+CTALLOC {"typed":true,"calls":4,"width":2,"allocations":179}
+CTALLOC {"typed":true,"calls":4,"width":64,"allocations":675}
+test allocation_diagnosis ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+

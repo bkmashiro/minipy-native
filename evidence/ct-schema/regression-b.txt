@@ -1,0 +1,27 @@
+
+running 2 tests
+test allocation_diagnosis ... ignored, independent CT allocation diagnosis for both fixed source variants
+test matched_schema_width_does_not_add_allocations ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 1 test
+CTERROR {"kind":"Unsupported","location":[2,1],"reason":"JSON field path is absent from the declared schema","source":"r=tools.fetch()\nprint(r['absent'])","typed":false}
+CTERROR {"kind":"Unsupported","location":[2,7],"reason":"JSON expression must name a declared leaf","source":"r=tools.fetch()\nprint(r['nested'])","typed":false}
+CTERROR {"kind":"Type","location":[1,1],"reason":"Tool argument must be i64","source":"print(tools.number(True, missing=unknown))","typed":false}
+CTERROR {"kind":"Unsupported","location":[1,1],"reason":"duplicate Tool argument","source":"print(tools.number(1, n=unknown))","typed":false}
+CTERROR {"kind":"Unsupported","location":[1,1],"reason":"unknown Tool argument name","source":"print(tools.number(missing=unknown))","typed":false}
+CTERROR {"kind":"Unsupported","location":[1,1],"reason":"string Tool requires its declared argument","source":"print(tools.text(n=unknown))","typed":false}
+CTERROR {"kind":"Type","location":[3,1],"reason":"string Tool requires a string literal or declared JSON leaf","source":"r=tools.fetch()\nx=r['nested']['value']\nprint(tools.text(x))","typed":false}
+CTERROR {"kind":"Unsupported","location":[2,1],"reason":"JSON field path is absent from the declared schema","source":"r=tools.fetch()\nprint(r['absent'])","typed":true}
+CTERROR {"kind":"Unsupported","location":[2,7],"reason":"JSON expression must name a declared leaf","source":"r=tools.fetch()\nprint(r['nested'])","typed":true}
+CTERROR {"kind":"Type","location":[1,1],"reason":"Tool argument must be i64","source":"print(tools.number(True, missing=unknown))","typed":true}
+CTERROR {"kind":"Unsupported","location":[1,1],"reason":"duplicate Tool argument","source":"print(tools.number(1, n=unknown))","typed":true}
+CTERROR {"kind":"Unsupported","location":[1,1],"reason":"unknown Tool argument name","source":"print(tools.number(missing=unknown))","typed":true}
+CTERROR {"kind":"Unsupported","location":[1,1],"reason":"string Tool requires its declared argument","source":"print(tools.text(n=unknown))","typed":true}
+CTERROR {"kind":"Type","location":[3,1],"reason":"string Tool requires a string literal or declared JSON leaf","source":"r=tools.fetch()\nx=r['nested']['value']\nprint(tools.text(x))","typed":true}
+test structured_errors_preserve_priority_and_source_location ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
