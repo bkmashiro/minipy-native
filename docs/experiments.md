@@ -1,5 +1,50 @@
 # Experiments
 
+## DM: bounded post-contract Code Mode retest (2026-10-16)
+
+After DL approval, froze a new private v3 experiment at `f158d73`, including
+guide/prompts, driver, source identity and the uniform 262144-byte Host stdout
+policy. Host-only preflight checked the four complete contracts and their
+output feasibility without exposing replies/oracles to generation. The same
+two-step, two-arm smoke passed all four first answers, releasing only the two
+remaining replay-complete steps. This is four source steps/eight case-arms,
+not eight independent tasks or representative coverage; 13/17 selected steps
+retain Host obstacles and null correctness, not language Unsupported labels.
+
+Nine actual text-only `openai-codex` calls all report `gpt-6.1-sol`: eight first
+answers and one allowed repair, with raw first answers retained. First correctness
+is 7/8 (fresh 3/4, rewrite 4/4); final correctness is 8/8. First Unsupported,
+Type and fallback-stub rates are each 0/8. Complete-source admission is 8/8;
+syntactic whole-program-bound Tool/data-selector sites are 46/46 each, not
+runtime read or unique-path counts. The sole mismatch adds redundant print
+newlines while preserving all calls and arguments; one reduced stdout-mismatch
+diagnostic repairs it. No preparation error occurred, so this run does not
+estimate concrete compiler-diagnostic repair efficacy. Concurrent changes to
+guide/policy and new model sampling preclude causal attribution versus DJ.
+
+Real fresh native/tape preparation/execution/drop, in separate timing and
+ownership modes, produce 52 private result rows including unchanged-original
+rejection checks. All backend/mode semantic results agree. Request timings are
+single observations across different sources, excluding build/process/JSONL I/O,
+with required Host matching/report copies included as documented in DI. No
+wait-distribution or speedup inference from zero-delay replay; no Monty baseline.
+Partial diagnostic counters show final handed-off raw owners released, not total
+heap or RSS/PSS. Native metadata and total task-state memory remain unknown.
+
+All source/prompts/corpus results and the Chinese report remain outside Git in
+the authorized private directory. All 140 historical non-cache files remain
+hash-identical. One initial old-venv import failure occurred before any API
+request; the installed Hermes isolated runtime then ran the frozen stages,
+without dependencies or transport retries. macOS arm64 Rust 1.96 offline/locked
+release passes 28 targeted Rust tests, five public Python tests and six private
+deterministic contract tests; fmt/diff checks pass. Public synthetic commands,
+raw output and source/toolchain identity: `bench/results/dm/checks.json`.
+No production change, language expansion, real Tool effects, new target/worktree,
+downloads, CI, Linux/Wasm run or automatic successor task. The next useful gap
+is a user-selected incomplete Host contract with a task-valued independent
+oracle; these four straight-line document-output steps do not justify further
+language features. Same-card review remains required for final approval.
+
 ## DL: concrete repair diagnostics and explicit Host stdout policy (2026-10-16)
 
 Reuse `ScriptLimits.stdout_bytes`: the DI wrapper and Rust example accept one

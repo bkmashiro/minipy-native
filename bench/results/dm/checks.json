@@ -1,0 +1,75 @@
+{
+  "head": "f158d739dbb9a5fede7bfb26909442f20dd97acb",
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)\nbinary: rustc\ncommit-hash: ac68faa20c58cbccd01ee7208bf3b6e93a7d7f96\ncommit-date: 2026-05-25\nhost: aarch64-apple-darwin\nrelease: 1.96.0\nLLVM version: 22.1.2\n",
+  "source_sha256": {
+    "Cargo.toml": "1629d1686cb94656593372d1d02b0d9401d6f6d25bdeba2e9b48075a111b9426",
+    "Cargo.lock": "15a236e43daf854bedbd6a83a6a667d1e7a173e9100008be03d82efbc3efe97e",
+    "examples/di_corpus.rs": "66105452ba8d182d9823e23c252f6c49a074c9066619b9ba28c0676ef7ca9fc2",
+    "tools/di_corpus.py": "fd91d9447114ce2ac378a799e634342d4bd350cace18a870159f55454a358eb0",
+    "tests/dl_contract.rs": "6059f4fa2c3714b446f525fe10cab743c2c00d56048b1cc5f1e1d29f4059d397",
+    "tests/di_corpus.rs": "a6f095897971ff35a8e7eae69d6020aa6c2e3b061c053fce1f1cff4ad24a94de",
+    "tests/scripts.rs": "a552b3c314cf60caadd38cbc04fb5e65dc08401c3fd09ce68474cacc95dd4cb4",
+    "tests/cy_routing.rs": "59cde3358351caf428ca6a90240860d69476589a824ae2bde1d95b73a7f90dd4"
+  },
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--features",
+        "tool-json,debug-runtime",
+        "--test",
+        "dl_contract",
+        "--test",
+        "di_corpus",
+        "--test",
+        "cy_routing",
+        "--test",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "seconds": 0.1742241382598877,
+      "stdout": "\nrunning 5 tests\ntest malformed_type_schema_and_preparation_limits_are_rejected_not_routed ... ok\ntest json_preparation_limits_are_resource_errors_on_both_backends ... ok\ntest cancellation_after_submission_keeps_effect_once_and_never_routes ... ok\ntest fresh_source_success_and_whole_script_admission_before_any_effect ... ok\ntest runtime_errors_keep_partial_stdout_and_never_replay_or_fallback ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n\nrunning 5 tests\ntest fixture_contract_is_strict_but_private_top_level_fields_are_not_executed ... ok\ntest resource_rejection_and_runtime_mismatch_never_fallback_or_replay ... ok\ntest malformed_json_and_numeric_two_args_use_actual_host_contract ... ok\ntest correctness_requires_complete_contract_oracle_and_expected ... ok\ntest controlled_smoke_both_backends_and_separate_memory_mode ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n\nrunning 4 tests\ntest scalar_reassignment_is_supported_but_json_binding_is_static ... ok\ntest explicit_quota_preserves_permission_and_precancellation ... ok\ntest uniform_stdout_policy_counts_utf8_and_keeps_failed_print_atomic ... ok\ntest document_default_is_bounded_without_changing_library_default ... ok\n\ntest result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 14 tests\ntest frontend_named_safety_bounds_and_rejections ... ok\ntest failures_keep_earlier_stdout_and_prevent_later_effects ... ok\ntest nested_predicates_match_value_consumers_and_join_locals ... ok\ntest compilation_of_different_sources_does_not_reuse_semantics_or_diagnostics ... ok\ntest scalar_script_private_stdout_and_no_implicit_echo ... ok\ntest branch_tool_resumption_and_loop_print_do_not_duplicate ... ok\ntest scalar_values_cross_tools_and_chunk_backedges_only_when_live ... ok\ntest real_scan_without_record_and_then_record_receipt ... ok\ntest nested_predicates_preserve_chunk_carry_and_tool_join_order ... ok\ntest future_scans_keep_owners_across_tools_and_live_bytes_are_aggregate ... ok\ntest predicate_short_circuit_preserves_overflow_and_output_order ... ok\ntest ordered_two_loops_and_tools_preserve_locals_and_total_fuel ... ok\ntest delayed_order_code_lifetime_and_last_use_buffer_release ... ok\ntest cancelling_after_print_during_record_keeps_output_and_discards_late_completion ... ok\n\ntest result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s\n\n",
+      "stderr": "    Finished `release` profile [optimized + debuginfo] target(s) in 0.05s\n     Running tests/cy_routing.rs (target/release/deps/cy_routing-fe40a4996045a3ee)\n     Running tests/di_corpus.rs (target/release/deps/di_corpus-e1c789a9cdb5abb0)\n     Running tests/dl_contract.rs (target/release/deps/dl_contract-be642872d62f745c)\n     Running tests/scripts.rs (target/release/deps/scripts-07e1308b7f64269e)\n"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/di_corpus_test.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.047410011291503906,
+      "stdout": "",
+      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.001s\n\nOK\n"
+    },
+    {
+      "command": [
+        "cargo",
+        "+stable",
+        "fmt",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.17044591903686523,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.00908970832824707,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "scope": "Public synthetic tests only. No private source, prompt or corpus result stored here."
+}
