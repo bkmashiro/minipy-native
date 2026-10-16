@@ -67,5 +67,25 @@ Current CV matrix: 01/02/03/06/07/08/10 run as complete original synthetic scrip
 The count is not a workload coverage percentage. CY documentation keeps its
 historical matrix and adds an explicit DA current-state note.
 
-One focused read-only Luna review will target the signed integrated commit;
-its exact commit, output and actual-model verification are recorded separately.
+## Fixed-target review and controller reconciliation
+
+One focused read-only Luna review targeted signed commit
+`8ece837cc6cbeef0d206e4160de3f06ee9432212`. The verdict was changes required for
+two P2 documentation/evidence issues, with no production correctness blocker:
+missing enum-variant API doc and trailing blank lines in three committed logs.
+The controller added the API doc, removed only terminal blank lines, and taught
+the runner to normalize those terminal blank lines for subsequent invocations.
+The original diff check ran before the then-untracked logs were staged, so it did
+not establish a clean fixed-commit range; that distinction is corrected here.
+No runtime behavior was changed in reconciliation. The final staged range is
+checked separately. The review was not repeated, and is not relabeled approval.
+
+`checks.json`/`measure.json` preserve their original source snapshots. Final
+`src/tool.rs` differs from that tested snapshot only by the API doc comment and
+stable rustfmt's associated enum-field layout;
+`tools/da_check.py` differs only by terminal-blank-line log normalization. Tests
+and timing were not rerun for these nonbehavioral changes. All remaining 65
+source hashes, ten CV original fixtures and raw timing values remain unchanged.
+Review stream/prompt/output and `review-identity.json` retain the exact target,
+verdict and independently checked model usage: actual gpt-6-luna/openai-codex,
+four review calls. Separate gpt-5.6-luna title generation is not review work.

@@ -1,0 +1,8 @@
+结论：需修改
+
+- P2 — src/tool.rs:221：公开的 StringSource::JsonInteger 变体没有 API 文档。DA 证据只称其为 additive，没有明确说明该变体的用途和约束。请添加变体文档注释。
+- P2 — bench/results/da/default.txt:299、bench/results/da/tool_json.txt:82、bench/results/da/debug_json.txt:82：这些已提交日志末尾有空行。对固定范围执行 git diff --check f2e905d..8ece837cc6cbeef0d206e4160de3f06ee9432212 会报告空白错误，与证据中“diff check passed”的记录不符。这是证据/整洁性缺口，不是生产行为缺陷。
+
+我检查了固定提交的差异、相关前端与运行时路径、根存活掩码、测试、探针、DA 检查脚本及证据声明。实现复用既有整数访问器和标量格式化器；混合片段按源顺序处理并保留大小检查，没有提前读取整数；根存活信息也包含新变体。测试覆盖 native/tape、CV01 ready 与非 ready 分支、错误优先级、stdout 原子性、Tool 权限/预算及取消后的生命周期。证据记录了要求的测试结果与限制。
+
+未重跑测试、构建或测量，也未进行网络操作。未发现生产正确性阻断项。实际审阅模型为 gpt-6-luna / openai-codex。未修改文件，未执行任务转换或关闭。

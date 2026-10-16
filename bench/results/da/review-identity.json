@@ -1,0 +1,33 @@
+{
+  "reviewed_commit": "8ece837cc6cbeef0d206e4160de3f06ee9432212",
+  "baseline": "f2e905d",
+  "session_id": "20261016_140219_646f56",
+  "verdict": "changes required",
+  "production_correctness_blockers_found": false,
+  "findings": [
+    {"severity": "P2", "issue": "Missing JsonInteger enum variant API doc", "controller_resolution": "Added API doc and applied stable rustfmt field layout"},
+    {"severity": "P2", "issue": "Trailing blank lines in three committed test logs, initial diff check excluded then-untracked files", "controller_resolution": "Normalized only terminal blank lines; runner now normalizes them; corrected evidence scope; checked final complete staged range"}
+  ],
+  "review_repeated": false,
+  "status": "controller resolved; operator review requested separately; not relabeled reviewer approval",
+  "actual_model_verification": "Read-only SELECT of session_model_usage in /Users/yuzhe/.hermes/state.db; checked against stream system init and final result session id",
+  "review_model": "gpt-6-luna",
+  "review_provider": "openai-codex",
+  "review_api_calls": 4,
+  "separate_non_review_task": {"task": "title_generation", "model": "gpt-5.6-luna", "provider": "openai-codex", "api_calls": 1},
+  "controller_reconciliation": {
+    "check_source_hashes": 67,
+    "unchanged_check_source_hashes": 65,
+    "exceptions": {"src/tool.rs": "API doc and associated rustfmt only", "tools/da_check.py": "terminal-blank-line log normalization only"},
+    "unchanged_cv_originals": 10,
+    "raw_records": 132,
+    "measured_records": 128,
+    "raw_medians_independently_reduced": true,
+    "default_full_release": {"passed": 84, "ignored": 3},
+    "tool_json_targeted": {"passed": 42, "ignored": 2},
+    "debug_json_targeted": {"passed": 42, "ignored": 2},
+    "performance_conclusion": "Single synthetic diagnostic only; no isolated low-load proof, Monty comparison or general net gain claim",
+    "reviewer_ran_tests": false,
+    "tests_rerun_after_comment_log_reconciliation": false
+  }
+}

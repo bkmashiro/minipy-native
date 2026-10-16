@@ -2629,3 +2629,12 @@ drop；source 构造、声明/Host/runtime 建立在外。tape direct/temporary
 没有依赖下载、新 target/worktree、CI、Host executor、源码重写或新 campaign。
 原始命令/log/source hashes/raw/限制见 `bench/results/da/README.md`。
 固定签名提交交唯一一次 Luna 定向只读审阅，结果及远端 SHA 留在原卡。
+
+DA 收尾：固定 `8ece837` 的一次 Luna 审阅无生产正确性阻断，要求补公开
+enum API 注释并移除三份日志尾部空行。主控已处理两项，runner 同步只
+规范日志末尾换行。原 diff check 在未跟踪日志暂存前执行，不能当固定
+提交范围通过；最终暂存范围另行检查。审阅仍记为 changes required /
+controller resolved，不冒称 reviewer approve、不追加审阅。实际
+session_model_usage 核验为 gpt-6-luna/openai-codex 四次审阅调用；独立
+title generation 不混计。生产语义未变，保留原测试/计时 snapshot，不为
+注释/日志收尾重跑或补采。review prompt/stream/output/identity 归档在 DA evidence。

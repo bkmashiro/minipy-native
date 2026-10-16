@@ -29,6 +29,10 @@ identity = {
 def run(cmd, name):
     with (OUT / name).open('w') as stream:
         result = subprocess.run(cmd, env=ENV, stdout=stream, stderr=subprocess.STDOUT)
+    # Keep all output content, normalizing only terminal blank lines for Git.
+    log = OUT / name
+    text = log.read_text()
+    log.write_text(text.rstrip('\n') + '\n' if text else '')
     identity['commands'].append({'command': cmd, 'exit_code': result.returncode, 'log': name})
     print(name, result.returncode, flush=True)
     result.check_returncode()

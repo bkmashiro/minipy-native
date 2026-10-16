@@ -217,9 +217,20 @@ pub enum ToolArguments {
 #[derive(Clone, Debug)]
 pub enum StringSource {
     Literal(Arc<str>),
-    Json { slot: usize, root: usize },
-    JsonInteger { slot: usize, root: usize },
-    Scalar { slot: usize, boolean: bool },
+    Json {
+        slot: usize,
+        root: usize,
+    },
+    /// Declared i64 leaf evaluated at an f-string sink, in piece order.
+    /// `root` participates in owner liveness; decimal formatting uses scalar rules.
+    JsonInteger {
+        slot: usize,
+        root: usize,
+    },
+    Scalar {
+        slot: usize,
+        boolean: bool,
+    },
     Joined(Vec<StringSource>),
 }
 impl StringSource {
