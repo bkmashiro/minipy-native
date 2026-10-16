@@ -1,0 +1,34 @@
+{
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--features",
+        "tool-json,debug-runtime",
+        "--test",
+        "dl_contract",
+        "--test",
+        "di_corpus",
+        "--test",
+        "scripts",
+        "--test",
+        "cy_routing"
+      ],
+      "exit_code": 101,
+      "seconds": 11.900109767913818,
+      "stdout": "\nrunning 5 tests\ntest malformed_type_schema_and_preparation_limits_are_rejected_not_routed ... ok\ntest json_preparation_limits_are_resource_errors_on_both_backends ... ok\ntest cancellation_after_submission_keeps_effect_once_and_never_routes ... ok\ntest fresh_source_success_and_whole_script_admission_before_any_effect ... ok\ntest runtime_errors_keep_partial_stdout_and_never_replay_or_fallback ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n\nrunning 5 tests\ntest fixture_contract_is_strict_but_private_top_level_fields_are_not_executed ... ok\ntest resource_rejection_and_runtime_mismatch_never_fallback_or_replay ... ok\ntest malformed_json_and_numeric_two_args_use_actual_host_contract ... ok\ntest correctness_requires_complete_contract_oracle_and_expected ... ok\ntest controlled_smoke_both_backends_and_separate_memory_mode ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s\n\n\nrunning 4 tests\ntest uniform_stdout_policy_counts_utf8_and_keeps_failed_print_atomic ... FAILED\ntest explicit_quota_preserves_permission_and_precancellation ... FAILED\ntest scalar_reassignment_is_supported_but_json_binding_is_static ... ok\ntest document_default_is_bounded_without_changing_library_default ... ok\n\nfailures:\n\n---- uniform_stdout_policy_counts_utf8_and_keeps_failed_print_atomic stdout ----\n\nthread 'uniform_stdout_policy_counts_utf8_and_keeps_failed_print_atomic' (47653319) panicked at tests/dl_contract.rs:19:17:\nassertion `left == right` failed\n  left: String(\"fallback_stub\")\n right: \"executed\"\n\n---- explicit_quota_preserves_permission_and_precancellation stdout ----\n\nthread 'explicit_quota_preserves_permission_and_precancellation' (47653317) panicked at tests/dl_contract.rs:144:74:\ncalled `Result::unwrap()` on an `Err` value: CompileError { kind: Unsupported, reason: \"only i64 and bool constants are supported\", location: Some((1, 7)) }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    explicit_quota_preserves_permission_and_precancellation\n    uniform_stdout_policy_counts_utf8_and_keeps_failed_print_atomic\n\ntest result: FAILED. 2 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n",
+      "stderr": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 10.79s\n     Running tests/cy_routing.rs (target/release/deps/cy_routing-fe40a4996045a3ee)\n     Running tests/di_corpus.rs (target/release/deps/di_corpus-e1c789a9cdb5abb0)\n     Running tests/dl_contract.rs (target/release/deps/dl_contract-be642872d62f745c)\nerror: test failed, to rerun pass `--test dl_contract`\n"
+    }
+  ],
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)\nbinary: rustc\ncommit-hash: ac68faa20c58cbccd01ee7208bf3b6e93a7d7f96\ncommit-date: 2026-05-25\nhost: aarch64-apple-darwin\nrelease: 1.96.0\nLLVM version: 22.1.2\n",
+  "source_sha256": {
+    "examples/di_corpus.rs": "66105452ba8d182d9823e23c252f6c49a074c9066619b9ba28c0676ef7ca9fc2",
+    "tests/dl_contract.rs": "5f8b9c9813065a466464eaeca5387570d1419ac781516ac2ddc561ca44d5b1ce",
+    "tools/di_corpus.py": "fd91d9447114ce2ac378a799e634342d4bd350cace18a870159f55454a358eb0"
+  }
+}

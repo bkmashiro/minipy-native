@@ -17,6 +17,37 @@ python3 tools/di_corpus.py --input fixtures/di/smoke.jsonl --mode diagnostic --o
 python3 tools/di_corpus_test.py
 ```
 
+DL adds one process/campaign-wide Host setting, `--stdout-bytes N`, forwarded
+to the existing `ScriptLimits.stdout_bytes` on both backends and in both modes.
+It defaults to 262144 (256 KiB), an engineering choice for short-document
+scripts, not a measured corpus requirement. Accepted range is 0..16777216
+(16 MiB harness ceiling). Zero disallows nonempty output. Invalid configuration
+fails before corpus execution. There is no per-case override. Both the manifest
+and every prepared/executed result report `policy.stdout_bytes`, the resolved
+byte cap. Direct Rust invocation accepts the same optional flag and default.
+
+The library `ScriptLimits::default()` remains 16 KiB: changing it would alter
+existing embedded Hosts, the bounded browser debugger and historical benchmarks.
+Document-oriented Hosts can use the same explicit override without a new public
+runtime API. To reproduce pre-DL DI/DJ/DK output policy, pass
+`--stdout-bytes 16384`; old result files retain their historical meaning and are
+never overwritten. Freeze one policy before generation, disclose it in prompts,
+and keep it uniform across tasks, arms and repairs. Do not size a case's budget
+from its expected output or use a higher quota to reinterpret a historical score.
+
+Accounting remains cumulative UTF-8 bytes including each print newline. The
+existing runtime checks a complete print before appending it, retains earlier
+stdout on error, and preserves permission/cancellation and no-runtime-fallback
+rules. Storage grows only as output is produced; the cap is not an allocation
+request. JSON token, source, literal, scan and buffer limits remain independent.
+
+The executor's diagnostic is `error: {category, reason, location}`, not
+`admission`. A repair adapter should forward these actual compiler fields for
+preparation errors. Runtime locations remain null; runtime Provider messages,
+reply bodies, actual/expected stdout and expected submissions must not be sent
+back as hidden oracle feedback. A correctness mismatch can disclose field names
+without values. Retain the first response and allow at most one repair.
+
 The wrapper checks the mount, takes the shared `minipy-perf-build.lock`, uses
 `CARGO_BUILD_JOBS=1 RUSTUP_AUTO_INSTALL=0 cargo +1.96.0 --offline --locked`, and
 reuses the existing target. No new worktree/target or downloads. It rejects an
@@ -187,3 +218,14 @@ wrong JSON type, numeric two-argument ABI and strict fixture validation. Python
 unit tests protect denominator definitions and unknown/incomplete contract
 handling. No private case, model generation, corpus campaign, Linux/Wasm run,
 new target or production semantic expansion is part of DI.
+
+DL adds synthetic quota tests for exact/one-byte-short multibyte print boundaries,
+zero/custom limits, prior output and later-effect suppression, cumulative document
+output above 16 KiB and at the new cap, permission/pre-cancellation, and the
+existing assignment boundary. Same-type i64/bool reassignment is supported.
+JSON roots/views/string-leaf aliases are single static bindings; rebinding would
+change owner/alias semantics and is deliberately not enabled by this repair.
+Use distinct root names for sequential JSON Tool replies. JSON dot/subscript
+selectors share that boundary. Preserve decoded Tool string arguments exactly,
+including all source/JSON escape layers. The versioned private v3 guide and
+repair regressions stay outside Git; DL performs no model generation or campaign.

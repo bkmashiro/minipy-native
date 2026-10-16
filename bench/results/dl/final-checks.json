@@ -1,0 +1,138 @@
+{
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--features",
+        "tool-json,debug-runtime",
+        "--test",
+        "dl_contract",
+        "--test",
+        "di_corpus",
+        "--test",
+        "scripts",
+        "--test",
+        "cy_routing"
+      ],
+      "exit_code": 0,
+      "stdout": "\nrunning 5 tests\ntest malformed_type_schema_and_preparation_limits_are_rejected_not_routed ... ok\ntest json_preparation_limits_are_resource_errors_on_both_backends ... ok\ntest cancellation_after_submission_keeps_effect_once_and_never_routes ... ok\ntest fresh_source_success_and_whole_script_admission_before_any_effect ... ok\ntest runtime_errors_keep_partial_stdout_and_never_replay_or_fallback ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n\nrunning 5 tests\ntest fixture_contract_is_strict_but_private_top_level_fields_are_not_executed ... ok\ntest resource_rejection_and_runtime_mismatch_never_fallback_or_replay ... ok\ntest malformed_json_and_numeric_two_args_use_actual_host_contract ... ok\ntest correctness_requires_complete_contract_oracle_and_expected ... ok\ntest controlled_smoke_both_backends_and_separate_memory_mode ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n\nrunning 4 tests\ntest scalar_reassignment_is_supported_but_json_binding_is_static ... ok\ntest explicit_quota_preserves_permission_and_precancellation ... ok\ntest uniform_stdout_policy_counts_utf8_and_keeps_failed_print_atomic ... ok\ntest document_default_is_bounded_without_changing_library_default ... ok\n\ntest result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n\nrunning 14 tests\ntest frontend_named_safety_bounds_and_rejections ... ok\ntest nested_predicates_match_value_consumers_and_join_locals ... ok\ntest failures_keep_earlier_stdout_and_prevent_later_effects ... ok\ntest scalar_script_private_stdout_and_no_implicit_echo ... ok\ntest compilation_of_different_sources_does_not_reuse_semantics_or_diagnostics ... ok\ntest branch_tool_resumption_and_loop_print_do_not_duplicate ... ok\ntest nested_predicates_preserve_chunk_carry_and_tool_join_order ... ok\ntest scalar_values_cross_tools_and_chunk_backedges_only_when_live ... ok\ntest real_scan_without_record_and_then_record_receipt ... ok\ntest future_scans_keep_owners_across_tools_and_live_bytes_are_aggregate ... ok\ntest ordered_two_loops_and_tools_preserve_locals_and_total_fuel ... ok\ntest predicate_short_circuit_preserves_overflow_and_output_order ... ok\ntest delayed_order_code_lifetime_and_last_use_buffer_release ... ok\ntest cancelling_after_print_during_record_keeps_output_and_discards_late_completion ... ok\n\ntest result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s\n\n",
+      "stderr": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 4.22s\n     Running tests/cy_routing.rs (target/release/deps/cy_routing-fe40a4996045a3ee)\n     Running tests/di_corpus.rs (target/release/deps/di_corpus-e1c789a9cdb5abb0)\n     Running tests/dl_contract.rs (target/release/deps/dl_contract-be642872d62f745c)\n     Running tests/scripts.rs (target/release/deps/scripts-07e1308b7f64269e)\n"
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "clippy",
+        "--offline",
+        "--locked",
+        "--release",
+        "--features",
+        "tool-json,debug-runtime",
+        "--example",
+        "di_corpus",
+        "--test",
+        "dl_contract",
+        "--",
+        "-D",
+        "warnings",
+        "-A",
+        "clippy::type_complexity"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "    Checking minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 0.79s\n"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/di_corpus.py",
+        "--input",
+        "fixtures/di/smoke.jsonl",
+        "--mode",
+        "timing",
+        "--stdout-bytes",
+        "262144",
+        "--output",
+        "bench/results/dl/smoke-timing.jsonl"
+      ],
+      "exit_code": 0,
+      "stdout": "10 cases x 2 backend(s): /Users/yuzhe/projects/minipy-native/bench/results/dl/smoke-timing.jsonl\n",
+      "stderr": "    Finished `release` profile [optimized + debuginfo] target(s) in 0.07s\n"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/di_corpus.py",
+        "--input",
+        "fixtures/di/smoke.jsonl",
+        "--mode",
+        "diagnostic",
+        "--stdout-bytes",
+        "262144",
+        "--output",
+        "bench/results/dl/smoke-diagnostic.jsonl"
+      ],
+      "exit_code": 0,
+      "stdout": "10 cases x 2 backend(s): /Users/yuzhe/projects/minipy-native/bench/results/dl/smoke-diagnostic.jsonl\n",
+      "stderr": "    Finished `release` profile [optimized + debuginfo] target(s) in 0.04s\n"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/di_corpus.py",
+        "--input",
+        "fixtures/di/smoke.jsonl",
+        "--mode",
+        "timing",
+        "--stdout-bytes",
+        "0",
+        "--output",
+        "bench/results/dl/zero-quota.jsonl"
+      ],
+      "exit_code": 0,
+      "stdout": "10 cases x 2 backend(s): /Users/yuzhe/projects/minipy-native/bench/results/dl/zero-quota.jsonl\n",
+      "stderr": "    Finished `release` profile [optimized + debuginfo] target(s) in 0.04s\n"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/di_corpus_test.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.001s\n\nOK\n"
+    },
+    {
+      "command": [
+        "cargo",
+        "+stable",
+        "fmt",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "source_sha256": {
+    "examples/di_corpus.rs": "66105452ba8d182d9823e23c252f6c49a074c9066619b9ba28c0676ef7ca9fc2",
+    "tests/dl_contract.rs": "6059f4fa2c3714b446f525fe10cab743c2c00d56048b1cc5f1e1d29f4059d397",
+    "tools/di_corpus.py": "fd91d9447114ce2ac378a799e634342d4bd350cace18a870159f55454a358eb0",
+    "tools/di_corpus_test.py": "dd3b65118d2730aa5985481969a1633ff9d777b119338084bf1085a4ee1242b0"
+  }
+}

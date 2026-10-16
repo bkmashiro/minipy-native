@@ -6,6 +6,14 @@ import di_corpus as corpus
 
 
 class InventoryTests(unittest.TestCase):
+    def test_uniform_output_policy_validation(self):
+        import argparse
+        for text in ['0', '7', '262144', '16777216']:
+            self.assertEqual(corpus.stdout_bytes(text), int(text))
+        for text in ['-1', '+1', '1.0', 'true', '16777217', '', '１２', ' 1']:
+            with self.assertRaises(argparse.ArgumentTypeError):
+                corpus.stdout_bytes(text)
+
     def test_whole_source_denominator_keeps_unsupported_tail(self):
         sites = corpus.inventory("x = tools.fetch(1)\nprint(x['a']['b'])\ny = [tools.fetch(2)]")
         self.assertEqual(sites, {'tool_call_sites': 2, 'data_selector_sites': 2})

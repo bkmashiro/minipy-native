@@ -1,5 +1,37 @@
 # Experiments
 
+## DL: concrete repair diagnostics and explicit Host stdout policy (2026-10-16)
+
+Reuse `ScriptLimits.stdout_bytes`: the DI wrapper and Rust example accept one
+uniform `--stdout-bytes` setting, validate 0..16 MiB and report the resolved
+budget. New runner default is 256 KiB for short-document replay, an engineering
+choice rather than a measured requirement. Library default stays 16 KiB to avoid
+changing existing embedded/browser contracts and historical baselines; reproduce
+old DI/DJ/DK policy explicitly with 16384. No production runtime, public API,
+allocation strategy, compiler, dependency or authorization change. Existing print
+appends remain UTF-8-byte bounded and atomic, with prior stdout and effect-error
+ordering preserved. [Contract and commands](di-corpus.md).
+
+Private v3 artifacts fix the driver's nonexistent `admission` lookup to use real
+`error.category/reason/location`. Actual native/tape compiler errors pass through
+to repair prompts; regression sentinels exclude reply/expected values. Runtime
+errors retain reduced non-oracle feedback. The v3 generation guide includes
+dot/subscript equivalence, exact decoded Tool argument escapes, uniform output
+policy and assignment semantics. Existing i64/bool reassignment works. JSON
+roots/views/string aliases intentionally bind once in the current frontend;
+mutable owner/alias rebinding is not a low-risk scalar defect and remains out of
+scope. Synthetic tests preserve that boundary instead of broadening it.
+
+macOS arm64 Rust 1.96 offline/locked release passes 28 targeted Rust tests
+(DL 4, DI 5, CY 5, scripts 14), five public Python tests and six private
+deterministic contract tests. Initial synthetic literal-print tests lacked a
+declared Tool environment and correctly failed admission; fixtures were corrected
+without changing production code. Raw commands, output and source identities are
+in `bench/results/dl/`. Private prompts, driver, tests and report remain under
+the authorized corpus directory, with all 125 pre-existing non-cache files
+hash-identical. No model generation, private task replay/campaign, real Tool
+effects, new target/worktree, downloads, CI, performance claim or Linux/Wasm run.
+
 ## DK: declared JSON dot/subscript binding (2026-10-16)
 
 User-approved dot selectors normalize in the shared frontend to the existing

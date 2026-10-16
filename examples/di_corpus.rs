@@ -324,7 +324,34 @@ fn error_kind(e: &TaskError) -> &'static str {
     }
 }
 
+// Host policy for short-document replay, not a measured workload requirement.
+pub const DEFAULT_STDOUT_BYTES: usize = 256 * 1024;
+pub const MAX_STDOUT_BYTES: usize = 16 * 1024 * 1024;
+
+pub fn validate_stdout_bytes(bytes: usize) -> Result<usize, String> {
+    if bytes > MAX_STDOUT_BYTES {
+        return Err("stdout-bytes exceeds runner ceiling 16777216".into());
+    }
+    Ok(bytes)
+}
+
 pub async fn run(case: &Case, native: bool, diagnostic: bool) -> Value {
+    run_with_stdout_bytes(case, native, diagnostic, DEFAULT_STDOUT_BYTES).await
+}
+
+pub async fn run_with_stdout_bytes(
+    case: &Case,
+    native: bool,
+    diagnostic: bool,
+    stdout_bytes: usize,
+) -> Value {
+    if let Err(reason) = validate_stdout_bytes(stdout_bytes) {
+        return json!({"case_id":case.case_id,"route":"fixture_error","reason":reason});
+    }
+    let limits = ScriptLimits {
+        stdout_bytes,
+        ..ScriptLimits::default()
+    };
     let request_start = Instant::now();
     let ownership = diagnostic.then(|| Arc::new(Mutex::new(Ownership::default())));
     let setup = Instant::now();
@@ -392,7 +419,7 @@ pub async fn run(case: &Case, native: bool, diagnostic: bool) -> Value {
                         u.clone(),
                         host.clone(),
                         &values,
-                        ScriptLimits::default(),
+                        limits,
                         Cancellation::default(),
                         trace.clone(),
                     )
@@ -403,7 +430,7 @@ pub async fn run(case: &Case, native: bool, diagnostic: bool) -> Value {
                         u.clone(),
                         host.clone(),
                         &values,
-                        ScriptLimits::default(),
+                        limits,
                         Cancellation::default(),
                         trace.clone(),
                     )
@@ -456,6 +483,7 @@ pub async fn run(case: &Case, native: bool, diagnostic: bool) -> Value {
         "mode":if diagnostic {"diagnostic"} else {"timing"},"route":route,
         "whole_source_admitted":route=="executed","error":{"category":if status=="ok" {None} else {Some(status)},"reason":reason,"location":location},
         "actual":actual,"correct":correct,"replay_matched":replay_matched,
+        "policy":{"stdout_bytes":stdout_bytes},
         "timing":if diagnostic {Value::Null} else {json!({"setup_ns":setup_ns,"request_including_setup_cleanup_ns":request_total_ns,"fresh_source_prepare_execute_cleanup_ns":total_ns,"prepare_ns":prepare_ns,"execute_ns":execute_ns,"prepared_cleanup_ns":cleanup_ns,"tool_waits":waits})},
         "memory":if diagnostic {json!({"prepared":memory,"runtime_events":events,"owner_phases":snapshots,"total_task_state_bytes":null,"rss_pss":null})} else {Value::Null}})
 }
@@ -463,12 +491,22 @@ pub async fn run(case: &Case, native: bool, diagnostic: bool) -> Value {
 #[allow(dead_code)] // Imported by targeted integration tests.
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<_> = std::env::args().collect();
-    if args.len() != 3
+    if ![3, 5].contains(&args.len())
         || !["tape", "native"].contains(&args[1].as_str())
         || !["timing", "diagnostic"].contains(&args[2].as_str())
     {
-        return Err("di_corpus <tape|native> <timing|diagnostic>; JSONL on stdin".into());
+        return Err(
+            "di_corpus <tape|native> <timing|diagnostic> [--stdout-bytes N]; JSONL on stdin".into(),
+        );
     }
+    let stdout_bytes = if args.len() == 5 {
+        if args[3] != "--stdout-bytes" || !args[4].bytes().all(|b| b.is_ascii_digit()) {
+            return Err("expected --stdout-bytes with a decimal integer".into());
+        }
+        validate_stdout_bytes(args[4].parse()?)?
+    } else {
+        DEFAULT_STDOUT_BYTES
+    };
     let runtime_start = Instant::now();
     let rt = tokio::runtime::Builder::new_current_thread()
         .enable_time()
@@ -491,7 +529,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
         let row = match serde_json::from_str::<Case>(&line) {
             Ok(case) => match case.validate_replay() {
-                Ok(()) => rt.block_on(run(&case, args[1] == "native", args[2] == "diagnostic")),
+                Ok(()) => rt.block_on(run_with_stdout_bytes(
+                    &case,
+                    args[1] == "native",
+                    args[2] == "diagnostic",
+                    stdout_bytes,
+                )),
                 Err(reason) => {
                     json!({"case_id":case.case_id,"route":"fixture_error","reason":reason})
                 }

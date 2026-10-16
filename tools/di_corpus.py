@@ -15,6 +15,12 @@ ROOT = Path(__file__).resolve().parents[1]
 LOCK = Path.home() / '.hermes/cache/scratch/minipy-perf-build.lock'
 
 
+def stdout_bytes(value):
+    if not value.isascii() or not value.isdecimal() or not 0 <= int(value) <= 16 * 1024 * 1024:
+        raise argparse.ArgumentTypeError('stdout-bytes must be a decimal integer in 0..16777216')
+    return int(value)
+
+
 def inventory(source):
     """Syntactic site denominators, including rejected/unsupported tails."""
     try:
@@ -53,6 +59,8 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--mode', choices=['timing', 'diagnostic'], required=True)
     parser.add_argument('--backend', choices=['tape', 'native', 'both'], default='both')
+    parser.add_argument('--stdout-bytes', type=stdout_bytes, default=256 * 1024,
+                        help='uniform Host stdout UTF-8 byte cap, including newlines (default: 262144)')
     args = parser.parse_args()
     os.chdir(ROOT)
     data = args.input.read_bytes()
@@ -77,6 +85,7 @@ def main():
     command = ['cargo', '+1.96.0', 'build', '--offline', '--locked', '--release', '--features', 'tool-json', '--example', 'di_corpus']
     sources = [ROOT / 'Cargo.toml', ROOT / 'Cargo.lock', Path(__file__).resolve(), ROOT / 'examples/di_corpus.rs', *sorted((ROOT / 'src').rglob('*.rs'))]
     identity = {'kind': 'manifest', 'mode': args.mode, 'case_count': len(cases),
+                'policy': {'stdout_bytes': args.stdout_bytes},
                 'input_sha256': hashlib.sha256(data).hexdigest(),
                 'head': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
                 'source_sha256': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sources},
@@ -95,7 +104,7 @@ def main():
             for backend in (['tape', 'native'] if args.backend == 'both' else [args.backend]):
                 # One resident process per backend. New prepare/execute/drop per input line.
                 try:
-                    result = subprocess.run([str(binary), backend, args.mode], input=data.decode(),
+                    result = subprocess.run([str(binary), backend, args.mode, '--stdout-bytes', str(args.stdout_bytes)], input=data.decode(),
                                             env=env, text=True, capture_output=True, timeout=600)
                 except subprocess.TimeoutExpired as error:
                     output.write(json.dumps({'kind': 'process_error', 'backend': backend,
