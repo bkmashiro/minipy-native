@@ -32,6 +32,12 @@ the authorized corpus directory, with all 125 pre-existing non-cache files
 hash-identical. No model generation, private task replay/campaign, real Tool
 effects, new target/worktree, downloads, CI, performance claim or Linux/Wasm run.
 
+One focused read-only review at signed `181efe9` verified actual response model
+`gpt-6-luna` on `openai-codex` (one request, no generation campaign), with no
+confirmed blocker. This was a text-packet review, not independent execution;
+raw private evidence stays private. [Review scope and limits](../bench/results/dl/review.md).
+Same-card review still gates the already-created DM follow-on experiment.
+
 ## DK: declared JSON dot/subscript binding (2026-10-16)
 
 User-approved dot selectors normalize in the shared frontend to the existing
