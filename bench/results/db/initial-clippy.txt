@@ -1,0 +1,17 @@
+    Checking minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> tests/string_equality.rs:912:9
+    |
+912 |         limits.stdout_bytes = 4;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `minipy_native::runtime::ScriptLimits { stdout_bytes: 4, ..Default::default() }` and removing relevant reassignments
+   --> tests/string_equality.rs:911:9
+    |
+911 |         let mut limits = ScriptLimits::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#field_reassign_with_default
+    = note: `-D clippy::field-reassign-with-default` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::field_reassign_with_default)]`
+
+error: could not compile `minipy-native` (test "string_equality") due to 1 previous error

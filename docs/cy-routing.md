@@ -69,6 +69,11 @@ its non-ready branch. The current count is seven synthetic complete originals;
 04/05/09 retain the listed gaps. See `tests/json_fstring.rs` and
 `bench/results/da/README.md`. This count is not a production coverage percentage.
 
+DB update: CV09 now also runs its unchanged complete source, both draft/final
+branches on native and tape. The current synthetic total is eight originals;
+only 04/05 remain unsupported. DA/CY counts above are historical snapshots.
+See `bench/results/db/README.md`. No production coverage percentage follows.
+
 ## Verification and bounded timing
 
 `python3 tools/cy_check.py` uses the existing external target, shared fcntl lock,

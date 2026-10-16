@@ -828,9 +828,11 @@ impl<'a> Compiler<'a> {
         }))
     }
     #[cfg(feature = "tool-json")]
-    fn equality_literal(&self, c: &ast::ExprConstant, literal: &str) -> Result<()> {
+    fn predicate_literal(&self, c: &ast::ExprConstant, literal: &str, name: &str) -> Result<()> {
         if literal.len() > 4096 {
-            return Err(resource_err("equality literal exceeds 4096 UTF-8 bytes"));
+            return Err(resource_err(format!(
+                "{name} literal exceeds 4096 UTF-8 bytes"
+            )));
         }
         // RustPython 0.4 replaces surrogate escapes with U+FFFD. Only inspect
         // raw tokens when that scalar occurs, preserving genuine U+FFFD, raw
@@ -839,7 +841,7 @@ impl<'a> Compiler<'a> {
             use rustpython_parser::{Mode, Tok, lexer};
             let source = &self.source[c.start().to_usize()..c.end().to_usize()];
             for token in lexer::lex(source, Mode::Expression) {
-                let (token, _) = token.map_err(|_| err("invalid equality literal"))?;
+                let (token, _) = token.map_err(|_| err(format!("invalid {name} literal")))?;
                 if let Tok::String { value, kind, .. } = token {
                     if kind.is_raw() {
                         continue;
@@ -859,13 +861,13 @@ impl<'a> Compiler<'a> {
                             let digit = chars
                                 .next()
                                 .and_then(|c| c.to_digit(16))
-                                .ok_or_else(|| err("invalid equality literal escape"))?;
+                                .ok_or_else(|| err(format!("invalid {name} literal escape")))?;
                             scalar = (scalar << 4) | digit;
                         }
                         if (0xd800..=0xdfff).contains(&scalar) {
-                            return Err(err(
-                                "surrogate escapes are unsupported in equality literals",
-                            ));
+                            return Err(err(format!(
+                                "surrogate escapes are unsupported in {name} literals"
+                            )));
                         }
                     }
                 }
@@ -1311,6 +1313,42 @@ impl<'a> Compiler<'a> {
         }
         match e {
             ast::Expr::Call(c) => {
+                #[cfg(feature = "tool-json")]
+                if let ast::Expr::Attribute(method) = c.func.as_ref()
+                    && method.attr.as_str() == "startswith"
+                {
+                    if !c.keywords.is_empty() || c.args.len() != 1 {
+                        return Err(err("startswith expects one positional string literal"));
+                    }
+                    let ast::Expr::Constant(constant) = &c.args[0] else {
+                        return Err(err("startswith prefix must be a string literal"));
+                    };
+                    let ast::Constant::Str(literal) = &constant.value else {
+                        return Err(err("startswith prefix must be a string literal"));
+                    };
+                    self.predicate_literal(constant, literal, "startswith")?;
+                    if !self.is_json_string(&method.value)? {
+                        return Err(err(
+                            "startswith receiver must be a declared JSON string leaf",
+                        ));
+                    }
+                    self.node(depth + 1)?;
+                    let (root, path) = self
+                        .json_path(&method.value)?
+                        .expect("declared string leaf");
+                    let slot = self.json.path(root, &path)?;
+                    let index = self.json.needles.len();
+                    self.json.needles.push(literal.clone());
+                    self.json.string_paths = true;
+                    return Ok((
+                        Expr::StartsWith {
+                            slot,
+                            root,
+                            literal: index,
+                        },
+                        Type::Bool,
+                    ));
+                }
                 let ast::Expr::Name(name) = c.func.as_ref() else {
                     return Err(err("unsupported call expression"));
                 };
@@ -1477,7 +1515,7 @@ impl<'a> Compiler<'a> {
                         _ => None,
                     };
                     if let Some((leaf, constant, literal)) = pair {
-                        self.equality_literal(constant, literal)?;
+                        self.predicate_literal(constant, literal, "equality")?;
                         if !self.is_json_string(leaf)? {
                             return Err(err(
                                 "string equality requires a declared JSON string leaf and literal",

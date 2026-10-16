@@ -1,0 +1,2 @@
+    Checking minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)
+    Finished `release` profile [optimized + debuginfo] target(s) in 0.20s

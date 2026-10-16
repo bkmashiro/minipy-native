@@ -132,6 +132,8 @@ pub(super) enum Op {
     #[cfg(feature = "tool-json")]
     StringEq(Dest, usize, usize, usize),
     #[cfg(feature = "tool-json")]
+    StartsWith(Dest, usize, usize, usize),
+    #[cfg(feature = "tool-json")]
     Tool(usize, usize, [u8; 2]),
     Add(Dest, Operand, Operand),
     Sub(Dest, Operand, Operand),
@@ -174,7 +176,7 @@ impl Op {
             #[cfg(feature = "tool-json")]
             Self::JsonRead(d, ..) => Some(*d),
             #[cfg(feature = "tool-json")]
-            Self::JsonString(d, ..) | Self::StringEq(d, ..) => Some(*d),
+            Self::JsonString(d, ..) | Self::StringEq(d, ..) | Self::StartsWith(d, ..) => Some(*d),
             Self::BufferLen(d, _)
             | Self::Abs(d, _)
             | Self::Min(d, _, _)
@@ -280,6 +282,12 @@ impl Lower<'_> {
                 root,
                 literal,
             } => self.ops.push(Op::StringEq(dest, slot, root, literal)),
+            #[cfg(feature = "tool-json")]
+            Expr::StartsWith {
+                slot,
+                root,
+                literal,
+            } => self.ops.push(Op::StartsWith(dest, slot, root, literal)),
             Expr::Binary(op, a, b) if !matches!(op, BinOp::And | BinOp::Or) => {
                 let a = self.value(*a);
                 let b = self.value(*b);
@@ -522,7 +530,9 @@ pub(super) fn json_liveness(ops: &[Op], plan: &crate::tool::Plan) -> Vec<u32> {
                     next | live[*end]
                 }
                 Op::JsonRead(_, _, root, _) => next | (1 << root),
-                Op::JsonString(_, _, root, _) | Op::StringEq(_, _, root, _) => next | (1 << root),
+                Op::JsonString(_, _, root, _)
+                | Op::StringEq(_, _, root, _)
+                | Op::StartsWith(_, _, root, _) => next | (1 << root),
                 Op::PrintJsonString(_, root) => next | (1 << root),
                 Op::PrintString(index) => next | plan.prints[*index].roots(),
                 Op::Tool(call, _, _) => {
@@ -653,6 +663,15 @@ pub(super) fn run<const STEP: bool>(
                     .as_mut()
                     .expect("sealed JSON plan")
                     .equals(*slot, *literal)?;
+                write(*d, v, state, temps);
+            }
+            #[cfg(feature = "tool-json")]
+            Op::StartsWith(d, slot, _, literal) => {
+                let v = output
+                    .json
+                    .as_mut()
+                    .expect("sealed JSON plan")
+                    .starts_with(*slot, *literal)?;
                 write(*d, v, state, temps);
             }
             #[cfg(feature = "tool-json")]

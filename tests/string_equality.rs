@@ -273,7 +273,7 @@ async fn original_cv_scripts_and_branches_both_backends() {
 }
 #[test]
 fn bounded_admission_and_remaining_cv_gaps() {
-    for index in [3, 4, 8] {
+    for index in [3, 4] {
         let a = CodeUnit::compile_with_declarations(CASES[index], INPUTS, &declarations())
             .err()
             .unwrap();
@@ -290,7 +290,6 @@ fn bounded_admission_and_remaining_cv_gaps() {
         "(d['message'] + 'x') == 'ax'",
         "d['count'] == '3'",
         "d['message']",
-        "d['message'].startswith('a')",
         "'a' == 'a'",
     ] {
         let source = format!("d=tools.fetch_state(request_id)\nif {expr}:\n    print(1)");
@@ -563,85 +562,359 @@ impl Drop for Owner {
 async fn owner_across_wait_last_use_cancellation_and_detached_argument() {
     for native in [false, true] {
         for raw in [r#""abc""#, r#""\u0061bc""#] {
-            for mode in ["resume", "cancel", "last", "detached", "budget"] {
-                let live = Arc::new(AtomicUsize::new(1));
-                let data = format!("{{\"message\":{raw}}}")
-                    .into_bytes()
-                    .into_boxed_slice();
-                let mut host = Host::new(Bytes::from_owner(Owner {
-                    data,
-                    live: live.clone(),
-                }));
-                let detached = mode == "detached";
-                host.gate = Some(if detached { 104 } else { 105 });
-                let host = Arc::new(host);
-                let source = if detached {
-                    "d=tools.fetch_state(request_id)\nprint(d['message'] == 'abc')\nr=tools.emit_text(d['message'])"
-                } else if mode == "last" {
-                    "d=tools.fetch_state(request_id)\nprint(d['message'] == 'abc')\nr=tools.publish(request_id,0)"
-                } else {
-                    "d=tools.fetch_state(request_id)\nprint(d['message'] == 'abc')\nr=tools.publish(request_id,0)\nprint(d['message'] != 'abc')"
-                };
-                let cancel = Cancellation::default();
-                let limits = ScriptLimits {
-                    string_scan_bytes: if mode == "budget" {
-                        raw.len() + 3 + if raw.contains('\\') { raw.len() } else { 0 }
+            for prefix in [false, true] {
+                for mode in ["resume", "cancel", "last", "detached", "budget"] {
+                    let live = Arc::new(AtomicUsize::new(1));
+                    let data = format!("{{\"message\":{raw}}}")
+                        .into_bytes()
+                        .into_boxed_slice();
+                    let mut host = Host::new(Bytes::from_owner(Owner {
+                        data,
+                        live: live.clone(),
+                    }));
+                    let detached = mode == "detached";
+                    host.gate = Some(if detached { 104 } else { 105 });
+                    let host = Arc::new(host);
+                    let source = if detached {
+                        "d=tools.fetch_state(request_id)\nprint(d['message'] == 'abc')\nr=tools.emit_text(d['message'])"
+                    } else if mode == "last" {
+                        "d=tools.fetch_state(request_id)\nprint(d['message'] == 'abc')\nr=tools.publish(request_id,0)"
                     } else {
-                        1024
-                    },
-                    ..ScriptLimits::default()
-                };
-                let task = run(native, source, host.clone(), limits, cancel.clone());
-                tokio::pin!(task);
-                tokio::select! { r = &mut task => panic!("early {:?}", r.status), _ = host.entered.notified() => {} }
-                assert_eq!(
-                    live.load(Ordering::SeqCst),
-                    if mode == "last" || (detached && raw.contains('\\')) {
-                        0
+                        "d=tools.fetch_state(request_id)\nprint(d['message'] == 'abc')\nr=tools.publish(request_id,0)\nprint(d['message'] != 'abc')"
+                    };
+                    let source = if prefix {
+                        source
+                            .replace("d['message'] == 'abc'", "d['message'].startswith('abc')")
+                            .replace(
+                                "d['message'] != 'abc'",
+                                "not d['message'].startswith('abc')",
+                            )
                     } else {
-                        1
-                    },
-                    "{native} {raw} {mode}"
-                );
-                if mode == "cancel" || detached {
-                    cancel.cancel();
-                    let out = task.await;
-                    assert_eq!(out.status, Err(TaskError::Cancelled));
-                    assert_eq!(out.stdout, "True\n");
+                        source.to_owned()
+                    };
+                    let cancel = Cancellation::default();
+                    let limits = ScriptLimits {
+                        string_scan_bytes: if mode == "budget" {
+                            raw.len() + 3 + if raw.contains('\\') { raw.len() } else { 0 }
+                        } else {
+                            1024
+                        },
+                        ..ScriptLimits::default()
+                    };
+                    let task = run(native, &source, host.clone(), limits, cancel.clone());
+                    tokio::pin!(task);
+                    tokio::select! { r = &mut task => panic!("early {:?}", r.status), _ = host.entered.notified() => {} }
                     assert_eq!(
                         live.load(Ordering::SeqCst),
-                        usize::from(detached && !raw.contains('\\'))
+                        if mode == "last" || (detached && raw.contains('\\')) {
+                            0
+                        } else {
+                            1
+                        },
+                        "{native} {raw} {mode}"
                     );
-                    host.finish.notify_one();
-                    host.completed.notified().await;
-                    if detached {
+                    if mode == "cancel" || detached {
+                        cancel.cancel();
+                        let out = task.await;
+                        assert_eq!(out.status, Err(TaskError::Cancelled));
+                        assert_eq!(out.stdout, "True\n");
                         assert_eq!(
-                            host.calls.lock().unwrap().last(),
-                            Some(&Call::Text(104, "abc".into()))
+                            live.load(Ordering::SeqCst),
+                            usize::from(detached && !raw.contains('\\'))
+                        );
+                        host.finish.notify_one();
+                        host.completed.notified().await;
+                        if detached {
+                            assert_eq!(
+                                host.calls.lock().unwrap().last(),
+                                Some(&Call::Text(104, "abc".into()))
+                            );
+                        }
+                    } else {
+                        host.finish.notify_one();
+                        let out = task.await;
+                        assert_eq!(
+                            out.status,
+                            if mode == "budget" {
+                                Err(TaskError::Budget)
+                            } else {
+                                Ok(())
+                            }
+                        );
+                        assert_eq!(
+                            out.stdout,
+                            if mode == "resume" {
+                                "True\nFalse\n"
+                            } else {
+                                "True\n"
+                            }
                         );
                     }
-                } else {
-                    host.finish.notify_one();
-                    let out = task.await;
-                    assert_eq!(
-                        out.status,
-                        if mode == "budget" {
-                            Err(TaskError::Budget)
-                        } else {
-                            Ok(())
-                        }
-                    );
-                    assert_eq!(
-                        out.stdout,
-                        if mode == "resume" {
-                            "True\nFalse\n"
-                        } else {
-                            "True\n"
-                        }
-                    );
+                    assert_eq!(live.load(Ordering::SeqCst), 0);
                 }
-                assert_eq!(live.load(Ordering::SeqCst), 0);
             }
         }
+    }
+}
+
+#[tokio::test]
+async fn startswith_original_cv09_and_unicode_aliases() {
+    for native in [false, true] {
+        for (data, expected) in [
+            (DATA.to_owned(), "draft\n"),
+            (DATA.replace("draft-", "final-"), "final\n"),
+        ] {
+            let host = Arc::new(Host::new(data));
+            let out = run(
+                native,
+                CASES[8],
+                host.clone(),
+                ScriptLimits::default(),
+                Cancellation::default(),
+            )
+            .await;
+            assert_eq!(out.status, Ok(()));
+            assert_eq!(out.stdout, expected);
+            assert_eq!(
+                *host.calls.lock().unwrap(),
+                vec![Call::Numeric(101, vec![7])]
+            );
+        }
+        for (raw, literal, hit) in [
+            (r#""""#, "", true),
+            (r#""abc""#, "", true),
+            (r#""abc""#, "ab", true),
+            (r#""abc""#, "bc", false),
+            (r#""ab""#, "abc", false),
+            (r#""ABC""#, "ab", false),
+            (r#""你好世界""#, "你好", true),
+            (r#""\ud83d\ude00x""#, "😀", true),
+            (r#""\u00e9x""#, "é", true),
+            (r#""éx""#, "e\\u0301", false),
+            (r#""a\u0000b""#, "a\\x00", true),
+            (r#""�x""#, "\\ufffd", true),
+            (r#""\\ud800�x""#, "\\\\ud800�", true),
+        ] {
+            let source = format!(
+                "d=tools.fetch_state(request_id)\ns=d['message']\np=s.startswith('{literal}')\nprint(p)\nprint(not d['message'].startswith('{literal}'))\nprint(s == '{literal}')\nprint('{literal}' in s)"
+            );
+            let out = run(
+                native,
+                &source,
+                Arc::new(Host::new(format!("{{\"message\":{raw}}}"))),
+                ScriptLimits::default(),
+                Cancellation::default(),
+            )
+            .await;
+            assert_eq!(out.status, Ok(()), "{native} {raw} {literal}");
+            let expected = if hit {
+                "True\nFalse\n"
+            } else {
+                "False\nTrue\n"
+            };
+            assert!(
+                out.stdout.starts_with(expected),
+                "{native} {raw}: {}",
+                out.stdout
+            );
+        }
+    }
+}
+
+#[test]
+fn startswith_rejects_expanded_method_forms_before_execution() {
+    for expression in [
+        "d['message'].startswith()",
+        "d['message'].startswith('a', 0)",
+        "d['message'].startswith('a', 0, 1)",
+        "d['message'].startswith(prefix='a')",
+        "d['message'].startswith(('a', 'b'))",
+        "d['message'].startswith(d['owner'])",
+        "d['message'].startswith(*('a',))",
+        "d['message'].startswith(1)",
+        "d['count'].startswith('a')",
+        "d['unknown'].startswith('a')",
+        "'abc'.startswith('a')",
+        "(d['message'] + 'x').startswith('a')",
+        "d['message'].endswith('a')",
+        "d['message'].startswith('\\ud800')",
+        "d['message'].startswith('a' '\\U0000dfff')",
+    ] {
+        // An unsupported tail must reject the entire script before the first Tool.
+        let source = format!("d=tools.fetch_state(request_id)\nprint(1)\nprint({expression})");
+        let a = CodeUnit::compile_with_declarations(&source, INPUTS, &declarations())
+            .err()
+            .unwrap();
+        let b = InterpreterUnit::prepare_with_declarations(&source, INPUTS, &declarations())
+            .err()
+            .unwrap();
+        assert_eq!(a, b, "{expression}");
+        assert_eq!(a.kind, AdmissionKind::Unsupported, "{expression}: {a:?}");
+        assert!(a.location.is_some(), "{expression}");
+    }
+    for (literal, accepted) in [
+        ("x".repeat(4096), true),
+        ("x".repeat(4097), false),
+        ("é".repeat(2048), true),
+        ("é".repeat(2049), false),
+    ] {
+        let source =
+            format!("d=tools.fetch_state(request_id)\nprint(d['message'].startswith('{literal}'))");
+        for error in [
+            CodeUnit::compile_with_declarations(&source, INPUTS, &declarations()).err(),
+            InterpreterUnit::prepare_with_declarations(&source, INPUTS, &declarations()).err(),
+        ] {
+            assert_eq!(error.is_none(), accepted);
+            if let Some(error) = error {
+                assert_eq!(error.kind, AdmissionKind::Resource);
+            }
+        }
+    }
+    assert!(CodeUnit::compile_script("print('x'.startswith('x'))", &[]).is_err());
+    assert!(InterpreterUnit::prepare_script("print('x'.startswith('x'))", &[]).is_err());
+}
+
+#[tokio::test]
+async fn startswith_validation_error_order_and_short_circuit() {
+    for native in [false, true] {
+        for data in [
+            Bytes::from_static(b"{}"),
+            Bytes::from_static(b"{\"message\":null}"),
+            Bytes::from_static(b"{\"message\":4}"),
+            Bytes::from_static(b"{\"message\":true}"),
+            Bytes::from_static(b"{\"message\":[]}"),
+            Bytes::from_static(br#"{"message":"\ud800"}"#),
+            Bytes::from_static(b"{\"message\":\"\xff\"}"),
+            Bytes::from_static(br#"{"message":"\q"}"#),
+        ] {
+            for prefix in ["", "longer-than-value"] {
+                let host = Arc::new(Host::new(data.clone()));
+                let source = format!(
+                    "d=tools.fetch_state(request_id)\nprint(1)\nprint(d['message'].startswith('{prefix}'))\nr=tools.publish(request_id,0)"
+                );
+                let out = run(
+                    native,
+                    &source,
+                    host.clone(),
+                    ScriptLimits::default(),
+                    Cancellation::default(),
+                )
+                .await;
+                assert!(
+                    matches!(out.status, Err(TaskError::Json(_))),
+                    "{native} {data:?}: {:?}",
+                    out.status
+                );
+                assert_eq!(out.stdout, "1\n");
+                assert_eq!(
+                    *host.calls.lock().unwrap(),
+                    vec![Call::Numeric(101, vec![7])]
+                );
+            }
+        }
+        for (data, budget, expected) in [
+            (
+                "{}",
+                0,
+                TaskError::Json("missing field or invalid JSON on accessed path"),
+            ),
+            (r#"{"message":null}"#, 0, TaskError::Budget),
+            (
+                r#"{"message":null}"#,
+                4,
+                TaskError::Json("expected UTF-8 string"),
+            ),
+        ] {
+            let out = run(
+                native,
+                "d=tools.fetch_state(request_id)\nprint(d['message'].startswith(''))",
+                Arc::new(Host::new(data)),
+                ScriptLimits {
+                    string_scan_bytes: budget,
+                    ..ScriptLimits::default()
+                },
+                Cancellation::default(),
+            )
+            .await;
+            assert_eq!(out.status, Err(expected));
+        }
+        let out = run(native, "d=tools.fetch_state(request_id)\nprint(False and d['message'].startswith(''))\nprint(True or d['owner'].startswith('x'))", Arc::new(Host::new("{}")), ScriptLimits { string_scan_bytes: 0, ..ScriptLimits::default() }, Cancellation::default()).await;
+        assert_eq!(out.status, Ok(()));
+        assert_eq!(out.stdout, "False\nTrue\n");
+    }
+}
+
+#[tokio::test]
+async fn startswith_exact_repeated_decode_retention_and_token_bounds() {
+    for native in [false, true] {
+        for raw in ["\"éx\"", r#""\u00e9x""#] {
+            let data = format!("{{\"message\":{raw}}}");
+            let required =
+                2 * (raw.len() + "é".len()) + if raw.contains('\\') { raw.len() } else { 0 };
+            for budget in [required, required - 1] {
+                let out = run(native, "d=tools.fetch_state(request_id)\nprint(d['message'].startswith('é'))\nprint(d['message'].startswith('é'))", Arc::new(Host::new(data.clone())), ScriptLimits { string_scan_bytes: budget, ..ScriptLimits::default() }, Cancellation::default()).await;
+                assert_eq!(
+                    out.status,
+                    if budget == required {
+                        Ok(())
+                    } else {
+                        Err(TaskError::Budget)
+                    }
+                );
+                assert_eq!(
+                    out.stdout,
+                    if budget == required {
+                        "True\nTrue\n"
+                    } else {
+                        "True\n"
+                    }
+                );
+            }
+            if raw.contains('\\') {
+                let mut limits = ScriptLimits::default();
+                limits.limits.buffer_bytes = data.len();
+                let out = run(
+                    native,
+                    "d=tools.fetch_state(request_id)\nprint(d['message'].startswith(''))",
+                    Arc::new(Host::new(data)),
+                    limits,
+                    Cancellation::default(),
+                )
+                .await;
+                assert_eq!(out.status, Err(TaskError::Budget));
+                assert_eq!(out.stdout, "");
+            }
+        }
+        for len in [64 * 1024 - 2, 64 * 1024 - 1] {
+            let out = run(
+                native,
+                "d=tools.fetch_state(request_id)\nprint(d['message'].startswith(''))",
+                Arc::new(Host::new(format!(
+                    "{{\"message\":\"{}\"}}",
+                    "x".repeat(len)
+                ))),
+                ScriptLimits::default(),
+                Cancellation::default(),
+            )
+            .await;
+            assert_eq!(
+                out.status,
+                if len == 64 * 1024 - 2 {
+                    Ok(())
+                } else {
+                    Err(TaskError::Budget)
+                }
+            );
+            assert_eq!(out.stdout, if out.status.is_ok() { "True\n" } else { "" });
+        }
+        let host = Arc::new(Host::new(DATA));
+        let limits = ScriptLimits {
+            stdout_bytes: 4,
+            ..ScriptLimits::default()
+        };
+        let out = run(native, "d=tools.fetch_state(request_id)\nprint(1)\nprint(d['filename'].startswith('draft-'))\nr=tools.publish(request_id,0)", host.clone(), limits, Cancellation::default()).await;
+        assert_eq!(out.status, Err(TaskError::Budget));
+        assert_eq!(out.stdout, "1\n");
+        assert_eq!(host.calls.lock().unwrap().len(), 1);
     }
 }

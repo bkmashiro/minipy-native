@@ -63,6 +63,12 @@ pub enum Expr {
         root: usize,
         literal: usize,
     },
+    #[cfg(feature = "tool-json")]
+    StartsWith {
+        slot: usize,
+        root: usize,
+        literal: usize,
+    },
     Field(Field),
     Binary(BinOp, Box<Expr>, Box<Expr>),
     Not(Box<Expr>),

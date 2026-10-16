@@ -1,5 +1,33 @@
 # Experiments
 
+## DB: statically bound JSON string prefix (2026-10-16)
+
+From DA reviewed main `d46ff94`, add only declared string leaf/alias
+`startswith(bounded literal)` to the shared frontend, tape and real native
+helper path. Exact Unicode prefixes preserve eager alias validation,
+locate/charge/decode order, cumulative budgets, short-circuiting, cancellation
+and owner last use. No tuple/dynamic prefix, optional indices, extra method,
+special Host Tool, dependency or fallback. CV09 runs unchanged draft/final
+branches on both backends. Eight of ten synthetic originals now run; 04 arrays/
+iteration/break and 05 get/default remain gaps, not a production coverage metric.
+
+Actual local offline/locked release: full default 84 passed/3 ignored; six
+targeted tool-json and tool-json+debug-runtime suites each 46 passed/2 ignored;
+feature library 30 passed/3 ignored. Focused Clippy passes with only existing CT
+type_complexity allowed; stable fmt/diff check pass. One initial test compile
+field typo and one test-only Clippy initializer issue were corrected, without
+changing production behavior. Existing external target, fcntl lock, single job,
+Rust 1.96; no new target/worktree, downloads, CI, Linux or Wasm execution.
+
+One bounded 132-row direct/alias diagnostic includes fresh prepare/native compile,
+real Tool/JSON/prefix execution, assertions and unit/outcome drop. After four
+warmups, 32 pairs/backend give median direct/alias ratios 0.8483 tape and 0.8757
+native. This compares two source forms of the new operation; alias has an extra
+eager validation. It is not a pre/post or equivalent-budget performance claim.
+Load 1.94/1.78/1.54 with Finder/Spotlight activity, so isolated low load is not
+established. No resampling, Monty comparison or generalized speedup conclusion.
+Source hashes, commands, raw results and exact limitations: `bench/results/db/`.
+
 ## CY: whole-source admission and Host routing (2026-10-16)
 
 在已审 CX `f6024e2` 上，仅补 Host 库调用示例和集成验收。Native/tape 都先

@@ -530,7 +530,8 @@ fn json_used(e: &Expr) -> u32 {
         | Expr::JsonView { root, .. }
         | Expr::JsonString { root, .. }
         | Expr::Contains { root, .. }
-        | Expr::StringEq { root, .. } => 1 << root,
+        | Expr::StringEq { root, .. }
+        | Expr::StartsWith { root, .. } => 1 << root,
         Expr::Binary(_, a, b) | Expr::Min(a, b) | Expr::Max(a, b) => json_used(a) | json_used(b),
         Expr::Not(e) | Expr::Abs(e) => json_used(e),
         _ => 0,
@@ -1020,11 +1021,13 @@ impl Emit<'_, '_> {
             #[cfg(feature = "tool-json")]
             Expr::JsonString { slot, .. }
             | Expr::Contains { slot, .. }
-            | Expr::StringEq { slot, .. } => {
+            | Expr::StringEq { slot, .. }
+            | Expr::StartsWith { slot, .. } => {
                 let (output, frame, _, error) = self.json.expect("frontend bound JSON plan");
                 let needle = match e {
                     Expr::Contains { needle, .. } => *needle as i64,
-                    Expr::StringEq { literal, .. } => -(*literal as i64) - 2,
+                    Expr::StringEq { literal, .. } => -2 * (*literal as i64) - 2,
+                    Expr::StartsWith { literal, .. } => -2 * (*literal as i64) - 3,
                     _ => -1,
                 };
                 let slot = self.b.ins().iconst(types::I64, *slot as i64);

@@ -1,0 +1,39 @@
+    Finished `release` profile [optimized + debuginfo] target(s) in 0.06s
+     Running unittests src/lib.rs (target/release/deps/minipy_native-2b46c0020db8d1ef)
+
+running 33 tests
+test buffer::tests::empty_and_malformed_buffers_are_handled_without_raw_loads ... ok
+test buffer::tests::exact_capacity_freeze_moves_the_payload_and_uses_a_thin_owner ... ok
+test buffer::tests::from_quotes_enforces_row_limit ... ok
+test codegen::tests::ce_arithmetic_code ... ignored, explicit serial CE code diagnostic, not formal timing
+test buffer::tests::import_decodes_little_endian_and_preserves_extreme_patterns ... ok
+test frontend::schema_probe::schema_prepare_diagnosis ... ignored, explicit serial release diagnosis under perf lock
+test buffer::tests::quote_v1_layout_and_offsets_are_stable ... ok
+test codegen::tests::layout ... ok
+test buffer::tests::immutable_owner_clones_and_weak_observation_share_one_allocation ... ok
+test frontend::tests::discarded_record_call_still_allocates_a_scratch_scalar ... ok
+test frontend::tests::accepts_int_local_annotation ... ok
+test frontend::tests::accepts_definite_branch_init_and_sequential_buffers ... ok
+test frontend::tests::parses_script_inputs_tools_print_and_loops ... ok
+test frontend::tests::print_is_allowed_in_loop_and_nested_branch_init_is_intersected ... ok
+test frontend::tests::rejects_unsafe_shapes_and_uninitialized_branches ... ok
+test frontend::tests::supports_legacy_main_semantics ... ok
+test http_provider::http_collect_cost_tests::report_fetch_future_size_for_collection_candidate ... ok
+test frontend::tests::initialization_mask_covers_zero_and_all_32_slots ... ok
+test interpreter::tape::bx_diagnostic ... ignored, explicit serial release preparation/layout diagnostic
+test frontend::tests::top_level_expressions_are_discarded_and_loop_locals_are_iteration_local ... ok
+test interpreter::liveness_tests::nonzero_buffer_mask_keeps_pc_bounds - should panic ... ok
+test json_view::tests::rejected_plain_token_never_sets_validation_marker ... ok
+test json_view::tests::static_json_task_state_size ... ok
+test json_view::tests::validated_span_is_reused_and_invalidated_with_its_owner ... ok
+test json_view::tests::argument_copy_cutoffs_headroom_and_scan_charge ... ok
+test interpreter::liveness_tests::cd_json_masks ... ok
+test runtime::output_tests::borrowed_sink_prepares_before_authority_and_commits_atomically ... ok
+test runtime::output_tests::growth_never_exceeds_the_task_cap_and_rejected_lines_are_atomic ... ok
+test interpreter::liveness_tests::cd_buffer_masks ... ok
+test interpreter::tape::count_admission_and_layout ... ok
+test provider::tests::cloned_buffer_lease_keeps_rows_alive_then_releases_them ... ok
+test provider::tests::load_suspends_and_each_call_gets_an_independent_owner ... ok
+test provider::tests::record_is_async_checked_and_failures_are_returned ... ok
+
+test result: ok. 30 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 0.03s

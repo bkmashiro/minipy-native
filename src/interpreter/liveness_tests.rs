@@ -52,6 +52,7 @@ fn reference_json(ops: &[Op], plan: &crate::tool::Plan) -> (Vec<u32>, usize) {
                 Op::JsonRead(_, _, root, _)
                 | Op::JsonString(_, _, root, _)
                 | Op::StringEq(_, _, root, _)
+                | Op::StartsWith(_, _, root, _)
                 | Op::PrintJsonString(_, root) => next | (1 << root),
                 Op::PrintString(i) => next | plan.prints[*i].roots(),
                 Op::Tool(call, _, _) => {

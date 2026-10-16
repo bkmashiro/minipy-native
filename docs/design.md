@@ -89,6 +89,26 @@ The existing 64-KiB raw-token bound and default cumulative 1-MiB string scan
 budget apply, including across Tool waits. Roots participate in both backends'
 last-use masks. No new ownership, authorization or scheduling mechanism is added.
 
+### Bounded string prefix
+
+With `tool-json`, `leaf.startswith(literal)` returns bool for a declared JSON
+string leaf or existing leaf alias. It accepts exactly one positional string
+literal, bounded to 4096 UTF-8 bytes by the same checked literal import as
+equality. Tuple prefixes, dynamic prefixes, start/end arguments, keywords and
+other string methods remain unsupported. Decoded UTF-8 prefix comparison
+matches Python Unicode prefix semantics within the existing UTF-8 value domain,
+without normalization or case folding. Source surrogate escapes are rejected.
+
+The equality scan/decode/retained/token budgets and error order above also apply
+to every prefix test. Empty prefixes and prefixes longer than the value still
+locate, charge and validate. Short-circuit skips unexecuted direct leaf tests;
+existing alias assignment still eagerly validates. Both backends retain roots
+across waits and release at last use, including error/cancellation paths. The
+native compiler calls the existing Rust string helper with a sealed selector;
+tape uses the same State accessor. No general method dispatch or new Tool is
+introduced. `ir::Expr::StartsWith` is an additive public IR enum variant, so
+exhaustive IR consumers must handle it.
+
 ## Memory and code
 
 CodeUnit owns RX code, entry/state layout, source/error mapping and ABI identity. Task owns parameters, authorization, budget, continuation state and strong references to code and buffers. Code may be explicitly compiled once and used by multiple independent tasks; no automatic IR matching/cache required.
