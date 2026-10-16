@@ -128,6 +128,14 @@ Commands (after acquiring the lock and setting the environment above):
     cargo +stable fmt --all -- --check
 
 Clippy retains the existing type_complexity exception; this is not a strict
-all-target Clippy claim. Linux validation remains pending. One fixed integrated
-snapshot receives focused read-only Luna review; same-card human review remains
+all-target Clippy claim. Linux validation remains pending.
+
+One focused read-only review checked signed integrated commit
+`3db69c803a0ef571461936bdfa8a7e9b8518feeb`, returning no confirmed blockers.
+Hermes child run metadata confirms `gpt-6-luna` / `openai-codex`. It inspected the
+fixed diff, tests and adjacent ownership/consumer paths, and ran diff checking;
+it did not rerun Cargo. The initial standalone Codex CLI request was rejected
+by its ChatGPT OAuth model support and produced no review. The configured
+Hermes delegate provided the single actual review, with no model substitution
+or configuration changes. Source stayed unchanged. Same-card review is still
 the final gate.

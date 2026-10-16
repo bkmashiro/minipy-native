@@ -20,7 +20,11 @@ element growth; source inspection finds no additional per-task allocation site.
 Missing proof adds scans and transient parser scratch, not metered token work.
 No performance campaign, latency claim, Linux run, CI, new target or worktree.
 Commands, API migration, implementation costs and limitations: [df-get.md](df-get.md).
-Submitted for fixed-snapshot focused review followed by same-card review.
+Fixed signed implementation 3db69c8 received one focused read-only review with
+verified gpt-6-luna/openai-codex identity: no confirmed blockers, no Cargo rerun
+or file edits. The standalone CLI's unsupported-model request produced no review;
+the existing configured Hermes delegate completed it without a substitution.
+Implementation remains unchanged; submitted for same-card review.
 
 ## DE: bounded missing-key parser proof (2026-10-16)
 
