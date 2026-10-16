@@ -114,6 +114,8 @@ pub struct Program {
 pub enum AdmissionKind {
     Syntax,
     Unsupported,
+    /// Preparation exhausted a finite source/IR limit; not a fallback request.
+    Resource,
     Type,
     Schema,
     Backend,

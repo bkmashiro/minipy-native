@@ -1,0 +1,6 @@
+    Finished `release` profile [optimized + debuginfo] target(s) in 0.03s
+     Running `target/release/examples/cy_route`
+Tape: Ok(()), stdout="7\n"
+Tape: Host routing stub only: 2:5: unsupported expression in restricted program
+Native: Ok(()), stdout="7\n"
+Native: Host routing stub only: 2:5: unsupported expression in restricted program

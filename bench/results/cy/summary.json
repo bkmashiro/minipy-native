@@ -1,0 +1,24 @@
+{
+  "Tape": {
+    "direct": {
+      "n": 32,
+      "median_ns": 13458.5
+    },
+    "route": {
+      "n": 32,
+      "median_ns": 13562.5
+    },
+    "paired_route_over_direct_median": 0.9831321852161035
+  },
+  "Native": {
+    "direct": {
+      "n": 32,
+      "median_ns": 150000.0
+    },
+    "route": {
+      "n": 32,
+      "median_ns": 150541.5
+    },
+    "paired_route_over_direct_median": 1.0065719961471646
+  }
+}

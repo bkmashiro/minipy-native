@@ -18,6 +18,20 @@ The implemented subset has sequential scans, scalar conditions and checked arith
 
 Signed i64 overflow is a task error; integers differ from Python's arbitrary precision values. Conditions short-circuit. Input order determines multiply/add order and first data error; no reassociated reductions. A filtered row must not trigger arithmetic in the skipped branch. An empty scan leaves its preinitialized accumulators unchanged. Resource errors terminate the task. Concrete source/IR size and execution limits should be few, documented engineering choices, not guessed production SLOs.
 
+### Whole-source admission and Host routing
+
+Preparation performs no source effects. A Host may offer an explicitly selected,
+separately authorized general executor only after an `Unsupported` preparation
+error. `Syntax`, `Type`, `Schema`, `Resource` and `Backend` errors are not fallback
+requests. `Resource` marks finite source/IR limits while preserving existing
+diagnostic text/location and error priority. A first preparation rejection is not
+proof that later source satisfies every limit or that general Python is valid.
+The Host must apply its own resource and capability policy to an external path.
+Once execution is entered, return its status and stdout unchanged, with no replay
+after overflow, permission, provider, budget or cancellation failure. See the
+[library example and support matrix](cy-routing.md). No external executor ships
+with the prototype.
+
 ## Initial Tool ABI
 
 Deployment declares:

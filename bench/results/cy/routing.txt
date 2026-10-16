@@ -1,0 +1,11 @@
+    Finished `release` profile [optimized + debuginfo] target(s) in 0.03s
+     Running tests/cy_routing.rs (target/release/deps/cy_routing-cd98f36f3eb48a78)
+
+running 4 tests
+test malformed_type_schema_and_preparation_limits_are_rejected_not_routed ... ok
+test cancellation_after_submission_keeps_effect_once_and_never_routes ... ok
+test fresh_source_success_and_whole_script_admission_before_any_effect ... ok
+test runtime_errors_keep_partial_stdout_and_never_replay_or_fallback ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+

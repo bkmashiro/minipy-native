@@ -1,5 +1,33 @@
 # Experiments
 
+## CY: whole-source admission and Host routing (2026-10-16)
+
+在已审 CX `f6024e2` 上，仅补 Host 库调用示例和集成验收。Native/tape 都先
+完整准备再执行，只有结构化 Unsupported 返回给上层路由 stub；没有引入
+CPython、子进程、沙箱、自动回退或源码改写。执行期 overflow/权限/Tool失败/
+预算/取消保留 status 与部分 stdout，绝不重放。补 `AdmissionKind::Resource`
+区分已有 source/AST/slot/string 上限，reason/location/优先级不变；同步更新
+已有 BI exhaustive match。没有新增生产热路径检查或通用路由框架。
+
+真实运行 default release 全套 84 passed/3 ignored，tool-json 全套145/13，
+debug-json 定向 routing/equality 11 passed；新增 routing 4/5 项各覆盖双后端，
+包括不支持尾句/死分支前零Tool、非法源码、资源拒绝、已有副作用后的失败、
+提交后取消及 detached effect 恰一次。定向 Clippy 通过，保留既有 CT
+type_complexity 豁免。stable fmt/diff check；原外盘target、fcntl锁、单job、
+1.96 offline/locked，无下载、新target/worktree、CI或Linux/Wasm运行。
+
+CV 原始完整脚本仍为6/10（02/03/06/07/08/10），本轮没有新增语法能力。
+01 JSON-i64 f-string、04数组迭代/break、05get/default、09startswith仍阻塞；
+只是合成工程案例计数，不是生产覆盖率。下一小候选是01，当前阶段到此停止。
+完整矩阵、API边界和复现命令见 [CY routing](cy-routing.md)，原始日志/hash
+见 `bench/results/cy/`，`python3 tools/cy_check.py` 可复现检查。
+
+仅一次最小配对（132行含4 warmup，双后端各32对），含新源准备+真实执行+
+unit/outcome drop，不含Host/runtime/源码文本构造。route/direct配对中位比
+tape 0.9831、native 1.0066。负载均值1.21/1.48/1.55，但有Spotlight/Finder
+活动，低负载隔离未成立，全部降级诊断，不作收益/回归界限结论、不继续采样。
+诊断与正确性分开保存，未与Monty比较，也不宣称优化收益。
+
 ## CW: checked scalar integer conversion (2026-10-16)
 
 One actual gpt-6-luna/openai-codex read-only [review](cw-review.md) approved fixed `6717fd5`, independently checking raw reduction and semantics. Operator same-card review remains the release gate for CX.

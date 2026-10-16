@@ -53,6 +53,11 @@ Execution bounds cover scanned rows, retained buffers, Tool calls and stdout. Ch
 
 Hosts choose the backend explicitly. There is no automatic tiering or source cache. With `tool-json`, a resident Host can validate declarations once with `tool::ToolEnvironment::new` and use either unit's `*_with_environment` entry point.
 
+The [Host routing example](docs/cy-routing.md) prepares the whole source before
+execution and leaves unsupported-source routing to the caller. Syntax, type,
+schema and preparation resource errors are rejected. Runtime failures never
+trigger fallback or replay. No external Python executor is included.
+
 ## Documentation
 
 - [Design and semantic contract](docs/design.md)

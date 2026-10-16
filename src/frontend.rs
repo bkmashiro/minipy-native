@@ -14,6 +14,9 @@ fn err(message: impl Into<String>) -> CompileError {
 fn type_err(message: impl Into<String>) -> CompileError {
     CompileError::new(AdmissionKind::Type, message)
 }
+fn resource_err(message: impl Into<String>) -> CompileError {
+    CompileError::new(AdmissionKind::Resource, message)
+}
 
 /// Parse with the historical two scalar inputs.
 pub fn parse(source: &str) -> Result<Program> {
@@ -26,7 +29,7 @@ pub fn parse(source: &str) -> Result<Program> {
 /// Parse a restricted script with an explicitly declared scalar input schema.
 pub fn parse_with_inputs(source: &str, inputs: &[(&str, Type)]) -> Result<Program> {
     if source.len() > ir::MAX_SOURCE_BYTES {
-        return Err(err("source exceeds MAX_SOURCE_BYTES"));
+        return Err(resource_err("source exceeds MAX_SOURCE_BYTES"));
     }
     check_delimiter_depth(source)?;
     validate_inputs(inputs)?;
@@ -83,7 +86,7 @@ fn parse_validated_tools(
     tools: &[crate::tool::ToolDeclaration],
 ) -> Result<Program> {
     if source.len() > ir::MAX_SOURCE_BYTES {
-        return Err(err("source exceeds MAX_SOURCE_BYTES"));
+        return Err(resource_err("source exceeds MAX_SOURCE_BYTES"));
     }
     check_delimiter_depth(source)?;
     validate_inputs(inputs)?;
@@ -149,7 +152,9 @@ fn check_delimiter_depth(s: &str) -> Result<()> {
             .sum::<usize>()
             > MAX_DEPTH * 4
     }) {
-        return Err(err("statement nesting exceeds the pre-parser limit"));
+        return Err(resource_err(
+            "statement nesting exceeds the pre-parser limit",
+        ));
     }
     let (mut depth, mut quote, mut escaped, mut comment) = (0usize, None, false, false);
     for c in s.chars() {
@@ -175,7 +180,7 @@ fn check_delimiter_depth(s: &str) -> Result<()> {
             '(' | '[' | '{' => {
                 depth += 1;
                 if depth > MAX_DEPTH {
-                    return Err(err("expression nesting exceeds maximum depth 32"));
+                    return Err(resource_err("expression nesting exceeds maximum depth 32"));
                 }
             }
             ')' | ']' | '}' => depth = depth.saturating_sub(1),
@@ -227,7 +232,7 @@ struct Compiler<'a> {
 impl<'a> Compiler<'a> {
     fn new(inputs: &[(&str, Type)], source: &'a str) -> Result<Self> {
         if inputs.len() > ir::MAX_LOCALS {
-            return Err(err("program exceeds MAX_LOCALS"));
+            return Err(resource_err("program exceeds MAX_LOCALS"));
         }
         Ok(Self {
             source,
@@ -253,10 +258,10 @@ impl<'a> Compiler<'a> {
     fn node(&mut self, depth: usize) -> Result<()> {
         self.nodes += 1;
         if self.nodes > ir::MAX_NODES {
-            return Err(err("AST exceeds MAX_NODES"));
+            return Err(resource_err("AST exceeds MAX_NODES"));
         }
         if depth > MAX_DEPTH {
-            return Err(err("AST nesting exceeds maximum depth 32"));
+            return Err(resource_err("AST nesting exceeds maximum depth 32"));
         }
         Ok(())
     }
@@ -321,7 +326,7 @@ impl<'a> Compiler<'a> {
     }
     fn finish(self, statements: Vec<Stmt>) -> Result<Program> {
         if self.locals.len() > ir::MAX_LOCALS {
-            return Err(err("program exceeds MAX_LOCALS"));
+            return Err(resource_err("program exceeds MAX_LOCALS"));
         }
         Ok(Program {
             locals: self.locals,
@@ -397,7 +402,7 @@ impl<'a> Compiler<'a> {
             return Ok(i);
         }
         if self.names.len() >= ir::MAX_LOCALS {
-            return Err(err("program exceeds MAX_LOCALS"));
+            return Err(resource_err("program exceeds MAX_LOCALS"));
         }
         let i = self.names.len();
         self.names.push(name.to_owned());
@@ -487,7 +492,7 @@ impl<'a> Compiler<'a> {
                         return Err(type_err("load_quotes batch expression must be i64"));
                     }
                     if self.next_buffer >= ir::MAX_BUFFERS {
-                        return Err(err("program exceeds 32 quote buffers"));
+                        return Err(resource_err("program exceeds 32 quote buffers"));
                     }
                     if self.names.iter().any(|n| n == &name)
                         || self.buffers.contains_key(&name)
@@ -654,7 +659,7 @@ impl<'a> Compiler<'a> {
                     }
                     let slot = self.next_buffer;
                     if slot >= ir::MAX_BUFFERS {
-                        return Err(err("too many quote buffers"));
+                        return Err(resource_err("too many quote buffers"));
                     }
                     self.next_buffer += 1;
                     self.buffers.insert(format!("\0discard{slot}"), slot);
@@ -760,7 +765,7 @@ impl<'a> Compiler<'a> {
         let name = format!("\0result{}", self.locals.len());
         let i = self.locals.len();
         if i >= ir::MAX_LOCALS {
-            return Err(err("program exceeds MAX_LOCALS"));
+            return Err(resource_err("program exceeds MAX_LOCALS"));
         }
         self.names.push(name);
         self.locals.push(ty);
@@ -809,7 +814,7 @@ impl<'a> Compiler<'a> {
             ));
         }
         if self.json_names.len() >= 128 {
-            return Err(err("too many JSON view bindings"));
+            return Err(resource_err("too many JSON view bindings"));
         }
         self.json_names.insert(name.to_owned(), (root, path));
         Ok(())
@@ -825,7 +830,7 @@ impl<'a> Compiler<'a> {
     #[cfg(feature = "tool-json")]
     fn equality_literal(&self, c: &ast::ExprConstant, literal: &str) -> Result<()> {
         if literal.len() > 4096 {
-            return Err(err("equality literal exceeds 4096 UTF-8 bytes"));
+            return Err(resource_err("equality literal exceeds 4096 UTF-8 bytes"));
         }
         // RustPython 0.4 replaces surrogate escapes with U+FFFD. Only inspect
         // raw tokens when that scalar occurs, preserving genuine U+FFFD, raw
@@ -904,7 +909,7 @@ impl<'a> Compiler<'a> {
                     unreachable!()
                 };
                 if s.len() > 4096 {
-                    return Err(err("string literal exceeds 4096 bytes"));
+                    return Err(resource_err("string literal exceeds 4096 bytes"));
                 }
                 parts.push(S::Literal(std::sync::Arc::from(s.as_str())));
             }
@@ -986,7 +991,7 @@ impl<'a> Compiler<'a> {
             }
         }
         if parts.len() > 32 {
-            return Err(err("string expression exceeds 32 parts"));
+            return Err(resource_err("string expression exceeds 32 parts"));
         }
         Ok(())
     }
@@ -1042,7 +1047,7 @@ impl<'a> Compiler<'a> {
             } else if let ast::Expr::Constant(v) = value {
                 if let ast::Constant::Str(s) = &v.value {
                     if s.len() > 4096 {
-                        return Err(err("string Tool literal exceeds 4096 bytes"));
+                        return Err(resource_err("string Tool literal exceeds 4096 bytes"));
                     }
                     crate::tool::StringSource::Literal(std::sync::Arc::from(s.as_str()))
                 } else {
@@ -1121,7 +1126,7 @@ impl<'a> Compiler<'a> {
         let json = !matches!(result, crate::tool::ResultSchema::I64);
         let target = if json {
             if self.json.roots >= 32 {
-                return Err(err("too many JSON owners"));
+                return Err(resource_err("too many JSON owners"));
             }
             let root = self.json.roots;
             self.bind_json(name, root, Vec::new())?;
@@ -1498,7 +1503,7 @@ impl<'a> Compiler<'a> {
                         return Err(err("contains needle must be a string literal"));
                     };
                     if needle.len() > 256 {
-                        return Err(err("contains needle exceeds 256 UTF-8 bytes"));
+                        return Err(resource_err("contains needle exceeds 256 UTF-8 bytes"));
                     }
                     let (root, path) = self.json_path(&c.comparators[0])?.ok_or_else(|| {
                         err("contains haystack must be a declared JSON string leaf")

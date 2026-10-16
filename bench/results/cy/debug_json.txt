@@ -1,0 +1,24 @@
+    Finished `release` profile [optimized + debuginfo] target(s) in 0.06s
+     Running tests/cy_routing.rs (target/release/deps/cy_routing-fe40a4996045a3ee)
+
+running 5 tests
+test malformed_type_schema_and_preparation_limits_are_rejected_not_routed ... ok
+test json_preparation_limits_are_resource_errors_on_both_backends ... ok
+test cancellation_after_submission_keeps_effect_once_and_never_routes ... ok
+test fresh_source_success_and_whole_script_admission_before_any_effect ... ok
+test runtime_errors_keep_partial_stdout_and_never_replay_or_fallback ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/string_equality.rs (target/release/deps/string_equality-786052de63aec3cc)
+
+running 6 tests
+test bounded_admission_and_remaining_cv_gaps ... ok
+test exact_scan_decode_retained_and_token_budgets ... ok
+test original_cv_scripts_and_branches_both_backends ... ok
+test error_order_short_circuit_and_no_later_effect ... ok
+test owner_across_wait_last_use_cancellation_and_detached_argument ... ok
+test unicode_predicates_literals_on_either_side_and_aliases ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

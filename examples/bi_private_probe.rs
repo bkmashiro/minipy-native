@@ -15,6 +15,7 @@ fn main() {
                 AdmissionKind::Type => "type",
                 AdmissionKind::Schema => "schema",
                 AdmissionKind::Backend => "backend",
+                AdmissionKind::Resource => "bound",
                 AdmissionKind::Unsupported => {
                     if e.reason.contains("unsupported builtin 'sum'") {
                         "builtin_sum"
