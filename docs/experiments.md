@@ -1,5 +1,29 @@
 # Experiments
 
+## DE: bounded missing-key parser proof (2026-10-16)
+
+Fixed reviewed DB `0b38696`; no production source/API/dependency changes.
+One dependency-level Rust probe establishes separate required-parent/final-key
+classification, safe checked receiver ranges excluding outside suffixes, and
+explicit UTF-8 plus serde_json IgnoredAny structural validation without a DOM.
+Retained counterexamples: sonic NotFound accepts `{garbage}` and a missing-key
+object with invalid UTF-8; IgnoredAny alone also accepts skipped invalid UTF-8.
+Surrogate escapes in unvisited values are structural syntax, not String-domain
+decoding. Existing present/required lazy behavior is not tightened.
+
+Actual macOS arm64 offline/locked release: 6 new parser tests and 15 existing
+Tool/JSON tests pass (the latter execute native and tape). Stable fmt and diff
+checks pass. Initial probe-only byte-array/slice compile errors were corrected;
+no behavioral assertions were relaxed. Existing mounted external target, shared
+fcntl build lock, one job and Rust 1.96.0 only. No benchmark, Linux execution,
+CPython oracle, new target/worktree or source-language get implementation.
+
+Feasible at this bounded parser gate, with extra missing-path scans and transient
+parser scratch, not a single-pass/allocation-free or performance result. Policy
+and public StringSource changes still require controller approval. Exact source
+identities, commands, raw summaries, limitations and next gate:
+[`de-missing-parser.md`](de-missing-parser.md). Submitted for same-card review.
+
 ## DB: statically bound JSON string prefix (2026-10-16)
 
 From DA reviewed main `d46ff94`, add only declared string leaf/alias
