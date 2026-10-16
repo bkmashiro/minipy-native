@@ -241,6 +241,10 @@ pub enum ToolArguments {
 #[derive(Clone, Debug)]
 pub enum StringSource {
     Literal(Arc<str>),
+    /// Print-only current line. Bound by the frontend to the active cursor.
+    Line {
+        root: usize,
+    },
     Json {
         slot: usize,
         root: usize,
@@ -266,7 +270,8 @@ pub enum StringSource {
 impl StringSource {
     pub(crate) fn roots(&self) -> u32 {
         match self {
-            Self::Json { root, .. }
+            Self::Line { root }
+            | Self::Json { root, .. }
             | Self::JsonGetLiteral { root, .. }
             | Self::JsonInteger { root, .. } => 1 << root,
             Self::Joined(parts) => parts.iter().fold(0, |mask, p| mask | p.roots()),

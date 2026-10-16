@@ -1,0 +1,1362 @@
+{
+  "python_splitlines": [
+    {
+      "text": "",
+      "lines": []
+    },
+    {
+      "text": "plain",
+      "lines": [
+        "plain"
+      ]
+    },
+    {
+      "text": "café😀",
+      "lines": [
+        "café😀"
+      ]
+    },
+    {
+      "text": " ",
+      "lines": [
+        " "
+      ]
+    },
+    {
+      "text": "\u001f",
+      "lines": [
+        "\u001f"
+      ]
+    },
+    {
+      "text": "\n",
+      "lines": [
+        ""
+      ]
+    },
+    {
+      "text": "a\n",
+      "lines": [
+        "a"
+      ]
+    },
+    {
+      "text": "\nb",
+      "lines": [
+        "",
+        "b"
+      ]
+    },
+    {
+      "text": "a\nb",
+      "lines": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "text": "😀\né",
+      "lines": [
+        "😀",
+        "é"
+      ]
+    },
+    {
+      "text": "\r",
+      "lines": [
+        ""
+      ]
+    },
+    {
+      "text": "a\r",
+      "lines": [
+        "a"
+      ]
+    },
+    {
+      "text": "\rb",
+      "lines": [
+        "",
+        "b"
+      ]
+    },
+    {
+      "text": "a\rb",
+      "lines": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "text": "😀\ré",
+      "lines": [
+        "😀",
+        "é"
+      ]
+    },
+    {
+      "text": "\r\n",
+      "lines": [
+        ""
+      ]
+    },
+    {
+      "text": "a\r\n",
+      "lines": [
+        "a"
+      ]
+    },
+    {
+      "text": "\r\nb",
+      "lines": [
+        "",
+        "b"
+      ]
+    },
+    {
+      "text": "a\r\nb",
+      "lines": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "text": "😀\r\né",
+      "lines": [
+        "😀",
+        "é"
+      ]
+    },
+    {
+      "text": "\u000b",
+      "lines": [
+        ""
+      ]
+    },
+    {
+      "text": "a\u000b",
+      "lines": [
+        "a"
+      ]
+    },
+    {
+      "text": "\u000bb",
+      "lines": [
+        "",
+        "b"
+      ]
+    },
+    {
+      "text": "a\u000bb",
+      "lines": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "text": "😀\u000bé",
+      "lines": [
+        "😀",
+        "é"
+      ]
+    },
+    {
+      "text": "\f",
+      "lines": [
+        ""
+      ]
+    },
+    {
+      "text": "a\f",
+      "lines": [
+        "a"
+      ]
+    },
+    {
+      "text": "\fb",
+      "lines": [
+        "",
+        "b"
+      ]
+    },
+    {
+      "text": "a\fb",
+      "lines": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "text": "😀\fé",
+      "lines": [
+        "😀",
+        "é"
+      ]
+    },
+    {
+      "text": "\u001c",
+      "lines": [
+        ""
+      ]
+    },
+    {
+      "text": "a\u001c",
+      "lines": [
+        "a"
+      ]
+    },
+    {
+      "text": "\u001cb",
+      "lines": [
+        "",
+        "b"
+      ]
+    },
+    {
+      "text": "a\u001cb",
+      "lines": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "text": "😀\u001cé",
+      "lines": [
+        "😀",
+        "é"
+      ]
+    },
+    {
+      "text": "\u001d",
+      "lines": [
+        ""
+      ]
+    },
+    {
+      "text": "a\u001d",
+      "lines": [
+        "a"
+      ]
+    },
+    {
+      "text": "\u001db",
+      "lines": [
+        "",
+        "b"
+      ]
+    },
+    {
+      "text": "a\u001db",
+      "lines": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "text": "😀\u001dé",
+      "lines": [
+        "😀",
+        "é"
+      ]
+    },
+    {
+      "text": "\u001e",
+      "lines": [
+        ""
+      ]
+    },
+    {
+      "text": "a\u001e",
+      "lines": [
+        "a"
+      ]
+    },
+    {
+      "text": "\u001eb",
+      "lines": [
+        "",
+        "b"
+      ]
+    },
+    {
+      "text": "a\u001eb",
+      "lines": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "text": "😀\u001eé",
+      "lines": [
+        "😀",
+        "é"
+      ]
+    },
+    {
+      "text": "",
+      "lines": [
+        ""
+      ]
+    },
+    {
+      "text": "a",
+      "lines": [
+        "a"
+      ]
+    },
+    {
+      "text": "b",
+      "lines": [
+        "",
+        "b"
+      ]
+    },
+    {
+      "text": "ab",
+      "lines": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "text": "😀é",
+      "lines": [
+        "😀",
+        "é"
+      ]
+    },
+    {
+      "text": " ",
+      "lines": [
+        ""
+      ]
+    },
+    {
+      "text": "a ",
+      "lines": [
+        "a"
+      ]
+    },
+    {
+      "text": " b",
+      "lines": [
+        "",
+        "b"
+      ]
+    },
+    {
+      "text": "a b",
+      "lines": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "text": "😀 é",
+      "lines": [
+        "😀",
+        "é"
+      ]
+    },
+    {
+      "text": " ",
+      "lines": [
+        ""
+      ]
+    },
+    {
+      "text": "a ",
+      "lines": [
+        "a"
+      ]
+    },
+    {
+      "text": " b",
+      "lines": [
+        "",
+        "b"
+      ]
+    },
+    {
+      "text": "a b",
+      "lines": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "text": "😀 é",
+      "lines": [
+        "😀",
+        "é"
+      ]
+    },
+    {
+      "text": "a\n\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\n\rWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\n\r\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\n\u000bWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\n\fWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\n\u001cWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\n\u001dWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\n\u001eWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\n WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\n WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\nWARN:x",
+      "lines": [
+        "a",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\rWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\r\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\u000bWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\fWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\u001cWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\u001dWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\u001eWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\rWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\n\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\n\rWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\n\r\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\n\u000bWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\n\fWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\n\u001cWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\n\u001dWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\n\u001eWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\n WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\n WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u000b\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u000b\rWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u000b\r\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u000b\u000bWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u000b\fWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u000b\u001cWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u000b\u001dWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u000b\u001eWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u000bWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u000b WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u000b WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\f\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\f\rWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\f\r\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\f\u000bWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\f\fWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\f\u001cWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\f\u001dWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\f\u001eWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\fWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\f WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\f WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001c\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001c\rWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001c\r\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001c\u000bWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001c\fWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001c\u001cWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001c\u001dWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001c\u001eWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001cWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001c WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001c WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001d\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001d\rWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001d\r\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001d\u000bWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001d\fWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001d\u001cWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001d\u001dWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001d\u001eWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001dWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001d WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001d WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001e\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001e\rWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001e\r\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001e\u000bWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001e\fWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001e\u001cWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001e\u001dWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001e\u001eWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001eWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001e WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001e WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\rWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\r\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u000bWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\fWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001cWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001dWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a\u001eWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "aWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \rWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \r\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \u000bWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \fWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \u001cWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \u001dWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \u001eWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a  WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a  WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \rWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \r\nWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \u000bWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \fWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \u001cWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \u001dWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a \u001eWARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a  WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    },
+    {
+      "text": "a  WARN:x",
+      "lines": [
+        "a",
+        "",
+        "WARN:x"
+      ]
+    }
+  ]
+}

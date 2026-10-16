@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "+1.96.0",
+    "test",
+    "--offline",
+    "--locked",
+    "--release",
+    "--features",
+    "tool-json,debug-runtime",
+    "--test",
+    "dr_cost",
+    "--",
+    "--ignored",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "returncode": 0,
+  "stdout": "\nrunning 1 test\ntest request_costs ... DRCOST {\"execute_alloc_calls\":1,\"execute_alloc_requested_bytes\":2,\"fresh_prepare_execute_unit_drop_ns\":1066458,\"future_bytes\":928,\"native\":false,\"native_code_bytes\":0,\"source\":\"scalar\",\"tape_prepared_bytes\":304}\nDRCOST {\"execute_alloc_calls\":2,\"execute_alloc_requested_bytes\":322,\"fresh_prepare_execute_unit_drop_ns\":1956458,\"future_bytes\":664,\"native\":true,\"native_code_bytes\":168,\"source\":\"scalar\",\"tape_prepared_bytes\":0}\nDRCOST {\"execute_alloc_calls\":14,\"execute_alloc_requested_bytes\":1048,\"fresh_prepare_execute_unit_drop_ns\":115666,\"future_bytes\":928,\"native\":false,\"native_code_bytes\":0,\"source\":\"json\",\"tape_prepared_bytes\":855}\nDRCOST {\"execute_alloc_calls\":15,\"execute_alloc_requested_bytes\":1368,\"fresh_prepare_execute_unit_drop_ns\":569916,\"future_bytes\":664,\"native\":true,\"native_code_bytes\":276,\"source\":\"json\",\"tape_prepared_bytes\":0}\nDRCOST {\"execute_alloc_calls\":13,\"execute_alloc_requested_bytes\":1306,\"fresh_prepare_execute_unit_drop_ns\":300750,\"future_bytes\":928,\"native\":false,\"native_code_bytes\":0,\"source\":\"array\",\"tape_prepared_bytes\":1458}\nDRCOST {\"execute_alloc_calls\":14,\"execute_alloc_requested_bytes\":1626,\"fresh_prepare_execute_unit_drop_ns\":664125,\"future_bytes\":664,\"native\":true,\"native_code_bytes\":648,\"source\":\"array\",\"tape_prepared_bytes\":0}\nDRCOST {\"execute_alloc_calls\":14,\"execute_alloc_requested_bytes\":1002,\"fresh_prepare_execute_unit_drop_ns\":82084,\"future_bytes\":928,\"native\":false,\"native_code_bytes\":0,\"source\":\"lines_count\",\"tape_prepared_bytes\":1568}\nDRCOST {\"execute_alloc_calls\":15,\"execute_alloc_requested_bytes\":1322,\"fresh_prepare_execute_unit_drop_ns\":458958,\"future_bytes\":664,\"native\":true,\"native_code_bytes\":660,\"source\":\"lines_count\",\"tape_prepared_bytes\":0}\nDRCOST {\"execute_alloc_calls\":15,\"execute_alloc_requested_bytes\":1024,\"fresh_prepare_execute_unit_drop_ns\":64541,\"future_bytes\":928,\"native\":false,\"native_code_bytes\":0,\"source\":\"lines_print\",\"tape_prepared_bytes\":1720}\nDRCOST {\"execute_alloc_calls\":16,\"execute_alloc_requested_bytes\":1344,\"fresh_prepare_execute_unit_drop_ns\":353625,\"future_bytes\":664,\"native\":true,\"native_code_bytes\":568,\"source\":\"lines_print\",\"tape_prepared_bytes\":0}\nok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n",
+  "stderr": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 9.38s\n     Running tests/dr_cost.rs (target/release/deps/dr_cost-4db7c78b04d4a66b)\n"
+}

@@ -200,6 +200,15 @@ impl CodeUnit {
         #[cfg(feature = "tool-json")]
         let arrays = program.json.array_paths;
         #[cfg(feature = "tool-json")]
+        let lines = has_lines(&program.statements);
+        #[cfg(feature = "tool-json")]
+        if lines {
+            builder.symbol(
+                "minipy_json_lines",
+                crate::json_view::native_lines as *const u8,
+            );
+        }
+        #[cfg(feature = "tool-json")]
         if arrays {
             builder.symbol(
                 "minipy_json_array",
@@ -313,6 +322,18 @@ impl CodeUnit {
         } else {
             None
         };
+        #[cfg(feature = "tool-json")]
+        let json_lines = if lines {
+            let mut sig = module.make_signature();
+            sig.params = vec![AbiParam::new(types::I64); 4];
+            sig.returns.push(AbiParam::new(types::I64));
+            let id = module
+                .declare_function("minipy_json_lines", Linkage::Import, &sig)
+                .map_err(error)?;
+            Some(module.declare_func_in_func(id, &mut ctx.func))
+        } else {
+            None
+        };
         #[cfg(feature = "compiler-profile")]
         crate::compiler_profile::update(|p| {
             p.setup_ns = crate::compiler_profile::elapsed(start);
@@ -368,6 +389,8 @@ impl CodeUnit {
                 json_release,
                 #[cfg(feature = "tool-json")]
                 json_array,
+                #[cfg(feature = "tool-json")]
+                json_lines,
                 #[cfg(feature = "tool-json")]
                 break_exit: None,
                 overflow,
@@ -493,6 +516,8 @@ struct Flow<'a, 'b> {
     #[cfg(feature = "tool-json")]
     json_array: Option<cranelift_codegen::ir::FuncRef>,
     #[cfg(feature = "tool-json")]
+    json_lines: Option<cranelift_codegen::ir::FuncRef>,
+    #[cfg(feature = "tool-json")]
     break_exit: Option<cranelift_codegen::ir::Block>,
     overflow: cranelift_codegen::ir::Block,
     budget: cranelift_codegen::ir::Block,
@@ -517,6 +542,14 @@ impl Live {
             json: self.json | other.json,
         }
     }
+}
+#[cfg(feature = "tool-json")]
+fn has_lines(ss: &[Stmt]) -> bool {
+    ss.iter().any(|s| match s {
+        Stmt::LineFor { .. } => true,
+        Stmt::If(_, yes, no) => has_lines(yes) || has_lines(no),
+        _ => false,
+    })
 }
 fn used(e: &Expr) -> u32 {
     match e {
@@ -560,7 +593,8 @@ fn json_used(e: &Expr) -> u32 {
         | Expr::JsonString { root, .. }
         | Expr::Contains { root, .. }
         | Expr::StringEq { root, .. }
-        | Expr::StartsWith { root, .. } => 1 << root,
+        | Expr::StartsWith { root, .. }
+        | Expr::LinePredicate { root, .. } => 1 << root,
         Expr::Binary(_, a, b) | Expr::Min(a, b) | Expr::Max(a, b) => json_used(a) | json_used(b),
         Expr::Not(e) | Expr::Abs(e) => json_used(e),
         _ => 0,
@@ -581,7 +615,7 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
         Stmt::If(_, _, _) => {}
         Stmt::Return(_) | Stmt::For(_, _) => {}
         #[cfg(feature = "tool-json")]
-        Stmt::JsonFor { .. } | Stmt::JsonBreak => {}
+        Stmt::JsonFor { .. } | Stmt::JsonBreak | Stmt::LineFor { .. } | Stmt::LineBreak => {}
         #[cfg(feature = "tool-json")]
         Stmt::PrintJsonString { .. } | Stmt::PrintString { .. } => {}
     }
@@ -631,7 +665,7 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
         }
         Stmt::For(i, body) => live = live_loop(*i, body, live),
         #[cfg(feature = "tool-json")]
-        Stmt::JsonFor { root, body, .. } => {
+        Stmt::JsonFor { root, body, .. } | Stmt::LineFor { root, body, .. } => {
             live.json |= 1 << root;
             loop {
                 let next = live.union(live_before(body, live));
@@ -642,7 +676,7 @@ fn live_statement(s: &Stmt, mut live: Live) -> Live {
             }
         }
         #[cfg(feature = "tool-json")]
-        Stmt::JsonBreak => {}
+        Stmt::JsonBreak | Stmt::LineBreak => {}
         #[cfg(feature = "tool-json")]
         Stmt::Tool {
             target,
@@ -681,6 +715,8 @@ impl Flow<'_, '_> {
                 .map(|read| (self.output, self.frame, read, self.output_error)),
             #[cfg(feature = "tool-json")]
             json_string: self.json_string,
+            #[cfg(feature = "tool-json")]
+            json_lines: self.json_lines,
         }
         .expr(expr)
     }
@@ -759,6 +795,8 @@ impl Flow<'_, '_> {
                             .map(|read| (self.output, self.frame, read, self.output_error)),
                         #[cfg(feature = "tool-json")]
                         json_string: self.json_string,
+                        #[cfg(feature = "tool-json")]
+                        json_lines: self.json_lines,
                     }
                     .predicate(e, y, n);
                     self.b.switch_to_block(y);
@@ -877,9 +915,15 @@ impl Flow<'_, '_> {
                     self.b.switch_to_block(next);
                 }
                 #[cfg(feature = "tool-json")]
-                Stmt::JsonFor { slot, root, body } => self.array_scan(*slot, *root, body, live),
+                Stmt::JsonFor { slot, root, body } => {
+                    self.cursor_scan(*slot, *root, body, live, false)
+                }
                 #[cfg(feature = "tool-json")]
-                Stmt::JsonBreak => {
+                Stmt::LineFor { slot, root, body } => {
+                    self.cursor_scan(*slot, *root, body, live, true)
+                }
+                #[cfg(feature = "tool-json")]
+                Stmt::JsonBreak | Stmt::LineBreak => {
                     self.b
                         .ins()
                         .jump(self.break_exit.expect("sealed array break"), &[]);
@@ -899,11 +943,15 @@ impl Flow<'_, '_> {
         false
     }
     #[cfg(feature = "tool-json")]
-    fn array_call(&mut self, slot: usize, action: i64) -> Value {
+    fn cursor_call(&mut self, slot: usize, action: i64, lines: bool) -> Value {
         let slot = self.b.ins().iconst(types::I64, slot as i64);
         let action = self.b.ins().iconst(types::I64, action);
         let call = self.b.ins().call(
-            self.json_array.expect("array helper"),
+            if lines {
+                self.json_lines.expect("line helper")
+            } else {
+                self.json_array.expect("array helper")
+            },
             &[self.output, self.frame, slot, action],
         );
         let status = self.b.inst_results(call)[0];
@@ -914,7 +962,14 @@ impl Flow<'_, '_> {
         status
     }
     #[cfg(feature = "tool-json")]
-    fn array_scan(&mut self, slot: usize, root: usize, body: &[Stmt], following: Live) {
+    fn cursor_scan(
+        &mut self,
+        slot: usize,
+        root: usize,
+        body: &[Stmt],
+        following: Live,
+        lines: bool,
+    ) {
         let mut live = following;
         live.json |= 1 << root;
         loop {
@@ -924,12 +979,12 @@ impl Flow<'_, '_> {
             }
             live = next;
         }
-        self.array_call(slot, 0);
+        self.cursor_call(slot, 0, lines);
         let (pc, header) = self.continuation();
         let finish = self.b.create_block();
         self.b.ins().jump(header, &[]);
         self.b.switch_to_block(header);
-        let status = self.array_call(slot, 1);
+        let status = self.cursor_call(slot, 1, lines);
         let done = self.b.ins().icmp_imm(IntCC::Equal, status, 0);
         let ready = self.b.create_block();
         self.b.ins().brif(done, finish, &[], ready, &[]);
@@ -947,7 +1002,7 @@ impl Flow<'_, '_> {
         }
         self.break_exit = None;
         self.b.switch_to_block(finish);
-        self.array_call(slot, 2);
+        self.cursor_call(slot, 2, lines);
     }
     fn scan(&mut self, buffer: usize, body: &[Stmt], following: Live) {
         let live = live_loop(buffer, body, following);
@@ -1028,8 +1083,26 @@ struct Emit<'a, 'b> {
     )>,
     #[cfg(feature = "tool-json")]
     json_string: Option<cranelift_codegen::ir::FuncRef>,
+    #[cfg(feature = "tool-json")]
+    json_lines: Option<cranelift_codegen::ir::FuncRef>,
 }
 impl Emit<'_, '_> {
+    #[cfg(feature = "tool-json")]
+    fn line_predicate(&mut self, literal: usize, prefix: bool) -> Value {
+        let (output, frame, _, error) = self.json.expect("bound JSON plan");
+        let literal = self.b.ins().iconst(types::I64, literal as i64);
+        let action = self.b.ins().iconst(types::I64, if prefix { 4 } else { 3 });
+        let call = self.b.ins().call(
+            self.json_lines.expect("line helper"),
+            &[output, frame, literal, action],
+        );
+        let value = self.b.inst_results(call)[0];
+        let failed = self.b.ins().icmp_imm(IntCC::SignedLessThan, value, 0);
+        let next = self.b.create_block();
+        self.b.ins().brif(failed, error, &[], next, &[]);
+        self.b.switch_to_block(next);
+        value
+    }
     // Predicate consumers need control flow, not a materialized bool join.
     // Recurse left-to-right; only the selected RHS may run (including errors).
     // Value consumers still use expr below, including bool assignment/print.
@@ -1158,6 +1231,10 @@ impl Emit<'_, '_> {
                     .ins()
                     .load(types::I64, MemFlags::trusted(), frame, 272)
             }
+            #[cfg(feature = "tool-json")]
+            Expr::LinePredicate {
+                literal, prefix, ..
+            } => self.line_predicate(*literal, *prefix),
             Expr::Field(f) => self.b.ins().load(
                 types::I64,
                 MemFlags::trusted(),

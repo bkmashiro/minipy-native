@@ -69,6 +69,13 @@ pub enum Expr {
         root: usize,
         literal: usize,
     },
+    /// Iteration-only borrowed line predicate, never a general string value.
+    #[cfg(feature = "tool-json")]
+    LinePredicate {
+        root: usize,
+        literal: usize,
+        prefix: bool,
+    },
     Field(Field),
     Binary(BinOp, Box<Expr>, Box<Expr>),
     Not(Box<Expr>),
@@ -86,6 +93,14 @@ pub enum Stmt {
     },
     #[cfg(feature = "tool-json")]
     JsonBreak,
+    #[cfg(feature = "tool-json")]
+    LineFor {
+        slot: usize,
+        root: usize,
+        body: Vec<Stmt>,
+    },
+    #[cfg(feature = "tool-json")]
+    LineBreak,
     Load(usize, Expr),
     Record(usize, Expr, Expr),
     #[cfg(feature = "tool-json")]

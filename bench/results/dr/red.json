@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "+1.96.0",
+    "test",
+    "--offline",
+    "--locked",
+    "--release",
+    "--features",
+    "tool-json",
+    "--test",
+    "line_scan",
+    "complete_count_and_filter_both_backends",
+    "--",
+    "--nocapture"
+  ],
+  "returncode": 101,
+  "stdout": "\nrunning 1 test\ntest complete_count_and_filter_both_backends ... FAILED\n\nfailures:\n\nfailures:\n    complete_count_and_filter_both_backends\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s\n\n",
+  "stderr": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 3.65s\n     Running tests/line_scan.rs (target/release/deps/line_scan-77092640648b6162)\n\nthread 'complete_count_and_filter_both_backends' (47852961) panicked at tests/line_scan.rs:34:118:\ncalled `Result::unwrap()` on an `Err` value: CompileError { kind: Unsupported, reason: \"for must iterate over a loaded quote buffer\", location: Some((4, 1)) }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nerror: test failed, to rerun pass `--test line_scan`\n"
+}

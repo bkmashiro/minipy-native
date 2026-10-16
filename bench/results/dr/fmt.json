@@ -1,0 +1,41 @@
+{
+  "command": [
+    "cargo",
+    "+1.96.0",
+    "fmt",
+    "--all"
+  ],
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "error: 'cargo-fmt' is not installed for the toolchain '1.96.0-aarch64-apple-darwin'.\nhelp: run `rustup component add --toolchain 1.96.0-aarch64-apple-darwin rustfmt` to install it\n",
+  "head": "bddcff08e957997ccc8b193b020d7eceb1acca1b",
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)\nbinary: rustc\ncommit-hash: ac68faa20c58cbccd01ee7208bf3b6e93a7d7f96\ncommit-date: 2026-05-25\nhost: aarch64-apple-darwin\nrelease: 1.96.0\nLLVM version: 22.1.2\n",
+  "sources": {
+    "src/frontend.rs": "209109d32d21c6e904466fcd28beea4c8d56a2337d149cc4d02ea9814a01c165",
+    "src/runtime.rs": "81620eba1d4f8990ce6034b7b1cffc7a8f2aa4ab90685e0c0a63717a6ef401c5",
+    "src/ir.rs": "766ab87bfbb170d13a736f6566dabaf996f465145a1b2ec6eb4462519246f253",
+    "src/json_view.rs": "5c1e774969aa2f4c0d53a5c41c459733b98fe5a01f7ee27be684cbdef57a032e",
+    "src/error.rs": "71b911094d7d0cc11b0d1445abd15c059e2b9ae6a32f76e14cda16020afb142c",
+    "src/interpreter_profile.rs": "ca14500ff28ec156553ae1d2e0672381afdad261b2f309ea72455bd11fa7722c",
+    "src/lib.rs": "d4e08a6ac47ee51961389937efa9d630d94c77005e2a45882705ca946a7153b6",
+    "src/provider.rs": "642cc57c0434f445a82fdbc41a4ff6271a4609ece93ca045d7ed3569624312da",
+    "src/fixture_reference.rs": "d3c67f1003a5816832fbd15c6d377edbb4d422c6db9be1b3cab7c40ae58aff53",
+    "src/http_provider.rs": "fde2d86e841e245c4c8300771f68304819589692741743e6449ae695a5208f1e",
+    "src/tool.rs": "a5aa444b5f5b161be181ccc2832812576ea65d7e67b4d323711fa3101a55d146",
+    "src/codegen.rs": "38b12934854817a0cf6189ec52dba5ba6f7e570dae7220d9a9e1e2e1e187853c",
+    "src/buffer.rs": "728e3dc082ed1f8bed96864f608c1ddb22f7f6b9016531dba0e5deff7d9d2867",
+    "src/wasm.rs": "d29e071173a706dd80a506557075af0fe3d6a26b7d2ed4be261658123edfb623",
+    "src/interpreter.rs": "9041a1a35637ee36466e66b41c9d1717d50102ed3b2b84e091b7c6e9e58b0655",
+    "src/compiler_profile.rs": "7fdb8442d6d37d630fcf9c679c2abb1da0c49ab52ffc6b2741cd05ff46fcaefb",
+    "src/interpreter/tape.rs": "3bebe173deb7b4207481f74b6c3ffacbe90b2b4bc6c2a8dd79cd514389709332",
+    "src/interpreter/liveness_tests.rs": "fc1a0a3a22aa67350e3ac97a2652ee502d59aad1a85f7c4f0c92d8a2527e6282",
+    "src/interpreter/line_tests.rs": "efac7b7501445a1db9d492281a892b6afc500068bd5789b053b3b312b2f4f344",
+    "src/interpreter/debug.rs": "fd6a458256c51a7a0d27bc9725c97a9330b7368247dc3031d96390f622b78fd0",
+    "src/frontend/schema_probe.rs": "63aa58fae1ae8175b0fba0cf55087c8bfed263e510aab7b3cb9d10895bf747cb",
+    "src/bin/minipy.rs": "14c157179b8156816de8b6bd2736407af8998059b5f1940b79073528f154a76f",
+    "tests/line_scan.rs": "4349da0d661d54dd932651cba4e303d5c5d5b6461d306a30856c879658fa16e3",
+    "tests/dr_cost.rs": "2dea58edc74cb556be07b0c5e8a03cc8f70151070e60226150f85022c7da21bc",
+    "Cargo.toml": "1629d1686cb94656593372d1d02b0d9401d6f6d25bdeba2e9b48075a111b9426",
+    "Cargo.lock": "15a236e43daf854bedbd6a83a6a667d1e7a173e9100008be03d82efbc3efe97e"
+  }
+}

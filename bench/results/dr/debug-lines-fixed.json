@@ -1,0 +1,19 @@
+{
+  "command": [
+    "cargo",
+    "+1.96.0",
+    "test",
+    "--offline",
+    "--locked",
+    "--release",
+    "--features",
+    "tool-json,debug-runtime",
+    "--lib",
+    "interpreter::line_tests",
+    "--",
+    "--nocapture"
+  ],
+  "returncode": 0,
+  "stdout": "\nrunning 1 test\nDR layout Op=48 tape_State=312 json_State=144 Frame=320 Output=72 Stmt=80 Expr=32 StringSource=40 Unit=112 prepared=2573\ntest interpreter::line_tests::debug_lines_break_and_sequential_array ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 38 filtered out; finished in 0.00s\n\n",
+  "stderr": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 6.32s\n     Running unittests src/lib.rs (target/release/deps/minipy_native-2b46c0020db8d1ef)\n"
+}

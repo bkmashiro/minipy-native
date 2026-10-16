@@ -1,0 +1,19 @@
+{
+  "command": [
+    "cargo",
+    "+1.96.0",
+    "test",
+    "--offline",
+    "--locked",
+    "--release",
+    "--features",
+    "tool-json,debug-runtime",
+    "--lib",
+    "interpreter::line_tests",
+    "--",
+    "--nocapture"
+  ],
+  "returncode": 101,
+  "stdout": "\nrunning 1 test\ntest interpreter::line_tests::debug_lines_break_and_sequential_array ... FAILED\n\nfailures:\n\nfailures:\n    interpreter::line_tests::debug_lines_break_and_sequential_array\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 38 filtered out; finished in 0.00s\n\n",
+  "stderr": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 6.18s\n     Running unittests src/lib.rs (target/release/deps/minipy_native-2b46c0020db8d1ef)\n\nthread 'interpreter::line_tests::debug_lines_break_and_sequential_array' (47865984) panicked at src/interpreter/line_tests.rs:11:83:\ncalled `Result::unwrap()` on an `Err` value: CompileError { kind: Schema, reason: \"Tool IDs/names must be unique and non-reserved\", location: None }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nerror: test failed, to rerun pass `--lib`\n"
+}

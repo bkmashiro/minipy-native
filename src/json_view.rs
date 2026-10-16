@@ -12,7 +12,34 @@ pub(crate) struct State {
     max: usize,
     external: usize,
     scan_left: usize,
-    array: Option<Box<ArrayCursor>>,
+    cursor: Option<Cursor>,
+}
+// Keep array's existing allocation/budget boundary. The inline discriminant
+// costs one word, rather than growing every existing array allocation.
+enum Cursor {
+    Array(Box<ArrayCursor>),
+    Lines(Box<LineCursor>),
+}
+impl Cursor {
+    fn root(&self) -> usize {
+        match self {
+            Self::Array(a) => a.root,
+            Self::Lines(l) => l.root,
+        }
+    }
+    fn heap_bytes(&self) -> usize {
+        match self {
+            Self::Array(_) => std::mem::size_of::<ArrayCursor>(),
+            Self::Lines(_) => std::mem::size_of::<LineCursor>(),
+        }
+    }
+}
+struct LineCursor {
+    slot: usize,
+    root: usize,
+    current: Range<usize>,
+    position: usize,
+    chunk_used: usize,
 }
 struct ArrayCursor {
     slot: usize,
@@ -50,7 +77,7 @@ impl State {
             max,
             external: 0,
             scan_left: scan_bytes,
-            array: None,
+            cursor: None,
             plan,
         }
     }
@@ -59,10 +86,7 @@ impl State {
     }
     pub(crate) fn held(&self) -> usize {
         self.roots.iter().flatten().map(Bytes::len).sum::<usize>()
-            + self
-                .array
-                .as_ref()
-                .map_or(0, |_| std::mem::size_of::<ArrayCursor>())
+            + self.cursor.as_ref().map_or(0, Cursor::heap_bytes)
             + self.strings.as_ref().map_or(0, |d| {
                 d.iter()
                     .map(|s| match s {
@@ -109,8 +133,8 @@ impl State {
         Ok(())
     }
     fn clear_root(&mut self, root: usize) {
-        if self.array.as_ref().is_some_and(|a| a.root == root) {
-            self.array = None;
+        if self.cursor.as_ref().is_some_and(|a| a.root() == root) {
+            self.cursor = None;
         }
         for (i, path) in self.plan.paths.iter().enumerate() {
             if path.root == root {
@@ -124,11 +148,11 @@ impl State {
     }
     pub(crate) fn release(&mut self, live: u32) {
         if self
-            .array
+            .cursor
             .as_ref()
-            .is_some_and(|a| live & (1 << a.root) == 0)
+            .is_some_and(|a| live & (1 << a.root()) == 0)
         {
-            self.array = None;
+            self.cursor = None;
         }
         for (root, bytes) in self.roots.iter_mut().enumerate() {
             if live & (1 << root) == 0 {
@@ -159,14 +183,14 @@ impl State {
         if range.len() > 64 * 1024 || self.available() < std::mem::size_of::<ArrayCursor>() {
             return Err(TaskError::Budget);
         }
-        self.array = Some(Box::new(ArrayCursor {
+        self.cursor = Some(Cursor::Array(Box::new(ArrayCursor {
             slot,
             root,
             position: range.start + 1,
             range,
             visited: 0,
             chunk_used: 0,
-        }));
+        })));
         Ok(())
     }
     fn clear_element(&mut self, slot: usize) {
@@ -181,7 +205,10 @@ impl State {
         }
     }
     pub(crate) fn array_finish(&mut self) {
-        if let Some(a) = self.array.take() {
+        if let Some(cursor) = self.cursor.take() {
+            let Cursor::Array(a) = cursor else {
+                unreachable!("sealed array cursor")
+            };
             self.clear_element(a.slot);
             self.ranges[a.slot] = Some(a.range);
         }
@@ -191,7 +218,9 @@ impl State {
         fuel: &mut u64,
         chunk: usize,
     ) -> Result<ArrayStep, TaskError> {
-        let a = self.array.as_mut().expect("sealed active array cursor");
+        let Cursor::Array(a) = self.cursor.as_mut().expect("sealed active cursor") else {
+            unreachable!("sealed array cursor")
+        };
         let owner = self.roots[a.root]
             .as_ref()
             .ok_or(TaskError::Json("released owner"))?;
@@ -250,6 +279,111 @@ impl State {
         self.clear_element(slot);
         self.ranges[slot] = Some(pos..end);
         Ok(ArrayStep::Row)
+    }
+    /// Validate the entire selected string before the first body, once. Only
+    /// integer offsets survive turns; the owner/cache remains pinned by liveness.
+    pub(crate) fn line_start(&mut self, slot: usize) -> Result<(), TaskError> {
+        self.string(slot)?;
+        if self.available() < std::mem::size_of::<LineCursor>() {
+            return Err(TaskError::Budget);
+        }
+        self.cursor = Some(Cursor::Lines(Box::new(LineCursor {
+            slot,
+            root: self.plan.paths[slot].root,
+            current: 0..0,
+            position: 0,
+            chunk_used: 0,
+        })));
+        Ok(())
+    }
+    pub(crate) fn line_finish(&mut self) {
+        self.cursor = None;
+    }
+    pub(crate) fn line_step(
+        &mut self,
+        fuel: &mut u64,
+        chunk: usize,
+    ) -> Result<ArrayStep, TaskError> {
+        let Cursor::Lines(line) = self.cursor.as_ref().expect("sealed active cursor") else {
+            unreachable!("sealed line cursor")
+        };
+        let text = self.prepared_string(line.slot);
+        if line.position == text.len() {
+            return Ok(ArrayStep::Done);
+        }
+        if line.chunk_used == chunk {
+            let Cursor::Lines(line) = self.cursor.as_mut().unwrap() else {
+                unreachable!()
+            };
+            line.chunk_used = 0;
+            return Ok(ArrayStep::Yield);
+        }
+        if *fuel == 0 {
+            return Err(TaskError::Budget);
+        }
+        let start = line.position;
+        let mut end = start;
+        let mut pos = start;
+        let mut left = self.scan_left;
+        for (offset, ch) in text[start..].char_indices() {
+            left = left.checked_sub(ch.len_utf8()).ok_or(TaskError::Budget)?;
+            pos = start + offset + ch.len_utf8();
+            if matches!(
+                ch,
+                '\n' | '\r'
+                    | '\u{b}'
+                    | '\u{c}'
+                    | '\u{1c}'
+                    | '\u{1d}'
+                    | '\u{1e}'
+                    | '\u{85}'
+                    | '\u{2028}'
+                    | '\u{2029}'
+            ) {
+                end = start + offset;
+                if ch == '\r' && text.as_bytes().get(pos) == Some(&b'\n') {
+                    left = left.checked_sub(1).ok_or(TaskError::Budget)?;
+                    pos += 1;
+                }
+                break;
+            }
+            end = pos;
+        }
+        // Failed scans are terminal, never commit a row or run its body.
+        self.scan_left = left;
+        let Cursor::Lines(line) = self.cursor.as_mut().unwrap() else {
+            unreachable!()
+        };
+        line.position = pos;
+        line.current = start..end;
+        line.chunk_used += 1;
+        *fuel -= 1;
+        Ok(ArrayStep::Row)
+    }
+    pub(crate) fn prepared_line(&self) -> &str {
+        let Cursor::Lines(line) = self.cursor.as_ref().expect("sealed active cursor") else {
+            unreachable!("sealed line cursor")
+        };
+        &self.prepared_string(line.slot)[line.current.clone()]
+    }
+    pub(crate) fn validate_line_sink(&mut self) -> Result<usize, TaskError> {
+        let len = self.prepared_line().len();
+        self.charge(len)?;
+        Ok(len)
+    }
+    pub(crate) fn line_predicate(
+        &mut self,
+        literal: usize,
+        prefix: bool,
+    ) -> Result<i64, TaskError> {
+        self.charge(self.prepared_line().len() + self.plan.needles[literal].len())?;
+        let text = self.prepared_line();
+        let literal = self.plan.needles[literal].as_str();
+        Ok(i64::from(if prefix {
+            text.starts_with(literal)
+        } else {
+            text.contains(literal)
+        }))
     }
     pub(crate) fn view(&mut self, slot: usize) -> Result<i64, TaskError> {
         self.locate(slot).map(|_| 0)
@@ -545,6 +679,42 @@ pub(crate) unsafe extern "C" fn native_read(
     }
 }
 /// Generated CFG controls the loop and body. This AOT helper only manages the
+/// line cursor and predicates, never filtering or reducing the user's data.
+#[cfg(not(target_arch = "wasm32"))]
+pub(crate) unsafe extern "C" fn native_lines(
+    output: *mut crate::runtime::Output,
+    frame: *mut crate::codegen::Frame,
+    operand: i64,
+    action: i64,
+) -> i64 {
+    let output = unsafe { &mut *output };
+    let frame = unsafe { &mut *frame };
+    let json = output.json.as_mut().expect("sealed line plan");
+    let result = match action {
+        0 => json.line_start(operand as usize).map(|_| 0),
+        1 => json
+            .line_step(&mut frame.remaining, frame.chunk as usize)
+            .map(|s| match s {
+                ArrayStep::Done => 0,
+                ArrayStep::Row => 1,
+                ArrayStep::Yield => 2,
+            }),
+        2 => {
+            json.line_finish();
+            Ok(0)
+        }
+        3 | 4 => json.line_predicate(operand as usize, action == 4),
+        _ => unreachable!("sealed line action"),
+    };
+    match result {
+        Ok(v) => v,
+        Err(e) => {
+            output.error = Some(e);
+            -1
+        }
+    }
+}
+/// Generated CFG controls the loop and body. This AOT helper only manages the
 /// cursor, element parsing and the existing task's fuel. Status: -1 error,
 /// 0 done, 1 row ready, 2 yield before the next element.
 #[cfg(not(target_arch = "wasm32"))]
@@ -804,7 +974,7 @@ mod tests {
         let mut state = State::new(Rc::new(plan), 1024, 1024);
         let data = Bytes::from_static(br#"{"a":[{"x":1},{"x":2}]}"#);
         state.install(0, data.clone(), 1024).unwrap();
-        assert!(state.array.is_none());
+        assert!(state.cursor.is_none());
         state.set_external(1024 - data.len() - 55);
         assert!(matches!(state.array_start(slot), Err(TaskError::Budget)));
         state.set_external(1024 - data.len() - 56);
@@ -821,25 +991,25 @@ mod tests {
             Ok(super::ArrayStep::Yield)
         ));
         state.release(1);
-        assert!(state.array.is_some());
+        assert!(state.cursor.is_some());
         assert!(matches!(
             state.array_step(&mut fuel, 1),
             Ok(super::ArrayStep::Row)
         ));
         assert_eq!(state.integer(field), Ok(2));
         state.array_finish();
-        assert!(state.array.is_none());
+        assert!(state.cursor.is_none());
         assert_eq!(state.held(), data.len());
         state.set_external(0);
         state.array_start(slot).unwrap();
         state
             .install(0, Bytes::from_static(br#"{"a":[]}"#), 1024)
             .unwrap();
-        assert!(state.array.is_none());
+        assert!(state.cursor.is_none());
         assert!(state.ranges.iter().all(Option::is_none));
         state.array_start(slot).unwrap();
         state.release(0);
-        assert!(state.array.is_none());
+        assert!(state.cursor.is_none());
         assert_eq!(state.held(), 0);
     }
 
@@ -848,12 +1018,52 @@ mod tests {
         // The pre-string state was Rc<Plan> plus three Vecs (80 bytes).
         // Non-string JSON tasks do not allocate a decoded vector, but retain
         // the additional inline Option<Vec> and budget counters.
-        // Array support adds one optional pointer to all JSON task states.
-        // The 56-byte cursor is allocated only when entering an array loop.
-        assert_eq!(std::mem::size_of::<super::State>(), 136);
+        // Tagged boxed cursors preserve array's exact 56-byte budget boundary.
+        // The inline tag costs 8 bytes versus the pre-line 136-byte State.
+        assert_eq!(std::mem::size_of::<super::State>(), 144);
         assert_eq!(std::mem::size_of::<super::ArrayCursor>(), 56);
+        assert_eq!(std::mem::size_of::<super::LineCursor>(), 48);
         // Ordinary escaped JSON still caches an inline String. A Tool argument
         // moves that string to an Arc only when it must outlive cancellation.
         assert_eq!(std::mem::size_of::<super::StringCache>(), 24);
+    }
+
+    #[test]
+    fn lines_borrow_cache_and_charge_exact_cursor_headroom() {
+        for raw in [r#"{"s":"é"}"#.as_bytes(), r#"{"s":"é\r\nlast"}"#.as_bytes()] {
+            let mut plan = Plan {
+                roots: 1,
+                string_paths: true,
+                ..Plan::default()
+            };
+            let slot = plan.path(0, &["s".into()]).unwrap();
+            let mut state = State::new(Rc::new(plan), 1024, 1024);
+            state.install(0, Bytes::copy_from_slice(raw), 1024).unwrap();
+            state.validate_string(slot).unwrap();
+            let held = state.held();
+            let ptr = state.prepared_string(slot).as_ptr();
+            state.set_external(1024 - held - 47);
+            assert!(matches!(state.line_start(slot), Err(TaskError::Budget)));
+            state.set_external(1024 - held - 48);
+            state.line_start(slot).unwrap();
+            assert_eq!(state.held(), held + 48);
+            let mut fuel = 1;
+            assert!(matches!(
+                state.line_step(&mut fuel, 1),
+                Ok(super::ArrayStep::Row)
+            ));
+            assert_eq!(state.prepared_line(), "é");
+            assert_eq!(state.prepared_line().as_ptr(), ptr);
+            state.release(1);
+            assert_eq!(state.prepared_line().as_ptr(), ptr);
+            state.line_finish();
+            assert_eq!(state.held(), held);
+            // Finishing the cursor keeps a future-used decoded cache in place.
+            state.line_start(slot).unwrap();
+            assert_eq!(state.prepared_string(slot).as_ptr(), ptr);
+            state.release(0);
+            assert_eq!(state.held(), 0);
+            assert!(state.cursor.is_none());
+        }
     }
 }

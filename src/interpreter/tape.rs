@@ -173,6 +173,14 @@ pub(super) enum Op {
     ArrayStep(usize, usize),
     #[cfg(feature = "tool-json")]
     ArrayFinish,
+    #[cfg(feature = "tool-json")]
+    LineStart(usize, usize),
+    #[cfg(feature = "tool-json")]
+    LineStep(usize, usize),
+    #[cfg(feature = "tool-json")]
+    LineFinish,
+    #[cfg(feature = "tool-json")]
+    LinePredicate(Dest, usize, usize, bool),
     Return,
 }
 impl Op {
@@ -182,7 +190,10 @@ impl Op {
             #[cfg(feature = "tool-json")]
             Self::JsonRead(d, ..) => Some(*d),
             #[cfg(feature = "tool-json")]
-            Self::JsonString(d, ..) | Self::StringEq(d, ..) | Self::StartsWith(d, ..) => Some(*d),
+            Self::JsonString(d, ..)
+            | Self::StringEq(d, ..)
+            | Self::StartsWith(d, ..)
+            | Self::LinePredicate(d, ..) => Some(*d),
             Self::BufferLen(d, _)
             | Self::Abs(d, _)
             | Self::Min(d, _, _)
@@ -290,6 +301,14 @@ impl Lower<'_> {
                 root,
                 literal,
             } => self.ops.push(Op::StringEq(dest, slot, root, literal)),
+            #[cfg(feature = "tool-json")]
+            Expr::LinePredicate {
+                root,
+                literal,
+                prefix,
+            } => self
+                .ops
+                .push(Op::LinePredicate(dest, root, literal, prefix)),
             #[cfg(feature = "tool-json")]
             Expr::StartsWith {
                 slot,
@@ -447,7 +466,7 @@ impl Lower<'_> {
                     *self.ops[jump].target() = self.ops.len();
                 }
                 #[cfg(feature = "tool-json")]
-                Stmt::JsonBreak => {
+                Stmt::JsonBreak | Stmt::LineBreak => {
                     self.breaks.push(self.ops.len());
                     self.ops.push(Op::Jump(0));
                 }
@@ -464,6 +483,20 @@ impl Lower<'_> {
                         *self.ops[edge].target() = end;
                     }
                     self.ops.push(Op::ArrayFinish);
+                }
+                #[cfg(feature = "tool-json")]
+                Stmt::LineFor { slot, root, body } => {
+                    self.ops.push(Op::LineStart(slot, root));
+                    let header = self.ops.len();
+                    self.ops.push(Op::LineStep(root, 0));
+                    self.statements(body);
+                    self.ops.push(Op::Jump(header));
+                    let end = self.ops.len();
+                    self.ops[header] = Op::LineStep(root, end);
+                    for edge in self.breaks.drain(..) {
+                        *self.ops[edge].target() = end;
+                    }
+                    self.ops.push(Op::LineFinish);
                 }
                 Stmt::For(buffer, body) => {
                     self.ops.push(Op::Start);
@@ -582,8 +615,11 @@ pub(super) fn json_liveness(ops: &[Op], plan: &crate::tool::Plan) -> Vec<u32> {
                     backward |= *end <= pc;
                     next | live[*end]
                 }
-                Op::ArrayStart(_, root) => next | (1 << root),
-                Op::ArrayStep(root, end) => next | live[*end] | (1 << root),
+                Op::ArrayStart(_, root) | Op::LineStart(_, root) => next | (1 << root),
+                Op::ArrayStep(root, end) | Op::LineStep(root, end) => {
+                    next | live[*end] | (1 << root)
+                }
+                Op::LinePredicate(_, root, ..) => next | (1 << root),
                 Op::JsonRead(_, _, root, _) => next | (1 << root),
                 Op::JsonString(_, _, root, _)
                 | Op::StringEq(_, _, root, _)
@@ -691,6 +727,35 @@ pub(super) fn run<const STEP: bool>(
             }
             #[cfg(feature = "tool-json")]
             Op::ArrayFinish => output.json.as_mut().expect("array plan").array_finish(),
+            #[cfg(feature = "tool-json")]
+            Op::LineStart(slot, _) => output.json.as_mut().expect("line plan").line_start(*slot)?,
+            #[cfg(feature = "tool-json")]
+            Op::LineStep(_, end) => {
+                match output
+                    .json
+                    .as_mut()
+                    .expect("line plan")
+                    .line_step(&mut state.remaining, limits.chunk)?
+                {
+                    crate::json_view::ArrayStep::Done => state.pc = *end,
+                    crate::json_view::ArrayStep::Row => {}
+                    crate::json_view::ArrayStep::Yield => {
+                        state.pc -= 1;
+                        return Ok(Boundary::Yield);
+                    }
+                }
+            }
+            #[cfg(feature = "tool-json")]
+            Op::LineFinish => output.json.as_mut().expect("line plan").line_finish(),
+            #[cfg(feature = "tool-json")]
+            Op::LinePredicate(d, _, literal, prefix) => {
+                let v = output
+                    .json
+                    .as_mut()
+                    .expect("line plan")
+                    .line_predicate(*literal, *prefix)?;
+                write(*d, v, state, temps);
+            }
             Op::BufferLen(d, i) => write(
                 *d,
                 owners[*i]

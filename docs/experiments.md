@@ -1,5 +1,22 @@
 # Experiments
 
+## DR: borrowed splitlines candidate, isolated branch (2026-10-16)
+
+Experimental shared binding and real native/tape lowering now execute complete
+line-count and filter/print scripts without Host reduction. CPython-compatible
+line boundaries, existing UTF-8 validation, scan/rows/chunk bounds, atomic stdout,
+break, cancellation and owner lifetimes are exercised. No separate 256-line cap.
+The new public IR/print-source enum variants are candidate-only; no existing
+public function signatures or array budget semantics change. The tagged boxed
+cursor preserves old 56-byte array metadata, costing 8 additional inline bytes
+in JSON State (136 to 144); new line metadata is 48 bytes. Op remains 48 bytes.
+[Contract, migration and commands](dr-lines.md). Private DP08 handwritten count
+and filter acceptance has eight correct backend/mode rows with frozen hashes
+unchanged; no model answers or Agent-success-rate update. Public synthetic checks
+and bounded cost smoke are in `bench/results/dr/`. This is an isolated experiment,
+not main integration, a performance campaign or a release. Independent review
+and same-card review approval remain pending.
+
 ## DM: bounded post-contract Code Mode retest (2026-10-16)
 
 After DL approval, froze a new private v3 experiment at `f158d73`, including

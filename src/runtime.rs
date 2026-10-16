@@ -329,6 +329,7 @@ impl Output {
     ) -> Result<crate::tool::StringValue, TaskError> {
         use crate::tool::{StringSource as S, StringValue as V};
         match source {
+            S::Line { .. } => unreachable!("frontend restricts line views to synchronous print"),
             S::Literal(s) => Ok(V::Literal(s.clone())),
             S::Json { slot, .. } => self.json.as_mut().expect("JSON plan").string_value(*slot),
             S::JsonGetLiteral { slot, default, .. } => {
@@ -394,6 +395,11 @@ impl Output {
             // Only scalars need temporary storage. Text stays in its current owner.
             let size = match part {
                 S::Literal(s) => s.len(),
+                S::Line { .. } => self
+                    .json
+                    .as_mut()
+                    .expect("line plan")
+                    .validate_line_sink()?,
                 S::Json { slot, .. } => {
                     let json = self.json.as_mut().expect("JSON plan");
                     json.validate_string(*slot)?;
@@ -447,6 +453,7 @@ impl Output {
         for (i, part) in parts.iter().enumerate() {
             let text = match part {
                 S::Literal(s) => s.as_ref(),
+                S::Line { .. } => self.json.as_ref().expect("line plan").prepared_line(),
                 S::Json { slot, .. } => self.json.as_ref().unwrap().prepared_string(*slot),
                 S::JsonGetLiteral { slot, default, .. } => {
                     if present & (1 << i) != 0 {

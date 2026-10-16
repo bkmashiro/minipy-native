@@ -231,6 +231,8 @@ struct Compiler<'a> {
     json_leaves: Vec<SchemaLeaves<'a>>,
     #[cfg(feature = "tool-json")]
     json_row: Option<(String, usize, Vec<String>)>,
+    #[cfg(feature = "tool-json")]
+    line: Option<(String, usize)>,
 }
 impl<'a> Compiler<'a> {
     fn new(inputs: &[(&str, Type)], source: &'a str) -> Result<Self> {
@@ -258,6 +260,8 @@ impl<'a> Compiler<'a> {
             json_leaves: Vec::new(),
             #[cfg(feature = "tool-json")]
             json_row: None,
+            #[cfg(feature = "tool-json")]
+            line: None,
         })
     }
     fn node(&mut self, depth: usize) -> Result<()> {
@@ -382,7 +386,7 @@ impl<'a> Compiler<'a> {
     }
     fn declare(&mut self, name: &str, ty: Type, allow_existing: bool) -> Result<usize> {
         #[cfg(feature = "tool-json")]
-        if self.json_names.contains_key(name) {
+        if self.json_names.contains_key(name) || self.line.as_ref().is_some_and(|l| l.0 == name) {
             return Err(err("JSON view names cannot be rebound"));
         }
         if [
@@ -608,6 +612,11 @@ impl<'a> Compiler<'a> {
                 Ok(())
             }
             #[cfg(feature = "tool-json")]
+            ast::Stmt::Break(_) if self.line.is_some() => {
+                out.push(Stmt::LineBreak);
+                Ok(())
+            }
+            #[cfg(feature = "tool-json")]
             ast::Stmt::Break(_) if self.json_row.is_some() => {
                 out.push(Stmt::JsonBreak);
                 Ok(())
@@ -618,6 +627,36 @@ impl<'a> Compiler<'a> {
                 }
                 if !f.orelse.is_empty() {
                     return Err(err("for-else is unsupported"));
+                }
+                #[cfg(feature = "tool-json")]
+                if let ast::Expr::Call(c) = f.iter.as_ref()
+                    && let ast::Expr::Attribute(method) = c.func.as_ref()
+                    && method.attr.as_str() == "splitlines"
+                {
+                    if !c.args.is_empty() || !c.keywords.is_empty() {
+                        return Err(err("splitlines accepts no arguments in this subset"));
+                    }
+                    if !self.is_json_string(&method.value)? {
+                        return Err(err("splitlines requires a declared JSON string leaf"));
+                    }
+                    let (root, path) = self.json_path(&method.value)?.expect("string leaf");
+                    let name = Self::target_name(&f.target)?;
+                    if self.names.contains(&name)
+                        || self.buffers.contains_key(&name)
+                        || self.json_names.contains_key(&name)
+                        || ["tools", "print", "len", "abs", "min", "max"].contains(&name.as_str())
+                    {
+                        return Err(err("line name conflicts with existing/reserved binding"));
+                    }
+                    let slot = self.json.path(root, &path)?;
+                    self.line = Some((name, root));
+                    let before = self.initialized;
+                    let body = self.compile_block(&f.body, depth + 1, true, true)?;
+                    self.initialized = before;
+                    self.line = None;
+                    self.json.string_paths = true;
+                    out.push(Stmt::LineFor { slot, root, body });
+                    return Ok(());
                 }
                 #[cfg(feature = "tool-json")]
                 if let Some((root, path)) = self.json_path(&f.iter)? {
@@ -751,7 +790,8 @@ impl<'a> Compiler<'a> {
                     }
                     #[cfg(feature = "tool-json")]
                     if !self.tools.is_empty()
-                        && (Self::string_expression(arg)
+                        && (self.line_receiver(arg).is_some()
+                            || Self::string_expression(arg)
                             || matches!(arg, ast::Expr::BinOp(b) if b.op == ast::Operator::Add && (self.is_json_string(&b.left)? || self.is_json_string(&b.right)?)))
                     {
                         let source = self.string_source(arg, true)?;
@@ -861,6 +901,7 @@ impl<'a> Compiler<'a> {
     #[cfg(feature = "tool-json")]
     fn bind_json(&mut self, name: &str, root: usize, path: Vec<String>) -> Result<()> {
         if self.names.iter().any(|n| n == name)
+            || self.line.as_ref().is_some_and(|l| l.0 == name)
             || self.buffers.contains_key(name)
             || self.rows.contains(name)
             || self.json_names.contains_key(name)
@@ -878,6 +919,16 @@ impl<'a> Compiler<'a> {
         }
         self.json_names.insert(name.to_owned(), (root, path));
         Ok(())
+    }
+    #[cfg(feature = "tool-json")]
+    fn line_receiver(&self, e: &ast::Expr) -> Option<usize> {
+        if let ast::Expr::Name(n) = e {
+            self.line
+                .as_ref()
+                .and_then(|(name, root)| (n.id.as_str() == name).then_some(*root))
+        } else {
+            None
+        }
     }
     #[cfg(feature = "tool-json")]
     fn is_json_string(&self, e: &ast::Expr) -> Result<bool> {
@@ -1025,6 +1076,11 @@ impl<'a> Compiler<'a> {
     ) -> Result<()> {
         use crate::tool::{JsonLeaf, StringSource as S};
         match e {
+            e if self.line_receiver(e).is_some() => {
+                parts.push(S::Line {
+                    root: self.line_receiver(e).unwrap(),
+                });
+            }
             e if Self::get_expression(e) => parts.push(self.get_string_source(e)?),
             ast::Expr::Constant(c) if matches!(c.value, ast::Constant::Str(_)) => {
                 let ast::Constant::Str(s) = &c.value else {
@@ -1474,6 +1530,18 @@ impl<'a> Compiler<'a> {
                         return Err(err("startswith prefix must be a string literal"));
                     };
                     self.predicate_literal(constant, literal, "startswith")?;
+                    if let Some(root) = self.line_receiver(&method.value) {
+                        let index = self.json.needles.len();
+                        self.json.needles.push(literal.clone());
+                        return Ok((
+                            Expr::LinePredicate {
+                                root,
+                                literal: index,
+                                prefix: true,
+                            },
+                            Type::Bool,
+                        ));
+                    }
                     if !self.is_json_string(&method.value)? {
                         return Err(err(
                             "startswith receiver must be a declared JSON string leaf",
@@ -1697,6 +1765,19 @@ impl<'a> Compiler<'a> {
                     let ast::Constant::Str(needle) = &literal.value else {
                         return Err(err("contains needle must be a string literal"));
                     };
+                    if let Some(root) = self.line_receiver(&c.comparators[0]) {
+                        self.predicate_literal(literal, needle, "line contains")?;
+                        let index = self.json.needles.len();
+                        self.json.needles.push(needle.clone());
+                        return Ok((
+                            Expr::LinePredicate {
+                                root,
+                                literal: index,
+                                prefix: false,
+                            },
+                            Type::Bool,
+                        ));
+                    }
                     if needle.len() > 256 {
                         return Err(resource_err("contains needle exceeds 256 UTF-8 bytes"));
                     }

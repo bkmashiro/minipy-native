@@ -1,0 +1,19 @@
+{
+  "command": [
+    "cargo",
+    "+1.96.0",
+    "test",
+    "--offline",
+    "--locked",
+    "--release",
+    "--features",
+    "tool-json",
+    "--test",
+    "line_scan",
+    "--",
+    "--nocapture"
+  ],
+  "returncode": 0,
+  "stdout": "\nrunning 4 tests\ntest reject_escaping_and_dynamic_lines_whole_source ... ok\ntest more_than_256_lines_and_exact_fuel ... ok\ntest entry_validation_and_atomic_output_errors ... ok\ntest complete_count_and_filter_both_backends ... ok\n\ntest result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n",
+  "stderr": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 10.15s\n     Running tests/line_scan.rs (target/release/deps/line_scan-77092640648b6162)\n"
+}

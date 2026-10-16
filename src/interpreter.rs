@@ -18,6 +18,13 @@ use std::sync::Arc;
 use tokio::sync::oneshot;
 #[cfg(feature = "debug-runtime")]
 pub mod debug;
+#[cfg(all(
+    test,
+    feature = "tool-json",
+    feature = "debug-runtime",
+    not(target_arch = "wasm32")
+))]
+mod line_tests;
 #[cfg(test)]
 mod liveness_tests;
 mod tape;
@@ -102,7 +109,7 @@ impl InterpreterUnit {
                             next | live[*end] | (1 << buffer)
                         }
                         #[cfg(feature = "tool-json")]
-                        Op::ArrayStep(_, end) => next | live[*end],
+                        Op::ArrayStep(_, end) | Op::LineStep(_, end) => next | live[*end],
                         Op::Count(count) => next | (1 << count.buffer),
                         Op::BufferLen(_, buffer) => next | (1 << buffer),
                         Op::Load(target, _) => next & !(1 << target),

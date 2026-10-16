@@ -1,5 +1,9 @@
 # Implementation mission
 
+Experimental branch DR adds iteration-only borrowed JSON text lines. It is not
+merged into main or released. See [the exact subset and public enum migration](dr-lines.md)
+before integrating; existing public function signatures and array bounds stay unchanged.
+
 ## Owner and scope
 
 A Kanban worker pinned to gpt-6.1-sol (openai-codex) leads this prototype and dispatches gpt-6-luna children. Default profile delegation is configured to Luna; verify worker/subagent run metadata. Sol owns design decisions, contracts, integration, experiments and final evidence. Children receive narrow tasks and cannot self-certify final integration.

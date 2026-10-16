@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "+1.96.0",
+    "build",
+    "--offline",
+    "--locked",
+    "--release",
+    "--features",
+    "tool-json",
+    "--example",
+    "di_corpus"
+  ],
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "   Compiling minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 10.56s\n"
+}
