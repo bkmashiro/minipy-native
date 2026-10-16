@@ -36,8 +36,12 @@ All diagnostic executions release handed-off raw JSON owners by final phase.
 The same source/binary identity produced both modes. Existing mounted external
 target, shared fcntl build lock, one job. No new target/worktree, downloads,
 Linux/Wasm run or CI. Contract, commands and boundaries: [di-corpus.md](di-corpus.md).
-Raw identities, outputs and checks: `bench/results/di/`. Fixed-snapshot focused
-independent review is the remaining implementation handoff step.
+Raw identities, outputs and checks: `bench/results/di/`. Fixed signed implementation
+`c650041` received one focused read-only independent review: actual tool-result
+model gpt-6-luna, configured/environment-reported provider openai-codex, four API
+calls, no confirmed blocker, file edit or Cargo rerun. The implementation is
+unchanged; `bench/results/di/review.md` records the scope and model evidence.
+Submitted for same-card review, with the separate DJ pilot still gated.
 
 ## DG: bounded declared object-array loop and break (2026-10-16)
 
