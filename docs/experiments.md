@@ -2439,3 +2439,37 @@ CJ 保留确定 prepare work/backing 删除，CK 撤回，CL 保留最小目的�
 没有通用请求提速、无回归界或累计阶段加速结论。CG stop 与 BT/BX/BY/CB
 负结果不变。此卡只完成主线整合，不开启新实验、CI、依赖下载或平台验证。
 
+## CR：排除明显外部 CPU 争用后的固定 PGO 复核
+
+独立证据分支从 main `820c79b` 开始，复用 CN `44212e0` 保留的原 A/B
+二进制、sidecar 与 merged profile，逐 SHA256 一致；生产源码/adapter/
+Cargo 与 `907eb40` 不变，没有混入 CO、重建、改训练、改 LTO、全套 Rust
+测试或下载。原 CN evidence 原样引用保存，结论限定由本节与 CR README 更新。
+
+CN gzip 创建秒与外层执行 wall 表明原 AB/AA 在本机 UTC+08:00 08:28:46/
+48 开始附近；没有同期 CPU/竞争进程记录，不能证实或排除用户报告的死循环
+污染。旧组降级为未控环境观测，不抹除正确性与身份验证，不与新组池化。
+08:49 的其他实验 CPU 记录和当前空闲都不能填补过去的观测缺口。
+
+同一五类 holdout、双后端、registered resident 新源 prepare+execute+cleanup
+边界，一轮 ABBA 与 exact-A A/A 各40进程/480正式请求，全断言通过。仅此
+一对复测，不增加样本。预检末两次 idle97.30%/96.19%，top1Hz 三个有效
+delta 为97.83%/94.76%/91.46%，未见无关进程≥50%单核；保守 guard 为
+pre idle≥90%、during idle≥85%及无无关≥50%，繁忙只停止自身进程组。
+复用外盘target/共享锁；锁不隔离外部任务，macOS没有硬独占。top delta
+属于前一 snapshot 区间，reducer重建近似区间，不能证明每个短请求无抢占。
+
+按 branch/scalar_inputs/madd_loop/escaped_join/detach_wait 顺序，native
+B/A 为 .76779/.81491/.72447/.75267/.84390，独立 A/A 为
+.99237/1.00321/1.00144/1.00390/.99987；与旧组方向一致。tape B/A 为
+.85713/.94753/.87564/.85084/.94037，仍有短程序进程漂移。全部 raw 和
+逐进程分布保留，A/A不当噪声上限，无精确生产收益或无回归结论。
+
+保留 PGO 正向假设，默认生产启用继续 defer，不能称为“没有调节空间”。
+仅建议未来单项训练覆盖改进：固定真实 Host 频率加权、去敏独立源码回放
+替代手写训练 fixture，冻结现有 holdout 不入训练；本卡不执行或搜索参数。
+CP仍用未启用PGO的已审阅标量候选作为SIMD基线。本次四项CR与九项BT
+Python tests、py_compile、源码身份及diff checks通过，未重跑Rust suites。
+原始时间/CPU/新旧分开归约与复现见
+[CR evidence](../evidence/cr-pgo/README.md)。停止CR，不合入main。
+

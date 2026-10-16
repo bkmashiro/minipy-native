@@ -1,0 +1,80 @@
+{
+  "machines": {
+    "baseline": {
+      "binary_sha256": "8cbbcf1c1eba1c92a151b43ee23548db9b754964a364f9f8dce73ad6bfaf57fa",
+      "profile_symbols": [],
+      "llvm_size": "__TEXT\t__DATA\t__OBJC\tothers\tdec\thex\n7749632\t16384\t0\t4297932800\t4305698816\t100a3c000\t\n"
+    },
+    "instrumented": {
+      "binary_sha256": "6d55f5bf1de32a1031ac7b6aabefd48f7974f4e1f02d0a97bdce91bc60563aff",
+      "profile_symbols": [
+        "00000001007bfbf8 t ___llvm_profile_begin_bitmap",
+        "00000001007bfbe0 t ___llvm_profile_begin_counters",
+        "00000001007bfbb0 t ___llvm_profile_begin_data",
+        "00000001007bfbc8 t ___llvm_profile_begin_names",
+        "00000001007bfc40 t ___llvm_profile_begin_vnodes",
+        "00000001007bfc10 t ___llvm_profile_begin_vtables",
+        "00000001007bfc28 t ___llvm_profile_begin_vtabnames",
+        "00000001007bf508 t ___llvm_profile_check_compatibility",
+        "00000001007bd998 t ___llvm_profile_counter_entry_size",
+        "00000001007bd6c8 t ___llvm_profile_disable_continuous_mode",
+        "00000001007bd6b8 t ___llvm_profile_enable_continuous_mode",
+        "00000001007bfc04 t ___llvm_profile_end_bitmap",
+        "00000001007bfbec t ___llvm_profile_end_counters",
+        "00000001007bfbbc t ___llvm_profile_end_data",
+        "00000001007bfbd4 t ___llvm_profile_end_names",
+        "00000001007bfc4c t ___llvm_profile_end_vnodes",
+        "00000001007bfc1c t ___llvm_profile_end_vtables",
+        "00000001007bfc34 t ___llvm_profile_end_vtabnames",
+        "00000001008da030 s ___llvm_profile_filename",
+        "00000001007bd9fc t ___llvm_profile_get_counters_size",
+        "00000001007bd968 t ___llvm_profile_get_data_size",
+        "00000001007bd670 t ___llvm_profile_get_magic",
+        "00000001007bda5c t ___llvm_profile_get_name_size",
+        "00000001007bda54 t ___llvm_profile_get_num_bitmap_bytes",
+        "00000001007bd9b4 t ___llvm_profile_get_num_counters",
+        "00000001007bd958 t ___llvm_profile_get_num_data",
+        "00000001007bd684 t ___llvm_profile_get_num_padding_bytes",
+        "00000001007bd978 t ___llvm_profile_get_num_vtable",
+        "00000001007bda64 t ___llvm_profile_get_padding_sizes_for_counters",
+        "00000001007bd6e0 t ___llvm_profile_get_size_for_buffer",
+        "00000001007bd7a4 t ___llvm_profile_get_size_for_buffer_internal",
+        "00000001007bd690 t ___llvm_profile_get_version",
+        "00000001007bd990 t ___llvm_profile_get_vtable_section_size",
+        "00000001007be4fc t ___llvm_profile_initialize",
+        "00000001007c09b0 t ___llvm_profile_instrument_memop",
+        "00000001007c0460 t ___llvm_profile_instrument_target",
+        "00000001008582a4 t ___llvm_profile_instrument_target.cold.1",
+        "00000001007c06e8 t ___llvm_profile_instrument_target_value",
+        "00000001008582c8 t ___llvm_profile_instrument_target_value.cold.1",
+        "00000001007bd69c t ___llvm_profile_is_continuous_mode_enabled",
+        "00000001007bf6dc t ___llvm_profile_merge_from_buffer",
+        "0000000100923ec0 s ___llvm_profile_raw_version",
+        "00000001007bfc78 t ___llvm_profile_recursive_mkdir",
+        "0000000100f34508 b ___llvm_profile_register_write_file_atexit.HasBeenRegistered",
+        "0000000100f34468 s ___llvm_profile_runtime",
+        "00000001007bd6d4 t ___llvm_profile_set_page_size",
+        "00000001007be5b4 t ___llvm_profile_write_file"
+      ],
+      "llvm_size": "__TEXT\t__DATA\t__OBJC\tothers\tdec\thex\n12533760\t3178496\t0\t4299423744\t4315136000\t10133c000\t\n"
+    },
+    "candidate": {
+      "binary_sha256": "0de0526b7352b48bcbfb657c7d9393d1fa9956d46f9406ccfe275a5aa9e3f3f3",
+      "profile_symbols": [],
+      "llvm_size": "__TEXT\t__DATA\t__OBJC\tothers\tdec\thex\n7831552\t16384\t0\t4298260480\t4306108416\t100aa0000\t\n"
+    }
+  },
+  "component": {
+    "official_compressed_bytes": 47464228,
+    "files": 14,
+    "logical_bytes": 423769624,
+    "allocated_bytes": 423800832
+  },
+  "cargo_json_declared_existing_artifacts": {
+    "count": 737,
+    "logical_bytes": 1259104872,
+    "allocated_bytes": 1260683264
+  },
+  "du_kib": "26710272\t/Users/yuzhe/projects/minipy-native/target/\n75300\t/Users/yuzhe/.hermes/cache/scratch/cn-pgo\n",
+  "scope": "Declared artifacts include shared existing deps, omit unreported objects/test outputs; not a net disk delta. Initial shared target was rounded 23 GiB."
+}
