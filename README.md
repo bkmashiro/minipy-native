@@ -50,6 +50,16 @@ field; `data.get("key", "default")` still means the existing method. Tool calls
 and `startswith` methods are unchanged. No general object attributes, dynamic
 lookup or field mutation are provided; unknown fields fail preparation.
 
+With `tool-json`, `for line in text.splitlines():` scans a declared JSON string
+leaf or its existing alias on both backends, using CPython line boundaries.
+The borrowed loop-only view supports literal `in line`, `line.startswith(literal)`,
+`print(line)` and existing print joins/f-strings, with scalar accumulation and
+`break`. No list result, arguments/keepends, line equality/rebinding/escape,
+nested loops, `continue`, for-else or Tool calls inside loops. Existing token,
+scan, cumulative rows fuel and chunk bounds apply, without the array 256-element
+cap. See [contract and public enum migration](docs/dr-lines.md) and the
+[current generation guide](docs/code-mode-guide.md).
+
 Limited f-strings also consume declared JSON i64 leaves directly, for example
 `print(f"ready: {state['count']}")`. Fields evaluate left to right at the sink;
 format specifiers, conversions and arbitrary embedded expressions remain unsupported.

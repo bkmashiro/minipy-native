@@ -1,8 +1,10 @@
 # Implementation mission
 
-Experimental branch DR adds iteration-only borrowed JSON text lines. It is not
-merged into main or released. See [the exact subset and public enum migration](dr-lines.md)
-before integrating; existing public function signatures and array bounds stay unchanged.
+DT integrates reviewed DR `6f79919` into main: iteration-only borrowed JSON text
+lines on native and tape, with no package release. See [the exact subset and public
+enum migration](dr-lines.md) and [current generation guide](code-mode-guide.md).
+Existing public function signatures and array budget boundaries stay unchanged;
+downstream exhaustive matches must handle the new variants. JSON State grows 8 B.
 
 ## Owner and scope
 

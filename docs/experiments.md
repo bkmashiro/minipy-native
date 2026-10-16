@@ -1,5 +1,22 @@
 # Experiments
 
+## DT: approved borrowed-line integration (2026-10-16)
+
+With explicit approval of the public enum additions and JSON State +8 B tradeoff,
+main fast-forwards from `bddcff0` to reviewed DR `6f79919`. Production sources,
+tests, manifests and runners match that candidate exactly; DT adds documentation
+only, including a new [current generation guide](code-mode-guide.md). Frozen
+private DP/DS guides, corpus and historical statistics are untouched.
+
+Reuse DR's independent 108 feature / 30 default regression passes and CPython
+oracle, plus DS's independently replayed 24/24 native/tape rows over two synthetic
+generated tasks and 12 payload cases (two correct first answers, no repair).
+Historical DP 7/8 is unchanged. DT runs only production-tree identity, local
+documentation-link and diff checks; no new build, suite, model call or performance
+sampling. No general success-rate, speedup, Linux/Wasm or total-memory claim.
+See [contract, migration and integration evidence](dr-lines.md#dt-integration-and-verification).
+Signed main publication is followed by remote SHA read-back and same-card review.
+
 ## DR: borrowed splitlines candidate, isolated branch (2026-10-16)
 
 Experimental shared binding and real native/tape lowering now execute complete

@@ -1,6 +1,9 @@
-# DR: borrowed lines (experimental branch only)
+# DR: borrowed lines (integrated by DT)
 
-This candidate is not merged into main and is not an API release. It admits
+DT integrates reviewed candidate `6f79919` into main with explicit approval of
+the public enum additions and JSON State +8 B tradeoff. This is not a package
+release. The historical DR evidence below retains its original source identity.
+The supported subset admits
 `for line in declared_string.splitlines():` in the shared frontend, then lowers
 the ordinary user body to the actual tape or Cranelift CFG. Helpers only provide
 cursor movement and string predicates. There is no Host reduction or backend fallback.
@@ -52,8 +55,8 @@ cursor movement and string predicates. There is no Host reduction or backend fal
 Public exhaustive matches must add `Stmt::LineFor`, `Stmt::LineBreak`,
 `Expr::LinePredicate` and print-only `StringSource::Line`. No existing public
 function signature, Type, Plan field, global budget, source ordering, effect
-contract or array 256-element semantics changes. These new enum alternatives
-remain experimental and require an explicit integration decision.
+contract or array 256-element semantics changes. Downstream exhaustive matches
+must handle these added alternatives when adopting the integrated main version.
 
 A shared optional tagged cursor holds either `Box<ArrayCursor>` or
 `Box<LineCursor>`. This intentionally chooses an 8-byte inline tag over the DQ
@@ -134,11 +137,28 @@ the whole-source Unsupported admission, not a synthetic stub. Retained failed
 attempts include a test-only borrow error, reserved synthetic Tool IDs, and the
 missing pinned rustfmt component; fixes did not weaken runtime assertions.
 
-Recommendation: retain this isolated candidate for focused review. It closes
+Historical DR recommendation: retain this isolated candidate for focused review. It closes
 the concrete DP08 expressiveness gap with ordinary-source lowering and bounded
 borrowing. No basis yet to merge automatically, expand to general strings/lists,
 run another model campaign, or claim a performance win.
 
 One actual `gpt-6-luna` text-packet review at signed `f3a6bb1` reports no confirmed
 implementation blocker. See [scope and compiler/formatter evidence resolution](../bench/results/dr/review.md).
-Same-card approval is still required; the reviewer did not independently execute.
+That packet reviewer did not independently execute. DR subsequently passed
+same-card independent review, including targeted regressions and private replay.
+
+## DT integration and verification
+
+Main fast-forwards from `bddcff0` to reviewed `6f79919`; subsequent DT changes
+are documentation only. Production sources, tests, manifests and runners match
+the reviewed candidate exactly (`git diff --exit-code 6f79919 -- src tests
+Cargo.toml Cargo.lock examples fixtures tools bench`). No new syntax or optimization.
+DR's independently rerun 108 feature and 30 default tests, 181-entry CPython
+oracle and bounded cost evidence are reused, not resampled. DS independently
+replayed two synthetic generated tasks over 12 payload cases on native/tape:
+24/24 correct, with two first answers and no repair. These small samples do not
+estimate general Agent success or performance; historical DP 7/8 stays unchanged.
+DT checks documentation links and diff hygiene, without another build, model
+call, performance sample or historical hash sweep. Linux/Wasm and total memory
+remain unmeasured. The new [current generation guide](code-mode-guide.md) leaves
+frozen DP/DS guides and private history untouched. DT same-card review is pending.
