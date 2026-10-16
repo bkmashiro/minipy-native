@@ -1,0 +1,13 @@
+diff --git a/src/interpreter.rs b/src/interpreter.rs
+--- a/src/interpreter.rs
++++ b/src/interpreter.rs
+@@ -16,6 +16,9 @@ use std::rc::Rc;
+ use std::sync::Arc;
+ #[cfg(not(target_arch = "wasm32"))]
+ use tokio::sync::oneshot;
++#[cfg(all(test, feature = "tool-json", feature = "interpreter-profile"))]
++#[path = "../evidence/co-count/probe.rs"]
++mod co_probe;
+ #[cfg(feature = "debug-runtime")]
+ pub mod debug;
+ #[cfg(test)]

@@ -1,0 +1,72 @@
+diff --git a/tests/perf_workbench.rs b/tests/perf_workbench.rs
+index 54b8e37..311cd2b 100644
+--- a/tests/perf_workbench.rs
++++ b/tests/perf_workbench.rs
+@@ -37,8 +37,18 @@ struct Host {
+     gate: Option<Arc<Gate>>,
+ }
+ impl Provider for Host {
+-    async fn load_quotes(&self, _: i64) -> Result<QuoteBuffer, TaskError> {
++    async fn load_quotes(&self, batch: i64) -> Result<QuoteBuffer, TaskError> {
+         // Producer construction/import is request work, not prebuilt resident input.
++        if batch < 0 {
++            return QuoteBuffer::from_quotes(
++                (0..-batch)
++                    .map(|i| Quote {
++                        unit_price_cents: i % 17 - 8,
++                        quantity: i % 7 - 3,
++                    })
++                    .collect(),
++            );
++        }
+         QuoteBuffer::from_quotes(
+             (0..256)
+                 .map(|i| Quote {
+@@ -189,6 +199,34 @@ fn resident_request() {
+         // Different literal each time, no prepared-code or result reuse.
+         let n = sample + 1;
+         let (source, expected) = match case.as_str() {
++            "count_price_small"
++            | "count_price_large"
++            | "count_quantity_small"
++            | "count_quantity_large"
++            | "count_none"
++            | "count_all" => {
++                let size = if case.ends_with("small") { 7 } else { 65537 };
++                let quantity = case.starts_with("count_quantity");
++                let field = if quantity {
++                    "quantity"
++                } else {
++                    "unit_price_cents"
++                };
++                let threshold = match case.as_str() {
++                    "count_none" => 8,
++                    "count_all" => -9,
++                    _ => 0,
++                };
++                let count = (0..size)
++                    .filter(|i| (if quantity { i % 7 - 3 } else { i % 17 - 8 }) > threshold)
++                    .count();
++                (
++                    format!(
++                        "rows=tools.load_quotes(-{size})\nthreshold={threshold}\ncount={n}\nfor row in rows:\n    if row.{field} > threshold:\n        count=count+1\nprint(count)\nprint(threshold)"
++                    ),
++                    format!("{}\n{threshold}\n", count + n),
++                )
++            }
+             "branch" => (
+                 format!("x={n}\nif x > 2:\n    print(x + 1)\nelse:\n    print(x - 1)"),
+                 format!("{}\n", if n > 2 { n + 1 } else { n - 1 }),
+diff --git a/tools/perf_workbench.py b/tools/perf_workbench.py
+index 36bb80f..e0b3831 100644
+--- a/tools/perf_workbench.py
++++ b/tools/perf_workbench.py
+@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
+ SCRATCH = Path.home() / '.hermes/cache/scratch'
+ LOCK = SCRATCH / 'minipy-perf-build.lock'
+ DEFAULT_CASES = ('scalar', 'quote', 'ready', 'loopback')
+-CASES = DEFAULT_CASES + ('scalar_inputs', 'ready_inputs', 'plain_sink', 'escaped_sink', 'joined_sink', 'fstring_sink', 'escaped_join', 'madd_short', 'madd_loop', 'detach', 'detach_live', 'detach_wait', 'branch', 'branch_ready')
++CASES = DEFAULT_CASES + ('scalar_inputs', 'ready_inputs', 'plain_sink', 'escaped_sink', 'joined_sink', 'fstring_sink', 'escaped_join', 'madd_short', 'madd_loop', 'detach', 'detach_live', 'detach_wait', 'branch', 'branch_ready', 'count_price_small', 'count_price_large', 'count_quantity_small', 'count_quantity_large', 'count_none', 'count_all')
+ BACKENDS = ('tape', 'native')
+ 
+ 

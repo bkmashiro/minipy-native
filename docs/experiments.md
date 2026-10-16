@@ -2479,3 +2479,45 @@ release。真实Host source分布与可维护训练profile尚未成立；此卡�
 整合main，不把后续kernel收益与PGO混合。详见
 [CN evidence](../evidence/cn-pgo/README.md)。
 
+## CO：单一筛选计数标量批量 kernel
+
+固定 `44212e0`，生产release/Cargo配置仍与 `907eb40` 相同，未启用PGO。
+只匹配整个loop体为 `if row.FIELD > THRESHOLD: count=count+1` 的纯形状，
+两个既有signed-i64字段，literal或非count local阈值。lowering以Start+Count
+替换原tape区段，40B descriptor内联，Op48B、Unit112B、State312B及本具体
+Provider tape/native future928/664B不变，无IR备份或新heap/执行器。
+其他形状仍走原tape；debug-runtime保持原逐Op trace，不融合。
+
+独立600行诊断：chunk256两字段dispatch2407→10，fuel3/yield2不变；chunk7
+2407→93，fuel86/yield85不变。匹配形状tape11→7 ops、capacity16→8，
+prepared逻辑976→560B；alias与普通求和对照不变。实际正式arm64机器码每个
+kernel20指令/80B，scalar ldr/compare/checked adds/b.vs，没有SIMD。
+不能只数被LLVM分离后的wrapper：dispatcher7500→8084B，selected tape
+text+1116B，同步栈4256→4336B（+80），scratch仍4096B，future未变。
+
+九类双后端、每cell12正式请求、一轮ABBA+exact-A A/A。首对未保存期间CPU
+记录，降级保留；原binary/候选/计划不变，仅补一对带CPU记录替代采集，
+不池化、不调参、不做第三轮。共288进程/3456正式请求，全部exit0且精确
+status/stdout断言通过。替代对large price/quantity/none/all tape B/A为
+.42109/.46453/.51505/.41193；小输入1.00063/.99487，对照scalar/quote/ready
+.97786/1.00072/1.02991。原未控对小输入1.20180/1.09843及明显进程漂移
+完整保留，不能用替代对覆盖回退或用A/A声称噪声界。startup独立记录。
+
+替代对前两次有效top idle96.46%/97.14%；期间只有两snapshot，首次累计
+snapshot不能当delta，后次87.74% idle，无记录到≥50%无关单核竞争者。
+reader漏结EOF最后block，使采集器后置样本数断言失败，但两个raw均完整，
+CPU原文仍保存；已补EOF结算但不重跑计时。低频记录不是整轮硬独占证明。
+不从当前空闲反推过去干扰，不改CN结论，CR负责独立复核PGO。
+
+最终完整default/tool-json/tool-json+debug release suites79/130/138通过，
+三套严格Clippy、fmt、9个BT Python tests和diff check通过。覆盖字段/尾部/
+signed extrema、overflow/effect顺序、fuel/index/yield、取消与弱owner释放、
+JSON跨融合chunk保留、未匹配形状和immutable unit复用。early fixture与
+记录脚本失败逐项保留。全部共享外盘target/锁/单job/offline，未新增依赖、
+下载、worktree、CI、网站或平台执行。
+
+取舍：保留窄候选在独立分支，停止CO；大输入完整请求和确定dispatch删除
+支持继续评估，小输入/真实Host通用净收益未建立。main集成等待原卡审阅，
+CP再判断SIMD净值，不先扩框架或启用PGO。源码hash重建、全部raw、CPU限制、
+真实linked code、命令及失败说明见 [CO evidence](../evidence/co-count/README.md)。
+

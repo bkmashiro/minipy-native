@@ -37,8 +37,18 @@ struct Host {
     gate: Option<Arc<Gate>>,
 }
 impl Provider for Host {
-    async fn load_quotes(&self, _: i64) -> Result<QuoteBuffer, TaskError> {
+    async fn load_quotes(&self, batch: i64) -> Result<QuoteBuffer, TaskError> {
         // Producer construction/import is request work, not prebuilt resident input.
+        if batch < 0 {
+            return QuoteBuffer::from_quotes(
+                (0..-batch)
+                    .map(|i| Quote {
+                        unit_price_cents: i % 17 - 8,
+                        quantity: i % 7 - 3,
+                    })
+                    .collect(),
+            );
+        }
         QuoteBuffer::from_quotes(
             (0..256)
                 .map(|i| Quote {
@@ -189,6 +199,34 @@ fn resident_request() {
         // Different literal each time, no prepared-code or result reuse.
         let n = sample + 1;
         let (source, expected) = match case.as_str() {
+            "count_price_small"
+            | "count_price_large"
+            | "count_quantity_small"
+            | "count_quantity_large"
+            | "count_none"
+            | "count_all" => {
+                let size = if case.ends_with("small") { 7 } else { 65537 };
+                let quantity = case.starts_with("count_quantity");
+                let field = if quantity {
+                    "quantity"
+                } else {
+                    "unit_price_cents"
+                };
+                let threshold = match case.as_str() {
+                    "count_none" => 8,
+                    "count_all" => -9,
+                    _ => 0,
+                };
+                let count = (0..size)
+                    .filter(|i| (if quantity { i % 7 - 3 } else { i % 17 - 8 }) > threshold)
+                    .count();
+                (
+                    format!(
+                        "rows=tools.load_quotes(-{size})\nthreshold={threshold}\ncount={n}\nfor row in rows:\n    if row.{field} > threshold:\n        count=count+1\nprint(count)\nprint(threshold)"
+                    ),
+                    format!("{}\n{threshold}\n", count + n),
+                )
+            }
             "branch" => (
                 format!("x={n}\nif x > 2:\n    print(x + 1)\nelse:\n    print(x - 1)"),
                 format!("{}\n", if n > 2 { n + 1 } else { n - 1 }),

@@ -52,6 +52,73 @@ pub(super) enum Dest {
     Temp(u16),
 }
 #[derive(Debug)]
+pub(super) struct Count {
+    pub(super) buffer: usize,
+    field: Field,
+    threshold: Operand,
+    accumulator: usize,
+}
+impl Count {
+    // One admitted pure shape. No source text/Tool identity or retained IR.
+    fn recognize(buffer: usize, body: &[Stmt]) -> Option<Self> {
+        // The instruction debugger must retain the original single-op trace.
+        if cfg!(feature = "debug-runtime") {
+            return None;
+        }
+        let [Stmt::If(Expr::Binary(BinOp::Gt, field, threshold), yes, no)] = body else {
+            return None;
+        };
+        let Expr::Field(field) = **field else {
+            return None;
+        };
+        let [Stmt::Set(accumulator, Expr::Binary(BinOp::Add, lhs, rhs))] = yes.as_slice() else {
+            return None;
+        };
+        if !no.is_empty()
+            || !matches!(**lhs, Expr::Local(i) if i == *accumulator)
+            || !matches!(**rhs, Expr::Int(1))
+        {
+            return None;
+        }
+        let threshold = match **threshold {
+            Expr::Int(v) => Operand::Imm(v),
+            Expr::Local(i) if i != *accumulator => Operand::Local(i),
+            _ => return None,
+        };
+        Some(Self {
+            buffer,
+            field,
+            threshold,
+            accumulator: *accumulator,
+        })
+    }
+}
+
+// Checked sequential increment preserves the first overflowing row. Inspect the
+// actual release machine code instead of assuming LLVM leaves this scalar.
+#[inline(never)]
+fn scalar_count<const QUANTITY: bool>(
+    rows: &[Quote],
+    threshold: i64,
+    count: &mut i64,
+) -> Result<(), usize> {
+    for (i, row) in rows.iter().enumerate() {
+        let value = if QUANTITY {
+            row.quantity
+        } else {
+            row.unit_price_cents
+        };
+        if value > threshold {
+            let Some(next) = count.checked_add(1) else {
+                return Err(i);
+            };
+            *count = next;
+        }
+    }
+    Ok(())
+}
+
+#[derive(Debug)]
 pub(super) enum Op {
     Copy(Dest, Operand),
     BufferLen(Dest, usize),
@@ -83,6 +150,7 @@ pub(super) enum Op {
     Branch(Operand, bool, usize),
     Jump(usize),
     Start,
+    Count(Count),
     Scan {
         buffer: usize,
         end: usize,
@@ -356,6 +424,10 @@ impl Lower<'_> {
                 }
                 Stmt::For(buffer, body) => {
                     self.ops.push(Op::Start);
+                    if let Some(count) = Count::recognize(buffer, &body) {
+                        self.ops.push(Op::Count(count));
+                        continue;
+                    }
                     let header = self.ops.len();
                     self.ops.push(Op::Scan { buffer, end: 0 });
                     self.statements(body);
@@ -369,6 +441,41 @@ impl Lower<'_> {
 }
 pub(super) fn flatten(statements: Vec<Stmt>, ops: &mut Vec<Op>) {
     Lower { ops, next: 0 }.statements(statements);
+}
+
+#[test]
+fn count_admission_and_layout() {
+    assert_eq!(std::mem::size_of::<Op>(), 48);
+    assert_eq!(std::mem::size_of::<Count>(), 40);
+    for (body, matched) in [
+        ("if row.quantity>threshold:\n        count=count+1", true),
+        ("if row.unit_price_cents>0:\n        count=count+1", true),
+        ("if row.quantity>count:\n        count=count+1", false),
+        ("if row.quantity>threshold:\n        count=count+2", false),
+        ("if row.quantity+1>threshold:\n        count=count+1", false),
+        (
+            "if row.quantity>threshold:\n        count=count+1\n    threshold=threshold+1",
+            false,
+        ),
+        (
+            "if row.quantity>threshold:\n        count=count+1\n    else:\n        count=count-1",
+            false,
+        ),
+    ] {
+        let source = format!(
+            "rows=tools.load_quotes(1)\nthreshold=0\ncount=0\nfor row in rows:\n    {body}\nprint(count)"
+        );
+        let unit = InterpreterUnit::prepare_script(&source, &[]).unwrap();
+        let hits = unit
+            .ops
+            .iter()
+            .filter(|op| matches!(op, Op::Count(_)))
+            .count();
+        assert_eq!(
+            hits,
+            usize::from(matched && !cfg!(feature = "debug-runtime"))
+        );
+    }
 }
 
 pub(super) enum Boundary {
@@ -588,6 +695,52 @@ pub(super) fn run<const STEP: bool>(
             Op::Start => {
                 state.index = 0;
                 state.chunk_left = 0;
+            }
+            Op::Count(count) => {
+                let rows = owners[count.buffer]
+                    .as_ref()
+                    .expect("sealed count owner")
+                    .rows();
+                if state.index == rows.len() {
+                    state.row = None;
+                    continue;
+                }
+                #[cfg(feature = "interpreter-profile")]
+                crate::interpreter_profile::update(|c| c.fuel_reservations += 1);
+                if state.remaining == 0 {
+                    return Err(TaskError::Budget);
+                }
+                let length = (rows.len() - state.index)
+                    .min(limits.chunk)
+                    .min(state.remaining as usize);
+                state.remaining -= length as u64;
+                state.chunk_left = length;
+                let threshold = read(count.threshold, state, temps);
+                let chunk = &rows[state.index..state.index + length];
+                let result = match count.field {
+                    Field::Price => scalar_count::<false>(
+                        chunk,
+                        threshold,
+                        &mut state.locals[count.accumulator],
+                    ),
+                    Field::Quantity => {
+                        scalar_count::<true>(chunk, threshold, &mut state.locals[count.accumulator])
+                    }
+                };
+                if let Err(completed) = result {
+                    state.index += completed;
+                    state.chunk_left -= completed;
+                    state.row = Some(rows[state.index]);
+                    return Err(TaskError::Overflow);
+                }
+                state.index += length;
+                state.chunk_left = 0;
+                state.row = Some(rows[state.index - 1]);
+                // Resume at this descriptor, using the ordinary fairness/cancel path.
+                state.pc -= 1;
+                if state.index < rows.len() {
+                    return Ok(Boundary::Yield);
+                }
             }
             Op::Scan { buffer, end } => {
                 let rows = owners[*buffer].as_ref().expect("sealed scan owner").rows();
