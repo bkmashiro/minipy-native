@@ -45,6 +45,11 @@ is a user-selected incomplete Host contract with a task-valued independent
 oracle; these four straight-line document-output steps do not justify further
 language features. Same-card review remains required for final approval.
 
+One bounded read-only packet review at signed `80bbe3c` reports the actual
+`openai-codex` response model `gpt-6-luna` and no confirmed blocker. It is not
+independent execution; raw review evidence remains private.
+[Review scope](../bench/results/dm/review.md).
+
 ## DL: concrete repair diagnostics and explicit Host stdout policy (2026-10-16)
 
 Reuse `ScriptLimits.stdout_bytes`: the DI wrapper and Rust example accept one
