@@ -2439,3 +2439,43 @@ CJ 保留确定 prepare work/backing 删除，CK 撤回，CL 保留最小目的�
 没有通用请求提速、无回归界或累计阶段加速结论。CG stop 与 BT/BX/BY/CB
 负结果不变。此卡只完成主线整合，不开启新实验、CI、依赖下载或平台验证。
 
+## CN：Rust 本体 LLVM PGO 有界实验
+
+固定 `907eb40`，生产源码、测试 adapter、Cargo 配置与 lock 全部不变。
+Rust1.96/LLVM22.1.2 优化的是 MiniPy 本体与 Cranelift 的 Rust 实现，用户
+源码仍由原 Cranelift JIT 编译，不增加 LLVM 用户后端。只改变 PGO flags，
+不捆绑 LTO/CPU/source 优化。Apple profdata21 不匹配，安装获授权官方
+llvm-tools 小组件：压缩下载47,464,228 B，14文件423,769,624 logical B。
+实际 matching profdata 22.1.2 merge 成功，最终 A/B 都无 profile runtime
+symbols，只有训练 binary 带插桩。全部复用外盘 target、fcntl锁与单job，
+offline/locked，无新target root/worktree/依赖/CI/平台执行。
+
+双后端训练 scalar/Quote/ready/plain string/loopback 十进程250请求。
+Holdout branch/scalar_inputs/madd_loop/escaped_join/detach_wait，与训练
+case分离但共享 BT Host 和语法家族。单轮ABBA和exact-A A/A各40进程/
+480正式完整新源请求，全输出/status/等待断言通过。计入prepare、执行、
+生产者构造导入、code/output与等待清理；fixture startup另列，进程启动
+和source构造不在计时内。不追加样本或训练。完整PGO default suite
+74 passed，tool-json/debug-runtime 132 passed，0 failures；九Python
+tests、py_compile、fmt/diff及逐base Git blob源码身份验证通过。
+
+Holdout native B:A 为 .76892/.80421/.72633/.71280/.84537，独立A/A
+约.99154–1.03174，提供本机合成请求正向信号，不当成生产精确15–29%
+因果收益。tape .59300/.83871/.81461/.85615/.99145，但首个branch的
+A0/B1/B2/A3中位37.271/20.167/7.729/9.771 µs，漂移明显，保留全部
+样本，不宣称40.7% tape提升或无回归界。正式构建913条missing-function
+profile警告如实保留；不同feature完整测试更多，未追加训练修饰覆盖。
+
+最终BT测试binary 10,725,216→11,138,480 B（+3.85%），不是生产服务
+尺寸；A/instrument/B构建119.388/112.117/111.459s，缓存条件不同，不能
+推断构建提速。shared target由粗粒度23G到25G，最终26,710,272 KiB；
+737个Cargo声明现存artifact共1,259,104,872 B，含共享依赖且漏报objects/
+全测试产物，不冒充精确新增磁盘量。scratch profiles/binaries 75,300 KiB
+不入库，仓库只保存轻量raw/身份/脚本。无RSS、吞吐、Linux/Wasm/Monty
+或Code Mode覆盖提升结论，CG stop保持。
+
+取舍：保留实验复现，defer 默认生产PGO，当前下游基线仍是未启用PGO的
+release。真实Host source分布与可维护训练profile尚未成立；此卡不自动
+整合main，不把后续kernel收益与PGO混合。详见
+[CN evidence](../evidence/cn-pgo/README.md)。
+
