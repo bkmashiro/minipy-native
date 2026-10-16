@@ -94,7 +94,10 @@ Monty competitiveness or production distribution coverage. No replacement
 sampling or full campaign. `measure.json` preserves binary hash and original
 source snapshot separately from correctness checks.
 
-One fixed-commit Luna read-only review follows this integrated snapshot. Final
-review verdict and independently verified actual model identity will be recorded
-alongside the prompt/output/trace. Same-card operator review remains the release
-gate, not a second implementation or broad optimization phase.
+One fixed-commit read-only review approved signed `c359e44` with no required
+changes. The controller independently queried actual session_model_usage:
+gpt-6-luna/openai-codex made six review calls. One separate gpt-5.6-luna title
+generation call is not a review call. `review-identity.json`, prompt, exact final
+output and stream trace preserve the evidence. Reviewer read source/logs and
+did not rerun tests. No implementation changes followed review. Same-card
+operator review remains the release gate.

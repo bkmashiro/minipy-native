@@ -28,6 +28,13 @@ Load 1.94/1.78/1.54 with Finder/Spotlight activity, so isolated low load is not
 established. No resampling, Monty comparison or generalized speedup conclusion.
 Source hashes, commands, raw results and exact limitations: `bench/results/db/`.
 
+The single fixed signed `c359e44` Luna read-only review approved with no required
+changes. Controller independently verified session_model_usage: six actual
+gpt-6-luna/openai-codex review calls, plus a separate title-generation call.
+Prompt, exact output, trace and identity are archived in DB results. Reviewer
+did not rerun tests. Implementation stays unchanged; same-card operator review
+remains pending.
+
 ## CY: whole-source admission and Host routing (2026-10-16)
 
 在已审 CX `f6024e2` 上，仅补 Host 库调用示例和集成验收。Native/tape 都先

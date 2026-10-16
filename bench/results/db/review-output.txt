@@ -1,0 +1,9 @@
+结论：approve。未发现需修改的正确性缺陷。
+
+审阅范围：固定签名提交 `c359e44f95bc80e2c664b17e335a91d64f52a21` 相对 `d46ff94d3b21fe2744dfbfab3205d5a8500197ac`；签名有效。核对了前端准入/字面量检查、共享 JSON predicate、native/tape lowering 与根存活、新增测试及提交内证据。
+
+边界行为与要求一致：只允许声明的字符串叶或既有 alias 加单个不超过 4096 UTF-8 字节的字面量；前缀比较精确、不规范化、不折叠大小写，并拒绝源码 surrogate。运行时保持 locate→按次 charge→validate/decode，包含空/过长前缀、缓存命中和 escaped decode 的额外 raw charge；缺路径、预算、类型/解码错误顺序及短路、alias eager validation、跨等待/取消/错误的 owner 生命周期均有对应实现和测试。selector 对 equality/contains/prefix 分路，IR 新增公开 variant 有注释。未见超出限定范围的框架、Tool、fallback 或依赖。
+
+证据：提交内记录的测试、Clippy、fmt 和 diff 检查结果与 README 说明相符；132 行诊断数据也与所述样本数一致。性能比值仅是单轮诊断，不能支持提速或无回归结论；CV 覆盖是合成样例，不代表生产覆盖。缺少 Linux/Wasm/CI 执行属于证据边界，不是本次发现的正确性缺陷。
+
+未运行构建、测试或采样；未做网络访问或文件修改。此次仅审阅源码与提交日志。

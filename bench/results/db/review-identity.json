@@ -1,0 +1,18 @@
+{
+  "reviewed_commit": "c359e44f95bc80e2c664b17e335a91d64f52a21b",
+  "base_commit": "d46ff94d3b21fe2744dfbfab3205d5a8500197ac",
+  "session_id": "20261016_141533_75f408",
+  "requested_model": "gpt-6-luna",
+  "requested_provider": "openai-codex",
+  "verification": "Controller queried session_model_usage in local state.db read-only after reviewer exited; actual usage, not banner or reviewer assertion",
+  "usage": [
+    {"model": "gpt-6-luna", "billing_provider": "openai-codex", "task": "", "api_call_count": 6},
+    {"model": "gpt-5.6-luna", "billing_provider": "openai-codex", "task": "title_generation", "api_call_count": 1}
+  ],
+  "verdict": "approve",
+  "blocking_findings": [],
+  "reviewer_reran_tests": false,
+  "exit_code": 0,
+  "command": ["hermes", "chat", "--query-file", "bench/results/db/review-prompt.txt", "--model", "gpt-6-luna", "--provider", "openai-codex", "--ignore-rules", "--max-turns", "24", "--run-budget", "600", "--format", "stream-json"],
+  "isolation": "All HERMES_KANBAN_* env vars removed; read-only prompt; no new worktree/target or config changes"
+}
