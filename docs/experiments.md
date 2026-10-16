@@ -28,6 +28,11 @@ tape 0.9831、native 1.0066。负载均值1.21/1.48/1.55，但有Spotlight/Finde
 活动，低负载隔离未成立，全部降级诊断，不作收益/回归界限结论、不继续采样。
 诊断与正确性分开保存，未与Monty比较，也不宣称优化收益。
 
+唯一一次固定签名提交 `3e03d1d` 的 Luna 只读定向审阅返回 Approve，无阻断项，
+reviewer未重跑测试。独立查询session_model_usage核验实际review模型为
+gpt-6-luna/openai-codex（4次调用），标题生成另计。主控核验67项最终输入hash、
+10份CV原例未变以及132行raw复算。prompt/output/trace/identity已归档于CY结果。
+
 ## CW: checked scalar integer conversion (2026-10-16)
 
 One actual gpt-6-luna/openai-codex read-only [review](cw-review.md) approved fixed `6717fd5`, independently checking raw reduction and semantics. Operator same-card review remains the release gate for CX.

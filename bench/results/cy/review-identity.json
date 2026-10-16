@@ -1,0 +1,24 @@
+{
+  "reviewed_commit": "3e03d1de91974865787b10121208fd7949a49fbc",
+  "baseline": "f6024e2c859a2682ce89be28939912d4df9ea004",
+  "session_id": "20261016_133717_4bbe61",
+  "verdict": "approve",
+  "actual_model_verification": "Read-only SELECT of session_model_usage in ~/.hermes/state.db, independently checked against stream system init event",
+  "review_model": "gpt-6-luna",
+  "review_provider": "openai-codex",
+  "review_api_calls": 4,
+  "separate_non_review_task": {"task": "title_generation", "model": "gpt-5.6-luna", "provider": "openai-codex", "api_calls": 1},
+  "scope": "One fixed-target read-only review; no builds, tests, timing samples, repository edits or board operations",
+  "controller_reconciliation": {
+    "final_check_source_hashes": 67,
+    "hash_mismatches": 0,
+    "cv_original_fixtures_unchanged": 10,
+    "raw_records": 132,
+    "measured_records": 128,
+    "raw_summary_independently_reduced": true,
+    "performance_conclusion": "Diagnostic only; Spotlight/Finder activity prevents isolated low-load claim",
+    "default_full_release": {"passed": 84, "ignored": 3},
+    "tool_json_full_release": {"passed": 145, "ignored": 13},
+    "debug_json_targeted": {"passed": 11, "ignored": 0}
+  }
+}

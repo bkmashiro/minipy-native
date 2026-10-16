@@ -97,3 +97,11 @@ No speedup, regression bound or broad overhead claim follows from this one run.
 Do not resample or add these ratios to earlier optimization gains. Diagnostic
 sampling is separate from correctness runs; `measure.json` preserves its original
 source snapshot, and `checks.json` records the later final check inputs.
+
+One focused independent read-only review approved fixed signed commit
+`3e03d1de91974865787b10121208fd7949a49fbc`. The controller verified actual review
+usage as gpt-6-luna/openai-codex (four calls); the separate title-generation call
+is not counted as review. Prompt, output, tool trace and identity are retained in
+`bench/results/cy/review-*`. The reviewer did not rerun tests. Controller separately
+matched all 67 final check-input hashes, ten unchanged CV originals, and the raw
+132-row summary. The original Kanban card remains for operator review.
