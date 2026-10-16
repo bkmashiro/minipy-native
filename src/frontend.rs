@@ -1292,9 +1292,7 @@ impl<'a> Compiler<'a> {
             ast::Expr::Constant(c) => match &c.value {
                 ast::Constant::Bool(b) => Ok((Expr::Bool(*b), Type::Bool)),
                 ast::Constant::Int(n) => {
-                    let value = n
-                        .to_string()
-                        .parse::<i64>()
+                    let value = i64::try_from(n)
                         .map_err(|_| err("integer literal is outside i64"))?;
                     Ok((Expr::Int(value), Type::I64))
                 }
@@ -1349,7 +1347,7 @@ impl<'a> Compiler<'a> {
                 ast::UnaryOp::USub => {
                     if let ast::Expr::Constant(c) = u.operand.as_ref()
                         && let ast::Constant::Int(n) = &c.value
-                        && n.to_string() == "9223372036854775808"
+                        && u64::try_from(n) == Ok(1_u64 << 63)
                     {
                         return Ok((Expr::Int(i64::MIN), Type::I64));
                     }

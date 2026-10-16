@@ -1,5 +1,9 @@
 # Experiments
 
+## CW: checked scalar integer conversion (2026-10-16)
+
+Replace BigInt decimal formatting/parsing with existing borrowed checked conversions, including the unary-negative minimum magnitude. No dependency or runtime behavior change. Separate allocation diagnosis removes 6 calls/28 requested bytes for ordinary short arithmetic and 128 calls/2432 bytes for 32 large negative literals on either backend; the no-integer control is unchanged. Preserve the initial Xprotect-contended run and one lower-load ABBA+A/A replacement (36 processes/2304 measured requests each). Dense tape has a favorable signal, but controls drift and neither short-source nor native establishes stable acceleration. Retain the tiny work-removal change and stop sampling. Default focused suites passed 43 tests; tool-json passed 6 with 2 existing performance tests ignored. Exact semantics, identities, commands, raw and limitations: [CW](cw-integer.md), `bench/results/cw/`. Linux not run.
+
 ## CU: optional Rust-host PGO and integrated holdouts (2026-10-16)
 
 Keep PGO explicit and experimental, with ordinary no-PGO release unchanged. On c5c0295 (CS scalar kernel + retained CT schema borrowing), two newly trained fixed distributions completed the bounded 528-process / 6,336-request ABBA+A/A matrix, including the original holdouts, three multi-Tool/error compositions, and 1/64 fresh-source warmup regimes. Native's resident B/A .6961–.8973 supports a local signal across both weights; tape's large-count full request regresses 11.6–12.9% after 64 warmups, so the predefined stop rejects default promotion. Early tape drift is preserved. No replacement sampling, LTO/CPU tuning, production-source change, or new optimization lane. Separate compiler-profile diagnostics are not formal phase shares. Frozen inputs, complete raw, opt-in build usage, costs and limits: [CU](cu-pgo.md), `evidence/cu-pgo/`.

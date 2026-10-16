@@ -1,0 +1,40 @@
+{
+  "arm": "B",
+  "head": "b21d0bf3bed46612de0fe0b9ab09d0e709da55d1",
+  "frontend_sha256": "5514e21f0cfddc2757c2c9beaa6c66fbe8de4bd51742a551282fff2e4efece67",
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)\nbinary: rustc\ncommit-hash: ac68faa20c58cbccd01ee7208bf3b6e93a7d7f96\ncommit-date: 2026-05-25\nhost: aarch64-apple-darwin\nrelease: 1.96.0\nLLVM version: 22.1.2\n",
+  "builds": {
+    "speed": {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "build",
+        "--offline",
+        "--locked",
+        "--release",
+        "--example",
+        "cw_probe",
+        "--features",
+        "tool-json"
+      ],
+      "binary": "/Users/yuzhe/projects/minipy-native/target/release/examples/cw_B_speed",
+      "sha256": "bdc3a308a4ee1c3a0d03468fae84403c0c4625dfb1919eab9b57058ffff3ac26"
+    },
+    "alloc": {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "build",
+        "--offline",
+        "--locked",
+        "--release",
+        "--example",
+        "cw_probe",
+        "--features",
+        "json-allocation-profile"
+      ],
+      "binary": "/Users/yuzhe/projects/minipy-native/target/release/examples/cw_B_alloc",
+      "sha256": "4037591d02c6301a5fa269816791ab1b3100f117506028777fc2d8b71fd34b7d"
+    }
+  }
+}
