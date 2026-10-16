@@ -1,5 +1,27 @@
 # Experiments
 
+## DF: shared declared-string get/default (2026-10-16)
+
+Implemented the approved StringSource::JsonGetLiteral on the shared print/Tool
+string path, including existing + and limited f-string composition. DE's checked
+receiver ranges and UTF-8 + IgnoredAny structural proof apply only to candidate
+missing final keys; present and required lazy semantics are retained. No Missing
+cache, task field, new dependency or Provider API. Default is expression-owned.
+
+Initial 7 tests failed before implementation. Final macOS release regression:
+default 84 passed/3 ignored, tool-json 172/13, focused debug-runtime 28/2. New
+runtime tests cover both real native/tape backends, CV05 and DD's complete Tool
+script, precise budget/error ordering and actual waits/cancellation/owner release.
+Current synthetic CV total is nine, with CV04 arrays still unsupported.
+
+Actual 64-bit rustc 1.96 layout: StringSource 24→40 bytes, BoundCall 40→56;
+Plan/JSON State/StringCache remain 112/128/24. No-get plans share this inline
+element growth; source inspection finds no additional per-task allocation site.
+Missing proof adds scans and transient parser scratch, not metered token work.
+No performance campaign, latency claim, Linux run, CI, new target or worktree.
+Commands, API migration, implementation costs and limitations: [df-get.md](df-get.md).
+Submitted for fixed-snapshot focused review followed by same-card review.
+
 ## DE: bounded missing-key parser proof (2026-10-16)
 
 Fixed reviewed DB `0b38696`; no production source/API/dependency changes.

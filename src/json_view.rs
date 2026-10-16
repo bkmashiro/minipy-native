@@ -143,7 +143,15 @@ impl State {
             .ok_or(TaskError::Json("released owner"))?;
         let raw = sonic_rs::get(&owner[within.clone()], [self.plan.paths[slot].key.as_str()])
             .map_err(|_| TaskError::Json("missing field or invalid JSON on accessed path"))?;
-        let raw = raw.as_raw_str().as_bytes();
+        let range = Self::import_range(owner, within, raw.as_raw_str().as_bytes())?;
+        self.ranges[slot] = Some(range.clone());
+        Ok(range)
+    }
+    fn import_range(
+        owner: &[u8],
+        within: Range<usize>,
+        raw: &[u8],
+    ) -> Result<Range<usize>, TaskError> {
         // Borrowed sonic output must lie within our immutable input. Checked once
         // when importing the range, never turned into an arbitrary address.
         let offset = (raw.as_ptr() as usize)
@@ -156,9 +164,66 @@ impl State {
         if offset < within.start {
             return Err(TaskError::Json("invalid parser range"));
         }
-        let range = offset..end;
-        self.ranges[slot] = Some(range.clone());
-        Ok(range)
+        Ok(offset..end)
+    }
+    /// Resolve required ancestors before treating one final key as optional.
+    /// Found uses existing range/string caches; absence is never cached.
+    pub(crate) fn get_present(&mut self, slot: usize) -> Result<bool, TaskError> {
+        if self.ranges[slot].is_some() {
+            return Ok(true);
+        }
+        let (root, parent) = {
+            let p = &self.plan.paths[slot];
+            (p.root, p.parent)
+        };
+        let within = if let Some(parent) = parent {
+            self.locate(parent)?
+        } else {
+            0..self.roots[root]
+                .as_ref()
+                .ok_or(TaskError::Json("released owner"))?
+                .len()
+        };
+        let owner = self.roots[root]
+            .as_ref()
+            .ok_or(TaskError::Json("released owner"))?;
+        let receiver = &owner[within.clone()];
+        // String-key NotFound must refer to an object, never an array/index.
+        if receiver
+            .iter()
+            .copied()
+            .find(|b| !matches!(b, b' ' | b'\t' | b'\r' | b'\n'))
+            != Some(b'{')
+        {
+            return Err(TaskError::Json("get receiver must be an object"));
+        }
+        match sonic_rs::get(receiver, [self.plan.paths[slot].key.as_str()]) {
+            Ok(raw) => {
+                let range = Self::import_range(owner, within, raw.as_raw_str().as_bytes())?;
+                self.ranges[slot] = Some(range);
+                Ok(true)
+            }
+            Err(e) if e.is_not_found() => {
+                // DE: NotFound alone accepts malformed/invalid-UTF8 objects.
+                // Select only the root object, excluding any external suffix.
+                // A required parent's range is already exact.
+                let range = if parent.is_none() {
+                    let raw = sonic_rs::get(receiver, std::iter::empty::<&str>())
+                        .map_err(|_| TaskError::Json("invalid missing-key receiver"))?;
+                    Self::import_range(owner, within, raw.as_raw_str().as_bytes())?
+                } else {
+                    within
+                };
+                let text = std::str::from_utf8(&owner[range])
+                    .map_err(|_| TaskError::Json("invalid missing-key receiver UTF-8"))?;
+                serde_json::from_str::<serde::de::IgnoredAny>(text)
+                    .map_err(|_| TaskError::Json("invalid missing-key receiver"))?;
+                Ok(false)
+            }
+            Err(_) => Err(TaskError::Json(
+                "missing field or invalid JSON on accessed path",
+            )),
+        }
     }
     pub(crate) fn integer(&mut self, slot: usize) -> Result<i64, TaskError> {
         if let Some(v) = self.integers[slot] {
@@ -526,6 +591,34 @@ mod tests {
             };
             assert_eq!(owner.len(), if copied { leaf_len } else { root_len });
         }
+    }
+
+    #[test]
+    fn get_found_and_absence_share_only_existing_cache_lifetime() {
+        let mut state = state();
+        state
+            .install(0, Bytes::from_static(br#"{"s":"\u0078"}"#), 1024)
+            .unwrap();
+        assert_eq!(state.get_present(0), Ok(true));
+        assert_eq!(state.string_value(0).unwrap().as_str(), "x");
+        state.install(0, Bytes::from_static(b"{}"), 1024).unwrap();
+        let before = state.scan_left;
+        assert_eq!(state.get_present(0), Ok(false));
+        assert_eq!(state.get_present(0), Ok(false));
+        assert!(state.ranges[0].is_none());
+        assert!(matches!(
+            state.strings.as_ref().unwrap()[0],
+            StringCache::Unchecked
+        ));
+        assert_eq!(state.scan_left, before);
+        assert!(state.validate_string(0).is_err()); // required still missing
+        state.release(0);
+        assert!(state.get_present(0).is_err()); // released is not absence
+        state
+            .install(0, Bytes::from_static(br#"{"s":"new"}"#), 1024)
+            .unwrap();
+        assert_eq!(state.get_present(0), Ok(true));
+        assert_eq!(state.string_value(0).unwrap().as_str(), "new");
     }
 
     #[test]

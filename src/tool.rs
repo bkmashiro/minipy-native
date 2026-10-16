@@ -221,6 +221,12 @@ pub enum StringSource {
         slot: usize,
         root: usize,
     },
+    /// Only a missing final object key selects this expression's literal.
+    JsonGetLiteral {
+        slot: usize,
+        root: usize,
+        default: Arc<str>,
+    },
     /// Declared i64 leaf evaluated at an f-string sink, in piece order.
     /// `root` participates in owner liveness; decimal formatting uses scalar rules.
     JsonInteger {
@@ -236,7 +242,9 @@ pub enum StringSource {
 impl StringSource {
     pub(crate) fn roots(&self) -> u32 {
         match self {
-            Self::Json { root, .. } | Self::JsonInteger { root, .. } => 1 << root,
+            Self::Json { root, .. }
+            | Self::JsonGetLiteral { root, .. }
+            | Self::JsonInteger { root, .. } => 1 << root,
             Self::Joined(parts) => parts.iter().fold(0, |mask, p| mask | p.roots()),
             _ => 0,
         }
@@ -250,7 +258,7 @@ impl StringSource {
     }
     pub(crate) fn owned_bytes(&self) -> usize {
         match self {
-            Self::Literal(s) => s.len(),
+            Self::Literal(s) | Self::JsonGetLiteral { default: s, .. } => s.len(),
             Self::Joined(parts) => {
                 parts.capacity() * std::mem::size_of::<Self>()
                     + parts.iter().map(Self::owned_bytes).sum::<usize>()
@@ -340,4 +348,56 @@ impl Plan {
 pub enum Reply {
     I64(i64),
     Json(bytes::Bytes),
+}
+
+#[cfg(all(test, target_pointer_width = "64"))]
+mod get_layout_tests {
+    use super::*;
+
+    // Exact pre-get shapes at 5a47c2c, measured with the current compiler.
+    #[allow(dead_code)]
+    enum Before {
+        Literal(Arc<str>),
+        Json { slot: usize, root: usize },
+        JsonInteger { slot: usize, root: usize },
+        Scalar { slot: usize, boolean: bool },
+        Joined(Vec<Before>),
+    }
+    #[allow(dead_code)]
+    struct BeforeCall {
+        id: u32,
+        arguments: usize,
+        json: bool,
+        string: Option<Before>,
+    }
+
+    #[test]
+    fn public_get_layout_and_owned_default_cost() {
+        use std::mem::size_of;
+        println!(
+            "StringSource before/after: {}/{}; Option: {}/{}; BoundCall: {}/{}; Plan: {}",
+            size_of::<Before>(),
+            size_of::<StringSource>(),
+            size_of::<Option<Before>>(),
+            size_of::<Option<StringSource>>(),
+            size_of::<BeforeCall>(),
+            size_of::<BoundCall>(),
+            size_of::<Plan>()
+        );
+        assert_eq!(size_of::<Before>(), 24);
+        assert_eq!(size_of::<StringSource>(), 40);
+        assert_eq!(size_of::<BeforeCall>(), 40);
+        assert_eq!(size_of::<BoundCall>(), 56);
+        let source = StringSource::JsonGetLiteral {
+            slot: 0,
+            root: 2,
+            default: Arc::from("雪"),
+        };
+        assert_eq!(source.roots(), 4);
+        assert_eq!(source.scalars(), 0);
+        assert_eq!(source.owned_bytes(), 3);
+        let parts = vec![source];
+        let expected = parts.capacity() * size_of::<StringSource>() + 3;
+        assert_eq!(StringSource::Joined(parts).owned_bytes(), expected);
+    }
 }

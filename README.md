@@ -46,6 +46,13 @@ Limited f-strings also consume declared JSON i64 leaves directly, for example
 `print(f"ready: {state['count']}")`. Fields evaluate left to right at the sink;
 format specifiers, conversions and arbitrary embedded expressions remain unsupported.
 
+Declared string paths also accept `.get(key_literal, default_literal)` at these
+same sinks, including concatenation and limited f-strings. Only a missing final
+object key uses the default. Present null/wrong types and invalid receivers fail.
+Candidate missing objects receive bounded UTF-8/structural validation, while
+present/required access retains its lazy behavior. See [semantics, costs and the
+public StringSource migration](docs/df-get.md).
+
 Iteration currently uses the fixed Quote/v1 layout (`unit_price_cents`, `quantity`). General record schemas, nested scans, Tool calls inside loops, conditional buffer creation, buffer aliases, general functions/objects and packages are unsupported.
 
 Execution bounds cover scanned rows, retained buffers, Tool calls and stdout. Chunk limits apply per scan, not per task CPU slice. Compiler, runtime and providers are trusted components. Providers must authorize each Tool call and bound detached work. Task budgets do not impose a service-wide memory or in-flight-operation quota.

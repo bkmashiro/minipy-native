@@ -191,6 +191,7 @@ async fn original_cv_scripts_and_branches_both_backends() {
     for native in [false, true] {
         for (index, expected, calls) in [
             (1, "7\ndaily\n", vec![Call::Numeric(102, vec![7])]),
+            (4, "unassigned\n", vec![Call::Numeric(101, vec![7])]),
             (
                 2,
                 "draft 🌍\n",
@@ -273,15 +274,14 @@ async fn original_cv_scripts_and_branches_both_backends() {
 }
 #[test]
 fn bounded_admission_and_remaining_cv_gaps() {
-    for index in [3, 4] {
-        let a = CodeUnit::compile_with_declarations(CASES[index], INPUTS, &declarations())
-            .err()
-            .unwrap();
-        let b = InterpreterUnit::prepare_with_declarations(CASES[index], INPUTS, &declarations())
-            .err()
-            .unwrap();
-        assert_eq!(a, b);
-    }
+    // CV04 still requires arrays/iteration; CV05 now executes in the matrix above.
+    let a = CodeUnit::compile_with_declarations(CASES[3], INPUTS, &declarations())
+        .err()
+        .unwrap();
+    let b = InterpreterUnit::prepare_with_declarations(CASES[3], INPUTS, &declarations())
+        .err()
+        .unwrap();
+    assert_eq!(a, b);
     for expr in [
         "d['message'] == d['status']",
         "d['message'] < 'a'",

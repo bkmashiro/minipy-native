@@ -876,15 +876,74 @@ impl<'a> Compiler<'a> {
         Ok(())
     }
     #[cfg(feature = "tool-json")]
+    fn get_expression(e: &ast::Expr) -> bool {
+        matches!(e, ast::Expr::Call(c) if matches!(c.func.as_ref(), ast::Expr::Attribute(a) if a.attr.as_str() == "get"))
+    }
+    #[cfg(feature = "tool-json")]
+    fn get_string_source(&mut self, e: &ast::Expr) -> Result<crate::tool::StringSource> {
+        let ast::Expr::Call(c) = e else {
+            unreachable!()
+        };
+        let ast::Expr::Attribute(a) = c.func.as_ref() else {
+            unreachable!()
+        };
+        let Some((root, mut path)) = self.json_path(&a.value)? else {
+            return Err(err("get receiver must be a bound JSON object path"));
+        };
+        if self.json_leaves[root].iter().any(|(p, _)| p == &path) {
+            return Err(type_err(
+                "get receiver must be an object, not a declared leaf",
+            ));
+        }
+        if c.args.len() != 2 || !c.keywords.is_empty() {
+            return Err(err("get requires two positional string literals"));
+        }
+        fn literal<'e>(compiler: &Compiler<'_>, e: &'e ast::Expr) -> Result<&'e str> {
+            let ast::Expr::Constant(c) = e else {
+                return Err(err("get requires literal key and default"));
+            };
+            let ast::Constant::Str(s) = &c.value else {
+                return Err(err("get requires string key and default"));
+            };
+            compiler.predicate_literal(c, s, "get")?;
+            Ok(s)
+        }
+        let key = literal(self, &c.args[0])?;
+        let default = std::sync::Arc::from(literal(self, &c.args[1])?);
+        path.push(key.to_owned());
+        let leaf = self.json_leaves[root]
+            .iter()
+            .find_map(|(p, t)| (p == &path).then_some(*t));
+        match leaf {
+            None => {
+                return Err(CompileError::new(
+                    AdmissionKind::Schema,
+                    "get field path is absent from the declared schema",
+                ));
+            }
+            Some(crate::tool::JsonLeaf::String) => {}
+            _ => return Err(type_err("get requires a declared JSON string leaf")),
+        }
+        let slot = self.json.path(root, &path)?;
+        self.json.string_paths = true;
+        Ok(crate::tool::StringSource::JsonGetLiteral {
+            slot,
+            root,
+            default,
+        })
+    }
+    #[cfg(feature = "tool-json")]
     fn string_expression(e: &ast::Expr) -> bool {
-        matches!(
-            e,
-            ast::Expr::JoinedStr(_)
-                | ast::Expr::Constant(ast::ExprConstant {
-                    value: ast::Constant::Str(_),
-                    ..
-                })
-        ) || matches!(e, ast::Expr::BinOp(b) if b.op == ast::Operator::Add && (Self::string_expression(&b.left) || Self::string_expression(&b.right)))
+        Self::get_expression(e)
+            || matches!(
+                e,
+                ast::Expr::JoinedStr(_)
+                    | ast::Expr::Constant(ast::ExprConstant {
+                        value: ast::Constant::Str(_),
+                        ..
+                    })
+            )
+            || matches!(e, ast::Expr::BinOp(b) if b.op == ast::Operator::Add && (Self::string_expression(&b.left) || Self::string_expression(&b.right)))
     }
     #[cfg(feature = "tool-json")]
     fn string_source(&mut self, e: &ast::Expr, format: bool) -> Result<crate::tool::StringSource> {
@@ -906,6 +965,7 @@ impl<'a> Compiler<'a> {
     ) -> Result<()> {
         use crate::tool::{JsonLeaf, StringSource as S};
         match e {
+            e if Self::get_expression(e) => parts.push(self.get_string_source(e)?),
             ast::Expr::Constant(c) if matches!(c.value, ast::Constant::Str(_)) => {
                 let ast::Constant::Str(s) = &c.value else {
                     unreachable!()

@@ -74,6 +74,12 @@ branches on native and tape. The current synthetic total is eight originals;
 only 04/05 remain unsupported. DA/CY counts above are historical snapshots.
 See `bench/results/db/README.md`. No production coverage percentage follows.
 
+DF update: CV05 now runs unchanged on both backends with declared-string literal
+get/default. Nine synthetic originals run, with only CV04 arrays/iteration still
+unsupported. Runtime required-parent/value-type/JSON failures remain executed errors,
+never routing triggers. Earlier counts are historical. See [df-get.md](df-get.md)
+for the missing-only validation policy and public enum migration.
+
 ## Verification and bounded timing
 
 `python3 tools/cy_check.py` uses the existing external target, shared fcntl lock,

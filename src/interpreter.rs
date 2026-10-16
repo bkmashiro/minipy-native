@@ -305,23 +305,13 @@ async fn run<P: Provider>(
                 let call = &unit.json.as_ref().expect("sealed Tool plan").calls[call];
                 let (id, count, is_json) = (call.id, call.arguments, call.json);
                 let argument = match &call.string {
-                    Some(crate::tool::StringSource::Literal(s)) => {
-                        crate::tool::ToolArguments::String(crate::tool::StringValue::Literal(
-                            s.clone(),
-                        ))
+                    Some(source) => {
+                        crate::tool::ToolArguments::String(output.string_argument_source(
+                            source,
+                            &state.locals,
+                            unit.json_live[state.pc],
+                        )?)
                     }
-                    Some(crate::tool::StringSource::Json { slot, .. }) => {
-                        crate::tool::ToolArguments::String(
-                            output
-                                .json
-                                .as_mut()
-                                .expect("JSON plan")
-                                .string_argument(*slot, unit.json_live[state.pc])?,
-                        )
-                    }
-                    Some(source) => crate::tool::ToolArguments::String(
-                        output.string_value(source, &state.locals)?,
-                    ),
                     None => crate::tool::ToolArguments::Numeric(args, count),
                 };
                 runtime::authorize_tool(&cancel, provider.allows_tool(call.id), &mut calls)?;

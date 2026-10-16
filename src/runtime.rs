@@ -280,6 +280,31 @@ impl SinkPart {
 }
 impl Output {
     #[cfg(feature = "tool-json")]
+    pub(crate) fn string_argument_source(
+        &mut self,
+        source: &crate::tool::StringSource,
+        locals: &[i64],
+        live: u32,
+    ) -> Result<crate::tool::StringValue, TaskError> {
+        use crate::tool::{StringSource as S, StringValue as V};
+        match source {
+            S::Json { slot, .. } => self
+                .json
+                .as_mut()
+                .expect("JSON plan")
+                .string_argument(*slot, live),
+            S::JsonGetLiteral { slot, default, .. } => {
+                let json = self.json.as_mut().expect("JSON plan");
+                if json.get_present(*slot)? {
+                    json.string_argument(*slot, live)
+                } else {
+                    Ok(V::Literal(default.clone()))
+                }
+            }
+            _ => self.string_value(source, locals),
+        }
+    }
+    #[cfg(feature = "tool-json")]
     fn sink_part(
         &mut self,
         source: &crate::tool::StringSource,
@@ -306,6 +331,14 @@ impl Output {
         match source {
             S::Literal(s) => Ok(V::Literal(s.clone())),
             S::Json { slot, .. } => self.json.as_mut().expect("JSON plan").string_value(*slot),
+            S::JsonGetLiteral { slot, default, .. } => {
+                let json = self.json.as_mut().expect("JSON plan");
+                if json.get_present(*slot)? {
+                    json.string_value(*slot)
+                } else {
+                    Ok(V::Literal(default.clone()))
+                }
+            }
             S::JsonInteger { .. } => Ok(V::Joined(
                 self.sink_part(source, locals)?.as_str().to_owned(),
             )),
@@ -355,6 +388,7 @@ impl Output {
         };
         let mut values: [Option<SinkPart>; 32] = std::array::from_fn(|_| None);
         let mut len = 1usize;
+        let mut present = 0u32;
         for (i, part) in parts.iter().enumerate() {
             // Preserve left-to-right validation, scan charging and size failures.
             // Only scalars need temporary storage. Text stays in its current owner.
@@ -364,6 +398,16 @@ impl Output {
                     let json = self.json.as_mut().expect("JSON plan");
                     json.validate_string(*slot)?;
                     json.prepared_string(*slot).len()
+                }
+                S::JsonGetLiteral { slot, default, .. } => {
+                    let json = self.json.as_mut().expect("JSON plan");
+                    if json.get_present(*slot)? {
+                        present |= 1 << i;
+                        json.validate_string(*slot)?;
+                        json.prepared_string(*slot).len()
+                    } else {
+                        default.len()
+                    }
                 }
                 S::Scalar { slot, boolean } => {
                     let value = SinkPart::scalar(locals[*slot], *boolean);
@@ -404,6 +448,13 @@ impl Output {
             let text = match part {
                 S::Literal(s) => s.as_ref(),
                 S::Json { slot, .. } => self.json.as_ref().unwrap().prepared_string(*slot),
+                S::JsonGetLiteral { slot, default, .. } => {
+                    if present & (1 << i) != 0 {
+                        self.json.as_ref().unwrap().prepared_string(*slot)
+                    } else {
+                        default.as_ref()
+                    }
+                }
                 S::Scalar { .. } | S::JsonInteger { .. } => values[i].as_ref().unwrap().as_str(),
                 S::Joined(_) => unreachable!("flattened sink plan"),
             };
@@ -658,22 +709,8 @@ async fn run<P: Provider>(
                     .ok_or(TaskError::Input)?;
                 let (id, count, json) = (call.id, call.arguments, call.json);
                 let argument = match &call.string {
-                    Some(crate::tool::StringSource::Literal(s)) => {
-                        crate::tool::ToolArguments::String(crate::tool::StringValue::Literal(
-                            s.clone(),
-                        ))
-                    }
-                    Some(crate::tool::StringSource::Json { slot, .. }) => {
-                        crate::tool::ToolArguments::String(
-                            output
-                                .json
-                                .as_mut()
-                                .expect("JSON plan")
-                                .string_argument(*slot, frame.batch as u32)?,
-                        )
-                    }
                     Some(source) => crate::tool::ToolArguments::String(
-                        output.string_value(source, &frame.locals)?,
+                        output.string_argument_source(source, &frame.locals, frame.batch as u32)?,
                     ),
                     None => crate::tool::ToolArguments::Numeric([frame.batch, frame.total], count),
                 };
