@@ -82,10 +82,50 @@ async fn malformed_json_and_numeric_two_args_use_actual_host_contract() {
     }
 }
 
+#[tokio::test]
+async fn correctness_requires_complete_contract_oracle_and_expected() {
+    for native in [false, true] {
+        for diagnostic in [false, true] {
+            for contract in [None, Some(false), Some(true)] {
+                for oracle in [None, Some(false), Some(true)] {
+                    for expected in [None, Some(false), Some(true)] {
+                        let mut value = json!({"case_id":"eligibility","source":"print(1)"});
+                        if let Some(flag) = contract {
+                            value["contract_complete"] = json!(flag);
+                        }
+                        if let Some(flag) = oracle {
+                            value["oracle_complete"] = json!(flag);
+                        }
+                        if let Some(matches) = expected {
+                            value["expected"] = json!({"stdout":if matches {"1\n"} else {"wrong\n"},"status":"ok","calls":[]});
+                        }
+                        let case: runner::Case = serde_json::from_value(value.clone()).unwrap();
+                        let result = runner::run(&case, native, diagnostic).await;
+                        let correct = if contract == Some(true) && oracle == Some(true) {
+                            json!(expected)
+                        } else {
+                            Value::Null
+                        };
+                        assert_eq!(result["correct"], correct, "{value}: {result}");
+                        assert_eq!(result["actual"]["stdout"], "1\n");
+                    }
+                }
+            }
+        }
+    }
+}
+
 #[test]
 fn fixture_contract_is_strict_but_private_top_level_fields_are_not_executed() {
     let good = json!({"case_id":"private","source":"print(1)","provenance":{"command":"never execute this"}});
     assert!(serde_json::from_value::<runner::Case>(good.clone()).is_ok());
+    for flag in ["contract_complete", "oracle_complete"] {
+        let mut c = good.clone();
+        c[flag] = Value::Null;
+        assert!(serde_json::from_value::<runner::Case>(c.clone()).is_ok());
+        c[flag] = json!(1);
+        assert!(serde_json::from_value::<runner::Case>(c).is_err());
+    }
     for reply in [
         json!({"tool_id":2,"arguments":[],"i64":1,"json":"{}"}),
         json!({"tool_id":2,"arguments":[],"i64":1,"wait_ms":1001}),

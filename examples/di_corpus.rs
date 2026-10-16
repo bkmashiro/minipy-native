@@ -35,6 +35,8 @@ pub struct Case {
     #[serde(default)]
     replies: Vec<Replay>,
     expected: Option<Value>,
+    contract_complete: Option<bool>,
+    oracle_complete: Option<bool>,
 }
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -441,7 +443,11 @@ pub async fn run(case: &Case, native: bool, diagnostic: bool) -> Value {
     drop(values);
     let request_total_ns = request_start.elapsed().as_nanos() as u64;
     let actual = json!({"stdout":stdout,"status":status,"calls":calls});
-    let correct = case.expected.as_ref().map(|e| *e == actual);
+    let correct = if case.contract_complete == Some(true) && case.oracle_complete == Some(true) {
+        case.expected.as_ref().map(|e| *e == actual)
+    } else {
+        None
+    };
     let events = trace.as_ref().map(|t| t.borrow().iter().map(|e| json!({"phase":e.phase,"runtime_buffer_accounting_bytes":e.buffer_bytes,"reported_frame_bytes":e.frame_bytes,"remaining":e.remaining,"index":e.index})).collect::<Vec<_>>());
     let snapshots = ownership
         .as_ref()

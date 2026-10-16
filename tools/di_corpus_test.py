@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """No Cargo/model/corpus campaign: inventory and no-partial-binding invariants."""
 import unittest
+from typing import Any
 import di_corpus as corpus
 
 
@@ -22,6 +23,27 @@ class InventoryTests(unittest.TestCase):
             'source': "d = tools.fetch()\nprint(d.get('name','x'))", 'contract_complete': True})
         self.assertEqual(row['static_binding']['whole_program_bound_sites'],
                          {'tool_call_sites': 1, 'data_selector_sites': 1})
+
+    def test_correctness_requires_complete_contract_oracle_and_expected(self):
+        expected = {'stdout': '1\n', 'status': 'ok', 'calls': []}
+        for contract in [False, None, True, 1]:
+            for oracle in [False, None, True, 1]:
+                for supplied in [False, True]:
+                    case: dict[str, Any] = {'source': 'print(1)'}
+                    if contract is not None:
+                        case['contract_complete'] = contract
+                    if oracle is not None:
+                        case['oracle_complete'] = oracle
+                    if supplied:
+                        case['expected'] = expected
+                    eligible = contract is True and oracle is True and supplied
+                    for equality in [False, True]:
+                        with self.subTest(case=case, equality=equality):
+                            row = corpus.decorate({'correct': equality}, case)
+                            self.assertIs(row['correct'], equality if eligible else None)
+        case = {'source': 'print(1)', 'contract_complete': True,
+                'oracle_complete': True, 'expected': None}
+        self.assertIsNone(corpus.decorate({'correct': True}, case)['correct'])
 
     def test_syntax_has_unknown_denominators_and_calls_are_not_field_sites(self):
         self.assertIsNone(corpus.inventory('print('))

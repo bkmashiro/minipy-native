@@ -38,6 +38,8 @@ def decorate(row: dict[str, Any], case: dict[str, Any]) -> dict[str, Any]:
     sites = inventory(case['source'])
     # Admission proves binding against the supplied ABI, not completeness of a real Host mapping.
     complete = case.get('contract_complete') is True
+    if not (complete and case.get('oracle_complete') is True and case.get('expected') is not None):
+        row['correct'] = None
     bound = sites if row.get('whole_source_admitted') and complete else None
     row['static_binding'] = {'source_sites': sites, 'whole_program_bound_sites': bound,
                              'contract_complete': case.get('contract_complete'),

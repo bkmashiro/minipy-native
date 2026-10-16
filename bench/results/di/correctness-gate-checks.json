@@ -1,0 +1,88 @@
+{
+  "base_head": "5430acdf86066f20bfc405700e930ce74e0e2e3f",
+  "source_sha256": {
+    "examples/di_corpus.rs": "3657ded473980a18c62693afa6bc2c47b3ac2e79ad97c53555974ba303f315b2",
+    "tests/di_corpus.rs": "a6f095897971ff35a8e7eae69d6020aa6c2e3b061c053fce1f1cff4ad24a94de",
+    "tools/di_corpus.py": "7690888864fb72e769225dcbde6baa67955fd6e21cd46884bb466929e8a9088b",
+    "tools/di_corpus_test.py": "f3b08a8c103af4a0eef55cafea6e4b16bdbf6ee31ba9c5995ac4df4e64c9b695"
+  },
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "tools/di_corpus_test.py"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nOK\n"
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--features",
+        "tool-json",
+        "--test",
+        "di_corpus",
+        "--test",
+        "cy_routing"
+      ],
+      "exit": 0,
+      "stdout": "\nrunning 5 tests\ntest malformed_type_schema_and_preparation_limits_are_rejected_not_routed ... ok\ntest json_preparation_limits_are_resource_errors_on_both_backends ... ok\ntest cancellation_after_submission_keeps_effect_once_and_never_routes ... ok\ntest fresh_source_success_and_whole_script_admission_before_any_effect ... ok\ntest runtime_errors_keep_partial_stdout_and_never_replay_or_fallback ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n\nrunning 5 tests\ntest fixture_contract_is_strict_but_private_top_level_fields_are_not_executed ... ok\ntest malformed_json_and_numeric_two_args_use_actual_host_contract ... ok\ntest resource_rejection_and_runtime_mismatch_never_fallback_or_replay ... ok\ntest correctness_requires_complete_contract_oracle_and_expected ... ok\ntest controlled_smoke_both_backends_and_separate_memory_mode ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n",
+      "stderr": "    Finished `release` profile [optimized + debuginfo] target(s) in 0.07s\n     Running tests/cy_routing.rs (/Volumes/M.2/caches/minipy-native-target/release/deps/cy_routing-1add952d3562a6d7)\n     Running tests/di_corpus.rs (/Volumes/M.2/caches/minipy-native-target/release/deps/di_corpus-1971137354badd9f)\n"
+    },
+    {
+      "command": [
+        "cargo",
+        "+1.96.0",
+        "clippy",
+        "--offline",
+        "--locked",
+        "--release",
+        "--features",
+        "tool-json",
+        "--lib",
+        "--example",
+        "di_corpus",
+        "--test",
+        "di_corpus",
+        "--",
+        "-D",
+        "warnings",
+        "-A",
+        "clippy::type_complexity"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "    Checking minipy-native v0.1.0 (/Users/yuzhe/projects/minipy-native)\n    Finished `release` profile [optimized + debuginfo] target(s) in 0.75s\n"
+    },
+    {
+      "command": [
+        "cargo",
+        "+stable",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "known_warning": "Unqualified -D warnings fails on pre-existing src/frontend.rs:200 clippy::type_complexity; final targeted check uses the original DI allowance."
+}

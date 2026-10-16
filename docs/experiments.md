@@ -1,5 +1,26 @@
 # Experiments
 
+## DI review repair: correctness eligibility (2026-10-16)
+
+The same-card review found that `correct` compared a supplied expected value
+without enforcing the documented complete-contract/complete-oracle gate. The
+Rust replay Case now reads optional boolean completeness flags and emits a
+boolean only when both are explicitly true and expected is non-null; all other
+cases emit null. Python decoration independently masks ineligible rows. Actual
+outcomes, admission, replay matching and binding denominators are unchanged.
+
+The new Rust matrix covers missing/false/true flags and missing/matching/mismatching
+expected on both real backends in timing and diagnostic modes (108 runs). Python
+also rejects truthy integer flags for eligibility. Optional null flags deserialize
+as unknown, non-boolean flags fail fixture decoding. macOS arm64 Rust 1.96 offline
+locked release passes DI 5 and CY 5 tests, Python 4, fmt and diff checks. Targeted
+Clippy passes with the original DI `type_complexity` allowance; unqualified
+`-D warnings` still fails at pre-existing `src/frontend.rs:200`. No production
+changes, private replay, model call, pilot, Linux/Wasm run or new target. Commands,
+outputs and source hashes: `bench/results/di/correctness-gate-checks.json`. Earlier
+smoke results remain historical evidence at their recorded source identities.
+This repair returns to original-card review; DJ remains dependency-gated.
+
 ## DI: controlled corpus admission/replay runner (2026-10-16)
 
 From reviewed DG `757cb0c`, add one opt-in example and a small Python driver,

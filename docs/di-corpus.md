@@ -58,11 +58,16 @@ ABI/argument/result/reply records are rejected as `fixture_error`.
 - `expected`, optional, is exactly `{stdout: string, status: string,
   calls: [{tool_id, arguments}]}`. `status` is `ok`, a task error category, or an
   admission category. Expected extra fields fail exact equality. Omitted
-  expected gives `correct: null`, not success. This expected target can describe
+  expected gives `correct: null`, not success. With both completeness flags true,
+  this expected target can describe
   desired semantics even when the original source is Unsupported, yielding
   `correct: false`. It need not endorse rejection as a task-level solution.
 - `contract_complete` and `oracle_complete` are corpus-author flags. An unknown
   or false Host contract never contributes whole-program binding coverage.
+  `correct` is boolean ONLY when BOTH flags are explicitly true and `expected`
+  is present and non-null; otherwise it is null, even if supplied expected output
+  matches. This gate applies in both the Rust adapter and Python decoration.
+  Flags are optional booleans (null means unknown); non-booleans are fixture errors.
   The runner does not manufacture missing contracts/oracles. Restrict a later
   correctness pilot to cases with BOTH flags true, preserving all other cases
   in the sampling/obstacle denominator. This runner does not launch that pilot,
