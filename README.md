@@ -40,7 +40,7 @@ Add `--ir` after the filename to inspect generated Cranelift IR.
 
 Top-level scripts support inferred i64/bool locals, optional annotations, checked arithmetic, comparisons, short-circuit conditions, sequential Tool calls, Quote scans and scalar `print`. Builtins include `len(quote_buffer)`, checked `abs(i64)` and two-argument i64 `min`/`max`. Integers are checked signed-64, not Python arbitrary precision.
 
-With `tool-json`, Hosts can declare JSON leaves and bounded string Tool arguments. String leaves, literal concatenation and limited f-strings work at print/Tool sinks. General string-valued locals and arbitrary string operations are unsupported.
+With `tool-json`, Hosts can declare JSON leaves and bounded string Tool arguments. String leaves, literal concatenation and limited f-strings work at print/Tool sinks. String predicates support literal `in` and declared string leaf `==` / `!=` literal (either side, including leaf aliases). Equality compares decoded Unicode without normalization. General string-valued locals and arbitrary string operations are unsupported.
 
 Iteration currently uses the fixed Quote/v1 layout (`unit_price_cents`, `quantity`). General record schemas, nested scans, Tool calls inside loops, conditional buffer creation, buffer aliases, general functions/objects and packages are unsupported.
 

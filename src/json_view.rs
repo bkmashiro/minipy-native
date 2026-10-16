@@ -295,6 +295,15 @@ impl State {
         let value = self.string(slot)?;
         Ok(i64::from(value.contains(plan.needles[needle].as_str())))
     }
+    pub(crate) fn equals(&mut self, slot: usize, literal: usize) -> Result<i64, TaskError> {
+        // Locate before charging, then validate even empty/unequal-length values.
+        // UTF-8 equality preserves exact Unicode scalar equality, without normalization.
+        let size = self.locate(slot)?.len() + self.plan.needles[literal].len();
+        self.charge(size)?;
+        let plan = self.plan.clone();
+        let value = self.string(slot)?;
+        Ok(i64::from(value == plan.needles[literal]))
+    }
 }
 /// Reborrow the interior of a validated immutable JSON string token. The range
 /// was bounds-checked by locate and checked as an unescaped string by sonic.
@@ -334,8 +343,11 @@ pub(crate) unsafe extern "C" fn native_string(
 ) -> i64 {
     let output = unsafe { &mut *output };
     let json = output.json.as_mut().expect("sealed JSON plan");
-    let value = if needle < 0 {
+    // Sealed compiler selector: -1 validates, >=0 contains, <=-2 equals.
+    let value = if needle == -1 {
         json.validate_string(slot as usize)
+    } else if needle < -1 {
+        json.equals(slot as usize, (-needle - 2) as usize)
     } else {
         json.contains(slot as usize, needle as usize)
     };

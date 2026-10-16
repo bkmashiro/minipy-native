@@ -61,3 +61,7 @@ compiler-profile = ["compile-timing"]
 
 [profile.release]
 debug = 1
+
+[[example]]
+name = "cx_probe"
+required-features = ["tool-json"]

@@ -1,0 +1,45 @@
+    Finished `release` profile [optimized + debuginfo] target(s) in 0.07s
+     Running tests/local_read_host.rs (target/release/deps/local_read_host-7f46a8c7c46a9a35)
+
+running 3 tests
+test dead_json_owner_released_before_quote_load_budget ... ok
+test dead_json_owner_released_before_next_literal_tool_reply ... ok
+test whole_scripts_read_real_files_with_bound_host_policy ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/string_contains.rs (target/release/deps/string_contains-a60012f840df2f19)
+
+running 4 tests
+test schema_rejects_unapproved_shapes ... ok
+test budgets_and_wait_lifetime ... ok
+test print_declared_json_string_leaf_both_backends ... ok
+test real_source_differential ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/string_equality.rs (target/release/deps/string_equality-802252b3477d6654)
+
+running 6 tests
+test bounded_admission_and_remaining_cv_gaps ... ok
+test exact_scan_decode_retained_and_token_budgets ... ok
+test error_order_short_circuit_and_no_later_effect ... ok
+test original_cv_scripts_and_branches_both_backends ... ok
+test owner_across_wait_last_use_cancellation_and_detached_argument ... ok
+test unicode_predicates_literals_on_either_side_and_aliases ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/string_tool.rs (target/release/deps/string_tool-2274f0f4bf23c4b6)
+
+running 7 tests
+test resident_request_cost ... ignored
+test resident_sink_cost ... ignored
+test admission_location_and_legacy_numeric_api ... ok
+test joined_argument_remains_owned_after_cancellation ... ok
+test json_alias_escaped_utf8_and_detached_owner_survive_cancellation ... ok
+test literal_string_tools_are_not_special_cased_and_errors_preserve_output ... ok
+test sink_join_print_and_tool_preserve_order_and_bounds ... ok
+
+test result: ok. 5 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

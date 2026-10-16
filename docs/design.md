@@ -38,6 +38,28 @@ Tool implementations stay behind declared capabilities; runtime authorization re
 
 With `tool-json`, the Host can declare a finite `ToolDeclaration` with one `ArgumentSchema::String("path")` and a `ResultSchema::JsonTyped` string leaf. Source may call `tools.read_file("notes.txt")`, `tools.read_file(path="notes.txt")`, or pass an already declared JSON string leaf/alias. `print(data["content"])`, `print("[" + data["content"] + "]")`, and `print(f"{n}: {data['content']}")` consume bounded strings directly. A `+` chain accepts only literals and declared string leaves; limited f-strings additionally accept i64/bool scalar fields without format specifiers or conversions. At most 32 pieces are sealed per sink. Source is capped at 16 KiB, individual literal at 4096 UTF-8 bytes, joined Tool argument at 64 KiB, and stdout (including newline) at its task cap. No string local values, generic operations, `read_file` global alias, dynamic iteration, or Python objects are exposed. A string-valued Tool call retains its arguments across detached operation completion even if the task cancels; the Host must recheck ID/path and bound independent in-flight work. The controlled real-file adapter in `tests/local_read_host.rs` validates this subset but does not reproduce Hermes read_file permissions, pagination, redaction or deduplication.
 
+### Bounded string equality
+
+With `tool-json`, a declared JSON string leaf or existing leaf alias supports
+`==` / `!=` against a string literal on either side. The result is bool. No
+leaf-to-leaf, concatenation operand, chained comparison, ordering or string
+truthiness is admitted. Literals are capped at 4096 UTF-8 bytes. Decoded UTF-8
+equality implements exact Unicode scalar equality without normalization or
+case folding. Source surrogate escapes are rejected for this predicate, and
+JSON lone surrogates remain task errors in the existing UTF-8 value domain.
+
+Like contains, equality first locates the raw token, then charges raw token
+bytes plus literal UTF-8 bytes against the cumulative string scan budget, then
+validates/decodes and compares. First escaped decode additionally charges the
+raw token size and retains its decoded capacity against the existing aggregate
+budget. Cache hits still charge each comparison. Empty or unequal-length
+operands do not bypass validation or charging. Missing-path errors precede
+charge; after successful locate, insufficient scan budget precedes type/decode
+errors. Existing short-circuit and eager alias validation order is preserved.
+The existing 64-KiB raw-token bound and default cumulative 1-MiB string scan
+budget apply, including across Tool waits. Roots participate in both backends'
+last-use masks. No new ownership, authorization or scheduling mechanism is added.
+
 ## Memory and code
 
 CodeUnit owns RX code, entry/state layout, source/error mapping and ABI identity. Task owns parameters, authorization, budget, continuation state and strong references to code and buffers. Code may be explicitly compiled once and used by multiple independent tasks; no automatic IR matching/cache required.

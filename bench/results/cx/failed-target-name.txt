@@ -1,0 +1,32 @@
+error: no test target named `tool_strings` in default-run packages
+help: available test targets:
+    acceptance
+    boundaries
+    builtins_admission
+    bz_detach
+    cc_waiting
+    cl_dest
+    co_count
+    ct_alloc
+    ct_errors
+    ct_profile
+    ct_schema
+    cw_integer_literals
+    debug_runtime
+    fixture_lifecycle
+    fixture_reference
+    http_collect_cost
+    http_tool
+    input_schema_cost
+    interpreter
+    kernel_admission
+    local_read_host
+    perf_workbench
+    scripts
+    string_contains
+    string_cost_probe
+    string_equality
+    string_tool
+    tool_environment
+    tool_json
+    tool_validation_cost

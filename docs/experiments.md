@@ -2523,3 +2523,37 @@ target、原 fcntl 锁、单 job、Rust 1.96.0 offline/locked，无 PGO flags。
 
 固定签名集成提交交一次 Luna 定向只读审阅，最终 SHA、审阅与远端 main
 回读记在 CS 卡片交付；CT/后续 PGO 必须引用该 SHA，不能沿用旧 profile。
+
+## CX：声明字符串叶与 literal 的精确相等
+
+在 CW 已审 main `a2b5b2f` 上保留单一家族：tool-json 的 leaf/literal
+`==` / `!=`，literal 可在两侧，复用现有 alias。共享 Rust helper、bool IR、
+native/tape lowering 与 root liveness，不增加通用字符串值或新依赖。
+保持 contains 同样的 locate→charge→validate/decode 顺序和跨 wait 累计预算。
+RustPython 的 surrogate escape 会有损转成 U+FFFD，因此 equality literal
+在命中 U+FFFD 时核查原始 lexer token，拒绝 surrogate escape，同时接受
+真实 replacement scalar、raw/反斜杠/implicit concatenation。无 normalize。
+
+CV 十个合成原始脚本逐字节导入 fixtures/cv：实际两个 backend 都执行
+02/03/06/07/08/10，完整新解锁仅 07/08。01 仍在第三行直接 JSON-i64
+f-string 被拒绝；04 数组结果/迭代、05 get/default、09 startswith 仍未支持。
+不把样本计数作为真实覆盖率。测试检查输出、Tool 顺序和参数，包含未命中
+和空消息分支、Unicode/坏字段、精确 scan/decode/retained/raw-token 边界、
+短路、错误后无 effect、跨等待 owner、取消/最后使用和 detached 参数。
+
+本次执行者核验前次全部 36 source hashes 与当前树相同，复用三套完整
+非 release suite 日志 default/tool-json/debug-json 80/140/148 passed。
+本次独立重跑 release equality/contains/string_tool/local_read_host 共18
+passed（2已有性能项 ignored），以及 debug equality 6 passed。定向
+lib/new-test/example Clippy 通过，豁免已有 CT type_complexity；全 target
+仍有 CT tests 的既有 lint，不冒称严格全库通过。stable fmt/diff check 通过。
+全部使用原外盘 target、fcntl 锁、单 job、1.96 offline/locked，无下载。
+缺失1.96 formatter、误写test名及既有Clippy失败日志保留，没有改CT代码。
+
+两次旧 worker 曾并发，本次确认都退出后收敛。原 raw.csv/summary 与另一批
+run-*.csv/identity/load 分开保留（各594行含18 warmup），不池化、不补采。
+现有全部计时降级为受争用诊断：没有成立的低负载或净收益结论。计时含新源
+prepare+实际 execute+unit/outcome drop，源码文本生成和Host/runtime设置
+在外；不能当 equality 对 contains 的优化证据。无Linux/Wasm运行或新campaign。
+复现/identity/原始日志/限制见 [CX evidence](../bench/results/cx/README.md)。
+固定签名提交交一次 Luna 只读定向审阅，结果及远端SHA留在原卡。

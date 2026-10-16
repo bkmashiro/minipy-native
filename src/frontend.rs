@@ -823,6 +823,52 @@ impl<'a> Compiler<'a> {
         }))
     }
     #[cfg(feature = "tool-json")]
+    fn equality_literal(&self, c: &ast::ExprConstant, literal: &str) -> Result<()> {
+        if literal.len() > 4096 {
+            return Err(err("equality literal exceeds 4096 UTF-8 bytes"));
+        }
+        // RustPython 0.4 replaces surrogate escapes with U+FFFD. Only inspect
+        // raw tokens when that scalar occurs, preserving genuine U+FFFD, raw
+        // strings, escaped backslashes and implicitly concatenated literals.
+        if literal.contains('\u{fffd}') {
+            use rustpython_parser::{Mode, Tok, lexer};
+            let source = &self.source[c.start().to_usize()..c.end().to_usize()];
+            for token in lexer::lex(source, Mode::Expression) {
+                let (token, _) = token.map_err(|_| err("invalid equality literal"))?;
+                if let Tok::String { value, kind, .. } = token {
+                    if kind.is_raw() {
+                        continue;
+                    }
+                    let mut chars = value.chars();
+                    while let Some(ch) = chars.next() {
+                        if ch != '\\' {
+                            continue;
+                        }
+                        let digits = match chars.next() {
+                            Some('u') => 4,
+                            Some('U') => 8,
+                            _ => continue,
+                        };
+                        let mut scalar = 0u32;
+                        for _ in 0..digits {
+                            let digit = chars
+                                .next()
+                                .and_then(|c| c.to_digit(16))
+                                .ok_or_else(|| err("invalid equality literal escape"))?;
+                            scalar = (scalar << 4) | digit;
+                        }
+                        if (0xd800..=0xdfff).contains(&scalar) {
+                            return Err(err(
+                                "surrogate escapes are unsupported in equality literals",
+                            ));
+                        }
+                    }
+                }
+            }
+        }
+        Ok(())
+    }
+    #[cfg(feature = "tool-json")]
     fn string_expression(e: &ast::Expr) -> bool {
         matches!(
             e,
@@ -1242,7 +1288,7 @@ impl<'a> Compiler<'a> {
                 .ok_or_else(|| err("JSON expression must name a declared leaf"))?;
             if leaf != crate::tool::JsonLeaf::I64 {
                 return Err(err(
-                    "string leaf is only supported as the right operand of literal `in`",
+                    "string leaf requires a string sink or literal predicate",
                 ));
             }
             let slot = self.json.path(root, &path)?;
@@ -1292,8 +1338,8 @@ impl<'a> Compiler<'a> {
             ast::Expr::Constant(c) => match &c.value {
                 ast::Constant::Bool(b) => Ok((Expr::Bool(*b), Type::Bool)),
                 ast::Constant::Int(n) => {
-                    let value = i64::try_from(n)
-                        .map_err(|_| err("integer literal is outside i64"))?;
+                    let value =
+                        i64::try_from(n).map_err(|_| err("integer literal is outside i64"))?;
                     Ok((Expr::Int(value), Type::I64))
                 }
                 _ => Err(err("only i64 and bool constants are supported")),
@@ -1402,6 +1448,46 @@ impl<'a> Compiler<'a> {
             ast::Expr::Compare(c) => {
                 if c.ops.len() != 1 || c.comparators.len() != 1 {
                     return Err(err("chained comparisons are unsupported"));
+                }
+                #[cfg(feature = "tool-json")]
+                if matches!(c.ops[0], ast::CmpOp::Eq | ast::CmpOp::NotEq) {
+                    let pair = match (c.left.as_ref(), &c.comparators[0]) {
+                        (ast::Expr::Constant(c), leaf) | (leaf, ast::Expr::Constant(c)) => {
+                            if let ast::Constant::Str(literal) = &c.value {
+                                Some((leaf, c, literal))
+                            } else {
+                                None
+                            }
+                        }
+                        _ => None,
+                    };
+                    if let Some((leaf, constant, literal)) = pair {
+                        self.equality_literal(constant, literal)?;
+                        if !self.is_json_string(leaf)? {
+                            return Err(err(
+                                "string equality requires a declared JSON string leaf and literal",
+                            ));
+                        }
+                        self.node(depth + 1)?;
+                        let (root, path) = self.json_path(leaf)?.expect("declared string leaf");
+                        let slot = self.json.path(root, &path)?;
+                        let index = self.json.needles.len();
+                        self.json.needles.push(literal.clone());
+                        self.json.string_paths = true;
+                        let equal = Expr::StringEq {
+                            slot,
+                            root,
+                            literal: index,
+                        };
+                        return Ok((
+                            if c.ops[0] == ast::CmpOp::NotEq {
+                                Expr::Not(Box::new(equal))
+                            } else {
+                                equal
+                            },
+                            Type::Bool,
+                        ));
+                    }
                 }
                 #[cfg(feature = "tool-json")]
                 if matches!(c.ops[0], ast::CmpOp::In) {

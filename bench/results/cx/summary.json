@@ -1,0 +1,32 @@
+{
+  "tape": {
+    "eq": {
+      "n": 96,
+      "median_ns": 14187.5
+    },
+    "contains": {
+      "n": 96,
+      "median_ns": 14541.5
+    },
+    "scalar": {
+      "n": 96,
+      "median_ns": 12770.5
+    },
+    "paired_eq_over_contains_median": 0.984319887565033
+  },
+  "native": {
+    "eq": {
+      "n": 96,
+      "median_ns": 127854.5
+    },
+    "contains": {
+      "n": 96,
+      "median_ns": 128333.5
+    },
+    "scalar": {
+      "n": 96,
+      "median_ns": 116145.5
+    },
+    "paired_eq_over_contains_median": 0.9948944748566062
+  }
+}

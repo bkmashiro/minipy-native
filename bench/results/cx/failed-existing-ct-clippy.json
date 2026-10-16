@@ -1,0 +1,174 @@
+{
+  "reused_suites": {
+    "default": {
+      "passed": 80,
+      "ignored": 3
+    },
+    "tool_json": {
+      "passed": 140,
+      "ignored": 13
+    },
+    "debug_json": {
+      "passed": 148,
+      "ignored": 13
+    }
+  },
+  "commands": [
+    {
+      "argv": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--features",
+        "tool-json",
+        "--test",
+        "string_equality",
+        "--test",
+        "string_contains",
+        "--test",
+        "string_tool",
+        "--test",
+        "local_read_host"
+      ],
+      "exit_code": 0,
+      "log": "/Users/yuzhe/projects/minipy-native/bench/results/cx/final-0.txt"
+    },
+    {
+      "argv": [
+        "cargo",
+        "+1.96.0",
+        "test",
+        "--offline",
+        "--locked",
+        "--release",
+        "--features",
+        "tool-json,debug-runtime",
+        "--test",
+        "string_equality"
+      ],
+      "exit_code": 0,
+      "log": "/Users/yuzhe/projects/minipy-native/bench/results/cx/final-1.txt"
+    },
+    {
+      "argv": [
+        "cargo",
+        "+1.96.0",
+        "clippy",
+        "--offline",
+        "--locked",
+        "--all-targets",
+        "--features",
+        "tool-json,debug-runtime",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 101,
+      "log": "/Users/yuzhe/projects/minipy-native/bench/results/cx/final-2.txt"
+    }
+  ],
+  "timing_status": "Both batches diagnostic only; concurrent workers, not low-load evidence. Never pooled.",
+  "unchanged_cv_fixtures": 10,
+  "timing_batches": {
+    "raw.csv": {
+      "records": 594,
+      "measured": 576
+    },
+    "run-*.csv": {
+      "records": 594
+    }
+  },
+  "source_sha256": {
+    "Cargo.lock": "15a236e43daf854bedbd6a83a6a667d1e7a173e9100008be03d82efbc3efe97e",
+    "Cargo.toml": "69056edb72469d1d1e49f069dddbcfa78ba3a79a8af24acfbabdf55f672384c8",
+    "examples/cx_probe.rs": "f2ae8766071b136d3cf316f54c5793464bb94646d10a1dfb092c3d577ff93c66",
+    "fixtures/cv/01_status_summary.py": "257392e9a26e1df98b7f9df6f63f1b80b046839b175c40ee7093618bafba7d80",
+    "fixtures/cv/02_json_few_fields.py": "5c54fc772464e19864a1686b8dea917c6160943f8696f20207754a421bcf5dd2",
+    "fixtures/cv/03_path_then_call.py": "2c7d5fdfb72cc1d3bbdc00cd78013c07478aea4f26fac4df2cd5342d60631cbd",
+    "fixtures/cv/04_first_matching_result.py": "0d9387d277f42cf732d4a8188c1ccb23a9d2535025cab9c659208d56e814d40d",
+    "fixtures/cv/05_missing_default.py": "cccf623fdc16c1f03933eded0b5106e6b4052e4df03f7a9c6a5db92e99beee36",
+    "fixtures/cv/06_multi_call_branch.py": "cec35cfbebf762136ece9670cddbc78f940ab5c3eba84aa2cce1568d73c0851f",
+    "fixtures/cv/07_exact_route.py": "0f3d4d8e5e69b59dfbb581861f54e4f6d5eb2d80b80a801b85d54639cbe5960a",
+    "fixtures/cv/08_nonempty_message.py": "1fd6181b336ab2c2ddbfbf750c6a345a1a7fc062fc49b34b514dae57ef601f1b",
+    "fixtures/cv/09_prefix_route.py": "a899b23e3e365a96fff160d58dae57191bd8372b4bcfc7edbffada13d56ddf8c",
+    "fixtures/cv/10_alias_contains_summary.py": "2db682ffb4917495e5d2db1715c3020258f7e588de88dace2f1897dd95e1aaf3",
+    "src/bin/minipy.rs": "14c157179b8156816de8b6bd2736407af8998059b5f1940b79073528f154a76f",
+    "src/buffer.rs": "728e3dc082ed1f8bed96864f608c1ddb22f7f6b9016531dba0e5deff7d9d2867",
+    "src/codegen.rs": "655be40e73b7c502485bf19db162db8dd9ac36fbc13306aef3a1153f21d7b7ac",
+    "src/compiler_profile.rs": "7fdb8442d6d37d630fcf9c679c2abb1da0c49ab52ffc6b2741cd05ff46fcaefb",
+    "src/error.rs": "71b911094d7d0cc11b0d1445abd15c059e2b9ae6a32f76e14cda16020afb142c",
+    "src/fixture_reference.rs": "d3c67f1003a5816832fbd15c6d377edbb4d422c6db9be1b3cab7c40ae58aff53",
+    "src/frontend/schema_probe.rs": "63aa58fae1ae8175b0fba0cf55087c8bfed263e510aab7b3cb9d10895bf747cb",
+    "src/frontend.rs": "0267f7fb4332d169361eafce31ee1ca4e6989b40ad6a7dde0b1bac7b2e5e8d75",
+    "src/http_provider.rs": "fde2d86e841e245c4c8300771f68304819589692741743e6449ae695a5208f1e",
+    "src/interpreter/debug.rs": "fd6a458256c51a7a0d27bc9725c97a9330b7368247dc3031d96390f622b78fd0",
+    "src/interpreter/liveness_tests.rs": "2a6866e16e814aca2c904d9108ace085ff577e2e78810f026bf29f1f4cbe1299",
+    "src/interpreter/tape.rs": "0be9186997b56dd826e0a52b289ee7a3e2a3dec3b2a1009efa531b24d155ec8e",
+    "src/interpreter.rs": "14f26b105ca6d9e082afd73f5984a6456059005ec2bf3291953e0d72c2b9f149",
+    "src/interpreter_profile.rs": "ca14500ff28ec156553ae1d2e0672381afdad261b2f309ea72455bd11fa7722c",
+    "src/ir.rs": "3d63e11f0a6e005b5d2d1aa08ec451cd7f66cc761b8513c823a8f7e89ffafe28",
+    "src/json_view.rs": "889c89998188b18fd260ba37940d6e95dbe61f75418a6548f6ea8d78bf4a1eb7",
+    "src/lib.rs": "d4e08a6ac47ee51961389937efa9d630d94c77005e2a45882705ca946a7153b6",
+    "src/provider.rs": "642cc57c0434f445a82fdbc41a4ff6271a4609ece93ca045d7ed3569624312da",
+    "src/runtime.rs": "e7b0c1ea030bd14f785963872842b65f7aa5c96b9019cc0eb1632f20da8aea0f",
+    "src/tool.rs": "6bbd80db8d2dc8fb3c0db6d6a49592c05d79326c479eaec618c8dc297889d891",
+    "src/wasm.rs": "d29e071173a706dd80a506557075af0fe3d6a26b7d2ed4be261658123edfb623",
+    "tests/acceptance.rs": "1e5fde78027721f1e474662c462de9c9cb8da207f28ec6168ca18e2ff5b0c644",
+    "tests/boundaries.rs": "dca5fa9b3afdcd0cd94ac1804c4dfb2686d0fcc2d9ecad9a2b72b65a793ce6a6",
+    "tests/builtins_admission.rs": "c48a9338f9af9de3e6517a0a7b3c9441c11b43ea120f066467c95ebe1db1649d",
+    "tests/bz_detach.rs": "d8d8ab1efa06f97b1788ddc70fa111799e883ee0562201a523699b0accf05594",
+    "tests/cc_waiting.rs": "9c05460d6ee03c81809df1668148627979d0a38f6326e436af5f84311d21ed57",
+    "tests/cl_dest.rs": "3d7e1b5f207a4a5c3729f9b49c386bf02375a504abd49f91580e71bbce87f5c4",
+    "tests/co_count.rs": "4408197c12ea19738fef4f4a2a2138527fe2e16292fca291f39613299a1e54d3",
+    "tests/ct_alloc.rs": "af70e8c217a1a556c74f8d6d9c9a6ebfa23aef3ebd0176b1c2e1d882571114d4",
+    "tests/ct_errors.rs": "90ee8c43d2fb190b2802f123ff9f4ea31364d4ae0a08883dd9c22d630830e10d",
+    "tests/ct_profile.rs": "867576182d9609f7b2fd26c9fe8d5545fc946a3414a0da519cf2751a758ef940",
+    "tests/ct_schema.rs": "4f4497242b0645c2ab6118e1ff4b6afb019f067753dcfe3021d38f34235be931",
+    "tests/cw_integer_literals.rs": "923630f25014e68ddee3a1b5c4a4a31a6857a6ba58c8eac94172c22e5b27058d",
+    "tests/debug_runtime.rs": "e9345d8e41cdde208b806b84906747482fdfd8202e767f0399f5c251d41c5c07",
+    "tests/fixture_lifecycle.rs": "887632623971d11454b2199fb503e491929ffe793519f9f60ee29556e4f121c0",
+    "tests/fixture_reference.rs": "b7fe6a49570defd549ea7705a94f00711de3f5630bbe786cb67d90271a729c07",
+    "tests/http_collect_cost.rs": "6104f2d670451dbb29df2790e98d9a15a31fb5d04dd06712839bd837c7912588",
+    "tests/http_tool.rs": "f05cc5dc5179d0f61bf7a737ca16cd6f324ed67a5c5f3b865184adc4545ff598",
+    "tests/input_schema_cost.rs": "2fc7f064d89efbe1e43b98b9d3ddf3d4c9dd77b0cdc544c4d2ffd710a8d62030",
+    "tests/interpreter.rs": "66706b0f4465e2ecba0e5577e65794405db5db877ab58f55b3e3e3c3c80690a2",
+    "tests/kernel_admission.rs": "9a0a9caa197a612f7f16992c8324bf0c312fc73c407d5ec49da7b8edafcf3f66",
+    "tests/local_read_host.rs": "924ce54ce1b7853c94374b0144a485552f93e8cea26dd6fa740bbc81064290ab",
+    "tests/perf_workbench.rs": "ad5abf13668b71909201d4083003c331dd1dd1db3f56aab81da331d877317de8",
+    "tests/scripts.rs": "a552b3c314cf60caadd38cbc04fb5e65dc08401c3fd09ce68474cacc95dd4cb4",
+    "tests/string_contains.rs": "344a7b1a28b0d066314f12d0c4a0f0eef9f43d2bc6feb8fc060f31c1d32fc2e9",
+    "tests/string_cost_probe.rs": "5e1b1ad6e36f16104bb52e6b480fef1c1ed433a5436ea333393640c441f0c6fe",
+    "tests/string_equality.rs": "6e4bdb42f6dad4d0b527fc9d2065e60f055ed14cde9903f8424491a00bd0dd6f",
+    "tests/string_tool.rs": "fe84f3a5429fc48c7e2fde7bd423693c599d00d9cba6dee10e6fe9d8a7be78a1",
+    "tests/tool_environment.rs": "50181b92bd1dabadb7ee69e1b104df8b12cabf4b79b8a76b022d349baffb4c95",
+    "tests/tool_json.rs": "6fbdb6a51cecaedaace8b442b8496e51ccbcdf4a648555ce2094c210b9e647e8",
+    "tests/tool_validation_cost.rs": "d23e1af5bcaecee2318cdab512833985c28429c6c06c5927b474d7c6861064a1",
+    "tools/cx_check.py": "e237e0530c7c917494d9a964e6e8935ab2b6951e56683229e3d9a810514ae90b",
+    "tools/cx_finalize.py": "d0721d1c35af1e87f589781adb0bec08c8ee7ee516da74653abd13f2ae7b9c79"
+  },
+  "evidence_sha256": {
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/build.txt": "0acb0a2bff112598410ca24f63b4158caab27357f014792e2fc332a5208bbbe4",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/check_identity.json": "6f540727f25c6cc543441bfd1598fc72f4ea80935743c89b9c23ddbf944ef5c7",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/debug_json.txt": "98d9d7fdb8b2fc3f81fe2e11d6271db6dea2c7d539d91a6a286beea5762f523b",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/default.txt": "8e60ee29751cf45fcfcbf3be8049abab8212b45d7521211c8d19a60e3210a039",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/failed-target-name.json": "7ee99bff46cea116f5ebb3f717efa891544b44a9652344b17e32c468b8a8ca5b",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/failed-target-name.txt": "ff94bfb4d9a6f8cac90578f1e3e6ff8ef934e2b3d4ac647803c55644facf8ec3",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/final-0.txt": "e423b85791edd319ff4ebb645adb1cafecd5c6e8190ff1ab37e2b38da6fb1758",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/final-1.txt": "c4c079e6d73d05f54996fc0128ea2c15acc50dd581df84e4ccce5fddfb1ca83c",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/final-2.txt": "831ebfa645413260321c847ef1503589597f0cdd2e2eb5b8dce49cc6ccad908d",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/identity.json": "54d1b444e801ae915abdfbd42ac387884ebcf9601bae713acddc663d90e07aac",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/load-0.txt": "ec253af2fd1b0b7af3238336ac458d40d3026c7867b32f3243b5e9193826a822",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/load-1.txt": "8d2c230c40993d58ca5c1a274c3701374756e3cd57f2cccf73b4a6123c199311",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/load-2.txt": "4a73f3b6a3e6ac7f2348b65f469e43604be685b31134d749e265ada73a1258be",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/measure_identity.json": "34c6303519f90fd5be9074dd19c7709d32c008f350ae5cf84cabe9036a27c7a1",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/raw.csv": "7ce3f90ffc035c0ed375bf2de1ffdd5437f4d3e1a7ec0ae05c7880e04d2da23d",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/run-0.csv": "ed4a8588ae16bb152b4db71a18a412cabd85e47d1eb626b4d12ecf889d056467",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/run-1.csv": "69d54adf7890366a598f925d0af8149c1074e62211e6a5115dbf8163560c879f",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/run-2.csv": "babe0526a2e5a68c0aaab8deef4de821539d6019edafefa8bd6cf35dda27ed91",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/summary.json": "efe9989f1b173464632c5180b6b2401c0688671dc5bcb219601d46cd145a6ba9",
+    "/Users/yuzhe/projects/minipy-native/bench/results/cx/tool_json.txt": "e61d6aaedfab1215d6f762bbcb0cb7acffe0c06ab1455d35c1146ae976a81787"
+  }
+}

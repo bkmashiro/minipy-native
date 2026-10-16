@@ -265,6 +265,7 @@ pub struct Plan {
     pub roots: usize,
     pub paths: Vec<PathSlot>,
     pub calls: Vec<BoundCall>,
+    /// Literal operands for contains and exact string equality.
     pub needles: Vec<String>,
     pub string_paths: bool,
     pub prints: Vec<StringSource>,

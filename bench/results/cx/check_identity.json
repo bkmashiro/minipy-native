@@ -1,0 +1,70 @@
+{
+  "head": "a2b5b2f2550de1e809948ac52b3fd071fb2fbca4",
+  "rustc": "rustc 1.96.0 (ac68faa20 2026-05-25)\nbinary: rustc\ncommit-hash: ac68faa20c58cbccd01ee7208bf3b6e93a7d7f96\ncommit-date: 2026-05-25\nhost: aarch64-apple-darwin\nrelease: 1.96.0\nLLVM version: 22.1.2\n",
+  "platform": "Darwin na-2.local 25.4.0 Darwin Kernel Version 25.4.0: Thu Mar 19 19:31:09 PDT 2026; root:xnu-12377.101.15~1/RELEASE_ARM64_T8132 arm64\n",
+  "commands": [
+    [
+      "cargo",
+      "+1.96.0",
+      "test",
+      "--offline",
+      "--locked"
+    ],
+    [
+      "cargo",
+      "+1.96.0",
+      "test",
+      "--offline",
+      "--locked",
+      "--features",
+      "tool-json"
+    ],
+    [
+      "cargo",
+      "+1.96.0",
+      "test",
+      "--offline",
+      "--locked",
+      "--features",
+      "tool-json,debug-runtime"
+    ]
+  ],
+  "source_sha256": {
+    "Cargo.lock": "15a236e43daf854bedbd6a83a6a667d1e7a173e9100008be03d82efbc3efe97e",
+    "Cargo.toml": "69056edb72469d1d1e49f069dddbcfa78ba3a79a8af24acfbabdf55f672384c8",
+    "examples/cx_probe.rs": "f2ae8766071b136d3cf316f54c5793464bb94646d10a1dfb092c3d577ff93c66",
+    "fixtures/cv/01_status_summary.py": "257392e9a26e1df98b7f9df6f63f1b80b046839b175c40ee7093618bafba7d80",
+    "fixtures/cv/02_json_few_fields.py": "5c54fc772464e19864a1686b8dea917c6160943f8696f20207754a421bcf5dd2",
+    "fixtures/cv/03_path_then_call.py": "2c7d5fdfb72cc1d3bbdc00cd78013c07478aea4f26fac4df2cd5342d60631cbd",
+    "fixtures/cv/04_first_matching_result.py": "0d9387d277f42cf732d4a8188c1ccb23a9d2535025cab9c659208d56e814d40d",
+    "fixtures/cv/05_missing_default.py": "cccf623fdc16c1f03933eded0b5106e6b4052e4df03f7a9c6a5db92e99beee36",
+    "fixtures/cv/06_multi_call_branch.py": "cec35cfbebf762136ece9670cddbc78f940ab5c3eba84aa2cce1568d73c0851f",
+    "fixtures/cv/07_exact_route.py": "0f3d4d8e5e69b59dfbb581861f54e4f6d5eb2d80b80a801b85d54639cbe5960a",
+    "fixtures/cv/08_nonempty_message.py": "1fd6181b336ab2c2ddbfbf750c6a345a1a7fc062fc49b34b514dae57ef601f1b",
+    "fixtures/cv/09_prefix_route.py": "a899b23e3e365a96fff160d58dae57191bd8372b4bcfc7edbffada13d56ddf8c",
+    "fixtures/cv/10_alias_contains_summary.py": "2db682ffb4917495e5d2db1715c3020258f7e588de88dace2f1897dd95e1aaf3",
+    "src/bin/minipy.rs": "14c157179b8156816de8b6bd2736407af8998059b5f1940b79073528f154a76f",
+    "src/buffer.rs": "728e3dc082ed1f8bed96864f608c1ddb22f7f6b9016531dba0e5deff7d9d2867",
+    "src/codegen.rs": "655be40e73b7c502485bf19db162db8dd9ac36fbc13306aef3a1153f21d7b7ac",
+    "src/compiler_profile.rs": "7fdb8442d6d37d630fcf9c679c2abb1da0c49ab52ffc6b2741cd05ff46fcaefb",
+    "src/error.rs": "71b911094d7d0cc11b0d1445abd15c059e2b9ae6a32f76e14cda16020afb142c",
+    "src/fixture_reference.rs": "d3c67f1003a5816832fbd15c6d377edbb4d422c6db9be1b3cab7c40ae58aff53",
+    "src/frontend/schema_probe.rs": "63aa58fae1ae8175b0fba0cf55087c8bfed263e510aab7b3cb9d10895bf747cb",
+    "src/frontend.rs": "0267f7fb4332d169361eafce31ee1ca4e6989b40ad6a7dde0b1bac7b2e5e8d75",
+    "src/http_provider.rs": "fde2d86e841e245c4c8300771f68304819589692741743e6449ae695a5208f1e",
+    "src/interpreter/debug.rs": "fd6a458256c51a7a0d27bc9725c97a9330b7368247dc3031d96390f622b78fd0",
+    "src/interpreter/liveness_tests.rs": "2a6866e16e814aca2c904d9108ace085ff577e2e78810f026bf29f1f4cbe1299",
+    "src/interpreter/tape.rs": "0be9186997b56dd826e0a52b289ee7a3e2a3dec3b2a1009efa531b24d155ec8e",
+    "src/interpreter.rs": "14f26b105ca6d9e082afd73f5984a6456059005ec2bf3291953e0d72c2b9f149",
+    "src/interpreter_profile.rs": "ca14500ff28ec156553ae1d2e0672381afdad261b2f309ea72455bd11fa7722c",
+    "src/ir.rs": "3d63e11f0a6e005b5d2d1aa08ec451cd7f66cc761b8513c823a8f7e89ffafe28",
+    "src/json_view.rs": "889c89998188b18fd260ba37940d6e95dbe61f75418a6548f6ea8d78bf4a1eb7",
+    "src/lib.rs": "d4e08a6ac47ee51961389937efa9d630d94c77005e2a45882705ca946a7153b6",
+    "src/provider.rs": "642cc57c0434f445a82fdbc41a4ff6271a4609ece93ca045d7ed3569624312da",
+    "src/runtime.rs": "e7b0c1ea030bd14f785963872842b65f7aa5c96b9019cc0eb1632f20da8aea0f",
+    "src/tool.rs": "6bbd80db8d2dc8fb3c0db6d6a49592c05d79326c479eaec618c8dc297889d891",
+    "src/wasm.rs": "d29e071173a706dd80a506557075af0fe3d6a26b7d2ed4be261658123edfb623",
+    "tests/string_equality.rs": "6e4bdb42f6dad4d0b527fc9d2065e60f055ed14cde9903f8424491a00bd0dd6f",
+    "tools/cx_check.py": "e237e0530c7c917494d9a964e6e8935ab2b6951e56683229e3d9a810514ae90b"
+  }
+}

@@ -57,6 +57,12 @@ pub enum Expr {
         root: usize,
         needle: usize,
     },
+    #[cfg(feature = "tool-json")]
+    StringEq {
+        slot: usize,
+        root: usize,
+        literal: usize,
+    },
     Field(Field),
     Binary(BinOp, Box<Expr>, Box<Expr>),
     Not(Box<Expr>),

@@ -1,0 +1,2 @@
+error: 'cargo-fmt' is not installed for the toolchain '1.96.0-aarch64-apple-darwin'.
+help: run `rustup component add --toolchain 1.96.0-aarch64-apple-darwin rustfmt` to install it

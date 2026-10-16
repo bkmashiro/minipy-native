@@ -1,0 +1,13 @@
+    Finished `release` profile [optimized + debuginfo] target(s) in 0.05s
+     Running tests/string_equality.rs (target/release/deps/string_equality-786052de63aec3cc)
+
+running 6 tests
+test bounded_admission_and_remaining_cv_gaps ... ok
+test exact_scan_decode_retained_and_token_budgets ... ok
+test error_order_short_circuit_and_no_later_effect ... ok
+test original_cv_scripts_and_branches_both_backends ... ok
+test owner_across_wait_last_use_cancellation_and_detached_argument ... ok
+test unicode_predicates_literals_on_either_side_and_aliases ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
